@@ -151,3 +151,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/mcp_wire_v13.py
+
+      - name: Compare fixed-planner MCP agent with and without NERVE memory
+        env:
+          PYTHONPATH: src
+        run: python scripts/llm_mcp_v14.py --cases 4
