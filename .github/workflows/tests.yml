@@ -27,3 +27,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python benchmarks/v17_benchmark.py
+
+      - name: Benchmark sensor outages and interval coverage
+        env:
+          PYTHONPATH: src
+        run: python benchmarks/v18_benchmark.py
