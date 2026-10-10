@@ -22,6 +22,7 @@ from nerve_awim.agent_study_v15 import (
     FormatChatPlanner, FormatExperience,
 )
 from nerve_awim.evolution_v01 import EvolutionMemory
+from nerve_awim.study_statistics_v16 import summarize_pairs
 from nerve_awim.llm_agent_v14 import Plan
 
 ALL_PLANS = (
@@ -81,6 +82,7 @@ async def study(*, planner, seeds=2, cases_per_format=3):
     if type(cases_per_format) is not int or not 1 <= cases_per_format <= 8:
         raise ValueError("per-format cases must be 1..8")
     rows = []
+    scored_pairs = []
     for seed in range(seeds):
         with tempfile.TemporaryDirectory() as folder:
             db = str(Path(folder) / "history.sqlite")
@@ -134,9 +136,12 @@ async def study(*, planner, seeds=2, cases_per_format=3):
                     rng = random.Random(seed + 990)
                     rng.shuffle(tasks)
                     outcomes = {}
+                    task_success_by_mode = {}
+                    task_errors_by_mode = {}
                     for mode in (("no_memory", "with_memory") if seed % 2 == 0
                                  else ("with_memory", "no_memory")):
                         results = []
+                        result_errors = []
                         failures = 0
                         elapsed = []
                         model_seconds = []
@@ -153,6 +158,7 @@ async def study(*, planner, seeds=2, cases_per_format=3):
                             ):
                                 if value is not None:
                                     tokens[name] += value
+                            failure = False
                             try:
                                 answer = await execute(
                                     client, task_id="ev-" + mode +
@@ -160,9 +166,13 @@ async def study(*, planner, seeds=2, cases_per_format=3):
                                 success = answer == expected
                             except (ValueError, RuntimeError):
                                 success = False
+                                failure = True
                                 failures += 1
                             results.append(success)
+                            result_errors.append(failure)
                             elapsed.append(perf_counter() - start)
+                        task_success_by_mode[mode] = tuple(results)
+                        task_errors_by_mode[mode] = tuple(result_errors)
                         outcomes[mode] = {
                             "successes": sum(results),
                             "tasks": len(results),
@@ -172,6 +182,19 @@ async def study(*, planner, seeds=2, cases_per_format=3):
                             "tokens": tokens,
                         }
                     rows.append(outcomes)
+                    # Only anonymised paired score flags are retained.
+                    # No raw prompts, answer keys, output text or secrets
+                    # enter the aggregate statistical report.
+                    for idx, (fmt, case_id, _text, _answer) in enumerate(tasks):
+                        scored_pairs.append({
+                            "seed": seed,
+                            "format": fmt,
+                            "task_id": str(case_id),
+                            "no_memory": task_success_by_mode["no_memory"][idx],
+                            "with_memory": task_success_by_mode["with_memory"][idx],
+                            "no_memory_error": task_errors_by_mode["no_memory"][idx],
+                            "with_memory_error": task_errors_by_mode["with_memory"][idx],
+                        })
     arms = {}
     for mode in ("no_memory", "with_memory"):
         subset = [row[mode] for row in rows]
@@ -198,6 +221,8 @@ async def study(*, planner, seeds=2, cases_per_format=3):
         "training_outcomes_per_seed": 16,
         "heldout_cases_per_format_per_seed": cases_per_format,
         "arms": arms,
+        "paired_analysis": summarize_pairs(scored_pairs),
+        "study_protocol": "paired-v1.6-fixed-heldout",
         "paired_arms": True,
         "arm_order_counterbalanced": seeds >= 2,
         "heldout_feedback_leakage": False,
