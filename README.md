@@ -87,3 +87,9 @@ The 20-seed synthetic benchmark in GitHub Actions run 38073284167 showed a mean 
 The `EvidenceGatedRecovery` controller connects independent evidence consistency checks to incident-scoped supervisor approval. Recovery now requires at least two complete timestamped position/velocity records meeting configured consistency tolerances; incomplete, contradictory or stale records cannot authorise resumption. Replayed approval nonces remain rejected by the v2.2 layer. Tests: GitHub Actions run 38073646374 passed 85 tests.
 
 **Research/security limits:** asserted supervisor role is not cryptographically authenticated; the evaluator checks consistency, not sensor truth or causal plausibility; audit events remain process-memory records; and the new recovery class is an opt-in research integration, not a production entry point. Do not connect to physical or medical devices.
+
+## WorldCore v2.5 — signed simulated recovery authorisation
+
+The opt-in `SignedRecovery` class (`recovery_v25.py`) requires an HMAC-SHA256 signed, incident-scoped approval with a principal, supervisor role, nonce and expiry. A SQLite ledger records approval events and persists used nonces across process instances. Five new tests cover valid signatures, forged signatures, expiry, legacy API bypass, and replay prevention with a reopened ledger. GitHub Actions run 38073760119 passed **90 tests**.
+
+**Security boundaries:** A shared HMAC key does not authenticate a real human or establish independent authorisation; anybody holding that key could issue a valid token. There is no real identity provider, hardware key management, trusted time source, key rotation, transactional binding between all controller state and ledger writes, or tamper-resistant event storage. Do not publish secrets or connect this experimental controller to actual robotic or clinical equipment. Before production, use externally authenticated identities and independently engineered safety controls.
