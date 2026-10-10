@@ -483,3 +483,35 @@ tool discovery and multi-step agent execution.
 
 See [v1.7 recovery research guide](docs/evolution-v17.md) for
 protocol details, rejected failures and security limitations.
+
+## Memory v1.8 — scoped verified ledger + optional Mem0/Obsidian pilot
+
+New, **opt-in and not yet production-deployed** components:
+
+- `memory_v18.py`: local trusted-host-issued capability contexts, exact
+  tenant/agent scope, pending/approved/revoked/superseded status, expiry,
+  evaluator identity, content hash, and hard deletion.
+- `memory_retrieval_v18.py`: lexical baseline and an optional OSS Mem0
+  **read-side semantic adapter**; every suggested ID is revalidated
+  against the authoritative in-scope, approved and nonexpired SQL record.
+- `obsidian_export_v18.py`: human-readable, one-way Markdown review
+  preview for approved synthetic/public memories, not a live vault sync.
+- Legacy unverified MCP `record_experience` and `rate_experience` writes
+  are now **OFF by default**. Only fully trusted single-user local
+  experimental clients should opt in with
+  `NERVE_ENABLE_LEGACY_MCP_WRITES=1`. This flag is NOT remote auth.
+
+Run the synthetic retrieval benchmark:
+
+```bash
+PYTHONPATH=src python benchmarks/v18_memory_retrieval.py
+```
+
+**Important:** this benchmark uses a curated semantic fixture, **not
+actual Mem0**; no live embeddings, semantic accuracy gain or pgvector
+service has been proven. No API keys or patient data are required.
+The original SQLite agent demos remain compatible, but this new
+security model is not a remote multi-tenant authentication system.
+
+See [implementation and limitations](docs/memory-v18-implementation.md)
+and [memory architecture decision](docs/memory-backend-decision-v18.md).
