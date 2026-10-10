@@ -77,8 +77,8 @@ async def study(*, planner, seeds=2, cases_per_format=3):
     # NERVE's core strategy and model-planning unit tests.
     from mcp import ClientSession, StdioServerParameters
     from mcp.client.stdio import stdio_client
-    if type(seeds) is not int or not 1 <= seeds <= 4:
-        raise ValueError("study seeds must be 1..4")
+    if type(seeds) is not int or not 1 <= seeds <= 12:
+        raise ValueError("study seeds must be 1..12")
     if type(cases_per_format) is not int or not 1 <= cases_per_format <= 8:
         raise ValueError("per-format cases must be 1..8")
     rows = []
@@ -142,7 +142,9 @@ async def study(*, planner, seeds=2, cases_per_format=3):
                                  else ("with_memory", "no_memory")):
                         results = []
                         result_errors = []
+                        model_errors = 0
                         failures = 0
+                        attempted_stages = 0
                         elapsed = []
                         model_seconds = []
                         tokens = {"input": 0, "output": 0}
@@ -150,24 +152,37 @@ async def study(*, planner, seeds=2, cases_per_format=3):
                             start = perf_counter()
                             advice = (memory.recommendation(fmt)
                                       if mode == "with_memory" else None)
-                            decision = planner.plan_for(fmt, advice=advice)
-                            model_seconds.append(decision.elapsed_seconds)
-                            for name, value in (
-                                ("input", decision.input_tokens),
-                                ("output", decision.output_tokens),
-                            ):
-                                if value is not None:
-                                    tokens[name] += value
-                            failure = False
+                            # A failed model response counts as an unsuccessful
+                            # held-out task; never quietly drop it from
+                            # the denominator or disclose provider details.
+                            model_failed = False
                             try:
-                                answer = await execute(
-                                    client, task_id="ev-" + mode +
-                                    str(index), text=text, plan=decision.plan)
-                                success = answer == expected
+                                decision = planner.plan_for(fmt, advice=advice)
                             except (ValueError, RuntimeError):
+                                decision = None
+                                model_failed = True
+                                model_errors += 1
+                            failure = model_failed
+                            if decision is None:
                                 success = False
-                                failure = True
-                                failures += 1
+                            else:
+                                model_seconds.append(decision.elapsed_seconds)
+                                for name, value in (
+                                    ("input", decision.input_tokens),
+                                    ("output", decision.output_tokens),
+                                ):
+                                    if value is not None:
+                                        tokens[name] += value
+                                attempted_stages += 2
+                                try:
+                                    answer = await execute(
+                                        client, task_id="ev-" + mode +
+                                        str(index), text=text, plan=decision.plan)
+                                    success = answer == expected
+                                except (ValueError, RuntimeError):
+                                    success = False
+                                    failure = True
+                                    failures += 1
                             results.append(success)
                             result_errors.append(failure)
                             elapsed.append(perf_counter() - start)
@@ -177,8 +192,12 @@ async def study(*, planner, seeds=2, cases_per_format=3):
                             "successes": sum(results),
                             "tasks": len(results),
                             "execution_errors": failures,
+                            "model_errors": model_errors,
+                            "registered_tool_stages": attempted_stages,
+                            "model_latency_samples": len(model_seconds),
                             "mean_wall_seconds": statistics.mean(elapsed),
-                            "mean_model_seconds": statistics.mean(model_seconds),
+                            "mean_model_seconds": (statistics.mean(model_seconds)
+                                                   if model_seconds else None),
                             "tokens": tokens,
                         }
                     rows.append(outcomes)
@@ -202,13 +221,21 @@ async def study(*, planner, seeds=2, cases_per_format=3):
             "accuracy": sum(x["successes"] for x in subset) /
                         sum(x["tasks"] for x in subset),
             "errors": sum(x["execution_errors"] for x in subset),
+            "model_errors": sum(x["model_errors"] for x in subset),
             "tasks": sum(x["tasks"] for x in subset),
             "model_decisions": sum(x["tasks"] for x in subset),
-            "registered_tool_stages": 2 * sum(x["tasks"] for x in subset),
+            "registered_tool_stages": sum(
+                x["registered_tool_stages"] for x in subset),
             "mean_wall_seconds": round(statistics.mean(
                 x["mean_wall_seconds"] for x in subset), 6),
-            "mean_model_seconds": round(statistics.mean(
-                x["mean_model_seconds"] for x in subset), 6),
+            "mean_model_seconds": (
+                round(statistics.mean(x["mean_model_seconds"] for x in subset
+                                      if x["mean_model_seconds"] is not None), 6)
+                if any(x["mean_model_seconds"] is not None for x in subset)
+                else None
+            ),
+            "model_latency_samples": sum(
+                x["model_latency_samples"] for x in subset),
             "token_usage": {
                 name: sum(x["tokens"][name] for x in subset)
                 for name in ("input", "output")
