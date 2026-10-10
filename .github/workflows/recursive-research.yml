@@ -1,0 +1,58 @@
+name: NERVE bounded recursive research
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nerve-recursive-research
+  cancel-in-progress: false
+
+jobs:
+  evolve-research:
+    if: github.repository == 'ALIYILD/NERVE' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout without persisted write credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Python runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate core evolutionary gates offline
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -p 'test_recursive_evolution_v19.py' -v
+      - name: Bounded data-only evolutionary experiment
+        env:
+          PYTHONPATH: src
+        run: |
+          mkdir -p research-output
+          python -m nerve_awim.recursive_evolution_v19 > research-output/recursive-research.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('research-output/recursive-research.json').read_text())
+          assert result['candidates_evaluated'] <= 72
+          assert result['generations_run'] <= 12
+          assert result['report_only_holdout']['cross_tenant_leaks'] == 0
+          assert result['baseline_holdout']['cross_tenant_leaks'] == 0
+          print('Status:', result['status'])
+          print('Validation accuracy:', result['selected_validation']['accuracy'])
+          print('Holdout accuracy:', result['report_only_holdout']['accuracy'])
+          print('No production code or policy changes were attempted')
+          PY
+      - name: Retain bounded offline research report
+        uses: actions/upload-artifact@v4
+        with:
+          name: nerve-recursive-research
+          path: research-output/recursive-research.json
+          retention-days: 7
+          if-no-files-found: error
