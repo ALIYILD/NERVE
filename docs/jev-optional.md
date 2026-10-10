@@ -78,3 +78,36 @@ python3 -m nerve_awim.jev_smoke
 ```
 
 The command makes exactly **one** TypeSafe HTTPS request containing two typed Noul judgments about fixed synthetic metrics. Its output contains only model identity, risk scores, elapsed time, token counts and a warning. It never prints or stores the key. Our CI cannot run the live service because no private key is configured there; the unit test uses a fake reviewer and checks the single-batch behaviour. Revoke the key after the real smoke test, especially because it was shared in conversation text.
+
+## Optional protected GitHub Actions live test
+
+The workflow `.github/workflows/jev-live.yml` is **manual only**
+(`workflow_dispatch`) and restricted to `ALIYILD/NERVE` on `main`.
+It has read-only repository permissions, a three-minute timeout, and
+references only the `typesafe-live` **environment** secret. Pushes and
+pull requests do not trigger this paid external API call.
+
+Before enabling it:
+
+1. Revoke the TypeSafe key that was shared in a conversation, and create
+   a fresh limited-purpose credential. Do not reuse the disclosed key.
+2. In GitHub, open `ALIYILD/NERVE` > **Settings** > **Environments**.
+3. Create an environment named `typesafe-live`; restrict deployment branches
+   to `main`, and enable required reviewers if your plan allows it.
+4. In that environment (not in the source repository), add an
+   **environment secret** named `TYPESAFE_API_KEY` containing only the
+   **new** credential.
+5. Open **Actions** > **TypeSafe Jev - manually approved live smoke test**
+   > **Run workflow**, select `main` and approve the protected environment
+   if prompted.
+6. Review the minimal output: model ID, two synthetic risk values,
+   token usage and elapsed time. Never upload raw responses or API keys.
+
+If the secret is missing, the workflow exits without making a request.
+CI cannot verify GitHub environment protection settings or run against an
+unconfigured live TypeSafe account. It validates the workflow's source
+and runs API contract tests with synthetic, mocked responses instead.
+
+Security note: In public repositories, contributors with sufficient write
+access can modify workflow code. Restrict write access and protect
+`main`; the protected environment should require independent review.
