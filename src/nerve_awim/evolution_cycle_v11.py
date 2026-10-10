@@ -16,10 +16,14 @@ from .autoresearch_v05 import eligibility
 
 class ParallelEvolutionCycle:
     def __init__(self, *, memory: EvolutionMemory, agent_id: str,
-                 max_workers: int = 4, ledger_path=None):
+                 max_workers: int = 4, ledger_path=None,
+                 learn_from_evaluations: bool = False):
         if not agent_id or not isinstance(agent_id, str):
             raise ValueError("research agent identity required")
+        if not isinstance(learn_from_evaluations, bool):
+            raise ValueError("learning switch must be explicit boolean")
         self.memory = memory
+        self.learn_from_evaluations = learn_from_evaluations
         self.agent_id = agent_id
         self.ledger_path = Path(ledger_path) if ledger_path is not None else None
         self.workers = BoundedParallelAgents({
@@ -75,7 +79,7 @@ class ParallelEvolutionCycle:
         ratings = {item.outcome: item.utility for item in memory.output}
         # Memory is advisory: it may prioritise work, not choose a winner.
         prioritised = sorted(candidates,
-                             key=lambda p: (-ratings.get(p.name, -1), p.name))
+                             key=lambda p: (-ratings.get(p.name, .5), p.name))
         baseline = Proposal("baseline", 5, .25)
         evaluated = self.workers.run([
             AgentJob("baseline", "evaluate", baseline),
@@ -124,6 +128,16 @@ class ParallelEvolutionCycle:
             "holdout_report_only": holdout,
             "scope": "Synthetic experiments. No deployment or policy changes.",
         }
+        # Deterministic, bounded research feedback may influence experiment
+        # PRIORITY on later runs; it never changes the independent evaluator.
+        # Failed candidates are scored zero. Unknown candidates are neutral.
+        if self.learn_from_evaluations:
+            for trial in trials:
+                self.memory.record(
+                    self.agent_id, context, trial["candidate"]["name"],
+                    1.0 if trial["decision"] == "candidate_for_review" else 0.0,
+                )
+        report["research_feedback_recorded"] = len(trials) if self.learn_from_evaluations else 0
         if self.ledger_path is not None:
             self.ledger_path.parent.mkdir(parents=True, exist_ok=True)
             with self.ledger_path.open("a", encoding="utf-8") as stream:
