@@ -27,6 +27,7 @@ def episode(seed,steps=80):
             # plant at its last observed position. This is an explicit
             # benchmark assumption, NOT a physically safe fallback.
             action=0
+            c.core.filter.step(0)  # record supervised simulated transition
         else:action=result.action
         gain=(.27,.48,.15,.4)[min(t//20,3)]
         velocity=.82*velocity+gain*action
