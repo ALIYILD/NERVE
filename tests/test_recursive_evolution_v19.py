@@ -110,6 +110,24 @@ class RecursiveEvolutionV19Tests(unittest.TestCase):
         self.assertEqual(first["selected"], second["selected"])
         self.assertEqual(first["lineage"], second["lineage"])
 
+    def test_resumed_recipe_regression_resets_to_canonical(self):
+        class DriftedObjective:
+            def evaluate(self, genome, split):
+                success = .9 if genome.trigram_weight == 0 else .2
+                return EvalScore(success, round(success * 10), 10, 0)
+        def mutation(parent, rng):
+            return RetrievalGenome(parent.token_weight, 1)
+        report = RecursiveEvolutionLoop(
+            objective=DriftedObjective(), generations=2,
+            mutation=mutation
+        ).run(
+            baseline=RetrievalGenome(3, 3),
+            previous_population=(RetrievalGenome(3, 3),)
+        )
+        self.assertTrue(report['reset_on_validation_drift'])
+        self.assertEqual(report['baseline'],
+                         {'token_weight': 3, 'trigram_weight': 0})
+        self.assertEqual(report['status'], 'no_verified_improvement')
     def test_known_objective_baseline_can_be_evaluated(self):
         objective = SyntheticMemoryObjective()
         try:
