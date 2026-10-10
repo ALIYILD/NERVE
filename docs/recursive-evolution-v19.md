@@ -55,3 +55,35 @@ The proposed future stages are:
 - Repeated independent experiments to establish whether the system **actually** improves on frozen heldout tasks; publish regressions and no-improvement results.
 
 Sources: [DeepMind AlphaEvolve explanation](https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/), [AlphaEvolve technical report](https://arxiv.org/abs/2506.13131), [Google Cloud AlphaEvolve API](https://docs.cloud.google.com/gemini/enterprise/docs/alphaevolve/reference-guide/api-reference).
+
+## Second research domain: WorldCore parameter evolution
+
+To ensure recursive research is not limited to search weights,
+`src/nerve_awim/worldcore_recursion_v19.py` also runs a typed
+multi-generation experiment over WorldCore's two existing parameters:
+`max_missing` (bounded 2–12) and `risk_aversion` (bounded 0–2).
+
+```bash
+PYTHONPATH=src python -m nerve_awim.worldcore_recursion_v19
+```
+
+Research operators cannot change the simulated plant, seeded data,
+evaluator, safety thresholds, abort penalties, holdout episodes or
+production controllers. Candidates are evaluated by parallel trusted
+local worker handlers. Any candidate that fails the independent
+`autoresearch_v05.eligibility` absolute rules, worsens completion,
+aborts, constraint violations, prediction error, or fails to strictly
+improve goal error is rejected. A final independently measured holdout
+must pass the same absolute gate and non-regression checks.
+
+The six-hour GitHub workflow runs **both domains**, archives both
+research JSON reports and resumes only the bounded retrieval recipe
+population from a versioned public GitHub Actions cache. WorldCore
+simulation generations are rerun from a fixed baseline each time;
+no unvalidated control recipe is persisted as an operational setting.
+
+If no admissible controller is found, the correct result is
+`no_deployable_improvement`. That is **not a failure of the safety gate**;
+it is evidence that the frozen research constraints refused promotion.
+Even `candidate_for_human_review` is not permission to change a clinical
+or physical device protocol. The WordCore track is synthetic research.
