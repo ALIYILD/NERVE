@@ -94,3 +94,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m nerve_awim.autoresearch_v04
+
+      - name: Check AutoResearch v0.5 absolute eligibility
+        env:
+          PYTHONPATH: src
+        run: python -m nerve_awim.autoresearch_v05
