@@ -53,3 +53,11 @@ Do not deploy this prototype to control medical or physical systems without inde
 The `integrated_v13.py` module combines the published timestamp-aware position/velocity filter with a bounded multi-step action planner and cautious online gain adaptation from consecutive timestamped velocity observations. It receives **observations only**; it does not receive hidden simulator state. Its uncertainty penalty is heuristic, not a calibrated safety guarantee.
 
 Run `PYTHONPATH=src python -m unittest discover -s tests -v` and inspect the CI run for the actual public-repository result. The v1.3 module has not yet been benchmarked against v1.2 end-to-end, and real-world performance is unknown.
+
+## v1.5 — Calibration and regression diagnostics
+
+- `calibration_v15.py`: rolling absolute-error prediction intervals with test-before-update evaluation to prevent outcome leakage. Empirical coverage is measured; no distribution-free coverage guarantee is claimed under drift.
+- `regression_v15.py`: two-metric research check that declines an improvement claim when goal tracking regresses despite lower prediction error.
+- The v1.4 controller and its benchmarks remain unchanged as comparison baselines; neither v1.5 utility is yet integrated into the action policy.
+
+Run all tests with `PYTHONPATH=src python -m unittest discover -s tests -v`. For measured performance, use the benchmark workflow outputs rather than assuming gains from new functionality.
