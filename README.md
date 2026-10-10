@@ -310,3 +310,27 @@ Actions workflow `jev-live.yml` offers `smoke` or `comparison` modes.
 Each mode sends one batched synthetic API request when manually triggered
 on protected `main`; routine CI is always credential-free and offline.
 See `docs/jev-optional.md`.
+
+## Evolution v1.2 — learning changes executable agent behaviour
+
+`src/nerve_awim/agent_learning_v12.py` now combines local outcome-aware
+SQLite memory with **explicitly registered Python strategy handlers**
+and NERVE's bounded parallel-agent executor. The same experience history
+supports a utility-mean policy and recency-only comparison. Unknown
+strategy names in memories can **never** become executable code.
+
+Use: `PYTHONPATH=src python benchmarks/v12_executable_agents.py`.
+
+On 12 deterministic seeds, using three executable hand-authored task
+categories and 72 matched held-out tasks per policy, outcome-aware
+selection achieved **100%** exact-output success versus **58.33%**
+recency-only selection. Training comprised 30 evaluated outcomes per
+seed, shared by both policies. GitHub Actions run 38081097181 passed
+**256 full-suite tests** and 6 additional focused Evolution checks.
+
+**Limitations:** This synthetic task construction intentionally contains
+correct and incorrect registered strategies. It is not evidence of real
+LLM reasoning improvement, independently authenticated feedback, model
+weight learning or faster execution. Test answers are not reused for
+learning, and production authorisation remains separate from memories.
+See `docs/evolution-engine.md` for a usage example and security boundaries.
