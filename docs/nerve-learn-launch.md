@@ -60,3 +60,52 @@ server and does not support distributed agent workers or automatic deployment.
 Agent IDs supplied by callers are not secure authentication. Keep the local
 service private until there is real identity, tenant isolation and appropriate
 data-protection engineering.
+
+## Evolution v1.3 — Executable agent demo through MCP
+
+`learn_mcp.py` now exposes five additional demo tools for compatible
+local MCP clients, alongside the existing memory tools:
+
+- `list_demo_agent_capabilities()` — discover the two fixed safe contexts;
+- `train_demo_agent_on_fixtures()` — score known built-in Python handlers
+  against trusted program-owned examples, without caller-supplied rewards;
+- `choose_demo_agent_strategy(context,policy)` — recommend an allowlisted
+  strategy using `utility` or `recency` feedback selection;
+- `run_demo_agent_pipeline(task_id,email_document,policy)` — execute a
+  two-stage JSON-field extraction and email-normalisation pipeline;
+- `run_demo_agent_pipelines(tasks,policy)` — concurrently execute up to
+  16 independent pipelines with deterministic result order.
+
+The input is a JSON string containing exactly the `email` key. For example:
+
+```json
+{"email": "  USER@EXAMPLE.ORG  "}
+```
+
+After calling `train_demo_agent_on_fixtures()`,
+`run_demo_agent_pipeline("t1", "{\"email\": \"  USER@EXAMPLE.ORG  \"}")`
+returns `user@example.org` when using the trained `utility` policy.
+The training samples are fixed. Returned strategy names are looked up only
+in an explicit static registry of pure Python string functions. **No
+model-generated code, unrestricted tools, shell commands, credentials,
+clinical devices or API calls are executed.**
+
+To run the independent benchmark:
+
+```bash
+PYTHONPATH=src python benchmarks/v13_external_mcp.py
+```
+
+The experiment compares utility-based selection, recency-only selection
+and an explicitly **fixed-correct** non-learning pipeline on the same
+synthetic held-out inputs. The fixed-correct control is essential: strategy
+memory must not be advertised as inherently superior to a well-configured
+single agent. The built-in MCP API is currently covered with mocked MCP
+registration and actual Python handler execution; end-to-end external
+client/SDK protocol interoperability must still be validated separately.
+
+**Security:** `NERVE_DEMO_AGENT_ID` optionally configures one local
+demo namespace at server startup. It is not a user authentication or
+tenant isolation mechanism. Use stdio only for local trusted clients; do
+not expose this demonstration as a multi-tenant HTTP service. Keep input
+synthetic and never persist private clinical data or credentials.
