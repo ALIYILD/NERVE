@@ -28,6 +28,8 @@ class EvolutionMemory:
             raise ValueError("reward must be finite and in [0,1]")
         self.store.feedback(agent_id, experience_id, score)
     def select(self, agent_id, context, limit=5, minimum_utility=0.0):
+        if isinstance(limit,bool) or not isinstance(limit,int) or not 1<=limit<=20:
+            raise ValueError("limit must be between 1 and 20")
         if (not isinstance(minimum_utility,(int,float)) or
                 isinstance(minimum_utility,bool) or
                 not isfinite(minimum_utility) or not 0 <= minimum_utility <= 1):
