@@ -96,3 +96,65 @@ or real medical-device and physical-AI validation.
 Python threads can overlap I/O work, but **do not imply acceleration for
 CPU-heavy Python tasks** because of interpreter scheduling and shared
 resources. Benchmark timings are descriptive rather than guarantees.
+
+## Evolution v1.2 — executable agent strategy feedback bridge
+
+The new `agent_learning_v12.py` connects persistent NERVE Evolution
+experience scores to **registered executable Python agent capabilities**.
+A caller can register trusted handlers, submit typed `AgentTask` objects,
+run multiple tasks through the existing bounded parallel worker pool, and
+record independently evaluated `feedback` scores (0–1).
+
+- The **utility** policy ranks available registered strategies by mean
+  feedback across previously evaluated episodes.
+- The **recency** comparator selects the latest registered evaluated
+  strategy using the **same** training history.
+- Stored strategy IDs are untrusted; unknown IDs **cannot** run as code.
+- Agent and context namespaces are exact-matched for evaluated records.
+- All batch choices occur before execution; test outputs are not
+  automatically treated as training feedback.
+- Recreating the coordinator with the same local SQLite path restores
+  the strategy history (not Python callable objects).
+
+```bash
+PYTHONPATH=src python benchmarks/v12_executable_agents.py
+```
+
+The built-in executable benchmark runs real registered Python utilities for
+email normalisation, numeric sorting and JSON extraction using constructed
+inputs with deterministic, externally supplied expected outputs. Each policy
+gets the same examples, observed feedback and task execution budget.
+This is an offline **tool strategy-selection** test, not real LLM reasoning
+or autonomous source-code learning. It cannot establish a runtime speedup
+simply because threads execute concurrently, and the supplied reward
+function is not cryptographically authenticated.
+
+### Trusted caller example
+
+```python
+from nerve_awim.agent_learning_v12 import (
+    AgentTask, RegisteredStrategy, FeedbackAgentCoordinator,
+)
+from nerve_awim.evolution_v01 import EvolutionMemory
+
+memory = EvolutionMemory("local-evolution.sqlite")
+agent = FeedbackAgentCoordinator(
+    memory=memory,
+    agent_id="research-agent",
+    strategies=[
+        RegisteredStrategy("basic", "normalise",
+                           lambda text: text.lower()),
+        RegisteredStrategy("trim", "normalise",
+                           lambda text: text.strip().lower()),
+    ],
+)
+agent.feedback(context="normalise", strategy_id="basic", reward=0.0)
+agent.feedback(context="normalise", strategy_id="trim", reward=1.0)
+output, = agent.run([AgentTask("demo", "normalise", "  EXAMPLE  ")])
+assert output.value == "example"
+```
+
+Do not run untrusted model-generated Python handlers. Reward provenance and
+human approval are application responsibilities; use the existing isolated
+WorldCore gates for control-related proposals. This is an experimental public
+integration that works without Jev, TypeSafe or any commercial API key.
