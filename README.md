@@ -545,3 +545,22 @@ source-code mutation would require an isolated sandbox, verified
 evaluator provenance, independent holdouts and human-reviewed PRs.
 
 See [loop architecture and schedule](docs/recursive-evolution-v19.md).
+
+### Recursive WorldCore experiments (same schedule)
+
+A second, independently gated generational track evolves **data-only**
+WorldCore outage/risk settings through the existing fixed simulator:
+
+```bash
+PYTHONPATH=src python -m nerve_awim.worldcore_recursion_v19
+```
+
+Absolute completion, abort and violation gates, non-regression constraints
+and a distinct holdout evaluation remain frozen. The scheduled workflow
+generates a separate `worldcore-research.json` artifact; **no controller
+setting is applied** to deployed NERVE, robots, or DeepSynaps devices.
+
+GitHub Actions scheduling is best-effort, not an always-on service.
+Typed numeric recipe checkpoints can be evicted; prior selected values
+are re-evaluated and previous claims or fitness numbers are never
+accepted on trust. See `docs/recursive-evolution-v19.md`.
