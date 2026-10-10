@@ -572,3 +572,27 @@ values are re-evaluated; old fitness and holdout scores are never checkpoint inp
 Across restarted runs the search can explore all 35 allowed recipes, then reports
 exhaustion instead of claiming further improvement. The fixed holdout is reused
 for reporting and is not fresh independent evidence across runs. See `docs/recursive-evolution-v19.md`.
+
+
+## Governed task-outcome learning v2.0
+
+`governed_learning_v20.py` now learns routing decisions from actual registered
+handler executions judged by a host-provisioned independent evaluator. It stores
+scoped outcomes, freezes candidates, enforces one-use held-out evaluation, and
+requires a separate operator capability for activation or rollback. Active routes
+and audit history survive process restarts. No public release/write endpoint is
+added and no production deployment is performed.
+
+```bash
+PYTHONPATH=src python benchmarks/v20_governed_repository_learning.py
+```
+
+On actual NERVE repository function-inventory tasks (four training files, eight
+held-out files), the initial regex route scored **2/8**, the learned route **8/8**,
+and a capable fixed AST tool also **8/8**. Approval changed the executed route;
+rollback restored the original behaviour in an isolated temporary runtime.
+This is tool-selection learning on a small public-code workload, not LLM weight
+training or evidence of broad autonomous intelligence. The demo's operator is
+simulated; remote authentication and live Clinical OS integration are not supplied.
+
+See [host integration, evidence gates and boundaries](docs/governed-outcome-learning-v20.md).
