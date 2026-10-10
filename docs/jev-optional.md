@@ -65,3 +65,16 @@ reviewer = JevBatchReviewer(timeout=8)
 The parallel coordinator recognises `review_many` automatically. The provider
 remains optional, no credentials are committed, and batch advice never
 changes the independent WorldCore acceptance rules.
+
+## Preferred one-command live smoke test
+
+When `TYPESAFE_API_KEY` is already exported in your **own terminal**:
+
+```bash
+cd NERVE
+git pull --ff-only origin main
+export PYTHONPATH=src
+python3 -m nerve_awim.jev_smoke
+```
+
+The command makes exactly **one** TypeSafe HTTPS request containing two typed Noul judgments about fixed synthetic metrics. Its output contains only model identity, risk scores, elapsed time, token counts and a warning. It never prints or stores the key. Our CI cannot run the live service because no private key is configured there; the unit test uses a fake reviewer and checks the single-batch behaviour. Revoke the key after the real smoke test, especially because it was shared in conversation text.
