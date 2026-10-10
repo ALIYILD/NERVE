@@ -125,3 +125,23 @@ This is simulation-only work. The operator authorisation flag is itself an untru
 `agents_v30.py` introduces validated task envelopes, deterministic capability routing, specialist processing stubs and a provenance-preserving in-memory result store. `benchmarks/v30_benchmark.py` compares coverage against one deliberately restricted specialist. GitHub Actions run 38075635069 passed **119 tests**; in the 100-task capability benchmark, the multi-specialist coordinator handled 100 supported task types and retained 100 source identifiers, whereas the EEG-only baseline could accept only 50 tasks.
 
 **Interpretation:** this is coverage by design, *not* higher predictive accuracy, learning speed, LLM-agent functionality, Hermes integration or demonstrated world-model benefits. The next meaningful experiment must compare equivalent-capability, equivalent-budget baselines on held-out prediction and planning tasks.
+
+## NERVE Learn — public agent developer preview
+
+**Bring evaluated experience memory to existing AI agents without replacing their framework.**
+
+- Local, opt-in SQLite memory, scoped by caller-supplied agent ID (not authentication).
+- MCP tools to record an experience, retrieve past tasks, rate outcomes, and suggest candidate lessons.
+- OpenClaw-compatible skill template at `skills/nerve-learn/SKILL.md`.
+- Setup and security limitations in `docs/nerve-learn-launch.md`.
+
+The prototype does **not** self-retrain LLM parameters, prove faster learning or automatically rewrite agent policies. Do not send secrets or private medical data to the store. Existing safety policies remain authoritative.
+
+**Try it locally:**
+
+```bash
+python -m pip install 'mcp>=2,<3'
+PYTHONPATH=src NERVE_LEARN_DB=./nerve-learn.db python -m nerve_awim.learn_mcp
+```
+
+ClawHub listing is a separate publication step and is **not yet verified**. Benchmarks against matched no-memory baselines are still required before claims of improved agent performance.
