@@ -20,7 +20,8 @@ class RecoveryV22Tests(unittest.TestCase):
         c=self.prepare()
         a=Approval("operator","supervisor",c.incident,"n1")
         self.assertTrue(c.authorize(a))
-        c.miss();c.ingest(2,velocity=.3);c.ingest(3,velocity=.4)
+        c.act();c.act();c.miss()
+        c.ingest(3,velocity=.3);c.ingest(4,velocity=.4)
         self.assertFalse(c.authorize(a))
     def test_boolean_approval_disabled(self):
         c=self.prepare()
