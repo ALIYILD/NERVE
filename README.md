@@ -533,7 +533,8 @@ PYTHONPATH=src python scripts/recursive_research_v19.py --resume first.json --se
 The public [scheduled research workflow](.github/workflows/recursive-research.yml)
 runs this bounded offline cycle **every six hours** on `main` when
 GitHub Actions scheduling is enabled. It keeps a small **typed genome
-checkpoint** in GitHub Actions cache, re-evaluates previous winners
+checkpoint** in a separate 90-day GitHub Actions artifact (subject to repository
+retention policy), with cache fallback. It re-evaluates previous winners
 rather than trusting old fitness numbers, and publishes research JSON
 artifacts for review. Its repository permissions are **read-only**;
 there is no self-commit, auto-merge, model-key usage or deployment.
@@ -561,6 +562,9 @@ generates a separate `worldcore-research.json` artifact; **no controller
 setting is applied** to deployed NERVE, robots, or DeepSynaps devices.
 
 GitHub Actions scheduling is best-effort, not an always-on service.
-Typed numeric recipe checkpoints can be evicted; prior selected values
-are re-evaluated and previous claims or fitness numbers are never
-accepted on trust. See `docs/recursive-evolution-v19.md`.
+Artifacts can expire and caches can be evicted. Checkpoints are written atomically,
+checked for corruption, and reset when evaluator code changes. Prior selected
+values are re-evaluated; old fitness and holdout scores are never checkpoint inputs.
+Across restarted runs the search can explore all 35 allowed recipes, then reports
+exhaustion instead of claiming further improvement. The fixed holdout is reused
+for reporting and is not fresh independent evidence across runs. See `docs/recursive-evolution-v19.md`.

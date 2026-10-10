@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: nerve-recursive-research
@@ -29,14 +30,42 @@ jobs:
       - name: Validate core evolutionary gates offline
         env:
           PYTHONPATH: src
-        run: python -m unittest discover -s tests -p 'test_recursive_evolution_v19.py' -v
-      - name: Restore recent bounded population checkpoint
+        run: |
+          python -m unittest discover -s tests -p 'test_recursive*.py' -v
+          node --test tests/test_checkpoint_discovery.cjs
+      - name: Restore optional cache fallback
+        id: cached-state
         uses: actions/cache@v4
         with:
           path: research-state/evolution.json
-          key: nerve-v19-${{ github.run_id }}
+          key: nerve-v19-state-v1-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
             nerve-v19-
+      - name: Find the latest successful main research checkpoint
+        id: previous-state
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { selectCheckpoint } = require('./scripts/select_research_checkpoint.cjs');
+            const previous = await selectCheckpoint({ github, context });
+            core.setOutput('run-id', previous?.runId ?? '');
+            core.setOutput('artifact-id', previous?.artifactId ?? '');
+            core.info(previous ? `Resuming research run ${previous.runId}` : 'No retained artifact; checking cache or starting fresh');
+      - name: Restore durable checkpoint ahead of cache fallback
+        if: steps.previous-state.outputs.artifact-id != ''
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ steps.previous-state.outputs.artifact-id }}
+          run-id: ${{ steps.previous-state.outputs.run-id }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          path: research-restored
+          merge-multiple: true
+      - name: Require the expected artifact checkpoint file
+        if: steps.previous-state.outputs.artifact-id != ''
+        run: |
+          mkdir -p research-state
+          install -m 600 research-restored/evolution.json research-state/evolution.json
       - name: Bounded data-only evolutionary experiment
         env:
           PYTHONPATH: src
@@ -44,19 +73,24 @@ jobs:
           mkdir -p research-output research-state
           python scripts/recursive_research_v19.py \
             --resume research-state/evolution.json \
+            --checkpoint-out research-state/evolution.json \
             --seed "${GITHUB_RUN_NUMBER}" \
             --generations 6 > research-output/recursive-research.json
-          cp research-output/recursive-research.json research-state/evolution.json
           python - <<'PY'
           import json
           from pathlib import Path
           result = json.loads(Path('research-output/recursive-research.json').read_text())
           assert result['candidates_evaluated'] <= 36
-          assert result['known_population_size'] <= 36
+          assert result['known_population_size'] <= 35
+          assert result['remaining_candidates'] == 35 - result['known_population_size']
           assert result['study_protocol'] == 'nerve-recursive-data-only-v19'
           assert result['generations_run'] <= 12
           assert result['report_only_holdout']['cross_tenant_leaks'] == 0
           assert result['baseline_holdout']['cross_tenant_leaks'] == 0
+          print('Completed runs:', result['completed_runs'])
+          print('Resumed:', result['resumed_from_checkpoint'])
+          print('Reset reason:', result['checkpoint_reset_reason'])
+          print('Remaining recipes:', result['remaining_candidates'])
           print('Status:', result['status'])
           print('Validation accuracy:', result['selected_validation']['accuracy'])
           print('Holdout accuracy:', result['report_only_holdout']['accuracy'])
@@ -89,4 +123,11 @@ jobs:
           name: nerve-recursive-research
           path: research-output/*.json
           retention-days: 7
+          if-no-files-found: error
+      - name: Retain versioned data-only checkpoint independently of cache
+        uses: actions/upload-artifact@v4
+        with:
+          name: nerve-retrieval-checkpoint-v1
+          path: research-state/evolution.json
+          retention-days: 90
           if-no-files-found: error

@@ -176,6 +176,7 @@ class RecursiveEvolutionLoop:
         self.seed = seed
         self.patience = patience
         self.mutation = mutation or self._mutate
+        self.global_exploration = mutation is None
 
     @staticmethod
     def _mutate(parent, rng):
@@ -226,7 +227,7 @@ class RecursiveEvolutionLoop:
         starting_baseline = best
         base_score = score
         previous_population = tuple(previous_population)
-        if len(previous_population) > 36 or any(
+        if len(previous_population) > 35 or any(
                 type(item) is not RetrievalGenome for item in previous_population):
             raise ValueError("untrusted or oversized recipe archive")
         # Re-evaluate the resumed baseline above; archive entries cannot
@@ -235,6 +236,10 @@ class RecursiveEvolutionLoop:
         records = []
         evaluated_this_run = 0
         stale = 0
+        stop_reason = "generation_budget"
+        search_space = tuple(RetrievalGenome(token, tri)
+                             for token in range(6) for tri in range(6)
+                             if token + tri > 0)
         for generation in range(1, self.generations + 1):
             pool = []
             # Even after all recipes have been exhausted, stop rather than
@@ -249,9 +254,20 @@ class RecursiveEvolutionLoop:
                 pool.append(candidate)
                 if len(pool) >= self.offspring:
                     break
+            # Local mutation can stall at a plateau with distant recipes
+            # still unseen. Deterministically explore the finite remainder;
+            # custom test/research mutators retain their explicit semantics.
+            if self.global_exploration and len(pool) < self.offspring:
+                remaining = [item for item in search_space if item not in seen]
+                rng.shuffle(remaining)
+                additions = remaining[:self.offspring - len(pool)]
+                pool.extend(additions)
+                seen.update(additions)
             evaluated_this_run += len(pool)
             if not pool:
-                records.append({"generation": generation, "stop": "search_space_exhausted"})
+                stop_reason = ("search_space_exhausted" if len(seen) == len(search_space)
+                               else "mutation_stalled")
+                records.append({"generation": generation, "stop": stop_reason})
                 break
             evaluated = []
             for candidate in pool:
@@ -285,6 +301,7 @@ class RecursiveEvolutionLoop:
             else:
                 stale += 1
             if stale >= self.patience:
+                stop_reason = "patience_reached"
                 break
         # Holdout is measured once, after selection; selection never uses it.
         holdout = self.objective.evaluate(best, "holdout")
@@ -306,6 +323,10 @@ class RecursiveEvolutionLoop:
             "generations_run": len(records),
             "candidates_evaluated": evaluated_this_run,
             "known_population_size": len(seen),
+            "search_space_size": len(search_space),
+            "remaining_candidates": len(search_space) - len(seen),
+            "stop_reason": ("search_space_exhausted" if len(seen) == len(search_space)
+                            else stop_reason),
             "population_archive": [
                 asdict(item) for item in sorted(
                     seen, key=lambda row: (row.token_weight, row.trigram_weight))
