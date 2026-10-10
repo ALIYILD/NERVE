@@ -14,7 +14,7 @@ The accompanying v1.2 package includes:
 - Timestamp-aware joint position/velocity estimation
 - Reproducible synthetic benchmarks and 92 passing Python unit tests
 
-The code and its source ZIP are being imported from the validated standalone v1.2 package. **Do not infer that unreleased integrations are present in this repository.** The planned Hermes, Jev, quantum-cloud and real-device adapters are not implemented in v1.2.
+The public repository currently includes a minimal core, the v1.2 delayed-observation filter, and a v1.3 integration module. The complete standalone v1.2 package is not yet imported. **Do not infer that unreleased integrations are present in this repository.** The planned Hermes, Jev, quantum-cloud and real-device adapters are not implemented in v1.2.
 
 ## Architecture
 
@@ -30,7 +30,7 @@ With Python 3.10+ and the source tree available:
 PYTHONPATH=src python -m unittest discover -s tests -q
 ```
 
-The original v1.2 package was checked with this command: **92 tests passed** on the synthetic test suite. These results are not external validation.
+The standalone v1.2 archive was checked locally with **92 tests passed**. The public repository has a smaller test suite; see GitHub Actions for its actual status. These results are not external validation.
 
 ## Research principles
 
@@ -47,3 +47,9 @@ NERVE-AWIM contributors (2026). *NERVE-AWIM: A Bio-Inspired Adaptive World Intel
 ## Security
 
 Do not deploy this prototype to control medical or physical systems without independent assurance, access controls and hardware-level safety mechanisms.
+
+## WorldCore v1.3 — experimental sensor-only MPC integration
+
+The `integrated_v13.py` module combines the published timestamp-aware position/velocity filter with a bounded multi-step action planner and cautious online gain adaptation from consecutive timestamped velocity observations. It receives **observations only**; it does not receive hidden simulator state. Its uncertainty penalty is heuristic, not a calibrated safety guarantee.
+
+Run `PYTHONPATH=src python -m unittest discover -s tests -v` and inspect the CI run for the actual public-repository result. The v1.3 module has not yet been benchmarked against v1.2 end-to-end, and real-world performance is unknown.
