@@ -211,3 +211,9 @@ GitHub Actions run 38077206796 passed **163 tests**. The selected validation pro
 `src/nerve_awim/autoresearch_v05.py` introduces an evaluator-defined minimum of **95% episode completion**, **zero aborted episodes** and **zero constraint violations** before a WorldCore candidate is eligible even for *deployment review*. Candidates cannot override these thresholds. An improved synthetic score does not override a failed gate.
 
 GitHub Actions run 38077317425 passed **167 tests**. The default WorldCore controller fails: holdout completion **0.51** on average, aborted fraction **1.0**, violations **0**. The official result is `eligible_for_deployment_review: false`. This does not certify any controller as safe, even if thresholds were met; external verification, human review, real hardware testing and appropriate regulation are still required.
+
+## AutoResearch v0.6 — simulated recovery research check
+
+`benchmarks/v06_recovery_research.py` and `tests/test_v06_recovery_research.py` exercise the existing `SupervisedWorldCore` recovery state machine. A sensor outage must suspend action; fresh observations must not cause automatic resumption without a separate approval; a positive simulated approval allows the state machine to resume. GitHub Actions run 38077915216 passed **170 tests**, including three new test cases and the CLI benchmark. The initial CI failure due to missing action timestamps was repaired in commit `ae6cd2d8`.
+
+**Scope:** this is a narrow simulated state-transition test, not a full AutoResearch search loop. It does not test live identity authentication, HMAC recovery approvals, failure evidence adjudication, hardware control, latency, true recovery success, or clinical safety. Approval in this benchmark is a boolean simulation input only; production approval requires the separate identity-bound recovery interface.
