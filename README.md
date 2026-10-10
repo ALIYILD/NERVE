@@ -105,3 +105,11 @@ The opt-in `IdentityBoundRecovery` integrates an injected identity-verification 
 `PinnedOIDCVerifier` in `oidc_v27.py` implements an offline, fail-closed RS256 JWT verifier using an explicitly provisioned JWKS and pinned HTTPS issuer, audience and algorithm. Claims validated include issuer, audience, subject, issued-at and expiration. The resulting `VerifiedIdentity` can be passed to the existing v2.6 identity-bound recovery interface. The CI workflow installs `PyJWT[crypto]` and uses locally generated RSA test keys. GitHub Actions run 38075175393 passed **103 tests**.
 
 **This is not a live IdP integration.** Operator-provisioned keys must be obtained securely; key rotation, IdP discovery hardening, revocation, logout, identity assurance, MFA, secure clock sourcing, key custody and distributed audit policy remain outstanding. Do not trust arbitrary JWKS URLs or use these tools to control robots or medical devices without independent security and safety engineering.
+
+## v2.8 — key rotation and consolidated research runtime
+
+- `key_rotation_v28.py` allows an operator-authorised, fail-closed replacement of a pinned OIDC JWKS. The candidate verifier is constructed before it replaces the active verifier. It does **not** fetch or authenticate key sets from a live IdP; the caller must securely provision them.
+- `runtime_v28.py` provides a narrow research entry point for sensor events, lockout, and identity-bound recovery approval, without granting AI agents authority to approve recovery.
+- GitHub Actions run 38075358712 passed **108 tests** with the pinned-JWKS and unified-runtime tests included.
+
+This is simulation-only work. The operator authorisation flag is itself an untrusted input unless an external control plane enforces it. Key rotation lacks distributed coordination and revocation; live OIDC integration and device safety certification remain out of scope.
