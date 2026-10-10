@@ -28,6 +28,9 @@ class IdentityBoundRecovery(SignedRecovery):
         self.verifier=identity_verifier
         self.issuer=expected_issuer
         self.audience=expected_audience
+    def authorize_signed(self,approval:SignedApproval,now:int)->bool:
+        """Block inherited signing-only bypass: identity is also mandatory."""
+        return False
     def authorize_identity(self,token:str,approval:SignedApproval,now:int)->bool:
         identity=self.verifier.verify(token,now)
         if (identity is None or identity.issuer!=self.issuer
@@ -36,4 +39,4 @@ class IdentityBoundRecovery(SignedRecovery):
             or identity.subject!=approval.principal):
             self.ledger.event(self.incident,"identity_denied",now)
             return False
-        return self.authorize_signed(approval,now)
+        return SignedRecovery.authorize_signed(self,approval,now)
