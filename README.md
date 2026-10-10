@@ -287,3 +287,26 @@ python -m nerve_awim.jev_optional
 See [`docs/jev-optional.md`](docs/jev-optional.md) for integration examples
 and limits. CI uses mocked responses only; live Jev response, actual latency,
 accuracy gains, and account access have not yet been verified.
+
+## Jev advisory-vs-deterministic research comparison
+
+`src/nerve_awim/jev_agreement_v12.py` provides a reproducible six-case
+synthetic evaluation of advisory regression warnings against NERVE's
+fixed deterministic benchmark and absolute reliability checks.
+
+```bash
+PYTHONPATH=src python -m nerve_awim.jev_agreement_v12
+```
+
+The **default** uses a deliberately imperfect fake reviewer, with no
+network access or key requirement, so disagreement handling can be tested.
+False positives, false negatives, per-case review decisions, latency and
+token usage are recorded. No inference about real Jev accuracy is possible
+from the mock scores. Human-review and deployment eligibility remain
+independent of Jev's risk opinion.
+
+With a **fresh** private TypeSafe credential, the optional manual GitHub
+Actions workflow `jev-live.yml` offers `smoke` or `comparison` modes.
+Each mode sends one batched synthetic API request when manually triggered
+on protected `main`; routine CI is always credential-free and offline.
+See `docs/jev-optional.md`.
