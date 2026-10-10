@@ -38,3 +38,61 @@ not a validated retrieval-performance gain.
 - Caller-provided agent IDs in NERVE Learn do not constitute authentication.
 - Candidate memories cannot change system prompts, permissions, medical
   decisions or deployed code without independent human approval.
+
+## Implemented: bounded parallel subagents
+
+`src/nerve_awim/parallel_agents_v11.py` provides a capped
+`ThreadPoolExecutor` for **trusted in-process** subagent handlers.
+`evolution_cycle_v11.py` connects five independent roles:
+
+- **Hypothesis agent** validates typed candidate proposals.
+- **Memory agent** retrieves previously scored local candidate experiences.
+- **Evaluation agents** run unchanged WorldCore benchmark metrics concurrently.
+- **Safety agent** applies the evaluator-defined absolute reliability gate.
+- **Review agent** rejects goal improvements with prediction/completion regressions.
+
+Outcomes are collected in deterministic proposal order. Worker failures cause
+the batch to fail closed, rather than publishing partial experimental results.
+Memory may prioritise candidates but cannot weaken any threshold. Optional
+`learn_from_evaluations=True` records **binary research-gate feedback**
+for future prioritisation; it never modifies model weights, code, policies or
+controllers. A failed candidate scores zero.
+
+```bash
+PYTHONPATH=src python benchmarks/v11_parallel_evolution.py
+PYTHONPATH=src python benchmarks/v11_memory_effectiveness.py
+```
+
+## Measured memory benchmark — synthetic only
+
+The 20-seed held-out Bernoulli simulation gives every strategy identical
+training feedback and compares selecting strategies by observed utility with
+selecting the most recently stored strategy. Results from CI
+[run 38078967300](https://github.com/ALIYILD/NERVE/actions/runs/38078967300):
+
+- Outcome-ranked memory success rate: **72.22%**
+- Recency-only strategy success rate: **51.50%**
+- Known-probability oracle: **73.28%**
+- Memory-ranked strategy won on **19/20** seeds, with one tie.
+
+This dataset is deliberately constructed with stable, context-specific
+strategy success probabilities. The result verifies selection behaviour;
+it does **not** establish real-world agent learning, performance speedup
+or adaptive reasoning ability. It also does not compare against vector
+retrieval or equivalent transformer-based memory systems.
+
+## Interfaces and remaining research
+
+`learn_mcp.py` now exposes optional `select_evaluated_strategy` over the
+local MCP stdio server, alongside record/rate/recall functions. Its
+caller-supplied agent IDs are not authentication; do not expose this local
+server directly to untrusted remote clients.
+
+Not implemented: independently running Hermes/Letta/GEPA/Darwin agents,
+provider API adapters, process isolation, hard CPU/memory/time limits,
+distributed consensus, semantic vector embeddings, private holdout sets,
+or real medical-device and physical-AI validation.
+
+Python threads can overlap I/O work, but **do not imply acceleration for
+CPU-heavy Python tasks** because of interpreter scheduling and shared
+resources. Benchmark timings are descriptive rather than guarantees.
