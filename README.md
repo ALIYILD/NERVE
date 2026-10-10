@@ -545,6 +545,10 @@ Google AlphaEvolve service or LLM-generated code evolution. Future
 source-code mutation would require an isolated sandbox, verified
 evaluator provenance, independent holdouts and human-reviewed PRs.
 
+A separate [artifact integration check](.github/workflows/research-persistence-ci.yml)
+uses two fresh GitHub runners to verify upload, download, byte identity and resumed
+exploration. Its synthetic CI artifacts never seed the scheduled research history.
+
 See [loop architecture and schedule](docs/recursive-evolution-v19.md).
 
 ### Recursive WorldCore experiments (same schedule)

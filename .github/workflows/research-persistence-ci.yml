@@ -1,0 +1,88 @@
+name: Research checkpoint artifact integration
+
+on:
+  push:
+    paths:
+      - '.github/workflows/research-persistence-ci.yml'
+      - 'scripts/recursive_research_v19.py'
+      - 'scripts/verify_research_persistence_v19.py'
+      - 'src/nerve_awim/recursive_evolution_v19.py'
+      - 'src/nerve_awim/research_checkpoint_v19.py'
+      - 'src/nerve_awim/memory_v18.py'
+      - 'tests/test_recursive*.py'
+  pull_request:
+    paths:
+      - '.github/workflows/research-persistence-ci.yml'
+      - 'scripts/recursive_research_v19.py'
+      - 'scripts/verify_research_persistence_v19.py'
+      - 'src/nerve_awim/recursive_evolution_v19.py'
+      - 'src/nerve_awim/research_checkpoint_v19.py'
+      - 'src/nerve_awim/memory_v18.py'
+      - 'tests/test_recursive*.py'
+
+permissions:
+  contents: read
+
+jobs:
+  seed:
+    name: Save first-run checkpoint
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      artifact-id: ${{ steps.upload.outputs.artifact-id }}
+      checkpoint-sha256: ${{ steps.seed.outputs.checkpoint-sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run the synthetic experiment in a fresh process
+        id: seed
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_research_persistence_v19.py seed --directory research-transfer
+      - name: Upload the actual checkpoint and comparison report
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-ci-seed-${{ github.run_attempt }}
+          path: research-transfer/*.json
+          retention-days: 7
+          if-no-files-found: error
+
+  resume:
+    name: Resume on a separate fresh runner
+    needs: seed
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download exactly this run's seed artifact
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.seed.outputs.artifact-id }}
+          path: research-downloaded
+          merge-multiple: true
+      - name: Verify byte identity and resume through the real CLI
+        env:
+          PYTHONPATH: src
+          CHECKPOINT_SHA256: ${{ needs.seed.outputs.checkpoint-sha256 }}
+        run: |
+          python scripts/verify_research_persistence_v19.py verify \
+            --input-directory research-downloaded \
+            --output-directory research-resumed \
+            --expected-sha256 "$CHECKPOINT_SHA256"
+      - name: Publish bounded integration evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-ci-resumed-${{ github.run_attempt }}
+          path: research-resumed/*.json
+          retention-days: 7
+          if-no-files-found: error

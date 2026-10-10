@@ -72,6 +72,30 @@ Corruption, interrupted writes, evaluator-version resets and artifact-source
 selection are covered separately. These checks establish persistence/control-flow
 behaviour, not general self-improving intelligence.
 
+## Hosted artifact integration check
+
+`.github/workflows/research-persistence-ci.yml` adds a separate push/PR
+integration workflow with two fresh GitHub-hosted runners:
+
+1. The producer executes the real CLI with seed 1 and uploads its checkpoint.
+   Its SHA-256 digest and GitHub artifact ID are passed as job outputs.
+2. The consumer downloads that exact artifact ID, checks the byte digest,
+   executes the CLI with seed 2, and requires retained run history, the previous
+   selected recipe as the starting baseline, a growing archive, freshly measured
+   baseline fitness and zero cross-tenant holdout results.
+3. Both reports and a compact `verification.json` are retained for seven days.
+   A missing download or mismatched digest fails before the next experiment.
+
+The harness is `scripts/verify_research_persistence_v19.py`; its local regression
+tests also execute the actual CLI in subprocesses. The integration uses only
+synthetic data, read-only repository permissions and no model credentials.
+
+This checks real GitHub upload/download transport and fresh-runner continuation.
+It does **not** prove cross-workflow discovery or the six-hour scheduler has run.
+CI artifacts have separate names and workflow provenance, so they cannot become
+the scheduled research checkpoint. That path still requires successive successful
+manual or scheduled executions of `recursive-research.yml`.
+
 ## Honest benchmark scope
 
 Only the fixed synthetic retrieval weights evolve. There is no automatic prompt evolution, arbitrary source patch generation, LLM-driven proposal, full WorldCore controller evolution, multi-agent model-weight update or deployment.
