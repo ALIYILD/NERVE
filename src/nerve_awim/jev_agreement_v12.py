@@ -68,7 +68,7 @@ class SyntheticFixtureReviewer:
             # Two illustrative misclassifications: both demonstrate that
             # third-party opinions cannot become independent safety facts.
             risk = {
-                "safer_goal": .10, "no_change": .05,
+                "safer_goal": .10, "no_change": .75,
                 "lower_completion": .85, "unexpected_abort": .90,
                 "constraint_violation": .15,
                 "prediction_regression": .80,
