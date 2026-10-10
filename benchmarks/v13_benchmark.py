@@ -43,8 +43,7 @@ def benchmark(seeds=range(20)):
     metrics=adaptive[0].keys()
     return {"config":{"seeds":len(adaptive),"steps":60,"change_step":30,"delay":2,"dropout":0.12},
             "adaptive":{m:statistics.mean(x[m] for x in adaptive) for m in metrics},
-            "frozen":{m:statistics.mean(x[m] for x in frozen) for m in metrics},
-            "drift":{m:statistics.mean(x[m] for x in drift) for m in metrics}}
+            "frozen":{m:statistics.mean(x[m] for x in frozen) for m in metrics}}
 
 
 def multi_regime_benchmark(seeds=range(20)):
