@@ -23,7 +23,7 @@ _PLACEHOLDER = re.compile(
     r"(?:-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|"
     r"apikey_[a-f0-9]{10,}|"
     r"sk-[a-zA-Z0-9_-]{20,}|"
-    r"password\\s*[:=]\\s*\\S+)", re.I
+    r"password\s*[:=]\s*\S+)", re.I
 )
 
 
@@ -253,6 +253,32 @@ class TrustedMemoryLedger:
             scored.append((rank, record))
         scored.sort(key=lambda p: (p[0], p[1].memory_id), reverse=True)
         return [record for _, record in scored[:limit]]
+
+    def approved_pool(self, actor, *, context, now=None, limit=500):
+        """Authorised approved pool for optional semantic re-ranking.
+
+        Unlike lexical retrieve, this yields all approved in-scope memories
+        in a bounded window. Untrusted external ranking results never bypass
+        the ledger's exact tenant/agent/context/expiry/status filters.
+        """
+        self.authority.require(actor, "read")
+        _id(context, "context")
+        if type(limit) is not int or not 1 <= limit <= 1000:
+            raise ValueError("invalid pool limit")
+        if now is None:
+            now = int(time.time())
+        if type(now) is not int or now < 0:
+            raise ValueError("invalid evaluation clock")
+        with sqlite3.connect(self.path) as con:
+            rows = con.execute(
+                """SELECT * FROM trusted_memory_v18
+                   WHERE tenant_id=? AND agent_id=? AND context=?
+                     AND status='approved'
+                     AND (valid_until IS NULL OR valid_until>?)
+                   ORDER BY created_at DESC, memory_id DESC LIMIT ?""",
+                (actor.tenant_id, actor.agent_id, context, now, limit),
+            ).fetchall()
+        return [self._record(row) for row in rows]
 
     def status(self, actor, memory_id):
         self.authority.require(actor, "read")
