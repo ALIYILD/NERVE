@@ -84,3 +84,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m nerve_awim.autoresearch_v02
+
+      - name: Run cross-benchmark AutoResearch v0.3 gate
+        env:
+          PYTHONPATH: src
+        run: python -m nerve_awim.autoresearch_v03
