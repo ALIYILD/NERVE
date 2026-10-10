@@ -81,3 +81,9 @@ The 20-seed synthetic benchmark in GitHub Actions run 38073284167 showed a mean 
 `recovery_policy_v23.py` adds an independent consistency evaluator for timestamped position/velocity recovery evidence and append-only JSONL audit recording with per-record SHA-256 digests. Five new tests cover consistent, contradictory and duplicate evidence, audit persistence and simple tamper detection. GitHub Actions run 38073534539 passed 81 tests.
 
 **Important limitations:** these modules are separate from the v2.2 recovery controller and are not yet mandatory approval gates; local SHA-256 checksums are not authenticated signatures or tamper-evident chained storage. The identity fields in v2.2 remain unverified assertions. These components cannot be used as production authentication or physical safety controls.
+
+## WorldCore v2.4 — evidence-gated recovery
+
+The `EvidenceGatedRecovery` controller connects independent evidence consistency checks to incident-scoped supervisor approval. Recovery now requires at least two complete timestamped position/velocity records meeting configured consistency tolerances; incomplete, contradictory or stale records cannot authorise resumption. Replayed approval nonces remain rejected by the v2.2 layer. Tests: GitHub Actions run 38073646374 passed 85 tests.
+
+**Research/security limits:** asserted supervisor role is not cryptographically authenticated; the evaluator checks consistency, not sensor truth or causal plausibility; audit events remain process-memory records; and the new recovery class is an opt-in research integration, not a production entry point. Do not connect to physical or medical devices.
