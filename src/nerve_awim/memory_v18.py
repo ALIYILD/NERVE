@@ -5,8 +5,7 @@ authentication or a production medical-data system. Never give capability
 issuing authority to an untrusted agent or a network request handler.
 Legacy NERVE Learn SQLite remains unchanged for compatibility.
 """
-from dataclasses import dataclass
-from datetime import datetime, timezone
+from dataclasses import dataclass, field
 from hashlib import sha256
 from math import isfinite
 from pathlib import Path
@@ -39,7 +38,7 @@ class MemoryActor:
     tenant_id: str
     agent_id: str
     permissions: frozenset
-    _capability: str
+    _capability: str = field(repr=False)
 
 
 class MemoryAuthority:
