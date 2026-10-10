@@ -2,6 +2,15 @@ name: TypeSafe Jev - manually approved live smoke test
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Choose exactly one paid API request"
+        required: true
+        type: choice
+        default: smoke
+        options:
+          - smoke
+          - comparison
 
 permissions:
   contents: read
@@ -27,6 +36,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Make one synthetic Jev request (protected secret only)
+        if: inputs.mode == 'smoke'
         shell: bash
         env:
           TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
@@ -37,3 +47,15 @@ jobs:
             exit 1
           fi
           python -m nerve_awim.jev_smoke
+      - name: Compare six synthetic Jev judgments with deterministic policy
+        if: inputs.mode == 'comparison'
+        shell: bash
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          PYTHONPATH: src
+        run: |
+          if [[ -z "${TYPESAFE_API_KEY:-}" ]]; then
+            echo 'Missing TYPESAFE_API_KEY in the typesafe-live environment; no request was sent.'
+            exit 1
+          fi
+          python -m nerve_awim.jev_agreement_v12 --live
