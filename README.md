@@ -334,3 +334,41 @@ LLM reasoning improvement, independently authenticated feedback, model
 weight learning or faster execution. Test answers are not reused for
 learning, and production authorisation remains separate from memories.
 See `docs/evolution-engine.md` for a usage example and security boundaries.
+
+
+## NERVE Evolution v1.3 — real MCP agent tool interoperability
+
+The local NERVE Learn MCP server now supports **registered executable
+strategy selection** as an additional optional demonstration. External
+MCP clients can discover safe capabilities, train on internal verified
+fixtures and execute a two-stage JSON-email pipeline through parallel
+trusted workers. No external model API, API key or generated-code
+execution is required.
+
+Run the official MCP SDK 2.3 stdio integration test:
+
+```bash
+python -m pip install "mcp==2.3.0"
+PYTHONPATH=src python scripts/mcp_wire_v13.py
+```
+
+Run the held-out multi-step benchmark:
+
+```bash
+PYTHONPATH=src python benchmarks/v13_external_mcp.py
+```
+
+GitHub Actions run [38082358322](https://github.com/ALIYILD/NERVE/actions/runs/38082358322)
+passed **270 unit tests**, six focused Evolution tests, and a real SDK
+stdio handshake with six tools discovered. In 12 synthetic seeded runs,
+outcome-ranked selection achieved **100%** on 18 two-step evaluation tasks
+per seed versus **0%** for a deliberately weak recency-only comparator;
+a fixed-correct non-learning pipeline also achieved **100%**. This
+demonstrates retrieval-guided selection of known tools, **not** general
+AI-agent improvement, new tool learning or a speedup over a capable
+baseline.
+
+See [MCP setup and limitations](docs/nerve-learn-launch.md).
+Caller-supplied agent namespaces are not authentication. Demo tools
+are intentionally inert and should not be exposed as a public HTTP
+multi-tenant service or used on regulated data.
