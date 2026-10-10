@@ -69,3 +69,9 @@ Run all tests with `PYTHONPATH=src python -m unittest discover -s tests -v`. For
 **Measured limitation (20 synthetic seeds, CI run 38073146982):** v2.0 aborted all 20 episodes during the forced sensor outage (mean 40.7 of 80 steps executed), while v1.7 continued. The final errors at different stopping times cannot be used to claim v2.0 is better or worse at full-horizon tracking. Prequential empirical coverage was approximately 81.1%, below the nominal 90% target. Zero constraint violations observed before abort are *not* evidence of safety.
 
 Next experiments should implement a separately simulated, externally supervised recovery policy, report complete-episode task outcomes, and test a held-out sensor fault regime. Do not deploy to physical actuators or clinical devices.
+
+## WorldCore v2.1 — supervised sensor recovery (simulation)
+
+The `recovery_v21.py` module adds a lockout state machine: sensor loss → supervision required → fresh observation qualification → explicit approval → resumed decisions. The associated `benchmarks/v21_benchmark.py` experiment assumes an independent simulated supervisor applies zero control during lockout; **that assumption is not a real-world safe-stop mechanism**.
+
+The 20-seed synthetic benchmark in GitHub Actions run 38073284167 showed a mean 14.05 withheld autonomous decisions, 1 approval-assisted recovery per run, mean final goal error 0.2253 and zero observed configured-envelope violations. These values do not establish physical safety, secure approval authentication, or generalised fault recovery. Human approval is modelled as an explicit boolean, not an authenticated operator identity. Hardware integration remains prohibited without external safety engineering and verification.
