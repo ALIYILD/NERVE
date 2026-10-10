@@ -89,3 +89,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m nerve_awim.autoresearch_v03
+
+      - name: Run AutoResearch v0.4 WorldCore closed-loop gate
+        env:
+          PYTHONPATH: src
+        run: python -m nerve_awim.autoresearch_v04
