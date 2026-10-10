@@ -15,9 +15,10 @@ from mcp.client.stdio import stdio_client
 
 
 def returned_text(result):
-    if result.isError:
+    if getattr(result, "is_error", getattr(result, "isError", False)):
         raise AssertionError("MCP tool reported an error")
-    content = result.structuredContent
+    content = getattr(result, "structured_content",
+                      getattr(result, "structuredContent", None))
     if content is not None:
         return json.dumps(content, sort_keys=True)
     return " ".join(getattr(block, "text", "") for block in result.content)
