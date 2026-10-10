@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from nerve_awim.agent_study_v15 import (
     CapableFixturePlanner, FormatChatPlanner, FormatExperience,
-    LimitedFixturePlanner, Plan,
+    LimitedFixturePlanner, FailureFixturePlanner, Plan,
 )
 from nerve_awim.evolution_v01 import EvolutionMemory
 from scripts.agent_study_v15 import make_task, mock_provider, MockResponse
@@ -100,6 +100,15 @@ class V15UnitTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 planner.plan_for("plain_email")
         self.assertEqual(calls, [])
+
+    def test_provider_failure_fixture_is_explicit(self):
+        failing = FailureFixturePlanner()
+        with self.assertRaisesRegex(RuntimeError, "simulated model"):
+            failing.plan_for("plain_email")
+        self.assertEqual(
+            failing.plan_for("json_email").plan,
+            Plan("json-field", "trim-lower"),
+        )
 
     def test_task_generator_isolates_training_and_holdout(self):
         a, _ = make_task("json_email", 3, 2, training=True)
