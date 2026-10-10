@@ -208,6 +208,22 @@ class RecursiveEvolutionLoop:
         training = self.objective.evaluate(best, "train")
         if not self._safe(score) or not self._safe(training):
             raise RuntimeError("baseline failed independent research safety gates")
+        reset_on_drift = False
+        canonical = RetrievalGenome()
+        if best != canonical:
+            reference_train = self.objective.evaluate(canonical, "train")
+            reference_val = self.objective.evaluate(canonical, "validation")
+            if not self._safe(reference_train) or not self._safe(reference_val):
+                raise RuntimeError("canonical baseline failed safety gates")
+            # Historical fitness numbers are untrusted. If a previously
+            # selected recipe regresses against the frozen canonical
+            # reference under CURRENT evaluation, reset and re-explore.
+            if (score.accuracy < reference_val.accuracy
+                    or training.accuracy < reference_train.accuracy):
+                best, score, training = canonical, reference_val, reference_train
+                previous_population = ()
+                reset_on_drift = True
+        starting_baseline = best
         base_score = score
         previous_population = tuple(previous_population)
         if len(previous_population) > 36 or any(
@@ -272,7 +288,7 @@ class RecursiveEvolutionLoop:
                 break
         # Holdout is measured once, after selection; selection never uses it.
         holdout = self.objective.evaluate(best, "holdout")
-        baseline_holdout = self.objective.evaluate(baseline, "holdout")
+        baseline_holdout = self.objective.evaluate(starting_baseline, "holdout")
         if not self._safe(holdout) or not self._safe(baseline_holdout):
             raise RuntimeError("holdout failed independent scope/safety checks")
         holdout_ok = holdout.accuracy >= baseline_holdout.accuracy
@@ -280,7 +296,8 @@ class RecursiveEvolutionLoop:
             "status": "candidate_for_human_review" if (
                 score.accuracy > base_score.accuracy and holdout_ok
             ) else "no_verified_improvement",
-            "baseline": asdict(baseline),
+            "baseline": asdict(starting_baseline),
+            "reset_on_validation_drift": reset_on_drift,
             "selected": asdict(best),
             "baseline_validation": asdict(base_score),
             "selected_validation": asdict(score),
