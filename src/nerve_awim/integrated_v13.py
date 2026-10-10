@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from itertools import product
 from math import isfinite
 from .fusion_v12 import LaggedPositionVelocityFilter
+from .drift_v14 import DriftAwareGain
 
 ACTIONS=(-1,0,1)
 
@@ -24,7 +25,7 @@ class Decision:
 class SensorOnlyController:
     def __init__(self, *, target=1.0, retention=0.82, gain=0.27,
                  learning_rate=0.02, bound=5.0, horizon=3,
-                 risk_weight=1.0):
+                 risk_weight=1.0, estimator='standard'):
         values=(target,retention,gain,learning_rate,bound,risk_weight)
         if not all(isfinite(v) for v in values):raise ValueError("nonfinite configuration")
         if not 0<=retention<1 or not 0<=learning_rate<=1 or not 0<bound or not 1<=horizon<=5 or risk_weight<0:
@@ -32,6 +33,9 @@ class SensorOnlyController:
         self.target,self.retention,self.gain=target,retention,gain
         self.lr,self.bound,self.horizon,self.risk=learning_rate,bound,horizon,risk_weight
         self.filter=LaggedPositionVelocityFilter(a=retention,b=gain)
+        if estimator not in ('standard','drift'): raise ValueError('invalid estimator')
+        self.estimator=estimator
+        self.drift_model=DriftAwareGain(initial=gain,base_rate=learning_rate) if estimator=='drift' and learning_rate>0 else None
         self.observation_count=0
         self._last_fit_index=-1
     def ingest(self, timestamp, *, position=None, velocity=None):
@@ -48,7 +52,10 @@ class SensorOnlyController:
             a=self.filter.actions[k]
             if prev is None or curr is None or a==0:continue
             sample=(curr-self.retention*prev)/a
-            if self.lr>0 and isfinite(sample) and abs(sample)<=2:
+            if self.drift_model is not None:
+                if self.drift_model.update(k,a,prev,curr,self.retention):
+                    self.gain=self.drift_model.gain
+            elif self.lr>0 and isfinite(sample) and abs(sample)<=2:
                 self.gain=max(0.01,min(1.0,(1-self.lr)*self.gain+self.lr*sample))
         # Revisit delayed updates next time: do not advance past missing pairs.
         self._last_fit_index=-1
