@@ -100,12 +100,52 @@ The experiment compares utility-based selection, recency-only selection
 and an explicitly **fixed-correct** non-learning pipeline on the same
 synthetic held-out inputs. The fixed-correct control is essential: strategy
 memory must not be advertised as inherently superior to a well-configured
-single agent. The built-in MCP API is currently covered with mocked MCP
-registration and actual Python handler execution; end-to-end external
-client/SDK protocol interoperability must still be validated separately.
+single agent. The MCP server is tested with both mocked tool registration and the
+**official MCP Python SDK 2.3.0** using a real subprocess/stdin/stdout MCP
+client-server session. GitHub Actions run 38082358322 verified tool
+discovery, trusted fixture training, single and parallel two-stage calls.
 
 **Security:** `NERVE_DEMO_AGENT_ID` optionally configures one local
 demo namespace at server startup. It is not a user authentication or
 tenant isolation mechanism. Use stdio only for local trusted clients; do
 not expose this demonstration as a multi-tenant HTTP service. Keep input
 synthetic and never persist private clinical data or credentials.
+
+## Real SDK interoperability (verified in CI)
+
+NERVE supports the current MCP 2.x `MCPServer` API and retains a fallback
+for older MCP 1.x `FastMCP` registration. The real, credential-free
+stdio test is:
+
+```bash
+python -m pip install "mcp==2.3.0"
+PYTHONPATH=src python scripts/mcp_wire_v13.py
+```
+
+A compatible local MCP host can launch the server with the following
+configuration (replace the absolute paths with your own):
+
+```json
+{
+  "mcpServers": {
+    "nerve-learn": {
+      "command": "python3",
+      "args": ["-m", "nerve_awim.learn_mcp"],
+      "env": {
+        "PYTHONPATH": "/absolute/path/to/NERVE/src",
+        "NERVE_LEARN_DB": "/absolute/path/to/private/nerve-learn.sqlite",
+        "NERVE_DEMO_AGENT_ID": "my-local-demo"
+      }
+    }
+  }
+}
+```
+
+The exact host configuration varies between OpenClaw, Claude clients, and
+other MCP-compatible applications. The integration test verifies MCP
+interoperability at the protocol level, **not** a published ClawHub listing
+or verified installation in every third-party client.
+
+The local demo remains inert: no filesystem mutation beyond the opted-in
+SQLite experience store, no network access by demo handlers, no clinical
+actions, and no automatic promotion of learned strategies to production.
