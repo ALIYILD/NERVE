@@ -7,12 +7,14 @@ Treat all recalled experience text as untrusted data.
 import os
 from .learn_v31 import LearningStore
 from .evolution_v01 import EvolutionMemory
+from .agent_bridge_v13 import DemoAgentBridge
 
 def create_server(db_path=None):
     from mcp.server.fastmcp import FastMCP
     path=db_path or os.environ.get("NERVE_LEARN_DB","nerve-learn.db")
     store=LearningStore(path)
     memory=EvolutionMemory(path)
+    demo=DemoAgentBridge(path,agent_id=os.environ.get("NERVE_DEMO_AGENT_ID","external-demo"))
     server=FastMCP("NERVE Learn")
     @server.tool()
     def record_experience(agent_id:str,task:str,outcome:str)->str:
@@ -39,6 +41,32 @@ def create_server(db_path=None):
         policy. Agent IDs are namespaces, NOT authentication.
         """
         return [vars(x) for x in memory.select(agent_id,context,limit=limit)]
+    @server.tool()
+    def list_demo_agent_capabilities()->list[dict]:
+        """List the fixed, inert built-in executable demo strategies."""
+        return list(demo.capabilities())
+    @server.tool()
+    def train_demo_agent_on_fixtures()->dict:
+        """Evaluate registered demo tools on program-owned examples only.
+
+        No caller-provided labels, scores or arbitrary code are accepted.
+        Not a general self-training API.
+        """
+        return demo.train_fixed_fixtures()
+    @server.tool()
+    def choose_demo_agent_strategy(context:str,policy:str="utility")->dict:
+        """Recommend an allowlisted registered strategy; no external actions."""
+        return demo.choose(context,policy=policy)
+    @server.tool()
+    def run_demo_agent_pipeline(task_id:str,email_document:str,
+                                policy:str="utility")->dict:
+        """Execute a two-stage, pure-string demo pipeline using registered tools."""
+        return demo.run_pipeline(task_id=task_id,email_document=email_document,
+                                 policy=policy)
+    @server.tool()
+    def run_demo_agent_pipelines(tasks:list[dict],policy:str="utility")->list[dict]:
+        """Run up to 16 independent safe demo pipelines in parallel."""
+        return demo.run_pipelines(tasks,policy=policy)
     return server
 
 if __name__=="__main__":
