@@ -191,3 +191,11 @@ Run with `PYTHONPATH=src python -m nerve_awim.autoresearch_v01`. CI run 38076632
 `src/nerve_awim/autoresearch_v02.py` accepts typed `Proposal` objects constrained to a finite gain-learning-rate range, evaluates them on an immutable-in-code synthetic WorldCore-*adjacent* drift task, records keep/reject decisions, and writes a JSONL experiment ledger. A separate 30-seed holdout is reported after validation selection. The loop cannot edit Python source, launch subprocesses, alter safety policies or deploy model changes.
 
 GitHub Actions run 38076802612 passed **150 tests**. The four-candidate demonstration selected gain learning rate **0.4** with holdout MAE **0.040716**, versus **0.223218** for the fixed rate 0.02. This is an easy synthetic drift-adaptation comparison, not a general-purpose self-improving AI demonstration. Repeatedly inspecting the same public holdout destroys its independence in future research. CPU/memory/time isolation and real WorldCore/agent-runtime integration are **not yet implemented**.
+
+## NERVE AutoResearch v0.3 — cross-benchmark regression gate
+
+`src/nerve_awim/autoresearch_v03.py` evaluates **existing** v3.1 memory-ablation, v3.2 multimodal and v3.3 nonlinear benchmarks. Candidates choose from a hardcoded unified or specialist architecture portfolio; no source editing or arbitrary execution is enabled. A candidate must improve at least one metric without regressing another to be promoted within the experimental report. An independent reporting-only seed set is evaluated after selection, and optional JSONL records retain accepted and rejected proposals.
+
+GitHub Actions run 38077082868 passed **157 tests**. The specialist portfolio was rejected and the unified reference remained selected. These are synthetic benchmark outcomes, not evidence of autonomous code discovery, supervised robotics readiness or improvement in clinical outcomes. The suite contains different model parameterisations; do not interpret this as a comprehensive compute-matched agent comparison.
+
+**Next:** invoke actual WorldCore closed-loop control in a protected evaluation runner, measure action cost and latency, and keep the report-only holdout sequestered for future experiments.
