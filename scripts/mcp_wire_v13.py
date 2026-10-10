@@ -49,6 +49,7 @@ async def smoke():
                     "run_demo_agent_pipeline",
                     "run_demo_agent_pipelines",
                     "select_evaluated_strategy",
+                    "run_bounded_recovery_demo",
                 }
                 if not required.issubset(names):
                     raise AssertionError("missing actual MCP tool registrations")
@@ -88,6 +89,17 @@ async def smoke():
                 if "first@example.org" not in text \
                         or "second@example.org" not in text:
                     raise AssertionError("parallel MCP tool outputs missing")
+                recovered = await session.call_tool(
+                    "run_bounded_recovery_demo",
+                    arguments={
+                        "policy": "memory",
+                        "train_on_fixtures": True,
+                    },
+                )
+                recovered_text = returned_text(recovered)
+                if ('"completed": 3' not in recovered_text or
+                        '"unresolved": 1' not in recovered_text):
+                    raise AssertionError("bounded recovery demonstration failed")
                 return {
                     "status": "pass",
                     "transport": "real SDK stdio",
@@ -95,6 +107,7 @@ async def smoke():
                     "fixture_training": "passed",
                     "single_pipeline": "passed",
                     "parallel_pipelines": "passed",
+                    "bounded_recovery": "passed",
                     "safety_scope": "local deterministic demo only",
                 }
 
