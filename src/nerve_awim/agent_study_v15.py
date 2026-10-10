@@ -117,6 +117,18 @@ class LimitedFixturePlanner:
         )
 
 
+class FailureFixturePlanner:
+    """Deterministic provider-failure fixture; not an LLM benchmark."""
+
+    def plan_for(self, task_format, advice=None):
+        fmt = _format(task_format)
+        if advice is not None:
+            _plan_id(advice)
+        if fmt == "plain_email":
+            raise RuntimeError("simulated model planning failure")
+        return CapableFixturePlanner().plan_for(fmt, advice=advice)
+
+
 class FormatChatPlanner(ChatCompletionsPlanner):
     """Optional real Chat Completions model, using inherited secure transport."""
 
