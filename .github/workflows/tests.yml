@@ -215,3 +215,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/verify_shadow_v21.py
+
+      - name: Verify sealed repository pilot and persisted rollout recommendation
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_repository_pilot_v22.py

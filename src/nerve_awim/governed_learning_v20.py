@@ -101,6 +101,10 @@ class GovernedLearning:
                 context TEXT, split TEXT, claim TEXT,
                 PRIMARY KEY (tenant, agent, task_id),
                 UNIQUE (tenant, agent, payload_hash));
+              CREATE TABLE IF NOT EXISTS gl_holdout_reservations (
+                tenant TEXT, agent TEXT, task_id TEXT, payload_hash TEXT,
+                PRIMARY KEY (tenant, agent, task_id),
+                UNIQUE (tenant, agent, payload_hash));
               CREATE TABLE IF NOT EXISTS gl_outcomes (
                 tenant TEXT, agent TEXT, task_id TEXT, strategy TEXT,
                 success INTEGER, handler_error INTEGER,
@@ -193,6 +197,10 @@ class GovernedLearning:
 
     @staticmethod
     def _claim(con, scope, task, digest, split, claim):
+        if split == 'train' and con.execute('''SELECT 1 FROM gl_holdout_reservations
+                WHERE tenant=? AND agent=? AND (task_id=? OR payload_hash=?)''',
+                (*scope, task.task_id, digest)).fetchone():
+            raise ValueError('task reserved for independently held-out evaluation')
         try:
             con.execute('INSERT INTO gl_tasks VALUES(?,?,?,?,?,?,?)',
                         (*scope, task.task_id, digest, task.context, split, claim))

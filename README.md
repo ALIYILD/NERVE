@@ -6,6 +6,10 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 ## v2.1 opt-in repository task shadow learning
 
+The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed study
+manifests, pre-reserved holdouts, content-change checks and a reviewable rollout
+recommendation across separate processes. It never activates a release.
+
 The [shadow adapter](docs/shadow-task-learning-v21.md) now executes selected real
 repository tasks with the active tool, then independently judges outputs and
 trains alternative tool routes outside the request path. Aggregate outcomes and

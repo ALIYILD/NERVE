@@ -1,0 +1,15 @@
+{
+  "repository": "ALIYILD.NERVE",
+  "train": [
+    "src/nerve_awim/identity_v26.py",
+    "src/nerve_awim/recovery_v24.py",
+    "src/nerve_awim/key_rotation_v28.py"
+  ],
+  "holdout": [
+    "src/nerve_awim/adaptive_calibration_v19.py",
+    "src/nerve_awim/recovery_v25.py",
+    "src/nerve_awim/drift_v14.py",
+    "src/nerve_awim/coverage_v18.py",
+    "src/nerve_awim/risk_v17.py"
+  ]
+}

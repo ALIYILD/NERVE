@@ -4,28 +4,12 @@ Explicit local host runner, not a public API. Only selected UTF-8 Python files
 inside --root are read. Raw source and inventories are not written to reports.
 """
 import argparse
-from hashlib import sha256
 import json
-from pathlib import Path
 
-from nerve_awim.agent_learning_v12 import AgentTask
 from nerve_awim.governed_learning_v20 import GovernedLearning, LearningAuthority
 from nerve_awim.repository_agents_v20 import CONTEXT, REPOSITORY_STRATEGIES, repository_judge
 from nerve_awim.shadow_learning_v21 import ShadowLearning
-
-
-def file_task(root, name):
-    root = Path(root).resolve(strict=True)
-    path = (root / name).resolve(strict=True)
-    if not path.is_relative_to(root) or path.suffix != '.py' or not path.is_file():
-        raise ValueError('select a Python file within the repository root')
-    # Bounded read also handles files growing after a stat check.
-    with path.open('rb') as handle:
-        data = handle.read(16385)
-    if len(data) > 16384:
-        raise ValueError('source exceeds research payload budget')
-    source = data.decode('utf-8')
-    return AgentTask('source-' + sha256(data).hexdigest(), CONTEXT, source)
+from nerve_awim.repository_pilot_v22 import file_task
 
 
 def main(argv=None):
