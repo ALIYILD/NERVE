@@ -106,12 +106,25 @@ class ParallelEvolutionCycle:
         # exist. Always advisory; provider failures reject the whole batch.
         jev_reviews = {}
         if self.jev_reviewer is not None:
-            responses = self.workers.run([
-                AgentJob("jev:" + p.name, "jev",
-                         (measurements["baseline"], measurements[p.name]))
-                for p in prioritised
-            ])
-            jev_reviews = {result.job_id: result.output for result in responses}
+            if callable(getattr(self.jev_reviewer, "review_many", None)):
+                # The TypeSafe client can evaluate independent typed questions
+                # in one API call. Only numeric synthetic summaries are sent.
+                batch = self.jev_reviewer.review_many(
+                    baseline=measurements["baseline"],
+                    candidates={p.name: measurements[p.name] for p in prioritised}
+                )
+                if set(batch) != {p.name for p in prioritised}:
+                    raise RuntimeError("Jev batch omitted candidate results")
+                jev_reviews = {"jev:" + name: review
+                               for name, review in batch.items()}
+            else:
+                responses = self.workers.run([
+                    AgentJob("jev:" + p.name, "jev",
+                             (measurements["baseline"], measurements[p.name]))
+                    for p in prioritised
+                ])
+                jev_reviews = {result.job_id: result.output
+                               for result in responses}
         trials = []
         eligible = []
         for proposal in prioritised:
