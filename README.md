@@ -2,7 +2,24 @@
 
 An open-source **research prototype** exploring sensor-driven world models, adaptive learning, state estimation, and safe planning.
 
-**Status:** Experimental, simulation only. Not validated for real-world robotics or clinical decision-making.
+**Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
+
+## v2.1 opt-in repository task shadow learning
+
+The [shadow adapter](docs/shadow-task-learning-v21.md) now executes selected real
+repository tasks with the active tool, then independently judges outputs and
+trains alternative tool routes outside the request path. Aggregate outcomes and
+release provenance persist across processes; source text is not stored. Measured
+handler latency is reported; provider costs remain explicitly unknown.
+
+The active AST tool is the strong fixed baseline. In the cross-process check,
+both baseline and candidate score 5/5 on disjoint files, so the proposal is
+rejected and no release changes. This is an executable research workflow, not a
+live Clinical OS integration or a claim of general self-improvement.
+
+```bash
+PYTHONPATH=src python scripts/verify_shadow_v21.py
+```
 
 ## WorldCore v1.2 research release
 

@@ -223,6 +223,10 @@ class GovernedLearning:
             con.execute('BEGIN IMMEDIATE')
             self._state(con, scope)
             self._claim(con, scope, task, digest, 'train', 'training')
+        return self._learn_claimed_task(scope, task)
+
+    def _learn_claimed_task(self, scope, task):
+        """Host-internal execution after an atomic, one-use training claim."""
         try:
             outcomes = [(strategy, *self._attempt(task, strategy))
                         for context, strategy in sorted(self._registry)
