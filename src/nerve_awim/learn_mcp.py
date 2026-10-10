@@ -8,6 +8,7 @@ import os
 from .learn_v31 import LearningStore
 from .evolution_v01 import EvolutionMemory
 from .agent_bridge_v13 import DemoAgentBridge
+from .recovery_mcp_v17 import RecoveryMCPDemo
 
 def create_server(db_path=None):
     try:
@@ -18,6 +19,7 @@ def create_server(db_path=None):
     store=LearningStore(path)
     memory=EvolutionMemory(path)
     demo=DemoAgentBridge(path,agent_id=os.environ.get("NERVE_DEMO_AGENT_ID","external-demo"))
+    recovery_demo=RecoveryMCPDemo(path)
     server=ServerClass("NERVE Learn")
     @server.tool()
     def record_experience(agent_id:str,task:str,outcome:str)->str:
@@ -81,6 +83,16 @@ def create_server(db_path=None):
         return demo.execute_plan(task_id=task_id,email_document=email_document,
                                  extract_strategy=extract_strategy,
                                  normalise_strategy=normalise_strategy)
+    @server.tool()
+    def run_bounded_recovery_demo(policy:str="memory",
+                                  train_on_fixtures:bool=False)->dict:
+        """Demonstrate verified two-attempt agent recovery on fixed synthetic cases.
+
+        All tools, judge responses and evaluation inputs are defined inside
+        NERVE. This is not an autonomous production repair service.
+        """
+        return recovery_demo.run(policy=policy,
+                                 train_on_fixtures=train_on_fixtures)
     return server
 
 if __name__=="__main__":
