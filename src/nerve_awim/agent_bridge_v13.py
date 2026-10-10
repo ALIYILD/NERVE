@@ -158,3 +158,38 @@ class DemoAgentBridge:
             for task in validated
         ])
         return [item.output for item in outcomes]
+
+    def execute_plan(self, *, task_id, email_document, extract_strategy,
+                     normalise_strategy):
+        """Execute an explicitly chosen *allowlisted* two-stage plan.
+
+        Plan inputs are untrusted strategy identifiers, never Python source.
+        The plan is not allowed to modify feedback memory or permissions.
+        """
+        if not isinstance(task_id, str) or not 0 < len(task_id) <= 48:
+            raise ValueError("bounded task ID required")
+        if not isinstance(email_document, str) or not 1 <= len(email_document) <= 512:
+            raise ValueError("bounded synthetic JSON document required")
+        if (type(extract_strategy) is not str
+                or ("extract", extract_strategy) not in self.agent.registry):
+            raise ValueError("unregistered extract strategy")
+        if (type(normalise_strategy) is not str
+                or ("normalise", normalise_strategy) not in self.agent.registry):
+            raise ValueError("unregistered normalise strategy")
+        # Registered pure transformations only; no eval/exec/commands/network.
+        extracted = self.agent.registry[("extract", extract_strategy)](
+            email_document)
+        if not isinstance(extracted, str):
+            raise ValueError("registered extract must produce text")
+        if len(extracted) > 512:
+            raise ValueError("extract output too large")
+        normalized = self.agent.registry[("normalise", normalise_strategy)](
+            extracted)
+        if not isinstance(normalized, str) or len(normalized) > 512:
+            raise ValueError("invalid normalise output")
+        return {
+            "task_id": task_id, "result": normalized,
+            "strategies": {"extract": extract_strategy,
+                           "normalise": normalise_strategy},
+            "feedback_written": False,
+        }
