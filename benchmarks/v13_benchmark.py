@@ -7,10 +7,10 @@ the simulator and scoring. Results vary across seeds; no superiority assumed.
 import json, math, random, statistics
 from nerve_awim.integrated_v13 import SensorOnlyController
 
-def experiment(seed, adaptive, steps=60, change=30, delay=2, dropout=0.12, regimes=None):
+def experiment(seed, adaptive, steps=60, change=30, delay=2, dropout=0.12, regimes=None, estimator='standard'):
     rng=random.Random(seed)
     controller=SensorOnlyController(target=1.2,learning_rate=.08 if adaptive else 0.0,
-                                    horizon=3, bound=6.0)
+                                    horizon=3, bound=6.0, estimator=estimator)
     position=velocity=0.0
     pending=[]
     position_errors=[]
@@ -43,7 +43,8 @@ def benchmark(seeds=range(20)):
     metrics=adaptive[0].keys()
     return {"config":{"seeds":len(adaptive),"steps":60,"change_step":30,"delay":2,"dropout":0.12},
             "adaptive":{m:statistics.mean(x[m] for x in adaptive) for m in metrics},
-            "frozen":{m:statistics.mean(x[m] for x in frozen) for m in metrics}}
+            "frozen":{m:statistics.mean(x[m] for x in frozen) for m in metrics},
+            "drift":{m:statistics.mean(x[m] for x in drift) for m in metrics}}
 
 
 def multi_regime_benchmark(seeds=range(20)):
@@ -55,6 +56,7 @@ def multi_regime_benchmark(seeds=range(20)):
     regimes=((0,.27),(20,.48),(40,.15),(60,.4))
     adaptive=[experiment(seed,True,steps=80,change=20,regimes=regimes) for seed in seeds]
     frozen=[experiment(seed,False,steps=80,change=20,regimes=regimes) for seed in seeds]
+    drift=[experiment(seed,True,steps=80,change=20,regimes=regimes,estimator="drift") for seed in seeds]
     metrics=adaptive[0].keys()
     return {"config":{"seeds":len(adaptive),"steps":80,"regimes":regimes,"delay":2,"dropout":.12},
             "adaptive":{m:statistics.mean(x[m] for x in adaptive) for m in metrics},
