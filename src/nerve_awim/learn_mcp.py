@@ -10,12 +10,15 @@ from .evolution_v01 import EvolutionMemory
 from .agent_bridge_v13 import DemoAgentBridge
 
 def create_server(db_path=None):
-    from mcp.server.fastmcp import FastMCP
+    try:
+        from mcp.server import MCPServer as ServerClass  # official MCP SDK 2.x
+    except ImportError:
+        from mcp.server.fastmcp import FastMCP as ServerClass  # SDK 1.x
     path=db_path or os.environ.get("NERVE_LEARN_DB","nerve-learn.db")
     store=LearningStore(path)
     memory=EvolutionMemory(path)
     demo=DemoAgentBridge(path,agent_id=os.environ.get("NERVE_DEMO_AGENT_ID","external-demo"))
-    server=FastMCP("NERVE Learn")
+    server=ServerClass("NERVE Learn")
     @server.tool()
     def record_experience(agent_id:str,task:str,outcome:str)->str:
         """Record a bounded task/outcome experience; no automatic learning."""
