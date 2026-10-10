@@ -111,3 +111,35 @@ and runs API contract tests with synthetic, mocked responses instead.
 Security note: In public repositories, contributors with sufficient write
 access can modify workflow code. Restrict write access and protect
 `main`; the protected environment should require independent review.
+
+## Jev agreement benchmark — offline by default
+
+The new `jev_agreement_v12.py` evaluates six synthetic WorldCore
+candidate scenarios with a fixed deterministic regression oracle.
+It records agreement, false-positive and false-negative counts, the
+separate deterministic human-review eligibility decision, request latency,
+and reported token usage. No cost estimate is calculated because
+pricing and real usage have not been independently established.
+
+Run the safe **fixture-only** example without any API key:
+
+```bash
+export PYTHONPATH=src
+python -m nerve_awim.jev_agreement_v12
+```
+
+**Important:** the synthetic fixture deliberately contains two incorrect
+advisory classifications to test that NERVE can detect and report errors.
+Fixture agreement is not actual Jev accuracy. This is not a measured model
+speedup, and no medical/physical-AI claims follow from the experiment.
+
+To compare real Jev judgments *after provisioning a fresh private key*,
+run `python -m nerve_awim.jev_agreement_v12 --live` locally, or select
+**comparison** in the manual `TypeSafe Jev` GitHub workflow. The workflow
+supports two mutually exclusive choices: **smoke** (2 judgments) or
+**comparison** (6 judgments), each performed in one API request.
+Ordinary push/PR CI never uses a paid API.
+
+The deterministic reviewer continues to reject candidates that violate
+completion, abort or constraint requirements regardless of Jev's advice.
+No candidate is promoted or deployed automatically.
