@@ -22,8 +22,8 @@ def episode(seed, outage=True, steps=80):
         due=[item for item in pending if item[0]<=t]
         pending=[item for item in pending if item[0]>t]
         for _,timestamp,p,v in due:
-            c.ingest(timestamp,position=p,velocity=v)
             prediction=c.pending_predictions.get(timestamp)
+            c.ingest(timestamp,position=p,velocity=v)
             if prediction is not None:
                 auditor.record(prediction,v)
         try:
