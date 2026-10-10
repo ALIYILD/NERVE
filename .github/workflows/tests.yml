@@ -156,3 +156,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/llm_mcp_v14.py --cases 4
+
+      - name: Test live-shaped model API adapter through real MCP transport (mocked)
+        env:
+          PYTHONPATH: src
+        run: python scripts/llm_mcp_v14.py --mock-api --cases 4
