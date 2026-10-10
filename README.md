@@ -426,3 +426,31 @@ An optional [manual protected live workflow](.github/workflows/llm-study-v15.yml
 can run a bounded study using a fresh private model credential. Its
 environment must be configured and reviewed independently.
 See [v1.5 evaluation guide](docs/evolution-v15.md).
+
+## Evolution v1.6 — paired evidence, uncertainty and failure accounting
+
+The same-agent MCP experiment now scores **paired held-out tasks** across
+memory and no-memory arms. `study_statistics_v16.py` reports per-format
+and aggregate accuracy, discordant wins/losses, explicit task errors,
+descriptive exact McNemar statistics and seed-cluster bootstrap
+intervals only when at least five distinct seeds are available.
+
+Model-planning errors are counted as failed tasks and remain in accuracy
+denominators. Actual executed tool calls, model errors, reported token
+usage and latency are recorded separately; no raw user inputs or
+API credentials are included in the report. The statistical p-value is
+**descriptive** because task pairs within seeds are dependent.
+
+Try these credential-free commands after installing MCP 2.3:
+
+```bash
+PYTHONPATH=src python scripts/agent_study_v15.py --seeds 5 --cases 2
+PYTHONPATH=src python scripts/agent_study_v15.py --failure-fixture --seeds 2 --cases 2
+```
+
+A capable offline planner still achieves the same accuracy with and
+without memory; mock provider failures now remain visible instead
+of being silently excluded. Five synthetic seed clusters are not a
+powered, independent real-LLM study. **No real-model improvement,
+speed advantage, clinical efficacy or physical-AI reliability claim**
+has been established. See [v1.6 methodology](docs/evolution-v16.md).
