@@ -454,3 +454,32 @@ of being silently excluded. Five synthetic seed clusters are not a
 powered, independent real-LLM study. **No real-model improvement,
 speed advantage, clinical efficacy or physical-AI reliability claim**
 has been established. See [v1.6 methodology](docs/evolution-v16.md).
+
+## NERVE Evolution v1.7 — bounded recover-after-failure agents
+
+`recovery_learning_v17.py` adds independently checked, two-attempt
+execution to registered local agent strategies. Success is decided only
+by a trusted evaluator; a failed handler may trigger one registered
+fallback. Held-out runs never silently update experience memory.
+
+```bash
+PYTHONPATH=src python benchmarks/v17_recovery_agents.py
+```
+
+In 12 synthetic 27-task runs spanning email transformation, numeric
+sorting and JSON extraction (including three unrecoverable tasks per
+run), final completion was **88.89% for all three policies**.
+Outcome-aware memory averaged **1.111 tool invocations per task**;
+a less-informed no-memory fallback averaged **1.630**, while the
+preconfigured fixed-correct control likewise averaged **1.111**.
+This shows reduced wasted attempts versus a weak baseline, **not**
+inherent multi-agent superiority or general self-improvement.
+
+The local MCP stdio service now also provides
+`run_bounded_recovery_demo`, a fixed-scenario training/retry test
+with no user-provided code, judge, secrets or hardware operations.
+The real official MCP SDK smoke test checks recovery alongside
+tool discovery and multi-step agent execution.
+
+See [v1.7 recovery research guide](docs/evolution-v17.md) for
+protocol details, rejected failures and security limitations.
