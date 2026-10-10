@@ -263,3 +263,27 @@ achieved **72.22%** task success versus **51.50%** from recency-only retrieval
 real-agent learning validation. A CI check confirmed that serial and
 parallel variants made the same rejection decisions; it did **not** establish
 faster CPU execution. See `docs/evolution-engine.md` for all limitations.
+
+## Optional TypeSafe AI Jev reviewer (off by default)
+
+NERVE supports a small, independent Jev integration via `jev_optional.py`
+and batched `jev_batch.py`. It uses the official TypeSafe System One
+HTTPS endpoint for **advisory** research-result critique, while WorldCore's
+deterministic safety and eligibility gates remain authoritative.
+
+- Reads `TYPESAFE_API_KEY` only from the runtime environment; no key is stored in Git.
+- Shares only five allowlisted synthetic benchmark aggregates, never raw medical records.
+- Can batch up to six candidate-review questions in one TypeSafe request.
+- Missing keys, malformed model answers and network errors fail closed.
+- Optional: omitting the reviewer leaves NERVE fully model-agnostic.
+
+Local single-request smoke test (from the same terminal where the key was exported):
+
+```bash
+export PYTHONPATH=src
+python -m nerve_awim.jev_optional
+```
+
+See [`docs/jev-optional.md`](docs/jev-optional.md) for integration examples
+and limits. CI uses mocked responses only; live Jev response, actual latency,
+accuracy gains, and account access have not yet been verified.
