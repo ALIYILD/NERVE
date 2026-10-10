@@ -198,7 +198,8 @@ class RecursiveEvolutionLoop:
                 and type(score.queries) is int
                 and 0 <= score.hits <= score.queries and score.queries > 0)
 
-    def run(self, *, baseline=RetrievalGenome()):
+    def run(self, *, baseline=RetrievalGenome(), previous_population=()):
+        """Resume only typed recipe IDs, never persisted code or verdicts."""
         if type(baseline) is not RetrievalGenome:
             raise TypeError("trusted baseline recipe required")
         rng = Random(self.seed)
@@ -208,8 +209,15 @@ class RecursiveEvolutionLoop:
         if not self._safe(score) or not self._safe(training):
             raise RuntimeError("baseline failed independent research safety gates")
         base_score = score
-        seen = {best}
+        previous_population = tuple(previous_population)
+        if len(previous_population) > 36 or any(
+                type(item) is not RetrievalGenome for item in previous_population):
+            raise ValueError("untrusted or oversized recipe archive")
+        # Re-evaluate the resumed baseline above; archive entries cannot
+        # import approvals, model outputs, or evaluator policies.
+        seen = {best, *previous_population}
         records = []
+        evaluated_this_run = 0
         stale = 0
         for generation in range(1, self.generations + 1):
             pool = []
@@ -225,6 +233,7 @@ class RecursiveEvolutionLoop:
                 pool.append(candidate)
                 if len(pool) >= self.offspring:
                     break
+            evaluated_this_run += len(pool)
             if not pool:
                 records.append({"generation": generation, "stop": "search_space_exhausted"})
                 break
@@ -278,7 +287,13 @@ class RecursiveEvolutionLoop:
             "baseline_holdout": asdict(baseline_holdout),
             "report_only_holdout": asdict(holdout),
             "generations_run": len(records),
-            "candidates_evaluated": len(seen) - 1,
+            "candidates_evaluated": evaluated_this_run,
+            "known_population_size": len(seen),
+            "population_archive": [
+                asdict(item) for item in sorted(
+                    seen, key=lambda row: (row.token_weight, row.trigram_weight))
+            ],
+            "study_protocol": "nerve-recursive-data-only-v19",
             "lineage": records,
             "retained_learning": "best evaluated data-only recipe across generations",
             "safety": "No source edits, secret keys, network calls or deployment; \
