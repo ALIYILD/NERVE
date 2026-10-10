@@ -80,8 +80,8 @@ class PairedEvidenceV16Tests(unittest.TestCase):
                    error_with=True),
         ]
         summary = summarize_pairs(rows)["overall"]
-        self.assertEqual(summary["no_memory_execution_errors"], 1)
-        self.assertEqual(summary["with_memory_execution_errors"], 1)
+        self.assertEqual(summary["no_memory_task_errors"], 1)
+        self.assertEqual(summary["with_memory_task_errors"], 1)
 
     def test_invalid_hyperparameters_fail_closed(self):
         rows = [record(1, "json_email", "a", False, True)]
