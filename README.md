@@ -372,3 +372,30 @@ See [MCP setup and limitations](docs/nerve-learn-launch.md).
 Caller-supplied agent namespaces are not authentication. Demo tools
 are intentionally inert and should not be exposed as a public HTTP
 multi-tenant service or used on regulated data.
+
+## NERVE Evolution v1.4 — model-selected, memory-guided MCP tools
+
+NERVE now includes a **provider-independent, opt-in model plan selector**
+(`llm_agent_v14.py`) and a real MCP client evaluation harness
+(`scripts/llm_mcp_v14.py`). A model proposes only allowlisted strategy
+identifiers for the trusted JSON extraction and email normalisation demo;
+the host refuses unknown identifiers, commands, insecure endpoints,
+HTTP redirects and unauthorised feedback updates.
+
+The reproducible offline comparison uses the same task cases and
+decision/tool-call budget in both arms:
+
+```bash
+PYTHONPATH=src python scripts/llm_mcp_v14.py --cases 4
+PYTHONPATH=src python scripts/llm_mcp_v14.py --mock-api --cases 4
+```
+
+Both run through the **real MCP 2.x stdio client** and server; the
+first uses a deterministic planner fixture and the second uses a fake
+chat-completions API with validated JSON/token parsing.
+Live inference requires an operator-configured HTTPS provider URL,
+model ID and private `NERVE_LLM_API_KEY` and is **not** exercised by CI.
+
+These constructed tests establish **protocol compatibility and
+control-flow integrity**, not improvement of actual LLM intelligence
+or self-retraining. See [v1.4 research guide](docs/llm-agent-v14.md).
