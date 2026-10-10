@@ -231,3 +231,9 @@ GitHub Actions run 38078147124 passed **179 tests**, with a research report show
 ## AutoResearch v0.9 — fixed-threshold outage search
 
 `src/nerve_awim/autoresearch_v09.py` explores five bounded `max_missing` choices on the existing WorldCore synthetic outage benchmark, using the absolute completion and abort gates rather than relative goal error alone. GitHub Actions run 38078260043 passed **182 tests**. **No tested choice qualified**: even `max_missing=12` achieved only **59.375%** average validation completion and aborted episodes. `eligible_candidate` is null; no deployment or autonomous recovery is allowed. A bigger outage tolerance alone is not a resilient recovery mechanism. Next research should model post-outage fresh readings, independent approval and resumed operation without compromising controls.
+
+## NERVE Evolution Engine v0.1 — outcome-scored strategy memory
+
+The new `src/nerve_awim/evolution_v01.py` adds a **MemRL-inspired**, independently implemented two-stage strategy selector atop the existing local NERVE Learn store: context-scoped memory retrieval, then explicit feedback-utility ranking. Unrated memories are excluded; agent namespaces are kept separate at the storage-query level (caller-provided IDs are **not** authentication). No third-party implementation or cloud API was imported. See `docs/evolution-engine.md` for the MemRL, GEPA, Letta, Darwin and Hermes integration roadmap.
+
+GitHub Actions run 38078447269 passed **188 full-suite tests**, followed by **6 focused Evolution tests**. This is not proof of improved agent outcomes or a real deployment of the upstream frameworks. The next benchmark must compare reward-based retrieval against an equally informed recency baseline with held-out tasks.
