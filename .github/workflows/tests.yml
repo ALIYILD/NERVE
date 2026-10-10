@@ -198,3 +198,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m nerve_awim.recursive_evolution_v19
+
+      - name: Verify independent WorldCore generational selection
+        env:
+          PYTHONPATH: src
+        run: python -m nerve_awim.worldcore_recursion_v19
