@@ -151,3 +151,17 @@ ClawHub listing is a separate publication step and is **not yet verified**. Benc
 The `collaboration_v31.py` module connects the deterministic typed-agent coordinator with a one-step scalar predictive transition and an explicit-context experience store. `benchmarks/v31_benchmark.py` compares the same specialist priors with and without prior observed feedback. GitHub Actions run 38075918098 passed **130 tests**. Across 20 deterministic synthetic seeds, late prediction MAE was **0.192123** with contextual feedback and **0.225480** without it (approximately 14.8% lower).
 
 **Scientific limitation:** this is not yet integration with the existing multi-step WorldCore controller or a real Hermes runtime. The comparator has equal specialist capability but no equivalent learning/memory facility, so the experiment isolates feedback-memory benefit, **not a pure multi-agent benefit**. The next ablation should compare a single-agent learner with the same memory and compute budget, then measure planning reward, errors and latency. Research only; no physical actuation or clinical claims.
+
+## v3.1 matched-feedback learning ablation
+
+`benchmarks/v31_ablation.py` uses the same 120-task observations and one update per task to compare a shared single learner, per-context specialist learners, and fixed specialist priors. GitHub Actions run 38076064514 passed **133 tests**. Across 20 synthetic seeds, post-change mean absolute error was:
+
+| Method | MAE |
+| --- | ---: |
+| Single learner with memory | 0.121099 |
+| Specialist learners with memory | 0.171796 |
+| Fixed specialists | 0.245548 |
+
+**Negative result for the collaborative hypothesis:** the single shared learner outperformed the contextual specialists on this task. The methods use different parameterisations despite matched observations and update counts; compute overhead, multi-step WorldCore planning and agent communication are not measured. There is no basis yet to claim NERVE agents improve accuracy or speed over equivalent single learners. Preserve this result in future comparisons.
+
+Next experiments should test partial observability, specialist information advantages, equal parameter budgets, cost/latency and task-level outcomes before any superiority claims.
