@@ -165,3 +165,9 @@ The `collaboration_v31.py` module connects the deterministic typed-agent coordin
 **Negative result for the collaborative hypothesis:** the single shared learner outperformed the contextual specialists on this task. The methods use different parameterisations despite matched observations and update counts; compute overhead, multi-step WorldCore planning and agent communication are not measured. There is no basis yet to claim NERVE agents improve accuracy or speed over equivalent single learners. Preserve this result in future comparisons.
 
 Next experiments should test partial observability, specialist information advantages, equal parameter budgets, cost/latency and task-level outcomes before any superiority claims.
+
+## v3.2 — complementary multimodal sensor ablation
+
+`benchmarks/v32_multimodal.py` compares a single-sensor learner, a single two-channel model, and a two-channel specialist-fusion formulation under the same deterministic 20-seed synthetic task stream and equal update counts. GitHub Actions run 38076241102 passed **137 tests**. Mean prediction MAE was **0.198922** with one sensor versus **0.069575** for both two-sensor formulations. Single fused and specialist fused predictions were *identical*, as expected from their mathematically equivalent linear updates.
+
+**Interpretation:** added sensor access improves prediction for this constructed task; splitting equivalent computations into specialist modules does not. No inter-agent communication cost, real sensor data, partial-observation inference, WorldCore multi-step control improvement or physical safety advantage is demonstrated. The next useful experiment must test non-equivalent specialist reasoning against a comparably capable unified model under matched compute and inputs.
