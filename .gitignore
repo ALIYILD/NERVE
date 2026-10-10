@@ -1,0 +1,18 @@
+# Keep local credentials and research runtime state out of public Git history
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.sqlite
+*.sqlite3
+*.db
+*.jsonl
+.coverage
+.venv/
+venv/
