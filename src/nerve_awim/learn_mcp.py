@@ -21,13 +21,20 @@ def create_server(db_path=None):
     demo=DemoAgentBridge(path,agent_id=os.environ.get("NERVE_DEMO_AGENT_ID","external-demo"))
     recovery_demo=RecoveryMCPDemo(path)
     server=ServerClass("NERVE Learn")
+    # Experimental compatibility writes can allow score poisoning.
+    # Default OFF. The opt-in flag is not network authentication.
+    allow_legacy_writes = os.environ.get("NERVE_ENABLE_LEGACY_MCP_WRITES", "0") == "1"
     @server.tool()
     def record_experience(agent_id:str,task:str,outcome:str)->str:
         """Record a bounded task/outcome experience; no automatic learning."""
+        if not allow_legacy_writes:
+            raise PermissionError("legacy unverified MCP memory writes disabled")
         return store.record(agent_id,task,outcome)
     @server.tool()
     def rate_experience(agent_id:str,experience_id:str,score:float)->str:
         """Explicitly evaluate an existing experience from 0 to 1."""
+        if not allow_legacy_writes:
+            raise PermissionError("legacy unverified MCP feedback disabled")
         store.feedback(agent_id,experience_id,score)
         return "recorded"
     @server.tool()
