@@ -47,3 +47,21 @@ Providing the reviewer enables calls to the external API; omitting it keeps the 
 - CI mocks TypeSafe; live connectivity requires a private environment containing a valid key.
 
 Do not send regulated clinical information without an appropriate separate vendor, security and data-protection assessment. Revoke any leaked key.
+
+## Single-call batch reviews
+
+For the research coordinator, use `JevBatchReviewer` from
+`nerve_awim.jev_batch` instead of `JevResearchReviewer`. It packages up to
+six independent candidate questions into a single TypeSafe System One
+request, matching the provider's documented batched-question interface.
+This *reduces request count*, but latency and speedups must still be measured
+on a real account before claiming performance gains.
+
+```python
+from nerve_awim.jev_batch import JevBatchReviewer
+reviewer = JevBatchReviewer(timeout=8)
+```
+
+The parallel coordinator recognises `review_many` automatically. The provider
+remains optional, no credentials are committed, and batch advice never
+changes the independent WorldCore acceptance rules.
