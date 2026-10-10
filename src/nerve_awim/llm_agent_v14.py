@@ -8,9 +8,15 @@ from dataclasses import dataclass
 from math import isfinite
 from time import perf_counter
 from urllib.parse import urlsplit
-from urllib.request import Request, urlopen
+from urllib.request import Request, build_opener, HTTPRedirectHandler
 import json
 import os
+
+class _NoRedirect(HTTPRedirectHandler):
+    """Fail closed instead of forwarding private auth headers via redirects."""
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        raise RuntimeError("model endpoint redirects are disallowed")
+
 
 EXTRACT = ("raw", "json-field")
 NORMALISE = ("lower-only", "trim-lower")
@@ -104,7 +110,7 @@ class ChatCompletionsPlanner:
                 or not 0 < timeout <= 30):
             raise ValueError("model timeout must be 0..30 seconds")
         self.timeout = float(timeout)
-        self.transport = transport or urlopen
+        self.transport = transport if transport is not None else build_opener(_NoRedirect()).open
 
     def plan(self, *, advice=None):
         key = os.environ.get("NERVE_LLM_API_KEY", "")
