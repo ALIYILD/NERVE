@@ -119,3 +119,9 @@ This is simulation-only work. The operator authorisation flag is itself an untru
 `telemetry_v29.py` introduces a bounded in-process event trace with strictly limited event categories and statuses, while `observed_runtime_v29.py` wraps the existing research runtime to log control, sensor and identity outcomes. The integration test simulates a missing sensor, a denied identity assertion, and an accepted supervisor approval. GitHub Actions run 38075485337 passed **111 tests**.
 
 **Limitations:** no live identity-provider connection, distributed tracing, persistence, privacy/security certification or real actuator controls. In-memory trace records are ephemeral and are not a replacement for the durable incident ledger. Do not place patient data or secrets in telemetry events.
+
+## v3.0 — typed multi-agent research foundation
+
+`agents_v30.py` introduces validated task envelopes, deterministic capability routing, specialist processing stubs and a provenance-preserving in-memory result store. `benchmarks/v30_benchmark.py` compares coverage against one deliberately restricted specialist. GitHub Actions run 38075635069 passed **119 tests**; in the 100-task capability benchmark, the multi-specialist coordinator handled 100 supported task types and retained 100 source identifiers, whereas the EEG-only baseline could accept only 50 tasks.
+
+**Interpretation:** this is coverage by design, *not* higher predictive accuracy, learning speed, LLM-agent functionality, Hermes integration or demonstrated world-model benefits. The next meaningful experiment must compare equivalent-capability, equivalent-budget baselines on held-out prediction and planning tasks.
