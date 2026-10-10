@@ -145,3 +145,9 @@ PYTHONPATH=src NERVE_LEARN_DB=./nerve-learn.db python -m nerve_awim.learn_mcp
 ```
 
 ClawHub listing is a separate publication step and is **not yet verified**. Benchmarks against matched no-memory baselines are still required before claims of improved agent performance.
+
+## v3.1 — typed prediction and contextual memory benchmark
+
+The `collaboration_v31.py` module connects the deterministic typed-agent coordinator with a one-step scalar predictive transition and an explicit-context experience store. `benchmarks/v31_benchmark.py` compares the same specialist priors with and without prior observed feedback. GitHub Actions run 38075918098 passed **130 tests**. Across 20 deterministic synthetic seeds, late prediction MAE was **0.192123** with contextual feedback and **0.225480** without it (approximately 14.8% lower).
+
+**Scientific limitation:** this is not yet integration with the existing multi-step WorldCore controller or a real Hermes runtime. The comparator has equal specialist capability but no equivalent learning/memory facility, so the experiment isolates feedback-memory benefit, **not a pure multi-agent benefit**. The next ablation should compare a single-agent learner with the same memory and compute budget, then measure planning reward, errors and latency. Research only; no physical actuation or clinical claims.
