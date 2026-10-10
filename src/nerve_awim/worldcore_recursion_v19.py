@@ -86,6 +86,8 @@ class WorldCoreResearchEvolution:
             for trial in range(self.offspring * 8):
                 candidate = self.mutation(
                     best, rng, "g" + str(generation) + "-" + str(trial))
+                if type(candidate) is not Proposal:
+                    raise TypeError("mutation must return a typed WorldCore proposal")
                 key = (candidate.max_missing, candidate.risk_aversion)
                 if key in seen:
                     continue
