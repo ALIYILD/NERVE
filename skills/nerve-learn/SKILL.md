@@ -27,3 +27,24 @@ evaluation, independent safety and review roles. The coordinator cannot be
 run as an unrestricted command from this skill. These are local Python
 subagents, not live Hermes processes; reviewed findings never authorise
 production deployment.
+
+## Verified executable demo (MCP 2.x stdio)
+
+The NERVE MCP server additionally exposes:
+- `list_demo_agent_capabilities` — list registered inert demo strategies
+- `train_demo_agent_on_fixtures` — fixed internally scored examples only
+- `choose_demo_agent_strategy` — select evaluated vs recency approach
+- `run_demo_agent_pipeline` — 2-stage JSON email extraction and normalisation
+- `run_demo_agent_pipelines` — bounded parallel execution, max 16 tasks
+
+For a safe end-to-end illustration, first call
+`train_demo_agent_on_fixtures`, then call `run_demo_agent_pipeline`
+with `task_id="sample"` and
+`email_document='{"email": "  USER@EXAMPLE.ORG  "}'`.
+Expect the normalised email result `user@example.org`.
+
+These are deliberately limited program-owned Python handlers.
+Never infer permission to execute arbitrary tools, write files, run shell
+commands, call external services or change clinical outcomes. Memory and
+caller-defined agent IDs are **not authenticated**. Do not send confidential
+user or patient data into these demonstrations.
