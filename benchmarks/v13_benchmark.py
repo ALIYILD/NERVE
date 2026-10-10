@@ -44,7 +44,7 @@ def benchmark(seeds=range(20)):
     return {"config":{"seeds":len(adaptive),"steps":60,"change_step":30,"delay":2,"dropout":0.12},
             "adaptive":{m:statistics.mean(x[m] for x in adaptive) for m in metrics},
             "frozen":{m:statistics.mean(x[m] for x in frozen) for m in metrics}}
-if __name__=="__main__":print(json.dumps({"single_change":benchmark(),"multi_regime":multi_regime_benchmark()},indent=2,sort_keys=True))
+
 
 def multi_regime_benchmark(seeds=range(20)):
     """Repeated dynamics switches: 0.27 → 0.48 → 0.15 → 0.4.
@@ -60,3 +60,4 @@ def multi_regime_benchmark(seeds=range(20)):
             "adaptive":{m:statistics.mean(x[m] for x in adaptive) for m in metrics},
             "frozen":{m:statistics.mean(x[m] for x in frozen) for m in metrics}}
 
+if __name__=="__main__":print(json.dumps({"single_change":benchmark(),"multi_regime":multi_regime_benchmark()},indent=2,sort_keys=True))
