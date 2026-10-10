@@ -237,3 +237,29 @@ GitHub Actions run 38078147124 passed **179 tests**, with a research report show
 The new `src/nerve_awim/evolution_v01.py` adds a **MemRL-inspired**, independently implemented two-stage strategy selector atop the existing local NERVE Learn store: context-scoped memory retrieval, then explicit feedback-utility ranking. Unrated memories are excluded; agent namespaces are kept separate at the storage-query level (caller-provided IDs are **not** authentication). No third-party implementation or cloud API was imported. See `docs/evolution-engine.md` for the MemRL, GEPA, Letta, Darwin and Hermes integration roadmap.
 
 GitHub Actions run 38078447269 passed **188 full-suite tests**, followed by **6 focused Evolution tests**. This is not proof of improved agent outcomes or a real deployment of the upstream frameworks. The next benchmark must compare reward-based retrieval against an equally informed recency baseline with held-out tasks.
+
+
+## Parallel NERVE Evolution agents — v1.1 research prototype
+
+The new `parallel_agents_v11.py` and `evolution_cycle_v11.py` implement
+bounded local concurrent workers in **five specialised roles**: research,
+memory, evaluation, safety and review. Evaluations can run concurrently,
+but decisions are collected deterministically and an independent WorldCore
+reliability gate still rejects unsafe research candidates. The coordinator
+does not run Hermes, external LLMs or arbitrary generated code.
+
+```bash
+PYTHONPATH=src python benchmarks/v11_parallel_evolution.py
+PYTHONPATH=src python benchmarks/v11_memory_effectiveness.py
+```
+
+`learn_mcp.py` now also exposes `select_evaluated_strategy` to compatible
+MCP clients. Optional experiment feedback can improve scheduling of later
+research candidates, but **cannot change acceptance rules**.
+
+In the 20-seed synthetic held-out memory benchmark, outcome-scored retrieval
+achieved **72.22%** task success versus **51.50%** from recency-only retrieval
+(oracle **73.28%**). This is a constructed Bernoulli-reward task, not a
+real-agent learning validation. A CI check confirmed that serial and
+parallel variants made the same rejection decisions; it did **not** establish
+faster CPU execution. See `docs/evolution-engine.md` for all limitations.
