@@ -48,3 +48,18 @@ Never infer permission to execute arbitrary tools, write files, run shell
 commands, call external services or change clinical outcomes. Memory and
 caller-defined agent IDs are **not authenticated**. Do not send confidential
 user or patient data into these demonstrations.
+
+## Verified two-attempt recovery example (local MCP)
+
+The additional `run_bounded_recovery_demo` MCP tool compares
+`policy="memory"` with `policy="no_memory"` on four fixed synthetic
+scenarios. The `train_on_fixtures` flag explicitly adds six checked
+program-owned experience records. The tool has a hard two-attempt bound,
+only invokes pre-registered Python handlers, and includes one deliberately
+unsolvable case which MUST remain marked unresolved.
+
+The recovery demonstration never accepts arbitrary executable code,
+model-defined reward rules, private clinical information, patient files,
+external shell commands or robot controls. It is an experimental
+string/number/JSON tool-choice exercise, not an autonomous recovery
+service or medical supervision mechanism. See `docs/evolution-v17.md`.
