@@ -62,10 +62,31 @@ jobs:
           print('Holdout accuracy:', result['report_only_holdout']['accuracy'])
           print('No production code or policy changes were attempted')
           PY
+      - name: Verify frozen WorldCore iterative gate logic
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -p 'test_worldcore_recursion_v19.py' -v
+      - name: Evolve constrained WorldCore research-only parameters
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m nerve_awim.worldcore_recursion_v19 > research-output/worldcore-research.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('research-output/worldcore-research.json').read_text())
+          assert result['candidate_count'] <= 15
+          assert result['generations_run'] <= 5
+          assert result['status'] in ('no_deployable_improvement', 'candidate_for_human_review')
+          if result['status'] == 'candidate_for_human_review':
+              assert result['holdout_absolute_eligible']
+          print('WorldCore research status:', result['status'])
+          print('No controller, protocol or production settings changed')
+          PY
       - name: Retain bounded offline research report
         uses: actions/upload-artifact@v4
         with:
           name: nerve-recursive-research
-          path: research-output/recursive-research.json
+          path: research-output/*.json
           retention-days: 7
           if-no-files-found: error
