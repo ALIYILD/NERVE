@@ -99,3 +99,9 @@ The opt-in `SignedRecovery` class (`recovery_v25.py`) requires an HMAC-SHA256 si
 The opt-in `IdentityBoundRecovery` integrates an injected identity-verification interface with existing incident-specific signed approvals. Acceptance requires a verifier-provided subject, matching issuer and audience, unexpired identity, required `recovery-supervisor` role, and identity subject matching the signed approval principal. Inherited signing-only approval is denied to avoid bypassing the identity boundary. GitHub Actions run 38074351071 passed **97 tests**.
 
 **Not production authentication:** the tests use a synthetic verifier that returns preconstructed identities. There is no live OAuth/OIDC provider, JWKS signature validation, issuer configuration hardening, operator MFA, revocation, or KMS integration in this prototype. The verifier is a trusted boundary whose real implementation must be independently security-reviewed. No physical or medical actuation should be connected.
+
+## WorldCore v2.7 — OIDC verification adapter
+
+`PinnedOIDCVerifier` in `oidc_v27.py` implements an offline, fail-closed RS256 JWT verifier using an explicitly provisioned JWKS and pinned HTTPS issuer, audience and algorithm. Claims validated include issuer, audience, subject, issued-at and expiration. The resulting `VerifiedIdentity` can be passed to the existing v2.6 identity-bound recovery interface. The CI workflow installs `PyJWT[crypto]` and uses locally generated RSA test keys. GitHub Actions run 38075175393 passed **103 tests**.
+
+**This is not a live IdP integration.** Operator-provisioned keys must be obtained securely; key rotation, IdP discovery hardening, revocation, logout, identity assurance, MFA, secure clock sourcing, key custody and distributed audit policy remain outstanding. Do not trust arbitrary JWKS URLs or use these tools to control robots or medical devices without independent security and safety engineering.
