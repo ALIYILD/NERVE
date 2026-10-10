@@ -35,6 +35,11 @@ class RecursiveScheduleV19Tests(unittest.TestCase):
         self.assertIn("scripts/recursive_research_v19.py", self.workflow)
         self.assertIn("candidates_evaluated", self.workflow)
         self.assertIn("cross_tenant_leaks", self.workflow)
+        self.assertIn("worldcore_recursion_v19.py", self.workflow)
+        self.assertIn("worldcore-research.json", self.workflow)
+        self.assertIn("holdout_absolute_eligible", self.workflow)
+        self.assertIn("research-output/*.json", self.workflow)
+        self.assertIn("cp research-output/recursive-research.json research-state/evolution.json", self.workflow)
         self.assertIn("actions/upload-artifact@v4", self.workflow)
         self.assertIn("retention-days: 7", self.workflow)
 
