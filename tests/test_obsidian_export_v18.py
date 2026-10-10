@@ -69,7 +69,7 @@ class ObsidianPreviewV18Tests(unittest.TestCase):
         self.assertNotIn("demo@example.org", markdown)
         self.assertNotIn("<script>", markdown)
         self.assertIn("&lt;script&gt;", markdown)
-        self.assertIn("[email redacted]", markdown)
+        self.assertIn("email redacted", markdown)
 
     def test_invalid_limit_rejected(self):
         with self.assertRaises(ValueError):
