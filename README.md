@@ -221,3 +221,9 @@ GitHub Actions run 38077317425 passed **167 tests**. The default WorldCore contr
 ## AutoResearch v0.7 — recovery authorisation regression tests
 
 `tests/test_recovery_v07.py` adds five regression tests covering rejected simulated identities, wrong-incident approvals, inconsistent sensor observations, reused prior-incident approvals and a valid supervised resumption. GitHub Actions run 38078032977 passed **175 tests**. This is a deterministic unit-test expansion around the existing identity-bound recovery boundary, **not** yet a multi-condition autonomous research-search loop. No real identity provider, safety-certified hardware or live credentials are involved.
+
+## AutoResearch v0.8 — aggregate evidence review
+
+`src/nerve_awim/autoresearch_v08.py` brings together the existing WorldCore absolute reliability eligibility gate, simulated supervised recovery state-transition benchmark, and a wall-clock research execution budget. It explicitly reports both individual checks and a collective `all_checks_pass` outcome, without automatically deploying or approving any candidate.
+
+GitHub Actions run 38078147124 passed **179 tests**, with a research report showing `runtime_budget: true`, `simulated_recovery_transitions: true`, but `controller_absolute_eligibility: false`. The aggregate verdict is **false**, due to inadequate completion and aborted episodes. The example measured roughly 0.15 seconds of wall-clock processing on GitHub CI, which is not a general hardware-independent performance claim. No actual resource isolation, live identity provider or production-safety certification is supplied.
