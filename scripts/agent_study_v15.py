@@ -19,7 +19,7 @@ from unittest.mock import patch
 
 from nerve_awim.agent_study_v15 import (
     FORMATS, PLANS, CapableFixturePlanner, LimitedFixturePlanner,
-    FormatChatPlanner, FormatExperience,
+    FormatChatPlanner, FormatExperience, FailureFixturePlanner,
 )
 from nerve_awim.evolution_v01 import EvolutionMemory
 from nerve_awim.study_statistics_v16 import summarize_pairs
@@ -293,6 +293,7 @@ def main(argv=None):
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--mock-api", action="store_true")
     modes.add_argument("--limited-fixture", action="store_true")
+    modes.add_argument("--failure-fixture", action="store_true")
     modes.add_argument("--live", action="store_true")
     parser.add_argument("--seeds", type=int, default=2)
     parser.add_argument("--cases", type=int, default=3)
@@ -308,12 +309,14 @@ def main(argv=None):
         report["mode"] = "offline-chat-protocol-mock-not-llm"
     else:
         planner = (FormatChatPlanner() if args.live else
+                   FailureFixturePlanner() if args.failure_fixture else
                    LimitedFixturePlanner() if args.limited_fixture else
                    CapableFixturePlanner())
         report = asyncio.run(study(
             planner=planner, seeds=args.seeds,
             cases_per_format=args.cases))
         report["mode"] = ("live-opt-in" if args.live else
+                          "failure-fixture" if args.failure_fixture else
                           "limited-fixture" if args.limited_fixture else
                           "capable-fixture-not-llm")
     print(json.dumps(report, indent=2, sort_keys=True))
