@@ -17,7 +17,8 @@ from .autoresearch_v05 import eligibility
 class ParallelEvolutionCycle:
     def __init__(self, *, memory: EvolutionMemory, agent_id: str,
                  max_workers: int = 4, ledger_path=None,
-                 learn_from_evaluations: bool = False):
+                 learn_from_evaluations: bool = False,
+                 jev_reviewer=None):
         if not agent_id or not isinstance(agent_id, str):
             raise ValueError("research agent identity required")
         if not isinstance(learn_from_evaluations, bool):
@@ -25,6 +26,7 @@ class ParallelEvolutionCycle:
         self.memory = memory
         self.learn_from_evaluations = learn_from_evaluations
         self.agent_id = agent_id
+        self.jev_reviewer = jev_reviewer
         self.ledger_path = Path(ledger_path) if ledger_path is not None else None
         self.workers = BoundedParallelAgents({
             "research": self._research,
@@ -32,7 +34,12 @@ class ParallelEvolutionCycle:
             "evaluate": self._evaluate,
             "review": self._review,
             "safety": eligibility,
+            **({"jev": self._jev_review} if jev_reviewer is not None else {}),
         }, max_workers=max_workers)
+
+    def _jev_review(self, payload):
+        reference, candidate = payload
+        return self.jev_reviewer.review(baseline=reference, candidate=candidate)
 
     def _research(self, proposals):
         candidates = tuple(proposals)
@@ -95,6 +102,16 @@ class ParallelEvolutionCycle:
                                          measurements["baseline"])))
         policy_results = {out.job_id: out.output
                           for out in self.workers.run(policy_jobs)}
+        # Optional external Jev critique, sent only after objective metrics
+        # exist. Always advisory; provider failures reject the whole batch.
+        jev_reviews = {}
+        if self.jev_reviewer is not None:
+            responses = self.workers.run([
+                AgentJob("jev:" + p.name, "jev",
+                         (measurements["baseline"], measurements[p.name]))
+                for p in prioritised
+            ])
+            jev_reviews = {result.job_id: result.output for result in responses}
         trials = []
         eligible = []
         for proposal in prioritised:
@@ -109,6 +126,12 @@ class ParallelEvolutionCycle:
                 "absolute_eligibility": gate.eligible,
                 "rejection_reasons": list(gate.reasons),
                 "decision": "candidate_for_review" if accepted else "reject",
+                "jev_advice": ({
+                    "regression_risk": jev_reviews["jev:" + proposal.name].risk_probability,
+                    "model": jev_reviews["jev:" + proposal.name].model,
+                    "elapsed_seconds": jev_reviews["jev:" + proposal.name].elapsed_seconds,
+                    "usage": jev_reviews["jev:" + proposal.name].token_usage,
+                } if self.jev_reviewer is not None else None),
             })
             if accepted:
                 eligible.append((score["goal_penalized"], proposal.name,
@@ -125,6 +148,7 @@ class ParallelEvolutionCycle:
             "trials": trials,
             "memory_advice_count": len(memory.output),
             "parallel_worker_limit": self.workers.max_workers,
+            "optional_jev_review_enabled": self.jev_reviewer is not None,
             "holdout_report_only": holdout,
             "scope": "Synthetic experiments. No deployment or policy changes.",
         }
