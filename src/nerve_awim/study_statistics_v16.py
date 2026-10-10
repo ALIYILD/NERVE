@@ -60,9 +60,9 @@ def _simple(rows):
                             for row in rows),
         "both_fail": sum(not row["with_memory"] and not row["no_memory"]
                          for row in rows),
-        "no_memory_execution_errors": sum(row["no_memory_error"]
+        "no_memory_task_errors": sum(row["no_memory_error"]
                                           for row in rows),
-        "with_memory_execution_errors": sum(row["with_memory_error"]
+        "with_memory_task_errors": sum(row["with_memory_error"]
                                             for row in rows),
     }
 
