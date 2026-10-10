@@ -75,3 +75,9 @@ Next experiments should implement a separately simulated, externally supervised 
 The `recovery_v21.py` module adds a lockout state machine: sensor loss → supervision required → fresh observation qualification → explicit approval → resumed decisions. The associated `benchmarks/v21_benchmark.py` experiment assumes an independent simulated supervisor applies zero control during lockout; **that assumption is not a real-world safe-stop mechanism**.
 
 The 20-seed synthetic benchmark in GitHub Actions run 38073284167 showed a mean 14.05 withheld autonomous decisions, 1 approval-assisted recovery per run, mean final goal error 0.2253 and zero observed configured-envelope violations. These values do not establish physical safety, secure approval authentication, or generalised fault recovery. Human approval is modelled as an explicit boolean, not an authenticated operator identity. Hardware integration remains prohibited without external safety engineering and verification.
+
+## WorldCore v2.3 — independent evidence and local audit
+
+`recovery_policy_v23.py` adds an independent consistency evaluator for timestamped position/velocity recovery evidence and append-only JSONL audit recording with per-record SHA-256 digests. Five new tests cover consistent, contradictory and duplicate evidence, audit persistence and simple tamper detection. GitHub Actions run 38073534539 passed 81 tests.
+
+**Important limitations:** these modules are separate from the v2.2 recovery controller and are not yet mandatory approval gates; local SHA-256 checksums are not authenticated signatures or tamper-evident chained storage. The identity fields in v2.2 remain unverified assertions. These components cannot be used as production authentication or physical safety controls.
