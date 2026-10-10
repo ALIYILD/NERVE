@@ -174,3 +174,12 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/agent_study_v15.py --mock-api --seeds 2 --cases 3
+
+      - name: V1.6 seed-cluster paired assessment with a capable planner
+        env:
+          PYTHONPATH: src
+        run: python scripts/agent_study_v15.py --seeds 5 --cases 2
+      - name: V1.6 provider-failure accounting with equal task denominators
+        env:
+          PYTHONPATH: src
+        run: python scripts/agent_study_v15.py --failure-fixture --seeds 2 --cases 2
