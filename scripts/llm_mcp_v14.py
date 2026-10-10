@@ -5,6 +5,9 @@ real model. --live makes a bounded number of operator-authorised chat API
 calls using a private environment key. Never sends raw tasks to the LLM.
 """
 import argparse
+import io
+import os
+from unittest.mock import patch
 import asyncio
 import json
 from pathlib import Path
@@ -141,13 +144,57 @@ async def run_study(*, planner, count=4):
                 }
 
 
+class MockChatResponse:
+    def __init__(self, result):
+        self._reader = io.BytesIO(json.dumps(result).encode())
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        return False
+
+    def read(self, size):
+        return self._reader.read(size)
+
+
+def mocked_chat_completions(request, timeout):
+    """Protocol-shaped, intentionally naive test double, NOT a real LLM."""
+    body = json.loads(request.data)
+    if len(body.get("messages", [])) != 2:
+        raise AssertionError("unexpected chat input shape")
+    prompt = body["messages"][1]["content"]
+    guided = '"extract": "json-field"' in prompt and \
+             '"normalise": "trim-lower"' in prompt
+    selected = {
+        "extract_strategy": "json-field" if guided else "raw",
+        "normalise_strategy": "trim-lower" if guided else "lower-only",
+    }
+    return MockChatResponse({
+        "choices": [{"message": {"content": json.dumps(selected)}}],
+        "usage": {"prompt_tokens": 75, "completion_tokens": 14},
+    })
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument("--live", action="store_true")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--live", action="store_true")
+    mode.add_argument("--mock-api", action="store_true")
     parser.add_argument("--cases", type=int, default=4)
     args = parser.parse_args(argv)
-    planner = (ChatCompletionsPlanner() if args.live else FixturePlanner())
-    report = asyncio.run(run_study(planner=planner, count=args.cases))
+    if args.mock_api:
+        with patch.dict(os.environ, {"NERVE_LLM_API_KEY": "local-test-only-not-a-credential"}):
+            planner = ChatCompletionsPlanner(
+                url="https://mock.invalid/v1/chat/completions",
+                model="protocol-fixture", transport=mocked_chat_completions)
+            report = asyncio.run(run_study(planner=planner, count=args.cases))
+        report["model_backend"] = "mock HTTP response; no external LLM"
+    else:
+        planner = ChatCompletionsPlanner() if args.live else FixturePlanner()
+        report = asyncio.run(run_study(planner=planner, count=args.cases))
+        report["model_backend"] = ("live external provider" if args.live
+                                   else "offline deterministic fixture")
     print(json.dumps(report, indent=2, sort_keys=True))
 
 
