@@ -161,3 +161,16 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/llm_mcp_v14.py --mock-api --cases 4
+
+      - name: V1.5 paired capable-agent control (same result with and without memory)
+        env:
+          PYTHONPATH: src
+        run: python scripts/agent_study_v15.py --seeds 2 --cases 3
+      - name: V1.5 paired limited-agent learning demonstration
+        env:
+          PYTHONPATH: src
+        run: python scripts/agent_study_v15.py --limited-fixture --seeds 2 --cases 3
+      - name: V1.5 model HTTP contract through real MCP stdio (mocked)
+        env:
+          PYTHONPATH: src
+        run: python scripts/agent_study_v15.py --mock-api --seeds 2 --cases 3
