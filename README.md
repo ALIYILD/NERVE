@@ -399,3 +399,30 @@ model ID and private `NERVE_LLM_API_KEY` and is **not** exercised by CI.
 These constructed tests establish **protocol compatibility and
 control-flow integrity**, not improvement of actual LLM intelligence
 or self-retraining. See [v1.4 research guide](docs/llm-agent-v14.md).
+
+## Evolution v1.5 — Context-specific learning with matched agent controls
+
+`agent_study_v15.py` adds format-scoped evaluation history and an
+optional `FormatChatPlanner` for model-assisted decisions. Its real MCP
+study runs on independent synthetic training and held-out examples in
+two formats (`json_email`, `plain_email`), using exactly the same
+registered capabilities, task inputs and decision/tool budgets in
+both the no-memory and memory arms.
+
+```bash
+python -m pip install 'mcp==2.3.0'
+PYTHONPATH=src python scripts/agent_study_v15.py --seeds 2 --cases 3
+PYTHONPATH=src python scripts/agent_study_v15.py --limited-fixture --seeds 2 --cases 3
+PYTHONPATH=src python scripts/agent_study_v15.py --mock-api --seeds 2 --cases 3
+```
+
+A **capable fixture** gets 100% with or without memory; a deliberately
+limited fixture improves after receiving evaluated format-specific
+recommendations. The mocked Chat Completions provider also solves
+both conditions without real network inference. No live LLM benchmark
+result is available and these tests do not prove learning-speed gains.
+
+An optional [manual protected live workflow](.github/workflows/llm-study-v15.yml)
+can run a bounded study using a fresh private model credential. Its
+environment must be configured and reviewed independently.
+See [v1.5 evaluation guide](docs/evolution-v15.md).
