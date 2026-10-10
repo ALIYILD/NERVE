@@ -70,6 +70,17 @@ def create_server(db_path=None):
     def run_demo_agent_pipelines(tasks:list[dict],policy:str="utility")->list[dict]:
         """Run up to 16 independent safe demo pipelines in parallel."""
         return demo.run_pipelines(tasks,policy=policy)
+    @server.tool()
+    def run_demo_agent_plan(task_id:str,email_document:str,
+                            extract_strategy:str,normalise_strategy:str)->dict:
+        """Execute only named registered string-tool strategies.
+
+        Never executes model-written code or writes reward feedback.
+        Caller supplies a bounded synthetic JSON document.
+        """
+        return demo.execute_plan(task_id=task_id,email_document=email_document,
+                                 extract_strategy=extract_strategy,
+                                 normalise_strategy=normalise_strategy)
     return server
 
 if __name__=="__main__":
