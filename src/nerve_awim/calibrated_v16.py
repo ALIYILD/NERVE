@@ -16,9 +16,10 @@ class CalibratedController:
         self.pending_predictions={}
         self.blocked=0
     def ingest(self,timestamp,*,position=None,velocity=None):
+        # Validate and assimilate first; rejected packets cannot contaminate calibration.
+        self.core.ingest(timestamp,position=position,velocity=velocity)
         if velocity is not None and timestamp in self.pending_predictions:
             self.calibration.update(self.pending_predictions.pop(timestamp),velocity)
-        self.core.ingest(timestamp,position=position,velocity=velocity)
     def choose(self):
         candidate=self.core.choose()
         radius=self.calibration.radius()
@@ -28,7 +29,6 @@ class CalibratedController:
         return candidate.action
     def act(self):
         # Record forecast only for the action actually applied, then advance filter.
-        candidate=self.core.choose()
         action=self.choose()
         state=self.core.filter.state
         prediction=self.core.retention*state.velocity+self.core.gain*action
