@@ -21,6 +21,12 @@ class IdentityTests(unittest.TestCase):
         c=self.setup_controller(identity)
         a=sign_approval(SECRET,"alice","supervisor",c.incident,"n1",200)
         self.assertTrue(c.authorize_identity("test-assertion",a,100))
+    def test_signed_only_bypass_blocked(self):
+        identity=VerifiedIdentity("alice","test-idp","nerve",frozenset({"recovery-supervisor"}),200)
+        c=self.setup_controller(identity)
+        a=sign_approval(SECRET,"alice","supervisor",c.incident,"n1",200)
+        self.assertFalse(c.authorize_signed(a,100))
+        self.assertEqual(c.phase,"awaiting_approval")
     def test_missing_identity(self):
         c=self.setup_controller(None)
         a=sign_approval(SECRET,"alice","supervisor",c.incident,"n1",200)
