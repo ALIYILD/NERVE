@@ -515,3 +515,33 @@ security model is not a remote multi-tenant authentication system.
 
 See [implementation and limitations](docs/memory-v18-implementation.md)
 and [memory architecture decision](docs/memory-backend-decision-v18.md).
+
+## NERVE recursive self-improvement research v1.9
+
+An **AlphaEvolve-inspired, self-iterating research controller** now
+runs data-only retrieval-configuration experiments in generations:
+mutate bounded candidate recipes → independently evaluate training and
+validation → reject privacy/scope violations and regressions → retain
+the best evaluated genome → mutate again → check report-only holdout.
+
+```bash
+PYTHONPATH=src python -m nerve_awim.recursive_evolution_v19
+PYTHONPATH=src python scripts/recursive_research_v19.py --seed 19 > first.json
+PYTHONPATH=src python scripts/recursive_research_v19.py --resume first.json --seed 20 > next.json
+```
+
+The public [scheduled research workflow](.github/workflows/recursive-research.yml)
+runs this bounded offline cycle **every six hours** on `main` when
+GitHub Actions scheduling is enabled. It keeps a small **typed genome
+checkpoint** in GitHub Actions cache, re-evaluates previous winners
+rather than trusting old fitness numbers, and publishes research JSON
+artifacts for review. Its repository permissions are **read-only**;
+there is no self-commit, auto-merge, model-key usage or deployment.
+
+The test domain is a fixed, constructed memory-retrieval dataset,
+**not** proof of broad self-improving intelligence. This is not the
+Google AlphaEvolve service or LLM-generated code evolution. Future
+source-code mutation would require an isolated sandbox, verified
+evaluator provenance, independent holdouts and human-reviewed PRs.
+
+See [loop architecture and schedule](docs/recursive-evolution-v19.md).
