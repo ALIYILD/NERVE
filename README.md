@@ -113,3 +113,9 @@ The opt-in `IdentityBoundRecovery` integrates an injected identity-verification 
 - GitHub Actions run 38075358712 passed **108 tests** with the pinned-JWKS and unified-runtime tests included.
 
 This is simulation-only work. The operator authorisation flag is itself an untrusted input unless an external control plane enforces it. Key rotation lacks distributed coordination and revocation; live OIDC integration and device safety certification remain out of scope.
+
+## v2.9 — observable runtime and end-to-end recovery test
+
+`telemetry_v29.py` introduces a bounded in-process event trace with strictly limited event categories and statuses, while `observed_runtime_v29.py` wraps the existing research runtime to log control, sensor and identity outcomes. The integration test simulates a missing sensor, a denied identity assertion, and an accepted supervisor approval. GitHub Actions run 38075485337 passed **111 tests**.
+
+**Limitations:** no live identity-provider connection, distributed tracing, persistence, privacy/security certification or real actuator controls. In-memory trace records are ephemeral and are not a replacement for the durable incident ledger. Do not place patient data or secrets in telemetry events.
