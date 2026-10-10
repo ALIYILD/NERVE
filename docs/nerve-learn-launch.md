@@ -149,3 +149,25 @@ or verified installation in every third-party client.
 The local demo remains inert: no filesystem mutation beyond the opted-in
 SQLite experience store, no network access by demo handlers, no clinical
 actions, and no automatic promotion of learned strategies to production.
+
+## v1.8 security change — generic write tools default disabled
+
+**Breaking hardening default:** The generic MCP methods
+`record_experience` and `rate_experience` still appear in the tool
+catalog, but they now reject calls unless the server operator starts a
+**fully trusted, local, single-user research service** with
+`NERVE_ENABLE_LEGACY_MCP_WRITES=1`. This is an intentional protection
+against unverified caller-supplied numeric rewards influencing agent
+strategy suggestions. The switch is **not authentication** and MUST
+NOT be set on a public or shared network service.
+
+Trusted built-in synthetic fixture training, evaluated agent experiments,
+and local read-only memory tools are unaffected. The new
+`memory_v18.py` verified local ledger is a separate research data path
+and **is not exposed as public MCP tools** until authenticated identity,
+verified feedback provenance, revocation/forget propagation, and
+tenant controls are implemented.
+
+For the optional Mem0 OSS read-only adapter, Obsidian-reviewed Markdown
+preview, and SQL baseline, see
+`docs/memory-v18-implementation.md`. No automatic migration is performed.
