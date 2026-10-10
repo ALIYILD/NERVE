@@ -4,6 +4,8 @@ from nerve_awim.recovery_v21 import SupervisedWorldCore
 
 def trial(approved):
     model = SupervisedWorldCore(max_missing=2, recovery_samples=2)
+    model.act()
+    model.act()
     model.miss()
     model.miss()
     suspended = model.decide().action is None
