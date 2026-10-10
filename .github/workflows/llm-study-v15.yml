@@ -1,0 +1,41 @@
+name: NERVE v1.5 - protected real-model evaluation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nerve-llm-research-live
+  cancel-in-progress: false
+
+jobs:
+  heldout-agent-evaluation:
+    name: Same-model paired memory A/B evaluation
+    if: github.repository == 'ALIYILD/NERVE' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: llm-research-live
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install MCP SDK
+        run: python -m pip install 'mcp==2.3.0'
+      - name: Evaluate eight synthetic model decisions on fixed heldout tasks
+        shell: bash
+        env:
+          PYTHONPATH: src
+          NERVE_LLM_CHAT_URL: ${{ vars.NERVE_LLM_CHAT_URL }}
+          NERVE_LLM_MODEL: ${{ vars.NERVE_LLM_MODEL }}
+          NERVE_LLM_API_KEY: ${{ secrets.NERVE_LLM_API_KEY }}
+        run: |
+          if [[ -z "${NERVE_LLM_API_KEY:-}" || -z "${NERVE_LLM_CHAT_URL:-}" || -z "${NERVE_LLM_MODEL:-}" ]]; then
+            echo 'Missing protected model research configuration; no requests sent.'
+            exit 1
+          fi
+          python scripts/agent_study_v15.py --live --seeds 1 --cases 2
