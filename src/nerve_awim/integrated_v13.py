@@ -27,7 +27,7 @@ class SensorOnlyController:
                  risk_weight=1.0):
         values=(target,retention,gain,learning_rate,bound,risk_weight)
         if not all(isfinite(v) for v in values):raise ValueError("nonfinite configuration")
-        if not 0<=retention<1 or not 0<learning_rate<=1 or not 0<bound or not 1<=horizon<=5 or risk_weight<0:
+        if not 0<=retention<1 or not 0<=learning_rate<=1 or not 0<bound or not 1<=horizon<=5 or risk_weight<0:
             raise ValueError("invalid controller configuration")
         self.target,self.retention,self.gain=target,retention,gain
         self.lr,self.bound,self.horizon,self.risk=learning_rate,bound,horizon,risk_weight
@@ -48,7 +48,7 @@ class SensorOnlyController:
             a=self.filter.actions[k]
             if prev is None or curr is None or a==0:continue
             sample=(curr-self.retention*prev)/a
-            if isfinite(sample) and abs(sample)<=2:
+            if self.lr>0 and isfinite(sample) and abs(sample)<=2:
                 self.gain=max(0.01,min(1.0,(1-self.lr)*self.gain+self.lr*sample))
         # Revisit delayed updates next time: do not advance past missing pairs.
         self._last_fit_index=-1
