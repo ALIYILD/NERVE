@@ -61,3 +61,11 @@ Run `PYTHONPATH=src python -m unittest discover -s tests -v` and inspect the CI 
 - The v1.4 controller and its benchmarks remain unchanged as comparison baselines; neither v1.5 utility is yet integrated into the action policy.
 
 Run all tests with `PYTHONPATH=src python -m unittest discover -s tests -v`. For measured performance, use the benchmark workflow outputs rather than assuming gains from new functionality.
+
+## WorldCore v2.0: adaptive risk planning and sensor supervision
+
+`worldcore_v20.py` connects the v1.9 coverage adaptor to candidate-action ranking and returns an explicit unavailable/infeasible result after persistent loss of observations. The new benchmark is `benchmarks/v20_benchmark.py` and runs in CI.
+
+**Measured limitation (20 synthetic seeds, CI run 38073146982):** v2.0 aborted all 20 episodes during the forced sensor outage (mean 40.7 of 80 steps executed), while v1.7 continued. The final errors at different stopping times cannot be used to claim v2.0 is better or worse at full-horizon tracking. Prequential empirical coverage was approximately 81.1%, below the nominal 90% target. Zero constraint violations observed before abort are *not* evidence of safety.
+
+Next experiments should implement a separately simulated, externally supervised recovery policy, report complete-episode task outcomes, and test a held-out sensor fault regime. Do not deploy to physical actuators or clinical devices.
