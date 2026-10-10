@@ -87,3 +87,27 @@ The endpoint must be HTTPS and is configured only by the operator.
 
 Source: `src/nerve_awim/agent_study_v15.py` and
 `scripts/agent_study_v15.py`.
+
+## Manual protected GitHub Actions live evaluation
+
+An optional `llm-study-v15.yml` workflow runs **only** when manually
+dispatched from the protected `main` branch. It uses the
+`llm-research-live` environment, read-only GitHub repository permission,
+a five-minute job timeout and a bounded 8-request evaluation.
+
+To enable it, first provision a *fresh* limited-purpose compatible model
+credential in GitHub **Settings → Environments → llm-research-live**.
+Configure these values within that environment:
+
+- **Variable:** `NERVE_LLM_CHAT_URL`, an HTTPS model chat/completions URL.
+- **Variable:** `NERVE_LLM_MODEL`, a compatible model identifier.
+- **Secret:** `NERVE_LLM_API_KEY`, newly issued and never committed.
+
+Restrict environment branches to `main` and require independent approval
+when supported. Run **Actions → NERVE v1.5 - protected real-model evaluation**
+only after checking provider billing and data-handling terms.
+
+The workflow is not automatically triggered by pushes or pull requests.
+The CI test checks source-level restrictions but cannot confirm private
+GitHub environment settings, provider privacy terms, or model billing.
+Previously exposed credentials must not be reused.
