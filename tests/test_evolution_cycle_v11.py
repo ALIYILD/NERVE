@@ -61,6 +61,21 @@ class ParallelEvolutionCycleTests(unittest.TestCase):
         self.assertEqual(parallel["baseline_validation"],
                          serial["baseline_validation"])
 
+    def test_feedback_loop_records_failures_without_promotion(self):
+        learning = ParallelEvolutionCycle(
+            memory=self.memory, agent_id="researcher", max_workers=2,
+            learn_from_evaluations=True,
+        )
+        first = learning.run(self.proposals(), context="WorldCore")
+        self.assertEqual(first["research_feedback_recorded"], 2)
+        self.assertEqual(first["status"], "rejected")
+        rated = self.memory.select("researcher", "WorldCore", limit=6)
+        self.assertEqual(len(rated), 2)
+        self.assertTrue(all(item.utility == 0.0 for item in rated))
+        second = learning.run(self.proposals(), context="WorldCore")
+        self.assertEqual(second["memory_advice_count"], 2)
+        self.assertEqual(second["status"], "rejected")
+
     def test_validation_cannot_change_by_memory(self):
         baseline = self.loop.run(self.proposals(), context="WorldCore")
         self.memory.record("researcher", "WorldCore", "short", 1)
