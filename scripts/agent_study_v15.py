@@ -17,9 +17,6 @@ from pathlib import Path
 from time import perf_counter
 from unittest.mock import patch
 
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
-
 from nerve_awim.agent_study_v15 import (
     FORMATS, PLANS, CapableFixturePlanner, LimitedFixturePlanner,
     FormatChatPlanner, FormatExperience,
@@ -75,6 +72,10 @@ async def execute(client, *, task_id, text, plan):
 
 
 async def study(*, planner, seeds=2, cases_per_format=3):
+    # The MCP SDK is an optional integration dependency, not required by
+    # NERVE's core strategy and model-planning unit tests.
+    from mcp import ClientSession, StdioServerParameters
+    from mcp.client.stdio import stdio_client
     if type(seeds) is not int or not 1 <= seeds <= 4:
         raise ValueError("study seeds must be 1..4")
     if type(cases_per_format) is not int or not 1 <= cases_per_format <= 8:
