@@ -46,7 +46,7 @@ class MCPRecoveryTests(unittest.TestCase):
         self.assertGreaterEqual(learned["memory_used"], 3)
 
     def test_input_data_cannot_replace_judge_or_register_handlers(self):
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             self.demo.run(policy="memory", train_on_fixtures="true")
         with self.assertRaises(ValueError):
             self.demo.run(policy="unknown")
