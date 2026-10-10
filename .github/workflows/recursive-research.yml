@@ -30,17 +30,30 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m unittest discover -s tests -p 'test_recursive_evolution_v19.py' -v
+      - name: Restore recent bounded population checkpoint
+        uses: actions/cache@v4
+        with:
+          path: research-state/evolution.json
+          key: nerve-v19-${{ github.run_id }}
+          restore-keys: |
+            nerve-v19-
       - name: Bounded data-only evolutionary experiment
         env:
           PYTHONPATH: src
         run: |
-          mkdir -p research-output
-          python -m nerve_awim.recursive_evolution_v19 > research-output/recursive-research.json
+          mkdir -p research-output research-state
+          python scripts/recursive_research_v19.py \
+            --resume research-state/evolution.json \
+            --seed "${GITHUB_RUN_NUMBER}" \
+            --generations 6 > research-output/recursive-research.json
+          cp research-output/recursive-research.json research-state/evolution.json
           python - <<'PY'
           import json
           from pathlib import Path
           result = json.loads(Path('research-output/recursive-research.json').read_text())
-          assert result['candidates_evaluated'] <= 72
+          assert result['candidates_evaluated'] <= 36
+          assert result['known_population_size'] <= 36
+          assert result['study_protocol'] == 'nerve-recursive-data-only-v19'
           assert result['generations_run'] <= 12
           assert result['report_only_holdout']['cross_tenant_leaks'] == 0
           assert result['baseline_holdout']['cross_tenant_leaks'] == 0
