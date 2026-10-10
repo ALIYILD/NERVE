@@ -177,3 +177,11 @@ Next experiments should test partial observability, specialist information advan
 `benchmarks/v33_nonlinear.py` tests synthetic nonlinear sensor dynamics with abrupt parameter change and 20% second-channel dropout. A unified eight-parameter model and context-specific specialist models use equivalent block-feature gradient updates. The small two-parameter linear reference has less representational capacity. GitHub Actions run 38076403825 passed **140 tests**.
 
 Measured late prediction MAE across 20 seeds: simple linear **0.159554**, unified nonlinear **0.208573**, specialist nonlinear **0.208573**. The equal-capacity models are algebraically equivalent, so the identical results are expected. Their poorer accuracy than the simple reference may reflect parameterisation and online adaptation under the chosen learning rate. No multi-agent coordination benefit is demonstrated. Real model runtime, communication overhead, token cost, and physical/clinical safety have not been benchmarked.
+
+## NERVE AutoResearch v0.1 — bounded experiment loop
+
+Inspired by [Andrej Karpathy's AutoResearch](https://github.com/karpathy/autoresearch), NERVE now has a constrained research cycle in `autoresearch_v01.py`: propose from predefined learning-rate candidates, evaluate on fixed validation seeds, keep or reject, and report once on untouched holdout seeds. Research rules: `research/program.md`; methodology: `docs/autoresearch-integration.md`.
+
+Run with `PYTHONPATH=src python -m nerve_awim.autoresearch_v01`. CI run 38076632867 passed **145 tests**. The selected scalar-learning-rate candidate was 0.3, with holdout MAE **0.038390** versus **0.153064** for the default 0.02 baseline. These numbers are from a simple synthetic parameter-adaptation task, not from real agent collaboration, model-weight training, robotics, or clinical workflows.
+
+**Research limitations:** candidates are predefined, code edits are not autonomous, evaluator isolation depends on source control, and the fixed benchmark can be overfit if reused repeatedly. Keep/reject only affects this experiment report, not production code or policy.
