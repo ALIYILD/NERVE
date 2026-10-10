@@ -59,6 +59,7 @@ def multi_regime_benchmark(seeds=range(20)):
     metrics=adaptive[0].keys()
     return {"config":{"seeds":len(adaptive),"steps":80,"regimes":regimes,"delay":2,"dropout":.12},
             "adaptive":{m:statistics.mean(x[m] for x in adaptive) for m in metrics},
-            "frozen":{m:statistics.mean(x[m] for x in frozen) for m in metrics}}
+            "frozen":{m:statistics.mean(x[m] for x in frozen) for m in metrics},
+            "drift":{m:statistics.mean(x[m] for x in drift) for m in metrics}}
 
 if __name__=="__main__":print(json.dumps({"single_change":benchmark(),"multi_regime":multi_regime_benchmark()},indent=2,sort_keys=True))
