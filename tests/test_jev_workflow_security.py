@@ -36,6 +36,14 @@ class ProtectedJevWorkflowTests(unittest.TestCase):
         self.assertNotIn("printenv", self.yaml)
         self.assertNotIn("set -x", self.yaml)
 
+    def test_manual_mode_is_fixed_choice(self):
+        self.assertIn("type: choice", self.yaml)
+        self.assertIn("default: smoke", self.yaml)
+        self.assertIn("if: inputs.mode == 'smoke'", self.yaml)
+        self.assertIn("if: inputs.mode == 'comparison'", self.yaml)
+        self.assertIn("python -m nerve_awim.jev_agreement_v12 --live", self.yaml)
+        self.assertEqual(self.yaml.count("python -m nerve_awim.jev_smoke"), 1)
+
     def test_principle_of_least_privilege(self):
         self.assertIn("permissions:\n  contents: read", self.yaml)
         self.assertIn("persist-credentials: false", self.yaml)
