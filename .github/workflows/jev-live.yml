@@ -1,0 +1,39 @@
+name: TypeSafe Jev - manually approved live smoke test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: typesafe-jev-live
+  cancel-in-progress: false
+
+jobs:
+  jev-smoke:
+    name: One synthetic TypeSafe request
+    if: github.repository == 'ALIYILD/NERVE' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    environment: typesafe-live
+    steps:
+      - name: Check out main without persisted Git credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Make one synthetic Jev request (protected secret only)
+        shell: bash
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          PYTHONPATH: src
+        run: |
+          if [[ -z "${TYPESAFE_API_KEY:-}" ]]; then
+            echo 'Missing TYPESAFE_API_KEY in the typesafe-live environment; no request was sent.'
+            exit 1
+          fi
+          python -m nerve_awim.jev_smoke
