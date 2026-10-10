@@ -185,3 +185,9 @@ Inspired by [Andrej Karpathy's AutoResearch](https://github.com/karpathy/autores
 Run with `PYTHONPATH=src python -m nerve_awim.autoresearch_v01`. CI run 38076632867 passed **145 tests**. The selected scalar-learning-rate candidate was 0.3, with holdout MAE **0.038390** versus **0.153064** for the default 0.02 baseline. These numbers are from a simple synthetic parameter-adaptation task, not from real agent collaboration, model-weight training, robotics, or clinical workflows.
 
 **Research limitations:** candidates are predefined, code edits are not autonomous, evaluator isolation depends on source control, and the fixed benchmark can be overfit if reused repeatedly. Keep/reject only affects this experiment report, not production code or policy.
+
+## NERVE AutoResearch v0.2 — bounded proposal coordinator
+
+`src/nerve_awim/autoresearch_v02.py` accepts typed `Proposal` objects constrained to a finite gain-learning-rate range, evaluates them on an immutable-in-code synthetic WorldCore-*adjacent* drift task, records keep/reject decisions, and writes a JSONL experiment ledger. A separate 30-seed holdout is reported after validation selection. The loop cannot edit Python source, launch subprocesses, alter safety policies or deploy model changes.
+
+GitHub Actions run 38076802612 passed **150 tests**. The four-candidate demonstration selected gain learning rate **0.4** with holdout MAE **0.040716**, versus **0.223218** for the fixed rate 0.02. This is an easy synthetic drift-adaptation comparison, not a general-purpose self-improving AI demonstration. Repeatedly inspecting the same public holdout destroys its independence in future research. CPU/memory/time isolation and real WorldCore/agent-runtime integration are **not yet implemented**.
