@@ -55,3 +55,25 @@ class LearningStore:
     def suggest(self,agent_id,query,min_score=.8):
         return [x for x in self.recall(agent_id,query) if x.score is not None
                 and x.score>=min_score]
+
+    def rated_history(self, agent_id, context, limit=500):
+        """Recent evaluated experiences for one exact agent/context.
+
+        Unlike task substring search, exact context matching avoids pulling
+        examples from adjacent capabilities. Returns oldest-to-newest order.
+        This is a local convenience namespace, NOT authentication.
+        """
+        if not all(isinstance(x, str) and 0 < len(x) <= 256
+                   for x in (agent_id, context)):
+            raise ValueError("nonempty bounded agent and context required")
+        if type(limit) is not int or not 1 <= limit <= 1000:
+            raise ValueError("history limit must be 1..1000")
+        with sqlite3.connect(self.path) as db:
+            rows = db.execute(
+                """SELECT experience_id,agent_id,task,outcome,score,created_at
+                   FROM experiences
+                   WHERE agent_id=? AND task=? AND score IS NOT NULL
+                   ORDER BY rowid DESC LIMIT ?""",
+                (agent_id, context, limit),
+            ).fetchall()
+        return [Experience(*row) for row in reversed(rows)]
