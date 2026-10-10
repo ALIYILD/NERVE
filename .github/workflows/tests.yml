@@ -79,3 +79,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m nerve_awim.autoresearch_v01
+
+      - name: Run bounded AutoResearch v0.2 coordinator
+        env:
+          PYTHONPATH: src
+        run: python -m nerve_awim.autoresearch_v02
