@@ -76,18 +76,26 @@ class Mem0SemanticAdapter:
 class SecureMemoryRetriever:
     """Authoritative ledger + optional advisory external semantic search."""
 
-    def __init__(self, ledger, semantic=None):
+    def __init__(self, ledger, semantic=None, utility=None):
         self.ledger = ledger
         self.semantic = semantic
+        if utility is not None and utility.ledger is not ledger:
+            raise ValueError('utility ranker must use the same authoritative ledger')
+        self.utility = utility
 
     def retrieve(self, actor, *, context, query, limit=5, mode="lexical",
                  now=None):
-        if mode not in ("lexical", "semantic"):
+        if mode not in ("lexical", "semantic", "adaptive"):
             raise ValueError("unknown retrieval mode")
         if type(query) is not str or not 1 <= len(query) <= 256:
             raise ValueError("bounded nonempty query required")
         if type(limit) is not int or not 1 <= limit <= 20:
             raise ValueError("bounded limit required")
+        if mode == 'adaptive':
+            if self.utility is None:
+                raise RuntimeError('adaptive ranking is not enabled')
+            candidates = self.ledger.retrieve(actor, context=context, query=query, limit=20, now=now)
+            return self.utility.rank(actor, candidates, now=now)[:limit]
         if mode == "lexical":
             return self.ledger.retrieve(
                 actor, context=context, query=query, limit=limit, now=now
