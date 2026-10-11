@@ -10,6 +10,12 @@ The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed stu
 manifests, pre-reserved holdouts, content-change checks and a reviewable rollout
 recommendation across separate processes. It never activates a release.
 
+The [v2.3 canary controller](docs/canary-learning-v23.md) lets a trusted operator
+approve limited trial traffic for a passed candidate. It checks candidate outputs,
+automatically falls back on canary failures, and requires separate approval for
+full promotion. This local API is tested with repository tasks; it is not wired to
+Clinical OS or external LLM traffic.
+
 The [shadow adapter](docs/shadow-task-learning-v21.md) now executes selected real
 repository tasks with the active tool, then independently judges outputs and
 trains alternative tool routes outside the request path. Aggregate outcomes and

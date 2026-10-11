@@ -197,7 +197,7 @@ class GovernedLearning:
 
     @staticmethod
     def _claim(con, scope, task, digest, split, claim):
-        if split == 'train' and con.execute('''SELECT 1 FROM gl_holdout_reservations
+        if split != 'holdout' and con.execute('''SELECT 1 FROM gl_holdout_reservations
                 WHERE tenant=? AND agent=? AND (task_id=? OR payload_hash=?)''',
                 (*scope, task.task_id, digest)).fetchone():
             raise ValueError('task reserved for independently held-out evaluation')

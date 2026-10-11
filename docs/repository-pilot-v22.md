@@ -71,7 +71,8 @@ Recommendations are explicit:
   passed; review data provenance, cost/latency budgets and the deployment plan.
 
 None of these recommendations activates a release. Operator-controlled activation
-and rollback remain available through v2.0; canary routing is not implemented here.
+and rollback remain available through v2.0; the optional
+[v2.3 controller](canary-learning-v23.md) now implements local canary routing.
 No provider billing or Clinical OS traffic is connected. Scheduling also remains
 the host's responsibility; this change does not create a recurring automation.
 

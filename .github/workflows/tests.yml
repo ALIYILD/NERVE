@@ -220,3 +220,8 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/verify_repository_pilot_v22.py
+
+      - name: Verify bounded canary traffic and automatic baseline fallback
+        env:
+          PYTHONPATH: src
+        run: python scripts/verify_canary_v23.py

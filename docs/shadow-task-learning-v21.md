@@ -53,8 +53,9 @@ person running this example is not independent human evaluation.
 There is deliberately no CLI activation command. Review candidates through the
 existing v2.0 operator API, with independently authenticated host identities,
 generation checks and rollback references. No activation is attempted by this
-adapter, its verifier or its CI workflow. No automatic canary routing or provider
-billing integration is included.
+adapter, its verifier or its CI workflow. The separate
+[v2.3 controller](canary-learning-v23.md) provides operator-approved local canary
+routing. Provider billing integration is not included.
 
 ## Host integration
 
