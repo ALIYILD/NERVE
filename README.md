@@ -10,6 +10,11 @@ The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed stu
 manifests, pre-reserved holdouts, content-change checks and a reviewable rollout
 recommendation across separate processes. It never activates a release.
 
+The [v2.4 promotion monitor](docs/promotion-monitor-v24.md) can be armed atomically
+with operator-approved promotion. It checks fresh promoted results and restores
+the previous release on failure, while respecting newer operator decisions.
+Monitoring persists across restarts and requires the host controller entrypoint.
+
 The [v2.3 canary controller](docs/canary-learning-v23.md) lets a trusted operator
 approve limited trial traffic for a passed candidate. It checks candidate outputs,
 automatically falls back on canary failures, and requires separate approval for

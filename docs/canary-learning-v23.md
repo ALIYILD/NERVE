@@ -86,9 +86,10 @@ existing host-issued local object capabilities, not proof of human identity or
 organisational separation. Raw host/database access remains trusted.
 
 Promotion atomically changes the active release and generation. The existing
-operator-controlled rollback restores a prior approved release. Automatic fallback
-is a **canary-stage** feature; this controller does not monitor or automatically
-roll back traffic after full promotion. Other trusted v2.0 operator APIs remain
+operator-controlled rollback restores a prior approved release. By default automatic fallback
+is a **canary-stage** feature. The optional [v2.4 monitor](promotion-monitor-v24.md)
+adds persistent post-promotion checks and automatic rollback when explicitly armed
+with `monitor_latency_ms` during promotion. Other trusted v2.0 operator APIs remain
 available, so the host must enforce its chosen deployment policy at its entrypoint.
 
 ## Evidence and limits

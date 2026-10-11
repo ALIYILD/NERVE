@@ -12,6 +12,7 @@ from time import perf_counter
 import uuid
 
 from .governed_learning_v20 import _json
+from .promotion_monitor_v24 import PromotionMonitor
 
 
 class CanaryLearning:
@@ -19,6 +20,7 @@ class CanaryLearning:
         if len(engine._baseline) != 1:
             raise ValueError('this bounded pilot supports one task context per scope')
         self.engine = engine
+        self.monitor = PromotionMonitor(engine)
         with engine._db() as con:
             con.executescript('''
                 CREATE TABLE IF NOT EXISTS gl_canaries (
@@ -90,6 +92,12 @@ class CanaryLearning:
 
     def execute(self, actor, canary, task):
         scope = self.engine._scope(actor, 'runtime')
+        with self.engine._db() as con:
+            self._row(con, scope, canary)
+            monitored = con.execute('SELECT 1 FROM gl_promotion_monitors WHERE canary=? AND tenant=? AND agent=?',
+                                    (canary, *scope)).fetchone()
+        if monitored:
+            return self.monitor.execute(actor, canary, task)
         task, digest = self.engine._task(task)
         selected, reason = False, 'baseline_sample'
         with self.engine._db() as con:
@@ -155,7 +163,20 @@ class CanaryLearning:
                     return {'value': value, 'strategy': routes[task.context], 'release': row['release'],
                             'generation': row['base_generation'], 'feedback_written': False,
                             'canary': {'id': canary, 'used': True, 'reason': 'judged_pass'}}
-        result = self.engine.execute(actor, task)
+        # Promotion can occur while this request is using the trial path.
+        # Decide monitoring versus an immutable active snapshot in one read transaction.
+        with self.engine._db() as con:
+            con.execute('BEGIN')
+            monitored = con.execute('SELECT 1 FROM gl_promotion_monitors WHERE canary=? AND tenant=? AND agent=?',
+                                    (canary, *scope)).fetchone()
+            state = self.engine._state(con, scope)
+            active_routes = self.engine._release(con, scope, state['active'])
+        if monitored:
+            return self.monitor.execute(actor, canary, task)
+        strategy = active_routes[task.context]
+        value = self.engine._registry[(task.context, strategy)](deepcopy(task.payload))
+        result = {'value': value, 'strategy': strategy, 'release': state['active'],
+                  'generation': state['generation'], 'feedback_written': False}
         result['canary'] = {'id': canary, 'used': False, 'reason': reason}
         return result
 
@@ -177,9 +198,11 @@ class CanaryLearning:
                 'base_release': row['base_release'], 'active_release': state['active'],
                 'cost_usd': None, 'automatic_promotion': False}
 
-    def promote(self, actor, canary, *, expected_generation, reason):
+    def promote(self, actor, canary, *, expected_generation, reason, monitor_latency_ms=None):
         scope = self.engine._scope(actor, 'operator')
         self.engine._approval_input(expected_generation, reason)
+        if monitor_latency_ms is not None:
+            self.monitor.validate_budget(monitor_latency_ms)
         with self.engine._db() as con:
             con.execute('BEGIN IMMEDIATE')
             row = self._row(con, scope, canary)
@@ -196,6 +219,8 @@ class CanaryLearning:
             con.execute('UPDATE gl_state SET active=?,generation=generation+1 WHERE tenant=? AND agent=?',
                         (row['release'], *scope))
             con.execute("UPDATE gl_canaries SET phase='promoted',reason=? WHERE id=?", (reason, canary))
+            if monitor_latency_ms is not None:
+                self.monitor.arm(con, scope, row, expected_generation + 1, monitor_latency_ms, reason)
             self.engine._event(con, scope, 'canary_promoted', {'canary': canary,
                 'release': row['release'], 'previous': row['base_release'],
                 'generation': expected_generation + 1, 'review': reason})
