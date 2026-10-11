@@ -1,0 +1,36 @@
+name: pilot-installation
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  packaged-service:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build and verify pilot bundle
+        env:
+          PYTHONPATH: src
+        run: |
+          python scripts/pilot_bundle_v28.py build --source . --destination "$RUNNER_TEMP/nerve-pilot.zip"
+          python scripts/pilot_bundle_v28.py verify --source "$RUNNER_TEMP/nerve-pilot.zip"
+          python scripts/pilot_bundle_v28.py unpack --source "$RUNNER_TEMP/nerve-pilot.zip" --destination "$RUNNER_TEMP/nerve-pilot"
+      - name: Install hash-locked dependencies in a clean environment
+        run: |
+          python -m venv "$RUNNER_TEMP/nerve-pilot-venv"
+          "$RUNNER_TEMP/nerve-pilot-venv/bin/python" -m pip install --require-hashes --only-binary=:all: -r "$RUNNER_TEMP/nerve-pilot/deploy/requirements-pilot-linux-x86_64.lock"
+      - name: Verify extracted service and recovery
+        run: |
+          "$RUNNER_TEMP/nerve-pilot-venv/bin/python" "$RUNNER_TEMP/nerve-pilot/scripts/verify_pilot_install_v28.py" > "$RUNNER_TEMP/nerve-pilot-installation.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nerve-pilot-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/nerve-pilot.zip
+            ${{ runner.temp }}/nerve-pilot-installation.json
+          retention-days: 14
+          if-no-files-found: error

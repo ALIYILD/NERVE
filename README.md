@@ -10,6 +10,11 @@ The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed stu
 manifests, pre-reserved holdouts, content-change checks and a reviewable rollout
 recommendation across separate processes. It never activates a release.
 
+The [v2.8 installation bundle](docs/pilot-installation-v28.md) packages the pilot
+with a checksum manifest and Linux/Python dependency lock. A separate CI job
+checks the extracted service in a clean venv, including signed HTTP and recovery.
+This verifies installation mechanics; it does not deploy a public service.
+
 The [v2.7 operations bundle](docs/host-operations-v27.md) adds authenticated
 readiness, startup checks, non-overwriting SQLite backup/restore and a systemd
 pilot template. Recovery preserves trial bindings and monitoring state; no live
