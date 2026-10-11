@@ -28,7 +28,7 @@ At least one paired final win and zero losses can admit a lesson as scoped advic
 
 Routing recommendations use the last 20 ingested verified outcomes per eligible profile, with score `(successes + 1) / (observations + 2)`. A challenger needs three observations and a strictly higher score; ties preserve the incumbent. The caller must establish task capability. These scores are neither calibrated probabilities nor causal comparisons, and the published recommendation alone does not prove the dispatcher changed its route.
 
-The automatic cycle can request a study after three newly observed supervisor failures, at most once per UTC day. This trigger currently launches the handoff fixture; it does not diagnose or repair the underlying mission timeout. The installed launch agent invokes the cycle every 15 minutes and its first cycle exited successfully.
+The automatic cycle can request a repository repair study after three newly observed supervisor failures, at most once per UTC day. It does not diagnose or repair the underlying mission timeout. An explicitly queued study deferred for the daily budget can retry after the UTC day changes without new failures. The installed launch agent invokes the cycle every 15 minutes while the user session is active.
 
 ## Research choices
 
@@ -83,3 +83,14 @@ Training inspection subsequently exposed missing raw-input-length and whitespace
 The repository experiment now has a visible dashboard summary. The recurring cycle can request it after three new supervisor failures, provided independent tasks are fresh. Reusing the finite fixture is rejected. Expanding to naturally occurring work requires new independently tested task families; repeated prompts over the same functions do not establish generalization.
 
 Final validation: **670 tests passed** on the installed Python 3.10 runtime, including evaluator execution and kernel isolation probes. Dashboard regression fixtures, TypeScript validation, and the v2 production build also passed. Claude TLS was verified with a credential-free request returning HTTP 401; targeted paid reviews still require an API credential. The $25 reviewer ledger records zero calls and zero spending.
+
+
+## Second cohort and deferred execution
+
+A second cohort adds eleven previously unused function identities: text trigrams, format validation, plan parsing, advice validation, JSON extraction, retrieval-genome validation, recipe selection, eligibility thresholds, paired statistics, and execution budgets. Selection tasks share a plan-parsing domain; some mechanisms also resemble the first cohort. Fresh function identities do not establish independent semantic domains or broad generalization. Declared inert constructor adapters keep extracted functions runnable under the same restricted evaluator.
+
+Database reservations now also reject previously used function families across studies, including changed mutations, profiles and evaluator revisions. Versioned cohort selection preserves the first experiment and chooses only an entirely fresh cohort. Current evaluator identities for both cohorts bind evaluator source, cohort source and extracted task contracts, with source snapshots retained before inference. Historical receipts retain their original hashes and are not relabeled.
+
+The next native study was queued on 11 October 2026: seven of the twenty daily native sessions remained, while the complete experiment may need eight. Queueing consumed no task evidence or native calls. The existing 15-minute cycle retries after the UTC day changes while the user session is active. The prior 3/3 versus 3/3 result remains the latest measured repository comparison; no additional improvement has yet been measured.
+
+Validation for this extension: **687 tests passed**, including all eleven new reference repairs and rejection of all eleven injected faults. Queue execution and next-day retry were tested with fake inference; the new live comparison remains pending. Claude remains unconfigured with zero calls and zero spending.

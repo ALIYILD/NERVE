@@ -24,8 +24,77 @@ def ledger(host):
     return RepositoryExperiments(host.directory/'repository-learning.sqlite3')
 
 
-def revision():
-    return sha256(Path(bench.__file__).read_bytes()).hexdigest()
+def cohorts():
+    from nerve_awim import agentos_taskbench_v2
+    return {'v1':bench, 'v2':agentos_taskbench_v2}
+
+
+def revision(cohort='v1'):
+    evaluator=Path(bench.__file__).read_bytes()
+    source=Path(cohorts()[cohort].__file__).read_bytes()
+    return sha256(encode({'cohort':cohort,'evaluator_sha256':sha256(evaluator).hexdigest(),
+                         'cohort_sha256':sha256(source).hexdigest(),
+                         'task_manifest':task_manifest(cohorts()[cohort].dataset())}).encode()).hexdigest()
+
+
+def task_manifest(groups):
+    return [{'id':bench.public_task(t)['id'],'phase':phase,
+        'family':bench.public_task(t)['family'],'task':bench.public_task(t)}
+        for phase,tasks in groups.items() for t in tasks]
+
+
+def registered_tasks(cohort=None):
+    available=cohorts()
+    if cohort is not None and cohort not in available:
+        raise ValueError('unknown repository cohort')
+    return {name:{phase:[bench.public_task(t) for t in tasks]
+                  for phase,tasks in module.dataset().items()}
+            for name,module in available.items() if cohort is None or cohort==name}
+
+
+def fresh_cohort(experiment, cohort=None):
+    available=cohorts()
+    if cohort is not None and cohort not in available:
+        raise ValueError('unknown repository cohort')
+    with sqlite3.connect(experiment.path) as db:
+        rows=db.execute('SELECT hash,family FROM tasks').fetchall()
+    used={row[0] for row in rows}
+    families={row[1] for row in rows}
+    for name,module in available.items():
+        if cohort is not None and name!=cohort:
+            continue
+        groups=module.dataset()
+        manifest=task_manifest(groups)
+        if any(t['family'] in families or
+               sha256(encode({k:v for k,v in t['task'].items() if k!='id'}).encode()).hexdigest() in used
+               for t in manifest):
+            continue
+        return name,groups,manifest
+    return None
+
+
+REQUIRED_STUDY_SESSIONS = 8
+DAILY_NATIVE_LIMIT = 20
+
+
+def session_budget(host):
+    # Production hosts always own the calls ledger. Lightweight test hosts may
+    # omit it because their native callback performs no inference.
+    if not hasattr(host,'path'):
+        return DAILY_NATIVE_LIMIT
+    day=time.strftime('%Y-%m-%d',time.gmtime())
+    with sqlite3.connect(host.path) as db:
+        used=db.execute('SELECT COUNT(*) FROM nerve_calls WHERE day=? AND provider=?',
+                        (day,'hermes-free')).fetchone()[0]
+    return max(0,DAILY_NATIVE_LIMIT-used)
+
+
+def clear_pending(host, profile, cohort):
+    path=host.directory/'pending-repository-study.json'
+    if path.exists():
+        pending=json.loads(path.read_text())
+        if pending.get('profile')==profile and (cohort is None or pending.get('cohort') in (None,cohort)):
+            path.unlink()
 
 
 def predict(host, native, profile, tasks, *, model, lesson=None):
@@ -54,25 +123,31 @@ def predict(host, native, profile, tasks, *, model, lesson=None):
     return values,checks,receipt
 
 
-def study(host, native, profile, vault, *, progress=lambda:None):
-    groups=bench.dataset()
+def study(host, native, profile, vault, *, progress=lambda:None, cohort=None):
     experiment=ledger(host)
-    model=native(host,profile,'',inspect=True)['requested_model']
-    judge_revision=revision()
-    manifest=[{'id':bench.public_task(t)['id'],'phase':phase,
-        'family':bench.public_task(t)['family'],'task':bench.public_task(t)}
-        for phase,tasks in groups.items() for t in tasks]
-    with sqlite3.connect(experiment.path) as db:
-        used={row[0] for row in db.execute('SELECT hash FROM tasks')}
-    if any(sha256(encode({k:v for k,v in t['task'].items() if k!='id'}).encode()).hexdigest() in used
-           for t in manifest):
+    selected=fresh_cohort(experiment,cohort)
+    if selected is None:
+        clear_pending(host,profile,cohort)
         return {'result':{'status':'no_fresh_tasks'},'limitation':
-                'This fixture contains previously reserved evidence. Add independent function families before another study.'}
+                'All requested cohorts contain reserved function families. Add independent function families before another study.'}
+    cohort,groups,manifest=selected
+    remaining=session_budget(host)
+    if remaining<REQUIRED_STUDY_SESSIONS:
+        atomic_json(host.directory/'pending-repository-study.json',
+                    {'profile':profile,'cohort':cohort,
+                     'requested_day':time.strftime('%Y-%m-%d',time.gmtime()),
+                     'status':'deferred_daily_budget','required_sessions':REQUIRED_STUDY_SESSIONS,
+                     'remaining_sessions':remaining})
+        return {'cohort':cohort,'result':{'status':'deferred_daily_budget',
+                'required_sessions':REQUIRED_STUDY_SESSIONS,'remaining_sessions':remaining},
+                'limitation':'Fresh evidence remains unreserved; the scheduled cycle retries after the UTC daily budget resets.'}
+    judge_revision=revision(cohort)
     # Independent evaluator self-check before reserving the holdout or spending.
     for tasks in groups.values():
         for task in tasks:
             if not bench.evaluate(task,bench.reference_solution(task))['passed']:
                 raise RuntimeError('reference repair failed evaluator preflight')
+    model=native(host,profile,'',inspect=True)['requested_model']
     sid='repair-'+uuid.uuid4().hex
     experiment.start(sid,profile=profile,model=model,judge_revision=judge_revision,
                      tasks=manifest,budget=BUDGET)
@@ -94,8 +169,10 @@ def study(host, native, profile, vault, *, progress=lambda:None):
         snapshot=host.directory/'study-inputs'/sid
         snapshot.mkdir(parents=True,exist_ok=False)
         (snapshot/'judge.py').write_bytes(Path(bench.__file__).read_bytes())
+        if cohort!='v1':
+            (snapshot/'cohort.py').write_bytes(Path(cohorts()[cohort].__file__).read_bytes())
         atomic_json(snapshot/'manifest.json',{'study_id':sid,'judge_revision':judge_revision,
-            'scope':SCOPE,'tasks':manifest})
+            'scope':SCOPE,'cohort':cohort,'tasks':manifest})
         progress()
         outputs,checks=execute('train','baseline')
         prompt=('Extract one concise reusable Python repair lesson from only these training attempts. '
@@ -124,33 +201,40 @@ def study(host, native, profile, vault, *, progress=lambda:None):
                 break
         if result is None:
             result=experiment.complete(sid,results=evidence)
-        receipt=dict(id=sid,profile=profile,scope=SCOPE,model=model,judge_revision=judge_revision,
+        receipt=dict(id=sid,profile=profile,scope=SCOPE,cohort=cohort,model=model,judge_revision=judge_revision,
                      result=result,native_sessions=sessions,artifacts=artifacts,limitation=LIMITATION)
     except Exception as error:
         # Native wrapper errors are categorical. Avoid raw provider or code text.
         reason=type(error).__name__+': repository experiment did not complete'
         experiment.fail(sid,reason,results=evidence)
-        receipt=dict(id=sid,profile=profile,scope=SCOPE,model=model,judge_revision=judge_revision,
+        receipt=dict(id=sid,profile=profile,scope=SCOPE,cohort=cohort,model=model,judge_revision=judge_revision,
                      result={'status':'failed','reason':reason},native_sessions=sessions,
                      artifacts=artifacts,limitation=LIMITATION)
         atomic_json(host.directory/'latest-repository-study.json',receipt)
         atomic_json(vault/'Journal/nerve'/f'{sid}.json',receipt)
+        clear_pending(host,profile,cohort)
         progress()
         raise
     atomic_json(host.directory/'latest-repository-study.json',receipt)
     atomic_json(vault/'Journal/nerve'/f'{sid}.json',receipt)
+    clear_pending(host,profile,cohort)
     progress()
     return receipt
 
 
-def run(host,native,profile,task_id):
+def run(host,native,profile,task_id, *, cohort=None):
     """Monitored reuse on a registered repair; this is replay, not fresh evidence."""
-    tasks=[t for group in bench.dataset().values() for t in group]
-    task=next((t for t in tasks if bench.public_task(t)['id']==task_id),None)
-    if task is None:
-        raise ValueError('registered repair task required')
+    available=cohorts()
+    if cohort is not None and cohort not in available:
+        raise ValueError('unknown repository cohort')
+    matches=[(name,t) for name,module in available.items() if cohort is None or name==cohort
+             for group in module.dataset().values() for t in group
+             if bench.public_task(t)['id']==task_id]
+    if len(matches)!=1:
+        raise ValueError('one unambiguous registered repair task required')
+    cohort,task=matches[0]
     model=native(host,profile,'',inspect=True)['requested_model']
-    judge_revision=revision()
+    judge_revision=revision(cohort)
     experiment=ledger(host)
     advice=experiment.recall(profile,model,judge_revision)
     outputs,checks,receipt=predict(host,native,profile,[task],model=model,
@@ -162,7 +246,7 @@ def run(host,native,profile,task_id):
         episode=sha256(json.dumps([bench.public_task(task),advice['id']],sort_keys=True).encode()).hexdigest()
         outcome=experiment.observe(episode,profile=profile,model=model,judge_revision=judge_revision,
             lesson_id=advice['id'],passed=checks[task_id]['passed'],baseline_passed=base[task_id]['passed'])
-    result=dict(task_id=task_id,scope=SCOPE,output=outputs[task_id],check=checks[task_id],
+    result=dict(task_id=task_id,scope=SCOPE,cohort=cohort,judge_revision=judge_revision,output=outputs[task_id],check=checks[task_id],
                 lesson_id=advice['id'] if advice else None,monitor=outcome,native=receipt,
                 limitation='Registered task replay; not a fresh held-out improvement measurement.')
     atomic_json(host.directory/'latest-repository-run.json',result)

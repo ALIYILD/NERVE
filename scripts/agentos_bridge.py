@@ -278,6 +278,8 @@ def publish(host, extra=None):
     reviewer=ClaudeReviewer(host.directory/'claude-review.sqlite3')
     status['claude_budget']=reviewer.report()
     status['claude_status']='configured' if claude_key() else 'credential_not_connected'
+    pending_path=host.directory/'pending-repository-study.json'
+    status['pending_repository_study']=json.loads(pending_path.read_text()) if pending_path.exists() else None
     status['repository_learning']=RepositoryExperiments(host.directory/'repository-learning.sqlite3').summary()
     native_file=host.directory/'latest-native.json'
     if native_file.exists():
@@ -285,7 +287,7 @@ def publish(host, extra=None):
     status['routing_advice']=host.recommend_profiles(
         ['coordinator','dashboard-operator','workflow-integrity-auditor'],incumbent='coordinator')
     status['automatic_learning']={'enabled':(HOME/'Library/LaunchAgents/com.aliyildirim.nerve.learning.plist').exists(),'provider':'hermes-free',
-        'trigger':'3 new supervisor-confirmed failures; at most one repository repair study per UTC day, requiring fresh tasks',
+        'trigger':'Queued studies retry after UTC budget reset; otherwise 3 new supervisor-confirmed failures, at most once per UTC day; fresh tasks required',
         'daily_native_session_limit':20,'paid_calls':False}
     atomic_json(host.directory/'status.json',status)
     approved=[]
@@ -293,6 +295,11 @@ def publish(host, extra=None):
         approved.extend({'profile':profile,'id':r.memory_id,'content':r.content,'expires':r.valid_until}
                         for r in host.recall(profile))
     atomic_json(host.directory/'context.json',{'context':CONTEXT,'lessons':approved})
+    pending=status['pending_repository_study']
+    pending_note=('Queued repository study: '+str(pending['profile'])+' / '+str(pending['cohort'])+
+        '; deferred on '+str(pending['requested_day'])+' UTC; '+
+        str(pending.get('remaining_sessions','?'))+' of '+str(pending.get('required_sessions',8))+
+        ' required native sessions available. Retries after the UTC daily budget resets.\n\n') if pending else ''
     note = ('# NERVE — Agent OS learning\n\n'+
         'AWIM coordination and evaluated-memory track. [[agent-os-capability-registry]]\n\n'+
         'Updated: '+status['updated_at']+'\n\n'+
@@ -304,6 +311,7 @@ def publish(host, extra=None):
         'Repository repair study: '+status['repository_learning']['status']+'; '+
         str(status['repository_learning']['active_lessons'])+' active lessons; '+
         str(status['repository_learning']['rollbacks'])+' rollbacks.\n\n'+
+        pending_note+
         'Receipts: `~/.agentic-os/nerve/status.json`; [[Journal/nerve]].\n')
     (VAULT/'Memory/nerve-status.md').write_text(note)
     return status
@@ -317,6 +325,7 @@ def main():
     parser.add_argument('--task',type=Path)
     parser.add_argument('--state',type=Path,default=STATE)
     parser.add_argument('--task-id')
+    parser.add_argument('--cohort',choices=('v1','v2'),help='Repository task cohort; default selects fresh evidence automatically')
     parser.add_argument('--review-target',choices=('handoff','repository-experiments','repository-taskbench','repository-runner'),default='handoff')
     args=parser.parse_args()
     args.profile=args.profile or ('backend-engineer' if args.command.startswith('repository-') or args.command=='cycle' else 'qa-release')
@@ -327,12 +336,11 @@ def main():
             import agentos_repository as repair
             try:
                 if args.command=='repository-study':
-                    result=repair.study(host,native,args.profile,VAULT,progress=lambda:publish(host))
+                    result=repair.study(host,native,args.profile,VAULT,progress=lambda:publish(host),cohort=args.cohort)
                 elif args.command=='repository-run':
-                    result=repair.run(host,native,args.profile,args.task_id)
+                    result=repair.run(host,native,args.profile,args.task_id,cohort=args.cohort)
                 else:
-                    result={phase:[repair.bench.public_task(t) for t in tasks]
-                            for phase,tasks in repair.bench.dataset().items()}
+                    result=repair.registered_tasks(args.cohort)
             finally:
                 publish(host)
         elif args.command=='study':
@@ -349,13 +357,19 @@ def main():
             gate=host.directory/'auto-study.json'
             previous=json.loads(gate.read_text()) if gate.exists() else {}
             today=datetime.now(timezone.utc).strftime('%Y-%m-%d')
-            if failures-previous.get('failures',0)>=3 and previous.get('day')!=today:
+            pending_path=host.directory/'pending-repository-study.json'
+            pending=json.loads(pending_path.read_text()) if pending_path.exists() else {}
+            pending_due=bool(pending) and pending.get('requested_day')!=today
+            if pending_due or (failures-previous.get('failures',0)>=3 and previous.get('day')!=today):
                 atomic_json(gate,{'day':today,'failures':failures,'status':'started'})
                 try:
                     import agentos_repository as repair
-                    learned=repair.study(host,native,args.profile,VAULT,progress=lambda:publish(host))
+                    learned=repair.study(host,native,pending['profile'] if pending_due else args.profile,
+                        VAULT,progress=lambda:publish(host),cohort=pending.get('cohort') if pending_due else None)
                     atomic_json(gate,{'day':today,'failures':failures,'status':learned['result']['status']})
                 except Exception as error:
+                    if pending_due:
+                        pending_path.unlink(missing_ok=True)
                     atomic_json(gate,{'day':today,'failures':failures,'status':'failed','error':str(error)[:180]})
             last_attempt=json.loads(gate.read_text()) if gate.exists() else {}
             result=publish(host,{'collection':collected,

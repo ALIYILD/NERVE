@@ -4,6 +4,7 @@ import tempfile
 import unittest
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from threading import Barrier
 
 from nerve_awim.agentos_experiments import RepositoryExperiments, SCOPE
 
@@ -99,6 +100,71 @@ class RepositoryExperimentTests(unittest.TestCase):
         bad[-1]['family'] = bad[-2]['family']
         with self.assertRaises(ValueError):
             self.start(manifest=bad)
+
+    def test_changed_payload_cannot_reuse_family_after_restart_or_failure(self):
+        self.start()
+        self.host.fail('study', 'provider unavailable')
+        self.host = RepositoryExperiments(self.path)
+        fresh = tasks('new-')
+        # Only one overlapping family suffices, despite every payload and ID
+        # being different and the old study failing before evaluation.
+        fresh[-1]['family'] = self.tasks[0]['family']
+        with self.assertRaisesRegex(sqlite3.IntegrityError, 'function family already reserved'):
+            self.host.start('changed', profile='other', model='other-model',
+                            judge_revision='new-judge', tasks=fresh, budget=BUDGET)
+        with self.assertRaises(LookupError):
+            self.host.status('changed')
+        with sqlite3.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM tasks').fetchone()[0], len(self.tasks))
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM events WHERE study='changed'").fetchone()[0], 0)
+        # A rejected transaction must not consume any of its genuinely new tasks.
+        fresh[-1]['family'] = 'new-final-family'
+        self.start('changed', fresh)
+
+    def test_existing_immutable_database_gains_family_reservation_without_rewrite(self):
+        self.start()
+        with sqlite3.connect(self.path) as db:
+            before = db.execute('SELECT * FROM tasks ORDER BY rowid').fetchall()
+            # Simulate the previous schema, retaining its immutable evidence.
+            db.execute('DROP TRIGGER reserve_task_family')
+            db.execute('DROP INDEX tasks_family_study')
+        self.host = RepositoryExperiments(self.path)
+        fresh = tasks('changed-')
+        fresh[0]['family'] = self.tasks[-1]['family']
+        with self.assertRaisesRegex(sqlite3.IntegrityError, 'function family already reserved'):
+            self.start('new-study', fresh)
+        with sqlite3.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT * FROM tasks ORDER BY rowid').fetchall(), before)
+            with self.assertRaises(sqlite3.IntegrityError):
+                db.execute("UPDATE tasks SET family='renamed'")
+
+    def test_concurrent_changed_mutations_reserve_family_for_exactly_one_study(self):
+        barrier = Barrier(2)
+        manifests = [tasks('left-'), tasks('right-')]
+        for manifest in manifests:
+            manifest[-1]['family'] = 'shared-function'
+        def reserve(index):
+            host = RepositoryExperiments(self.path)
+            barrier.wait(timeout=10)
+            try:
+                host.start('study-'+str(index), profile='hermes', model='model-a',
+                           judge_revision='judge-1', tasks=manifests[index], budget=BUDGET)
+                return True
+            except sqlite3.IntegrityError as exc:
+                self.assertIn('function family already reserved', str(exc))
+                return False
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            accepted = list(pool.map(reserve, range(2)))
+        self.assertEqual(sum(accepted), 1)
+        with sqlite3.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM studies').fetchone()[0], 1)
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM tasks').fetchone()[0], len(self.tasks))
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM events').fetchone()[0], 1)
+
+    def test_multiple_mutations_of_one_family_allowed_within_same_study(self):
+        self.tasks[1]['family'] = self.tasks[0]['family']
+        self.start()
+        self.assertEqual(len(self.host.development('study')), 6)
 
     def test_final_excluded_from_proposer_and_frozen_immutably(self):
         self.start()

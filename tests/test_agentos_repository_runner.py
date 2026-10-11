@@ -18,6 +18,7 @@ SCRIPT = Path(__file__).resolve().parents[1]/'scripts/agentos_repository.py'
 SPEC = importlib.util.spec_from_file_location('nerve_test_repository_runner', SCRIPT)
 runner = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(runner)
+REAL_REVISION = runner.revision
 
 
 class RepositoryRunnerTests(unittest.TestCase):
@@ -36,6 +37,7 @@ class RepositoryRunnerTests(unittest.TestCase):
         self.calls = []
         self.stack = ExitStack()
         self.addCleanup(self.stack.close)
+        self.stack.enter_context(patch.object(runner,'cohorts',return_value={'v1':runner.bench}))
         self.stack.enter_context(patch.object(runner.bench,'dataset',return_value=self.groups))
         self.stack.enter_context(patch.object(runner.bench,'public_task',side_effect=self.public))
         self.stack.enter_context(patch.object(runner.bench,'reference_solution',return_value={'code':'REFERENCE'},create=True))
@@ -192,6 +194,102 @@ class RepositoryRunnerTests(unittest.TestCase):
         second=runner.run(self.host,regressed,'qa','final-0')
         self.assertIsNone(second['lesson_id'])
         self.assertEqual(self.experiment().summary()['rollbacks'],1)
+
+    def second_cohort(self):
+        groups={phase:[dict(task,id=task['id']+'-v2',family=task['family']+'-v2')
+                       for task in tasks] for phase,tasks in self.groups.items()}
+        source=self.root/'cohort.py'
+        source.write_text('# independent cohort source\n')
+        return SimpleNamespace(dataset=lambda:groups,__file__=str(source))
+
+    def test_changed_contract_and_id_cannot_recycle_function_families(self):
+        runner.study(self.host,self.native(mode='tie'),'qa',self.vault)
+        for tasks in self.groups.values():
+            for task in tasks:
+                task['id']+='-renamed'
+                task['requirements']+=' changed contract'
+        self.calls.clear()
+        result=runner.study(self.host,self.native(),'qa',self.vault)
+        self.assertEqual(result['result']['status'],'no_fresh_tasks')
+        self.assertEqual(self.calls,[])
+
+    def test_automatic_second_cohort_snapshot_then_exhaustion(self):
+        runner.study(self.host,self.native(mode='tie'),'qa',self.vault)
+        second=self.second_cohort()
+        with patch.object(runner,'cohorts',return_value={'v1':runner.bench,'v2':second}):
+            result=runner.study(self.host,self.native(mode='tie'),'qa',self.vault)
+            self.assertEqual(result['cohort'],'v2')
+            snapshot=self.host.directory/'study-inputs'/result['id']
+            self.assertEqual((snapshot/'cohort.py').read_bytes(),Path(second.__file__).read_bytes())
+            self.assertEqual(json.loads((snapshot/'manifest.json').read_text())['cohort'],'v2')
+            self.calls.clear()
+            exhausted=runner.study(self.host,self.native(),'qa',self.vault)
+            self.assertEqual(exhausted['result']['status'],'no_fresh_tasks')
+            self.assertEqual(self.calls,[])
+
+    def test_revision_binds_second_cohort_source_and_v1_manifest(self):
+        from hashlib import sha256
+        second=self.second_cohort()
+        with patch.object(runner,'cohorts',return_value={'v1':runner.bench,'v2':second}):
+            original=REAL_REVISION('v2')
+            v1=REAL_REVISION('v1')
+            self.assertNotEqual(v1,sha256(Path(runner.bench.__file__).read_bytes()).hexdigest())
+            self.groups['train'][0]['source']='changed v1 extracted target'
+            self.assertNotEqual(v1,REAL_REVISION('v1'))
+            v1=REAL_REVISION('v1')
+            self.groups['train'][0]['revision']='changed v1 helper revision'
+            self.assertNotEqual(v1,REAL_REVISION('v1'))
+            Path(second.__file__).write_text('# modified independent cohort source\n')
+            self.assertNotEqual(original,REAL_REVISION('v2'))
+
+    def test_revision_binds_dynamic_public_target_and_helper_revision(self):
+        second=self.second_cohort()
+        with patch.object(runner,'cohorts',return_value={'v1':runner.bench,'v2':second}):
+            original=REAL_REVISION('v2')
+            second.dataset()['train'][0]['source']='updated dynamic repository target'
+            changed_target=REAL_REVISION('v2')
+            self.assertNotEqual(original,changed_target)
+            second.dataset()['train'][0]['revision']='updated-target-and-helper-digest'
+            self.assertNotEqual(changed_target,REAL_REVISION('v2'))
+
+    def test_run_uses_selected_cohort_revision_and_rejects_ambiguous_id(self):
+        second=self.second_cohort()
+        with patch.object(runner,'cohorts',return_value={'v1':runner.bench,'v2':second}), \
+             patch.object(runner,'revision',side_effect=lambda c:'judge-'+c):
+            result=runner.run(self.host,self.native(mode='tie'),'qa','train-0-v2')
+            self.assertEqual(result['cohort'],'v2')
+            self.assertEqual(result['judge_revision'],'judge-v2')
+            with self.assertRaises(ValueError):
+                runner.run(self.host,self.native(),'qa','train-0-v2',cohort='v1')
+
+    def test_exhausted_automatic_cohorts_clear_same_profile_pending(self):
+        runner.study(self.host,self.native(mode='tie'),'qa',self.vault)
+        pending=self.host.directory/'pending-repository-study.json'
+        pending.write_text(json.dumps({'profile':'qa','cohort':'v1'}))
+        result=runner.study(self.host,self.native(),'qa',self.vault)
+        self.assertEqual(result['result']['status'],'no_fresh_tasks')
+        self.assertFalse(pending.exists())
+
+    def test_insufficient_budget_queues_without_reserving_or_inference(self):
+        self.host.path=self.root/'calls.sqlite3'
+        day=runner.time.strftime('%Y-%m-%d',runner.time.gmtime())
+        with sqlite3.connect(self.host.path) as db:
+            db.execute('CREATE TABLE nerve_calls(day TEXT, provider TEXT)')
+            db.executemany('INSERT INTO nerve_calls VALUES(?,?)',[(day,'hermes-free')]*13)
+        result=runner.study(self.host,self.native(),'qa',self.vault)
+        self.assertEqual(result['result'],{'status':'deferred_daily_budget',
+                                          'required_sessions':8,'remaining_sessions':7})
+        self.assertEqual(self.calls,[])
+        self.assertEqual(self.experiment().summary()['status'],'not_run')
+        pending=self.host.directory/'pending-repository-study.json'
+        self.assertEqual(json.loads(pending.read_text())['cohort'],'v1')
+        with sqlite3.connect(self.experiment().path) as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM tasks').fetchone()[0],0)
+        with sqlite3.connect(self.host.path) as db:
+            db.execute("UPDATE nerve_calls SET day='2000-01-01'")
+        result=runner.study(self.host,self.native(mode='tie'),'qa',self.vault,cohort='v1')
+        self.assertEqual(result['result']['status'],'no_gain')
+        self.assertFalse(pending.exists())
 
 
 if __name__=='__main__':

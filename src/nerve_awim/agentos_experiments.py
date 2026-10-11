@@ -52,6 +52,11 @@ class RepositoryExperiments:
                   passed INTEGER, baseline INTEGER, created REAL);
                 CREATE TABLE IF NOT EXISTS events (
                   seq INTEGER PRIMARY KEY, study TEXT, kind TEXT, payload TEXT, created REAL);
+                CREATE INDEX IF NOT EXISTS tasks_family_study ON tasks(family, study);
+                CREATE TRIGGER IF NOT EXISTS reserve_task_family
+                  BEFORE INSERT ON tasks
+                  WHEN EXISTS (SELECT 1 FROM tasks WHERE family=NEW.family AND study!=NEW.study)
+                  BEGIN SELECT RAISE(ABORT,"function family already reserved by another study"); END;
             ''')
             for table in ('tasks', 'receipts', 'events'):
                 for action in ('UPDATE', 'DELETE'):
@@ -87,7 +92,10 @@ class RepositoryExperiments:
             tid, family, phase = identifier(task['id']), identifier(task['family']), task['phase']
             if phase not in ('train', 'selection', 'retention', 'final') or type(task['task']) is not dict:
                 raise ValueError('valid phase and task payload required')
-            # Cosmetic IDs never make an existing fixture fresh.
+            # Cosmetic IDs never make an existing fixture fresh. The insertion
+            # trigger also reserves its family across studies, including when a
+            # new mutation changes the payload hash. Existing evidence stays
+            # immutable; repeated family members within one study are allowed.
             payload = encode({k:v for k,v in task['task'].items() if k != 'id'})
             if len(payload.encode()) > 200000:
                 raise ValueError('task too large')

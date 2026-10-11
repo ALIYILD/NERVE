@@ -25,6 +25,60 @@ class AgentOSBridgeTests(unittest.TestCase):
             patcher.start()
             self.addCleanup(patcher.stop)
 
+    def test_publish_includes_budget_queue_in_status_and_obsidian(self):
+        (self.vault/'Memory').mkdir(parents=True)
+        pending=dict(profile='backend-engineer',cohort='v2',requested_day='2026-10-11',
+                     status='deferred_daily_budget',required_sessions=8,remaining_sessions=7)
+        (self.host.directory/'pending-repository-study.json').write_text(json.dumps(pending))
+        with patch.object(bridge,'claude_key',return_value=None):
+            status=bridge.publish(self.host)
+        self.assertEqual(status['pending_repository_study'],pending)
+        note=(self.vault/'Memory/nerve-status.md').read_text()
+        self.assertIn('backend-engineer / v2',note)
+        self.assertIn('7 of 8 required native sessions',note)
+        self.assertIn('2026-10-11 UTC',note)
+
+    def test_cycle_retries_queued_study_on_new_day_without_new_failures(self):
+        import contextlib
+        import io
+        import sys
+        from types import SimpleNamespace
+        pending=self.host.directory/'pending-repository-study.json'
+        request=dict(profile='queued-profile',cohort='v2',requested_day='2000-01-01',
+                     status='deferred_daily_budget')
+        pending.write_text(json.dumps(request))
+        calls=[]
+        def study(host,native,profile,vault,**kwargs):
+            calls.append((profile,kwargs['cohort']))
+            pending.unlink()
+            return {'result':{'status':'no_gain'}}
+        with patch.dict(sys.modules,{'agentos_repository':SimpleNamespace(study=study)}), \
+             patch.object(sys,'argv',['bridge','cycle','--state',str(self.host.directory)]), \
+             patch.object(bridge,'collect_missions',return_value={}), \
+             patch.object(bridge,'publish',return_value={}),contextlib.redirect_stdout(io.StringIO()):
+            bridge.main()
+        self.assertEqual(calls,[('queued-profile','v2')])
+        self.assertFalse(pending.exists())
+        self.assertEqual(json.loads((self.host.directory/'auto-study.json').read_text())['status'],'no_gain')
+
+    def test_cycle_does_not_retry_queued_budget_on_same_day(self):
+        import contextlib
+        import io
+        import sys
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        pending=self.host.directory/'pending-repository-study.json'
+        today=bridge.datetime.now(bridge.timezone.utc).strftime('%Y-%m-%d')
+        pending.write_text(json.dumps(dict(profile='worker',cohort='v2',requested_day=today)))
+        study=Mock()
+        with patch.dict(sys.modules,{'agentos_repository':SimpleNamespace(study=study)}), \
+             patch.object(sys,'argv',['bridge','cycle','--state',str(self.host.directory)]), \
+             patch.object(bridge,'collect_missions',return_value={}), \
+             patch.object(bridge,'publish',return_value={}),contextlib.redirect_stdout(io.StringIO()):
+            bridge.main()
+        study.assert_not_called()
+        self.assertTrue(pending.exists())
+
     def test_interrupted_repository_study_is_failed_without_recycling_tasks(self):
         experiments=bridge.RepositoryExperiments(self.host.directory/'repository-learning.sqlite3')
         phases=['train','selection','retention','final','final','final']
