@@ -15,12 +15,21 @@ skill. The fixture is public and small, not a private realistic benchmark.
 `run_improvement_loop(..., regression=episodes)` now optionally checks each
 selection-improving candidate on a separate retained suite against the original
 baseline. Any paired loss rejects the candidate before replacing the incumbent.
+When an incumbent exists, a second retained-suite comparison also protects its
+acquired capabilities. Matching the original baseline is not sufficient if the
+candidate forgets something learned in an earlier iteration. The worst-case
+budget includes both comparisons. Each history entry reports both results.
 Regression tasks participate in exact-overlap checks and worst-case prediction
 budget preflight. They are also included in the exclusion prefix for final
 testing. The proposer sees aggregate retention results, so these tasks are
 development feedback, never final holdout evidence. Existing callers that omit
 the retained suite behave as before. Neither this check nor its reports grant
 deployment or memory approval.
+
+A failed final test now clears `selected_lesson`. `selection_winner` retains the
+pre-final candidate for audit only; it must not be treated as approved or ready
+for use. A final tie also clears selection. This is report-level rejection, not
+a production rollback: no deployment or ledger approval happens in this loop.
 
 Two ten-proposal deterministic scenarios are exercised:
 

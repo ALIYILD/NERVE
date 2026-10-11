@@ -25,7 +25,7 @@ def run_improvement_loop(training, selection, final, *, propose, predict, judge,
         raise ValueError('at least five retained regression tasks required')
     if len(selection) < 5 or len(final) < 5:
         raise ValueError('at least five selection and five final tasks required')
-    required = 2 * (iterations * (len(selection) + len(regression)) + len(final))
+    required = 2 * (iterations * (len(selection) + 2*len(regression)) + len(final))
     if type(max_prediction_calls) is not int or not required <= max_prediction_calls <= 20000:
         raise ValueError('insufficient bounded prediction-call quota')
     incumbent, history, seen, calls = None, [], set(), 0
@@ -46,6 +46,7 @@ def run_improvement_loop(training, selection, final, *, propose, predict, judge,
         # Any observed regression blocks replacement, even with positive net gain.
         keep = report['wins'] > 0 and report['losses'] == 0
         regression_report = None
+        incumbent_regression = None
         if keep and regression:
             # Compare with the original baseline, so accumulated changes cannot
             # progressively forget a previously working retained capability.
@@ -53,10 +54,18 @@ def run_improvement_loop(training, selection, final, *, propose, predict, judge,
                 predict=predict, judge=judge, max_calls=2*len(regression))
             calls += regression_report['prediction_calls']
             keep = regression_report['losses'] == 0
+            if keep and previous is not None:
+                # Also protect capabilities acquired by earlier accepted lessons.
+                incumbent_regression = evaluate_lesson(candidate, training + regression,
+                    predict=lambda task, lesson: predict(task, previous if lesson is None else lesson),
+                    judge=judge, max_calls=2*len(regression))
+                calls += incumbent_regression['prediction_calls']
+                keep = incumbent_regression['losses'] == 0
         if keep:
             incumbent = candidate
         history.append({'iteration': index + 1, 'status': 'kept' if keep else 'reverted',
-                        'selection': report, 'regression': regression_report})
+                        'selection': report, 'regression': regression_report,
+                        'incumbent_regression': incumbent_regression})
     final_report = None
     if incumbent is not None:
         # Include selection in the exclusion prefix; it is never final evidence.
@@ -65,7 +74,8 @@ def run_improvement_loop(training, selection, final, *, propose, predict, judge,
                                       judge=judge, max_calls=2*len(final))
         calls += final_report['prediction_calls']
     improved = final_report is not None and final_report['wins'] > 0 and final_report['losses'] == 0
-    return {'history': history, 'selected_lesson': incumbent, 'final': final_report,
+    return {'history': history, 'selected_lesson': incumbent if improved else None,
+            'selection_winner': incumbent, 'final': final_report,
             'prediction_calls': calls, 'proposal_calls': iterations,
             'status': 'observed_final_gain' if improved else 'no_verified_improvement',
             'promotion_authorized': False,
