@@ -10,8 +10,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   pilot:
-    # Credential-related HTTP 400. Disabled until replacement is confirmed.
-    if: ${{ false }}
+    # User confirmed replacement; one continuation retaining earlier reservations.
+    if: github.run_attempt == 1 && github.event.head_commit.message == 'resume approved Claude pilot 20261011-d8a72'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
