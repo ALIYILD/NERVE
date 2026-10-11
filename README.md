@@ -39,7 +39,7 @@ The [v2.3 canary controller](docs/canary-learning-v23.md) lets a trusted operato
 approve limited trial traffic for a passed candidate. It checks candidate outputs,
 automatically falls back on canary failures, and requires separate approval for
 full promotion. This local API is tested with repository tasks; it is not wired to
-Clinical OS or external LLM traffic.
+a downstream clinical application or external LLM traffic.
 
 The [shadow adapter](docs/shadow-task-learning-v21.md) now executes selected real
 repository tasks with the active tool, then independently judges outputs and
@@ -50,7 +50,8 @@ handler latency is reported; provider costs remain explicitly unknown.
 The active AST tool is the strong fixed baseline. In the cross-process check,
 both baseline and candidate score 5/5 on disjoint files, so the proposal is
 rejected and no release changes. This is an executable research workflow, not a
-live Clinical OS integration or a claim of general self-improvement.
+live integration with a downstream clinical application or a claim of general
+self-improvement.
 
 ```bash
 PYTHONPATH=src python scripts/verify_shadow_v21.py
@@ -72,8 +73,6 @@ The public repository currently includes a minimal core, the v1.2 delayed-observ
 
 `Sensors → Perception → WorldCore → NERVE Decision Layer → Safe Action → Feedback → Evaluated Memory/Model Updates`
 
-See the academic research proposal at https://deepsynaps.ai/blogs/nerve-awim-adaptive-world-intelligence-research and the [AI Lab model page](https://deepsynaps.ai/awim).
-
 ## Run the test suite
 
 With Python 3.10+ and the source tree available:
@@ -94,7 +93,7 @@ Apache License 2.0. See `LICENSE`.
 
 ## Citation
 
-NERVE-AWIM contributors (2026). *NERVE-AWIM: A Bio-Inspired Adaptive World Intelligence Architecture*. Research software and specification, DeepSynaps AI Lab.
+NERVE-AWIM contributors (2026). *NERVE-AWIM: A Bio-Inspired Adaptive World Intelligence Architecture*. Research software and specification.
 
 ## Security
 
@@ -615,7 +614,7 @@ PYTHONPATH=src python -m nerve_awim.worldcore_recursion_v19
 Absolute completion, abort and violation gates, non-regression constraints
 and a distinct holdout evaluation remain frozen. The scheduled workflow
 generates a separate `worldcore-research.json` artifact; **no controller
-setting is applied** to deployed NERVE, robots, or DeepSynaps devices.
+setting is applied** to deployed NERVE, robots, or neuromodulation devices.
 
 GitHub Actions scheduling is best-effort, not an always-on service.
 Artifacts can expire and caches can be evicted. Checkpoints are written atomically,
@@ -645,6 +644,7 @@ and a capable fixed AST tool also **8/8**. Approval changed the executed route;
 rollback restored the original behaviour in an isolated temporary runtime.
 This is tool-selection learning on a small public-code workload, not LLM weight
 training or evidence of broad autonomous intelligence. The demo's operator is
-simulated; remote authentication and live Clinical OS integration are not supplied.
+simulated; remote authentication and live integration with a downstream clinical
+application are not supplied.
 
 See [host integration, evidence gates and boundaries](docs/governed-outcome-learning-v20.md).

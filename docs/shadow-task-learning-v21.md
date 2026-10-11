@@ -3,7 +3,8 @@
 This adapter connects the governed learner to an executable repository-inventory
 workflow. The default active tool is the capable AST inventory tool. Shadow
 training can select among registered tools, but cannot change an active release.
-It does not connect Clinical OS, external LLM providers or patient traffic.
+It does not connect a downstream clinical application, external LLM providers or
+patient traffic.
 
 ## Run on selected repository files
 

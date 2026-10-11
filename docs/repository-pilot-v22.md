@@ -73,7 +73,8 @@ Recommendations are explicit:
 None of these recommendations activates a release. Operator-controlled activation
 and rollback remain available through v2.0; the optional
 [v2.3 controller](canary-learning-v23.md) now implements local canary routing.
-No provider billing or Clinical OS traffic is connected. Scheduling also remains
+No provider billing or downstream clinical application traffic is connected.
+Scheduling also remains
 the host's responsibility; this change does not create a recurring automation.
 
 Training accumulates at the namespace level, so frozen routes may use previous

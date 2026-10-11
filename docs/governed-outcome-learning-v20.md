@@ -2,7 +2,8 @@
 
 Status: opt-in local research runtime. This extends routing among registered
 Python tools. It does not train model weights, generate executable code, or
-activate a policy in DeepSynaps Clinical OS, an external agent service or a device.
+activate a policy in a downstream clinical application, an external agent service
+or a device.
 
 ## Implemented lifecycle
 
@@ -154,7 +155,8 @@ baseline rejection, frozen snapshots, contract changes and concurrent approvals.
 ## Still required for a live agent service
 
 The reusable runtime and real repository-task adapter are implemented. No external
-LLM provider or Clinical OS production traffic has been connected. A live service
+LLM provider or downstream clinical application production traffic has been
+connected. A live service
 needs host integration with its authenticated identities, registered read-only
 tools, independently verified task outcomes, fresh evaluation datasets and its
 own release/rollback controls. Keep proposals separate from operator approval.
