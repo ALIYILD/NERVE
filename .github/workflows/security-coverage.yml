@@ -1,0 +1,89 @@
+name: security-coverage
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    env:
+      TYPESAFE_API_KEY: ''
+      NERVE_LLM_API_KEY: ''
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+
+      # Entire git history: empty base + HEAD (see TruffleHog "Scan entire branch").
+      # Action adds --fail and --github-actions (redacted detector/path output).
+      # Verification stays on (--no-verification is not passed).
+      - name: TruffleHog git history scan
+        uses: trufflesecurity/trufflehog@e76dff8a7e57d6df0c60ad8cbf5d5cba505a8fc9 # v3.99.2
+        with:
+          path: ./
+          base: ""
+          head: HEAD
+          extra_args: --results=verified
+
+      # Filesystem scan with JSON + jq so Raw/RawV2/Redacted never appear in logs.
+      - name: TruffleHog filesystem scan
+        run: |
+          set -euo pipefail
+          curl -sSfL \
+            "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.2/trufflehog_3.99.2_linux_amd64.tar.gz" \
+            | tar -xz -C /tmp trufflehog
+          /tmp/trufflehog --version
+          FILTER='del(.Raw, .RawV2, .Redacted) | {DetectorName: .DetectorName, File: (.SourceMetadata.Data.Filesystem.file // "unknown")}'
+          set +e
+          /tmp/trufflehog filesystem . --results=verified --json --no-update --fail \
+            | jq -c "${FILTER}"
+          rc=${PIPESTATUS[0]}
+          set -e
+          if [ "${rc}" -eq 183 ]; then
+            echo "Verified secret finding(s) detected in filesystem scan"
+            exit 1
+          fi
+          if [ "${rc}" -ne 0 ]; then
+            echo "TruffleHog filesystem scan failed with exit ${rc}"
+            exit "${rc}"
+          fi
+
+  coverage:
+    runs-on: ubuntu-latest
+    env:
+      TYPESAFE_API_KEY: ''
+      NERVE_LLM_API_KEY: ''
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12'
+
+      - name: Install coverage
+        run: pip install coverage
+
+      - name: Run unit tests under coverage
+        env:
+          PYTHONPATH: src
+        run: coverage run -m unittest discover -s tests
+
+      - name: Coverage report
+        run: |
+          coverage report
+          coverage xml
+
+      - name: Upload coverage.xml artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: coverage-xml
+          path: coverage.xml
