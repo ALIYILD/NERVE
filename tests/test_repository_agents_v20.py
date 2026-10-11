@@ -1,11 +1,31 @@
 """Independent token judge and actual repository-task lifecycle verification."""
 import unittest
+from unittest.mock import patch
 
-from nerve_awim.repository_agents_v20 import ast_inventory, token_inventory, regex_inventory
+from nerve_awim.agent_learning_v12 import AgentTask
+from nerve_awim.repository_agents_v20 import CONTEXT, ast_inventory, token_inventory, regex_inventory, repository_judge
 from benchmarks.v20_governed_repository_learning import benchmark, TRAIN_PATHS, HOLDOUT_PATHS
 
 
 class RepositoryAgentsTests(unittest.TestCase):
+    def test_unicode_identifiers_match_python_normalization(self):
+        for source, expected in (
+            ('def K(): pass', ['K']),
+            ('async def 𝒇(): pass', ['f']),
+            ('def cafe\u0301(): pass', ['café']),
+            ('def Ａ(): pass\ndef A(): pass', ['A']),
+            ('def 東京(): pass', ['東京']),
+        ):
+            with self.subTest(source=source):
+                self.assertEqual(ast_inventory(source), expected)
+                self.assertEqual(token_inventory(source), expected)
+
+    def test_unicode_judge_stays_independent_and_rejects_wrong_spelling(self):
+        task = AgentTask('unicode', CONTEXT, 'def K(): pass')
+        with patch('nerve_awim.repository_agents_v20.ast.parse', side_effect=AssertionError('not independent')):
+            self.assertTrue(repository_judge(task, ['K']))
+            self.assertFalse(repository_judge(task, ['K']))
+
     def test_inventory_excludes_methods_nested_defs_strings_and_comments(self):
         source = '''# def fake_comment():
 text = "def fake_string():"

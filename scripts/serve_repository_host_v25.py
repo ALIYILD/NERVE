@@ -46,7 +46,7 @@ def build_host(config, database, *, bootstrap=False):
 def repository_engine(database):
     return GovernedLearning(database, authority=LearningAuthority(), strategies=REPOSITORY_STRATEGIES,
         judge=repository_judge, baseline_routes={CONTEXT: 'ast-inventory'},
-        contract_revision='repository-host-v25-tools-v1')
+        contract_revision='repository-host-v25-tools-v2')
 
 
 def initialize_database(config, database):

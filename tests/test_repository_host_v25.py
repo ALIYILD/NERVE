@@ -72,6 +72,21 @@ class HostTests(unittest.TestCase):
         self.assertNotIn(b'PRIVATE-CONTENT', self.db.read_bytes())
         self.assertNotIn(self.token().encode(), self.db.read_bytes())
 
+    def test_unicode_output_is_recorded_as_successful_learning_evidence(self):
+        status, result, _ = self.request({'task_id': 'unicode', 'source': 'def K(): pass'})
+        self.assertEqual(status, 200)
+        self.assertEqual(result['value'], ['K'])
+        self.assertEqual(self.host.drain()[('a', 'repo')]['recorded'], 1)
+        row = self.request(path='/v1/evidence', method='GET')[1]['actual_active_outcomes'][0]
+        self.assertEqual(row['hits'], 1)
+        self.assertEqual(row['training_failures'], 0)
+
+    def test_old_judge_contract_is_not_silently_reused(self):
+        with self.host.engine._db() as connection:
+            connection.execute("UPDATE gl_state SET contract='repository-host-v25-tools-v1'")
+        with self.assertRaisesRegex(ValueError, 'contract revision changed'):
+            build_host(self.config, self.db)
+
     def test_expired_wrong_issuer_audience_and_bad_signature(self):
         bad = [self.token(exp=int(time.time())-10), self.token(iss='https://evil.test'),
                self.token(aud='other'), self.token() + 'invalid']

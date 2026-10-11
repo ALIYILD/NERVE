@@ -46,7 +46,7 @@ def benchmark():
     with tempfile.TemporaryDirectory() as folder:
         engine = GovernedLearning(Path(folder) / 'outcomes.sqlite', authority=authority,
             strategies=REPOSITORY_STRATEGIES, judge=repository_judge,
-            contract_revision='python-inventory-tools-and-token-judge-v1',
+            contract_revision='python-inventory-tools-and-token-judge-v2',
             baseline_routes={CONTEXT: 'regex-inventory'})
         baseline = engine.bootstrap(actors['operator'])
         for task in load_tasks(TRAIN_PATHS):

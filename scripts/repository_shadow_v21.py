@@ -33,7 +33,7 @@ def main(argv=None):
     actors = {role: authority.issue(args.tenant, args.agent, role)
               for role in ('runtime', 'trainer', 'evaluator', 'operator', 'auditor')}
     engine = GovernedLearning(args.db, authority=authority, strategies=REPOSITORY_STRATEGIES,
-        judge=repository_judge, contract_revision='repository-shadow-v21-token-judge-v1',
+        judge=repository_judge, contract_revision='repository-shadow-v21-token-judge-v2',
         baseline_routes={CONTEXT: 'ast-inventory'})
     try:
         engine.status(actors['operator'])

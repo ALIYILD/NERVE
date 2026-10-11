@@ -42,7 +42,16 @@ Omit it on subsequent starts. Scope creation is an offline host action; there is
 no bootstrap HTTP route. Protect configuration and persistent storage from agent
 writes. Use public JWKS only; no provider private signing keys belong here.
 Changes to tool/judge semantics require a new reviewed contract/namespace, as in
-v2.0. This host uses contract `repository-host-v25-tools-v1`.
+v2.0. This host uses contract `repository-host-v25-tools-v2`.
+The v2 judge normalizes Unicode identifiers using Python's NFKC rules while
+remaining independent of the AST handler. For example, `def K(): pass` produces
+`K`, and the judge now correctly accepts that result. Existing v1 scopes are
+rejected rather than silently reusing evidence collected under the older judge.
+For an upgrade, retain the old database and audit history, then initialize a new
+reviewed database or deployment namespace. Recollect training and held-out
+measurements before any new candidate approval; do not relabel old contracts in
+SQLite. The shadow/pilot CLI contract likewise advances to
+`repository-shadow-v21-token-judge-v2`.
 
 The server listens only on `127.0.0.1`. An actual hosted pilot needs a TLS reverse
 proxy, a provisioned IdP, supervision, firewall/rate limits, persistent disk and

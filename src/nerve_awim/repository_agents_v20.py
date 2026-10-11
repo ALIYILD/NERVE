@@ -7,6 +7,7 @@ import ast
 import io
 import re
 import tokenize
+import unicodedata
 
 from .agent_learning_v12 import RegisteredStrategy
 
@@ -37,7 +38,9 @@ def token_inventory(source):
         elif waiting_for_name:
             if token.type != tokenize.NAME:
                 raise ValueError('invalid function declaration')
-            names.add(token.string)
+            # Python's parser stores identifiers in NFKC form. Compare the same
+            # semantic name without calling the AST strategy from the judge.
+            names.add(unicodedata.normalize('NFKC', token.string))
             waiting_for_name = False
         elif token.type == tokenize.NAME and token.string == 'def' and depth == 0:
             waiting_for_name = True

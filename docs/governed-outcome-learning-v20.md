@@ -54,7 +54,7 @@ runtime = authority.issue('tenant-a', 'inventory-agent', 'runtime')
 engine = GovernedLearning(
     'agent-outcomes.sqlite', authority=authority,
     strategies=REPOSITORY_STRATEGIES, judge=repository_judge,
-    contract_revision='python-inventory-tools-and-token-judge-v1',
+    contract_revision='python-inventory-tools-and-token-judge-v2',
     baseline_routes={CONTEXT: 'regex-inventory'},
 )
 initial = engine.bootstrap(operator)  # Once per deployment namespace.

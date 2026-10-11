@@ -27,7 +27,7 @@ def verify():
                   for r in ('trainer', 'evaluator', 'operator', 'runtime', 'auditor')}
         engine = GovernedLearning(Path(folder) / 'canary.db', authority=auth,
             strategies=REPOSITORY_STRATEGIES, judge=repository_judge,
-            baseline_routes={CONTEXT: 'regex-inventory'}, contract_revision='canary-drill-v1')
+            baseline_routes={CONTEXT: 'regex-inventory'}, contract_revision='canary-drill-v2')
         baseline = engine.bootstrap(actors['operator'])
         for name in TRAIN:
             engine.learn_from_task(actors['trainer'], file_task(ROOT, 'src/nerve_awim/' + name))
