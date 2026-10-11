@@ -1,6 +1,7 @@
 """Loopback-only pilot; provision trusted OIDC/grants config before starting."""
 import argparse
 import json
+import signal
 from pathlib import Path
 from wsgiref.simple_server import WSGIServer, WSGIRequestHandler, make_server
 
@@ -50,19 +51,39 @@ def main():
     parser.add_argument('--database', required=True)
     parser.add_argument('--port', type=int, default=8765)
     parser.add_argument('--bootstrap', action='store_true', help='explicitly initialise missing configured scopes')
+    parser.add_argument('--check', action='store_true', help='validate configured scopes without listening')
     args = parser.parse_args()
     if not 1 <= args.port <= 65535:
         parser.error('port must be between 1 and 65535')
-    host = build_host(json.loads(Path(args.config).read_text()), args.database, bootstrap=args.bootstrap)
+    if args.check and (args.bootstrap or not Path(args.database).is_file()):
+        parser.error('--check requires an existing database and cannot bootstrap')
+    try:
+        host = build_host(json.loads(Path(args.config).read_text()), args.database, bootstrap=args.bootstrap)
+        checks = [host.readiness(scope) for scope in host.adapters]
+        if not all(check['ready'] for check in checks):
+            raise ValueError('startup readiness failed')
+    except Exception:
+        parser.exit(1, 'Host configuration, database or deployment validation failed.\n')
+    if args.check:
+        print(json.dumps({'ready': True, 'scopes_checked': len(checks),
+                          'degraded_scopes': sum(c['degraded'] for c in checks)}))
+        return
     with make_server('127.0.0.1', args.port, host, server_class=PilotServer, handler_class=QuietHandler) as server:
         server.timeout = 1
         print(f'Repository shadow pilot listening on 127.0.0.1:{args.port}', flush=True)
+        stopping = False
+        def stop(signum, frame):
+            nonlocal stopping
+            stopping = True
+        old_handler = signal.signal(signal.SIGTERM, stop)
         try:
-            while True:
+            while not stopping:
                 server.handle_request()  # Response has been sent before learning starts.
                 host.drain(limit=8)
         except KeyboardInterrupt:
             pass
+        finally:
+            signal.signal(signal.SIGTERM, old_handler)
 
 
 if __name__ == '__main__':

@@ -96,7 +96,8 @@ class RepositoryHost:
 
     def _request(self, env):
         path, method = env.get('PATH_INFO', ''), env.get('REQUEST_METHOD', '')
-        routes = {('/v1/tasks', 'POST'): 'runtime', ('/v1/evidence', 'GET'): 'auditor'}
+        routes = {('/v1/tasks', 'POST'): 'runtime', ('/v1/evidence', 'GET'): 'auditor',
+                  ('/v1/readiness', 'GET'): 'auditor'}
         role = routes.get((path, method))
         if role is None or env.get('QUERY_STRING'):
             return '404 Not Found', {'error': 'route_not_found'}
@@ -120,6 +121,9 @@ class RepositoryHost:
         scope = (grant.tenant, grant.agent)
         adapter = self.adapters[scope]
         if role == 'auditor':
+            if path == '/v1/readiness':
+                result = self.readiness(scope)
+                return ('200 OK' if result['ready'] else '503 Service Unavailable'), result
             return '200 OK', self._evidence(scope)
         if env.get('CONTENT_TYPE', '').split(';')[0].strip().lower() != 'application/json':
             return '415 Unsupported Media Type', {'error': 'json_required'}
@@ -159,3 +163,23 @@ class RepositoryHost:
     def _execute_task(self, scope, task):
         result = self.adapters[scope].execute(task, expected_release=self.bindings[scope], expected_generation=0)
         return {**result, 'mode': 'shadow', 'learning': 'queued_best_effort', 'cost_usd': None}
+
+    def _readiness_state(self, con, scope, state):
+        if state['generation'] != 0 or state['active'] != self.bindings[scope]:
+            raise ValueError('unreviewed release change')
+        return {'mode': 'shadow', 'degraded': False}
+
+    def readiness(self, scope):
+        """Host-local check; HTTP callers must first pass auditor authentication."""
+        if scope not in self.adapters:
+            raise PermissionError('scope is not configured in this host')
+        try:
+            with self.engine._db() as con:
+                con.execute('BEGIN')
+                if con.execute('PRAGMA quick_check').fetchall()[0][0] != 'ok':
+                    raise ValueError('database integrity failed')
+                state = self.engine._state(con, scope)
+                detail = self._readiness_state(con, scope, state)
+            return {'ready': True, **detail}
+        except Exception:
+            return {'ready': False, 'reason': 'deployment_or_database_unavailable'}

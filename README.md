@@ -10,6 +10,11 @@ The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed stu
 manifests, pre-reserved holdouts, content-change checks and a reviewable rollout
 recommendation across separate processes. It never activates a release.
 
+The [v2.7 operations bundle](docs/host-operations-v27.md) adds authenticated
+readiness, startup checks, non-overwriting SQLite backup/restore and a systemd
+pilot template. Recovery preserves trial bindings and monitoring state; no live
+host or identity provider is provisioned by the bundle.
+
 The [v2.6 HTTP trial binding](docs/bound-repository-host-v26.md) connects the
 signed task endpoint to an operator-approved trial and its post-promotion monitor.
 Bindings persist across restarts, reject unrelated deployment changes and expose

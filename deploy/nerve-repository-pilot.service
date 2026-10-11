@@ -1,0 +1,37 @@
+[Unit]
+Description=NERVE authenticated repository pilot
+After=network.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=nerve
+Group=nerve
+WorkingDirectory=/opt/nerve
+Environment=PYTHONPATH=/opt/nerve/src
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=PYTHONUNBUFFERED=1
+ExecStartPre=/opt/nerve/.venv/bin/python /opt/nerve/scripts/serve_repository_host_v25.py --config /etc/nerve/identity.json --database /var/lib/nerve/pilot.db --check
+ExecStart=/opt/nerve/.venv/bin/python /opt/nerve/scripts/serve_repository_host_v25.py --config /etc/nerve/identity.json --database /var/lib/nerve/pilot.db --port 8765
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+StateDirectory=nerve
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+MemoryMax=512M
+TasksMax=32
+
+[Install]
+WantedBy=multi-user.target

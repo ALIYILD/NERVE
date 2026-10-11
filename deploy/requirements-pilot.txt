@@ -1,0 +1,2 @@
+# Existing OIDC verification dependency; resolve in the reviewed host environment.
+PyJWT[crypto]>=2.10,<3

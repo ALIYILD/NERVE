@@ -152,3 +152,21 @@ class BoundRepositoryHost(RepositoryHost):
         if report['mode'] == 'shadow':
             return super()._evidence(scope)
         return {**report, 'shadow': super()._evidence(scope)}
+
+    def _readiness_state(self, con, scope, state):
+        binding = self.deployments._binding(con, scope)
+        if binding is None:
+            return super()._readiness_state(con, scope, state)
+        self.deployments.guard(binding)(con, scope, state)
+        trial = self.deployments.controller._row(con, scope, binding['canary'])
+        pending = False
+        if trial['phase'] == 'active':
+            pending = con.execute("SELECT 1 FROM gl_canary_outcomes WHERE canary=? AND status='pending'",
+                                  (binding['canary'],)).fetchone() is not None
+        elif trial['phase'] == 'promoted':
+            monitor = self.deployments.controller.monitor._row(con, scope, binding['canary'])
+            if monitor['phase'] == 'active':
+                pending = con.execute("SELECT 1 FROM gl_promotion_outcomes WHERE canary=? AND status='pending'",
+                                      (binding['canary'],)).fetchone() is not None
+        return {'mode': 'controlled', 'degraded': pending,
+                'reason': 'pending_attempt_baseline_only' if pending else 'approved_lifecycle'}
