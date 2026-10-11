@@ -21,6 +21,10 @@ jobs:
         env:
           PYTHONPATH: src
         run: python scripts/adaptive_memory_study.py
+      - name: Run offline multi-family learning and retention checks
+        env:
+          PYTHONPATH: src
+        run: python scripts/offline_learning_suite.py
       - name: Run reproducible v1.3 benchmark
         env:
           PYTHONPATH: src
