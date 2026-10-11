@@ -18,6 +18,23 @@ class PilotError(RuntimeError):
     pass
 
 
+def error_category(data):
+    """Return only fixed labels, never raw provider text or echoed input."""
+    try:
+        message = json.loads(data)['error']['message'].lower()
+    except Exception:
+        return 'unclassified'
+    for needle, label in (('credit balance', 'insufficient_api_credit'),
+                          ('billing', 'billing_configuration'),
+                          ('api key', 'invalid_api_key'),
+                          ('oauth', 'unsupported_oauth_credential'),
+                          ('model', 'model_access_or_identifier'),
+                          ('max_tokens', 'output_token_setting')):
+        if needle in message:
+            return label
+    return 'invalid_request'
+
+
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, *args, **kwargs):
         raise PilotError('redirect refused')
@@ -34,16 +51,19 @@ def post_message(key, body):
             raise PilotError('response too large')
         return json.loads(data)
     except urllib.error.HTTPError as error:
-        raise PilotError('Claude HTTP ' + str(error.code)) from None
+        category = error_category(error.read(8192))
+        raise PilotError('Claude HTTP ' + str(error.code) + ': ' + category) from None
     except Exception:
         # Never propagate provider bodies, request headers or credentials.
         raise PilotError('Claude request failed; no automatic retry') from None
 
 
 class ClaudePilot:
-    def __init__(self, path, key, *, send=post_message):
+    def __init__(self, path, key, *, send=post_message, prior_reserved=0):
         if not key:
             raise PilotError('missing Claude repository secret')
+        if type(prior_reserved) is not int or not 0 <= prior_reserved <= 10_000_000:
+            raise PilotError('invalid carried budget')
         # A fresh exclusive ledger is mandatory; do not reset a spent ledger.
         fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
         os.close(fd)
@@ -51,6 +71,8 @@ class ClaudePilot:
         self.failed = False
         with sqlite3.connect(path) as con:
             con.execute('CREATE TABLE calls (id INTEGER PRIMARY KEY, reserved INTEGER, actual INTEGER, status TEXT)')
+            if prior_reserved:
+                con.execute("INSERT INTO calls(reserved,status) VALUES(?,'prior_uncertain')", (prior_reserved,))
 
     def complete(self, system, prompt):
         if self.failed:
@@ -91,7 +113,7 @@ class ClaudePilot:
     def report(self):
         with sqlite3.connect(self.path) as con:
             count, reserved, actual, pending = con.execute('''SELECT COUNT(*),COALESCE(SUM(reserved),0),
-                COALESCE(SUM(actual),0),SUM(status='pending') FROM calls''').fetchone()
+                COALESCE(SUM(actual),0),SUM(status!='completed') FROM calls''').fetchone()
         return {'model': MODEL, 'calls': count, 'budget_usd': 10,
                 'accounted_usd': reserved/1e6, 'confirmed_usage_cost_usd': actual/1e6,
                 'uncertain_calls': pending or 0, 'pricing_date': '2026-10-11'}

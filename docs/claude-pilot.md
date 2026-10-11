@@ -37,3 +37,10 @@ Sources:
 - https://platform.claude.com/docs/en/about-claude/pricing
 - https://platform.claude.com/docs/en/models/sonnet-4-6/overview
 - https://platform.claude.com/docs/en/api/http/messages
+
+First live attempt: run 38143335565 returned HTTP 400 on its first request.
+No task evaluation completed; confirmed token usage cost is zero, not proof of
+zero provider charges. Its USD 3.01536 uncertain reservation is retained in the
+diagnostic continuation through PILOT_PRIOR_RESERVED_MICROUSD. Only fixed error
+categories are exposed, never raw provider error text. The continuation retains
+the original USD 10 total cap; it is not a new USD 10 authorization.

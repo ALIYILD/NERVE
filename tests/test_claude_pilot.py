@@ -2,7 +2,7 @@ import sqlite3
 import tempfile
 from pathlib import Path
 import unittest
-from nerve_awim.claude_pilot import ClaudePilot, PilotError, RESERVATION
+from nerve_awim.claude_pilot import ClaudePilot, PilotError, RESERVATION, error_category
 from scripts.claude_learning_pilot import dataset, run
 
 
@@ -79,3 +79,15 @@ class ClaudePilotTests(unittest.TestCase):
         a = sum(dataset('a'), [])
         b = sum(dataset('b'), [])
         self.assertEqual(len({e.task['source'] for e in a + b}), 26)
+
+    def test_carried_reservation_counts_towards_same_ten_dollars(self):
+        client = ClaudePilot(self.path, 'fake', prior_reserved=8_000_000,
+                             send=lambda *args: self.fail('overspend'))
+        with self.assertRaises(PilotError):
+            client.complete('s', 'p')
+        self.assertEqual(client.report()['accounted_usd'], 8)
+
+    def test_error_category_never_echoes_provider_text(self):
+        self.assertEqual(error_category('{"error":{"message":"Your credit balance is too low SECRET"}}'),
+                         'insufficient_api_credit')
+        self.assertEqual(error_category('SECRET'), 'unclassified')

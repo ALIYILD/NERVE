@@ -55,7 +55,8 @@ def run(client, seed):
 if __name__ == '__main__':
     client = None
     try:
-        client = ClaudePilot('claude-pilot-budget.sqlite', os.environ.get('ANTHROPIC_API_KEY', ''))
+        client = ClaudePilot('claude-pilot-budget.sqlite', os.environ.get('ANTHROPIC_API_KEY', ''),
+                             prior_reserved=int(os.environ.get('PILOT_PRIOR_RESERVED_MICROUSD', '0')))
         result = run(client, os.environ.get('GITHUB_RUN_ID', 'local'))
         exit_code = 0
     except Exception as error:

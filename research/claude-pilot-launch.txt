@@ -1,2 +1,4 @@
 One authorized pilot, 2026-10-11, maximum USD 10 total, secret claude_git.
 Launch token 20261011-b7f93. Do not reuse or automatically rerun.
+Diagnostic continuation 20261011-c2e41: carry forward USD 3.01536 from
+run 38143335565 (HTTP 400, no confirmed usage). Original total cap remains USD 10.
