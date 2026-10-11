@@ -1,0 +1,362 @@
+"""Connect NERVE to the existing local Agent OS, with durable learning receipts."""
+import argparse
+from datetime import datetime, timezone
+import itertools
+import json
+import os
+from pathlib import Path
+import signal
+import random
+import sqlite3
+import subprocess
+import sys
+import tempfile
+import uuid
+import urllib.request
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'src'))
+from nerve_awim.agentos_learning import (AgentOSLearning, BASELINE, CONTEXT,
+    atomic_json, expected_handoff, host_lock, judge_handoff)
+from nerve_awim.improvement_loop import run_improvement_loop
+from nerve_awim.learning_study import Episode, canonical
+from nerve_awim.agentos_claude import ClaudeReviewer
+
+HOME = Path.home()
+REPO = Path(__file__).resolve().parents[1]
+VAULT = HOME/'AgentOS-Vault'
+STATE = HOME/'.agentic-os/nerve'
+
+
+def claude_key():
+    key=os.environ.get('ANTHROPIC_API_KEY','').strip()
+    env=HOME/'.agentic-os/anthropic.env'
+    if not key and env.exists():
+        for line in env.read_text().splitlines():
+            if line.startswith('ANTHROPIC_API_KEY='):
+                key=line.split('=',1)[1].strip().strip('\"\'')
+    return key if key.startswith('sk-ant-api') else None
+
+
+def jev_review(host):
+    path=host.directory/'latest-study.json'
+    if not path.exists():
+        raise RuntimeError('complete the learning study before semantic review')
+    study_data=json.loads(path.read_text())
+    state={'study':study_data,'scope':host.status()['scope']}
+    questions={
+        'broad_gain':{'type':'noul','instructions':'Does the supplied evidence establish broad general intelligence improvement beyond a small synthetic evidence-handoff fixture?'},
+        'bounded_claim':{'type':'noul','instructions':'Does the report clearly limit its result to the tested task and distinguish observed gains from proof of general improvement?'}}
+    host.reserve_calls('jev',1,daily_limit=1)
+    request=urllib.request.Request('http://127.0.0.1:3737/api/jev',
+        data=json.dumps({'state':json.dumps(state),'questions':questions}).encode(),
+        headers={'Content-Type':'application/json'})
+    with urllib.request.urlopen(request,timeout=40) as response:
+        value=json.loads(response.read(100000))
+    answers=value.get('answers',{})
+    for name in questions:
+        answer=answers.get(name,{})
+        if answer.get('type')!='noul' or type(answer.get('noul')) not in (int,float) or not 0<=answer['noul']<=1:
+            raise ValueError('invalid semantic review response')
+    result={'model':value.get('model'),'answers':answers,'usage':value.get('usage'),
+            'advisory_only':True,'promotion_authorized':False,'cost_usd':None}
+    atomic_json(host.directory/'jev-review.json',result)
+    return result
+
+
+def native(host, profile, prompt):
+    """Installed runtime, bounded text, no tools, free model, process timeout."""
+    catalog=host.directory/'free-models.json'
+    if not catalog.exists() or datetime.now().timestamp()-catalog.stat().st_mtime>86400:
+        # System curl uses macOS's maintained CA trust; never disable TLS checks.
+        raw=subprocess.check_output(['curl','--fail','--silent','--show-error','--max-time','20',
+            'https://openrouter.ai/api/v1/models'],timeout=25)
+        if len(raw)>5000000:
+            raise ValueError('provider catalog too large')
+        data=json.loads(raw)
+        available=[m['id'] for m in data['data'] if m['id'].endswith(':free')
+                   and all(float(m.get('pricing',{}).get(k,'-1'))==0 for k in ('prompt','completion'))]
+        atomic_json(catalog,available)
+    else:
+        available=json.loads(catalog.read_text())
+    host.reserve_calls('hermes-free', 1, daily_limit=20)
+    checkout = HOME/'.hermes/hermes-agent'
+    launcher = json.loads(subprocess.check_output(
+        [str(HOME/'.local/bin/hermes'), '--print-runtime-command'], text=True, timeout=10))
+    # Resolve the selected dependency environment without installing anything.
+    resolve = ('import sys; from pathlib import Path; sys.path.insert(0,sys.argv[1]); '
+               'from pm.environments import project_python; print(project_python(Path(sys.argv[1])))')
+    python = subprocess.check_output([launcher[0], '-I', '-c', resolve, str(checkout)],
+                                     text=True, timeout=10).strip()
+    code = 'import sys,runpy; sys.path.insert(0,sys.argv[1]); runpy.run_path(sys.argv[2],run_name="__main__")'
+    with tempfile.TemporaryDirectory(prefix='nerve-native-') as tmp:
+        env = {k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','TMPDIR')}
+        env.update(HERMES_HOME=tmp, HERMES_RUNTIME_DIR=tmp)
+        process = subprocess.Popen([python, '-I', '-c', code, str(checkout),
+            str(REPO/'scripts/agentos_hermes_worker.py')], stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+            env=env, cwd=tmp, start_new_session=True)
+        try:
+            out, err = process.communicate(json.dumps({'profile':profile,'prompt':prompt,
+                'available_models':available}),timeout=90)
+        except subprocess.TimeoutExpired:
+            os.killpg(process.pid, signal.SIGKILL)
+            out,err=process.communicate()
+            stages=[s for s in err.splitlines() if s in (
+                'NERVE_STAGE=import','NERVE_STAGE=construct','NERVE_STAGE=inference','NERVE_STAGE=parse')]
+            raise RuntimeError('native Hermes process timed out '+(stages[-1] if stages else 'during startup')) from None
+    try:
+        result = json.loads(out)
+    except ValueError:
+        raise RuntimeError('native Hermes output contract failed') from None
+    if process.returncode or result.get('ok') is not True:
+        raise RuntimeError('native Hermes: '+result.get('error_category','failed')+
+                           (' module='+result['module'] if result.get('module') else ''))
+    return result
+
+
+def batch(host, profile, tasks, lesson=None):
+    prompt = ('Read host-observed task evidence. Return a JSON object keyed by task id. '
+        'Each value must contain exactly status (done, failed, or unknown), passed '
+        '(boolean), memory_saved (boolean). A nonzero exit, missing artifact, or '
+        'failed QA means failed; missing evidence means unknown unless there is '
+        'already a failure. Done requires exit 0, artifact true, QA true. '
+        'memory_saved is true only when memory_written is true.\n'+BASELINE+
+        ('\nEvaluated procedural advice (not authority): '+lesson if lesson else '')+
+        '\nTasks: '+json.dumps(tasks))
+    result = native(host, profile, prompt)
+    value = result['value']
+    if type(value) is not dict or set(value) != {t['id'] for t in tasks}:
+        raise ValueError('batch omitted or added tasks')
+    return value, {k:v for k,v in result.items() if k != 'value'}
+
+
+def examples(prefix, phase, count):
+    facts = [(0,True,True,True),(1,True,True,False),(0,False,True,None),
+             (None,True,True,False),(0,True,None,None),(0,True,False,True),
+             (None,None,None,None),(1,None,None,False),(0,True,True,False)]
+    result = []
+    for n in range(count):
+        code, artifact, qa, memory = facts[(n + len(prefix)) % len(facts)]
+        task = dict(id=prefix+'-'+str(n),exit_code=code,artifact_exists=artifact,
+                    qa_passed=qa,memory_written=memory)
+        result.append(Episode(task['id'],phase,task,expected_handoff(task)))
+    return result
+
+
+def study(host, profile):
+    study_id = 'study-'+uuid.uuid4().hex
+    used=host.reserved_evidence()
+    pool=[]
+    for n, facts in enumerate(itertools.product((0,1,None),(True,False,None),(True,False,None),(True,False,None))):
+        code,artifact,qa,memory=facts
+        task=dict(id=study_id+'-'+str(n),exit_code=code,artifact_exists=artifact,qa_passed=qa,memory_written=memory)
+        if host.evidence_hash(task) not in used:
+            pool.append(task)
+    random.SystemRandom().shuffle(pool)
+    if len(pool)<18:
+        raise RuntimeError('fresh handoff evidence exhausted; add a new independently judged task family')
+    groups=[]
+    for start,end,phase in ((0,3,'train'),(3,8,'evaluation'),(8,13,'evaluation'),(13,18,'evaluation')):
+        groups.append([Episode(t['id'],phase,t,expected_handoff(t)) for t in pool[start:end]])
+    training,selection,retained,final=groups
+    host.reserve_holdout(study_id+'-development',[e.task for e in training+selection+retained])
+    host.reserve_holdout(study_id,[e.task for e in final])
+    train_outputs, receipt = batch(host,profile,[e.task for e in training])
+    for e in training:
+        host.observe(profile,e.task,train_outputs[e.task['id']],mode='study-training')
+    proposal = native(host,'nina-memory-librarian',
+        'Propose a short reusable lesson for evidence handoff, based only on these '
+        'training examples and observed answers. Return JSON with exactly lesson '
+        '(string, 1-2048 characters). Do not claim to approve, store or run anything.\n'+
+        json.dumps([{'task':e.task,'expected':e.expected,'observed':train_outputs[e.task['id']]}
+                    for e in training]))
+    lesson = proposal['value'].get('lesson')
+    if type(lesson) is not str or not 1 <= len(lesson) <= 2048:
+        raise ValueError('bounded generated lesson required')
+    # Batch once per split/arm. Only the current split reaches this model call;
+    # expected values and final results never reach the proposer.
+    partitions = {e.task['id']:group for group in (selection,retained,final) for e in group}
+    cache, calls = {}, [receipt, {k:v for k,v in proposal.items() if k!='value'}]
+    def predict(task, advice):
+        group = partitions[task['id']]
+        key = (group[0].episode_id, advice)
+        if key not in cache:
+            values, info = batch(host,profile,[e.task for e in group],advice)
+            if info.get('requested_model') != receipt.get('requested_model'):
+                raise RuntimeError('model changed within paired study; comparison rejected')
+            cache[key] = values
+            calls.append(info)
+        return cache[key][task['id']]
+    report = run_improvement_loop(training,selection,final,
+        propose=lambda _:lesson,predict=predict,judge=judge_handoff,
+        iterations=1,regression=retained)
+    memory = host.accept_study(profile,study_id,report)
+    result = {'id':study_id,'profile':profile,'report':report,'approved_memory':memory,
+              'native_sessions':calls,'hermes_revision':subprocess.check_output(
+                  ['git','-C',str(HOME/'.hermes/hermes-agent'),'rev-parse','HEAD'],text=True).strip(),
+              'limitation':'Small synthetic handoff fixture; fresh IDs do not make task templates independent. No broad capability gain claim.'}
+    atomic_json(host.directory/'latest-study.json',result)
+    atomic_json(VAULT/'Journal/nerve'/f'{study_id}.json',result)
+    return result
+
+
+def collect_missions(host):
+    """Read existing local mission metadata; require actual QA and terminal run."""
+    db_path = HOME/'.hermes/kanban/boards/agentos-maintenance/kanban.db'
+    if not db_path.exists():
+        return {'added':0,'reason':'maintenance board unavailable'}
+    added = rejected = 0
+    with sqlite3.connect(f'file:{db_path}?mode=ro',uri=True) as db:
+        db.row_factory = sqlite3.Row
+        for manifest_path in sorted((VAULT/'Journal/maintenance-missions').glob('*/mission.json'))[-30:]:
+            try:
+                manifest=json.loads(manifest_path.read_text())
+                verification=json.loads((manifest_path.parent/'verification.json').read_text())
+                if verification.get('accepted') is not True or not verification.get('checks') or verification.get('issues'):
+                    rejected += 1
+                    continue
+                # Independent verifier must itself have completed on a distinct
+                # profile, and both promised worker artifacts must be present.
+                if not all((manifest_path.parent/name).is_file() for name in ('routing.json','scheduling.json')):
+                    rejected += 1
+                    continue
+                verifier = db.execute('SELECT r.profile,r.ended_at,t.status FROM task_runs r '
+                    'JOIN tasks t ON t.id=r.task_id WHERE r.task_id=? ORDER BY r.id DESC LIMIT 1',
+                    (manifest['verifier_id'],)).fetchone()
+                if not verifier or verifier['status']!='done' or not verifier['ended_at']:
+                    rejected += 1
+                    continue
+                for task_id in manifest.get('worker_ids',[]):
+                    row = db.execute('SELECT r.id,r.profile,r.started_at,r.ended_at,t.status FROM task_runs r '
+                        'JOIN tasks t ON t.id=r.task_id WHERE r.task_id=? ORDER BY r.id DESC LIMIT 1',(task_id,)).fetchone()
+                    if not row or row['profile']==verifier['profile'] or row['status']!='done' or not row['ended_at']:
+                        continue
+                    added += host.ingest_mission('maintenance-'+str(row['id']),row['profile'],success=True,
+                        duration=row['ended_at']-row['started_at'],source=str(manifest_path.relative_to(VAULT)))
+            except (OSError,ValueError,KeyError,TypeError):
+                rejected += 1
+        # Supervisor-observed timeouts are failures even without a QA artifact.
+        # Reclaimed leases are unknown, not automatically task failures.
+        for row in db.execute("SELECT id,profile,started_at,ended_at FROM task_runs WHERE outcome='timed_out' AND ended_at IS NOT NULL"):
+            if row['profile'] and row['ended_at'] >= row['started_at']:
+                added += host.ingest_mission('maintenance-'+str(row['id']),row['profile'],success=False,
+                    duration=row['ended_at']-row['started_at'],source='agentos-maintenance:supervisor-timeout')
+    return {'added':added,'unverified_missions':rejected,
+            'limitation':'QA-accepted completion observations; not causal evidence that memory helped.'}
+
+
+def publish(host, extra=None):
+    status=host.status()
+    study_file=host.directory/'latest-study.json'
+    if study_file.exists():
+        s=json.loads(study_file.read_text())
+        status['last_study']={k:s[k] for k in ('id','profile','approved_memory','limitation')}
+        status['last_study']['result']=s['report']['status']
+        status['last_study']['final']=(s['report']['final'] if s['report']['final'] is not None
+                                       else 'Not opened: no selection gain.')
+    status.update(extra or {})
+    status['source_repository']=str(REPO)
+    status['claude_budget_usd']=25
+    reviewer=ClaudeReviewer(host.directory/'claude-review.sqlite3')
+    status['claude_budget']=reviewer.report()
+    status['claude_status']='configured' if claude_key() else 'credential_not_connected'
+    native_file=host.directory/'latest-native.json'
+    if native_file.exists():
+        status['native_hermes']=json.loads(native_file.read_text())
+    status['routing_advice']=host.recommend_profiles(
+        ['coordinator','dashboard-operator','workflow-integrity-auditor'],incumbent='coordinator')
+    status['automatic_learning']={'enabled':(HOME/'Library/LaunchAgents/com.aliyildirim.nerve.learning.plist').exists(),'provider':'hermes-free',
+        'trigger':'3 new supervisor-confirmed failures; at most one study per UTC day',
+        'daily_native_session_limit':20,'paid_calls':False}
+    atomic_json(host.directory/'status.json',status)
+    approved=[]
+    for profile in ('coordinator','qa-release','nina-memory-librarian'):
+        approved.extend({'profile':profile,'id':r.memory_id,'content':r.content,'expires':r.valid_until}
+                        for r in host.recall(profile))
+    atomic_json(host.directory/'context.json',{'context':CONTEXT,'lessons':approved})
+    note = ('# NERVE — Agent OS learning\n\n'+
+        'AWIM coordination and evaluated-memory track. [[agent-os-capability-registry]]\n\n'+
+        'Updated: '+status['updated_at']+'\n\n'+
+        'Learning: scoped evidence-handoff lessons; recent failed outcomes can revoke a lesson.\n'+
+        'Hermes: installed profiles; native isolated text sessions on configured free models.\n'+
+        'Operational receipts: '+str(sum(r['tasks'] for r in status['missions']))+' verified completions or supervisor-confirmed failures.\n'+
+        'Approved lessons: '+str(len(approved))+'. No model-weight training or source self-modification.\n\n'+
+        'Latest study: '+str(status.get('last_study',{}).get('result','not run'))+'\n\n'+
+        'Receipts: `~/.agentic-os/nerve/status.json`; [[Journal/nerve]].\n')
+    (VAULT/'Memory/nerve-status.md').write_text(note)
+    return status
+
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review'))
+    parser.add_argument('--profile',default='qa-release')
+    parser.add_argument('--task',type=Path)
+    parser.add_argument('--state',type=Path,default=STATE)
+    args=parser.parse_args()
+    with host_lock(args.state):
+        host=AgentOSLearning(args.state)
+        if args.command=='study':
+            try:
+                result=study(host,args.profile)
+            except Exception as error:
+                publish(host,{'last_error':str(error)[:180]})
+                raise
+            publish(host)
+        elif args.command=='cycle':
+            collected=collect_missions(host)
+            with sqlite3.connect(host.path) as db:
+                failures=db.execute('SELECT COUNT(*) FROM nerve_missions WHERE success=0').fetchone()[0]
+            gate=host.directory/'auto-study.json'
+            previous=json.loads(gate.read_text()) if gate.exists() else {}
+            today=datetime.now(timezone.utc).strftime('%Y-%m-%d')
+            if failures-previous.get('failures',0)>=3 and previous.get('day')!=today:
+                atomic_json(gate,{'day':today,'failures':failures,'status':'started'})
+                try:
+                    learned=study(host,args.profile)
+                    atomic_json(gate,{'day':today,'failures':failures,'status':learned['report']['status']})
+                except Exception as error:
+                    atomic_json(gate,{'day':today,'failures':failures,'status':'failed','error':str(error)[:180]})
+            last_attempt=json.loads(gate.read_text()) if gate.exists() else {}
+            result=publish(host,{'collection':collected,
+                'last_error':last_attempt.get('error','') if last_attempt.get('status')=='failed' else ''})
+        elif args.command in ('probe','run'):
+            task=json.loads(args.task.read_text()) if args.task else examples('native-probe-'+uuid.uuid4().hex,'train',1)[0].task
+            expected_handoff(task)
+            memories=host.recall(args.profile)
+            selected=memories[0] if memories else None
+            values, info=batch(host,args.profile,[task],selected.content if selected else None)
+            result={**info,'output':values[task['id']], 'evaluation':host.observe(args.profile,task,
+                values[task['id']],lesson=selected.memory_id if selected else None,
+                mode='live' if args.command=='run' else 'probe')}
+            atomic_json(host.directory/'latest-native.json',result)
+            publish(host)
+        elif args.command=='recall':
+            result=[{'id':r.memory_id,'content':r.content} for r in host.recall(args.profile)]
+        elif args.command=='jev-review':
+            result=jev_review(host)
+        elif args.command=='claude-review':
+            reviewer=ClaudeReviewer(host.directory/'claude-review.sqlite3',claude_key())
+            code=(REPO/'src/nerve_awim/agentos_learning.py').read_text()
+            try:
+                review=reviewer.complete('Review this public NERVE implementation for concrete correctness problems. '
+                    'Prioritize reward integrity, temporal leakage, forgetting, concurrency and honest claims. '
+                    'Return concise actionable findings. No tools are available.',code)
+                result={'review':review,'advisory_only':True,'budget':reviewer.report()}
+                atomic_json(host.directory/'claude-review.json',result)
+            finally:
+                publish(host)
+        elif args.command=='sync-gbrain':
+            publish(host)
+            content=(VAULT/'Memory/nerve-status.md').read_text()
+            cmd=[str(HOME/'.bun/bin/gbrain'),'put','nerve-agentos-learning']
+            done=subprocess.run(cmd,input=content,text=True,capture_output=True,timeout=30)
+            result={'ok':done.returncode==0,'slug':'nerve-agentos-learning'}
+            atomic_json(host.directory/'gbrain-receipt.json',result)
+        else:
+            result=publish(host)
+        print(json.dumps(result,indent=2))
+
+
+if __name__=='__main__':
+    main()

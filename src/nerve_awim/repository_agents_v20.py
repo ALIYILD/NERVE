@@ -30,7 +30,17 @@ def token_inventory(source):
     depth = 0
     waiting_for_name = False
     names = set()
+    name, name_end = None, None
     for token in tokenize.generate_tokens(io.StringIO(source).readline):
+        if name is not None:
+            # Before Python 3.12 tokenize splits some valid Unicode identifier
+            # continuations (notably combining marks) into ERRORTOKEN/NAME.
+            if (token.start == name_end and token.type in (tokenize.NAME, tokenize.ERRORTOKEN)
+                    and (name + token.string).isidentifier()):
+                name, name_end = name + token.string, token.end
+                continue
+            names.add(unicodedata.normalize('NFKC', name))
+            name = None
         if token.type == tokenize.INDENT:
             depth += 1
         elif token.type == tokenize.DEDENT:
@@ -40,7 +50,7 @@ def token_inventory(source):
                 raise ValueError('invalid function declaration')
             # Python's parser stores identifiers in NFKC form. Compare the same
             # semantic name without calling the AST strategy from the judge.
-            names.add(unicodedata.normalize('NFKC', token.string))
+            name, name_end = token.string, token.end
             waiting_for_name = False
         elif token.type == tokenize.NAME and token.string == 'def' and depth == 0:
             waiting_for_name = True

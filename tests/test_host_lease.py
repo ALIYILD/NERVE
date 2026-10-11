@@ -5,6 +5,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from nerve_awim.host_lease import exclusive_host
 
@@ -80,3 +81,45 @@ class HostLeaseTests(unittest.TestCase):
             with sqlite3.connect(self.path) as connection, sqlite3.connect(':memory:') as backup:
                 connection.backup(backup)
                 self.assertEqual(backup.execute('SELECT value FROM example').fetchone(), (7,))
+
+    def test_darwin_private_lock_persists_and_uses_database_inode(self):
+        root = self.path.parent/'leases'
+        with patch('nerve_awim.host_lease.sys.platform', 'darwin'), patch('nerve_awim.host_lease._LOCK_ROOT', root):
+            with exclusive_host(self.path):
+                locks = list(root.iterdir())
+                self.assertEqual(len(locks), 1)
+                lock = locks[0]
+                info = self.path.stat()
+                self.assertEqual(lock.name, f'{info.st_dev}-{info.st_ino}.lock')
+                self.assertEqual(root.stat().st_mode & 0o777, 0o700)
+                self.assertEqual(lock.stat().st_mode & 0o777, 0o600)
+                inode = lock.stat().st_ino
+            self.assertTrue(lock.exists())
+            with exclusive_host(self.path):
+                self.assertEqual(lock.stat().st_ino, inode)
+
+    def test_darwin_refuses_shared_directory_and_symlink_lock(self):
+        root = self.path.parent/'leases'
+        root.mkdir(mode=0o755)
+        with patch('nerve_awim.host_lease.sys.platform', 'darwin'), patch('nerve_awim.host_lease._LOCK_ROOT', root):
+            with self.assertRaises(PermissionError):
+                with exclusive_host(self.path):
+                    pass
+            root.chmod(0o700)
+            info = self.path.stat()
+            lock = root/f'{info.st_dev}-{info.st_ino}.lock'
+            lock.symlink_to(self.path)
+            with self.assertRaises(OSError):
+                with exclusive_host(self.path):
+                    pass
+            self.assertEqual(self.path.read_bytes(), b'')
+
+    def test_darwin_refuses_symlink_directory(self):
+        target = self.path.parent/'target'
+        target.mkdir(mode=0o700)
+        root = self.path.parent/'leases'
+        root.symlink_to(target)
+        with patch('nerve_awim.host_lease.sys.platform', 'darwin'), patch('nerve_awim.host_lease._LOCK_ROOT', root):
+            with self.assertRaises(OSError):
+                with exclusive_host(self.path):
+                    pass
