@@ -1,5 +1,6 @@
 import json
 import unittest
+from unittest.mock import patch
 import test_memory_retrieval_v18 as fixtures
 from nerve_awim.hermes_agents import HermesAgentRuntime, ROLES, load_pinned_factory
 from nerve_awim.hermes_learning import propose_and_evaluate
@@ -49,6 +50,10 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(a.config['enabled_toolsets'], [])
         self.assertEqual(a.config['max_iterations'], 2)
         self.assertTrue(a.closed and b.closed)
+    def test_unsupported_interpreter_rejected_before_import(self):
+        with patch('nerve_awim.hermes_agents.sys.version_info', (3,12,0)):
+            with self.assertRaisesRegex(RuntimeError, 'Python 3.14'):
+                load_pinned_factory('/does-not-exist', enabled=True)
     def test_unexpected_tools_rejected_and_closed(self):
         class Tools(FakeHermes):
             def __init__(self, **kwargs):

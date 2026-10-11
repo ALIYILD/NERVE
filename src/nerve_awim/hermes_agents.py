@@ -5,6 +5,7 @@ import importlib.util
 import json
 from pathlib import Path
 import subprocess
+import sys
 from threading import Lock
 from types import MappingProxyType
 import uuid
@@ -41,6 +42,8 @@ def load_pinned_factory(checkout, *, enabled=False):
     """
     if enabled is not True:
         raise PermissionError('Hermes runtime disabled')
+    if sys.version_info[:2] != (3, 14):
+        raise RuntimeError('pinned Hermes requires its separate Python 3.14 worker environment')
     root = Path(checkout).resolve(strict=True)
     def git(*args):
         return subprocess.check_output(['git', '-C', str(root), *args], text=True, timeout=10).strip()

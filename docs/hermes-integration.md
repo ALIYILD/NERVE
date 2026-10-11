@@ -1,8 +1,9 @@
 # Optional Hermes agent integration
 
 Status: adapter and role registry implemented; offline contract/integration tests
-pass. No Hermes package installed, live model invoked, or clinical integration
-enabled by this stage. Offline tests use a contract double, not the real runtime.
+pass. The pinned real runtime was separately provisioned and passed the import
+and zero-tool construction probe. No live model was invoked or clinical integration
+enabled. Normal unit tests still use a contract double.
 
 ## Version contract
 
@@ -20,6 +21,51 @@ importing it. The host must provision dependencies and put the checkout on its
 worker's PYTHONPATH. This source pin does not verify dependency supply chains,
 ignored files, preloaded modules or external plugins. It is not an OS sandbox.
 Do not load an untrusted Hermes installation into the NERVE service process.
+
+## Separate runtime readiness probe
+
+The pinned upstream revision supports Python 3.14 for its runtime; Python 3.12
+metadata compatibility is for upgrades and does not provision its dependencies.
+NERVE remains on Python 3.12. The real factory loader now rejects an incompatible
+interpreter before importing Hermes. Injectable offline contract doubles are
+unaffected.
+
+Provision a separate clean checkout and isolated HERMES_HOME/HERMES_RUNTIME_DIR
+using upstream `scripts/run-in-hermes-env`. Do not install Hermes dependencies
+into NERVE's environment. On containers that cannot preserve archive ownership,
+`TAR_OPTIONS=--no-same-owner` allows the upstream bootstrap extraction while
+retaining its checksum verification. Upstream PM owns all dependency installation.
+
+From a provisioned worker, with NERVE's src and the Hermes checkout on PYTHONPATH:
+
+```bash
+python /path/to/NERVE/scripts/check_hermes_runtime.py --checkout /path/to/hermes-agent
+```
+
+Run the probe with an isolated data home and no real provider credentials. It
+imports the pinned AIAgent and constructs it with a placeholder key and a dead
+loopback endpoint, requests zero tools, then closes the instance. No conversation
+is started. A Python audit hook rejects socket connections; this is a probe guard,
+not an OS network sandbox or protection from arbitrary subprocesses/plugins.
+The JSON report distinguishes import, construction and tool-surface results.
+Successful construction does not establish model inference or deployment readiness.
+
+### Measured readiness result (2026-10-11)
+
+The real probe ran on Python 3.14.7: import and construction succeeded, tool count
+was zero, and no conversation/model call ran. Eight Python socket connection
+attempts during startup were rejected by the audit hook. This confirms startup
+can attempt network access even with no conversation; retain host network isolation.
+The categorical report is in `docs/hermes-runtime-readiness.json`.
+
+Upstream PM installed the core environment successfully. Optional Chromium failed
+to download (byte-range response error); browser tools remain unavailable. A later
+activation under a stripped environment tried dependency resolution again and
+failed DNS. The successful probe used the already provisioned interpreter returned
+by upstream `pm.environments.project_python(Path(checkout))`, without reinstalling
+or changing its dependencies. The probe process inherited only PATH, PYTHONPATH,
+HERMES_HOME and HERMES_RUNTIME_DIR. This is a local readiness result, not a
+reproducibility guarantee for another machine or a passing inference test.
 
 ## Core registry
 
