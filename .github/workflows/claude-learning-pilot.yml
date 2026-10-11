@@ -1,0 +1,34 @@
+name: claude-learning-pilot
+on:
+  push:
+    branches: [main]
+    paths: ['research/claude-pilot-launch.txt']
+permissions:
+  contents: read
+concurrency:
+  group: claude-learning-pilot-20261011
+  cancel-in-progress: false
+jobs:
+  pilot:
+    if: github.run_attempt == 1 && github.event.head_commit.message == 'run approved Claude pilot 20261011-b7f93'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run paid pilot with approved ten-dollar cap
+        env:
+          PYTHONPATH: src
+          ANTHROPIC_API_KEY: ${{ secrets.claude_git }}
+        run: python scripts/claude_learning_pilot.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: claude-pilot-report
+          path: |
+            claude-pilot-report.json
+            claude-pilot-budget.sqlite
