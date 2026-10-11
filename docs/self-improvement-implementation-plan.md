@@ -7,7 +7,7 @@ Status below distinguishes implemented foundations from connected live capabilit
 |---|---|---|
 | Experience-based memory | Scoped independently judged utility and recent-window reranking | No demonstrated real-agent performance gain; not live-enabled |
 | Chronological measurement | `learning_study.py`: separate train/evaluation, duplicate rejection, three arms, paired wins/losses, prediction timing | Realistic independently controlled data, multiple seeds, uncertainty intervals and provider cost |
-| Skill consolidation | `skill_proposals.py`: pending procedural lesson plus 3–20 successful episode references; scope/revision/status checks | Lesson generation, semantic deduplication, independent lesson testing, review and expiry policy |
+| Skill consolidation | `skill_proposals.py`: one-call host generator interface, strict output schema, pending procedural lesson plus 3–20 successful episode references, atomic storage and exact retry deduplication | Real-model generator adapter, semantic deduplication, independent lesson testing, review and expiry policy |
 | Prompt/tool selection | `recipe_selection.py`: bounded matched boolean evaluation of data-only candidates, incumbent wins ties, no deployment authorization | LLM/GEPA proposal adapter, allowlisted executable tools, fresh final evaluation, budget attestation |
 | Release control | Existing governed learning, shadow collection, operator approval, canaries and rollback | Explicit connection of the new memory/recipe components to reviewed nonclinical host trials |
 | Code evolution | Not enabled | Isolated execution environment, secret/network exclusion, resource limits, independent tests and reviewed PRs |
@@ -35,11 +35,26 @@ It is not a process sandbox or an enforcement layer for arbitrary agent code.
 Task hashes prevent exact duplicates, not semantic near-duplicates. The host must
 freeze datasets independently and prevent evaluation tasks entering other learners.
 
-Skill proposals are always pending. Their text is host-supplied, not automatically
-extracted from transcripts. A successful source episode does not prove its lesson
-is correct. Review must recheck linked evidence, freshness and lesson quality.
-Proposal creation and provenance attachment are separate transactions: if attaching
-links fails, an unapproved orphan proposal may remain and must not be approved.
+Skill proposals are always pending. Text can be host-supplied or returned by the
+host-configured `generate_skill_proposal(..., generator=...)` callback. The callback
+receives only approved source-memory snippets and successful episode references;
+raw task/output transcripts were never stored and cannot be reconstructed here.
+It must return exactly `lesson` and the unchanged ordered `episodes` list. Read
+and proposal capabilities are required, and current evidence is rechecked after
+the callback. Its generated text is never executed or automatically approved.
+
+Proposal creation and provenance attachment now share one SQLite transaction.
+A failed link write rolls back both. An exact pending lesson/evidence/revision
+retry reuses its existing ID; this is not semantic deduplication or generator-call
+deduplication. A successful source episode does not prove its lesson is correct.
+Review must recheck linked evidence, freshness and lesson quality. Existing old
+orphan proposals are not repaired or approved automatically.
+
+The interface makes one generator call per invocation. It does not provide a hard
+runtime timeout, monetary budget or process sandbox. No external model adapter
+is installed or invoked by this change: the host must separately provision and
+authorize any external transmission and enforce call/time/cost limits. Local
+fixtures test integration mechanics, not actual LLM lesson quality.
 
 Recipe selection is exhaustive bounded offline comparison, **not GEPA installed**,
 not mutation/crossover and not autonomous prompt generation. The first recipe is

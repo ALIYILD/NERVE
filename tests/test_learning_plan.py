@@ -1,9 +1,10 @@
 import unittest
+import sqlite3
 import test_memory_retrieval_v18 as fixtures
 from nerve_awim.adaptive_memory import OutcomeMemoryRanker
 from nerve_awim.learning_study import Episode, run_study, validate_stream
 from nerve_awim.recipe_selection import select_recipe
-from nerve_awim.skill_proposals import propose_skill
+from nerve_awim.skill_proposals import propose_skill, generate_skill_proposal
 from scripts.adaptive_memory_study import run
 
 
@@ -82,3 +83,57 @@ class SkillTests(unittest.TestCase):
         self.host.revoke(self.reviewer, mid, evaluator_id='test')
         with self.assertRaises(ValueError):
             propose_skill(self.host, self.writer, **kwargs)
+
+    def generate(self, generator):
+        return generate_skill_proposal(self.host, self.writer, context='planning',
+            episodes=['case-0','case-1','case-2'], evaluator_revision='test-v1', generator=generator)
+
+    def test_generation_receives_bounded_evidence_and_stays_pending(self):
+        self.seed()
+        calls = []
+        def generate(request):
+            calls.append(request)
+            return {'lesson':'Use a checked sorting strategy.',
+                    'episodes':[row['episode_id'] for row in request['evidence']]}
+        mid = self.generate(generate)
+        self.assertEqual(self.host.status(self.writer, mid).status, 'pending')
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(set(calls[0]['evidence'][0]), {'episode_id','memory_id','memory_text'})
+        self.assertEqual(self.generate(generate), mid)
+
+    def test_generation_cannot_invent_evidence_or_approve(self):
+        self.seed()
+        for response in (
+            {'lesson':'test', 'episodes':['invented']},
+            {'lesson':'test', 'episodes':['case-0','case-1','case-2'], 'approve':True},
+            {'lesson':'password=secret', 'episodes':['case-0','case-1','case-2']},
+        ):
+            with self.assertRaises(ValueError):
+                self.generate(lambda request: response)
+
+    def test_evidence_revocation_during_generation_blocks_publication(self):
+        mid = self.seed()
+        def generate(request):
+            self.host.revoke(self.reviewer, mid, evaluator_id='test')
+            return {'lesson':'test', 'episodes':['case-0','case-1','case-2']}
+        with self.assertRaises(ValueError):
+            self.generate(generate)
+
+    def test_link_failure_rolls_back_proposal_and_partial_evidence(self):
+        self.seed()
+        with sqlite3.connect(self.host.path) as con:
+            con.execute('CREATE TABLE skill_evidence (proposal TEXT, episode TEXT, revision TEXT, PRIMARY KEY(proposal,episode))')
+            con.execute("""CREATE TRIGGER reject_link BEFORE INSERT ON skill_evidence
+                WHEN NEW.episode='case-1' BEGIN SELECT RAISE(ABORT,'interrupted'); END""")
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.generate(lambda request: {'lesson':'test', 'episodes':['case-0','case-1','case-2']})
+        with sqlite3.connect(self.host.path) as con:
+            self.assertEqual(con.execute('SELECT COUNT(*) FROM skill_evidence').fetchone()[0], 0)
+            self.assertEqual(con.execute("SELECT COUNT(*) FROM trusted_memory_v18 WHERE source_id='verified-episode-proposal'").fetchone()[0], 0)
+
+    def test_unauthorized_generator_is_not_called(self):
+        self.seed()
+        actor = self.host.authority.issue('tenant-a', 'agent-a', permissions=('propose',))
+        with self.assertRaises(PermissionError):
+            generate_skill_proposal(self.host, actor, context='planning', episodes=['case-0','case-1','case-2'],
+                evaluator_revision='test-v1', generator=lambda request: self.fail('must not disclose memory'))
