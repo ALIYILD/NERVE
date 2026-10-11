@@ -1,10 +1,12 @@
 import unittest
 import sqlite3
+import json
 import test_memory_retrieval_v18 as fixtures
 from nerve_awim.adaptive_memory import OutcomeMemoryRanker
 from nerve_awim.learning_study import Episode, run_study, validate_stream
 from nerve_awim.recipe_selection import select_recipe
 from nerve_awim.skill_proposals import propose_skill, generate_skill_proposal
+from nerve_awim.skill_model import LessonModelAdapter
 from scripts.adaptive_memory_study import run
 
 
@@ -100,6 +102,16 @@ class SkillTests(unittest.TestCase):
         self.assertEqual(len(calls), 1)
         self.assertEqual(set(calls[0]['evidence'][0]), {'episode_id','memory_id','memory_text'})
         self.assertEqual(self.generate(generate), mid)
+
+    def test_model_adapter_integrates_without_approval(self):
+        self.seed()
+        def complete(request):
+            evidence = json.loads(request['input'])['evidence']
+            return json.dumps({'lesson': 'Check sorting direction.',
+                               'episodes': [row['episode_id'] for row in evidence]})
+        adapter = LessonModelAdapter(complete=complete, model='local-test', enabled=True)
+        mid = self.generate(adapter)
+        self.assertEqual(self.host.status(self.writer, mid).status, 'pending')
 
     def test_generation_cannot_invent_evidence_or_approve(self):
         self.seed()

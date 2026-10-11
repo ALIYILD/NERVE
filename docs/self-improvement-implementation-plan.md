@@ -51,10 +51,37 @@ Review must recheck linked evidence, freshness and lesson quality. Existing old
 orphan proposals are not repaired or approved automatically.
 
 The interface makes one generator call per invocation. It does not provide a hard
-runtime timeout, monetary budget or process sandbox. No external model adapter
-is installed or invoked by this change: the host must separately provision and
+runtime timeout, monetary budget or process sandbox. A provider-neutral adapter
+is available, but no external provider is installed or invoked: the host must separately provision and
 authorize any external transmission and enforce call/time/cost limits. Local
 fixtures test integration mechanics, not actual LLM lesson quality.
+
+### Model adapter and fresh lesson comparison
+
+`skill_model.LessonModelAdapter(complete=transport, model=model_id,
+enabled=True, max_calls=1)` can be passed as `generator` to
+`generate_skill_proposal`. It defaults to disabled. The trusted transport accepts
+one dictionary (`model`, `system`, JSON `input`, `max_output_tokens`,
+`timeout_seconds`) and returns JSON text. It must implement those timeout/token
+limits and enforce provider/data/spending policy itself. There is deliberately
+no default endpoint, credential lookup, retry or external transmission.
+
+The adapter reserves its thread-safe process-local call quota before transport;
+failed calls consume quota. It bounds input/response size, rejects duplicate JSON
+keys and validates the exact lesson/evidence schema. This is not a durable
+spending cap, hard transport timeout or prompt-injection sandbox.
+
+`skill_validation.evaluate_lesson` compares baseline and lesson predictions on
+the evaluation tail of a validated `Episode` stream. Declare every development
+and selection task in its training prefix. Exact task overlap is rejected before
+prediction, call count is preflighted, arm order alternates, and predictors never
+receive expected answers or judge results. Reports expose paired wins/losses and
+never approve memory or activate deployment. Exceptions abort without a partial
+success report. Host callbacks must have independent/stateless execution; this
+helper cannot enforce isolation, semantic disjointness, historical nonreuse,
+provider cost or multiple-seed generalization. No real-model quality result has
+been produced. A reviewed dataset, protected provider configuration and spending
+authorization remain necessary for the live experiment.
 
 Recipe selection is exhaustive bounded offline comparison, **not GEPA installed**,
 not mutation/crossover and not autonomous prompt generation. The first recipe is
