@@ -87,6 +87,14 @@ def verify():
         assert database.stat().st_mode & 0o777 == 0o600
         process, port = start(database)
         try:
+            duplicate = subprocess.run([sys.executable, str(ROOT/'scripts'/'serve_repository_host_v25.py'),
+                '--config', str(config), '--database', str(database), '--port', str(port)],
+                env=env, cwd=folder, capture_output=True, text=True, timeout=5)
+            assert duplicate.returncode == 1
+            assert duplicate.stderr == 'Host configuration, database ownership or deployment validation failed.\n'
+            assert not duplicate.stdout
+            assert command('serve_repository_host_v25.py', '--config', config,
+                           '--database', database, '--check')['ready']
             assert call(port, '/v1/readiness')['ready']
             try:
                 call(port, '/v1/readiness', auth=False)
@@ -113,7 +121,8 @@ def verify():
         finally:
             stop(process)
     return {'status': 'packaged_installation_verified', 'dependencies': dependencies,
-            'checks': ['offline_initialization', 'private_database_permissions', 'signed_http', 'unauthorised_denial', 'task_output', 'shadow_evidence',
+            'checks': ['offline_initialization', 'private_database_permissions', 'single_service_ownership',
+                       'signed_http', 'unauthorised_denial', 'task_output', 'shadow_evidence',
                        'startup_check', 'backup_restore', 'restarted_release', 'graceful_stop'],
             'scope': 'temporary loopback service and generated test identities; no public deployment'}
 

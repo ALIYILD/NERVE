@@ -94,7 +94,9 @@ reports expose dropped counts. The response's `queued_best_effort` is not a
 durable acceptance guarantee. Identifiers/hashes are not anonymisation. Queue
 and per-subject rate limits are process-local and reset on restart; they are not
 cluster-wide quotas. Up to 64 principals and queue capacity 32 per scope are the
-pilot defaults. One host process owns each database/queue deployment.
+pilot defaults. One host process owns each database/queue deployment. The Linux
+service command enforces this with a database-inode advisory lock; embedded API
+users must provide their own single-owner lifecycle. See the operations guide.
 
 The host pins the initial AST baseline release and generation zero. If an offline
 operator changes that scope's deployment, subsequent tasks fail closed with 503;

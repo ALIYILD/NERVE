@@ -89,6 +89,22 @@ This is not per-request process isolation. The service template was checked by
 `systemd-analyze verify` using the available local Python executable; installation
 and runtime isolation on the target host still require verification.
 
+The Linux service command holds a nonblocking advisory `flock` on the database
+inode for its entire lifetime, including startup validation and queue draining.
+A second service using that database exits before constructing its host or
+listening, even through a symlink or hard-link alias. Graceful exit and process
+termination release ownership automatically; no stale lockfile needs deletion.
+Normal service startup requires an existing database; only explicit `--bootstrap`
+can create a missing one. Prefer offline `--initialize` for first installation.
+
+This lock coordinates cooperating local service commands. Direct `build_host`
+users must enforce ownership themselves. It does not lock out SQLite readers,
+backups or the separate operator commands, and `--check` remains available while
+the service is running. It does not coordinate copied databases, hosts or network
+filesystems. Use local Linux storage; never rename, unlink, replace or restore over
+the live database. Stop the service before selecting a recovered store. A process
+crash still loses its in-memory queue and resets process-local rate limits.
+
 ## Backup and recovery
 
 Use SQLite's online backup API rather than copying only the main file of a

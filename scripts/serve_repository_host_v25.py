@@ -1,5 +1,6 @@
 """Loopback-only pilot; provision trusted OIDC/grants config before starting."""
 import argparse
+from contextlib import ExitStack
 import json
 import signal
 import tempfile
@@ -12,6 +13,7 @@ from nerve_awim.repository_agents_v20 import CONTEXT, REPOSITORY_STRATEGIES, rep
 from nerve_awim.repository_host_v25 import HostGrant
 from nerve_awim.bound_repository_host_v26 import BoundRepositoryHost
 from nerve_awim.store_recovery_v27 import copy_store
+from nerve_awim.host_lease import exclusive_host
 
 
 class QuietHandler(WSGIRequestHandler):
@@ -77,37 +79,41 @@ def main():
         parser.error('--check requires an existing database and cannot bootstrap')
     if args.initialize and (args.bootstrap or args.check):
         parser.error('--initialize cannot be combined with --bootstrap or --check')
-    try:
-        config = json.loads(Path(args.config).read_text())
-        if args.initialize:
-            print(json.dumps(initialize_database(config, args.database)))
-            return
-        host = build_host(config, args.database, bootstrap=args.bootstrap)
-        checks = [host.readiness(scope) for scope in host.adapters]
-        if not all(check['ready'] for check in checks):
-            raise ValueError('startup readiness failed')
-    except Exception:
-        parser.exit(1, 'Host configuration, database or deployment validation failed.\n')
-    if args.check:
-        print(json.dumps({'ready': True, 'scopes_checked': len(checks),
-                          'degraded_scopes': sum(c['degraded'] for c in checks)}))
-        return
-    with make_server('127.0.0.1', args.port, host, server_class=PilotServer, handler_class=QuietHandler) as server:
-        server.timeout = 1
-        print(f'Repository shadow pilot listening on 127.0.0.1:{args.port}', flush=True)
-        stopping = False
-        def stop(signum, frame):
-            nonlocal stopping
-            stopping = True
-        old_handler = signal.signal(signal.SIGTERM, stop)
+    with ExitStack() as ownership:
         try:
-            while not stopping:
-                server.handle_request()  # Response has been sent before learning starts.
-                host.drain(limit=8)
-        except KeyboardInterrupt:
-            pass
-        finally:
-            signal.signal(signal.SIGTERM, old_handler)
+            config = json.loads(Path(args.config).read_text())
+            if args.initialize:
+                print(json.dumps(initialize_database(config, args.database)))
+                return
+            database = args.database
+            if not args.check:
+                database = ownership.enter_context(exclusive_host(database, create=args.bootstrap))
+            host = build_host(config, database, bootstrap=args.bootstrap)
+            checks = [host.readiness(scope) for scope in host.adapters]
+            if not all(check['ready'] for check in checks):
+                raise ValueError('startup readiness failed')
+        except Exception:
+            parser.exit(1, 'Host configuration, database ownership or deployment validation failed.\n')
+        if args.check:
+            print(json.dumps({'ready': True, 'scopes_checked': len(checks),
+                              'degraded_scopes': sum(c['degraded'] for c in checks)}))
+            return
+        with make_server('127.0.0.1', args.port, host, server_class=PilotServer, handler_class=QuietHandler) as server:
+            server.timeout = 1
+            print(f'Repository shadow pilot listening on 127.0.0.1:{args.port}', flush=True)
+            stopping = False
+            def stop(signum, frame):
+                nonlocal stopping
+                stopping = True
+            old_handler = signal.signal(signal.SIGTERM, stop)
+            try:
+                while not stopping:
+                    server.handle_request()  # Response has been sent before learning starts.
+                    host.drain(limit=8)
+            except KeyboardInterrupt:
+                pass
+            finally:
+                signal.signal(signal.SIGTERM, old_handler)
 
 
 if __name__ == '__main__':
