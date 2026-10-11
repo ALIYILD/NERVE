@@ -53,7 +53,8 @@ other Python versions, architectures and older glibc environments require a
 separate reviewed lock. Wheels are downloaded from the configured Python package
 index. The bundle itself is not a fully offline installer.
 
-The drill creates temporary RSA signing keys and a temporary database. It starts
+The drill creates temporary RSA signing keys and initializes a new temporary
+database offline with `--initialize`, checking mode-0600 permissions. It starts
 the extracted service on loopback, checks signed requests and unauthorised denial,
 executes a repository task, checks shadow evidence, gracefully stops, runs startup
 validation, backs up/restores into a new database and starts again. It verifies

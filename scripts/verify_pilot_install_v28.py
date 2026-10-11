@@ -82,7 +82,10 @@ def verify():
                 data=json.dumps(body).encode() if body is not None else None, headers=headers)
             with urlopen(request, timeout=5) as response:
                 return json.load(response)
-        process, port = start(database, bootstrap=True)
+        assert command('serve_repository_host_v25.py', '--config', config,
+                       '--database', database, '--initialize')['initialized']
+        assert database.stat().st_mode & 0o777 == 0o600
+        process, port = start(database)
         try:
             assert call(port, '/v1/readiness')['ready']
             try:
@@ -110,7 +113,7 @@ def verify():
         finally:
             stop(process)
     return {'status': 'packaged_installation_verified', 'dependencies': dependencies,
-            'checks': ['signed_http', 'unauthorised_denial', 'task_output', 'shadow_evidence',
+            'checks': ['offline_initialization', 'private_database_permissions', 'signed_http', 'unauthorised_denial', 'task_output', 'shadow_evidence',
                        'startup_check', 'backup_restore', 'restarted_release', 'graceful_stop'],
             'scope': 'temporary loopback service and generated test identities; no public deployment'}
 

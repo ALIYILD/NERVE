@@ -2,6 +2,7 @@
 import argparse
 import json
 import signal
+import tempfile
 from pathlib import Path
 from wsgiref.simple_server import WSGIServer, WSGIRequestHandler, make_server
 
@@ -10,6 +11,7 @@ from nerve_awim.oidc_v27 import PinnedOIDCVerifier
 from nerve_awim.repository_agents_v20 import CONTEXT, REPOSITORY_STRATEGIES, repository_judge
 from nerve_awim.repository_host_v25 import HostGrant
 from nerve_awim.bound_repository_host_v26 import BoundRepositoryHost
+from nerve_awim.store_recovery_v27 import copy_store
 
 
 class QuietHandler(WSGIRequestHandler):
@@ -45,6 +47,21 @@ def repository_engine(database):
         contract_revision='repository-host-v25-tools-v1')
 
 
+def initialize_database(config, database):
+    """Prepare all scopes privately, then publish a new store without overwriting."""
+    destination = Path(database).absolute()
+    if destination.exists() or destination.is_symlink():
+        raise FileExistsError('initialization requires a new database path')
+    with tempfile.TemporaryDirectory(prefix='.nerve-init-', dir=destination.parent) as folder:
+        staged = Path(folder)/'pilot.db'
+        host = build_host(config, staged, bootstrap=True)
+        checks = [host.readiness(scope) for scope in host.adapters]
+        if not checks or not all(check['ready'] and not check['degraded'] for check in checks):
+            raise ValueError('initialization readiness failed')
+        copy_store(staged, destination)
+    return {'initialized': True, 'ready': True, 'scopes_checked': len(checks)}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', required=True)
@@ -52,13 +69,20 @@ def main():
     parser.add_argument('--port', type=int, default=8765)
     parser.add_argument('--bootstrap', action='store_true', help='explicitly initialise missing configured scopes')
     parser.add_argument('--check', action='store_true', help='validate configured scopes without listening')
+    parser.add_argument('--initialize', action='store_true', help='initialize a new database offline without listening')
     args = parser.parse_args()
     if not 1 <= args.port <= 65535:
         parser.error('port must be between 1 and 65535')
     if args.check and (args.bootstrap or not Path(args.database).is_file()):
         parser.error('--check requires an existing database and cannot bootstrap')
+    if args.initialize and (args.bootstrap or args.check):
+        parser.error('--initialize cannot be combined with --bootstrap or --check')
     try:
-        host = build_host(json.loads(Path(args.config).read_text()), args.database, bootstrap=args.bootstrap)
+        config = json.loads(Path(args.config).read_text())
+        if args.initialize:
+            print(json.dumps(initialize_database(config, args.database)))
+            return
+        host = build_host(config, args.database, bootstrap=args.bootstrap)
         checks = [host.readiness(scope) for scope in host.adapters]
         if not all(check['ready'] for check in checks):
             raise ValueError('startup readiness failed')

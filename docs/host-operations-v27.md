@@ -43,9 +43,9 @@ can start safely on the baseline; a mismatched deployment refuses startup.
 ## Supervised Linux pilot
 
 Use a reviewed checkout at `/opt/nerve`, a Python 3.12 virtual environment at
-`/opt/nerve/.venv`, and install `deploy/requirements-pilot.txt`. Resolve and retain
-the dependency versions used by your deployment; the file is a compatible range,
-not a reproducible lockfile. Provision a dedicated `nerve` service user/group.
+`/opt/nerve/.venv`, and install `deploy/requirements-pilot-linux-x86_64.lock` using
+`pip install --require-hashes --only-binary=:all: -r` as described in the
+v2.8 installation guide (Linux x86_64, glibc 2.34 or newer). Provision a dedicated `nerve` service user/group.
 Keep application files root-owned and non-writable by that user.
 
 Provision `/etc/nerve/identity.json` using the v2.5 schema, your actual pinned
@@ -53,11 +53,23 @@ public JWKS, issuer, audience and subject grants. Keep it readable by `nerve`
 and writable only by administrators. Do not store private IdP signing keys here.
 Create `/var/lib/nerve` owned by `nerve`, mode 0700, before first initialisation.
 
-Initialise missing scopes explicitly by running the normal server once as
-`nerve` with `--bootstrap`, then stop it with Ctrl-C. Alternatively use the
-trusted `build_host(config, database, bootstrap=True)` API in an offline
-provisioning script. The service template deliberately never bootstraps on restart.
-Run `--check` as `nerve` before enabling the service.
+Initialise a **new** database offline as `nerve`, without starting a listener:
+
+```bash
+PYTHONPATH=/opt/nerve/src /opt/nerve/.venv/bin/python \
+  /opt/nerve/scripts/serve_repository_host_v25.py \
+  --config /etc/nerve/identity.json --database /var/lib/nerve/pilot.db --initialize
+```
+
+This validates and bootstraps all configured scopes in a private staging directory,
+checks readiness, then publishes a consistent mode-0600 database without replacing
+any existing destination, including symlinks or a concurrently created file.
+Validation failures leave no destination or staged database. A filesystem failure
+after publication may leave the new database; inspect it with `--check` before
+retrying. Use an administrator-controlled parent directory and run as the intended
+service account so ownership is correct. This does not configure the identity
+provider, enable systemd or change an existing store. The service template never
+bootstraps on restart. Run `--check` as `nerve` before enabling the service.
 
 Review and install `deploy/nerve-repository-pilot.service` in your systemd unit
 directory. Its fixed paths must match your installation. Then run your normal

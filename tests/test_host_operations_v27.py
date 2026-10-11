@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 import test_repository_host_v25 as fixtures
 import test_bound_repository_host_v26 as bound
-from scripts.serve_repository_host_v25 import build_host
+from scripts.serve_repository_host_v25 import build_host, initialize_database
 from nerve_awim.store_recovery_v27 import copy_store, verify_store
 
 
@@ -61,6 +61,48 @@ class OperationsTests(unittest.TestCase):
                            '--database', str(path), '--check')
         self.assertNotEqual(run.returncode, 0)
         self.assertFalse(path.exists())
+
+    def test_offline_initialization_publishes_ready_private_database(self):
+        path = Path(self.temp.name)/'initialized.db'
+        with patch('scripts.serve_repository_host_v25.make_server', side_effect=AssertionError('must not listen')):
+            result = initialize_database(self.config, path)
+        self.assertEqual(result, {'initialized': True, 'ready': True, 'scopes_checked': 2})
+        self.assertEqual(path.stat().st_mode & 0o777, 0o600)
+        host = build_host(self.config, path)
+        self.assertTrue(all(host.readiness(scope)['ready'] for scope in host.adapters))
+        self.assertEqual(list(path.parent.glob('.nerve-init-*')), [])
+
+    def test_offline_initialization_cli_exits_without_listening(self):
+        path = Path(self.temp.name)/'offline.db'
+        run = self.command('scripts/serve_repository_host_v25.py', '--config', str(self.config_file()),
+                           '--database', str(path), '--initialize')
+        self.assertEqual(run.returncode, 0, run.stderr)
+        self.assertTrue(json.loads(run.stdout)['initialized'])
+        before = path.read_bytes()
+        failed = self.command('scripts/serve_repository_host_v25.py', '--config', str(self.config_file()),
+                              '--database', str(path), '--initialize')
+        self.assertNotEqual(failed.returncode, 0)
+        self.assertEqual(path.read_bytes(), before)
+
+    def test_failed_initialization_does_not_publish_partial_scopes(self):
+        path = Path(self.temp.name)/'failed.db'
+        real_build = build_host
+        def fail_after_bootstrap(*args, **kwargs):
+            real_build(*args, **kwargs)
+            raise ValueError('failure after staged initialization')
+        with patch('scripts.serve_repository_host_v25.build_host', side_effect=fail_after_bootstrap):
+            with self.assertRaises(ValueError):
+                initialize_database(self.config, path)
+        self.assertFalse(path.exists())
+        self.assertEqual(list(path.parent.glob('.nerve-init-*')), [])
+
+    def test_initialization_refuses_dangling_symlink(self):
+        path = Path(self.temp.name)/'link.db'
+        target = path.parent/'target.db'
+        path.symlink_to(target)
+        with self.assertRaises(FileExistsError):
+            initialize_database(self.config, path)
+        self.assertFalse(target.exists())
 
     def test_backup_restore_preserves_learning_and_permissions(self):
         self.request()
