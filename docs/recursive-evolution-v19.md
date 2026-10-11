@@ -91,10 +91,27 @@ tests also execute the actual CLI in subprocesses. The integration uses only
 synthetic data, read-only repository permissions and no model credentials.
 
 This checks real GitHub upload/download transport and fresh-runner continuation.
-It does **not** prove cross-workflow discovery or the six-hour scheduler has run.
+That integration alone does **not** prove cross-workflow discovery or the six-hour scheduler has run.
 CI artifacts have separate names and workflow provenance, so they cannot become
-the scheduled research checkpoint. That path still requires successive successful
-manual or scheduled executions of `recursive-research.yml`.
+the scheduled research checkpoint.
+
+### Observed scheduled continuation — 11 October 2026
+
+Two automatic `schedule` runs completed successfully:
+[38101107577](https://github.com/ALIYILD/NERVE/actions/runs/38101107577)
+at 01:13 UTC and
+[38119063394](https://github.com/ALIYILD/NERVE/actions/runs/38119063394)
+at 06:44 UTC. These are observed creation times, not guaranteed cron start times.
+The later run's logs explicitly selected run 38101107577, successfully restored
+its checkpoint artifact and reported `completed_runs: 2`,
+`resumed_from_checkpoint: true`, and no checkpoint reset.
+
+Its retrieval result was `no_verified_improvement`, with six recipes remaining,
+validation accuracy 1.0 and report-only holdout accuracy 0.8333333333333334.
+WorldCore reported `no_deployable_improvement`. These are fixed synthetic-study
+measurements, not evidence of general agent improvement or clinical performance.
+This verifies an actual scheduled cross-run continuation, not just local tests.
+Neither result authorizes promotion, source changes or production deployment.
 
 ## Honest benchmark scope
 
