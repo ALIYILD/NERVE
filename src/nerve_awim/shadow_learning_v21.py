@@ -48,12 +48,16 @@ class ShadowLearning:
     def pending(self):
         return len(self._pending)
 
-    def execute(self, task):
+    def execute(self, task, *, expected_release=None, expected_generation=None):
         # Invalid inputs/credentials fail before dispatch and are not outcomes.
         scope = self.engine._scope(self.runtime, 'runtime')
         clean, _ = self.engine._task(task)
         with self.engine._db() as con:
+            con.execute('BEGIN')
             state = self.engine._state(con, scope)
+            if ((expected_release is not None and state['active'] != expected_release) or
+                    (expected_generation is not None and state['generation'] != expected_generation)):
+                raise ValueError('host deployment changed; review binding before serving')
             routes = self.engine._release(con, scope, state['active'])
         strategy = routes[clean.context]
         result = {'strategy': strategy, 'release': state['active'],

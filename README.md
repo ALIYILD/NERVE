@@ -10,6 +10,11 @@ The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed stu
 manifests, pre-reserved holdouts, content-change checks and a reviewable rollout
 recommendation across separate processes. It never activates a release.
 
+The [v2.5 authenticated repository host](docs/repository-host-v25.md) connects
+pinned OIDC identities to scoped HTTP tasks and off-request-path shadow learning.
+It serves the strong AST baseline, persists aggregate evidence, and exposes no
+remote release controls. The loopback pilot is tested, not publicly deployed.
+
 The [v2.4 promotion monitor](docs/promotion-monitor-v24.md) can be armed atomically
 with operator-approved promotion. It checks fresh promoted results and restores
 the previous release on failure, while respecting newer operator decisions.
