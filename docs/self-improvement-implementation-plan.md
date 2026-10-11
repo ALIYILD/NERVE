@@ -92,6 +92,35 @@ monetary spending controls. Evaluator failure aborts selection.
 
 ## Next actions, in order
 
+### Bounded improvement loop (implemented)
+
+`improvement_loop.run_improvement_loop(training, selection, final, propose=...,
+predict=..., judge=...)` defaults to ten iterations and rejects larger runs.
+Provide at least three training, five selection and five final `Episode` objects;
+training phases must be `train`, both other partitions `evaluation`. IDs and exact
+task payloads must be disjoint across all partitions. The predictor receives only
+task and lesson (or `None` for baseline). The proposer sees training examples,
+the incumbent and selection history, never final tasks or final results.
+
+Each distinct proposed lesson is compared with the incumbent. Keep requires at
+least one paired win and zero observed losses; otherwise the incumbent remains.
+Exact duplicate lessons skip evaluation. At the iteration limit the selected
+lesson is frozen and tested once against the original baseline on final tasks.
+No candidate means no final test is necessary. A final tie, loss or lack of gain
+reports `no_verified_improvement`; positive gains without losses report only
+`observed_final_gain`, not statistical proof or release authorization.
+
+Prediction-call allowance is preflighted for the entire worst-case run. Proposal
+calls are limited by iterations. Callbacks are trusted and must independently
+enforce real model costs/timeouts and execution isolation. Exceptions abort;
+there is no automatic retry, daemon, durable resume, cross-run holdout registry,
+code self-modification or clinical deployment. Reusing the final set in another
+run would contaminate it; hosts must provide genuinely new final data. Local
+tests run the ten-step mechanics, including no-gain and failed-final scenarios;
+they are not real-model learning evidence.
+
+### Remaining live experiment prerequisites
+
 1. Provision a fresh limited-purpose model credential through the protected
    research environment, with explicit task/data handling and spending limits.
    Never use historical disclosed/revoked keys.
