@@ -10,7 +10,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   pilot:
-    if: github.run_attempt == 1 && github.event.head_commit.message == 'continue approved Claude pilot 20261011-c2e41'
+    # Credential-related HTTP 400. Disabled until replacement is confirmed.
+    if: ${{ false }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -24,7 +25,7 @@ jobs:
         env:
           PYTHONPATH: src
           ANTHROPIC_API_KEY: ${{ secrets.claude_git }}
-          PILOT_PRIOR_RESERVED_MICROUSD: '3015360'
+          PILOT_PRIOR_RESERVED_MICROUSD: '6030720'
         run: python scripts/claude_learning_pilot.py
       - uses: actions/upload-artifact@v4
         if: always()

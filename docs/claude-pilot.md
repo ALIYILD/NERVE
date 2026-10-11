@@ -44,3 +44,12 @@ zero provider charges. Its USD 3.01536 uncertain reservation is retained in the
 diagnostic continuation through PILOT_PRIOR_RESERVED_MICROUSD. Only fixed error
 categories are exposed, never raw provider error text. The continuation retains
 the original USD 10 total cap; it is not a new USD 10 authorization.
+
+Diagnostic continuation: run 38143472649 returned HTTP 400, sanitized category
+`invalid_api_key` (derived from provider message mentioning API key; the raw
+message is not stored). Both requests have no confirmed usage. Total uncertain
+reservation is USD 6.03072, leaving USD 3.96928 of the original authorization
+unreserved. These are conservative reservations, not claimed provider charges.
+The workflow is now explicitly disabled pending a replacement credential. Do not
+reset carried reservations when enabling a future continuation. No model answer,
+selection measurement, final evaluation or self-improvement result was obtained.
