@@ -48,13 +48,15 @@ class ShadowLearning:
     def pending(self):
         return len(self._pending)
 
-    def execute(self, task, *, expected_release=None, expected_generation=None):
+    def execute(self, task, *, expected_release=None, expected_generation=None, guard=None):
         # Invalid inputs/credentials fail before dispatch and are not outcomes.
         scope = self.engine._scope(self.runtime, 'runtime')
         clean, _ = self.engine._task(task)
         with self.engine._db() as con:
             con.execute('BEGIN')
             state = self.engine._state(con, scope)
+            if guard is not None:
+                guard(con, scope, state)
             if ((expected_release is not None and state['active'] != expected_release) or
                     (expected_generation is not None and state['generation'] != expected_generation)):
                 raise ValueError('host deployment changed; review binding before serving')
@@ -79,7 +81,14 @@ class ShadowLearning:
             except Exception:
                 self.dropped += 1
 
-    def drain(self, *, limit=32):
+    def discard_pending(self):
+        """Trusted single-owner host discards queued tasks after deployment changes."""
+        count = self.pending
+        self._pending.clear()
+        self.dropped += count
+        return count
+
+    def drain(self, *, limit=32, guard=None):
         """Judge actual outputs; then independently run matched training arms.
 
         Primary telemetry and replay training are explicitly distinct. A failed
@@ -100,7 +109,9 @@ class ShadowLearning:
                 # failed-judge retries cannot leak examples or bias selection.
                 with self.engine._db() as con:
                     con.execute('BEGIN IMMEDIATE')
-                    self.engine._state(con, scope)
+                    state = self.engine._state(con, scope)
+                    if guard is not None:
+                        guard(con, scope, state)
                     self.engine._claim(con, scope, task, digest, 'train', 'shadow-training')
                     con.execute('INSERT INTO gl_shadow VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)',
                         (*scope, task.task_id, digest, task.context, item.result['release'],

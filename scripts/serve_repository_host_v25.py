@@ -7,7 +7,8 @@ from wsgiref.simple_server import WSGIServer, WSGIRequestHandler, make_server
 from nerve_awim.governed_learning_v20 import GovernedLearning, LearningAuthority
 from nerve_awim.oidc_v27 import PinnedOIDCVerifier
 from nerve_awim.repository_agents_v20 import CONTEXT, REPOSITORY_STRATEGIES, repository_judge
-from nerve_awim.repository_host_v25 import HostGrant, RepositoryHost
+from nerve_awim.repository_host_v25 import HostGrant
+from nerve_awim.bound_repository_host_v26 import BoundRepositoryHost
 
 
 class QuietHandler(WSGIRequestHandler):
@@ -33,10 +34,14 @@ def build_host(config, database, *, bootstrap=False):
         if type(entry['roles']) is not list:
             raise ValueError('grant roles must be a list')
         grants.append(HostGrant(entry['subject'], entry['tenant'], entry['agent'], frozenset(entry['roles'])))
-    engine = GovernedLearning(database, authority=LearningAuthority(), strategies=REPOSITORY_STRATEGIES,
+    engine = repository_engine(database)
+    return BoundRepositoryHost(engine, verifier=verifier, grants=grants, bootstrap=bootstrap)
+
+
+def repository_engine(database):
+    return GovernedLearning(database, authority=LearningAuthority(), strategies=REPOSITORY_STRATEGIES,
         judge=repository_judge, baseline_routes={CONTEXT: 'ast-inventory'},
         contract_revision='repository-host-v25-tools-v1')
-    return RepositoryHost(engine, verifier=verifier, grants=grants, bootstrap=bootstrap)
 
 
 def main():

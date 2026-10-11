@@ -386,12 +386,15 @@ class GovernedLearning:
                                                   'review': reason, 'generation': expected_generation + 1})
         return self.status(actor)
 
-    def execute(self, actor, task):
+    def execute(self, actor, task, *, guard=None):
         """Use one immutable approved route snapshot; never writes training rewards."""
         scope = self._scope(actor, 'runtime')
         task, _ = self._task(task)
         with self._db() as con:
+            con.execute('BEGIN')
             state = self._state(con, scope)
+            if guard is not None:
+                guard(con, scope, state)
             routes = self._release(con, scope, state['active'])
         strategy = routes[task.context]
         value = self._registry[(task.context, strategy)](deepcopy(task.payload))

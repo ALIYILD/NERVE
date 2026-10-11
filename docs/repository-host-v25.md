@@ -1,5 +1,9 @@
 # Authenticated repository shadow host v2.5
 
+The [v2.6 extension](bound-repository-host-v26.md) now adds an optional, persisted
+operator binding to trials and monitored promotion. The standalone entrypoint
+uses that extended host; the unbound shadow behaviour below remains the default.
+
 This pilot connects signed HTTP requests to the existing repository tool and
 shadow-learning engine. It serves the capable AST inventory tool and gathers
 independently judged evidence without changing its release. It is a loopback
@@ -99,10 +103,10 @@ changed route being served through the shadow endpoint. An already-started
 baseline request can finish using its immutable original route snapshot.
 
 There are no HTTP promotion, rollback, candidate, evaluator or operator APIs.
-The v2.3/v2.4 trial and promotion-monitor controls remain separate trusted host
-APIs. Connecting them to this HTTP deployment requires an explicit reviewed
-binding design; this pilot does not claim that integration. Use independent
-reserved holdouts and offline review before any future deployment change.
+The v2.3/v2.4 trial and promotion-monitor controls remain trusted host APIs.
+The [v2.6 binding](bound-repository-host-v26.md) now connects an explicitly
+reviewed trial to this HTTP deployment; it exposes no remote control authority.
+Use independent reserved holdouts and offline review before deployment changes.
 
 ## Verification and remaining work
 

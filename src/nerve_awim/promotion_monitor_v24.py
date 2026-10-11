@@ -70,7 +70,7 @@ class PromotionMonitor:
                 raise ValueError('active monitor and current explicit generation required')
             self._finish(con, scope, row, state, reason)
 
-    def execute(self, actor, canary, task):
+    def execute(self, actor, canary, task, *, guard=None):
         scope = self.engine._scope(actor, 'runtime')
         task, digest = self.engine._task(task)
         attempt = False
@@ -78,6 +78,8 @@ class PromotionMonitor:
             con.execute('BEGIN IMMEDIATE')
             row = self._row(con, scope, canary)
             state = self.engine._state(con, scope)
+            if guard is not None:
+                guard(con, scope, state)
             reason = row['phase']
             fallback = None
             if row['phase'] == 'active':
@@ -119,6 +121,8 @@ class PromotionMonitor:
                 con.execute('BEGIN IMMEDIATE')
                 latest = self._row(con, scope, canary)
                 state = self.engine._state(con, scope)
+                if guard is not None:
+                    guard(con, scope, state)
                 con.execute('UPDATE gl_promotion_outcomes SET status=?,latency_ms=? WHERE canary=? AND task_id=?',
                             (status, elapsed, canary, task.task_id))
                 if latest['phase'] != 'active':
@@ -140,7 +144,7 @@ class PromotionMonitor:
             result = {'value': value, 'strategy': strategy, 'release': row['fallback'],
                       'generation': row['generation'], 'feedback_written': False}
         else:
-            result = self.engine.execute(actor, task)
+            result = self.engine.execute(actor, task, guard=guard)
         result['monitor'] = {'id': canary, 'used': False, 'reason': reason}
         return result
 

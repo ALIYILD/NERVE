@@ -61,8 +61,7 @@ class RepositoryHost:
                         raise ValueError('scope needs explicit offline bootstrap') from None
                     state = engine.bootstrap(operator)
                 # No implicitly adopted promoted release, including after restart.
-                if state['generation'] != 0 or state['routes'] != engine._baseline:
-                    raise ValueError('shadow host requires an unchanged initial baseline scope')
+                self._validate_deployment(scope, state)
                 self.bindings[scope] = state['active_release']
             finally:
                 engine.authority.revoke(operator)
@@ -121,7 +120,7 @@ class RepositoryHost:
         scope = (grant.tenant, grant.agent)
         adapter = self.adapters[scope]
         if role == 'auditor':
-            return '200 OK', adapter.report(self.auditors[scope])
+            return '200 OK', self._evidence(scope)
         if env.get('CONTENT_TYPE', '').split(';')[0].strip().lower() != 'application/json':
             return '415 Unsupported Media Type', {'error': 'json_required'}
         raw_length = env.get('CONTENT_LENGTH', '')
@@ -148,6 +147,15 @@ class RepositoryHost:
             self.engine._task(task)
         except (ValueError, TypeError, UnicodeError, RecursionError):
             return '400 Bad Request', {'error': 'invalid_task'}
-        result = adapter.execute(task, expected_release=self.bindings[scope], expected_generation=0)
-        return '200 OK', {**result, 'mode': 'shadow', 'learning': 'queued_best_effort',
-                          'cost_usd': None}
+        return '200 OK', self._execute_task(scope, task)
+
+    def _validate_deployment(self, scope, state):
+        if state['generation'] != 0 or state['routes'] != self.engine._baseline:
+            raise ValueError('shadow host requires an unchanged initial baseline scope')
+
+    def _evidence(self, scope):
+        return self.adapters[scope].report(self.auditors[scope])
+
+    def _execute_task(self, scope, task):
+        result = self.adapters[scope].execute(task, expected_release=self.bindings[scope], expected_generation=0)
+        return {**result, 'mode': 'shadow', 'learning': 'queued_best_effort', 'cost_usd': None}

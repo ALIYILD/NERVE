@@ -10,6 +10,11 @@ The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed stu
 manifests, pre-reserved holdouts, content-change checks and a reviewable rollout
 recommendation across separate processes. It never activates a release.
 
+The [v2.6 HTTP trial binding](docs/bound-repository-host-v26.md) connects the
+signed task endpoint to an operator-approved trial and its post-promotion monitor.
+Bindings persist across restarts, reject unrelated deployment changes and expose
+trial/rollback evidence to scoped auditors. No remote operator API is exposed.
+
 The [v2.5 authenticated repository host](docs/repository-host-v25.md) connects
 pinned OIDC identities to scoped HTTP tasks and off-request-path shadow learning.
 It serves the strong AST baseline, persists aggregate evidence, and exposes no

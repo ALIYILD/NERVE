@@ -90,20 +90,22 @@ class CanaryLearning:
                 raise ValueError('canary is not active or awaiting review')
             self._stop(con, scope, canary, reason)
 
-    def execute(self, actor, canary, task):
+    def execute(self, actor, canary, task, *, guard=None):
         scope = self.engine._scope(actor, 'runtime')
         with self.engine._db() as con:
             self._row(con, scope, canary)
             monitored = con.execute('SELECT 1 FROM gl_promotion_monitors WHERE canary=? AND tenant=? AND agent=?',
                                     (canary, *scope)).fetchone()
         if monitored:
-            return self.monitor.execute(actor, canary, task)
+            return self.monitor.execute(actor, canary, task, guard=guard)
         task, digest = self.engine._task(task)
         selected, reason = False, 'baseline_sample'
         with self.engine._db() as con:
             con.execute('BEGIN IMMEDIATE')
             row = self._row(con, scope, canary)
             state = self.engine._state(con, scope)
+            if guard is not None:
+                guard(con, scope, state)
             if row['phase'] not in ('active', 'ready'):
                 reason = row['phase']
             elif state['generation'] != row['base_generation'] or state['active'] != row['base_release']:
@@ -144,6 +146,8 @@ class CanaryLearning:
                 con.execute('BEGIN IMMEDIATE')
                 latest = self._row(con, scope, canary)
                 state = self.engine._state(con, scope)
+                if guard is not None:
+                    guard(con, scope, state)
                 con.execute('UPDATE gl_canary_outcomes SET status=?,latency_ms=? WHERE canary=? AND task_id=?',
                             (status, elapsed, canary, task.task_id))
                 if latest['phase'] != 'active':
@@ -170,9 +174,11 @@ class CanaryLearning:
             monitored = con.execute('SELECT 1 FROM gl_promotion_monitors WHERE canary=? AND tenant=? AND agent=?',
                                     (canary, *scope)).fetchone()
             state = self.engine._state(con, scope)
+            if guard is not None:
+                guard(con, scope, state)
             active_routes = self.engine._release(con, scope, state['active'])
         if monitored:
-            return self.monitor.execute(actor, canary, task)
+            return self.monitor.execute(actor, canary, task, guard=guard)
         strategy = active_routes[task.context]
         value = self.engine._registry[(task.context, strategy)](deepcopy(task.payload))
         result = {'value': value, 'strategy': strategy, 'release': state['active'],
