@@ -74,6 +74,51 @@ class ShadowTests(unittest.TestCase):
         self.shadow.execute(self.task())
         self.assertEqual(self.shadow.drain()['rejected'], 1)
 
+    def test_interruption_after_claim_survives_restart_without_replay(self):
+        class Interrupted(BaseException):
+            pass
+        original_judge = self.engine.judge
+        def interrupted(*args):
+            raise Interrupted()
+        self.shadow.execute(self.task())
+        self.engine.judge = interrupted
+        with self.assertRaises(Interrupted):
+            self.shadow.drain()
+        self.engine.judge = original_judge
+        restarted = ShadowLearning(self.engine, runtime=self.actors['runtime'],
+                                   trainer=self.actors['trainer'])
+        row = restarted.report(self.actors['auditor'])['actual_active_outcomes'][0]
+        self.assertEqual((row['hits'], row['unjudged'], row['interrupted_or_pending']), (0, 1, 1))
+        with self.engine._db() as con:
+            self.assertEqual(con.execute('SELECT COUNT(*) FROM gl_outcomes').fetchone()[0], 0)
+        restarted.execute(self.task())
+        self.assertEqual(restarted.drain()['rejected'], 1)
+        with self.assertRaises(ValueError):
+            self.engine.freeze_candidate(self.actors['trainer'])
+        self.assertEqual(self.engine.status(self.actors['auditor'])['generation'], 0)
+
+    def test_partial_replay_evaluation_never_stores_partial_rewards(self):
+        original_judge = self.engine.judge
+        calls = []
+        def fail_last_arm(task, value):
+            calls.append(1)
+            if len(calls) == 3:  # Primary observation, first arm, then failing arm.
+                raise RuntimeError('private judge failure')
+            return original_judge(task, value)
+        self.engine.judge = fail_last_arm
+        self.shadow.execute(self.task())
+        self.assertEqual(self.shadow.drain()['failed'], 1)
+        self.assertEqual(len(calls), 3)
+        row = self.shadow.report(self.actors['auditor'])['actual_active_outcomes'][0]
+        # The real response was correctly judged, but replay training failed.
+        self.assertEqual((row['hits'], row['training_failures'], row['interrupted_or_pending']), (1, 1, 0))
+        with self.engine._db() as con:
+            self.assertEqual(con.execute('SELECT COUNT(*) FROM gl_outcomes').fetchone()[0], 0)
+        self.engine.judge = original_judge
+        self.shadow.execute(self.task())
+        self.assertEqual(self.shadow.drain()['rejected'], 1)
+        self.assertNotIn(b'private judge failure', self.path.read_bytes())
+
     def test_duplicates_do_not_weight_training(self):
         self.shadow.execute(self.task())
         self.shadow.drain()
