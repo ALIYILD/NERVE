@@ -67,6 +67,27 @@ or changing its dependencies. The probe process inherited only PATH, PYTHONPATH,
 HERMES_HOME and HERMES_RUNTIME_DIR. This is a local readiness result, not a
 reproducibility guarantee for another machine or a passing inference test.
 
+### Real conversation transport probe
+
+`scripts/check_hermes_transport.py --checkout /path/to/hermes-agent` exercises
+the actual pinned AIAgent through NERVE's adapter against an ephemeral loopback
+HTTP fixture. Use the same isolated Python 3.14 worker and stripped environment
+as above; apply a host process timeout (for example, `timeout 120s python ...`).
+The fixture returns predetermined OpenAI-compatible responses, including streaming
+chunks when requested. It does not run a model or measure learning quality.
+
+On 2026-10-11, two valid turns (research and skill-builder) returned the expected
+objects, and a third response with duplicate JSON keys was rejected. Exactly three
+fixture requests were received, with no tool definitions. No non-fixture Python
+connection attempts were observed in this run; earlier initialization may have
+populated metadata caches, so this does not replace the startup probe's findings.
+See `docs/hermes-transport-readiness.json` for the measured result.
+
+The audit hook permits connections only to the fixture's exact loopback address
+and port. It does not constrain subprocess networking or provide an OS sandbox.
+This probe checks transport and response validation, not the evidence ledger,
+independent judging, provider billing, model competence or production isolation.
+
 ## Core registry
 
 | Role | Function | Implemented execution |
