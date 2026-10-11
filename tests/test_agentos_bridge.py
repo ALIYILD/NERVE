@@ -25,6 +25,21 @@ class AgentOSBridgeTests(unittest.TestCase):
             patcher.start()
             self.addCleanup(patcher.stop)
 
+    def test_interrupted_repository_study_is_failed_without_recycling_tasks(self):
+        experiments=bridge.RepositoryExperiments(self.host.directory/'repository-learning.sqlite3')
+        phases=['train','selection','retention','final','final','final']
+        tasks=[dict(id=str(n),phase=phase,family='family-'+str(n),task={'source':str(n)})
+               for n,phase in enumerate(phases)]
+        experiments.start('interrupted',profile='worker',model='model',judge_revision='judge',
+                          tasks=tasks,budget=dict(max_tokens=4096,max_iterations=2,timeout_seconds=90))
+        bridge.recover_interrupted_repository(self.host)
+        bridge.recover_interrupted_repository(self.host)
+        self.assertEqual(experiments.summary()['status'],'failed')
+        self.assertEqual(experiments.summary()['active_lessons'],0)
+        with sqlite3.connect(experiments.path) as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM tasks').fetchone()[0],6)
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM events WHERE kind='failed'").fetchone()[0],1)
+
     def test_collection_requires_independent_qa_and_distinguishes_timeout_from_reclaim(self):
         path = self.root/'.hermes/kanban/boards/agentos-maintenance/kanban.db'
         path.parent.mkdir(parents=True)

@@ -20,6 +20,7 @@ from nerve_awim.agentos_learning import (AgentOSLearning, BASELINE, CONTEXT,
 from nerve_awim.improvement_loop import run_improvement_loop
 from nerve_awim.learning_study import Episode, canonical
 from nerve_awim.agentos_claude import ClaudeReviewer
+from nerve_awim.agentos_experiments import RepositoryExperiments
 
 HOME = Path.home()
 REPO = Path(__file__).resolve().parents[1]
@@ -27,10 +28,25 @@ VAULT = HOME/'AgentOS-Vault'
 STATE = HOME/'.agentic-os/nerve'
 
 
+def recover_interrupted_repository(host):
+    """Call once after acquiring the exclusive host lock, never from publish."""
+    path=host.directory/'repository-learning.sqlite3'
+    if not path.exists():
+        return
+    experiments=RepositoryExperiments(path)
+    with sqlite3.connect(path) as db:
+        interrupted=[r[0] for r in db.execute("SELECT id FROM studies WHERE status IN ('started','frozen')")]
+    for study_id in interrupted:
+        experiments.fail(study_id,'Previous host exited before completing the experiment; reservations remain consumed.')
+
+
 def claude_key():
     key=os.environ.get('ANTHROPIC_API_KEY','').strip()
-    env=HOME/'.agentic-os/anthropic.env'
+    env=Path(os.environ.get('ANTHROPIC_API_KEY_FILE',str(HOME/'.agentic-os/anthropic.env'))).expanduser()
     if not key and env.exists():
+        text=env.read_text().strip()
+        if text.startswith('sk-ant-api') and '\n' not in text:
+            key=text
         for line in env.read_text().splitlines():
             if line.startswith('ANTHROPIC_API_KEY='):
                 key=line.split('=',1)[1].strip().strip('\"\'')
@@ -63,7 +79,7 @@ def jev_review(host):
     return result
 
 
-def native(host, profile, prompt):
+def native(host, profile, prompt, *, max_tokens=2048, inspect=False):
     """Installed runtime, bounded text, no tools, free model, process timeout."""
     catalog=host.directory/'free-models.json'
     if not catalog.exists() or datetime.now().timestamp()-catalog.stat().st_mtime>86400:
@@ -78,7 +94,8 @@ def native(host, profile, prompt):
         atomic_json(catalog,available)
     else:
         available=json.loads(catalog.read_text())
-    host.reserve_calls('hermes-free', 1, daily_limit=20)
+    if not inspect:
+        host.reserve_calls('hermes-free', 1, daily_limit=20)
     checkout = HOME/'.hermes/hermes-agent'
     launcher = json.loads(subprocess.check_output(
         [str(HOME/'.local/bin/hermes'), '--print-runtime-command'], text=True, timeout=10))
@@ -97,7 +114,7 @@ def native(host, profile, prompt):
             env=env, cwd=tmp, start_new_session=True)
         try:
             out, err = process.communicate(json.dumps({'profile':profile,'prompt':prompt,
-                'available_models':available}),timeout=90)
+                'available_models':available,'max_tokens':max_tokens,'inspect':inspect}),timeout=90)
         except subprocess.TimeoutExpired:
             os.killpg(process.pid, signal.SIGKILL)
             out,err=process.communicate()
@@ -111,6 +128,7 @@ def native(host, profile, prompt):
     if process.returncode or result.get('ok') is not True:
         raise RuntimeError('native Hermes: '+result.get('error_category','failed')+
                            (' module='+result['module'] if result.get('module') else ''))
+    result['timeout_seconds']=90
     return result
 
 
@@ -260,13 +278,14 @@ def publish(host, extra=None):
     reviewer=ClaudeReviewer(host.directory/'claude-review.sqlite3')
     status['claude_budget']=reviewer.report()
     status['claude_status']='configured' if claude_key() else 'credential_not_connected'
+    status['repository_learning']=RepositoryExperiments(host.directory/'repository-learning.sqlite3').summary()
     native_file=host.directory/'latest-native.json'
     if native_file.exists():
         status['native_hermes']=json.loads(native_file.read_text())
     status['routing_advice']=host.recommend_profiles(
         ['coordinator','dashboard-operator','workflow-integrity-auditor'],incumbent='coordinator')
     status['automatic_learning']={'enabled':(HOME/'Library/LaunchAgents/com.aliyildirim.nerve.learning.plist').exists(),'provider':'hermes-free',
-        'trigger':'3 new supervisor-confirmed failures; at most one study per UTC day',
+        'trigger':'3 new supervisor-confirmed failures; at most one repository repair study per UTC day, requiring fresh tasks',
         'daily_native_session_limit':20,'paid_calls':False}
     atomic_json(host.directory/'status.json',status)
     approved=[]
@@ -282,6 +301,9 @@ def publish(host, extra=None):
         'Operational receipts: '+str(sum(r['tasks'] for r in status['missions']))+' verified completions or supervisor-confirmed failures.\n'+
         'Approved lessons: '+str(len(approved))+'. No model-weight training or source self-modification.\n\n'+
         'Latest study: '+str(status.get('last_study',{}).get('result','not run'))+'\n\n'+
+        'Repository repair study: '+status['repository_learning']['status']+'; '+
+        str(status['repository_learning']['active_lessons'])+' active lessons; '+
+        str(status['repository_learning']['rollbacks'])+' rollbacks.\n\n'+
         'Receipts: `~/.agentic-os/nerve/status.json`; [[Journal/nerve]].\n')
     (VAULT/'Memory/nerve-status.md').write_text(note)
     return status
@@ -289,14 +311,31 @@ def publish(host, extra=None):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review'))
-    parser.add_argument('--profile',default='qa-release')
+    parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review',
+        'repository-study','repository-run','repository-tasks'))
+    parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
     parser.add_argument('--state',type=Path,default=STATE)
+    parser.add_argument('--task-id')
+    parser.add_argument('--review-target',choices=('handoff','repository-experiments','repository-taskbench','repository-runner'),default='handoff')
     args=parser.parse_args()
+    args.profile=args.profile or ('backend-engineer' if args.command.startswith('repository-') or args.command=='cycle' else 'qa-release')
     with host_lock(args.state):
         host=AgentOSLearning(args.state)
-        if args.command=='study':
+        recover_interrupted_repository(host)
+        if args.command in ('repository-study','repository-run','repository-tasks'):
+            import agentos_repository as repair
+            try:
+                if args.command=='repository-study':
+                    result=repair.study(host,native,args.profile,VAULT,progress=lambda:publish(host))
+                elif args.command=='repository-run':
+                    result=repair.run(host,native,args.profile,args.task_id)
+                else:
+                    result={phase:[repair.bench.public_task(t) for t in tasks]
+                            for phase,tasks in repair.bench.dataset().items()}
+            finally:
+                publish(host)
+        elif args.command=='study':
             try:
                 result=study(host,args.profile)
             except Exception as error:
@@ -313,8 +352,9 @@ def main():
             if failures-previous.get('failures',0)>=3 and previous.get('day')!=today:
                 atomic_json(gate,{'day':today,'failures':failures,'status':'started'})
                 try:
-                    learned=study(host,args.profile)
-                    atomic_json(gate,{'day':today,'failures':failures,'status':learned['report']['status']})
+                    import agentos_repository as repair
+                    learned=repair.study(host,native,args.profile,VAULT,progress=lambda:publish(host))
+                    atomic_json(gate,{'day':today,'failures':failures,'status':learned['result']['status']})
                 except Exception as error:
                     atomic_json(gate,{'day':today,'failures':failures,'status':'failed','error':str(error)[:180]})
             last_attempt=json.loads(gate.read_text()) if gate.exists() else {}
@@ -337,12 +377,19 @@ def main():
             result=jev_review(host)
         elif args.command=='claude-review':
             reviewer=ClaudeReviewer(host.directory/'claude-review.sqlite3',claude_key())
-            code=(REPO/'src/nerve_awim/agentos_learning.py').read_text()
+            targets={'handoff':'src/nerve_awim/agentos_learning.py',
+                     'repository-experiments':'src/nerve_awim/agentos_experiments.py',
+                     'repository-taskbench':'src/nerve_awim/agentos_taskbench.py',
+                     'repository-runner':'scripts/agentos_repository.py'}
+            code=(REPO/targets[args.review_target]).read_text()
+            if len(code.encode())>22000:
+                raise ValueError('review target exceeds bounded review context')
             try:
                 review=reviewer.complete('Review this public NERVE implementation for concrete correctness problems. '
                     'Prioritize reward integrity, temporal leakage, forgetting, concurrency and honest claims. '
                     'Return concise actionable findings. No tools are available.',code)
-                result={'review':review,'advisory_only':True,'budget':reviewer.report()}
+                result={'review':review,'target':targets[args.review_target],
+                        'advisory_only':True,'budget':reviewer.report()}
                 atomic_json(host.directory/'claude-review.json',result)
             finally:
                 publish(host)
@@ -359,4 +406,7 @@ def main():
 
 
 if __name__=='__main__':
-    main()
+    try:
+        main()
+    except BlockingIOError:
+        print(json.dumps({'status':'busy','reason':'Another NERVE operation holds the host lock; scheduled cycles retry later.'}))

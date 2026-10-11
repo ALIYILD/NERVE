@@ -2,6 +2,7 @@
 import json
 import os
 import sqlite3
+import ssl
 import urllib.request
 import urllib.error
 
@@ -40,12 +41,24 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         raise PilotError('redirect refused')
 
 
+def tls_context():
+    """Use verified CA certificates, including framework Python on macOS."""
+    paths=ssl.get_default_verify_paths()
+    if paths.cafile or paths.capath:
+        return ssl.create_default_context()
+    try:
+        import certifi
+    except ImportError:
+        raise PilotError('verified CA certificate bundle required') from None
+    return ssl.create_default_context(cafile=certifi.where())
+
+
 def post_message(key, body):
     request = urllib.request.Request('https://api.anthropic.com/v1/messages',
         data=json.dumps(body).encode(), headers={'x-api-key': key,
         'anthropic-version': '2023-06-01', 'content-type': 'application/json'})
     try:
-        with urllib.request.build_opener(NoRedirect()).open(request, timeout=60) as response:
+        with urllib.request.build_opener(NoRedirect(),urllib.request.HTTPSHandler(context=tls_context())).open(request, timeout=60) as response:
             data = response.read(131073)
         if len(data) > 131072:
             raise PilotError('response too large')

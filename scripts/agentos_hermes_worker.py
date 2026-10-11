@@ -36,6 +36,14 @@ def main():
             raise RuntimeError('no configured free model currently available')
     if not model.endswith(':free'):
         raise ValueError('only explicitly free models allowed')
+    if request.get('inspect') is True:
+        print(json.dumps({'ok':True,'profile':profile,'requested_model':model,
+                          'configured_model':original_model,'availability_fallback':model!=original_model,
+                          'native_hermes':False,'tools':0,'value':None}))
+        return
+    max_tokens=request.get('max_tokens',2048)
+    if type(max_tokens) is not int or not 512 <= max_tokens <= 8192:
+        raise ValueError('bounded output budget required')
     key = os.environ.get('OPENROUTER_API_KEY', '')
     if not key:
         for path in (root/'.env', installed/'profiles/coordinator/.env', installed/'.env'):
@@ -66,7 +74,7 @@ def main():
                 base_url='https://openrouter.ai/api/v1', max_iterations=2,
                 enabled_toolsets=[], skip_memory=True, skip_context_files=True,
                 skip_background_review=True, load_soul_identity=False,
-                save_trajectories=False, quiet_mode=True, max_tokens=2048,
+                save_trajectories=False, quiet_mode=True, max_tokens=max_tokens,
                 run_budget_seconds=55, fallback_model=None,
                 reasoning_config={'enabled':False})
             try:
@@ -82,7 +90,7 @@ def main():
                     raise RuntimeError('native turn failed')
                 raw = result.get('final_response','')
                 os.write(2,b'NERVE_STAGE=parse\n')
-                if type(raw) is not str or len(raw.encode()) > 20000:
+                if type(raw) is not str or len(raw.encode()) > 40000:
                     raise ValueError('bounded response required')
                 raw = re.sub(r'^```(?:json)?\s*|\s*```$', '', raw.strip())
                 value = json.loads(raw)
@@ -90,7 +98,8 @@ def main():
                 runtime.close()
         print(json.dumps({'ok':True, 'profile':profile, 'requested_model':model,
                           'configured_model':original_model,'availability_fallback':model!=original_model,
-                          'native_hermes':True, 'tools':0, 'value':value}))
+                          'native_hermes':True, 'tools':0, 'max_tokens':max_tokens,
+                          'max_iterations':2,'runtime_seconds':55, 'value':value}))
 
 
 if __name__ == '__main__':
