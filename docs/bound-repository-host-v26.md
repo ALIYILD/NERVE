@@ -109,6 +109,7 @@ and reserved tasks, waiting for promotion, pending-monitor recovery, latency
 failure, operator stops, rebinding and unrelated rollback during execution.
 
 The v2.5 loopback/proxy/IdP requirements and v2.4 pure-handler/time-budget limits
-still apply. Real identity provisioning, public hosting, live Clinical OS
-traffic, external-model providers/billing and production resource isolation remain
+still apply. Real identity provisioning, public hosting, live downstream clinical
+application traffic, external-model providers/billing and production resource
+isolation remain
 unconnected. No approval, provider secret or public service is created here.
