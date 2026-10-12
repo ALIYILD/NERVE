@@ -10,7 +10,7 @@ from .evolution_v01 import EvolutionMemory
 from .agent_bridge_v13 import DemoAgentBridge
 from .recovery_mcp_v17 import RecoveryMCPDemo
 
-def create_server(db_path=None):
+def create_server(db_path=None, *, world_model_binding=None):
     try:
         from mcp.server import MCPServer as ServerClass  # official MCP SDK 2.x
     except ImportError:
@@ -100,6 +100,9 @@ def create_server(db_path=None):
         """
         return recovery_demo.run(policy=policy,
                                  train_on_fixtures=train_on_fixtures)
+    if world_model_binding is not None:
+        from .world_model.mcp import register
+        register(server, world_model_binding)
     return server
 
 if __name__=="__main__":
