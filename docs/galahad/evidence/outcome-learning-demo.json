@@ -1,0 +1,12 @@
+{
+  "after_strategy": "trim-lower",
+  "before_strategy": "lower-only",
+  "deployed": false,
+  "host_evaluations": 12,
+  "limitation": "Constructed deterministic drift fixture, not real-model improvement.",
+  "model_weights_trained": false,
+  "restart_retains_learning": true,
+  "revocation_blocks_learned_strategy": true,
+  "status": "passed",
+  "synthetic_only": true
+}

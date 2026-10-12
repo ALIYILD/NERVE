@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest learning continuation:** [19-outcome-learning.md](19-outcome-learning.md) documents executable, host-verified adaptive sessions and actual strategy changes across restart, with1,055 full-suite passes plus the final deletion-semantics regression.
+
 **Latest continuation:** [18-hardening-report.md](18-hardening-report.md) records durable policy, optional inference and evidence-based operational readiness; [17-acceptance-matrix.md](17-acceptance-matrix.md) tracks the complete original specification. Older checkpoint details below are historical.
 
 **Latest wiring checkpoint:** see [16-wiring-report.md](16-wiring-report.md) for the 992-test integration and [15-runtime-wiring.md](15-runtime-wiring.md) for executable commands. Existing agent and MCP source files are now modified as documented there.

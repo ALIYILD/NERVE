@@ -1,0 +1,17 @@
+{
+  "full_suite": {
+    "passed": 1055,
+    "seconds": 57.318,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "subsequent_learning_suite": {
+    "passed": 18,
+    "seconds": 1.306,
+    "includes_one_additional_deletion_test": true
+  },
+  "real_model_tested": false,
+  "deployed": false,
+  "base_revision": "02f36552d21e0294d413aa9f444b483b4c6b934b"
+}
