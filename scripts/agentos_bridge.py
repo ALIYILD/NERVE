@@ -277,9 +277,11 @@ def collect_missions(host):
 def publish(host, extra=None):
     import agentos_audit_study as audit
     import agentos_audit_shadow as shadow
+    import agentos_autoresearch as autoresearch
     status=host.status()
     status['audit_evidence_study']=audit.status(host)
     status['audit_shadow']=shadow.status(host)
+    status['autoresearch']=autoresearch.status(host)
     study_file=host.directory/'latest-study.json'
     if study_file.exists():
         s=json.loads(study_file.read_text())
@@ -339,6 +341,9 @@ def publish(host, extra=None):
         audit_note+
         'Audit shadow monitoring: '+str(status['audit_shadow'].get('status','not_run'))+
         '. No operational activation is authorized.\n\n'+
+        'Autoresearch: '+str(status['autoresearch'].get('status','paused'))+
+        '; enabled='+str(status['autoresearch'].get('enabled',False))+
+        '. Bounded experiments resume on the 15-minute scheduler; fresh evidence and budget are required.\n\n'+
         'Receipts: `~/.agentic-os/nerve/status.json`; [[Journal/nerve]].\n')
     (VAULT/'Memory/nerve-status.md').write_text(note)
     return status
@@ -388,7 +393,8 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review',
         'repository-study','repository-run','repository-tasks','repository-diagnose','audit-study','audit-status',
-        'audit-shadow','audit-shadow-status'))
+        'audit-shadow','audit-shadow-status','autoresearch-enable','autoresearch-pause',
+        'autoresearch-status','autoresearch-tick','autoresearch-submit'))
     parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
     parser.add_argument('--state',type=Path,default=STATE)
@@ -397,11 +403,28 @@ def main():
     parser.add_argument('--cohort',choices=('v1','v2','v3'),help='Repository task cohort; default selects fresh evidence automatically')
     parser.add_argument('--review-target',choices=('handoff','repository-experiments','repository-taskbench','repository-runner'),default='handoff')
     args=parser.parse_args()
+    requested_profile=args.profile
     args.profile=args.profile or ('backend-engineer' if args.command.startswith('repository-') or args.command=='cycle' else 'qa-release')
     with host_lock(args.state):
         host=AgentOSLearning(args.state)
         recover_interrupted_repository(host)
-        if args.command in ('audit-shadow','audit-shadow-status'):
+        if args.command.startswith('autoresearch-'):
+            import agentos_autoresearch as autoresearch
+            try:
+                if args.command in ('autoresearch-enable','autoresearch-pause'):
+                    result=autoresearch.configure(host,args.command=='autoresearch-enable',profile=requested_profile)
+                elif args.command=='autoresearch-tick':
+                    result=autoresearch.tick(host,native)
+                elif args.command=='autoresearch-submit':
+                    if args.task is None:
+                        raise ValueError('autoresearch-submit requires --task with fresh host-owned simulated evidence')
+                    from agentos_audit_bench import read_json
+                    result=autoresearch.submit(host,read_json(args.task))
+                else:
+                    result=autoresearch.status(host)
+            finally:
+                publish(host)
+        elif args.command in ('audit-shadow','audit-shadow-status'):
             import agentos_audit_shadow as shadow
             try:
                 if args.command=='audit-shadow':
@@ -442,7 +465,13 @@ def main():
             publish(host)
         elif args.command=='cycle':
             collected=collect_missions(host)
-            retry_pending_audit(host)
+            import agentos_autoresearch as autoresearch
+            research_status=autoresearch.status(host)
+            research_enabled=research_status.get('enabled',False)
+            if research_enabled:
+                autoresearch.tick(host,native)
+            elif not research_status.get('configured',False):
+                retry_pending_audit(host)
             with sqlite3.connect(host.path) as db:
                 failures=db.execute('SELECT COUNT(*) FROM nerve_missions WHERE success=0').fetchone()[0]
             gate=host.directory/'auto-study.json'
@@ -451,7 +480,7 @@ def main():
             pending_path=host.directory/'pending-repository-study.json'
             pending=json.loads(pending_path.read_text()) if pending_path.exists() else {}
             pending_due=bool(pending) and pending.get('requested_day')!=today
-            if pending_due or (failures-previous.get('failures',0)>=3 and previous.get('day')!=today):
+            if not research_enabled and (pending_due or (failures-previous.get('failures',0)>=3 and previous.get('day')!=today)):
                 atomic_json(gate,{'day':today,'failures':failures,'status':'started'})
                 try:
                     import agentos_repository as repair

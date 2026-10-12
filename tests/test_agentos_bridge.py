@@ -14,6 +14,50 @@ _spec.loader.exec_module(bridge)
 
 
 class AgentOSBridgeTests(unittest.TestCase):
+    def test_autoresearch_enable_pause_and_status_do_not_infer(self):
+        import contextlib
+        import io
+        import sys
+        (self.vault/'Memory').mkdir(parents=True)
+        for command,enabled in (('autoresearch-enable',True),('autoresearch-status',True),('autoresearch-pause',False)):
+            output=io.StringIO()
+            with patch.object(sys,'argv',['bridge',command,'--state',str(self.host.directory)]), \
+                 patch.object(bridge,'native',side_effect=AssertionError('configuration must not infer')), \
+                 patch.object(bridge,'claude_key',return_value=None),contextlib.redirect_stdout(output):
+                bridge.main()
+            self.assertEqual(json.loads(output.getvalue())['enabled'],enabled)
+            published=json.loads((self.host.directory/'status.json').read_text())
+            self.assertEqual(published['autoresearch']['enabled'],enabled)
+
+    def test_enabled_cycle_delegates_audit_once_to_controller(self):
+        import contextlib
+        import io
+        import sys
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        tick=Mock(return_value={'status':'waiting_budget'})
+        controller=SimpleNamespace(status=lambda host:{'enabled':True},tick=tick)
+        with patch.dict(sys.modules,{'agentos_autoresearch':controller}), \
+             patch.object(sys,'argv',['bridge','cycle','--state',str(self.host.directory)]), \
+             patch.object(bridge,'retry_pending_audit',side_effect=AssertionError('duplicate study path')), \
+             patch.object(bridge,'collect_missions',return_value={}), \
+             patch.object(bridge,'publish',return_value={}),contextlib.redirect_stdout(io.StringIO()):
+            bridge.main()
+        tick.assert_called_once_with(unittest.mock.ANY,bridge.native)
+
+    def test_paused_controller_does_not_resume_legacy_audit_queue(self):
+        import contextlib
+        import io
+        import sys
+        from types import SimpleNamespace
+        controller=SimpleNamespace(status=lambda host:{'enabled':False,'configured':True})
+        with patch.dict(sys.modules,{'agentos_autoresearch':controller}), \
+             patch.object(sys,'argv',['bridge','cycle','--state',str(self.host.directory)]), \
+             patch.object(bridge,'retry_pending_audit',side_effect=AssertionError('paused audit resumed')), \
+             patch.object(bridge,'collect_missions',return_value={}), \
+             patch.object(bridge,'publish',return_value={}),contextlib.redirect_stdout(io.StringIO()):
+            bridge.main()
+
     def test_shadow_status_does_not_infer_or_activate_a_candidate(self):
         import contextlib
         import io
