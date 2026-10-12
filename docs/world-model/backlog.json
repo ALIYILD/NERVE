@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "plan_complete": false,
+  "loops": [
+    {
+      "loop": "00",
+      "status": "complete",
+      "evidence": "repo-map.md; baseline-evidence.json",
+      "remaining_or_decision": "Isolated checkout, source mapping and baseline recorded."
+    },
+    {
+      "loop": "01",
+      "status": "partial",
+      "evidence": "contracts.py; strict policy tests",
+      "remaining_or_decision": "Core strict Policy/Rule contracts exist; full proposed Transition/ModelManifest/VerificationReport/LearningRun typed schemas and probabilistic contracts remain."
+    },
+    {
+      "loop": "02",
+      "status": "partial",
+      "evidence": "ledger.py; concurrent receipt and process recovery tests",
+      "remaining_or_decision": "Ordered receipts, idempotency and transactional imports work; full action/provider/latency provenance contract remains."
+    },
+    {
+      "loop": "03",
+      "status": "partial",
+      "evidence": "registry.py; rulebook.py; tampering tests",
+      "remaining_or_decision": "Immutable scoped artifacts and supported rules work; versioned semantic rule lifecycle and complete dependency manifests remain."
+    },
+    {
+      "loop": "04",
+      "status": "partial",
+      "evidence": "reflection.py; hidden-state and mismatch tests",
+      "remaining_or_decision": "Scripted evidence-linked paths work; execution-error diagnosis needs actual code-failure input rather than unchanged-rule inference."
+    },
+    {
+      "loop": "05",
+      "status": "partial",
+      "evidence": "sandbox.py; worker.py; escape rejection tests",
+      "remaining_or_decision": "Finite DSL only. Arbitrary Python deliberately unavailable. macOS hard memory isolation and timeout/oversized-output fault injection remain."
+    },
+    {
+      "loop": "06",
+      "status": "partial",
+      "evidence": "replay.py; fidelity.py; wrong-code/goal tests",
+      "remaining_or_decision": "Full visible-state episode replay and independent structural review work; hidden-state learning and provider fidelity review are unavailable."
+    },
+    {
+      "loop": "07",
+      "status": "partial",
+      "evidence": "evaluator.py; consumed-final crash/nonreuse tests",
+      "remaining_or_decision": "Durable source reservation and trainer API denial work. Semantic clone detection, independently sealed evaluator storage/process, and full frozen policy verification remain."
+    },
+    {
+      "loop": "08",
+      "status": "partial",
+      "evidence": "planner.py; stale observation and budget tests",
+      "remaining_or_decision": "Known-state bounded planning and dispatch checks work. Registry eligibility must be integrated at planner entry before operational use; real dispatch is unavailable."
+    },
+    {
+      "loop": "09",
+      "status": "partial",
+      "evidence": "population.py; disagreement/probe test",
+      "remaining_or_decision": "Bounded seeded distinct hypotheses and simulated probe elimination work; not wired into coordinator candidate search."
+    },
+    {
+      "loop": "10",
+      "status": "partial",
+      "evidence": "coordinator.py; checkpoint/fencing/process tests",
+      "remaining_or_decision": "Durable single-candidate scripted path works. Multigeneration candidate repair, complete category cost accounting and external-effect outbox remain."
+    },
+    {
+      "loop": "11",
+      "status": "partial",
+      "evidence": "adapters.py; hermes_learning.py; real AgentOS and pending-memory tests",
+      "remaining_or_decision": "Existing host observation and offline Hermes bridge work; live budgeted provider wiring and unified orchestration hook remain."
+    },
+    {
+      "loop": "12",
+      "status": "partial",
+      "evidence": "adapters.shadow; counterfactual test",
+      "remaining_or_decision": "Pure observed-action shadow output works; full family-level success/error/latency/cost comparison remains."
+    },
+    {
+      "loop": "13",
+      "status": "partial",
+      "evidence": "release.py; simulated rollback test",
+      "remaining_or_decision": "Atomic simulated bundles, stale generation rejection and integrity fallback work. Operational canary/promotion is intentionally unavailable pending eligibility and authenticated host integration."
+    },
+    {
+      "loop": "14",
+      "status": "partial",
+      "evidence": "cli.py; mcp.py; real stdio and CLI tests",
+      "remaining_or_decision": "Local synthetic CLI and host-bound MCP inspection work; proposal tools and real operator commands are denied, not implemented."
+    },
+    {
+      "loop": "15",
+      "status": "partial",
+      "evidence": "benchmarks/world_model/benchmark.py",
+      "remaining_or_decision": "Three disjoint-parameter family cohorts expose no final gain. Replay/rulebook/population/memory variants currently share behavior; useful causal ablations and independent task generation remain."
+    },
+    {
+      "loop": "16",
+      "status": "partial",
+      "evidence": "retention.py; transfer/drift/tombstone tests",
+      "remaining_or_decision": "Proposal-only transfer and conservative invalidation work. Physical deletion, precise dependency cleanup and continual-learning evaluation remain."
+    },
+    {
+      "loop": "17",
+      "status": "partial",
+      "evidence": "adapters.sensor_observation; existing runtime outage test",
+      "remaining_or_decision": "Simulation outage preserves unavailable. No learned stochastic predictions, calibration metrics or patient/device readiness."
+    },
+    {
+      "loop": "18",
+      "status": "partial",
+      "evidence": "README.md; CI additions; CLI demo",
+      "remaining_or_decision": "Offline reproducible demo and tests exist. Full failure-injection coverage and opt-in budgeted live-provider CI remain."
+    },
+    {
+      "loop": "19",
+      "status": "partial",
+      "evidence": "implementation-report.md; verification.json",
+      "remaining_or_decision": "Integrated tests and CI scripts executed. Full 00\u201319 acceptance is not met; remaining implementation work is not disguised as an external blocker."
+    }
+  ]
+}
