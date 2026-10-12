@@ -55,6 +55,24 @@ Use a fresh demo database. See the [commands and host integration guide](docs/wo
 default, uses no live provider, and does not authorize deployment. The complete
 Memento 3 plan is still in progress.
 
+
+## Opt-in Cognitive Cue Engine
+
+The [Cognitive Cue Engine](docs/cce/runbook.md) adds model/tokenizer-bound cue
+selection, bounded paired experiments, optional Hermes instruction cues and
+advisory JEV review using NERVE's existing authority, audit and memory interfaces.
+It defaults off. Synthetic results cannot activate cues; clinical cues remain
+disabled. Paper reproduction and live deployment are separate, outstanding gates.
+See the [15-loop plan](docs/cce/implementation-plan.md),
+[Claude Code master prompt](docs/cce/claude-cli-prompt.md) and
+[verification status](docs/cce/verification.md).
+The [installed-host wiring](docs/cce/host-integration.md) connects the Agent OS
+bridge and native Hermes worker, with `cce-status`, inspection and revocation.
+
+```bash
+PYTHONPATH=src python -m nerve_awim.cue_cli demo
+```
+
 ## v2.1 opt-in repository task shadow learning
 
 The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed study
