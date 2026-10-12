@@ -1,0 +1,15 @@
+✔ restores only same-repository successful main scheduled/manual research (4.804598ms)
+✔ rejects failed, foreign, other-workflow, PR and current runs before reading artifacts (0.430779ms)
+✔ skips expired, oversized and wrongly named artifacts (0.31381ms)
+✔ paginates beyond the first 50 successful runs (0.902547ms)
+✔ missing history returns explicit cold-start/cache fallback (0.281793ms)
+✔ API failures are not hidden as cold starts (1.038555ms)
+✔ duplicate eligible checkpoints fail closed (0.364933ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 264.814896

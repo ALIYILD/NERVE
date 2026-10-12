@@ -1,0 +1,7 @@
+{
+  "tasks": 100,
+  "specialist_completion": 100,
+  "single_specialist_supported": 50,
+  "provenance_retained": 100,
+  "note": "Capability coverage only; this does not establish accuracy or learning advantage"
+}

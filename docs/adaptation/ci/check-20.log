@@ -1,0 +1,15 @@
+{
+  "positive": {
+    "suspended": true,
+    "awaiting": true,
+    "accepted": true,
+    "resumed": true
+  },
+  "negative": {
+    "suspended": true,
+    "awaiting": true,
+    "accepted": false,
+    "resumed": false
+  },
+  "passed": true
+}

@@ -1,0 +1,57 @@
+{
+  "scenario": "budget",
+  "stopped": true,
+  "state": {
+    "action_receipts": {
+      "0861ff24d6fd4a3f8c59ed58f7903164": "58ff6c577e4b404bbbf7629206f814b6",
+      "bb32f40812c1447fa6e5138989526bc2": "1efc650968394de0aec814f28e12a212",
+      "f2cd2bb65fe4442496d375f87c4628f2": "defbdc48aeb741e78992abf82811c025",
+      "ffcb9e60515d41c6b74392d754b86ac9": "32b4449531004814863d0104eb046793"
+    },
+    "active_correction_ids": [],
+    "completed_steps": [],
+    "config": {
+      "automatic_global_promotion": false,
+      "backend": "structured",
+      "cross_subject_memory": false,
+      "enabled": true,
+      "max_action_steps": 20,
+      "max_context_tokens": 4000,
+      "max_replans": 3,
+      "max_tool_retries": 2,
+      "mode": "active-development",
+      "provider_spend_limit": 0,
+      "require_verified_corrections": true,
+      "task_deadline_seconds": 120
+    },
+    "constraints": [
+      "preserve-facts"
+    ],
+    "episode": "b4b7ee3008004c75875331a7984b2df8",
+    "expiry": 1791837597.891346,
+    "goal": "synthetic-goal",
+    "last_decision": "bb32f40812c1447fa6e5138989526bc2",
+    "last_event": "adb299d5edea4b8b91b9321a10d4c58d",
+    "last_outcome_status": "failed",
+    "memory_backend_version": "adaptation-v1",
+    "pending_steps": [],
+    "recent_failures": [
+      "0861ff24d6fd4a3f8c59ed58f7903164",
+      "ffcb9e60515d41c6b74392d754b86ac9",
+      "f2cd2bb65fe4442496d375f87c4628f2",
+      "bb32f40812c1447fa6e5138989526bc2"
+    ],
+    "replans": 3,
+    "schema_version": "adaptation-v1",
+    "sequence": 14,
+    "status": "budget-exhausted",
+    "steps": 4,
+    "tool_failures": {},
+    "unresolved_questions": [],
+    "unverified_observations": [],
+    "verified_facts": [],
+    "version": 18,
+    "task_id": "final-budget",
+    "subject_scope": "subject-a"
+  }
+}

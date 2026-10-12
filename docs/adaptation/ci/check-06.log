@@ -1,0 +1,34 @@
+{
+  "limitations": "synthetic, retrospective interval coverage; no formal safety guarantees",
+  "outage_interval": [
+    35,
+    50
+  ],
+  "results": {
+    "abrupt_outage": {
+      "completed_steps": 80,
+      "empirical_coverage": 0.7968384840648586,
+      "final_goal_error": 0.2269827560475942,
+      "infeasible": 0,
+      "intervals_issued": 49.05,
+      "late_goal_error": 0.19511008679537029,
+      "mean_interval_width": 0.17708704456957344,
+      "observed": 55.05,
+      "outages": 23.15,
+      "violations": 0
+    },
+    "normal": {
+      "completed_steps": 80,
+      "empirical_coverage": 0.8192631153357237,
+      "final_goal_error": 0.252646691245085,
+      "infeasible": 0,
+      "intervals_issued": 62.4,
+      "late_goal_error": 0.17440247592574187,
+      "mean_interval_width": 0.19899174680953663,
+      "observed": 68.4,
+      "outages": 9.9,
+      "violations": 0
+    }
+  },
+  "seeds": 20
+}

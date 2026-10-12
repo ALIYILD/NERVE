@@ -21,6 +21,22 @@ bridge and native Hermes worker, with `cce-status`, inspection and revocation.
 PYTHONPATH=src python -m nerve_awim.cue_cli demo
 ```
 
+## Opt-in task adaptation and external-memory research
+
+Task-scoped verified corrections now extend the ARC dispatcher with persistent
+receipts, bounded replanning, checkpoint recovery and an operator kill switch.
+Production defaults remain off. The `adaptation-run` CLI now verifies real local
+repository inventories, with an explicit correction/recovery scenario. See
+[observed NERVE behavior](docs/adaptation/continuation/observed-behavior.md).
+Synthetic CLI demonstrations, frozen evaluations
+and a separate budgeted NumPy fast-memory experiment are documented in the
+[adaptation runbook](docs/adaptation/runbook.md).
+
+The synthetic adaptation candidate failed its overhead gate, and trained external
+memory underperformed exact structured memory. Neither is production-approved.
+See the [readiness report](docs/adaptation/final-readiness.md) for measured results,
+code versions and remaining integration boundaries.
+
 ## v2.1 opt-in repository task shadow learning
 
 The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed study

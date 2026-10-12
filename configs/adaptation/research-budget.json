@@ -1,0 +1,6 @@
+{
+  "max_seconds": 60,
+  "max_epochs": 30,
+  "max_events": 60000,
+  "device": "cpu"
+}

@@ -1,0 +1,10 @@
+{
+  "interpretation": "Specialists and unified 8-parameter block model are algebraically equivalent; linear 2-parameter reference is less expressive.",
+  "nonlinear_parameter_budget": 8,
+  "results": {
+    "single_linear": 0.15955440260918208,
+    "specialists": 0.2085726376195153,
+    "unified": 0.2085726376195153
+  },
+  "seeds": 20
+}

@@ -1,0 +1,11 @@
+test_agent_isolation (test_evolution_v01.EvolutionMemoryTests.test_agent_isolation) ... ok
+test_context_isolation (test_evolution_v01.EvolutionMemoryTests.test_context_isolation) ... ok
+test_invalid_reward (test_evolution_v01.EvolutionMemoryTests.test_invalid_reward) ... ok
+test_reinforcement_changes_selection (test_evolution_v01.EvolutionMemoryTests.test_reinforcement_changes_selection) ... ok
+test_unrated_excluded (test_evolution_v01.EvolutionMemoryTests.test_unrated_excluded) ... ok
+test_utility_threshold (test_evolution_v01.EvolutionMemoryTests.test_utility_threshold) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.033s
+
+OK

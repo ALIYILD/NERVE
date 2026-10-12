@@ -1,0 +1,25 @@
+ M scripts/agentos_bridge.py
+ M src/nerve_awim/canary_learning_v23.py
+ M src/nerve_awim/governed_learning_v20.py
+ M src/nerve_awim/promotion_monitor_v24.py
+ M src/nerve_awim/shadow_learning_v21.py
+?? docs/adaptation/
+?? docs/arc/candidates-v1-report.json
+?? docs/arc/evaluation.md
+?? docs/arc/loops-11-12-evidence.md
+?? docs/arc/smoke-v1-manifest.json
+?? docs/arc/smoke-v1-report.json
+?? docs/arc/smoke-v1.json
+?? docs/arc/workflows.md
+?? src/nerve_awim/arc_cli.py
+?? src/nerve_awim/arc_contracts.py
+?? src/nerve_awim/arc_evaluation.py
+?? src/nerve_awim/arc_execution.py
+?? src/nerve_awim/arc_operations.py
+?? src/nerve_awim/arc_provider.py
+?? src/nerve_awim/arc_workflows.py
+?? tests/test_arc_evaluation.py
+?? tests/test_arc_provider.py
+?? tests/test_arc_review.py
+?? tests/test_arc_runtime.py
+?? tests/test_arc_workflows.py

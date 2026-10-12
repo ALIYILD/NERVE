@@ -1,0 +1,36 @@
+{
+  "benchmark": "three executable contexts with bounded retry",
+  "limitations": "Synthetic deterministic registered strategies and trusted exact judges only. Memory may reduce redundant attempts, but the preconfigured non-learning control is equally capable; no claim of faster LLM learning or production safety.",
+  "max_attempts_per_task": 2,
+  "policies": {
+    "fixed_correct": {
+      "failed_handler_calls": 3,
+      "first_attempt_success_rate": 0.8888888888888888,
+      "mean_invocations": 1.1111111111111112,
+      "recovered_after_failure_rate": 0.0,
+      "success_rate": 0.8888888888888888,
+      "tasks": 27,
+      "unresolved_tasks": 3
+    },
+    "memory": {
+      "failed_handler_calls": 3,
+      "first_attempt_success_rate": 0.8888888888888888,
+      "mean_invocations": 1.1111111111111112,
+      "recovered_after_failure_rate": 0.0,
+      "success_rate": 0.8888888888888888,
+      "tasks": 27,
+      "unresolved_tasks": 3
+    },
+    "no_memory": {
+      "failed_handler_calls": 3,
+      "first_attempt_success_rate": 0.37037037037037035,
+      "mean_invocations": 1.6296296296296298,
+      "recovered_after_failure_rate": 0.5185185185185185,
+      "success_rate": 0.8888888888888888,
+      "tasks": 27,
+      "unresolved_tasks": 3
+    }
+  },
+  "seeds": 12,
+  "training_observations_per_seed": 18
+}
