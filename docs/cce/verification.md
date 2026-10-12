@@ -11,7 +11,9 @@ cue has been enabled and no model or clinical deployment has been performed.
 | Check | Observed result |
 | --- | --- |
 | Complete Python suite after host wiring | **1,027 passed**, 35.928 seconds |
-| CCE-specific suite | **82 passed**, including bounded cycle, independent receipts, persistent governance, bridge/native-worker wiring, Hermes and JEV contracts |
+| Integrated suite with published world-model work and adaptation guard | **1,080 run, 1,079 passed, 1 skipped**, 77.911 seconds |
+| Continued host/discovery/readiness integration, full suite | **1,109 run, 1,108 passed, 1 skipped**, 176.374 seconds |
+| CCE-specific suite after continued host wiring | **111 passed**, including bounded discovery, host cycles, operator CLI, readiness, native profiling and existing safety contracts |
 | Node checkpoint discovery | **7 passed** |
 | `git diff --check` | Passed |
 | Offline commissioning CLI | 30 paired tasks / 60 fixture calls, zero external provider calls; candidate rejected, no active cue, pending memory export |
@@ -45,6 +47,14 @@ host-selection and worker-application receipts, uncued research controls, and
 fresh-only feedback/memory export. The status command was exercised without any
 provider call and reported `enabled: false`, `reason: not_configured`.
 
+The continued implementation exposes trusted host discovery and cycle methods,
+operator approval with current-generation/profile checks, provider-free installed
+profile inspection, and recomputed release readiness. The observed installed
+`qa-release` profile has a clean identifiable Hermes checkout and template, but
+does not attest model or tokenizer revisions. No provider calls or cue activation
+were performed. The new release builder consumes trusted host observations; it
+does not turn uploaded JSON assertions into staging proof or deployment permission.
+
 ## Loop ledger
 
 “Verified” below means the stated local software gate, not live model effectiveness
@@ -55,8 +65,8 @@ or clinical assurance. The complete objective is **not** claimed complete.
 | 01 Discovery | Verified | [Architecture inventory](architecture.md), real interfaces and dependency boundaries |
 | 02 Paper reproduction | Blocked | [Pinned handoff manifest](reproduction-manifest.json); no GPU host, weights, dataset/grader pins or approved compute budget |
 | 03 Core | Verified | Immutable registry and persistent version identity, profiles, no-cue routing; core and governance tests |
-| 04 Discovery | Partial | Existing Hermes callback and bounded single-candidate cycle tested; author beam search/entropy screening not implemented in NERVE or reproduced |
-| 05 Profiling | Partial | Exact model/tokenizer/template bindings and injected tokenizer checks tested; no downloaded real tokenizer or live provider capability probe |
+| 04 Discovery | Partial | Bounded multi-candidate Hermes collection, source-preserving paper imports, exact-content deduplication and host cycle tested; author beam search/entropy screening not implemented in NERVE or reproduced |
+| 05 Profiling | Partial | Exact bindings, injected tokenizer checks and provider-free installed Hermes/template inspection verified; installed provider still lacks immutable weight/tokenizer attestation |
 | 06 Evaluation | Partial | Paired reports, exact parity, Brier/accuracy/safety/cost/mean+p95 latency, conservative interval and failure accounting tested; real benchmark extraction/grading and per-rollout token-use instrumentation still require the research adapter |
 | 07 Routing | Verified | Actual Hermes instruction boundary tested; unsupported prefixes fall back; provider-specific native prefix transport remains outside this host contract |
 | 08 Hermes | Verified | Existing roles, fresh sessions, JSON/no-tools guarantees, bounded telemetry and fail-closed policy errors tested with contract doubles |
@@ -64,9 +74,9 @@ or clinical assurance. The complete objective is **not** claimed complete.
 | 10 Memory | Verified | Existing authority/database/audit and pending trusted-memory export; cross-scope denial, persistence, expiry and outcome revocation |
 | 11 Safety | Verified | Clinical/high-risk exclusion, permission gates, cue/receipt tampering and scoped approval tests; clinical deployment remains prohibited |
 | 12 Performance/cost | Partial | Call/cost preflight caps, no-provider route selection and local timing measured; no real inference optimization or GPU/provider cost benefit demonstrated |
-| 13 Recursive improvement | Partial | One proposal → selection → holdout → pending approval, rejection and baseline rollback tested; no continuous live host installation, retained-capability benchmark or production canary connection |
+| 13 Recursive improvement | Partial | Host cycle → pending memory → explicit operator CLI approval, rejection and baseline rollback tested; no automatic live cycle dispatch, retained-capability benchmark or production canary connection |
 | 14 API/docs | Verified | Local Python APIs, offline CLI, runbook, full fifteen-loop specification and Claude Code prompt |
-| 15 Staging/deployment | Blocked | No target, validated live profile, eligible live candidate or staged traffic approval receipt; no external deployment attempted |
+| 15 Staging/deployment | Blocked | Offline release manifest recomputes eligibility and identifies missing staging/rollback receipts; no validated live profile, eligible live candidate or controlled traffic evidence |
 
 ## Measured fixture outcome
 

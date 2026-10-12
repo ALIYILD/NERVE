@@ -63,6 +63,8 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
             raise ValueError('inference metadata differs from profile')
     if not isinstance(manifest, DatasetManifest):
         raise TypeError('frozen dataset manifest required')
+    if len(manifest.holdout) < 30:
+        raise ValueError('at least 30 heldout pairs required before discovery')
     selections, holdouts = tuple(selection_tasks), tuple(holdout_tasks)
     for split, tasks in (('selection', selections), ('holdout', holdouts)):
         if (any(not isinstance(t, ExperimentTask) for t in tasks)
