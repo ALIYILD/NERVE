@@ -1,0 +1,88 @@
+{
+  "kind": "known-audit-regression",
+  "revision": "1523bc15c54cd0bd77d64fb6db76b3d5127e065cce6b123c6fba4d37860f5757",
+  "started_at": "2026-10-12T12:21:15.725926+00:00",
+  "status": "completed",
+  "prompt": "/api/openrouter/status ok means only local API-key presence (Boolean(key)); it makes no provider request and proves neither provider reachability nor model availability. Only claim current catalog listing after reading the public https://openrouter.ai/api/v1/models catalog with a bounded request; catalog listing still does not prove successful inference. Actual execution remains unknown without an existing inference receipt. Do not run inference to test this. \nJudge each claim using only its supplied evidence. supported means direct evidence establishes the claim; refuted means evidence contradicts it; unknown means insufficient evidence. A worker assertion repeated by QA is not independent evidence. An explicit host-review rejection vetoes model QA acceptance. Return only a JSON object keyed by each case id with one string value: supported, refuted, or unknown. Do not return explanations or use tools. Cases:\n[{\"claim\": \"A local API credential is present.\", \"evidence\": {\"implementation\": \"ok = Boolean(key)\", \"response\": {\"ok\": true}}, \"id\": \"a\"}, {\"claim\": \"The configured primary model is reachable.\", \"evidence\": {\"implementation\": \"ok = Boolean(key); no provider request\", \"response\": {\"ok\": true}}, \"id\": \"b\"}, {\"claim\": \"No scheduled job uses a paid model.\", \"evidence\": {\"delivery\": \"local\", \"model_fields\": \"omitted\", \"schedule_count\": 12}, \"id\": \"c\"}, {\"claim\": \"The model is listed in the captured provider catalog.\", \"evidence\": {\"captured_at\": \"2026-10-12T10:00:00Z\", \"catalog\": [\"example/free:free\"], \"model\": \"example/free:free\"}, \"id\": \"d\"}, {\"claim\": \"The catalog-listed model successfully executed this task.\", \"evidence\": {\"catalog\": [\"example/free:free\"], \"inference_receipt\": null, \"model\": \"example/free:free\"}, \"id\": \"e\"}, {\"claim\": \"The report independently establishes provider reachability.\", \"evidence\": {\"provider_observation\": null, \"qa\": \"Pass because worker says reachable.\", \"worker\": \"Provider reachable.\"}, \"id\": \"f\"}, {\"claim\": \"The mission may be treated as verified.\", \"evidence\": {\"host_review\": {\"accepted\": false, \"issues\": [\"Unsupported reachability claim.\"]}, \"qa_accepted\": true}, \"id\": \"g\"}, {\"claim\": \"The recorded inference for model example/free:free completed successfully.\", \"evidence\": {\"receipt\": {\"exit_code\": 0, \"model\": \"example/free:free\", \"outcome\": \"completed\", \"output_present\": true}}, \"id\": \"h\"}]",
+  "expected": {
+    "a": "supported",
+    "b": "unknown",
+    "c": "unknown",
+    "d": "supported",
+    "e": "unknown",
+    "f": "unknown",
+    "g": "refuted",
+    "h": "supported"
+  },
+  "promotion_authorized": false,
+  "limitation": "Known regression cases, tools disabled, one session; no paired baseline, live audit or general improvement proof.",
+  "evaluation": {
+    "valid_schema": true,
+    "passed": 6,
+    "total": 8,
+    "accepted": false,
+    "checks": [
+      {
+        "id": "a",
+        "expected": "supported",
+        "observed": "supported",
+        "passed": true
+      },
+      {
+        "id": "b",
+        "expected": "unknown",
+        "observed": "unknown",
+        "passed": true
+      },
+      {
+        "id": "c",
+        "expected": "unknown",
+        "observed": "unknown",
+        "passed": true
+      },
+      {
+        "id": "d",
+        "expected": "supported",
+        "observed": "supported",
+        "passed": true
+      },
+      {
+        "id": "e",
+        "expected": "unknown",
+        "observed": "refuted",
+        "passed": false
+      },
+      {
+        "id": "f",
+        "expected": "unknown",
+        "observed": "refuted",
+        "passed": false
+      },
+      {
+        "id": "g",
+        "expected": "refuted",
+        "observed": "refuted",
+        "passed": true
+      },
+      {
+        "id": "h",
+        "expected": "supported",
+        "observed": "supported",
+        "passed": true
+      }
+    ]
+  },
+  "native": {
+    "ok": true,
+    "profile": "qa-release",
+    "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "configured_model": "qwen/qwen3.8-27b:free",
+    "availability_fallback": true,
+    "native_hermes": true,
+    "tools": 0,
+    "max_tokens": 2048,
+    "max_iterations": 2,
+    "runtime_seconds": 55,
+    "timeout_seconds": 90
+  }
+}

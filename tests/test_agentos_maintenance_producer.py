@@ -97,6 +97,19 @@ class MaintenanceProducerTests(unittest.TestCase):
             self.assertIn('catalog listing still does not prove successful inference',card['body'])
             self.assertIn('Actual execution remains unknown without an existing inference receipt',card['body'])
             self.assertIn('Do not run inference to test this.',card['body'])
+    def test_coordinator_keeps_qa_and_host_verdicts_separate_and_honors_veto(self):
+        self.run_mission('--evidence',str(self.evidence))
+        coordinator=self.board.cards[3]
+        direct_prompt=coordinator['body'].split('\n\n',1)[0]
+        self.assertEqual(coordinator['parents'],['card-3'])
+        self.assertIn('Read host-review.json in the output directory if present',direct_prompt)
+        self.assertIn('Report the model QA verdict and host-review verdict separately',direct_prompt)
+        self.assertIn('A host veto overrides QA accepted=true',direct_prompt)
+        self.assertIn('malformed or incomplete host review blocks verification',direct_prompt)
+        self.assertIn('If absent, report host review as not reviewed, not approved',direct_prompt)
+        self.assertIn('Preserve the original QA and host-review files unchanged',direct_prompt)
+        manifest=json.loads((self.dest/'mission.json').read_text())
+        self.assertIn(producer.HOST_REVIEW_CONTRACT,manifest['goal'])
     def test_every_nonterminal_state_blocks_admission_including_triage(self):
         for status in ('triage','scheduled','claimed','needs_human'):
             with self.subTest(status=status):

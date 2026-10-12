@@ -21,6 +21,15 @@ ROUTING_EVIDENCE_CONTRACT = (
     'Only claim current catalog listing after reading the public https://openrouter.ai/api/v1/models '
     'catalog with a bounded request; catalog listing still does not prove successful inference. '
     'Actual execution remains unknown without an existing inference receipt. Do not run inference to test this. ')
+HOST_REVIEW_CONTRACT = (
+    'Read host-review.json in the output directory if present before writing the summary. '
+    'Report the model QA verdict and host-review verdict separately, then the effective result. '
+    'A host veto overrides QA accepted=true: never describe the audit as verified or accepted '
+    'when the host review rejects it. A present host review is accepting only when accepted '
+    'is boolean true, checks is a nonempty array, and issues is an empty array; malformed or '
+    'incomplete host review blocks verification. If absent, report host review as not reviewed, '
+    'not approved; distinguish any QA-only acceptance. Preserve the original QA and host-review '
+    'files unchanged; quote their issues and identify remaining blockers in summary.md. ')
 
 
 def ensure_runtime(home, checkout, argv):
@@ -213,7 +222,8 @@ def main(argv=None, *, home=HOME, kanban=None):
     goal = (f'Agent OS daily operational audit for {day}. {boundaries} Output directory: {dest}. '
             'Workers produce routing.json and scheduling.json. QA must independently read both files and write verification.json with boolean accepted, checks, and issues. '
             'Accept only when both worker reports are valid JSON, each includes evidence and honest pass/fail/unknown states, and no paid routes or unsafe schedules were activated. '
-            'Coordinator reads all three files and writes summary.md listing completed checks, remaining blockers, and next action; never call an unaccepted mission verified. ')
+            'Coordinator reads all three files and writes summary.md listing completed checks, remaining blockers, and next action; never call an unaccepted mission verified. '
+            + HOST_REVIEW_CONTRACT)
     routing = (boundaries + f'Write {dest}/routing.json. Read http://127.0.0.1:3737/api/openrouter/status and ~/.agentic-os/free-model-config.json. '
                + ROUTING_EVIDENCE_CONTRACT + 'Report primary model, judge default from /Users/aliyildirim/agent-os-runtime/source/src/lib/freeModels.ts, free fallbacks, and whether all automatic defaults are free. Include evidence paths/URLs and status pass/fail/unknown. A configured :free suffix shows configuration only, not current provider availability or actual historical execution. Separate configured routing from observed availability and execution; mark absent evidence unknown. Do not expose keys. Limit evidence gathering to these three local sources and, only if claiming current catalog listing, the public model catalog. ')
     scheduling = (boundaries + f'Write {dest}/scheduling.json. Read only {dest}/maintenance-evidence.json for operational evidence. '
@@ -230,7 +240,9 @@ def main(argv=None, *, home=HOME, kanban=None):
         verifier_id = card('qa-release', 'Verify operational receipts',
             boundaries + f'Read {dest}/routing.json and {dest}/scheduling.json. Independently verify each critical claim against its underlying evidence, including {dest}/maintenance-evidence.json for scheduling. A worker assertion is not independent evidence. If the underlying source omits a field, mark that claim unknown; never infer no_paid_model_routes from a snapshot without model/provider fields. For routing, inspect the sources named by the routing worker directly. {ROUTING_EVIDENCE_CONTRACT}Distinguish configured :free model names from current provider availability and actual execution; configuration alone proves neither. Write {dest}/verification.json with accepted (boolean), checks (array), and issues (array). Use false when a required check fails, is unsupported, or is unknown.', worker_ids)
         synthesizer_id = card('coordinator', 'Summarize operational audit',
-            boundaries + f'Read {dest}/routing.json, scheduling.json, verification.json. Write {dest}/summary.md with results, blockers and next action. Keep it concise.', [verifier_id])
+            boundaries + f'Read {dest}/routing.json, scheduling.json, verification.json. '
+            + HOST_REVIEW_CONTRACT
+            + f'Write {dest}/summary.md with results, blockers and next action. Keep it concise.', [verifier_id])
     finally:
         conn.close()
     write_json(manifest, {'date':day,'runKey':run_key,'goal':goal,'outputs':str(dest),
