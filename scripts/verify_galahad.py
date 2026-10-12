@@ -11,11 +11,13 @@ ROOT = Path(__file__).resolve().parents[1]
 GROUPS = {
     'cpu': ('test_memory_gateway.py', 'test_galahad_provider.py',
             'test_memory_gateway_evaluation.py', 'test_memory_service.py',
-            'test_memory_lifecycle.py', 'test_memory_holdout.py'),
+            'test_memory_lifecycle.py', 'test_memory_holdout.py', 'test_memory_runtime.py',
+            'test_memory_agent_wiring.py', 'test_memory_gateway_mcp.py'),
     'security': ('test_memory_gateway.py', 'test_memory_service.py', 'test_galahad_provider.py',
-                 'test_memory_lifecycle.py', 'test_memory_holdout.py'),
+                 'test_memory_lifecycle.py', 'test_memory_holdout.py', 'test_memory_runtime.py',
+                 'test_memory_agent_wiring.py', 'test_memory_gateway_mcp.py'),
     'faults': ('test_memory_gateway.py', 'test_galahad_provider.py', 'test_memory_lifecycle.py'),
-    'api': ('test_memory_service.py',),
+    'api': ('test_memory_service.py', 'test_memory_runtime.py'),
     'baseline': ('test*.py',),
 }
 

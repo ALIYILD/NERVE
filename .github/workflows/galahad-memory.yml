@@ -14,4 +14,8 @@ jobs:
       - run: python -m compileall -q src/nerve_awim/memory_gateway scripts/verify_galahad.py
       - run: python scripts/verify_galahad.py cpu
       - run: PYTHONPATH=src python scripts/galahad_benchmark.py --samples 30
+      - run: PYTHONPATH=src python scripts/memory_gateway_demo.py
+      - run: PYTHONPATH=src python scripts/memory_gateway_demo.py --provider galahad
+      - run: python -m pip install 'mcp==2.3.0'
+      - run: PYTHONPATH=src python scripts/memory_gateway_mcp_wire.py
       # No GPU, commercial activation, shadow, canary or clinical deployment.

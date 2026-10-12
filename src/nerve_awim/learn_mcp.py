@@ -10,7 +10,7 @@ from .evolution_v01 import EvolutionMemory
 from .agent_bridge_v13 import DemoAgentBridge
 from .recovery_mcp_v17 import RecoveryMCPDemo
 
-def create_server(db_path=None):
+def create_server(db_path=None, *, memory_session=None):
     try:
         from mcp.server import MCPServer as ServerClass  # official MCP SDK 2.x
     except ImportError:
@@ -18,7 +18,8 @@ def create_server(db_path=None):
     path=db_path or os.environ.get("NERVE_LEARN_DB","nerve-learn.db")
     store=LearningStore(path)
     memory=EvolutionMemory(path)
-    demo=DemoAgentBridge(path,agent_id=os.environ.get("NERVE_DEMO_AGENT_ID","external-demo"))
+    demo=DemoAgentBridge(path,agent_id=os.environ.get("NERVE_DEMO_AGENT_ID","external-demo"),
+                         memory_session=memory_session)
     recovery_demo=RecoveryMCPDemo(path)
     server=ServerClass("NERVE Learn")
     # Experimental compatibility writes can allow score poisoning.
@@ -100,7 +101,34 @@ def create_server(db_path=None):
         """
         return recovery_demo.run(policy=policy,
                                  train_on_fixtures=train_on_fixtures)
+    if memory_session is not None:
+        from .memory_gateway.mcp_tools import register_memory_tools
+        register_memory_tools(server, memory_session)
     return server
 
+def main(argv=None):
+    """Trusted local process launcher; subject is never an MCP tool argument."""
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--memory-config')
+    parser.add_argument('--memory-subject')
+    args = parser.parse_args(argv)
+    if ((args.memory_config is None) != (args.memory_subject is None)
+            or args.memory_config == '' or args.memory_subject == ''):
+        parser.error('--memory-config and --memory-subject must be supplied together')
+    import sqlite3
+    session = None
+    try:
+        if args.memory_config:
+            from .memory_gateway.runtime import load_runtime
+            runtime = load_runtime(args.memory_config, required_subject=args.memory_subject)
+            session = runtime.sessions.get(args.memory_subject)
+            if session is None:
+                parser.error('subject has no configured memory session')
+        create_server(memory_session=session).run()
+    except (ValueError, TypeError, OSError, sqlite3.Error, ImportError, RuntimeError):
+        parser.error('memory MCP startup or runtime unavailable')
+
+
 if __name__=="__main__":
-    create_server().run()
+    main()

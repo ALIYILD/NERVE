@@ -4,6 +4,30 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## Verified memory gateway: executable synthetic integration
+
+The optional memory gateway now connects to the existing NERVE demo agent,
+bounded parallel pipelines and NERVE Learn MCP. A host-owned configuration
+builds the scoped ledger, pinned-OIDC HTTP service and restricted agent sessions.
+Approved structured hints select existing allowlisted tools; outcomes remain
+pending until separate host review. Legacy behavior is unchanged when disabled.
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip setuptools
+.venv/bin/python -m pip install -r deploy/requirements-memory-synthetic.txt
+PYTHONPATH=src .venv/bin/python scripts/memory_gateway_demo.py
+PYTHONPATH=src .venv/bin/python scripts/memory_gateway_demo.py --provider galahad
+PYTHONPATH=src .venv/bin/python scripts/memory_gateway_mcp_wire.py
+```
+
+These commands use temporary synthetic stores and keys. They exercise signed
+HTTP, approved/pending evidence, actual agent execution, parallel jobs, ledger
+reopen, revocation and official MCP stdio. The Galahad option exercises ordinary
+text fallback: **real persistent KV restoration is not enabled or verified**.
+Nothing is deployed. See the [runtime and wiring guide](docs/galahad/15-runtime-wiring.md)
+for configuration, local launch commands and remaining integration boundaries.
+
 ## v2.1 opt-in repository task shadow learning
 
 The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed study

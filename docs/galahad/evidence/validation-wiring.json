@@ -1,0 +1,29 @@
+{
+  "starting_commit": "274e1d00b97683a67a7351341889eef959cd99b3",
+  "prior_tests": 951,
+  "final_tests": 992,
+  "added_tests": 41,
+  "seconds": 109.431,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "wiring_suites": {
+    "agent": 13,
+    "mcp_cli": 13,
+    "runtime_http": 15
+  },
+  "official_mcp_version": "2.3.0",
+  "http_demo_null": "passed",
+  "http_demo_unavailable_galahad": "passed_prefill_only",
+  "official_mcp_stdio": "passed",
+  "syntax": "passed",
+  "diff_check": "passed",
+  "pip_check": "no broken requirements",
+  "optional_venv_audit": {
+    "local_distributions": 15,
+    "known_vulnerabilities": 0,
+    "inherited_system_packages_covered": false
+  },
+  "deployed": false,
+  "runtime_kv_restore": "not_implemented"
+}

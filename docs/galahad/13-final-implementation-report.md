@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest wiring checkpoint:** see [16-wiring-report.md](16-wiring-report.md) for the 992-test integration and [15-runtime-wiring.md](15-runtime-wiring.md) for executable commands. Existing agent and MCP source files are now modified as documented there.
+
 **Continuation:** see [14-continuation-report.md](14-continuation-report.md) for the latest 951-test checkpoint, atomic quotas, concurrent API handling and one-use external holdout interface. The evidence below records the initial 926-test checkpoint; its single-host quota and request-lock limitations were subsequently addressed.
 
 Status: partial master-plan implementation; locally verified CPU research checkpoint. No deployment, push, PR or merge. Real persistent KV restoration is not implemented or tested.

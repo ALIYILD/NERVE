@@ -39,6 +39,15 @@ def _normalise_trim(value):
     return _validate_email(value).strip().lower()
 
 
+def _unique_hint_fields(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError('duplicate strategy hint field')
+        result[key] = value
+    return result
+
+
 STRATEGIES = (
     RegisteredStrategy("raw", "extract", _extract_raw),
     RegisteredStrategy("json-field", "extract", _extract_json),
@@ -54,7 +63,12 @@ FIXTURES = (
 
 
 class DemoAgentBridge:
-    def __init__(self, path, *, agent_id="external-demo", max_workers=4):
+    def __init__(self, path, *, agent_id="external-demo", max_workers=4, memory_session=None):
+        if memory_session is not None:
+            from .memory_gateway.session import BoundMemorySession
+            if type(memory_session) is not BoundMemorySession:
+                raise TypeError('host-bound memory session required')
+        self.memory_session = memory_session
         self.agent = FeedbackAgentCoordinator(
             memory=EvolutionMemory(path), agent_id=agent_id,
             strategies=STRATEGIES, max_workers=max_workers
@@ -113,6 +127,11 @@ class DemoAgentBridge:
             raise ValueError("demo JSON input must be <=512 characters")
         if policy not in ("utility", "recency"):
             raise ValueError("only utility and recency research policies supported")
+        if self.memory_session is not None:
+            return self._run_with_verified_memory(task_id, email_document, policy)
+        return self._run_default(task_id, email_document, policy)
+
+    def _run_default(self, task_id, email_document, policy):
         first = self.agent.run([
             AgentTask(task_id + ":extract", "extract", email_document)
         ], policy=policy)[0]
@@ -131,6 +150,55 @@ class DemoAgentBridge:
             "used_feedback": first.used_feedback or second.used_feedback,
             "policy": policy,
         }
+
+    def _run_with_verified_memory(self, task_id, email_document, policy):
+        """Approved data selects fixed registered tools, never executable code.
+
+        This is the existing synthetic email demo. Clinical reasoning and free
+        form agent instructions are deliberately outside this adapter.
+        """
+        evidence = self.memory_session.query('email normalization', limit=20)
+        hints, provenance = set(), []
+        for record in evidence['records']:
+            try:
+                hint = json.loads(record['content'], object_pairs_hook=_unique_hint_fields)
+            except (ValueError, TypeError, RecursionError):
+                continue
+            if (type(hint) is not dict
+                    or set(hint) != {'schema', 'task', 'extract', 'normalise'}
+                    or hint['schema'] != 'nerve-demo-strategy-v1'
+                    or hint['task'] != 'email-normalization'
+                    or type(hint['extract']) is not str or type(hint['normalise']) is not str
+                    or ('extract', hint['extract']) not in self.agent.registry
+                    or ('normalise', hint['normalise']) not in self.agent.registry):
+                continue
+            hints.add((hint['extract'], hint['normalise']))
+            provenance.append({key: record[key] for key in ('memory_id', 'source_id', 'source_sha256')})
+        if len(hints) == 1:
+            extract, normalise = next(iter(hints))
+            result = self.execute_plan(task_id=task_id, email_document=email_document,
+                                       extract_strategy=extract, normalise_strategy=normalise)
+            result.update(policy=policy, used_feedback=False)
+            status = 'used'
+        else:
+            result = self._run_default(task_id, email_document, policy)
+            status = 'conflicting_hints' if hints else 'no_valid_hint'
+        result['verified_memory'] = {'status': status, 'provenance': provenance,
+                                      'kv_status': evidence['kv_status']}
+        result['outcome_memory'] = {'status': 'not_requested'}
+        if self.memory_session.can_propose:
+            # Completion is not correctness. No raw task/email/output or reward
+            # is retained; independent host approval remains mandatory.
+            observation = json.dumps({'schema': 'nerve-demo-outcome-v1',
+                'task': 'email-normalization', 'strategies': result['strategies'],
+                'execution_completed': True, 'correctness_verified': False}, sort_keys=True)
+            try:
+                result['outcome_memory'] = self.memory_session.propose(observation, 'demo-pipeline-outcome')
+            except PermissionError:
+                raise
+            except Exception:
+                result['outcome_memory'] = {'status': 'not_recorded', 'reason': 'memory_write_unavailable'}
+        return result
 
     def run_pipeline(self, *, task_id, email_document, policy="utility"):
         if not isinstance(task_id, str) or not 0 < len(task_id) <= 48:

@@ -1,0 +1,18 @@
+{
+  "approved_strategy_used": true,
+  "cache_purge_confirmed": false,
+  "deployed": false,
+  "http_signed_auth": true,
+  "kv_status": "prefill",
+  "ledger_reopen_verified": true,
+  "outcomes_pending": true,
+  "parallel_jobs": 2,
+  "pending_excluded": true,
+  "provider": "galahad",
+  "provider_available": false,
+  "revocation_visible_after_reopen": true,
+  "runtime_kv_restore_tested": false,
+  "scope_denial_verified": true,
+  "status": "passed",
+  "synthetic_only": true
+}
