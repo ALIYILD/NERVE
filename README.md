@@ -4,6 +4,22 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## Independent safety-control foundation
+
+Optional controller-owned tool execution, signed behavioral receipts, an
+observer watchdog, owner-authenticated stop/recovery, and incident notification
+adapters are implemented. Protected runtime, training and evaluation use the
+controller; unbound research workflows keep their current behavior.
+
+```bash
+PYTHONPATH=src python3 -m nerve_awim safety-control demo --directory /tmp/nerve-safety-new-run
+```
+
+The demo tests a separate process and disposable worker, not production OS
+isolation. Separate service identities, exclusive tool credentials and alert
+configuration remain deployment requirements. No proof of absent hidden model
+capabilities is claimed. See the [implementation and operator guide](docs/safety-control/implementation.md).
+
 ## Connected learning and adaptation research
 
 ARC, task adaptation, Memento frame learning, persistent uncertainty, Galahad

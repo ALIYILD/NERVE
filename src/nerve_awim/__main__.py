@@ -4,7 +4,7 @@ import argparse
 
 def main(argv=None):
     parser = argparse.ArgumentParser(prog='nerve', description='NERVE research tools')
-    parser.add_argument('command', choices=['world-model', 'integrated-learning'])
+    parser.add_argument('command', choices=['world-model', 'integrated-learning', 'safety-control'])
     parser.add_argument('arguments', nargs=argparse.REMAINDER)
     args = parser.parse_args(argv)
     if args.command == 'world-model':
@@ -13,6 +13,9 @@ def main(argv=None):
     if args.command == 'integrated-learning':
         from .integrated_learning import main as integrated_main
         return integrated_main(args.arguments)
+    if args.command == 'safety-control':
+        from .safety_control.cli import main as safety_main
+        return safety_main(args.arguments)
 
 
 if __name__ == '__main__':

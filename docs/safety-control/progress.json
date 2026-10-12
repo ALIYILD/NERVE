@@ -1,0 +1,46 @@
+{
+  "updated_at": "2026-10-12T21:56:50.944554+00:00",
+  "status": "implemented_and_locally_verified_not_production_isolated",
+  "branch": "codex/uncertainty-integration",
+  "validation": {
+    "full_suite": {
+      "passed": 1392,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 161.205
+    },
+    "additional_observer_runner_tests": {
+      "passed": 6,
+      "seconds": 0.065
+    },
+    "node_tests": {
+      "passed": 7
+    },
+    "controller_demo": {
+      "passed_checks": 9,
+      "status": "passed"
+    },
+    "existing_learning_demo": "offline_verified"
+  },
+  "live_llm_calls": 0,
+  "alerts_sent": 0,
+  "production_activated": false,
+  "implemented": [
+    "controller-owned registered tool execution for protected runtime, training and holdout",
+    "owner HMAC authentication and replay rejection",
+    "durable runtime credential revocation and reviewed recovery",
+    "receipt-based independent observer with authenticated pagination and watchdog",
+    "local model artifact integrity verification",
+    "host-registered worker group isolation",
+    "redacted email and Telegram outbox adapters",
+    "independent observer CLI and owner command CLI"
+  ],
+  "remaining": [
+    "Separate OS identities, protected controller/observer files and management credentials",
+    "Route remaining direct provider/script tools through broker; remove learner copies of protected credentials",
+    "Dedicated management availability, external audit anchoring and deployment isolation tests",
+    "Configure owner notification destinations and transports; verify actual delivery",
+    "Hosted-model provenance and adversarial evaluation of actual models beyond tested protocol defenses"
+  ],
+  "resume": "Follow docs/safety-control/implementation.md; do not treat same-UID tests as independent OS isolation."
+}

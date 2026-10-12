@@ -1,0 +1,11 @@
+test_continuous_failure_retries_after_interval_until_interrupt (test_safety_observer_runner.ObserverRunnerTests.test_continuous_failure_retries_after_interval_until_interrupt) ... ok
+test_failures_sanitized_no_retry_in_once_mode (test_safety_observer_runner.ObserverRunnerTests.test_failures_sanitized_no_retry_in_once_mode) ... ok
+test_finite_iterations_sleep_only_between_polls (test_safety_observer_runner.ObserverRunnerTests.test_finite_iterations_sleep_only_between_polls) ... ok
+test_invalid_bounds_and_mutually_exclusive_modes (test_safety_observer_runner.ObserverRunnerTests.test_invalid_bounds_and_mutually_exclusive_modes) ... ok
+test_missing_public_symlink_and_oversized_keys_rejected (test_safety_observer_runner.ObserverRunnerTests.test_missing_public_symlink_and_oversized_keys_rejected) ... ok
+test_once_uses_real_observer_controller_and_persists_state (test_safety_observer_runner.ObserverRunnerTests.test_once_uses_real_observer_controller_and_persists_state) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.065s
+
+OK

@@ -225,9 +225,23 @@ class GovernedLearning:
             if mode is not None and mode != 'off':
                 raise PermissionError('ARC-enabled context requires the governed decision dispatcher')
 
-    def _attempt(self, task, strategy):
+    def _attempt(self, task, strategy, scope):
         # Isolate mutable input objects between handlers and the evaluator.
         original = deepcopy(task)
+        from types import SimpleNamespace
+        from .safety_control.integration import dispatch_binding
+        with self._db() as con:
+            protected = dispatch_binding(con, self, SimpleNamespace(tenant=scope[0], agent=scope[1]),
+                                         task.context, strategy)
+        if protected is not None:
+            client, protected_scope, tool, model_digest = protected
+            # A controller denial is not a training failure/reward. Abort the
+            # evaluation so a stop cannot be converted into misleading scores.
+            value = client.dispatch(protected_scope, tool, model_digest, deepcopy(task.payload))
+            accepted = self.judge(original, value)
+            if type(accepted) is not bool:
+                raise ValueError('independent judge must return a boolean')
+            return accepted, False
         try:
             value = self._registry[(task.context, strategy)](deepcopy(task.payload))
         except Exception:
@@ -255,7 +269,7 @@ class GovernedLearning:
     def _learn_claimed_task(self, scope, task):
         """Host-internal execution after an atomic, one-use training claim."""
         try:
-            outcomes = [(strategy, *self._attempt(task, strategy))
+            outcomes = [(strategy, *self._attempt(task, strategy, scope))
                         for context, strategy in sorted(self._registry)
                         if context == task.context]
         except Exception:
@@ -336,8 +350,8 @@ class GovernedLearning:
         try:
             for task, _ in prepared:
                 row = metrics[task.context]
-                old_ok, old_error = self._attempt(task, baseline[task.context])
-                new_ok, new_error = self._attempt(task, routes[task.context])
+                old_ok, old_error = self._attempt(task, baseline[task.context], scope)
+                new_ok, new_error = self._attempt(task, routes[task.context], scope)
                 row['tasks'] += 1
                 row['baseline_hits'] += old_ok
                 row['candidate_hits'] += new_ok
@@ -429,8 +443,14 @@ class GovernedLearning:
             routes = self._release(con, scope, state['active'])
             from .uncertainty.policy import dispatch_guard as uncertainty_dispatch_guard
             uncertainty_dispatch_guard(con, self, actor, task, routes[task.context])
+            from .safety_control.integration import dispatch_binding
+            protected = dispatch_binding(con, self, actor, task.context, routes[task.context])
         strategy = routes[task.context]
-        value = self._registry[(task.context, strategy)](deepcopy(task.payload))
+        if protected is None:
+            value = self._registry[(task.context, strategy)](deepcopy(task.payload))
+        else:
+            client, protected_scope, tool, model_digest = protected
+            value = client.dispatch(protected_scope, tool, model_digest, deepcopy(task.payload))
         return {'value': value, 'strategy': strategy, 'release': state['active'],
                 'generation': state['generation'], 'feedback_written': False}
 

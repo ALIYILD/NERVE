@@ -276,6 +276,11 @@ jobs:
           PYTHONPATH: src
         run: python -m nerve_awim integrated-learning --repository . --directory /tmp/nerve-integrated-ci
 
+      - name: Verify independent controller owner stop and reviewed recovery
+        env:
+          PYTHONPATH: src
+        run: python -m nerve_awim safety-control demo --directory /tmp/nerve-safety-ci
+
       - name: Smoke test learned frame rules and repository tool wiring
         env:
           PYTHONPATH: src
