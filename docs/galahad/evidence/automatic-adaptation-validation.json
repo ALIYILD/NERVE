@@ -1,0 +1,23 @@
+{
+  "code_revision": "501b1e416db43123b0ad13d0d5b6c3123517a47d",
+  "full_suite": {
+    "passed": 1079,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 104.795
+  },
+  "new_automation_and_strict_tests": 23,
+  "official_mcp_stdio": "pass",
+  "fault_checks_passed": 5,
+  "syntax": "pass",
+  "whitespace": "pass",
+  "environment": {
+    "python": "3.10.0",
+    "os": "Darwin x86_64"
+  },
+  "deployed": false,
+  "real_model_tested": false,
+  "gpu_restore": "blocked",
+  "licence": "unverified"
+}

@@ -1,0 +1,178 @@
+{
+  "automatic_outcome_feedback": true,
+  "deployed": false,
+  "episodes": 16,
+  "first_phase_final_strategy": "trim-lower",
+  "host_selected_strategies": false,
+  "limitation": "Constructed deterministic drift; no general-model improvement claim.",
+  "model_weights_trained": false,
+  "observed_failures": 2,
+  "outcomes": [
+    {
+      "memory_id": "b75fcd2a030d468b856619f6da2dee3e",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "trim-lower"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "b75fcd2a030d468b856619f6da2dee3e",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "trim-lower"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "b75fcd2a030d468b856619f6da2dee3e",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "trim-lower"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "b75fcd2a030d468b856619f6da2dee3e",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "trim-lower"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "b75fcd2a030d468b856619f6da2dee3e",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "trim-lower"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "b75fcd2a030d468b856619f6da2dee3e",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "trim-lower"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "b75fcd2a030d468b856619f6da2dee3e",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "trim-lower"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "b75fcd2a030d468b856619f6da2dee3e",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "trim-lower"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "b75fcd2a030d468b856619f6da2dee3e",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "trim-lower"
+      },
+      "success": false,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "b75fcd2a030d468b856619f6da2dee3e",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "trim-lower"
+      },
+      "success": false,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "a48afd6541ec4a029de5f51fcd699158",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "lower-only"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "a48afd6541ec4a029de5f51fcd699158",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "lower-only"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "a48afd6541ec4a029de5f51fcd699158",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "lower-only"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "a48afd6541ec4a029de5f51fcd699158",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "lower-only"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "a48afd6541ec4a029de5f51fcd699158",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "lower-only"
+      },
+      "success": true,
+      "synthetic_only": true
+    },
+    {
+      "memory_id": "a48afd6541ec4a029de5f51fcd699158",
+      "status": "judged",
+      "strategies": {
+        "extract": "json-field",
+        "normalise": "lower-only"
+      },
+      "success": true,
+      "synthetic_only": true
+    }
+  ],
+  "reopened_between_phases": true,
+  "replay_or_exhausted_run_denied": true,
+  "second_phase_final_strategy": "lower-only",
+  "status": "passed",
+  "successes": 14,
+  "synthetic_only": true
+}

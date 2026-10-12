@@ -32,3 +32,22 @@ One evaluator per gateway and one synthetic agent tool family are supported. Aut
 The feedback call is also bound to the source snapshot used by the execution. If approved content changes before feedback starts, the old output cannot earn credit for the new source. Cross-context replay checks deliberately share the tenant/agent namespace; changing context does not let the same run/document be replayed.
 
 Initial equal-utility ties follow the existing lexical record order, which may vary with generated record identifiers. Therefore individual demo runs can show different adaptation-error counts. The assertions require correct final strategy in both phases and preserved bounds; they do not hide initial errors or demand a fabricated speedup. The committed trace records the actual observed run.
+
+## Integration checkpoint
+
+Code revision: `501b1e416db43123b0ad13d0d5b6c3123517a47d`, branch `feature/galahad-persistent-memory`. No push, PR, merge or deployment.
+
+Added: `memory_gateway/automation.py`, `scripts/memory_autoadapt_demo.py`, `tests/test_memory_automation.py`, `tests/test_memory_autoadapt_demo.py`. Modified: existing agent bridge (shared data-only parser and opt-in strict mode), outcome learning (execution-source snapshot binding), CPU verification/CI and README. Source selection, execution, evaluation and durable utility remain existing NERVE components.
+
+The runner is a training/operational-feedback path: do not feed independent holdout tasks into it. It does not reserve a global holdout corpus shared with other experiment stores. Use the existing separately frozen holdout/release workflow for candidate promotion.
+
+Validation and actual trace are recorded in the companion evidence JSON. The full master plan is still incomplete: real Galahad restoration, compatible GPU/licence evidence, encrypted operations and actual Clinical OS integration remain blocked or unimplemented.
+
+## Final validation
+
+- **1,079 tests passed** in104.795seconds, zero failures/errors/skips on Python3.10.0/Darwin x86_64. The new automation/strict-agent suites comprise23 tests within that total.
+- Official MCP2.3 stdio smoke passed; five synthetic fault checks passed. Compileall and whitespace checks passed. Remote CI has not run.
+- Recorded automatic demo:16 episodes,14 successes,2 observed adaptation errors. It reopened between task phases and ended with `trim-lower` then `lower-only`, without host-selected strategies or separate manual feedback calls. Other tie orders can produce more adaptation errors; this is not a general accuracy claim or controlled improvement benchmark.
+- Independent review confirmed strict evidence execution and durable claims; source-snapshot attribution and metadata-cap concerns were addressed with tests. Retained hash metadata and the trusted evaluator limitations remain explicit.
+
+Evidence: [validation](evidence/automatic-adaptation-validation.json), [actual episode trace](evidence/automatic-adaptation-demo.json), [fault checks](evidence/automatic-adaptation-faults.json). Evidence binds the code revision above; the following documentation commit leaves executable source unchanged.

@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest automatic adaptation:** [20-automatic-adaptation.md](20-automatic-adaptation.md) records the bounded automatic execution→evaluation→feedback path, durable budgets/replay claims and synthetic drift evidence. This does not complete the GPU or clinical gates.
+
 **Latest learning continuation:** [19-outcome-learning.md](19-outcome-learning.md) documents executable, host-verified adaptive sessions and actual strategy changes across restart, with1,055 full-suite passes plus the final deletion-semantics regression.
 
 **Latest continuation:** [18-hardening-report.md](18-hardening-report.md) records durable policy, optional inference and evidence-based operational readiness; [17-acceptance-matrix.md](17-acceptance-matrix.md) tracks the complete original specification. Older checkpoint details below are historical.
