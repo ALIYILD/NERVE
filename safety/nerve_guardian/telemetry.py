@@ -19,6 +19,12 @@ _TABLES = {
 }
 _TABLES.update({name: f'SELECT count(*) FROM {name} e JOIN adaptation_tasks t ON e.task=t.id WHERE t.tenant=?'
                 for name in ('adaptation_events', 'adaptation_corrections', 'adaptation_checkpoints')})
+# Existing AgentOS learning storage has explicit tenant boundaries on these two
+# tables. Legacy runs/calls/missions have none and are deliberately not collected.
+_TABLES.update({
+    'trusted_memory_v18': 'SELECT count(*) FROM trusted_memory_v18 WHERE tenant_id=?',
+    'memory_utility': 'SELECT count(*) FROM memory_utility WHERE tenant=?',
+})
 
 
 def _label(value):

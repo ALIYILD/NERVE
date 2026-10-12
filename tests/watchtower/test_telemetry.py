@@ -56,6 +56,46 @@ class TelemetryTests(unittest.TestCase):
         result = SQLiteMetadataSource(self.path, tenant='a', source='app', tables=('adaptation_events',)).sample()
         self.assertEqual(result['counters'], {'adaptation_events': 1})
 
+    def test_agentos_learning_counts_are_tenant_scoped_and_metadata_only(self):
+        with sqlite3.connect(self.path) as con:
+            con.execute('CREATE TABLE trusted_memory_v18(tenant_id TEXT, agent_id TEXT, content TEXT)')
+            con.execute('CREATE TABLE memory_utility(tenant TEXT, agent TEXT, payload_hash TEXT)')
+            con.executemany('INSERT INTO trusted_memory_v18 VALUES(?,?,?)',
+                            [('agentos-local', 'agent-a', 'PATIENT credential-secret'),
+                             ('agentos-local', 'agent-b', 'private-memory'),
+                             ('other-tenant', 'agent-c', 'unrelated-secret')])
+            con.executemany('INSERT INTO memory_utility VALUES(?,?,?)',
+                            [('agentos-local', 'agent-a', 'private-hash'),
+                             ('other-tenant', 'agent-c', 'unrelated-hash')])
+        before = self.path.read_bytes()
+        source = SQLiteMetadataSource(self.path, tenant='agentos-local', source='agentos-learning',
+                                      tables=('trusted_memory_v18', 'memory_utility'))
+        result = source.sample()
+        self.assertEqual('OK', result['status'])
+        self.assertEqual({'trusted_memory_v18': 2, 'memory_utility': 1}, result['counters'])
+        self.assertEqual(before, self.path.read_bytes())
+        for secret in ('PATIENT', 'credential-secret', 'private-memory', 'unrelated-secret',
+                       'private-hash', 'agent-a', 'other-tenant'):
+            self.assertNotIn(secret, json.dumps(result))
+        other = SQLiteMetadataSource(self.path, tenant='other-tenant', source='other',
+                                     tables=('trusted_memory_v18', 'memory_utility')).sample()
+        self.assertEqual({'trusted_memory_v18': 1, 'memory_utility': 1}, other['counters'])
+        absent = SQLiteMetadataSource(self.path, tenant='absent', source='absent',
+                                      tables=('trusted_memory_v18', 'memory_utility')).sample()
+        self.assertEqual({'trusted_memory_v18': 0, 'memory_utility': 0}, absent['counters'])
+
+    def test_agentos_learning_views_and_unscoped_tables_rejected(self):
+        with sqlite3.connect(self.path) as con:
+            con.execute("CREATE VIEW trusted_memory_v18 AS SELECT 'agentos-local' AS tenant_id")
+            con.execute("CREATE VIEW memory_utility AS SELECT 'agentos-local' AS tenant")
+        result = SQLiteMetadataSource(self.path, tenant='agentos-local', source='agentos-learning',
+                                      tables=('trusted_memory_v18', 'memory_utility')).sample()
+        self.assertEqual('UNKNOWN', result['status'])
+        self.assertEqual({}, result['counters'])
+        for name in ('nerve_runs', 'nerve_calls', 'nerve_missions'):
+            with self.assertRaises(ValueError):
+                SQLiteMetadataSource(self.path, tenant='agentos-local', source='unsafe', tables=(name,))
+
     def test_queue_saturation_observable(self):
         collector = BoundedCollector([self.source], max_queue=1)
         self.assertTrue(collector.submit('app'))
