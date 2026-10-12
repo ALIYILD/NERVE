@@ -1,0 +1,66 @@
+{
+  "activation_authorized": false,
+  "adapter": {
+    "attempted_calls": 4,
+    "confidence_available": false,
+    "deployment_authorized": false,
+    "errors": 1,
+    "external_provider_fee_usd": 0.0,
+    "input_tokens": 117,
+    "last_error": "local_request_timeout",
+    "last_error_stage": "generation",
+    "local_compute_cost_usd": null,
+    "manifest_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "model": "qwen2.5-coder:1.5b",
+    "output_tokens": 271,
+    "schema": "nerve-cce-ollama-usage-v1",
+    "scope": "local instruction smoke; not paper reproduction or deployed cue",
+    "server_duration_ns": 75209197145,
+    "truncations": 2
+  },
+  "attempted_calls": 4,
+  "failed_calls": 3,
+  "identity": {
+    "attestation": "observational local research only",
+    "deployment_authorized": false,
+    "installed_template_digest": "1e65450c30670713aa47fe23e8b9662bdf4065e81cc8e3cbfaa98924fcc0d320",
+    "manifest_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "model_blob_digest": "29d8c98fa6b098e200069bfb88b9508dc3e85586d20cba59f8dda9a808165104",
+    "model_calls": 0,
+    "model_config": {
+      "context_digest": "693abc7ad2a279f491e78f57ef3e716b168efd1594a6076cb100c3f6873a2e51",
+      "max_tokens": 96,
+      "model": "qwen2.5-coder:1.5b",
+      "profile_key": "75641f07883b339e43a5ef6250de6599524303af29c6d8a9c46ed7427474e6ec",
+      "provider": "ollama-local-research",
+      "revision": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+      "sampling_digest": "458ee533f3ae356e4a01dd789aaf4b8390977f5fa649bec6fc517d1177ba5fbe",
+      "temperature": 0.0,
+      "template_digest": "2e06144aafa332a4be81eff38a73040c91144a176983269b4e045e49de4dd149",
+      "tokenizer": "gguf-embedded-artifact",
+      "tokenizer_revision": "918523ef037b839c9120ef715c0a8636e79702af13755968c6b92191b523474a"
+    },
+    "profile": {
+      "model": "qwen2.5-coder:1.5b",
+      "provider": "ollama-local-research",
+      "revision": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+      "supported_modes": [
+        "instruction"
+      ],
+      "template_revision": "2e06144aafa332a4be81eff38a73040c91144a176983269b4e045e49de4dd149",
+      "tokenizer": "gguf-embedded-artifact",
+      "tokenizer_revision": "918523ef037b839c9120ef715c0a8636e79702af13755968c6b92191b523474a"
+    },
+    "schema": "nerve-cce-ollama-profile-v1",
+    "server_version": "0.20.2",
+    "show_digest": "74995d4649d0d5f21678e6812ea313220734af3beb4452b43405084bd4463ee0",
+    "tokenizer_identity": "verified GGUF artifact plus executor; token IDs unverified"
+  },
+  "known_external_provider_fee_usd": 0.0,
+  "paper_reproduced": false,
+  "reason": "provider_error_or_unknown_cost",
+  "report": null,
+  "schema": "nerve-cce-local-smoke-v1",
+  "scope": "incomplete local arithmetic smoke; not effectiveness evidence",
+  "state": "blocked"
+}

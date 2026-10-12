@@ -155,6 +155,8 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
         metrics = selected.metrics
         if metrics['synthetic']:
             return finish('skipped', 'synthetic_selection')
+        if any(metrics[arm]['brier_score'] is None for arm in ('baseline', 'candidate')):
+            return finish('rejected', 'missing_calibration')
         if (metrics['paired_accuracy_delta'] <= 0 or metrics['candidate']['safety'] < 1
                 or any(metrics['candidate'][m] > metrics['baseline'][m]
                        for m in ('brier_score', 'latency_ms', 'cost_usd'))):

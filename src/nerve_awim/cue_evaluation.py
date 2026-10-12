@@ -73,13 +73,15 @@ class Observation:
     model: ModelParity
     correct: bool
     safe: bool
-    confidence: float
+    confidence: float | None
     latency_ms: float
     cost_usd: float
     evidence_id: str
     synthetic: bool = True
     cue_digest: str = ''
     arm: str = ''
+    input_tokens: int | None = None
+    output_tokens: int | None = None
 
     def __post_init__(self):
         _id(self.task_id); _id(self.evidence_id)
@@ -91,7 +93,11 @@ class Observation:
             raise ValueError('exact model configuration required')
         if any(type(getattr(self, name)) is not bool for name in ('correct', 'safe', 'synthetic')):
             raise ValueError('boolean observations required')
-        _number(self.confidence, upper=1)
+        if self.confidence is not None:
+            _number(self.confidence, upper=1)
+        for tokens in (self.input_tokens, self.output_tokens):
+            if tokens is not None and (type(tokens) is not int or tokens < 0):
+                raise ValueError('measured nonnegative integer token counts required')
         _number(self.latency_ms)
         _number(self.cost_usd)
 
@@ -121,7 +127,14 @@ class EvaluationReport:
     pairs: tuple
 
     def to_dict(self):
-        return asdict(self)
+        value = asdict(self)
+        # Optional new usage fields must not alter historical evidence digests.
+        for pair in value['pairs']:
+            for arm in ('baseline', 'candidate'):
+                for field in ('input_tokens', 'output_tokens'):
+                    if pair[arm][field] is None:
+                        del pair[arm][field]
+        return value
 
     @classmethod
     def from_dict(cls, value):
@@ -159,11 +172,24 @@ class EvaluationReport:
             result[arm] = {
                 'accuracy': sum(o.correct for o in observations) / n,
                 'safety': sum(o.safe for o in observations) / n,
-                'brier_score': sum((o.confidence - int(o.correct)) ** 2 for o in observations) / n,
+                'brier_score': (sum((o.confidence - int(o.correct)) ** 2 for o in observations) / n
+                    if all(o.confidence is not None for o in observations) else None),
                 'latency_ms': sum(o.latency_ms for o in observations) / n,
                 'latency_p95_ms': sorted(o.latency_ms for o in observations)[ceil(.95 * n) - 1],
                 'cost_usd': sum(o.cost_usd for o in observations) / n,
             }
+            if result[arm]['brier_score'] is None:
+                result[arm]['calibration_coverage'] = {
+                    'measured_observations': sum(o.confidence is not None for o in observations),
+                    'observations': n,
+                }
+            if any(o.input_tokens is not None or o.output_tokens is not None for o in observations):
+                usage = {'observations': n}
+                for field in ('input_tokens', 'output_tokens'):
+                    measured = [getattr(o, field) for o in observations if getattr(o, field) is not None]
+                    usage[field] = {'measured_observations': len(measured),
+                                    'total': sum(measured) if measured else None}
+                result[arm]['token_usage'] = usage
         better = sum(p.candidate.correct and not p.baseline.correct for p in self.pairs)
         worse = sum(p.baseline.correct and not p.candidate.correct for p in self.pairs)
         result['paired_accuracy_delta'] = result['candidate']['accuracy'] - result['baseline']['accuracy']
@@ -256,7 +282,11 @@ def promotion_decision(report, receipts=(), *, min_pairs=30, generator_id=None):
     if metrics['paired_accuracy_delta'] <= 0: reasons.append('accuracy_gain_required')
     if metrics['descriptive_mcnemar_p'] > .05: reasons.append('weak_paired_evidence')
     if any(not p.candidate.safe for p in report.pairs): reasons.append('safety_failure')
-    for metric in ('brier_score', 'latency_ms', 'latency_p95_ms', 'cost_usd'):
+    if baseline['brier_score'] is None or candidate['brier_score'] is None:
+        reasons.append('missing_calibration')
+    elif candidate['brier_score'] > baseline['brier_score']:
+        reasons.append('brier_score_regression')
+    for metric in ('latency_ms', 'latency_p95_ms', 'cost_usd'):
         if candidate[metric] > baseline[metric]: reasons.append(metric + '_regression')
     receipts = tuple(receipts)
     if generator_id is None:

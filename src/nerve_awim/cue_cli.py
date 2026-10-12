@@ -80,16 +80,37 @@ def main(argv=None):
     run.add_argument('--output', type=Path)
     inspect = sub.add_parser('inspect-report', help='Validate a scored report and print aggregate metrics')
     inspect.add_argument('path', type=Path)
+    dataset = sub.add_parser('inspect-dataset', help='Validate a frozen local dataset without exposing answers')
+    dataset.add_argument('path', type=Path)
+    for command in ('local-inspect', 'local-smoke'):
+        local = sub.add_parser(command, help='Inspect or smoke-test an installed, digest-bound local Ollama model')
+        local.add_argument('--model', required=True)
+        local.add_argument('--digest', required=True, help='Expected installed manifest SHA256')
+        local.add_argument('--output', type=Path)
+        if command == 'local-smoke':
+            local.add_argument('--allow-local-inference', action='store_true')
     args = parser.parse_args(argv)
     if args.command == 'demo':
         result = demo()
+    elif args.command == 'inspect-dataset':
+        from .cue_dataset import load_dataset
+        result = load_dataset(args.path).telemetry()
+    elif args.command in ('local-inspect', 'local-smoke'):
+        from .cue_ollama import OllamaCueAdapter
+        from .cue_local import run_local_smoke
+        execute = args.command == 'local-smoke'
+        if execute and not args.allow_local_inference:
+            parser.error('local-smoke requires --allow-local-inference for four bounded local calls')
+        adapter = OllamaCueAdapter(args.model, args.digest, enabled=execute, permission_granted=execute,
+            max_calls=4, max_output_tokens=32)
+        result = run_local_smoke(adapter) if execute else adapter.inspect()
     else:
         if args.path.stat().st_size > 10000000:
             parser.error('report exceeds 10 MB')
         report = EvaluationReport.from_dict(json.loads(args.path.read_text()))
         result = {'digest': report.digest, 'metrics': report.metrics, 'promotion_authorized': False}
     text = json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + '\n'
-    if args.command == 'demo' and args.output:
+    if getattr(args, 'output', None):
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(text)
         print(str(args.output))

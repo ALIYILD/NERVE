@@ -16,6 +16,9 @@ See the [15-loop plan](docs/cce/implementation-plan.md),
 [verification status](docs/cce/verification.md).
 The [installed-host wiring](docs/cce/host-integration.md) connects the Agent OS
 bridge and native Hermes worker, with `cce-status`, inspection and revocation.
+An optional [local research adapter](docs/cce/local-research.md) supports verified
+installed Qwen models, frozen datasets and measured token receipts. Its bounded
+arithmetic smoke has run locally; no cue effectiveness or deployment is claimed.
 
 ```bash
 PYTHONPATH=src python -m nerve_awim.cue_cli demo
