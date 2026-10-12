@@ -1,4 +1,7 @@
-# Memento 3 implementation checkpoint — 12 October 2026
+# First Memento 3 implementation checkpoint — 12 October 2026
+
+Continuation results: [capability-report.md](capability-report.md). The measurements
+below describe the earlier exact-memory checkpoint and are retained as history.
 
 **The full 00–19 assignment is not complete.** This branch implements and tests a
 bounded offline foundation, not the complete proposed learning system. Loop 00

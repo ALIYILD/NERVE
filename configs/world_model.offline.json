@@ -16,5 +16,7 @@
   "max_real_actions_per_run": 20,
   "provider_spend_limit": 0,
   "promotion_mode": "manual",
-  "allow_clinical_actions": false
+  "allow_clinical_actions": false,
+  "model_backend": "declarative-exact-v1",
+  "max_work_units": 1500
 }

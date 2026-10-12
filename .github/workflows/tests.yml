@@ -264,6 +264,16 @@ jobs:
           PYTHONPATH: src
         run: python -m nerve_awim.uncertainty.combined_demo --state /tmp/nerve-combined-ci.sqlite3
 
+      - name: Verify NERVE world-model entry point
+        run: python scripts/nerve_world_model.py doctor --json
+
+      - name: Smoke test learned frame rules and repository tool wiring
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m nerve_awim world-model study --directory /tmp/nerve-world-model-frame-ci --final-per-family 2 --final-seed 19003
+          python -m nerve_awim world-model repository-study --repository . --directory /tmp/nerve-world-model-repository-ci
+
   adaptation-research:
     runs-on: ubuntu-latest
     steps:

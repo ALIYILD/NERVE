@@ -75,6 +75,7 @@ class Policy:
     schema_version: int = 1
     enabled: bool = False
     mode: str = 'offline'
+    model_backend: str = 'declarative-exact-v1'
     max_generations: int = 5
     max_candidates_per_generation: int = 3
     max_population: int = 3
@@ -87,11 +88,14 @@ class Policy:
     max_plan_depth: int = 5
     max_simulated_nodes_per_decision: int = 100
     max_real_actions_per_run: int = 20
+    max_work_units: int = 1500
     provider_spend_limit: int = 0
     promotion_mode: str = 'manual'
     allow_clinical_actions: bool = False
 
     def __post_init__(self):
+        if self.model_backend not in ('declarative-exact-v1','declarative-frame-v1'):
+            raise ValueError('unsupported model backend')
         if type(self.enabled) is not bool or type(self.allow_clinical_actions) is not bool:
             raise ValueError('boolean flags required')
         if (self.schema_version != 1 or type(self.schema_version) is not int or
@@ -105,13 +109,18 @@ class Policy:
                   'max_llm_calls_per_run':30, 'max_run_seconds':1800,
                   'max_artifact_bytes':MAX_BYTES, 'sandbox_wall_seconds':5,
                   'sandbox_memory_mb':256, 'max_plan_depth':5,
-                  'max_simulated_nodes_per_decision':100, 'max_real_actions_per_run':20}
+                  'max_simulated_nodes_per_decision':100, 'max_real_actions_per_run':20, 'max_work_units':100000}
         for name, maximum in bounds.items():
             if type(getattr(self, name)) is not int or not 1 <= getattr(self, name) <= maximum:
                 raise ValueError('invalid budget: '+name)
 
     @classmethod
     def load(cls, value):
+        # v1 checkpoints predate these additive configuration fields.
+        if type(value) is dict:
+            value = dict(value)
+            value.setdefault('model_backend', 'declarative-exact-v1')
+            value.setdefault('max_work_units', 1500)
         exact(value, cls.__dataclass_fields__)
         return cls(**value)
 

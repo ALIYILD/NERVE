@@ -36,23 +36,32 @@ def parser():
     p.add_argument('--scope',choices=['offline-demo'],default='offline-demo',
                    help='fixed local synthetic scope; cannot select another tenant')
     sub = p.add_subparsers(dest='command',required=True)
-    for name in ('doctor','init','demo','ingest','run','status','resume','verify','evaluate','freeze','shadow','report',
+    for name in ('doctor','init','demo','study','repository-study','ingest','run','status','resume','verify','evaluate','recover-final','freeze','shadow','report',
                  'authorize-canary','promote','rollback','stop'):
         s = sub.add_parser(name)
         s.add_argument('--json',action='store_true')
         s.add_argument('--dry-run',action='store_true')
         if name in ('init','run','resume'):
             s.add_argument('--config',default='configs/world_model.offline.json')
+        if name == 'repository-study':
+            s.add_argument('--directory',required=True)
+            s.add_argument('--repository',required=True)
+        if name == 'study':
+            s.add_argument('--directory',required=True)
+            s.add_argument('--final-per-family',type=int,default=80)
+            s.add_argument('--final-seed',type=int,default=9001)
         if name == 'run':
             s.add_argument('--mode',choices=['offline'],default='offline')
         if name in ('status','resume','report','stop'):
             s.add_argument('--run-id',required=True)
         if name == 'report':
             s.add_argument('--format',choices=['json'],default='json')
-        if name in ('verify','evaluate','freeze','shadow','authorize-canary','promote','rollback'):
+        if name in ('verify','evaluate','recover-final','freeze','shadow','authorize-canary','promote','rollback'):
             s.add_argument('--model-id',required=True)
         if name == 'verify':
             s.add_argument('--suite',choices=['replay'],default='replay')
+        if name == 'recover-final':
+            s.add_argument('--run-id',required=True)
         if name == 'evaluate':
             s.add_argument('--suite',choices=['selection','regression','sealed-final'],required=True)
             s.add_argument('--run-id')
@@ -71,10 +80,17 @@ def main(argv=None):
             result = {'mode':'offline','enabled_by_default':False,
                       'scope':'local synthetic only','arbitrary_python':'unavailable',
                       'backend':'trusted-declarative-process-v1',
+                      'languages':['declarative-exact-v1','declarative-frame-v1'],
                       'memory_limit_enforced':sys.platform != 'darwin',
                       'provider':'unavailable','deployment_authorized':False}
         elif args.dry_run:
             result = {'dry_run':True,'operation':args.command,'mutations':0}
+        elif args.command == 'repository-study':
+            from .repository_study import run_repository_study
+            result = run_repository_study(args.repository,args.directory)
+        elif args.command == 'study':
+            from .study import run_study
+            result = run_study(args.directory,final_per_family=args.final_per_family,final_seed=args.final_seed)
         elif args.command in ('init','demo'):
             path = Path(args.db)
             path.parent.mkdir(parents=True,exist_ok=True)
@@ -140,6 +156,10 @@ def main(argv=None):
                 if not result['replay_pass']:
                     print(canonical(result))
                     return 4
+            elif args.command == 'recover-final':
+                result = Evaluator(ledger).recover_final(evaluator,args.model_id,run_id=args.run_id)
+                if result is None:
+                    raise LookupError('no committed final report for this run')
             elif args.command == 'shadow':
                 from .adapters import shadow
                 exact(read_json(args.manifest),('recommended_action',))

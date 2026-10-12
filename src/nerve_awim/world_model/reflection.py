@@ -2,7 +2,7 @@
 from .contracts import Rule, digest, canonical
 
 
-def reflect(episodes, existing_rules=()):
+def reflect(episodes, existing_rules=(), *, execution_failures=()):
     if any(e['split'] != 'train' for e in episodes):
         raise PermissionError('proposer accepts training only')
     rules, reasons, missing = {}, [], []
@@ -31,6 +31,12 @@ def reflect(episodes, existing_rules=()):
         return {'decision':'retain','failure_class':'no_new_evidence','evidence':[],'rules':[]}
     old_program = [(r['preconditions'],r['action'],r['predicted_effect'],r['completion']) for r in existing_rules]
     new_program = [(r['preconditions'],r['action'],r['predicted_effect'],r['completion']) for r in proposed]
+    if old_program == new_program:
+        ids={row['id'] for episode in episodes for row in episode['transitions']}
+        if any(type(f) is not dict or f.get('transition') not in ids for f in execution_failures):
+            raise ValueError('code repair needs actual replay failure references')
+        if not execution_failures:
+            return {'decision':'retain','failure_class':'no_new_evidence','evidence':[], 'rules':proposed}
     return {'decision':'repair_code' if old_program == new_program else 'revise_rulebook',
             'failure_class':'execution_error' if old_program == new_program else 'rule_mismatch',
             'evidence':reasons or [r['supporting_transition_ids'][0] for r in proposed], 'rules':proposed,

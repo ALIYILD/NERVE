@@ -76,14 +76,21 @@ class Coordinator:
             db.execute('INSERT INTO wm_events VALUES(NULL,?,?,?,?)',
                        (self.scope,run_id,phase,canonical({'checkpoint_hash':digest(body)})))
 
-    def _reserve_work(self, run_id, owner, fence, units):
+    def _reserve_work(self, run_id, owner, fence, units, *, body, category):
         # Maximum total simulator/evaluation transition attempts; retries count again.
-        limit = self.policy.max_generations*self.policy.max_candidates_per_generation*100
+        limit = self.policy.max_work_units
+        usage = body.setdefault("reserved_work_by_category", {})
+        previous_usage = usage.get(category, 0)
+        usage[category] = previous_usage+units
         with self.ledger.db() as db:
-            updated = db.execute('UPDATE wm_runs SET budget=budget+?,lease_until=? WHERE scope=? AND id=? '
+            updated = db.execute('UPDATE wm_runs SET budget=budget+?,lease_until=?,body=? WHERE scope=? AND id=? '
                 'AND owner=? AND fence=? AND lease_until>? AND budget+?<=?',
-                (units,time.time()+30,self.scope,run_id,owner,fence,time.time(),units,limit)).rowcount
+                (units,time.time()+30,canonical(body),self.scope,run_id,owner,fence,time.time(),units,limit)).rowcount
             if not updated:
+                if previous_usage:
+                    usage[category] = previous_usage
+                else:
+                    usage.pop(category, None)
                 row = db.execute('SELECT owner,fence,lease_until FROM wm_runs WHERE scope=? AND id=?',(self.scope,run_id)).fetchone()
                 if not row or row['owner'] != owner or row['fence'] != fence or row['lease_until'] <= time.time():
                     raise StaleWorker('work claim stale')
@@ -91,7 +98,7 @@ class Coordinator:
 
     def resume(self, run_id, *, stop_after=None):
         current = self.status(run_id)
-        if current['body']['policy'] != self.policy.to_dict():
+        if Policy.load(current['body']['policy']) != self.policy:
             raise IntegrityError('run policy is immutable')
         if current['phase'] == 'stopped':
             return current
@@ -113,45 +120,93 @@ class Coordinator:
                     self.checkpoint(run_id,owner,fence,'stopped',body)
                     break
                 self.checkpoint(run_id,owner,fence,phase,body)
-                self._reserve_work(run_id,owner,fence,1)
+                self._reserve_work(run_id,owner,fence,1,body=body,category="phase_dispatch")
                 if phase == 'capture':
                     self.review.reserve_final(self.evaluator,run_id)
                 elif phase == 'reflect':
-                    proposal = reflect(self.ledger.episodes(self.trainer))
-                    body['proposal'] = proposal
-                    if proposal['decision'] == 'retain':
-                        body['stop_reason'] = proposal['failure_class']
+                    training = self.ledger.episodes(self.trainer)
+                    proposals = []
+                    if self.policy.model_backend == 'declarative-frame-v1':
+                        from .generalization import infer
+                        proposal = infer(training)
+                        if proposal['rules']:
+                            proposals.append(proposal)
+                    exact_proposal = reflect(training)
+                    exact_proposal['backend'] = 'declarative-exact-v1'
+                    if exact_proposal['rules']:
+                        proposals.append(exact_proposal)
+                    proposals = proposals[:min(self.policy.max_population,self.policy.max_candidates_per_generation)]
+                    if not proposals:
+                        body['stop_reason'] = exact_proposal['failure_class']
                         self.checkpoint(run_id,owner,fence,'stopped',body)
                         break
+                    body['proposal'] = proposals[0]
+                    body['candidate_proposals'] = proposals
+                    body['generation'] = 1
                 elif phase == 'compile':
-                    rules = body['proposal']['rules']
-                    body['model_id'] = self.registry.put(self.trainer,rules,compile_rules(rules),self.policy)
+                    candidates = []
+                    body['compilation_failures'] = []
+                    for proposal in body.get('candidate_proposals',[body['proposal']]):
+                        rules = proposal['rules']
+                        backend = proposal.get('backend',self.policy.model_backend)
+                        try:
+                            model_id = self.registry.put(self.trainer,rules,compile_rules(rules,backend=backend),self.policy)
+                        except ValueError as error:
+                            body['compilation_failures'].append({'backend':backend,'reason':str(error)[:512]})
+                            continue
+                        candidates.append({'model_id':model_id,'backend':backend,'reports':{}})
+                    body['candidates'] = candidates
+                    if not candidates:
+                        body['stop_reason'] = 'compilation_failed'
+                        self.checkpoint(run_id,owner,fence,'stopped',body)
+                        break
+                    body['model_id'] = candidates[0]['model_id']
                 elif phase == 'verify':
-                    model = self.registry.get(self.evaluator,body['model_id'])
                     episodes = self.ledger.episodes(self.trainer)
-                    self._reserve_work(run_id,owner,fence,sum(len(e['transitions']) for e in episodes))
-                    body['reports']['replay'] = replay(model['program'],episodes)
-                    body['reports']['fidelity'] = assess(model['rules'],model['program'])
-                    if not body['reports']['replay']['replay_pass'] or body['reports']['fidelity']['status'] != 'pass':
+                    candidates = body.setdefault('candidates',[{'model_id':body['model_id'],'reports':{}}])
+                    for candidate in candidates:
+                        model = self.registry.get(self.evaluator,candidate['model_id'])
+                        self._reserve_work(run_id,owner,fence,sum(len(e['transitions']) for e in episodes),body=body,category='training_replay')
+                        candidate['reports']['replay'] = replay(model['program'],episodes)
+                        candidate['reports']['fidelity'] = assess(model['rules'],model['program'])
+                        candidate['verified'] = candidate['reports']['replay']['replay_pass'] and candidate['reports']['fidelity']['status'] == 'pass'
+                    if not any(c['verified'] for c in candidates):
                         body['stop_reason'] = 'verification_failed'
                         self.checkpoint(run_id,owner,fence,'stopped',body)
                         break
+                    body['reports'].update(candidates[0]['reports'])
                 elif phase == 'selection':
-                    for split in ('selection','regression'):
-                        episodes = self.ledger.episodes(self.evaluator,split)
-                        self._reserve_work(run_id,owner,fence,101*len(episodes))
-                        body['reports'][split] = self.review.evaluate(self.evaluator,body['model_id'],split)
-                    if not all(body['reports'][s]['replay_pass'] for s in ('selection','regression')):
+                    candidates = body.get('candidates',[{'model_id':body['model_id'],'verified':True,'reports':body['reports']}])
+                    for candidate in candidates:
+                        if not candidate['verified']:
+                            continue
+                        for split in ('selection','regression'):
+                            episodes = self.ledger.episodes(self.evaluator,split)
+                            self._reserve_work(run_id,owner,fence,101*len(episodes),body=body,category='evaluation_and_planning')
+                            candidate['reports'][split] = self.review.evaluate(self.evaluator,candidate['model_id'],split)
+                    survivors = [c for c in candidates if c['verified'] and all(c['reports'][s]['replay_pass'] for s in ('selection','regression'))]
+                    if not survivors:
                         body['stop_reason'] = 'selection_or_regression_failed'
                         self.checkpoint(run_id,owner,fence,'stopped',body)
                         break
+                    def objective(candidate):
+                        report = candidate['reports']['selection']
+                        return (sum(m['candidate_success'] for m in report['metrics_by_family'].values()),
+                                -report['unknown_fraction'],candidate['model_id'])
+                    winner = max(survivors,key=objective)
+                    body['model_id'] = winner['model_id']
+                    body['reports'] = dict(winner['reports'])
+                    body['selection_trace'] = {'objective':'success_then_unknown_then_stable_hash',
+                        'candidate_ids':[c['model_id'] for c in candidates],'winner':winner['model_id']}
                 elif phase == 'freeze':
                     self.registry.freeze(self.evaluator,body['model_id'])
                 elif phase == 'final':
                     episodes = self.ledger.episodes(self.evaluator,'final')
-                    self._reserve_work(run_id,owner,fence,101*len(episodes))
                     try:
-                        body['reports']['final'] = self.review.evaluate(self.evaluator,body['model_id'],'final',run_id=run_id)
+                        recovered = self.review.recover_final(self.evaluator,body['model_id'],run_id=run_id)
+                        if recovered is None:
+                            self._reserve_work(run_id,owner,fence,101*len(episodes),body=body,category="evaluation_and_planning")
+                        body['reports']['final'] = recovered if recovered is not None else self.review.evaluate(self.evaluator,body['model_id'],'final',run_id=run_id)
                     except IntegrityError:
                         body['stop_reason'] = 'final_consumed_without_recoverable_report'
                         self.checkpoint(run_id,owner,fence,'stopped',body)

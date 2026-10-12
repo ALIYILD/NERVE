@@ -46,3 +46,31 @@ def validate_dispatch(decision, program, observed, allowed_actions, remaining_ac
     if remaining_actions < 1 or decision['actions'][0] not in allowed_actions:
         raise PermissionError('dispatch policy or action budget denied')
     return decision['actions'][0]
+
+
+def plan_registered(ledger, actor, model_id, initial, allowed_actions, *, revision,
+                    research_evaluation=False, max_depth=5, max_nodes=100):
+    """Model lookup and authority checks precede planning at the host boundary.
+
+    Evaluators may exercise frozen candidates for bounded research. A runtime
+    actor needs an eligible artifact; a caller boolean cannot grant that role.
+    No source/path/text memory can bypass registry integrity or revision checks.
+    """
+    from .registry import Registry
+    if research_evaluation:
+        ledger.scope(actor,'evaluator')
+    else:
+        ledger.scope(actor,'runtime')
+    model=Registry(ledger).get(actor,model_id)
+    required=('frozen','eligible') if research_evaluation else ('eligible',)
+    if model['state'] not in required or 'dependencies' not in model:
+        raise PermissionError('verified frozen research model or eligible runtime model required')
+    if revision != model['environment_revision']:
+        raise PermissionError('environment revision drift; revalidation required')
+    from .contracts import Policy
+    pinned=Policy.load(model['evaluation_policy'])
+    decision=plan(model['program'],initial,allowed_actions,
+                  max_depth=min(max_depth,pinned.max_plan_depth),
+                  max_nodes=min(max_nodes,pinned.max_simulated_nodes_per_decision))
+    return {**decision,'model_id':model_id,'environment_revision':revision,
+            'research_evaluation':research_evaluation,'deployment_authorized':False}

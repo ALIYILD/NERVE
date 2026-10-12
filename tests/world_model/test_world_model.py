@@ -9,6 +9,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 
 from nerve_awim.governed_learning_v20 import LearningAuthority
 from nerve_awim.world_model.contracts import Policy, Rule, canonical, digest, IntegrityError, StaleWorker
@@ -141,7 +142,11 @@ class WorldModelTests(unittest.TestCase):
         rules,_=self.populated()
         episodes=self.ledger.episodes(self.trainer)
         self.assertEqual(reflect(episodes)['decision'],'revise_rulebook')
-        self.assertEqual(reflect(episodes,rules)['decision'],'repair_code')
+        self.assertEqual(reflect(episodes,rules)['decision'],'retain')
+        bad=compile_rules(rules)
+        bad['entries'][0]['after']={'stage':99}
+        failures=replay(bad,episodes)['failures']
+        self.assertEqual(reflect(episodes,rules,execution_failures=failures)['decision'],'repair_code')
         episodes[0]['transitions'][0]['status']='missing'
         self.assertEqual(reflect(episodes)['failure_class'],'missing_evidence')
 
@@ -201,14 +206,76 @@ class WorldModelTests(unittest.TestCase):
         with self.assertRaises(IntegrityError):
             Evaluator(self.ledger).evaluate(self.evaluator,current['body']['model_id'],'final',run_id=run)
 
-    def test_crash_after_final_consumption_never_reopens_holdout(self):
+    def test_committed_final_recovers_without_reexecution(self):
         self.populated()
         service=self.coordinator()
         run=service.create()
         state=service.resume(run,stop_after='freeze')
         Evaluator(self.ledger).evaluate(self.evaluator,state['body']['model_id'],'final',run_id=run)
-        recovered=service.resume(run)
+        with patch('nerve_awim.world_model.evaluator.replay', side_effect=AssertionError('reopened')):
+            recovered=service.resume(run)
+        self.assertEqual(recovered['body']['stop_reason'],'inconclusive_independent_gain_not_established')
+        self.assertTrue(recovered['body']['reports']['final']['replay_pass'])
+
+    def test_interrupted_final_claim_never_reopens_holdout(self):
+        self.populated()
+        service=self.coordinator()
+        run=service.create()
+        state=service.resume(run,stop_after='freeze')
+        with patch('nerve_awim.world_model.evaluator.replay', side_effect=RuntimeError('crash')):
+            with self.assertRaises(RuntimeError):
+                Evaluator(self.ledger).evaluate(self.evaluator,state['body']['model_id'],'final',run_id=run)
+        with patch('nerve_awim.world_model.evaluator.replay', side_effect=AssertionError('reopened')):
+            recovered=service.resume(run)
         self.assertEqual(recovered['body']['stop_reason'],'final_consumed_without_recoverable_report')
+
+    def test_final_report_scope_and_corruption_checks(self):
+        self.populated()
+        service=self.coordinator()
+        run=service.create()
+        state=service.resume(run)
+        model=state['body']['model_id']
+        reviewer=Evaluator(self.ledger)
+        report=reviewer.recover_final(self.evaluator,model,run_id=run)
+        self.assertEqual(report,state['body']['reports']['final'])
+        with self.assertRaises(PermissionError):
+            reviewer.recover_final(self.trainer,model,run_id=run)
+        with self.ledger.db() as db:
+            db.execute("UPDATE wm_final_reports SET report_hash='corrupt'")
+        with self.assertRaises(IntegrityError):
+            reviewer.recover_final(self.evaluator,model,run_id=run)
+
+    def test_concurrent_final_dispatch_has_one_winner(self):
+        self.populated()
+        service=self.coordinator()
+        run=service.create()
+        state=service.resume(run,stop_after='freeze')
+        model=state['body']['model_id']
+        def evaluate():
+            try:
+                return Evaluator(self.ledger).evaluate(self.evaluator,model,'final',run_id=run)
+            except IntegrityError:
+                return None
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            results=list(pool.map(lambda _: evaluate(),range(2)))
+        self.assertEqual(sum(r is not None for r in results),1)
+        self.assertEqual(Evaluator(self.ledger).recover_final(self.evaluator,model,run_id=run),
+                         next(r for r in results if r is not None))
+
+    def test_v1_migration_preserves_consumed_holdouts(self):
+        with sqlite3.connect(self.path) as db:
+            db.execute('DROP TABLE wm_final_reports')
+            db.execute('UPDATE wm_schema SET version=1')
+            db.execute("INSERT INTO wm_final VALUES('scope','source','run','model',1)")
+        with self.assertRaises(IntegrityError):
+            Ledger(self.path,self.auth)
+        migrate(self.path)
+        migrate(self.path)
+        with sqlite3.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT version FROM wm_schema').fetchall(),[(2,)])
+            self.assertEqual(db.execute('SELECT consumed FROM wm_final').fetchall(),[(1,)])
+            self.assertEqual(db.execute('SELECT count(*) FROM wm_final_reports').fetchone()[0],0)
+
 
     def test_arbitrary_code_and_language_escape_probes_rejected(self):
         _,program=self.populated()
@@ -260,6 +327,26 @@ class WorldModelTests(unittest.TestCase):
         result=subprocess.run(base+['report','--run-id',report['run_id']],env=env,capture_output=True,text=True)
         self.assertEqual(result.returncode,0,result.stderr)
         self.assertEqual(json.loads(result.stdout)['result']['phase'],'stopped')
+        recovered_command=['recover-final','--run-id',report['run_id'],'--model-id',report['model_id']]
+        entry_points=[
+            [sys.executable,'-m','nerve_awim','world-model'],
+            [sys.executable,str(Path(__file__).resolve().parents[2]/'scripts'/'nerve_world_model.py')]]
+        for entry in entry_points:
+            result=subprocess.run(entry+['--db',str(db)]+recovered_command,
+                                  env=env,capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr+result.stdout)
+            self.assertEqual(json.loads(result.stdout)['result'],report['reports']['final'])
+        result=subprocess.run(base+['evaluate','--suite','sealed-final','--run-id',report['run_id'],
+                                    '--model-id',report['model_id']],env=env,capture_output=True,text=True)
+        self.assertEqual(result.returncode,8)  # Report recovery never reopens final evidence.
+
+    def test_package_help_delegates_without_creating_store(self):
+        env={**os.environ,'PYTHONPATH':str(Path(__file__).resolve().parents[2]/'src')}
+        result=subprocess.run([sys.executable,'-m','nerve_awim','world-model','--help'],
+                              cwd=self.temp.name,env=env,capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertIn('recover-final',result.stdout)
+        self.assertFalse((Path(self.temp.name)/'.world-model').exists())
 
     def test_simulated_rollback_is_atomic_and_survives_restart(self):
         from nerve_awim.world_model.release import SimulatedRelease
