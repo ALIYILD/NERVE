@@ -712,3 +712,7 @@ The durable research loop evaluates a finite candidate grid, records rejected ca
 ### Discounted feedback research
 
 Optional per-observation discounting now weights old verified outcomes less heavily. The fresh v3 study executed 5,800 synthetic tool calls; recurrent validation improved for fast discounting, but training regressed, so the current policy was retained. See [primary-source rationale, evidence and reproduction](docs/galahad/23-discounted-feedback-research.md).
+
+### Prospective online adaptation
+
+A fixed discounted-feedback policy scored **84.33% versus 75.44%** for the existing learner across 2,048 fresh synthetic online episodes per arm, with no scenario regression. It is a candidate for review; defaults remain unchanged. The separate real local-model smoke attempt failed at the 30-second deadline. See [protocol, complete results and reproduction](docs/galahad/24-online-adaptation-and-local-model.md).
