@@ -66,3 +66,7 @@ The independent alerts/admin reviewer examined release 65151a7 and reran all 12 
 ## Live activation prerequisite review
 
 Independent review reran six service tests (0.315 seconds), confirmed unsupported-host and missing owner/channel/tenant checks precede Store construction, and found no new blocker in this change. The passive path remains unchanged. Review explicitly does not establish actual systemd availability beyond executable presence, enforceable unit coverage, independent credentials, MFA recovery or notification delivery. The infrastructure specialist separately confirmed user-domain launchd disable/bootout cannot prevent same-user manual execution; independent account migration and a compatible enforcement adapter remain prerequisites.
+
+## Same-Mac preflight review
+
+The infrastructure specialist implemented six isolated preflight tests. Independent admin review passed those six plus seven CLI/service tests and found no false-ready path or untrusted-content leakage. Review requested unreadable-vs-missing precision and installation file types; both were fixed with an additional test. Root ownership is labeled only root_owned, not administrative independence. The complete suite now passes 90 tests. No accounts/services were modified by preflight.

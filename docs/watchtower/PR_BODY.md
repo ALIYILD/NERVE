@@ -4,7 +4,7 @@ The implementation includes separate Watchtower/Guardian entrypoints, an externa
 
 Validation:
 - 1,124 existing NERVE tests passed before and after implementation.
-- 82 safety tests passed, including 13 independent adversarial tests and a signed-MFA HTTP recovery/replay test.
+- 90 safety tests passed, including 13 independent adversarial tests and a signed-MFA HTTP recovery/replay test.
 - A real disposable TERM-ignoring child was stopped, prevented from recreating, and restarted through the controlled fixture flow.
 - 12,000 actual AST inventories remained correct during the bounded local passive-collection comparison; median change was approximately +2.7%. This is not a production performance guarantee.
 
@@ -21,3 +21,5 @@ Strict offline configuration validation now runs before service state creation o
 Actual macOS deployment discovery identified a launchd learning worker. Added tenant-scoped AgentOS memory counters and installed a user-authorized passive observer from release65151a7. Full independent Guardian protection remains unprovisioned; LIVE_DEPLOYMENT.md records exact scope and gates.
 
 Live activation now rejects unsupported hosts and incomplete owner/notification provisioning before creating state. macOS remains passive observation only; full readiness still requires a compatible controller and independent identities.
+
+Owner selected this Mac. Added a read-only macos-preflight CLI and local setup plan; NOT_READY/exit2 persists until native containment and independent provisioning are complete.

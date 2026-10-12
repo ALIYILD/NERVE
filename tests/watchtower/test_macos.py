@@ -34,7 +34,7 @@ class MacOSPreflightTests(unittest.TestCase):
         self.assertFalse(result['ready'])
         self.assertEqual('NOT_READY', result['status'])
         self.assertTrue(result['facts']['learning_launch_agent']['expected_command'])
-        self.assertFalse(result['facts']['learning_launch_agent']['independently_owned'])
+        self.assertFalse(result['facts']['learning_launch_agent']['root_owned'])
         self.assertEqual('OBSERVED_METADATA_ONLY', result['facts']['passive_telemetry']['status'])
         self.assertNotIn('DO-NOT-EXPORT', json.dumps(result))
         self.assertNotIn('/test-user', json.dumps(result))
@@ -47,6 +47,8 @@ class MacOSPreflightTests(unittest.TestCase):
     def test_malformed_plist_unexpected_arguments_and_missing_files(self):
         self.files[self.learning] = b'private-malformed'
         self.assertEqual('UNKNOWN', self.inspect()['facts']['learning_launch_agent']['status'])
+        self.files[self.learning] = b'<?xml version="1.0"?><plist><dict>'
+        self.assertEqual('UNKNOWN', self.inspect()['facts']['learning_launch_agent']['status'])
         self.files[self.learning] = plistlib.dumps({'ProgramArguments': ['secret-token', 'arbitrary.py']})
         result = self.inspect()
         self.assertFalse(result['facts']['learning_launch_agent']['expected_command'])
@@ -56,11 +58,23 @@ class MacOSPreflightTests(unittest.TestCase):
 
     def test_root_metadata_still_does_not_verify_independent_identity(self):
         def root_metadata(path):
-            return {'exists': True, 'uid': 0, 'mode': 0o600, 'regular': True, 'symlink': False}
+            regular = path.suffix in ('.json', '.plist')
+            return {'exists': True, 'uid': 0, 'mode': 0o600, 'regular': regular, 'directory': not regular, 'symlink': False}
         result = self.inspect(metadata=root_metadata)
         self.assertTrue(result['facts']['independent_installation']['protected_metadata'])
         self.assertFalse(result['ready'])
         self.assertTrue(all(gate['status'] == 'BLOCKED' for gate in result['blocking_gates']))
+
+    def test_unreadable_metadata_is_unknown_and_wrong_install_types_rejected(self):
+        from unittest.mock import patch
+        from nerve_guardian.macos import _metadata
+        with patch.object(Path, 'lstat', side_effect=PermissionError('private')):
+            result = inspect_local(home=self.home, platform_name='Darwin', metadata=_metadata)
+        self.assertIsNone(result['facts']['learning_launch_agent']['exists'])
+        self.assertTrue(result['facts']['learning_launch_agent']['metadata_unavailable'])
+        def wrong_type(path):
+            return {'exists': True, 'uid': 0, 'mode': 0o600, 'regular': True, 'directory': False}
+        self.assertFalse(self.inspect(metadata=wrong_type)['facts']['independent_installation']['protected_metadata'])
 
     def test_symlink_and_unprotected_installation(self):
         def unsafe(path):

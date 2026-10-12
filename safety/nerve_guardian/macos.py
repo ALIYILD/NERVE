@@ -9,6 +9,7 @@ import platform
 import plistlib
 import stat
 import time
+from xml.parsers.expat import ExpatError
 
 
 def _metadata(path):
@@ -17,8 +18,10 @@ def _metadata(path):
         return {'exists': True, 'uid': info.st_uid, 'mode': stat.S_IMODE(info.st_mode),
                 'regular': stat.S_ISREG(info.st_mode), 'directory': stat.S_ISDIR(info.st_mode),
                 'symlink': stat.S_ISLNK(info.st_mode)}
-    except OSError:
+    except FileNotFoundError:
         return {'exists': False}
+    except OSError:
+        return {'exists': None, 'metadata_unavailable': True}
 
 
 def _read(path):
@@ -56,7 +59,8 @@ def inspect_local(*, home=None, root=Path('/'), platform_name=None, uid=None,
 
     def file_fact(path):
         record = info(path)
-        return {'exists': record.get('exists') is True,
+        return {'exists': record.get('exists') if type(record.get('exists')) is bool else None,
+                'metadata_unavailable': record.get('metadata_unavailable') is True,
                 'uid': record.get('uid') if type(record.get('uid')) is int else None,
                 'mode': oct(record['mode']) if type(record.get('mode')) is int else None,
                 'symlink': record.get('symlink') is True}
@@ -81,8 +85,8 @@ def inspect_local(*, home=None, root=Path('/'), platform_name=None, uid=None,
             expected_command=document.get('ProgramArguments') == expected,
             interval_seconds=document.get('StartInterval') if type(document.get('StartInterval')) is int else None,
             run_at_load=document.get('RunAtLoad') is True,
-            independently_owned=learning_fact['uid'] == 0 and current_uid != 0)
-    except (OSError, ValueError, TypeError, AttributeError, plistlib.InvalidFileException):
+            root_owned=learning_fact['uid'] == 0)
+    except (OSError, ValueError, TypeError, AttributeError, plistlib.InvalidFileException, ExpatError, RecursionError):
         pass
 
     telemetry = home / '.local/share/nerve-watchtower/state/telemetry.json'
@@ -107,7 +111,7 @@ def inspect_local(*, home=None, root=Path('/'), platform_name=None, uid=None,
                     break
         telemetry_fact.update(fresh=fresh, collection_health='OK' if collection_ok else 'UNKNOWN',
                               status='OBSERVED_METADATA_ONLY' if fresh and collection_ok and sources_ok else 'UNKNOWN')
-    except (OSError, ValueError, TypeError, AttributeError):
+    except (OSError, ValueError, TypeError, AttributeError, RecursionError):
         pass
 
     install = root / 'Library/Application Support/NERVE-Guardian'
@@ -119,6 +123,7 @@ def inspect_local(*, home=None, root=Path('/'), platform_name=None, uid=None,
     inspected = (install, config, daemon, *install.parents, *daemon.parent.parents, daemon.parent)
     protected = all((m := info(path)).get('exists') and not m.get('symlink')
                     and m.get('uid') == 0 and type(m.get('mode')) is int and not m['mode'] & 0o022
+                    and m.get('regular' if path in (config, daemon) else 'directory') is True
                     for path in inspected)
     installation['protected_metadata'] = bool(protected)
     return {'schema': 'nerve-macos-preflight-v1', 'ready': False, 'status': 'NOT_READY',

@@ -160,12 +160,15 @@ def run_watchtower(config,*,once=False):
 
 def main():
     parser=argparse.ArgumentParser(description='Independent Watchtower/Guardian; observe-only by default')
-    parser.add_argument('command',choices=['demo','watchtower','service','validate'])
+    parser.add_argument('command',choices=['demo','watchtower','service','validate','macos-preflight'])
     parser.add_argument('--config',type=Path);parser.add_argument('--report',type=Path)
     parser.add_argument('--once',action='store_true')
     parser.add_argument('--allow-live-enforcement',action='store_true',help='Independent infrastructure administrator only; never use during development')
     args=parser.parse_args()
-    if args.command=='demo':
+    if args.command=='macos-preflight':
+        from .macos import inspect_local
+        result=inspect_local()
+    elif args.command=='demo':
         from .demo import run_demo
         result=run_demo()
     else:
@@ -178,6 +181,8 @@ def main():
         else:result=run_service(config,once=args.once,allow_live=args.allow_live_enforcement)
     if args.report:atomic_json(args.report,result)
     print(json.dumps(result,indent=2,allow_nan=False))
+    if args.command=='macos-preflight' and not result.get('ready',False):
+        parser.exit(2)
 
 
 if __name__=='__main__':main()

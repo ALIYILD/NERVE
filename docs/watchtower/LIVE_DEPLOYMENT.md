@@ -57,7 +57,7 @@ or shutdown test was performed.
 - Inventory unmanaged workers, deployment paths, network/IAM authority and clinical
   dependencies. Current coverage is explicitly incomplete.
 
-The deployment-host/account and secret-location question remains pending. Do not
+The owner selected this Mac. Independent account, MFA and secret-location details remain pending. Do not
 paste secret values into chat. No automatic containment, independent Guardian,
 owner recovery portal or live alerts have been enabled by this deployment.
 
@@ -83,3 +83,7 @@ state creation, even when invoked as root. It also rejects missing owner MFA
 configuration, missing email/Telegram channels or tenants without recovery owners.
 These are necessary prerequisites, not proof of external authority or successful
 provider delivery. The current safety suite passes 82 tests.
+
+## Same-Mac setup selected
+
+The destination is fixed to this Mac. See [local setup](MACOS_SETUP.md) and the [read-only preflight result](evidence/macos-preflight.json). The CLI reports NOT_READY with exit code 2 and does not mutate services or read credentials. The existing learning job and live passive collector remain unchanged.

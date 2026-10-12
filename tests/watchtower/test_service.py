@@ -1,4 +1,5 @@
 import json
+import io
 from pathlib import Path
 import sqlite3
 import tempfile
@@ -11,6 +12,14 @@ class ServiceTests(unittest.TestCase):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
     def test_service_cannot_implicitly_arm(self):
         with self.assertRaises(PermissionError):build_guardian({'armed':True})
+    def test_macos_preflight_cli_needs_no_config_and_returns_not_ready(self):
+        from nerve_guardian.__main__ import main
+        result={'ready':False,'status':'NOT_READY'}
+        output=io.StringIO()
+        with patch('sys.argv',['guardian','macos-preflight']), patch('nerve_guardian.macos.inspect_local',return_value=result), patch('sys.stdout',output), patch('nerve_guardian.__main__.build_guardian',side_effect=AssertionError('Guardian started')):
+            with self.assertRaises(SystemExit) as error:main()
+        self.assertEqual(error.exception.code,2)
+        self.assertEqual(json.loads(output.getvalue()),result)
     def test_root_cannot_arm_unsupported_host_or_missing_systemctl(self):
         for system,available in [('Darwin',True),('Linux',False)]:
             with self.subTest(system=system), patch('os.geteuid',return_value=0), patch('platform.system',return_value=system), patch('os.access',return_value=available), patch('nerve_guardian.__main__.Store',side_effect=AssertionError('state created')):

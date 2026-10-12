@@ -51,6 +51,13 @@ test_real_disposable_child_and_persistent_recreation_refusal (test_infrastructur
 test_restart_timeout_recontains (test_infrastructure.InfrastructureTests.test_restart_timeout_recontains) ... ok
 test_tampering_missing_stale_and_unauthorized_restart (test_infrastructure.InfrastructureTests.test_tampering_missing_stale_and_unauthorized_restart) ... ok
 test_timeout_is_unknown (test_infrastructure.InfrastructureTests.test_timeout_is_unknown) ... ok
+test_malformed_plist_unexpected_arguments_and_missing_files (test_macos.MacOSPreflightTests.test_malformed_plist_unexpected_arguments_and_missing_files) ... ok
+test_observed_schedule_and_metadata_never_claim_ready (test_macos.MacOSPreflightTests.test_observed_schedule_and_metadata_never_claim_ready) ... ok
+test_real_files_unchanged_and_no_missing_file_creation (test_macos.MacOSPreflightTests.test_real_files_unchanged_and_no_missing_file_creation) ... ok
+test_root_metadata_still_does_not_verify_independent_identity (test_macos.MacOSPreflightTests.test_root_metadata_still_does_not_verify_independent_identity) ... ok
+test_stale_or_falsely_fresh_telemetry_unknown (test_macos.MacOSPreflightTests.test_stale_or_falsely_fresh_telemetry_unknown) ... ok
+test_symlink_and_unprotected_installation (test_macos.MacOSPreflightTests.test_symlink_and_unprotected_installation) ... ok
+test_unreadable_metadata_is_unknown_and_wrong_install_types_rejected (test_macos.MacOSPreflightTests.test_unreadable_metadata_is_unknown_and_wrong_install_types_rejected) ... ok
 test_credential_permissions_and_https (test_notifications.NotificationTests.test_credential_permissions_and_https) ... ok
 test_database_connections_closed_on_success_and_error (test_notifications.NotificationTests.test_database_connections_closed_on_success_and_error) ... ok
 test_directory_alias_cannot_create_second_owner (test_notifications.NotificationTests.test_directory_alias_cannot_create_second_owner) ... ok
@@ -64,6 +71,7 @@ test_stalled_provider_does_not_block_close_and_pending_recovers (test_notificati
 test_unsafe_outbox_files_and_constructor_failure_release (test_notifications.NotificationTests.test_unsafe_outbox_files_and_constructor_failure_release) ... ok
 test_arming_requires_owner_recovery_and_both_alert_channels (test_service.ServiceTests.test_arming_requires_owner_recovery_and_both_alert_channels) ... ok
 test_config_rejects_world_writable (test_service.ServiceTests.test_config_rejects_world_writable) ... ok
+test_macos_preflight_cli_needs_no_config_and_returns_not_ready (test_service.ServiceTests.test_macos_preflight_cli_needs_no_config_and_returns_not_ready) ... ok
 test_passive_collector_real_sqlite_cli_contract (test_service.ServiceTests.test_passive_collector_real_sqlite_cli_contract) ... ok
 test_poisoned_report_has_no_arbitrary_payload (test_service.ServiceTests.test_poisoned_report_has_no_arbitrary_payload) ... ok
 test_root_cannot_arm_unsupported_host_or_missing_systemctl (test_service.ServiceTests.test_root_cannot_arm_unsupported_host_or_missing_systemctl) ... ok
@@ -82,6 +90,6 @@ test_read_only_tenant_scoped_redacted (test_telemetry.TelemetryTests.test_read_o
 test_tables_allowlisted (test_telemetry.TelemetryTests.test_tables_allowlisted) ... ok
 
 ----------------------------------------------------------------------
-Ran 82 tests in 7.000s
+Ran 90 tests in 7.337s
 
 OK

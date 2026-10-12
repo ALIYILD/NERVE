@@ -8,7 +8,7 @@ Implemented on isolated branch `feat/nerve-watchtower`, based on local NERVE com
 |---|---|---|
 | Unmodified baseline | 1,124 tests passed | [baseline](evidence/baseline.log) |
 | Existing NERVE regression | 1,124 tests passed | [regression](evidence/regression.log) |
-| Safety suite | 82 tests passed | [test log](evidence/safety-tests.log) |
+| Safety suite | 90 tests passed | [test log](evidence/safety-tests.log) |
 | Independent adversarial review | 13 attack tests passed; demonstrated defects repaired | [review](INDEPENDENT_REVIEW.md) |
 | Passive CLI collector | Actual read-only SQLite aggregate collection, no source writes | [collector entrypoint](evidence/watchtower-entrypoint.json) |
 | Guardian CLI on unprovisioned host | Correctly UNKNOWN, enforcement disabled | [service entrypoint](evidence/service-entrypoint.json) |
@@ -64,3 +64,5 @@ The safety suite now passes 78 tests. Both deployment examples validate through 
 User-authorized limited passive monitoring is now installed on the actual macOS host; see [live status](LIVE_DEPLOYMENT.md). Full Guardian production acceptance remains unestablished. The combined safety suite passes 80 tests, including 12 telemetry tests independently rerun on the deployed Python 3.10 interpreter. Learning schedules and NERVE runtime source remain unchanged.
 
 Live-readiness audit: unsupported-host activation and missing recovery/notification provisioning are now rejected before state creation. 82 safety tests pass. Actual macOS enforcement remains unimplemented; see LIVE_DEPLOYMENT.md for the required identity boundary and migration.
+
+Same-Mac preflight follow-up: 90 safety tests pass. Read-only local provisioning inspection reports actual metadata and explicitly remains NOT_READY. The deployment destination is resolved; independent identities, native containment and provider/MFA provisioning remain open.

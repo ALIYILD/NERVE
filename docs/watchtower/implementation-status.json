@@ -7,7 +7,7 @@
   "checks": {
     "baseline_tests": 1124,
     "regression_tests": 1124,
-    "safety_tests": 82,
+    "safety_tests": 90,
     "independent_adversarial_tests": 13,
     "real_disposable_process_demo": true,
     "live_provider_delivery": false,
@@ -77,7 +77,8 @@
     "clinical_dependencies",
     "production_retention_endurance"
   ],
-  "next_action": "Provide independent deployment host/account and owner MFA/provider secret locations; current macOS workload is unsupported by the systemd enforcement adapter.",
+  "next_action": "Implement and verify same-Mac containment with restricted workload identity; provision independent owner administration, MFA and alert secrets.",
   "passive_local_observer_running": true,
-  "passive_observer_release": "65151a7"
+  "passive_observer_release": "65151a7",
+  "deployment_target": "existing_mac"
 }

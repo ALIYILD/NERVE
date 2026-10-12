@@ -9,7 +9,7 @@
     "deploy/watchtower/nerve-watchtower.service.example": "dc885b54c67f97aa17da51991d034911084efa39f57afbdcabbc770e6087d439",
     "deploy/watchtower/watchtower.example.json": "de200c6c3f2f9c6bb97a9b428f5b830b556d140cd0dbab17ffd7e31834a15623",
     "safety/nerve_guardian/__init__.py": "c37e899d84c505113f9e13febe6c51f8c4201b0ebe0d7dd16b7fc27f06dae7c4",
-    "safety/nerve_guardian/__main__.py": "1293b7c18199ee050d37aba320ea02f9f3da08df0ce29102491ccc919cb4d96f",
+    "safety/nerve_guardian/__main__.py": "38cc18be4cca0fd159f12d7218e35d13fe8eb1878f6523ad4e3175ac76303b38",
     "safety/nerve_guardian/analysis.py": "1beec81d55ac3e704bb50ec182e0ddcc74c85f16f81ad8e99282b010d948e899",
     "safety/nerve_guardian/auth.py": "a794137dbafef03789446733725b61bea66315c21f3a7ccb04e4d32908308be7",
     "safety/nerve_guardian/config.py": "8a8114e4c4989fe9bb066809624934d7ca27e59b651666e321ff7ed9929b1cdd",
@@ -17,6 +17,7 @@
     "safety/nerve_guardian/demo.py": "763b01b211db1c6d310e4bdfb3a28efcbe49d513ccb0b5c5f13adaf056121bf6",
     "safety/nerve_guardian/health.py": "61f7c2633614ba2fb43cfc47a115b2620597895f15b9a267b696498e2232162f",
     "safety/nerve_guardian/infrastructure.py": "5322564b8d2a73d189e749fa18a1174cf43fb3277856a899050eadd73a127d68",
+    "safety/nerve_guardian/macos.py": "fc438fdc2b61613504e6830d672c7f32e8cd48702718ac9de21297360189749f",
     "safety/nerve_guardian/notifications.py": "c8d84640b2cedf2f8c216c5c7870618f6584e8c76d7132c04c05eb5403d3316c",
     "safety/nerve_guardian/probes.py": "d8992ad99c7b5e7511ec245b17fdea5262d6148856077fa0f46e9a2db0da527a",
     "safety/nerve_guardian/static/app.js": "b5ee27312ea7c5d47864969ce68ff52d5c120a97b7fca9fe4299e96c098d0e2d",
@@ -34,8 +35,9 @@
     "tests/watchtower/test_http_recovery.py": "2ed621354f842fe26379ca1b6b63f6ebfcfae6fb5fab72ec119fc865d0997dff",
     "tests/watchtower/test_independent_review.py": "40f9014e384d924c22bfc0fb04d3d3ea110eb209b4a280175b06fa142fc6d39a",
     "tests/watchtower/test_infrastructure.py": "d4646dde59b3bbabfd18a502356d065324272f2bc6fa872c085d8e93fdda4370",
+    "tests/watchtower/test_macos.py": "c66466300d57274764171687fab31cbd2885abd48f5e1a212397366458b158c9",
     "tests/watchtower/test_notifications.py": "f5a87f83c8642f49eb70902f6b63b6e7820e1d7ed38d5098b3ea0912ee405cd8",
-    "tests/watchtower/test_service.py": "377d37ed66ca2f6ecd4cf2d9f268425b30accb22f4aa9e6bb0da03b7db3b8a8e",
+    "tests/watchtower/test_service.py": "eb5190185e78119feedc72ca036cfea7dd3cc1f0df2a43b5cf71664452f0a15a",
     "tests/watchtower/test_telemetry.py": "49c6072ab3cd746843f85128d75d18fa8c54b49d05ed5607df93ce2202153c50"
   }
 }
