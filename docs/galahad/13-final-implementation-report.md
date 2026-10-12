@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest orchestration:** [28-autonomous-research-campaign.md](28-autonomous-research-campaign.md) records the bounded campaign→trial→episode coordinator and overnight execution status. [29-registry-grounding.md](29-registry-grounding.md) records the scoped synthetic answer guard and fresh real-model validation. Neither is a claim of general autonomous discovery or weight training.
+
 **Latest real-model study:** [27-real-model-evidence-study.md](27-real-model-evidence-study.md) records eight actual CPU-model completions, 3/4 relevant code-plus-citation matches and wrong-entity attribution in all four irrelevant controls. The full suite passed 1,182 tests; reliable grounding is not established. No training, policy promotion, deployment or real KV restoration.
 
 **Latest successful local inference:** [26-cpu-research-inference.md](26-cpu-research-inference.md) records one accepted real CPU-model completion through the scoped gateway (72.684 seconds, 262 input/15 output tokens) and 1,173 passing tests. The new profile is host-only and opt-in; no deployment or broader accuracy claim.

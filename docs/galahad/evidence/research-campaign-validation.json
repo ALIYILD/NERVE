@@ -1,0 +1,20 @@
+{
+  "previous_commit": "ae5454400c87db75416293fd6441cedece520950",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests": 1228,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 72.043,
+  "grounding_guard_tests": 19,
+  "mocked_grounding_study_tests": 10,
+  "campaign_tests": 17,
+  "real_grounding_model_calls": 8,
+  "raw_contract_passes": 2,
+  "guarded_contract_passes": 6,
+  "unnecessary_relevant_abstentions": 2,
+  "model_and_source_hashes_verified": true,
+  "sqlite_export_match": true,
+  "deployed": false,
+  "weight_training": false,
+  "policy_promoted": false
+}

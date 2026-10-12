@@ -728,3 +728,7 @@ A separate CPU research profile permits one request at a time, up to 128 output 
 ### Matched real-model evidence study
 
 Eight actual local CPU-model requests completed through the scoped memory gateway. Relevant evidence yielded all four expected codes, with citations in three responses; all four irrelevant controls incorrectly attributed a decoy code to the requested object. This exposes a grounding failure, not a successful learning result. The full suite passed 1,182 tests. See [protocol, responses and reproduction](docs/galahad/27-real-model-evidence-study.md).
+
+### Autonomous research campaigns and grounding checks
+
+A bounded host supervisor now runs campaign cycles, matched trials and outcome-feedback episodes with durable claims, source pins, child timeouts and an explicit stop deadline. It advances automatically without replaying consumed experiments. See [operation and limits](docs/galahad/28-autonomous-research-campaign.md). The optional [synthetic registry guard](docs/galahad/29-registry-grounding.md) checks entity/code/source associations; it is deterministic validation, not model training.
