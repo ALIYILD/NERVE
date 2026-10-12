@@ -1,5 +1,6 @@
 import os
 import tempfile
+import threading
 import time
 import unittest
 from pathlib import Path
@@ -7,6 +8,63 @@ from nerve_guardian.notifications import Notifier, HTTPSDelivery, protected_secr
 
 
 class NotificationTests(unittest.TestCase):
+    def test_shutdown_bounds_stalled_dispatch_and_rejects_new_alerts(self):
+        release = threading.Event()
+        class StalledNotifier(Notifier):
+            def _dispatch(self):
+                release.wait(5)
+        with tempfile.TemporaryDirectory() as root:
+            notifier = StalledNotifier(Path(root)/'outbox.db', {'email': lambda alert: None})
+            try:
+                alert = dict(tenant='a', incident_id='i', event='critical')
+                self.assertTrue(notifier.enqueue(alert))
+                start = time.monotonic()
+                self.assertFalse(notifier.close(timeout=.1))
+                self.assertLess(time.monotonic()-start, .5)
+                self.assertFalse(notifier.enqueue(alert))
+                self.assertEqual(notifier.health()['status'], 'UNKNOWN')
+                self.assertTrue(notifier.health()['closing'])
+            finally:
+                release.set()
+                for thread in notifier.threads: thread.join(2)
+
+    def test_stalled_provider_does_not_block_close_and_pending_recovers(self):
+        entered, release = threading.Event(), threading.Event()
+        def blocked(alert):
+            entered.set()
+            release.wait(5)
+            raise RuntimeError('synthetic provider outage')
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root)/'outbox.db'
+            notifier = Notifier(path, {'email': blocked}, rate_seconds=0)
+            try:
+                notifier.enqueue(dict(tenant='a', incident_id='i', event='critical'))
+                self.assertTrue(entered.wait(2))
+                start = time.monotonic()
+                self.assertFalse(notifier.close(timeout=.1))
+                self.assertLess(time.monotonic()-start, .5)
+                self.assertEqual(notifier.status('a')[0]['status'], 'pending')
+            finally:
+                release.set()
+                self.assertTrue(notifier.close(timeout=2))
+            received = []
+            restored = Notifier(path, {'email': received.append}, rate_seconds=0)
+            try:
+                self.wait_for(lambda: bool(received))
+                self.wait_for(lambda: restored.status('a')[0]['status']=='accepted')
+                self.assertEqual(len(received), 1)
+            finally:
+                self.assertTrue(restored.close())
+
+    def test_shutdown_rejects_invalid_budgets_without_closing(self):
+        with tempfile.TemporaryDirectory() as root:
+            notifier = Notifier(Path(root)/'outbox.db', {'email': lambda alert: None})
+            try:
+                for timeout in (-1, float('inf'), float('nan'), 61, '1'):
+                    with self.assertRaises(ValueError): notifier.close(timeout)
+                self.assertFalse(notifier.closing.is_set())
+            finally: self.assertTrue(notifier.close())
+
     def wait_for(self, test, seconds=4):
         end = time.monotonic()+seconds
         while time.monotonic()<end:

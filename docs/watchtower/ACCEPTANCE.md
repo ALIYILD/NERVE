@@ -8,7 +8,7 @@ Implemented on isolated branch `feat/nerve-watchtower`, based on local NERVE com
 |---|---|---|
 | Unmodified baseline | 1,124 tests passed | [baseline](evidence/baseline.log) |
 | Existing NERVE regression | 1,124 tests passed | [regression](evidence/regression.log) |
-| Safety suite | 63 tests passed | [test log](evidence/safety-tests.log) |
+| Safety suite | 66 tests passed | [test log](evidence/safety-tests.log) |
 | Independent adversarial review | 13 attack tests passed; demonstrated defects repaired | [review](INDEPENDENT_REVIEW.md) |
 | Passive CLI collector | Actual read-only SQLite aggregate collection, no source writes | [collector entrypoint](evidence/watchtower-entrypoint.json) |
 | Guardian CLI on unprovisioned host | Correctly UNKNOWN, enforcement disabled | [service entrypoint](evidence/service-entrypoint.json) |
@@ -46,3 +46,7 @@ Production recovery is deliberately unavailable with the example configuration: 
 Additional outstanding gates: actual unit/cgroup/reboot and escape verification; IAM credential suspension, network egress and deployment-controller enforcement; remote/launchd/CI coverage; separate administration and external health escalation; owner TLS/IdP; off-host immutable audit archival and approved retention/deletion; long-duration performance; clinical dependency and safe-degradation review. Agent/root-equivalent compromise of the safety host is outside this boundary.
 
 No live kill switch, provider notification, production installation, merge or deployment was performed. A draft PR is the delivery target. See [architecture](ARCHITECTURE.md), [threat model](THREAT_MODEL.md), [runbook](RUNBOOK.md) and [implementation plan](IMPLEMENTATION_PLAN.md).
+
+## Notification shutdown follow-up
+
+The safety suite now passes 66 tests. New failure tests establish bounded shutdown with a stalled dispatcher or provider, enqueue rejection after closing, UNKNOWN closing health, and persisted pending delivery recovery. No live provider calls were made. Prior baseline/regression and benchmark results above remain historical evidence; this follow-up changes only the independent notification package and its tests. All PR checks passed for the preceding commit; CI reruns for the follow-up commit.

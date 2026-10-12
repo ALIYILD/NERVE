@@ -47,6 +47,9 @@ test_credential_permissions_and_https (test_notifications.NotificationTests.test
 test_database_connections_closed_on_success_and_error (test_notifications.NotificationTests.test_database_connections_closed_on_success_and_error) ... ok
 test_https_provider_contract_and_sanitized_failure (test_notifications.NotificationTests.test_https_provider_contract_and_sanitized_failure) ... ok
 test_parallel_channels_dedup_retry_and_tenant_isolation (test_notifications.NotificationTests.test_parallel_channels_dedup_retry_and_tenant_isolation) ... ok
+test_shutdown_bounds_stalled_dispatch_and_rejects_new_alerts (test_notifications.NotificationTests.test_shutdown_bounds_stalled_dispatch_and_rejects_new_alerts) ... ok
+test_shutdown_rejects_invalid_budgets_without_closing (test_notifications.NotificationTests.test_shutdown_rejects_invalid_budgets_without_closing) ... ok
+test_stalled_provider_does_not_block_close_and_pending_recovers (test_notifications.NotificationTests.test_stalled_provider_does_not_block_close_and_pending_recovers) ... ok
 test_config_rejects_world_writable (test_service.ServiceTests.test_config_rejects_world_writable) ... ok
 test_passive_collector_real_sqlite_cli_contract (test_service.ServiceTests.test_passive_collector_real_sqlite_cli_contract) ... ok
 test_poisoned_report_has_no_arbitrary_payload (test_service.ServiceTests.test_poisoned_report_has_no_arbitrary_payload) ... ok
@@ -63,6 +66,6 @@ test_read_only_tenant_scoped_redacted (test_telemetry.TelemetryTests.test_read_o
 test_tables_allowlisted (test_telemetry.TelemetryTests.test_tables_allowlisted) ... ok
 
 ----------------------------------------------------------------------
-Ran 63 tests in 5.164s
+Ran 66 tests in 7.724s
 
 OK

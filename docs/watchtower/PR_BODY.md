@@ -4,7 +4,7 @@ The implementation includes separate Watchtower/Guardian entrypoints, an externa
 
 Validation:
 - 1,124 existing NERVE tests passed before and after implementation.
-- 63 safety tests passed, including 13 independent adversarial tests and a signed-MFA HTTP recovery/replay test.
+- 66 safety tests passed, including 13 independent adversarial tests and a signed-MFA HTTP recovery/replay test.
 - A real disposable TERM-ignoring child was stopped, prevented from recreating, and restarted through the controlled fixture flow.
 - 12,000 actual AST inventories remained correct during the bounded local passive-collection comparison; median change was approximately +2.7%. This is not a production performance guarantee.
 

@@ -1,5 +1,6 @@
 """Bounded independent notification outbox; no provider errors or secrets logged."""
 import json
+import math
 from contextlib import contextmanager
 import os
 import queue
@@ -100,6 +101,8 @@ class Notifier:
         self.dropped = 0
         self.storage_failures = 0
         self.stop = threading.Event()
+        self.closing = threading.Event()
+        self.lifecycle_lock = threading.Lock()
         with self._db() as db:
             db.execute('CREATE TABLE IF NOT EXISTS outbox (tenant TEXT, incident TEXT, event TEXT, channel TEXT, payload TEXT, attempts INTEGER DEFAULT 0, status TEXT DEFAULT "pending", next_try REAL DEFAULT 0, PRIMARY KEY(tenant,incident,event,channel))')
         os.chmod(self.database, 0o600)
@@ -124,12 +127,16 @@ class Notifier:
             raise ValueError('notification identifiers required')
         if any(not isinstance(value, (str, int, float, bool)) or len(str(value)) > 512 for value in safe.values()):
             raise ValueError('notification field invalid')
-        try:
-            self.pending.put_nowait(safe)
-            return True
-        except queue.Full:
-            self.dropped += 1
-            return False
+        with self.lifecycle_lock:
+            if self.closing.is_set():
+                self.dropped += 1
+                return False
+            try:
+                self.pending.put_nowait(safe)
+                return True
+            except queue.Full:
+                self.dropped += 1
+                return False
 
     def _dispatch(self):
         while not self.stop.is_set():
@@ -176,11 +183,28 @@ class Notifier:
     def health(self):
         with self._db() as db:
             failed = db.execute('SELECT COUNT(*) FROM outbox WHERE status="failed"').fetchone()[0]
-        return {'failed_deliveries': failed, 'workers_alive':all(t.is_alive() for t in self.threads), 'status': 'UNKNOWN' if self.dropped or self.storage_failures or failed or not all(t.is_alive() for t in self.threads) else 'AVAILABLE', 'queue_dropped': self.dropped,
+        return {'failed_deliveries': failed, 'closing': self.closing.is_set(), 'workers_alive':all(t.is_alive() for t in self.threads), 'status': 'UNKNOWN' if self.closing.is_set() or self.dropped or self.storage_failures or failed or not all(t.is_alive() for t in self.threads) else 'AVAILABLE', 'queue_dropped': self.dropped,
             'storage_failures': self.storage_failures, 'delivery_semantics': 'provider acceptance; duplicate delivery possible after crash'}
 
-    def close(self):
-        self.pending.join()
+    def close(self, timeout=6):
+        """Bound the entire drain/join operation, including stalled adapters.
+
+        False means a worker or uncommitted queue entry remains. Durable pending
+        deliveries resume on startup; Guardian's incident intents replay entries
+        that never reached the outbox. Never claim provider delivery on shutdown.
+        """
+        if not isinstance(timeout, (int, float)) or not math.isfinite(timeout) or not 0 <= timeout <= 60:
+            raise ValueError('invalid shutdown timeout')
+        deadline = time.monotonic() + timeout
+        with self.lifecycle_lock:
+            self.closing.set()
+        with self.pending.all_tasks_done:
+            while self.pending.unfinished_tasks:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0 or not self.threads[0].is_alive():
+                    break
+                self.pending.all_tasks_done.wait(min(remaining, .05))
         self.stop.set()
         for thread in self.threads:
-            thread.join(timeout=6)
+            thread.join(timeout=max(0, deadline - time.monotonic()))
+        return not self.pending.unfinished_tasks and not any(thread.is_alive() for thread in self.threads)

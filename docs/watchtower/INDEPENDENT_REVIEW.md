@@ -46,3 +46,7 @@ PYTHONPATH=/Users/aliyildirim/NERVE-watchtower/safety python3 -m unittest discov
 The initial telemetry specialist suite separately passed 10 tests for actual read-only SQLite collection, tenant joins, poisoned views, missing sources, bounded queue behavior and advisory analysis. Repository-wide regression and combined safety-suite totals belong to the primary implementation report.
 
 No unresolved failing assertion remains in this specialist test set. This is approval of the reviewed local software evidence for a reviewable feature branch, not production acceptance or complete safety coverage.
+
+## Bounded notification shutdown review
+
+The independent administration/alerts specialist reviewed the follow-up diff read-only and ran all seven notification tests successfully. The review confirmed the shared monotonic deadline, serialized enqueue/close boundary and UNKNOWN closing health. It identified that a worker may remain after `close(False)`; an overlapping notifier on the same database can duplicate delivery or overwrite delivery status. The supported lifecycle requires one notifier per outbox and previous worker/process termination before replacement; this limitation is now explicit in ADMIN.md. The recovery test verifies that supported lifecycle. The service does not separately publish incomplete notification shutdown; external supervisor and freshness checks remain required. This review does not establish multi-process delivery safety or live provider acceptance.
