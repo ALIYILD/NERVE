@@ -1,0 +1,239 @@
+{
+  "id": "repair-9f4f8735bb274e20a7efbe5b58e9c070",
+  "profile": "backend-engineer",
+  "scope": "agentos-repository-repair-v1",
+  "cohort": "v2",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "judge_revision": "c878dc49bab93caeca507cd3b4c99a639b334810e618af285018ceee8871097c",
+  "result": {
+    "selection": {
+      "tasks": 3,
+      "evaluated": true,
+      "baseline_hits": 3,
+      "lesson_hits": 3,
+      "wins": 0,
+      "losses": 0
+    },
+    "retention": {
+      "tasks": 0,
+      "baseline_hits": 0,
+      "lesson_hits": 0,
+      "wins": 0,
+      "losses": 0,
+      "evaluated": false
+    },
+    "final": {
+      "tasks": 0,
+      "baseline_hits": 0,
+      "lesson_hits": 0,
+      "wins": 0,
+      "losses": 0,
+      "evaluated": false
+    },
+    "status": "no_gain",
+    "lesson_id": null,
+    "scope": "agentos-repository-repair-v1",
+    "general_improvement_proven": false
+  },
+  "native_sessions": [
+    {
+      "phase": "train",
+      "arm": "baseline",
+      "ok": true,
+      "profile": "backend-engineer",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90,
+      "elapsed_seconds": 39.919,
+      "budget": {
+        "max_tokens": 4096,
+        "max_iterations": 2,
+        "timeout_seconds": 90
+      },
+      "cost_usd": null
+    },
+    {
+      "phase": "proposal",
+      "ok": true,
+      "profile": "nina-memory-librarian",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90
+    },
+    {
+      "phase": "selection",
+      "arm": "lesson",
+      "ok": true,
+      "profile": "backend-engineer",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90,
+      "elapsed_seconds": 42.378,
+      "budget": {
+        "max_tokens": 4096,
+        "max_iterations": 2,
+        "timeout_seconds": 90
+      },
+      "cost_usd": null
+    },
+    {
+      "phase": "selection",
+      "arm": "baseline",
+      "ok": true,
+      "profile": "backend-engineer",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90,
+      "elapsed_seconds": 28.897,
+      "budget": {
+        "max_tokens": 4096,
+        "max_iterations": 2,
+        "timeout_seconds": 90
+      },
+      "cost_usd": null
+    }
+  ],
+  "artifacts": [
+    {
+      "task_id": "repair-c584e57252c9",
+      "phase": "train",
+      "arm": "baseline",
+      "output": "TOKENS = re.compile(r\"[a-z0-9]+\")\ndef grams(text):\n    value = \" \".join(TOKENS.findall(text.lower()))\n    return {value[i:i+3] for i in range(max(0, len(value) - 2))}\n",
+      "check": {
+        "passed": false,
+        "category": "patch_rejected",
+        "tests_passed": 0,
+        "tests_total": 7,
+        "scope": "agentos-repository-repair-v1"
+      }
+    },
+    {
+      "task_id": "repair-abdab14940a9",
+      "phase": "train",
+      "arm": "baseline",
+      "output": "FORMATS = (\"json_email\",\"plain_email\")\ndef _format(value):\n    if type(value) is not str or value not in FORMATS:\n        raise ValueError(\"unregistered task format\")\n    return value\n",
+      "check": {
+        "passed": false,
+        "category": "patch_rejected",
+        "tests_passed": 0,
+        "tests_total": 7,
+        "scope": "agentos-repository-repair-v1"
+      }
+    },
+    {
+      "task_id": "repair-d379d68522ba",
+      "phase": "selection",
+      "arm": "lesson",
+      "output": "def _plan_from_id(text):\n    if type(text) is not str or len(text) > 40:\n        raise ValueError(\"invalid stored plan\")\n    parts = text.split(\"|\")\n    if len(parts) != 2 or tuple(parts) not in ALLOWED:\n        raise ValueError(\"unregistered stored plan\")\n    return Plan(*parts)",
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 9,
+        "tests_total": 9,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-32ab139b35fc",
+      "phase": "selection",
+      "arm": "lesson",
+      "output": "def parse_plan(source):\n    if not isinstance(source, str) or not 1 <= len(source) <= 1024:\n        raise ValueError(\"model plan must be short JSON\")\n    raw = json.loads(source)\n    if not isinstance(raw, dict) or set(raw) != {\"extract_strategy\", \"normalise_strategy\"}:\n        raise ValueError(\"unexpected model plan fields\")\n    if not all(type(v) is str for v in raw.values()):\n        raise ValueError(\"strategy identifiers must be strings\")\n    return Plan(**raw)",
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 9,
+        "tests_total": 9,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-c7981dacc073",
+      "phase": "selection",
+      "arm": "lesson",
+      "output": "def _advice(advice):\n    \"\"\"Only the allowlisted strategy IDs cross into the model prompt.\"\"\"\n    if advice is None:\n        return \"No previous outcome feedback was retrieved.\"\n    if not isinstance(advice, dict) or set(advice) != {\n            \"extract\", \"normalise\"}:\n        raise ValueError(\"two contextual strategy recommendations required\")\n    if advice[\"extract\"] not in EXTRACT or advice[\"normalise\"] not in NORMALISE:\n        raise ValueError(\"unregistered feedback recommendation\")\n    return json.dumps(advice, sort_keys=True)",
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 7,
+        "tests_total": 7,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-d379d68522ba",
+      "phase": "selection",
+      "arm": "baseline",
+      "output": {
+        "code": "def _plan_from_id(text):\n    if type(text) is not str or len(text) > 40:\n        raise ValueError(\"invalid stored plan\")\n    parts = text.split(\"|\")\n    if len(parts) != 2 or tuple(parts) not in ALLOWED:\n        raise ValueError(\"unregistered stored plan\")\n    return Plan(*parts)"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 9,
+        "tests_total": 9,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-32ab139b35fc",
+      "phase": "selection",
+      "arm": "baseline",
+      "output": {
+        "code": "def parse_plan(source):\n    if not isinstance(source, str) or not 1 <= len(source) <= 1024:\n        raise ValueError(\"model plan must be short JSON\")\n    raw = json.loads(source)\n    if not isinstance(raw, dict) or set(raw) != {\n            \"extract_strategy\", \"normalise_strategy\"}:\n        raise ValueError(\"unexpected model plan fields\")\n    if not all(type(v) is str for v in raw.values()):\n        raise ValueError(\"strategy identifiers must be strings\")\n    return Plan(**raw)"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 9,
+        "tests_total": 9,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-c7981dacc073",
+      "phase": "selection",
+      "arm": "baseline",
+      "output": {
+        "code": "def _advice(advice):\n    \"\"\"Only the allowlisted strategy IDs cross into the model prompt.\"\"\"\n    if advice is None:\n        return \"No previous outcome feedback was retrieved.\"\n    if not isinstance(advice, dict) or set(advice) != {\n            \"extract\", \"normalise\"}:\n        raise ValueError(\"two contextual strategy recommendations required\")\n    if advice[\"extract\"] not in EXTRACT or advice[\"normalise\"] not in NORMALISE:\n        raise ValueError(\"unregistered feedback recommendation\")\n    return json.dumps(advice, sort_keys=True)"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 7,
+        "tests_total": 7,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    }
+  ],
+  "limitation": "Repository-derived injected faults, not resolved production tickets. Small disjoint function set; measured paired results do not prove general improvement."
+}

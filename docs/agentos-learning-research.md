@@ -94,3 +94,15 @@ Database reservations now also reject previously used function families across s
 The next native study was queued on 11 October 2026: seven of the twenty daily native sessions remained, while the complete experiment may need eight. Queueing consumed no task evidence or native calls. The existing 15-minute cycle retries after the UTC day changes while the user session is active. The prior 3/3 versus 3/3 result remains the latest measured repository comparison; no additional improvement has yet been measured.
 
 Validation for this extension: **687 tests passed**, including all eleven new reference repairs and rejection of all eleven injected faults. Queue execution and next-day retry were tested with fake inference; the new live comparison remains pending. Claude remains unconfigured with zero calls and zero spending.
+
+## Overnight second-cohort result — 12 October 2026
+
+The scheduled v2 study ran from 00:04:45 to 00:07:02 UTC (01:04–01:07 London), using four native Hermes sessions. The [unaltered v2 receipt](evidence/agentos-repository-repair-v2.json), `repair-9f4f8735bb274e20a7efbe5b58e9c070`, matches its completed ledger summary and evaluator revision. Its SHA256 is `6f5144094d697441ae1537df1cad103dc0fcbbf583a36a9022754756d2092665`.
+
+Selection again scored **3/3 baseline and 3/3 learned advice**, with no paired wins or losses. No lesson was promoted. Retention and final evaluation stayed unopened. Both training outputs were rejected for including top-level dependency assignments instead of only the replacement function. These format failures do not establish that the function bodies were behaviorally wrong; rejected code was not executed.
+
+The baseline reached the selection ceiling, so this comparison could not demonstrate a higher selection accuracy. It does not prove that advice never helps. Both registered cohorts now contain consumed reservations, and a repeat study request returned `no_fresh_tasks` before any model call. The next meaningful evaluation needs fresh, more challenging task families with independently frozen tests; another renamed or remutated existing function is not fresh evidence.
+
+Added `repository-diagnose` to distinguish ceiling ties, training patch failures, regressions and incomplete evidence, using validated recorded artifacts. It cannot approve a lesson, execute repairs or rewrite historical results. Diagnoses are published to local status and Obsidian. Native dollar cost remains unknown in the receipts; Claude still has no connected credential and its review ledger records $0 used.
+
+Follow-up validation: **697 tests passed**. Diagnostics and the no-fresh-task check made no model calls; the daily ledger still records only the four overnight native sessions. Obsidian and gbrain status synchronization succeeded.

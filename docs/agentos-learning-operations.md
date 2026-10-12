@@ -55,6 +55,7 @@ The dashboard uses the validated `.next-nerve-v3-check` production build through
 
 ```sh
 python3 scripts/agentos_bridge.py repository-tasks
+python3 scripts/agentos_bridge.py repository-diagnose
 python3 scripts/agentos_bridge.py repository-study
 python3 scripts/agentos_bridge.py repository-run --task-id REGISTERED_TASK_ID
 ```
@@ -70,6 +71,8 @@ The proposal receives training attempts and test summaries only. The host freeze
 State is durable in `~/.agentic-os/nerve/repository-learning.sqlite3`. Task reservations and outcome events are immutable. The database atomically rejects cross-study function-family reuse even when a mutation changes the task hash. Advice retrieval requires the exact profile, model, evaluator revision, and repository scope. For every cohort the revision covers the shared evaluator, cohort source, and extracted task contracts, which are archived before inference. Historical receipts retain their original hashes; older advice does not match the strengthened revision. A lesson expires after 30 days or is revoked after an observed paired regression or two failures in its latest five monitored uses. Monitoring repeats are deduplicated. Replaying registered tasks is not fresh improvement evidence.
 
 The latest report and generated repairs are saved to `latest-repository-study.json` and `AgentOS-Vault/Journal/nerve/`. The dashboard shows measured scores, active lessons, and rollback counts. Curated fault repairs are separate from fixing naturally occurring production incidents.
+
+`repository-diagnose` explains the latest archived receipt without inference, patch execution, or promotion. It checks paired artifacts against phase totals and binds the receipt to the latest ledger study, model, evaluator revision and completed summary. It distinguishes training patch rejection, selection ceiling ties, regressions and missing evidence. The readable diagnosis is also published to Obsidian and `status.json`; `sync-gbrain` mirrors the note. Diagnostic recommendations are engineering follow-ups, not approved learned advice.
 
 For targeted Claude review, use `claude-review --review-target repository-experiments`, `repository-taskbench`, or `repository-runner`. The same cumulative $25 ledger applies. A credential file can be selected using `ANTHROPIC_API_KEY_FILE`; its contents remain local. Review results never grant promotion authority.
 

@@ -281,6 +281,7 @@ def publish(host, extra=None):
     pending_path=host.directory/'pending-repository-study.json'
     status['pending_repository_study']=json.loads(pending_path.read_text()) if pending_path.exists() else None
     status['repository_learning']=RepositoryExperiments(host.directory/'repository-learning.sqlite3').summary()
+    status['repository_diagnosis']=repository_diagnosis(host)
     native_file=host.directory/'latest-native.json'
     if native_file.exists():
         status['native_hermes']=json.loads(native_file.read_text())
@@ -311,16 +312,40 @@ def publish(host, extra=None):
         'Repository repair study: '+status['repository_learning']['status']+'; '+
         str(status['repository_learning']['active_lessons'])+' active lessons; '+
         str(status['repository_learning']['rollbacks'])+' rollbacks.\n\n'+
+        'Diagnosis: '+status['repository_diagnosis']['summary']+'\n\n'+
         pending_note+
         'Receipts: `~/.agentic-os/nerve/status.json`; [[Journal/nerve]].\n')
     (VAULT/'Memory/nerve-status.md').write_text(note)
     return status
 
 
+def repository_diagnosis(host):
+    """Read-only explanation; never grants advice approval or changes evidence."""
+    from nerve_awim.agentos_diagnostics import diagnose
+    path=host.directory/'latest-repository-study.json'
+    if not path.exists():
+        return {'status':'not_run','summary':'No repository experiment receipt is available.'}
+    try:
+        receipt=json.loads(path.read_text())
+        report=diagnose(receipt)
+        experiments=RepositoryExperiments(host.directory/'repository-learning.sqlite3')
+        latest=experiments.summary()
+        if report['study_id']!=latest.get('study_id'):
+            raise ValueError('receipt does not describe latest ledger study')
+        stored=experiments.status(report['study_id'])
+        if stored['revision']!=receipt.get('judge_revision') or stored['model']!=report['model']:
+            raise ValueError('receipt evaluator or model differs from ledger')
+        if stored['status']=='completed' and stored['summary']!=receipt['result']:
+            raise ValueError('receipt result differs from ledger')
+        return report
+    except (ValueError,LookupError,TypeError):
+        return {'status':'invalid_receipt','summary':'The latest receipt could not be validated against the current study.'}
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review',
-        'repository-study','repository-run','repository-tasks'))
+        'repository-study','repository-run','repository-tasks','repository-diagnose'))
     parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
     parser.add_argument('--state',type=Path,default=STATE)
@@ -332,7 +357,10 @@ def main():
     with host_lock(args.state):
         host=AgentOSLearning(args.state)
         recover_interrupted_repository(host)
-        if args.command in ('repository-study','repository-run','repository-tasks'):
+        if args.command=='repository-diagnose':
+            result=repository_diagnosis(host)
+            publish(host)
+        elif args.command in ('repository-study','repository-run','repository-tasks'):
             import agentos_repository as repair
             try:
                 if args.command=='repository-study':

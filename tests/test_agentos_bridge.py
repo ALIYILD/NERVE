@@ -14,6 +14,35 @@ _spec.loader.exec_module(bridge)
 
 
 class AgentOSBridgeTests(unittest.TestCase):
+    def test_repository_diagnosis_does_not_infer_or_modify_receipt(self):
+        source=Path(__file__).resolve().parents[1]/'docs/evidence/agentos-repository-repair-v2.json'
+        raw=source.read_bytes()
+        receipt=json.loads(raw)
+        target=self.host.directory/'latest-repository-study.json'
+        target.write_bytes(raw)
+        with patch.object(bridge.RepositoryExperiments,'summary',return_value={'study_id':receipt['id']}), \
+             patch.object(bridge.RepositoryExperiments,'status',return_value=dict(revision=receipt['judge_revision'],model=receipt['model'],status='completed',summary=receipt['result'])), \
+             patch.object(bridge,'native',side_effect=AssertionError('no model calls')):
+            report=bridge.repository_diagnosis(self.host)
+        self.assertEqual(report['study_id'],receipt['id'])
+        self.assertIn('summary',report)
+        self.assertEqual(target.read_bytes(),raw)
+
+    def test_repository_diagnosis_rejects_stale_or_malformed_receipt(self):
+        target=self.host.directory/'latest-repository-study.json'
+        self.assertEqual(bridge.repository_diagnosis(self.host)['status'],'not_run')
+        target.write_text('{broken')
+        self.assertEqual(bridge.repository_diagnosis(self.host)['status'],'invalid_receipt')
+        target.write_bytes((Path(__file__).resolve().parents[1]/'docs/evidence/agentos-repository-repair-v2.json').read_bytes())
+        self.assertEqual(bridge.repository_diagnosis(self.host)['status'],'invalid_receipt')
+
+    def test_repository_diagnosis_rejects_matching_id_with_different_ledger_result(self):
+        raw=(Path(__file__).resolve().parents[1]/'docs/evidence/agentos-repository-repair-v2.json').read_bytes()
+        receipt=json.loads(raw)
+        (self.host.directory/'latest-repository-study.json').write_bytes(raw)
+        with patch.object(bridge.RepositoryExperiments,'summary',return_value={'study_id':receipt['id']}), \
+             patch.object(bridge.RepositoryExperiments,'status',return_value=dict(revision=receipt['judge_revision'],model=receipt['model'],status='completed',summary={'status':'different'})):
+            self.assertEqual(bridge.repository_diagnosis(self.host)['status'],'invalid_receipt')
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
