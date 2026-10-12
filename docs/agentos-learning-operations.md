@@ -112,3 +112,20 @@ python3 scripts/agentos_bridge.py audit-study --profile qa-release
 The first study uses 2/4/4/6 multi-source cases under `agentos-audit-composition-v1`. It needs eight available native sessions; the whole maximum is prepaid and unused slots are not refunded. Do not delete the ledger to reclaim allowance or reuse cases. A queued request is stored at `~/.agentic-os/nerve/pending-audit-study.json`, bound to the profile, cohort and evaluator revision. The existing cycle retries after UTC reset while this Mac is awake. Changed queued scope requires explicit review; it cannot silently run different cases.
 
 `audit-status`, `status.json` under `audit_evidence_study`, and the Obsidian/gbrain status note distinguish the latest result from pending work. Receipts live in `audit-study.sqlite3` and `latest-audit-study.json`; frozen source/fixture snapshots live under `audit-study-snapshots/<study-id>/`. Advice remains a shadow candidate even if all paired gates pass. No operational advice is automatically activated by this runner. See the [study design and implementation limits](agentos-next-evaluation.md#implemented-first-composition-study).
+
+## Shadow monitoring of an accepted audit candidate
+
+```sh
+python3 scripts/agentos_bridge.py audit-shadow-status
+python3 scripts/agentos_bridge.py audit-shadow --task /absolute/path/fresh-simulated-task.json
+```
+
+An optional `--study-id` selects an exact accepted audit study. The task file must contain exactly `id`, `family`, and a valid `agentos-audit-evidence-v1` `bundle`. Evidence is explicitly simulated and supplied by the trusted host; this command does not authenticate production sources. Benchmark/development cases, their family labels, and previous monitoring compositions cannot be reused as fresh tasks, including cosmetic renames.
+
+The monitor retrieves only a qualifying `shadow_accepted` study from the authoritative ledger. It checks all eight immutable receipts and their hashes, phase layout, model, budgets, exact proposed lesson, frozen source/cohort snapshots and the selection/retention/final gates. A summary file alone cannot authorize retrieval. Scope/revision/model changes make a candidate ineligible. Advice expires 30 days after study creation.
+
+One fresh monitoring task prepays two native calls under the same daily 20-session cap. Baseline and advice order is randomized; both use the accepted model/profile and fixed limits. Insufficient budget defers without inference or reserving evidence. Interrupted/failed monitoring, metadata drift, a paired regression, or a supported claim with an invalid label **or citation** revokes the shadow candidate. Revocation and consumed evidence persist; restarting does not reset them. Unused prepaid slots are not refunded, and UTC rollover stops further calls.
+
+`audit-shadow.sqlite3` stores candidates, immutable task identities, requests written before inference, responses, hashes and results. `audit_shadow` in `status.json` and the Obsidian status note report `no_candidate`, `eligible_unmonitored`, `active`, `ineligible`, `expired`, or `revoked`. Here `active` means eligible for further simulated shadow checks, never operational deployment. Every result retains `activation_authorized: false`. There is no automatic shadow-task generator or production activation path.
+
+The 12 October live guard check returned `no_candidate`, left zero shadow episodes and kept native reservations at 20. The queued first study's revision and manifest remained unchanged. All 821 tests passed, including 24 shadow-monitor tests and a CLI/status integration test. These are implementation and guard checks, not observed live candidate performance.

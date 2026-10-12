@@ -14,6 +14,21 @@ _spec.loader.exec_module(bridge)
 
 
 class AgentOSBridgeTests(unittest.TestCase):
+    def test_shadow_status_does_not_infer_or_activate_a_candidate(self):
+        import contextlib
+        import io
+        import sys
+        (self.vault/'Memory').mkdir(parents=True)
+        output=io.StringIO()
+        with patch.object(sys,'argv',['bridge','audit-shadow-status','--state',str(self.host.directory)]), \
+             patch.object(bridge,'native',side_effect=AssertionError('status must not infer')), \
+             patch.object(bridge,'claude_key',return_value=None),contextlib.redirect_stdout(output):
+            bridge.main()
+        self.assertEqual(json.loads(output.getvalue())['status'],'no_candidate')
+        status=json.loads((self.host.directory/'status.json').read_text())
+        self.assertEqual(status['audit_shadow']['status'],'no_candidate')
+        self.assertIn('Audit shadow monitoring: no_candidate',(self.vault/'Memory/nerve-status.md').read_text())
+
     def test_audit_command_queues_and_publishes_without_inference(self):
         import contextlib
         import io

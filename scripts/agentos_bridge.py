@@ -276,8 +276,10 @@ def collect_missions(host):
 
 def publish(host, extra=None):
     import agentos_audit_study as audit
+    import agentos_audit_shadow as shadow
     status=host.status()
     status['audit_evidence_study']=audit.status(host)
+    status['audit_shadow']=shadow.status(host)
     study_file=host.directory/'latest-study.json'
     if study_file.exists():
         s=json.loads(study_file.read_text())
@@ -335,6 +337,8 @@ def publish(host, extra=None):
         'Audit evidence study: '+str(status['audit_evidence_study'].get('status','not_run'))+
         '. Results are scoped shadow evidence, not operational approval.\n\n'+
         audit_note+
+        'Audit shadow monitoring: '+str(status['audit_shadow'].get('status','not_run'))+
+        '. No operational activation is authorized.\n\n'+
         'Receipts: `~/.agentic-os/nerve/status.json`; [[Journal/nerve]].\n')
     (VAULT/'Memory/nerve-status.md').write_text(note)
     return status
@@ -383,11 +387,13 @@ def repository_diagnosis(host):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review',
-        'repository-study','repository-run','repository-tasks','repository-diagnose','audit-study','audit-status'))
+        'repository-study','repository-run','repository-tasks','repository-diagnose','audit-study','audit-status',
+        'audit-shadow','audit-shadow-status'))
     parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
     parser.add_argument('--state',type=Path,default=STATE)
     parser.add_argument('--task-id')
+    parser.add_argument('--study-id',help='Accepted audit study to monitor in shadow mode')
     parser.add_argument('--cohort',choices=('v1','v2','v3'),help='Repository task cohort; default selects fresh evidence automatically')
     parser.add_argument('--review-target',choices=('handoff','repository-experiments','repository-taskbench','repository-runner'),default='handoff')
     args=parser.parse_args()
@@ -395,7 +401,19 @@ def main():
     with host_lock(args.state):
         host=AgentOSLearning(args.state)
         recover_interrupted_repository(host)
-        if args.command in ('audit-study','audit-status'):
+        if args.command in ('audit-shadow','audit-shadow-status'):
+            import agentos_audit_shadow as shadow
+            try:
+                if args.command=='audit-shadow':
+                    if args.task is None:
+                        raise ValueError('audit-shadow requires --task with fresh host-owned simulated evidence')
+                    from agentos_audit_bench import read_json
+                    result=shadow.monitor(host,native,read_json(args.task),study_id=args.study_id)
+                else:
+                    result=shadow.status(host)
+            finally:
+                publish(host)
+        elif args.command in ('audit-study','audit-status'):
             import agentos_audit_study as audit
             try:
                 result=audit.study(host,native,args.profile) if args.command=='audit-study' else audit.status(host)
