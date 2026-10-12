@@ -2,7 +2,7 @@
   "start_commit": "57074d9",
   "branch": "codex/uncertainty-integration",
   "checkout": "/Users/aliyildirim/nerve-uncertainty",
-  "updated_at": "2026-10-12T21:02:36.816603+00:00",
+  "updated_at": "2026-10-12T21:11:05.092011+00:00",
   "bootstrap": {
     "status": "passed",
     "evidence": [
@@ -58,7 +58,7 @@
     "memento": "merged_2d42201_and_combined_verified",
     "adaptation": "manifest_verified_snapshot_imported_and_combined_verified"
   },
-  "next_action": "Use the documented combined demo; keep production flags off and shadow eligibility. A fresh independent labelled provider study and reviewed live host contracts are required for promotion.",
+  "next_action": "Keep rejected candidates unpromoted. Profile end-to-end recovery costs on development cases; obtain independent labelled provider evidence and reviewed host contracts before live promotion.",
   "implementation_commit": "3cbb7e0",
   "source_revision": "56590516c37869a1a3830f758e39700e0c88bf2ef5d9aac00d733556cc6c500a",
   "verification": {
@@ -122,5 +122,52 @@
     "Live host connectors and domain reviewer authority not verified; no deployment.",
     "Adaptation overhead and fast-memory benefit gates failed; candidates not promoted.",
     "Memento source workstream retains its documented partial-loop backlog."
-  ]
+  ],
+  "continuations": [
+    {
+      "base_commit": "64b6073",
+      "implementation_commit": "5d2d529",
+      "source_revision": "b3a814bf355fd98e5e971112602242104f9713bd877fcbabba52f3b3d8b2e75f",
+      "status": "implemented_offline_verified",
+      "changes": [
+        "Atomic uncertainty dependency links, policy and assessment commit/rollback",
+        "Serialized immutable dispatch binding",
+        "Single indexed task/grant query with fresh scope checks",
+        "Skip redundant schema query only for initialized attached coordinator"
+      ],
+      "verification": {
+        "full_python": {
+          "passed": 1128,
+          "skipped": 0,
+          "exit_code": 0,
+          "seconds": 89.589
+        },
+        "combined_tests": {
+          "passed": 3,
+          "exit_code": 0
+        },
+        "combined_demo": {
+          "passed": true,
+          "exit_code": 0
+        },
+        "new_regression_tests": 7
+      },
+      "development_diagnostics": {
+        "assessment_median_ms_before": 6.588423733289043,
+        "assessment_median_ms_after": 3.7658040334160128,
+        "adaptation_2000_read_median_seconds_before": 0.12476232699555112,
+        "adaptation_2000_read_median_seconds_after": 0.08598335549322655,
+        "adaptation_12_episode_median_seconds_before": 0.6014560924959369,
+        "adaptation_12_episode_median_seconds_after": 0.6020868455016171,
+        "end_to_end_gain_demonstrated": false,
+        "holdout_rerun": false
+      },
+      "evidence_directory": "/private/tmp/nerve-continuation-evidence",
+      "report": "continuation-performance.md",
+      "paid_cost_usd": 0,
+      "deployment_performed": false
+    }
+  ],
+  "current_source_revision": "b3a814bf355fd98e5e971112602242104f9713bd877fcbabba52f3b3d8b2e75f",
+  "current_implementation_commit": "5d2d529"
 }

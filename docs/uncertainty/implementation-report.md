@@ -2,7 +2,10 @@
 
 Implemented uncertainty loops 20–25 on `codex/uncertainty-integration` in
 `/Users/aliyildirim/nerve-uncertainty`. Starting commit: `57074d9`.
-Final implementation commit: `3cbb7e0`; subsequent handoff commits contain documentation only.
+This report records implementation commit `3cbb7e0` and handoff `64b6073`.
+Later atomicity and performance changes are documented in
+[continuation-performance.md](continuation-performance.md); the benchmark below
+remains evidence for its original source revision.
 Frozen Python source digest:
 `56590516c37869a1a3830f758e39700e0c88bf2ef5d9aac00d733556cc6c500a`.
 
