@@ -2,7 +2,7 @@
 from .contracts import Rule, canonical, digest, exact, observation, REVISION
 
 
-def compile_rules(rules):
+def compile_rules(rules, *, backend="declarative-exact-v1"):
     if not 1 <= len(rules) <= 256:
         raise ValueError('one to 256 rules required')
     entries = []
@@ -19,14 +19,14 @@ def compile_rules(rules):
         ids.add(rule.rule_id)
         entries.append({'rule_id':rule.rule_id,'before':rule.preconditions,
                         'action':rule.action,'after':rule.predicted_effect,'goal':rule.completion})
-    program = {'revision':REVISION,'backend':'declarative-exact-v1','entries':entries}
+    program = {'revision':REVISION,'backend':backend,'entries':entries}
     canonical(program)
-    return program
+    return validate_program(program)
 
 
 def validate_program(program):
     exact(program, ('revision','backend','entries'))
-    if program['revision'] != REVISION or program['backend'] != 'declarative-exact-v1':
+    if program['revision'] != REVISION or program['backend'] not in ('declarative-exact-v1','declarative-frame-v1'):
         raise ValueError('unsupported executable backend/revision')
     if type(program['entries']) is not list or not 1 <= len(program['entries']) <= 256:
         raise ValueError('bounded declarative entries required')
@@ -41,6 +41,9 @@ def validate_program(program):
                 raise ValueError('known declarative states required')
         if entry['goal'] is not None and type(entry['goal']) is not bool:
             raise ValueError('invalid goal')
+        if program['backend'] == 'declarative-frame-v1':
+            from .generalization import validate_frame
+            validate_frame(entry['before'],entry['after'])
         key = digest([entry['before'],entry['action']])
         if key in seen:
             raise ValueError('ambiguous executable')
@@ -62,9 +65,22 @@ class Simulator:
         return {'observation':initial_observation,'goal':None,'rule_id':None}
 
     def step(self, state, action):
+        from .generalization import matches, apply
+        candidates=[]
         for entry in self.program['entries']:
-            if canonical(entry['before']) == canonical(state['observation']) and entry['action'] == action:
-                return {'observation':entry['after'],'goal':entry['goal'],'rule_id':entry['rule_id']}
+            known = (matches(entry['before'],state['observation'])
+                     if self.program['backend'] == 'declarative-frame-v1'
+                     else canonical(entry['before']) == canonical(state['observation']))
+            if known and entry['action'] == action:
+                candidates.append(entry)
+        if len(candidates) == 1:
+            entry=candidates[0]
+            try:
+                predicted=(apply(entry['after'],state['observation'])
+                           if self.program['backend'] == 'declarative-frame-v1' else entry['after'])
+            except ValueError:
+                predicted=None
+            return {'observation':predicted,'goal':entry['goal'] if predicted is not None else None,'rule_id':entry['rule_id']}
         return {'observation':None,'goal':None,'rule_id':None}
 
     def observe(self, state):

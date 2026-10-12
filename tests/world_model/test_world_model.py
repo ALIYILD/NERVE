@@ -141,7 +141,11 @@ class WorldModelTests(unittest.TestCase):
         rules,_=self.populated()
         episodes=self.ledger.episodes(self.trainer)
         self.assertEqual(reflect(episodes)['decision'],'revise_rulebook')
-        self.assertEqual(reflect(episodes,rules)['decision'],'repair_code')
+        self.assertEqual(reflect(episodes,rules)['decision'],'retain')
+        bad=compile_rules(rules)
+        bad['entries'][0]['after']={'stage':99}
+        failures=replay(bad,episodes)['failures']
+        self.assertEqual(reflect(episodes,rules,execution_failures=failures)['decision'],'repair_code')
         episodes[0]['transitions'][0]['status']='missing'
         self.assertEqual(reflect(episodes)['failure_class'],'missing_evidence')
 

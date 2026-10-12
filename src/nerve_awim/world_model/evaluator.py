@@ -10,7 +10,7 @@ from .replay import replay
 class Evaluator:
     def __init__(self, ledger, policy=None):
         self.ledger, self.registry = ledger, Registry(ledger)
-        self.policy = policy or Policy()
+        self.policy = policy
 
     def reserve_final(self, actor, run_id):
         scope = self.ledger.scope(actor,'evaluator')
@@ -33,6 +33,9 @@ class Evaluator:
         if split not in ('selection','regression','final'):
             raise ValueError('invalid evaluation split')
         model = self.registry.get(actor,model_id)
+        pinned = Policy.load(model['evaluation_policy']) if 'evaluation_policy' in model else (self.policy or Policy())
+        if self.policy is not None and self.policy != pinned:
+            raise IntegrityError('evaluator policy differs from frozen model policy')
         if model['state'] == 'revoked':
             raise IntegrityError('revoked model')
         episodes = self.ledger.episodes(actor,split)
@@ -53,8 +56,8 @@ class Evaluator:
         for episode in episodes:
             actions = sorted({t['action'] for t in episode['transitions']})
             decision = plan(model['program'],episode['initial'],actions,
-                            max_depth=self.policy.max_plan_depth,
-                            max_nodes=self.policy.max_simulated_nodes_per_decision)
+                            max_depth=pinned.max_plan_depth,
+                            max_nodes=pinned.max_simulated_nodes_per_decision)
             # Independent observed action trace checks actual completion. A model's goal
             # prediction alone never counts as task success.
             observed = {tuple(t['action'] for t in episode['transitions']):
