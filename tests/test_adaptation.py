@@ -224,3 +224,15 @@ class AdaptationTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError,'budget'):
             step(self.c,'task','verified-heading',section='exhausted',parent=failed)
         self.assertEqual(self.a.inspect(self.actor,'task')['status'],'budget-exhausted')
+
+    def test_persisted_active_task_cannot_disable_hooks(self):
+        decision=self.arc.propose(self.actor,'task','note',{'heading':'verified-heading','facts':'synthetic-fact','section':'first'},[],'goal',['objective'])
+        for mode in ('off','shadow'):
+            with self.subTest(mode=mode):
+                del self.arc.adaptation
+                AdaptationCoordinator(self.arc,AdaptationConfig(enabled=mode!='off',mode=mode),clock=lambda:self.now)
+                with self.assertRaises((ValueError,PermissionError)):
+                    self.arc.execute(self.actor,decision.decision_id)
+                with self.assertRaises((ValueError,PermissionError)):
+                    step(self.c,'task','verified-heading',section='new')
+                self.assertEqual(self.c['effects'],[])

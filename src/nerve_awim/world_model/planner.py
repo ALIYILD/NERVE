@@ -61,16 +61,21 @@ def plan_registered(ledger, actor, model_id, initial, allowed_actions, *, revisi
         ledger.scope(actor,'evaluator')
     else:
         ledger.scope(actor,'runtime')
-    model=Registry(ledger).get(actor,model_id)
-    required=('frozen','eligible') if research_evaluation else ('eligible',)
-    if model['state'] not in required or 'dependencies' not in model:
-        raise PermissionError('verified frozen research model or eligible runtime model required')
-    if revision != model['environment_revision']:
-        raise PermissionError('environment revision drift; revalidation required')
-    from .contracts import Policy
-    pinned=Policy.load(model['evaluation_policy'])
-    decision=plan(model['program'],initial,allowed_actions,
-                  max_depth=min(max_depth,pinned.max_plan_depth),
-                  max_nodes=min(max_nodes,pinned.max_simulated_nodes_per_decision))
-    return {**decision,'model_id':model_id,'environment_revision':revision,
-            'research_evaluation':research_evaluation,'deployment_authorized':False}
+    with ledger.db() as con:
+        model=Registry(ledger).get(actor,model_id)
+        required=('frozen','eligible') if research_evaluation else ('eligible',)
+        if model['state'] not in required or 'dependencies' not in model:
+            raise PermissionError('verified frozen research model or eligible runtime model required')
+        if revision != model['environment_revision']:
+            raise PermissionError('environment revision drift; revalidation required')
+        from ..uncertainty.world_model_adapter import guard
+        uncertainty=guard(ledger,actor,model['rules'],con=con)
+        from .contracts import Policy
+        pinned=Policy.load(model['evaluation_policy'])
+        decision=plan(model['program'],initial,allowed_actions,
+                      max_depth=min(max_depth,pinned.max_plan_depth),
+                      max_nodes=min(max_nodes,pinned.max_simulated_nodes_per_decision))
+        result={**decision,'model_id':model_id,'environment_revision':revision,
+                'research_evaluation':research_evaluation,'deployment_authorized':False}
+        if uncertainty is not None:result['uncertainty']=uncertainty
+        return result

@@ -1,0 +1,398 @@
+{
+  "operation_completed": true,
+  "result": {
+    "ablation_effects": {
+      "frame_over_exact_successes": 6,
+      "population_over_single_frame_successes": 0,
+      "retained_history_over_recent_only_successes": 4
+    },
+    "candidates": {
+      "exact_memory": {
+        "fidelity": {
+          "reviewer": "independent-structural-v1",
+          "scope": "finite exact-transition DSL; not a formal proof or provider review",
+          "status": "pass"
+        },
+        "model_id": "a707412584d75856283f08a8a3d31caae88ee11ca5142ca9326161a7b9badaa8",
+        "replay": {
+          "compared": 36,
+          "failures": [],
+          "goal_matches": 36,
+          "replay_pass": true,
+          "unknown_fraction": 0.0
+        },
+        "selection": {
+          "abstentions": 6,
+          "episodes": 6,
+          "metrics_by_family": {
+            "data_transform": {
+              "abstentions": 2,
+              "episodes": 2,
+              "policy_violations": 0,
+              "simulated_nodes": 6,
+              "simulator_actions": 0,
+              "success": 0
+            },
+            "retry_api": {
+              "abstentions": 2,
+              "episodes": 2,
+              "policy_violations": 0,
+              "simulated_nodes": 6,
+              "simulator_actions": 0,
+              "success": 0
+            },
+            "workflow": {
+              "abstentions": 2,
+              "episodes": 2,
+              "policy_violations": 0,
+              "simulated_nodes": 6,
+              "simulator_actions": 0,
+              "success": 0
+            }
+          },
+          "provider_calls": 0,
+          "provider_cost": 0,
+          "real_actions": 0,
+          "success": 0
+        }
+      },
+      "frame_rules": {
+        "fidelity": {
+          "reviewer": "independent-structural-v1",
+          "scope": "finite exact-transition DSL; not a formal proof or provider review",
+          "status": "pass"
+        },
+        "model_id": "753be93e84ce4105c4a5c0f28076a8e33d4e993900ae8c88a11089720233e3ad",
+        "replay": {
+          "compared": 36,
+          "failures": [],
+          "goal_matches": 36,
+          "replay_pass": true,
+          "unknown_fraction": 0.0
+        },
+        "selection": {
+          "abstentions": 0,
+          "episodes": 6,
+          "metrics_by_family": {
+            "data_transform": {
+              "abstentions": 0,
+              "episodes": 2,
+              "policy_violations": 0,
+              "simulated_nodes": 36,
+              "simulator_actions": 6,
+              "success": 2
+            },
+            "retry_api": {
+              "abstentions": 0,
+              "episodes": 2,
+              "policy_violations": 0,
+              "simulated_nodes": 36,
+              "simulator_actions": 6,
+              "success": 2
+            },
+            "workflow": {
+              "abstentions": 0,
+              "episodes": 2,
+              "policy_violations": 0,
+              "simulated_nodes": 36,
+              "simulator_actions": 6,
+              "success": 2
+            }
+          },
+          "provider_calls": 0,
+          "provider_cost": 0,
+          "real_actions": 0,
+          "success": 6
+        }
+      }
+    },
+    "capable_control_gain": 0,
+    "deployment_authorized": false,
+    "eligibility": false,
+    "evidence_mode": "offline deterministic host simulations",
+    "final": {
+      "capable_script": {
+        "abstentions": 0,
+        "episodes": 6,
+        "metrics_by_family": {
+          "data_transform": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 0,
+            "simulator_actions": 6,
+            "success": 2
+          },
+          "retry_api": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 0,
+            "simulator_actions": 6,
+            "success": 2
+          },
+          "workflow": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 0,
+            "simulator_actions": 6,
+            "success": 2
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0,
+        "success": 6
+      },
+      "direct_finish": {
+        "abstentions": 0,
+        "episodes": 6,
+        "metrics_by_family": {
+          "data_transform": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 0,
+            "simulator_actions": 2,
+            "success": 0
+          },
+          "retry_api": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 0,
+            "simulator_actions": 2,
+            "success": 0
+          },
+          "workflow": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 0,
+            "simulator_actions": 2,
+            "success": 0
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0,
+        "success": 0
+      },
+      "exact_memory": {
+        "abstentions": 6,
+        "episodes": 6,
+        "metrics_by_family": {
+          "data_transform": {
+            "abstentions": 2,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 6,
+            "simulator_actions": 0,
+            "success": 0
+          },
+          "retry_api": {
+            "abstentions": 2,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 6,
+            "simulator_actions": 0,
+            "success": 0
+          },
+          "workflow": {
+            "abstentions": 2,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 6,
+            "simulator_actions": 0,
+            "success": 0
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0,
+        "success": 0
+      },
+      "frame_rules": {
+        "abstentions": 0,
+        "episodes": 6,
+        "metrics_by_family": {
+          "data_transform": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 36,
+            "simulator_actions": 6,
+            "success": 2
+          },
+          "retry_api": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 36,
+            "simulator_actions": 6,
+            "success": 2
+          },
+          "workflow": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 36,
+            "simulator_actions": 6,
+            "success": 2
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0,
+        "success": 6
+      },
+      "recent_family_only": {
+        "abstentions": 4,
+        "episodes": 6,
+        "metrics_by_family": {
+          "data_transform": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 36,
+            "simulator_actions": 6,
+            "success": 2
+          },
+          "retry_api": {
+            "abstentions": 2,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 6,
+            "simulator_actions": 0,
+            "success": 0
+          },
+          "workflow": {
+            "abstentions": 2,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 6,
+            "simulator_actions": 0,
+            "success": 0
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0,
+        "success": 2
+      },
+      "selected_population": {
+        "abstentions": 0,
+        "episodes": 6,
+        "metrics_by_family": {
+          "data_transform": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 36,
+            "simulator_actions": 6,
+            "success": 2
+          },
+          "retry_api": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 36,
+            "simulator_actions": 6,
+            "success": 2
+          },
+          "workflow": {
+            "abstentions": 0,
+            "episodes": 2,
+            "policy_violations": 0,
+            "simulated_nodes": 36,
+            "simulator_actions": 6,
+            "success": 2
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0,
+        "success": 6
+      }
+    },
+    "final_seed": 19003,
+    "holdout_status": "consumed",
+    "host_handoff_total": 6,
+    "host_handoff_verified": 6,
+    "limitations": [
+      "synthetic deterministic families with shared mechanics; no real-world or clinical claim",
+      "induction and all rules are deterministic; no live LLM used",
+      "capable scripted planner is a matched ceiling control",
+      "eligibility remains false pending sealed-process authority and complete release gates"
+    ],
+    "model_id": "753be93e84ce4105c4a5c0f28076a8e33d4e993900ae8c88a11089720233e3ad",
+    "policy_probe": {
+      "abstained": true,
+      "family": "workflow",
+      "latency_ms": 5.5204160016728565,
+      "policy_violations": 0,
+      "provider_calls": 0,
+      "provider_cost": 0,
+      "real_actions": 0,
+      "simulated_nodes": 3,
+      "simulator_actions": 0,
+      "success": false,
+      "task_id": "workflow_19003_0",
+      "tokens": 0,
+      "trace": []
+    },
+    "retention": {
+      "abstentions": 0,
+      "episodes": 6,
+      "metrics_by_family": {
+        "data_transform": {
+          "abstentions": 0,
+          "episodes": 2,
+          "policy_violations": 0,
+          "simulated_nodes": 36,
+          "simulator_actions": 6,
+          "success": 2
+        },
+        "retry_api": {
+          "abstentions": 0,
+          "episodes": 2,
+          "policy_violations": 0,
+          "simulated_nodes": 36,
+          "simulator_actions": 6,
+          "success": 2
+        },
+        "workflow": {
+          "abstentions": 0,
+          "episodes": 2,
+          "policy_violations": 0,
+          "simulated_nodes": 36,
+          "simulator_actions": 6,
+          "success": 2
+        }
+      },
+      "provider_calls": 0,
+      "provider_cost": 0,
+      "real_actions": 0,
+      "success": 6
+    },
+    "schema_drift_probe": {
+      "abstained": true,
+      "family": "workflow",
+      "latency_ms": 4.268272998160683,
+      "policy_violations": 0,
+      "provider_calls": 0,
+      "provider_cost": 0,
+      "real_actions": 0,
+      "simulated_nodes": 3,
+      "simulator_actions": 0,
+      "success": false,
+      "task_id": "workflow_19003_0",
+      "tokens": 0,
+      "trace": []
+    },
+    "schema_version": 1,
+    "selected": "frame_rules",
+    "status": "offline_gain_over_weak_baseline"
+  }
+}

@@ -454,16 +454,57 @@
       "gate": "track_a_benefit_over_capable_control",
       "reason": "Verified correction policy and capable fixed AST both succeeded on 30/30 fresh held-out episodes; observed benefit is zero.",
       "next_action": "No promotion or superiority claim; preserve capable tool as normal starting policy."
+    },
+    {
+      "gate": "current_code_heldout",
+      "reason": "Restart guard and administrative CLI changed after v2 holdout was consumed. Prior negative result remains historical.",
+      "next_action": "Use a new independently frozen batch if pursuing another promotion candidate."
     }
   ],
-  "next_action": "Use adaptation-run for local read-only repository work. Live host/clinical/provider integrations still need separate reviewed contracts; no production activation.",
+  "next_action": "Local scoped CLI workflow is available. Preserve legacy state; use a fresh state directory for root-bound tasks. Live host integration and promotion still require the recorded external gates.",
   "repository_commit_at_finish": "a4942ea01fe89e0b1051370f655bea4f338eedea",
-  "completion_scope": "Local synthetic and real read-only repository integration complete and observed; fresh current-code evaluation performed; benefit/promotion gates fail.",
+  "completion_scope": "Local implementation with repository administration and restart mode guard; latest revision functionally tested, prior benefit evaluation historical.",
   "continuation": {
     "request": "continue apply all to NERVE and see what NERVE will do",
     "code_digest": "297bdf17e08cffaa266942e9ab94868445c0c6d48812145cb13e9bf8d5ea1059",
     "evidence": "continuation/observed-behavior.md",
     "verified_real_repository_workflow": true,
-    "verified_current_code_heldout": true
+    "verified_current_code_heldout": false,
+    "code_digest_scope": "Previous evaluated revision; see continuation/admin/previous-source-manifest.json"
+  },
+  "administrative_continuation": {
+    "evidence": "continuation/admin/commands.json",
+    "changes": [
+      "Persisted configuration checked before off/shadow hook bypass",
+      "Real repository status/reset/kill with explicit local scope",
+      "Kill reports written and state required to exist"
+    ],
+    "heldout_reused": false,
+    "verification": {
+      "full_python_tests": 1010,
+      "focused_adaptation_tests": 49,
+      "passed": true,
+      "evidence": "continuation/admin/full-tests-python312.log"
+    }
+  },
+  "root_scope_continuation": {
+    "changes": [
+      "Canonical repository root binds local agent and subject",
+      "Root-specific grants and persistent kill",
+      "Legacy unbound records rejected without mutation or inferred ownership"
+    ],
+    "evidence": "continuation/root-scope/commands.json",
+    "observed": {
+      "nerve_recovery": "completed",
+      "other_root_read": "denied",
+      "nerve_after_kill": "blocked",
+      "other_root_after_nerve_kill": "completed"
+    },
+    "fresh_heldout": false,
+    "verification": {
+      "full_python_tests": 1013,
+      "passed": true,
+      "evidence": "continuation/root-scope/full-tests-python312.log"
+    }
   }
 }

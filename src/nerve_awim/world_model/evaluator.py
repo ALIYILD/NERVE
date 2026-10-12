@@ -52,6 +52,10 @@ class Evaluator:
                     or report['evidence_hashes'] != [row['evidence_hash']]
                     or not claims or any(not r['consumed'] or r['model'] != model_id for r in claims)):
                 raise IntegrityError('final report integrity failure')
+            from ..uncertainty.world_model_adapter import checkpoint_state
+            uncertainty=checkpoint_state(self.ledger,actor,{'model_id':model_id},con=db)
+            if uncertainty is not None:
+                report={**report,'uncertainty':uncertainty}
             return report
 
     def evaluate(self, actor, model_id, split, *, run_id=None):
@@ -71,6 +75,8 @@ class Evaluator:
             if model['state'] != 'frozen' or not run_id:
                 raise IntegrityError('frozen artifact and reserved run required')
             with self.ledger.db() as db:
+                from ..uncertainty.world_model_adapter import guard
+                guard(self.ledger,actor,model['rules'],con=db)
                 rows = db.execute('SELECT * FROM wm_final WHERE scope=? AND run=?',(scope,run_id)).fetchall()
                 if {r['source'] for r in rows} != {e['source'] for e in episodes} or any(r['consumed'] for r in rows):
                     raise IntegrityError('final evidence missing or already consumed')

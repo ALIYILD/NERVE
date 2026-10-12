@@ -20,10 +20,17 @@ from .lifecycle import install_quota, QUOTA_ERROR
 
 
 class MemoryGateway:
-    def __init__(self, ledger, *, retriever=None, provider=None, max_records_per_scope=1000):
+    def __init__(self, ledger, *, retriever=None, provider=None, max_records_per_scope=1000, uncertainty=None):
         if type(max_records_per_scope) is not int or not 1 <= max_records_per_scope <= 10000:
             raise ValueError('scope quota must be 1..10000 records')
         self.ledger = ledger
+        self.uncertainty = uncertainty
+        if uncertainty is not None:
+            from ..uncertainty.adapters import UncertaintyAdapter
+            if not isinstance(uncertainty, UncertaintyAdapter):
+                raise TypeError('real host-owned uncertainty adapter required')
+            if Path(ledger.path).resolve() != Path(uncertainty.ledger.engine.path).resolve():
+                raise PermissionError('memory and uncertainty must share the authoritative SQLite store')
         self.max_records_per_scope = max_records_per_scope
         self.retriever = retriever or SecureMemoryRetriever(ledger)
         if self.retriever.ledger is not ledger:
@@ -52,19 +59,29 @@ class MemoryGateway:
             raise TypeError('typed memory request required')
         with self._lock:
             self._require(actor, request.scope, 'read')
+            from ..uncertainty.adapters import memory_boundary
+            memory_boundary(self.ledger, actor, request.scope.context, self.uncertainty)
             self._count(request.scope, 'queries')
             reason = 'kv_runtime_unverified'
             try:
-                records = self.retriever.retrieve(
-                    actor, context=request.scope.context, query=request.query,
-                    limit=request.limit, mode=request.mode)
+                if self.uncertainty is not None:
+                    response = self.ledger.retrieve(actor, context=request.scope.context,
+                        query=request.query, limit=request.limit, uncertainty=self.uncertainty)
+                    records = response['records']
+                    if request.mode != 'lexical':
+                        reason = 'uncertainty_scoped_lexical_fallback'
+                else:
+                    records = self.retriever.retrieve(
+                        actor, context=request.scope.context, query=request.query,
+                        limit=request.limit, mode=request.mode)
             except PermissionError:
                 raise
             except Exception:
                 # Optional ranking outage falls back to the SAME scoped ledger.
                 self._count(request.scope, 'retrieval_failures')
-                records = self.ledger.retrieve(actor, context=request.scope.context,
-                                              query=request.query, limit=request.limit)
+                response = self.ledger.retrieve(actor, context=request.scope.context,
+                    query=request.query, limit=request.limit, uncertainty=self.uncertainty)
+                records = response['records'] if self.uncertainty is not None else response
                 reason = 'retrieval_backend_unavailable'
             # Materialise bounded advisory IDs BEFORE the authoritative snapshot.
             # A lazy ranker can revoke an earlier candidate during enumeration.
@@ -100,12 +117,29 @@ class MemoryGateway:
                 if len(selected) >= request.limit:
                     break
             self._require(actor, request.scope, 'read')
+            memory_boundary(self.ledger, actor, request.scope.context, self.uncertainty)
+            envelope = None
+            if self.uncertainty is not None:
+                # Rebuild from current ledger after ranking/revalidation, never
+                # trust a recalled summary or an earlier copied envelope.
+                envelope = self.uncertainty.handoff(actor)
+                mandatory = json.dumps({'uncertainty': envelope, 'guidance_authority': False},
+                                       ensure_ascii=True, sort_keys=True)
+                if len(mandatory) > request.max_context_chars:
+                    raise ValueError('mandatory uncertainty envelope exceeds context budget; fetch scoped details')
+                while blocks and len(mandatory) + 1 + len('\n'.join(blocks)) > request.max_context_chars:
+                    blocks.pop()
+                    selected.pop()
+                blocks.insert(0, mandatory)
             text = '\n'.join(blocks)
             digest = sha256(text.encode()).hexdigest()
             self._count(request.scope, 'records_returned', len(selected))
             self._count(request.scope, 'prefill_fallbacks')
             if not selected:
                 reason = 'no_approved_context'
+            if envelope is not None:
+                from .uncertainty_adapter import UncertaintyMemoryResult
+                return UncertaintyMemoryResult(tuple(selected), text, 'prefill', reason, digest, envelope)
             return MemoryRetrievalResult(tuple(selected), text, 'prefill', reason, digest)
 
     def propose(self, actor, *, scope, content, source_id, kind='episodic',

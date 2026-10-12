@@ -7,6 +7,8 @@ host evaluators; SQL and host Python code are within the existing trust boundary
 from dataclasses import asdict
 import json
 import math
+from hashlib import sha256
+from pathlib import Path
 import time
 import uuid
 
@@ -16,12 +18,16 @@ from .governed_learning_v20 import GovernedLearning, _id, _json
 
 
 class GovernedCueCoordinator:
-    def __init__(self, engine, *, enabled=False, clock=time.time):
+    def __init__(self, engine, *, enabled=False, clock=time.time, uncertainty=None):
         if not isinstance(engine, GovernedLearning) or type(enabled) is not bool or not callable(clock):
             raise TypeError('existing governed engine, explicit opt-in and clock required')
         self.engine, self.enabled, self.clock = engine, enabled, clock
+        self.uncertainty = uncertainty
         with engine._db() as con:
             con.executescript('''
+              CREATE TABLE IF NOT EXISTS cce_uncertainty_bindings (
+                tenant TEXT,agent TEXT,contract TEXT,context TEXT,task TEXT,dependencies TEXT,required INTEGER,
+                PRIMARY KEY(tenant,agent,contract,context));
               CREATE TABLE IF NOT EXISTS cce_candidates (
                 id TEXT PRIMARY KEY, tenant TEXT, agent TEXT, contract TEXT,
                 cue TEXT, profile TEXT, task_type TEXT, generator TEXT,
@@ -45,6 +51,57 @@ class GovernedCueCoordinator:
                 digest TEXT, candidate TEXT,
                 PRIMARY KEY(tenant,agent,contract,cue_id,version));
             ''')
+
+    def uncertainty_state(self, actor, task_type, *, require_learning=False):
+        """Host opt-in persists; a replacement coordinator cannot omit the gate."""
+        scope = self._scope(actor, 'runtime', 'operator', 'trainer', 'evaluator', 'auditor')
+        _id(task_type)
+        with self.engine._db() as con:
+            binding = con.execute('SELECT * FROM cce_uncertainty_bindings WHERE tenant=? AND agent=? AND contract=? AND context=?',
+                (*scope, self.engine.contract, task_type)).fetchone()
+        adapter = self.uncertainty
+        if adapter is None:
+            if binding:
+                raise PermissionError('uncertainty-enabled CCE context requires its scoped adapter')
+            return None
+        from .uncertainty.adapters import UncertaintyAdapter
+        if not isinstance(adapter, UncertaintyAdapter):
+            raise TypeError('host UncertaintyAdapter required')
+        adapter.ledger.engine._scope(adapter.actor, 'runtime', 'operator')
+        if ((adapter.actor.tenant, adapter.actor.agent) != scope or
+                Path(adapter.ledger.engine.path).resolve() != Path(self.engine.path).resolve()):
+            raise PermissionError('CCE and uncertainty require the same store and authenticated scope')
+        # Validate every declared dependency before persisting the opt-in.
+        known = {c.claim_id for c in adapter.ledger.claims(adapter.actor, adapter.task_id)}
+        if not set(adapter.dependencies) <= known:
+            raise PermissionError('CCE dependency source is unavailable')
+        expected = (adapter.task_id, _json(sorted(adapter.dependencies)), int(adapter.required))
+        with self.engine._db() as con:
+            con.execute('BEGIN IMMEDIATE')
+            binding = con.execute('SELECT * FROM cce_uncertainty_bindings WHERE tenant=? AND agent=? AND contract=? AND context=?',
+                (*scope, self.engine.contract, task_type)).fetchone()
+            if binding and (binding['task'], binding['dependencies'], binding['required']) != expected:
+                raise PermissionError('CCE uncertainty dependencies are immutable; new reviewed context required')
+            con.execute('INSERT OR IGNORE INTO cce_uncertainty_bindings VALUES(?,?,?,?,?,?,?)',
+                        (*scope, self.engine.contract, task_type, *expected))
+        if require_learning:
+            decision = 'cce-' + sha256((adapter.task_id + ':' + task_type).encode()).hexdigest()
+            assessment = adapter.policy.assess(adapter.actor, adapter.task_id, decision,
+                'cue-guidance', adapter.dependencies, impact='restricted', required=adapter.required)
+            if assessment.status not in ('proceed', 'proceed_with_qualification'):
+                raise PermissionError('required cue evidence remains unresolved')
+        envelope = adapter.propagator.envelope(adapter.actor, adapter.task_id)
+        if envelope['state'] != 'complete':
+            raise PermissionError('complete authoritative CCE uncertainty state required')
+        return envelope
+
+    def _uncertainty_recheck(self, con, actor, task_type, envelope):
+        binding = con.execute('SELECT task FROM cce_uncertainty_bindings WHERE tenant=? AND agent=? AND contract=? AND context=?',
+            (*self._scope(actor, 'runtime', 'operator', 'trainer', 'evaluator', 'auditor'), self.engine.contract, task_type)).fetchone()
+        if binding and (self.uncertainty is None or envelope is None):
+            raise PermissionError('persisted CCE uncertainty gate cannot be omitted')
+        if envelope is not None and self.uncertainty.ledger.revision(self.uncertainty.actor, binding['task'], con=con) != envelope['ledger_revision']:
+            raise ValueError('uncertainty changed before CCE boundary; reassess')
 
     def _scope(self, actor, *roles):
         return self.engine._scope(actor, *roles)
@@ -103,10 +160,12 @@ class GovernedCueCoordinator:
                 raise ValueError('preregistered model metadata differs from profile')
         if cue.expires_at is not None and cue.expires_at <= self.clock():
             raise ValueError('candidate already expired')
+        envelope = self.uncertainty_state(actor, task_type)
         candidate = uuid.uuid4().hex
         with self.engine._db() as con:
             con.execute('BEGIN IMMEDIATE')
             self.engine._state(con, scope)
+            self._uncertainty_recheck(con, actor, task_type, envelope)
             if con.execute('SELECT 1 FROM cce_versions WHERE tenant=? AND agent=? AND contract=? AND cue_id=? AND version=?',
                            (*scope, self.engine.contract, cue.cue_id, cue.version)).fetchone():
                 raise ValueError('cue identity/version already registered; create a new version')
@@ -136,9 +195,12 @@ class GovernedCueCoordinator:
         scope = self._scope(actor, 'evaluator')
         _id(evaluator_id)
         from .cue_evaluation import DatasetManifest
+        context = self.status(actor, candidate)['task_type']
+        envelope = self.uncertainty_state(actor, context, require_learning=True)
         with self.engine._db() as con:
             con.execute('BEGIN IMMEDIATE')
             row = self._row(con, scope, candidate)
+            self._uncertainty_recheck(con, actor, context, envelope)
             if row['status'] != 'pending':
                 raise ValueError('candidate can be evaluated only once')
             cue = Cue(**json.loads(row['cue']))
@@ -180,9 +242,12 @@ class GovernedCueCoordinator:
         self.engine._approval_input(expected_generation, reason)
         if type(valid_for) not in (int, float) or not math.isfinite(valid_for) or not 0 < valid_for <= 604800:
             raise ValueError('approval lifetime must be at most seven days')
+        context = self.status(actor, candidate)['task_type']
+        envelope = self.uncertainty_state(actor, context, require_learning=True)
         with self.engine._db() as con:
             con.execute('BEGIN IMMEDIATE')
             row = self._row(con, scope, candidate)
+            self._uncertainty_recheck(con, actor, context, envelope)
             cue = Cue(**json.loads(row['cue']))
             if row['status'] != 'passed' or safety_reason(cue):
                 raise PermissionError('independently passed candidate required')
@@ -216,9 +281,11 @@ class GovernedCueCoordinator:
         if not isinstance(profile, ModelProfile):
             raise TypeError('exact model profile required')
         _id(task_type)
+        envelope = self.uncertainty_state(actor, task_type, require_learning=True)
         registry = CueRegistry()
         with self.engine._db() as con:
             self.engine._state(con, scope)
+            self._uncertainty_recheck(con, actor, task_type, envelope)
             route = con.execute('SELECT active FROM cce_routes WHERE tenant=? AND agent=? AND contract=? AND task_type=? AND profile=?',
                 (*scope, self.engine.contract, task_type, profile.key)).fetchone()
             if route and route['active']:
@@ -272,6 +339,14 @@ class GovernedCueCoordinator:
         if scope != (memory_actor.tenant_id, memory_actor.agent_id):
             raise PermissionError('memory scope differs from cue scope')
         status = self.status(actor, candidate)
+        envelope = self.uncertainty_state(actor, status['task_type'])
+        from .uncertainty.adapters import memory_boundary
+        memory_boundary(ledger, memory_actor, 'cognitive-cues', self.uncertainty)
+        if envelope is not None:
+            self.uncertainty.match_memory_actor(memory_actor)
+            envelope = self.uncertainty.handoff(memory_actor, envelope)
+            status['uncertainty'] = envelope
+            status['guidance_authority'] = False
         report = status.pop('evaluation')
         status['report_digest'] = report['decision']['report_digest'] if report else None
         status['note'] = 'Research evidence only; memory cannot authorize cue deployment.'

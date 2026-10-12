@@ -4,6 +4,23 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## Connected learning and adaptation research
+
+ARC, task adaptation, Memento frame learning, persistent uncertainty, Galahad
+text memory and cognitive cues now share an executable research workflow with
+the Hermes runtime adapter:
+
+```bash
+PYTHONPATH=src python3 -m nerve_awim integrated-learning --repository . --directory /tmp/nerve-integrated-fresh
+```
+
+Use a fresh output directory. The workflow reads real repository files, verifies
+tool results, learns a bounded transition rule, reuses a reviewed correction, and
+tests conflict propagation across planning, dispatch, memory and agent output.
+Hermes responses and cue comparisons are explicit offline fixtures. This does
+not establish live-model improvement, update LLM weights or activate deployment.
+See the [integration report](docs/uncertainty/all-workstreams-report.md).
+
 ## Persistent uncertainty and combined recovery
 
 The optional uncertainty ledger preserves source-linked conflicts across Hermes

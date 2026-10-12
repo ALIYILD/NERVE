@@ -57,17 +57,32 @@ def dispatch(args):
             else: raise AssertionError('expected bounded termination')
         else: raise ValueError('unknown demo scenario')
     elif command in ('adaptation-status','adaptation-reset','adaptation-kill'):
-        if not args.synthetic: raise PermissionError('CLI can reauthenticate only explicitly synthetic scope')
-        c=build(str(args.state/'adaptation.sqlite3')); a=c['adaptation']; operator=c['operator']
+        if not args.synthetic and args.repository is None:
+            raise PermissionError('explicit --repository or --synthetic scope required')
+        if args.synthetic and args.repository is not None:
+            raise ValueError('choose one administrative scope')
+        if command!='adaptation-status' and not args.reason:
+            raise ValueError('--reason required')
+        if command!='adaptation-kill' and not args.task_id:
+            raise ValueError('--task-id required')
+        database=args.state/('adaptation.sqlite3' if args.synthetic else 'repository-adaptation.sqlite3')
+        if not database.is_file(): raise FileNotFoundError('existing adaptation state required')
+        if args.synthetic:
+            c=build(str(database),mode=args.adaptation_mode)
+            subject='subject-a'; review='local-synthetic-cli'
+        else:
+            from .adaptation_repository import build_repository
+            if not args.repository.resolve().is_dir(): raise ValueError('repository directory required')
+            c=build_repository(str(database),mode=args.adaptation_mode,repository_root=args.repository)
+            subject=c['subject_scope']; review='local-operator-repository-cli'
+        a=c['adaptation']; operator=c['operator']
         if command=='adaptation-kill':
-            if not args.reason: raise ValueError('--reason required')
-            a.kill_switch(operator,reason=args.reason); return {'killed':True,'production_activation':False}
-        if not args.task_id: raise ValueError('--task-id required')
-        a.grant(operator,args.task_id,operator,subject_scope='subject-a',review_reference='local-synthetic-cli')
-        if command=='adaptation-reset':
-            if not args.reason: raise ValueError('--reason required')
-            a.reset(operator,args.task_id,reason=args.reason)
-        result=a.inspect(operator,args.task_id)
+            a.kill_switch(operator,reason=args.reason)
+            result={'killed':True,'scope':subject,'production_activation':False}
+        else:
+            a.grant(operator,args.task_id,operator,subject_scope=subject,review_reference=review)
+            if command=='adaptation-reset': a.reset(operator,args.task_id,reason=args.reason)
+            result=a.inspect(operator,args.task_id)
     elif command in ('research-fast-memory-train','research-fast-memory-evaluate'):
         if not args.synthetic or not args.budget: raise PermissionError('research requires --synthetic and --budget')
         # Import optional numerical dependencies only after explicit opt-in.

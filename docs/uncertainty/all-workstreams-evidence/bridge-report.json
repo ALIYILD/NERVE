@@ -1,0 +1,265 @@
+{
+  "arc_adaptation": {
+    "correction_reused": true,
+    "probe_receipt": {
+      "decision_id": "417a1e7ee4c0486b8b684b99caa119e3",
+      "outcome_id": "f6be616cde824016ab3f54a84cd43289",
+      "tool": "regex-inventory",
+      "verification": "failed"
+    },
+    "receipts": [
+      {
+        "decision_id": "272840f3c8b74279987192c0eb33c811",
+        "names": [],
+        "outcome_id": "9725b346ef8149e4b315d5472f08a967",
+        "source_hash": "d702c67bb7ff66acb7ee143dca7a4cbb820f53bbae2fd81b22890f0fba434b09",
+        "source_path": "src/nerve_awim/memory_gateway/contracts.py",
+        "transition_id": "observed-inventory-0-transition",
+        "verification": "verified"
+      },
+      {
+        "decision_id": "ce13d4e8a7744bf9be1a12745663b6e8",
+        "names": [
+          "ast_inventory",
+          "regex_inventory",
+          "repository_judge",
+          "token_inventory"
+        ],
+        "outcome_id": "9bb34dc1c6f74e64987a9cadc37a74f8",
+        "source_hash": "bebd7ef544b49da39ccc4a4b9f88e944cb9ca388e0c2ee872dff0a5cb784eb4b",
+        "source_path": "src/nerve_awim/repository_agents_v20.py",
+        "transition_id": "observed-inventory-1-transition",
+        "verification": "verified"
+      }
+    ],
+    "regex_probe_failed": true,
+    "reused_correction_id": "d3c5ba9a48ff4432bbab05d1bb4d7cd2",
+    "reviewed_correction_id": "d3c5ba9a48ff4432bbab05d1bb4d7cd2",
+    "third_dispatch_blocked": true,
+    "unaffected_dispatch_verified": true
+  },
+  "cce": {
+    "activated": false,
+    "candidate_id": "ed6da86f2d514b4098a983fc8658450c",
+    "decision": {
+      "eligible": false,
+      "reasons": [
+        "live_evidence_required",
+        "accuracy_gain_required",
+        "weak_paired_evidence"
+      ],
+      "report_digest": "8d95e0b539cf0d17b2e015fee56243b65b4e4a96d2c4a915a06e01ad312b4fd9"
+    },
+    "new_conflict_blocks_guidance": true,
+    "pending_memory_id": "6e60618bd53f49f5bde8347c9cd5b9fb",
+    "pending_memory_status": "pending",
+    "synthetic_pairs": 30
+  },
+  "combined_improvement_claim": false,
+  "database": "/private/tmp/nerve-all-workstreams-evidence/bridge/integrated.sqlite3",
+  "deployment_authorized": false,
+  "evidence_mode": "actual read-only repository tools; scripted Hermes and cue observations; planted synthetic conflict",
+  "galahad_memory": {
+    "approved_memory_id": "ddc24fd3e63a4cc89d3f8d3dd26a924e",
+    "final_envelope": {
+      "decision_id": null,
+      "evidence_refs": [
+        "synthetic-dispute",
+        "verified-training"
+      ],
+      "impacted_decisions": [
+        "b495f4a1d3584392b768e587f8d283e9",
+        "cce-f54242119ae2a866d256c30b264c8405c9caa4bb1f9912a1728b4bc9cb2e09f7",
+        "wm-rule-f1d564cb2d74c07f3d55007ed968622867e13dba2e2513d19f3292b671103176"
+      ],
+      "ledger_revision": 8,
+      "open_conflict_count": 1,
+      "open_conflict_ids": [
+        "58950c5554644118b3c3af605bfb9b49"
+      ],
+      "schema_version": "uncertainty-handoff-v1",
+      "scope": {
+        "agent_id": "repository-af784317e60b6c29a0c02a4c233e99eca16b33ecf87980a2faec038ffd1e3ec0",
+        "tenant_id": "local-repository"
+      },
+      "state": "complete",
+      "task_id": "integrated-af9104ab2bf844e08ba8eee3e5b03573",
+      "unavailable_claim_ids": [],
+      "unknowns": [
+        "source_disagreement"
+      ]
+    },
+    "guidance_authority": false,
+    "kv_status": "unverified-prefill-only",
+    "omitted_adapter_denied": true,
+    "retrieved_memory_ids": [
+      "ddc24fd3e63a4cc89d3f8d3dd26a924e"
+    ],
+    "wrong_scope_denied": true
+  },
+  "hermes": {
+    "native_provider_calls": 0,
+    "received_contexts": [
+      {
+        "conflicts": [],
+        "context_hash": "a9188d8f99ae553adabcc46f6316347602374668443dddfefc498150e04bd9b7"
+      },
+      {
+        "conflicts": [
+          "58950c5554644118b3c3af605bfb9b49"
+        ],
+        "context_hash": "3894622815373338c7bc6ae8d3825ec5581a85d89ccc8628427b3e30bec3badc"
+      }
+    ],
+    "scripted_fixture_calls": 2
+  },
+  "implementation_hashes": {
+    "adaptation.py": "61d32ee17105d14a243f80f9c206799556bb4b8b6f21b89cbce3286d547c29fb",
+    "arc_execution.py": "287039643762d56cc168f7efc2a3842d652488af7395a6f8b56f76858989dd25",
+    "cue_learning.py": "b3f2cedbe284ff96939a2726263f610b63a43ef524de2011e53c48770d5938df",
+    "hermes_agents.py": "3bf80683a2fcd5405552210f1608e2e66e83b029008e6a7a50173fe53f00e070",
+    "integrated_learning.py": "d27ef209f3a83ea51c4bed236aed94504a5342ed0a4a1013ea6e1a89738f0c94",
+    "memory_gateway/gateway.py": "9b9c35aabf11fabd352f068321ff4004a2ab5eef81c5d368b8f0179b340e3cf6",
+    "uncertainty/ledger.py": "4c4eac0b5f935a64b2c3862d6570b485f8695e522d0db52507be18951ca71706",
+    "uncertainty/world_model_adapter.py": "cf27da946495f532055488d61287c48dbfca961812460223ab96e3eb8814e5cb",
+    "world_model/generalization.py": "c142e3e0b3ea31de1c11ae4e32efac5a366f0f8cbddb2cbd49e847a1015c7679",
+    "world_model/planner.py": "4af50d3d9036b1f47b572b0ef1e88968e3470ac498ce25210ba4234a41b8af0f"
+  },
+  "limitations": [
+    "symbolic frame induction from two observations is not general model improvement",
+    "cue pairs are synthetic tied observations and cannot authorize promotion",
+    "memory is verified text prefill; no Galahad KV inference",
+    "planted disagreement exercises enforcement and does not establish a real repository defect"
+  ],
+  "provider_calls": 0,
+  "provider_cost_usd": 0,
+  "repository": "/Users/aliyildirim/nerve-uncertainty",
+  "schema_version": "nerve-integrated-research-v1",
+  "scope": {
+    "agent": "repository-af784317e60b6c29a0c02a4c233e99eca16b33ecf87980a2faec038ffd1e3ec0",
+    "subject": "repository-af784317e60b6c29a0c02a4c233e99eca16b33ecf87980a2faec038ffd1e3ec0",
+    "tenant": "local-repository"
+  },
+  "source_executed": false,
+  "source_hash_scheme": "sha256 of canonical JSON source string",
+  "source_hashes": {
+    "src/nerve_awim/memory_gateway/contracts.py": "d702c67bb7ff66acb7ee143dca7a4cbb820f53bbae2fd81b22890f0fba434b09",
+    "src/nerve_awim/memory_gateway/null_kv_adapter.py": "8d6de80b1985411435c800bbd8e3d2b9a357f305aa7491e5ed8fd10fd017c331",
+    "src/nerve_awim/repository_agents_v20.py": "bebd7ef544b49da39ccc4a4b9f88e944cb9ca388e0c2ee872dff0a5cb784eb4b"
+  },
+  "source_modified": false,
+  "status": "offline_verified",
+  "task_id": "integrated-af9104ab2bf844e08ba8eee3e5b03573",
+  "uncertainty": {
+    "conflict_id": "58950c5554644118b3c3af605bfb9b49",
+    "preserved_after_restart": true,
+    "qualified_output": {
+      "actions": [],
+      "deterministic_fallback": false,
+      "qualified": [
+        {
+          "claim_id": "verified-training",
+          "conflict_ids": [
+            "58950c5554644118b3c3af605bfb9b49"
+          ],
+          "decision_id": null,
+          "dependency_claim_ids": [
+            "verified-training"
+          ],
+          "qualification": "Disputed; do not treat as confirmed",
+          "source_refs": [
+            "source-verified-training"
+          ],
+          "text": "inventory_verified: true"
+        }
+      ],
+      "repair_count": 0,
+      "schema_version": "uncertainty-result-v1",
+      "supported": [],
+      "text": "inventory_verified: true \u2014 Disputed; do not treat as confirmed\nUnresolved 58950c5554644118b3c3af605bfb9b49: Obtain independent current evidence or authorized evidence-backed review",
+      "unavailable": [],
+      "uncertainty_state_revision": 6,
+      "unresolved": [
+        {
+          "affected_conclusion": [
+            "synthetic-dispute",
+            "verified-training"
+          ],
+          "completed_checks": [],
+          "conflict_id": "58950c5554644118b3c3af605bfb9b49",
+          "evidence_refs": [
+            "synthetic-dispute",
+            "verified-training"
+          ],
+          "next_check": "Obtain independent current evidence or authorized evidence-backed review",
+          "status": "confirmed_open"
+        }
+      ]
+    },
+    "supported_output": {
+      "actions": [],
+      "deterministic_fallback": false,
+      "qualified": [],
+      "repair_count": 0,
+      "schema_version": "uncertainty-result-v1",
+      "supported": [
+        {
+          "claim_id": "verified-training",
+          "decision_id": null,
+          "dependency_claim_ids": [
+            "verified-training"
+          ],
+          "source_refs": [
+            "source-verified-training"
+          ],
+          "text": "inventory_verified: true"
+        }
+      ],
+      "text": "inventory_verified: true",
+      "unavailable": [],
+      "uncertainty_state_revision": 3,
+      "unresolved": []
+    }
+  },
+  "world_model": {
+    "backend": "declarative-frame-v1",
+    "eligibility": false,
+    "learned_rule_ids": [
+      "frame_0ec1267d47b71ae9a177d5e5"
+    ],
+    "model_id": "35162bd963781c46a66e8316d24e70e0b4d5718a2e5b5d95bc41d9d4b7290b4e",
+    "new_conflict_blocked": true,
+    "omitted_adapter_denied": true,
+    "plan": {
+      "actions": [
+        "ast-inventory"
+      ],
+      "deployment_authorized": false,
+      "environment_revision": "normalized-workflow-v1",
+      "initial_hash": "27a9a80f6ddde18af8266e72a4c37da63449674844789317030dc96463e8d411",
+      "model_hash": "6276cc9fbc3537d55b5d93cd531cff491bd8c5868732d3253764c2f1131aacd7",
+      "model_id": "35162bd963781c46a66e8316d24e70e0b4d5718a2e5b5d95bc41d9d4b7290b4e",
+      "research_evaluation": true,
+      "simulated_nodes": 1,
+      "simulation_only": true,
+      "status": "planned",
+      "uncertainty": {
+        "conflict_ids": [],
+        "promotion_authorized": false,
+        "rules": [
+          {
+            "conflict_ids": [],
+            "rule_id": "frame_0ec1267d47b71ae9a177d5e5",
+            "status": "supported",
+            "task_id": "integrated-af9104ab2bf844e08ba8eee3e5b03573"
+          }
+        ],
+        "status": "supported",
+        "task_revisions": {
+          "integrated-af9104ab2bf844e08ba8eee3e5b03573": 2
+        }
+      }
+    },
+    "restart_blocked": true
+  }
+}

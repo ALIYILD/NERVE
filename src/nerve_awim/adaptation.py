@@ -440,7 +440,11 @@ def task_hook(runtime, con, actor, task, method, *args, **kwargs):
     exists=con.execute('SELECT 1 FROM adaptation_tasks WHERE id=? AND tenant=? AND agent=?',(task,actor.tenant,actor.agent)).fetchone()
     if not exists: return
     if coordinator is None: raise PermissionError('persisted adaptation requires coordinator')
-    if coordinator.config.mode != 'active-development': return
+    # Disabling a restarted host cannot remove a persisted task's contract.
+    # Validate both task capability and the exact stored configuration first.
+    if coordinator.config.mode != 'active-development':
+        coordinator._row(con,actor,task)
+        return
     return getattr(coordinator,method)(con,actor,task,*args,**kwargs)
 
 

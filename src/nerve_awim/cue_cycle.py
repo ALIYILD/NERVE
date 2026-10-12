@@ -33,7 +33,7 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
                   provider, judge, generator_id, evaluator_id, max_calls,
                   max_cost_usd, discovery_cost_cap_usd, per_call_cost_cap_usd,
                   permission_granted=False, clinical=False, risk='low',
-                  experiment_clock=perf_counter):
+                  experiment_clock=perf_counter, uncertainty=None):
     """Discover one proposal, screen selection, evaluate untouched holdout, stop.
 
     ``discovery_execute`` is a trusted adapter with the existing Hermes execute
@@ -83,6 +83,12 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
     if not all(callable(f) for f in (discovery_execute, provider, judge, experiment_clock)):
         raise ValueError('trusted host adapters required')
 
+    if uncertainty is not None:
+        if coordinator.uncertainty is not None and coordinator.uncertainty is not uncertainty:
+            raise PermissionError('cycle cannot replace its existing uncertainty adapter')
+        coordinator.uncertainty = uncertainty
+    coordinator.uncertainty_state(trainer, task_type, require_learning=True)
+
     # Atomic reservation occurs before the first remote dispatch. It is never
     # recycled after absent candidates, synthetic evidence or callback failures.
     reservation = coordinator.reserve_study(trainer, manifest)
@@ -105,6 +111,9 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
 
     def discover(role, payload, *, tenant, agent):
         nonlocal calls, cost, discovery_synthetic
+        envelope = coordinator.uncertainty_state(trainer, task_type, require_learning=True)
+        if envelope is not None:
+            payload = {**payload, 'uncertainty': envelope}
         calls += 1
         receipt = discovery_execute(role, payload, tenant=tenant, agent=agent,
                                     cost_cap_usd=discovery_cost_cap_usd)
@@ -114,16 +123,19 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
         if receipt.cost_usd > discovery_cost_cap_usd or cost > max_cost_usd:
             raise ValueError('discovery cost cap violated')
         discovery_synthetic = receipt.synthetic
+        coordinator.uncertainty_state(trainer, task_type, require_learning=True)
         return receipt.result
 
     def dispatch(request):
         nonlocal calls, cost
+        coordinator.uncertainty_state(trainer, task_type, require_learning=True)
         if calls >= max_calls or cost + request.cost_cap_usd > max_cost_usd:
             raise RuntimeError('cycle dispatch budget exhausted')
         calls += 1
         receipt = provider(request)
         if isinstance(receipt, ProviderReceipt):
             cost += receipt.cost_usd
+        coordinator.uncertainty_state(trainer, task_type, require_learning=True)
         return receipt
 
     try:

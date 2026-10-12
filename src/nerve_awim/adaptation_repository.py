@@ -7,6 +7,7 @@ pure tools; it does not grant remote identity, model access or code modification
 from pathlib import Path
 import hashlib
 import time
+import sqlite3
 import uuid
 from .adaptation import AdaptationConfig, AdaptationCoordinator
 from .arc_execution import ArcRuntime, ToolSpec, digest
@@ -17,10 +18,27 @@ from .repository_agents_v20 import regex_inventory, ast_inventory, token_invento
 TOOLS={'regex-inventory':regex_inventory,'ast-inventory':ast_inventory}
 
 
-def build_repository(path, *, mode='active-development'):
+def repository_scope(root):
+    """Stable local namespace; symlink aliases resolve to the same repository."""
+    root=Path(root).resolve(strict=True)
+    if not root.is_dir(): raise ValueError('repository directory required')
+    return 'repository-'+hashlib.sha256(str(root).encode()).hexdigest()
+
+
+def build_repository(path, *, mode='active-development', repository_root=None):
+    scope=repository_scope(repository_root) if repository_root is not None else 'repository'
+    agent='repository-adaptation' if repository_root is None else scope
+    if repository_root is not None and Path(path).is_file():
+        # Old records contain no root binding. Never infer ownership or bypass
+        # an old agent-wide kill switch by silently moving into a new namespace.
+        with sqlite3.connect(path) as con:
+            tables={r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+            for table in ('adaptation_tasks','adaptation_switch'):
+                if table in tables and con.execute(f"SELECT 1 FROM {table} WHERE tenant=? AND agent=? LIMIT 1",('local-repository','repository-adaptation')).fetchone():
+                    raise PermissionError('legacy repository state has no root binding; preserve it for review and use a new state directory')
     authority=LearningAuthority()
-    actor=authority.issue('local-repository','repository-adaptation','runtime')
-    operator=authority.issue('local-repository','repository-adaptation','operator')
+    actor=authority.issue('local-repository',agent,'runtime')
+    operator=authority.issue('local-repository',agent,'operator')
     observed={}
     def validate(args):
         return (type(args) is dict and set(args)=={'source','file','content_hash'} and
@@ -40,10 +58,10 @@ def build_repository(path, *, mode='active-development'):
     except LookupError: engine.bootstrap(operator)
     arc=ArcRuntime(engine,tools={name:ToolSpec(name,validate,verifier,evidence_bindings=bind) for name in TOOLS},mode='enforce')
     adaptation=AdaptationCoordinator(arc,AdaptationConfig(enabled=mode!='off',mode=mode))
-    return dict(engine=engine,arc=arc,adaptation=adaptation,actor=actor,operator=operator,observed=observed)
+    return dict(engine=engine,arc=arc,adaptation=adaptation,actor=actor,operator=operator,observed=observed,subject_scope=scope)
 
 
-def run_sources(database, sources, *, policy='corrections', mode='active-development', restart=False, task_id=None, initial_tool='regex-inventory'):
+def run_sources(database, sources, *, policy='corrections', mode='active-development', restart=False, task_id=None, initial_tool='regex-inventory', repository_root=None):
     """Sources are host-authorized (name,text) pairs. At most three files/task."""
     if initial_tool not in TOOLS: raise ValueError('registered initial tool required')
     if policy not in ('baseline','structured','corrections','strong-baseline'): raise ValueError('unknown policy')
@@ -52,11 +70,11 @@ def run_sources(database, sources, *, policy='corrections', mode='active-develop
         if type(name) is not str or type(source) is not str or len(source.encode())>12000: raise ValueError('bounded Python source required')
         # Parsing does not execute source; fail before dispatch if not valid Python.
         ast_inventory(source)
-    c=build_repository(database,mode=mode); a=c['adaptation']; actor=c['actor']; task=task_id or 'repo-'+uuid.uuid4().hex
+    c=build_repository(database,mode=mode,repository_root=repository_root); a=c['adaptation']; actor=c['actor']; task=task_id or 'repo-'+uuid.uuid4().hex
     active=mode=='active-development' and policy not in ('baseline','strong-baseline')
     if active:
-        a.begin_task(actor,task_id=task,subject_scope='repository',goal_reference='top-level-function-inventory',constraints=['read-only','no-source-execution','independent-verification'])
-        a.grant(c['operator'],task,c['operator'],subject_scope='repository',review_reference='local-operator-read-only-command')
+        a.begin_task(actor,task_id=task,subject_scope=c['subject_scope'],goal_reference='top-level-function-inventory',constraints=['read-only','no-source-execution','independent-verification'])
+        a.grant(c['operator'],task,c['operator'],subject_scope=c['subject_scope'],review_reference='local-operator-read-only-command')
     attempts=[]; outputs=[]; correction_ids=[]; reused=0; probes=0; resumed=False
     for index,(name,source) in enumerate(sources):
         context=a.read_context(actor,task) if active else {'corrections':[]}
@@ -82,8 +100,8 @@ def run_sources(database, sources, *, policy='corrections', mode='active-develop
             a.verify_correction(c['operator'],task,cid); correction_ids.append(cid)
             if restart and not resumed:
                 cp=a.checkpoint(actor,task)
-                c=build_repository(database,mode=mode);a=c['adaptation'];actor=c['actor']
-                for principal in (actor,c['operator']): a.grant(c['operator'],task,principal,subject_scope='repository',review_reference='local-operator-reauthentication')
+                c=build_repository(database,mode=mode,repository_root=repository_root);a=c['adaptation'];actor=c['actor']
+                for principal in (actor,c['operator']): a.grant(c['operator'],task,principal,subject_scope=c['subject_scope'],review_reference='local-operator-reauthentication')
                 a.resume(actor,task,cp)
                 for old in correction_ids:a.verify_correction(c['operator'],task,old,reaffirm=True)
                 resumed=True
@@ -92,7 +110,7 @@ def run_sources(database, sources, *, policy='corrections', mode='active-develop
     success=len(outputs)==len(sources)
     if active:a.close_task(actor,task,status='completed' if success else 'review-required')
     state=a.inspect(actor,task) if active else {'status':'completed' if success else 'review-required','action_receipts':{}}
-    return dict(task_id=task,success=success,status=state['status'],attempts=attempts,outputs=outputs,corrections=len(correction_ids),correction_reuse=reused,review_probes=probes,resumed=resumed,receipt_count=len(state['action_receipts']),provider_calls=0,provider_cost_usd=0,source_executed=False,source_modified=False,mode=mode,policy=policy,initial_tool=initial_tool,events=a.events(actor,task) if active else [])
+    return dict(task_id=task,repository_scope=c['subject_scope'],success=success,status=state['status'],attempts=attempts,outputs=outputs,corrections=len(correction_ids),correction_reuse=reused,review_probes=probes,resumed=resumed,receipt_count=len(state['action_receipts']),provider_calls=0,provider_cost_usd=0,source_executed=False,source_modified=False,mode=mode,policy=policy,initial_tool=initial_tool,events=a.events(actor,task) if active else [])
 
 
 def run_repository(database,root, *, paths=None, mode='active-development', restart=False, task_id=None, initial_tool='ast-inventory'):
@@ -105,4 +123,4 @@ def run_repository(database,root, *, paths=None, mode='active-development', rest
         if root not in path.parents or path.suffix!='.py' or not path.is_file(): raise PermissionError('source must be a Python file inside the authorized repository')
         if path.stat().st_size>12000: raise ValueError('source exceeds 12KiB task limit')
         sources.append((str(path.relative_to(root)),path.read_text()))
-    return run_sources(database,sources,mode=mode,restart=restart,task_id=task_id,initial_tool=initial_tool)
+    return run_sources(database,sources,mode=mode,restart=restart,task_id=task_id,initial_tool=initial_tool,repository_root=root)

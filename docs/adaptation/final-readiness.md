@@ -1,7 +1,7 @@
 # Readiness after continuation
 
 Applied in `/Users/aliyildirim/nerve-review` on
-`codex/robottt-task-adaptation-20261012`. Task adaptation now has a real read-only
+`codex/nerve-adaptation-integrated-20261012` (publication branch). Task adaptation now has a real read-only
 repository CLI workflow in addition to the synthetic demos and optional external
 fast-memory research. It uses the existing ARC dispatcher, tool registry, independent
 verifier and SQLite store. The normal tool is the capable AST inventory; the explicit
@@ -12,9 +12,9 @@ verifier and SQLite store. The normal tool is the capable AST inventory; the exp
 | Local implementation | Synthetic workflows and real read-only repository integration implemented |
 | Observed normal behavior | Verified both real NERVE source files without correction |
 | Observed recovery behavior | Detected incorrect regex inventory, verified AST alternative, reopened/resumed, reused correction and closed with three receipts |
-| Final regression | 1,007 Python tests passed on Python 3.12 |
-| Focused checks | 46 adaptation/research tests, 86 ARC tests and 7 Node tests passed |
-| Fresh current-code evaluation | 60 development plus 30 held-out repository episodes; exact code digest matches current implementation |
+| Final regression | 1,013 Python tests passed on Python 3.12 |
+| Focused checks | 52 adaptation/research tests; prior separate checks: 86 ARC and 7 Node tests passed |
+| Prior revision evaluation | 60 development plus 30 held-out repository episodes; predates administrative CLI and restart guard hardening |
 | Benefit against capable baseline | Zero: adaptation and fixed AST each passed 30/30 held-out cases |
 | Track A overhead | Failed: recovery p95 overhead 95.8%, threshold 20% |
 | Track B benefit | Prior five-seed study remains negative, about −12.7 pp versus exact structured memory |
@@ -45,12 +45,36 @@ provider budget, clinical policy update or learned-memory production activation
 was inferred from the instruction to continue. The optional memory experiment is
 not RoboTTT reproduction or access to hosted LLM weights.
 
-No commit, push or deployment was performed by this task. Existing ARC work and its
-concurrent prerequisite commit were preserved. Reviewable changes include untracked
-adaptation/research files and narrow edits to the shared CLI/runtime. Exact working
-source hashes are in [source-manifest.json](source-manifest.json).
+The user authorized committing and pushing the implementation. The publication
+branch includes the intervening NERVE/Hermes cognitive-cue integration and the ARC
+CLI/evaluation prerequisites. Deployment and production activation remain separate.
+Exact pre-commit source hashes are in [source-manifest.json](source-manifest.json).
 
 Evidence: [verification results](verification-results.json),
 [implementation status](implementation-status.json),
-[fresh held-out report](continuation/repository-heldout.json),
+[prior revision held-out report](continuation/repository-heldout.json),
 [runbook](runbook.md).
+
+
+Administrative continuation adds explicit local repository status/reset/kill commands.
+The restart hook now checks persisted configuration before permitting an off/shadow
+coordinator to skip adaptation. New tests cover both proposal and execution denial,
+separate CLI processes, receipt preservation, scope selection and persistent kill.
+The observed recovery completed with three receipts; reset preserved those receipts
+and three used steps; the next run after kill had zero steps and zero receipts.
+See [administrative trace](continuation/admin/commands.json) and
+[stopped task](continuation/admin/stopped-task.json).
+
+The benchmark above belongs to the previous revision. The current code has not
+consumed a fresh holdout, and no promotion is claimed. Previous manifests and
+verification summaries are preserved in `continuation/admin/previous-*`.
+
+
+Repository isolation continuation binds new task grants and kill switches to the
+canonical root path. The real CLI trace confirms that another root cannot inspect
+NERVE's task, stopping NERVE blocks its next run, and the other repository still
+completes in the same database. Symlink aliases retain the same scope. Legacy
+unbound state is preserved and rejected by the new CLI pending reviewed migration;
+use a fresh state directory for new root-bound runs. See the
+[root isolation trace](continuation/root-scope/commands.json) and migration limits
+in the [runbook](runbook.md). No benchmark was rerun or promotion claimed.

@@ -29,10 +29,11 @@ def _object(pairs):
 
 
 class CueHost:
-    def __init__(self, host):
+    def __init__(self, host, *, uncertainty=None):
         if not isinstance(host, AgentOSLearning):
             raise TypeError('existing AgentOS learning host required')
         self.host = host
+        self.uncertainty = uncertainty
         self._authority = LearningAuthority()
         self._engine = None
 
@@ -86,7 +87,7 @@ class CueHost:
             self._engine.bootstrap(self._actor(profile, 'operator'))
         elif existing['contract'] != CONTRACT:
             raise ValueError('existing learning scope has a different contract')
-        return GovernedCueCoordinator(self._engine, enabled=True)
+        return GovernedCueCoordinator(self._engine, enabled=True, uncertainty=self.uncertainty)
 
     def status(self, profile=None):
         profiles, state = self._config()
@@ -126,8 +127,22 @@ class CueHost:
         atomic_json(self.host.directory / 'cce-last-receipt.json', receipt)
         return {'envelope': envelope, 'receipt': receipt}
 
+    def _uncertainty_required(self, profile, task_type):
+        if self.uncertainty is not None:
+            return True
+        with sqlite3.connect(self.host.path) as con:
+            exists = con.execute("SELECT 1 FROM sqlite_master WHERE name='cce_uncertainty_bindings'").fetchone()
+            return bool(exists and con.execute('SELECT 1 FROM cce_uncertainty_bindings WHERE tenant=? AND agent=? AND contract=? AND context=?',
+                (TENANT, profile, CONTRACT, task_type)).fetchone())
+
     def prepare(self, profile, task_type, *, permission_granted=False, clinical=False, risk='low'):
         _id(profile)
+        uncertainty_state = None
+        if self._uncertainty_required(profile, task_type):
+            # This is an action restriction, not a cue preference. Never let the
+            # optional no-cue fallback erase an opted-in uncertainty denial.
+            uncertainty_state = self._coordinator(profile).uncertainty_state(
+                self._actor(profile, 'runtime'), task_type, require_learning=True)
         profiles, state = self._config()
         if state != 'enabled':
             return self._result(profile, state)
@@ -149,9 +164,15 @@ class CueHost:
             approved = coordinator.status(self._actor(profile, 'auditor'), candidate)
             envelope = {'profile': asdict(model), 'cue': asdict(cue), 'task_type': task_type,
                         'approval_expires': approved['expires']}
-            return self._result(profile, 'awaiting_worker_attestation', envelope=envelope,
-                                candidate=candidate, profile_key=model.key)
+            result = self._result(profile, 'awaiting_worker_attestation', envelope=envelope,
+                                  candidate=candidate, profile_key=model.key)
+            if uncertainty_state is not None:
+                result['uncertainty'] = coordinator.uncertainty_state(
+                    self._actor(profile, 'runtime'), task_type, require_learning=True)
+            return result
         except (ValueError, LookupError, PermissionError, sqlite3.Error):
+            if self._uncertainty_required(profile, task_type):
+                raise
             return self._result(profile, 'host_state_unavailable', profile_key=model.key)
 
     def feedback(self, profile, candidate, *, episode_id, safe, correct):

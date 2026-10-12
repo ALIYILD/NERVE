@@ -80,16 +80,30 @@ def jev_review(host):
     return result
 
 
-def native(host, profile, prompt, *, max_tokens=2048, inspect=False, cue_context=None):
+def native(host, profile, prompt, *, max_tokens=2048, inspect=False, cue_context=None, uncertainty=None):
     """Installed runtime, bounded text, no tools, free model, process timeout."""
     # Only an operational caller supplies this trusted context. Research and
     # no-cue comparison arms retain the unchanged default request contract.
     cue_preparation = None
+    uncertainty_state = None
+    uncertainty_host = None
+    if not inspect:
+        # This persistent restriction applies even if a later caller omits cues.
+        with sqlite3.connect(host.path) as con:
+            bound_table = con.execute("SELECT 1 FROM sqlite_master WHERE name='cce_uncertainty_bindings'").fetchone()
+            bound = bool(bound_table and con.execute(
+                'SELECT 1 FROM cce_uncertainty_bindings WHERE tenant=? AND agent=? AND contract=? AND context=?',
+                ('agentos-local', profile, 'cce-host-v1', 'handoff')).fetchone())
+        if uncertainty is not None or bound:
+            from nerve_awim.cue_host import CueHost
+            uncertainty_host = CueHost(host, uncertainty=uncertainty)
+            uncertainty_state = uncertainty_host._coordinator(profile).uncertainty_state(
+                uncertainty_host._actor(profile, 'runtime'), 'handoff', require_learning=True)
     if cue_context is not None and not inspect:
         from nerve_awim.cue_host import CueHost
         if cue_context != 'handoff':
             raise PermissionError('unsupported operational cue context')
-        cue_preparation = CueHost(host).prepare(profile, 'handoff', permission_granted=True)
+        cue_preparation = (uncertainty_host or CueHost(host)).prepare(profile, 'handoff', permission_granted=True)
     catalog=host.directory/'free-models.json'
     if not catalog.exists() or datetime.now().timestamp()-catalog.stat().st_mtime>86400:
         # System curl uses macOS's maintained CA trust; never disable TLS checks.
@@ -117,6 +131,14 @@ def native(host, profile, prompt, *, max_tokens=2048, inspect=False, cue_context
     with tempfile.TemporaryDirectory(prefix='nerve-native-') as tmp:
         env = {k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','TMPDIR')}
         env.update(HERMES_HOME=tmp, HERMES_RUNTIME_DIR=tmp)
+        if uncertainty_host is not None:
+            fresh = uncertainty_host._coordinator(profile).uncertainty_state(
+                uncertainty_host._actor(profile, 'runtime'), 'handoff', require_learning=True)
+            # Cue preparation may add dependency links; capture its checked state.
+            uncertainty_state = fresh
+            # Preserve the strict CCE worker envelope. The structured companion
+            # enters the bounded text request and is checked again by the host.
+            prompt += '\nHost uncertainty state (not provider authority):\n' + json.dumps(fresh, sort_keys=True)
         process = subprocess.Popen([python, '-I', '-c', code, str(checkout),
             str(REPO/'scripts/agentos_hermes_worker.py')], stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
@@ -140,6 +162,14 @@ def native(host, profile, prompt, *, max_tokens=2048, inspect=False, cue_context
     if process.returncode or result.get('ok') is not True:
         raise RuntimeError('native Hermes: '+result.get('error_category','failed')+
                            (' module='+result['module'] if result.get('module') else ''))
+    if uncertainty_host is not None:
+        observed = uncertainty.propagator.envelope(uncertainty.actor, uncertainty.task_id)
+        if observed != uncertainty_state:
+            raise PermissionError('uncertainty changed during native response')
+        fresh = uncertainty_host._coordinator(profile).uncertainty_state(
+            uncertainty_host._actor(profile, 'runtime'), 'handoff', require_learning=True)
+        result['uncertainty'] = fresh
+        result['guidance_authority'] = False
     result['timeout_seconds']=90
     if cue_preparation is not None:
         # Worker evidence reports actual application, not just host selection.
@@ -422,7 +452,7 @@ def main():
         'adaptation-inspect','adaptation-validate-config','adaptation-replay','adaptation-evaluate',
         'adaptation-run','adaptation-demo','adaptation-status','adaptation-reset','adaptation-kill',
         'research-fast-memory-train','research-fast-memory-evaluate',
-        'cce-status','cce-inspect','cce-revoke','cce-demo'))
+        'cce-status','cce-inspect','cce-revoke','cce-demo','integrated-study'))
     parser.add_argument('--repository',type=Path,help='Authorized local repository for read-only adaptation')
     parser.add_argument('--candidate')
     parser.add_argument('--config',type=Path)
@@ -458,6 +488,13 @@ def main():
     parser.add_argument('--review-target',choices=('handoff','repository-experiments','repository-taskbench','repository-runner'),default='handoff')
     args=parser.parse_args()
     requested_profile=args.profile
+    if args.command=='integrated-study':
+        if args.output is None:
+            parser.error('integrated-study requires --output pointing to a fresh research directory')
+        from nerve_awim.integrated_learning import run
+        result=run(args.repository or REPO,args.output)
+        print(json.dumps(result,indent=2))
+        return
     if args.command.startswith(('arc-','adaptation-','research-fast-memory-')):
         if args.command.startswith('arc-'):
             from nerve_awim.arc_cli import dispatch

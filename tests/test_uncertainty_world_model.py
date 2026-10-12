@@ -64,10 +64,10 @@ class WorldUncertaintyTests(unittest.TestCase):
     def test_plan_requires_frozen_and_dispatch_rechecks_revision(self):
         episode=self.world.episodes(self.trainer)[0];initial=episode['initial'];actions=sorted(set(r['action'] for r in self.rules))
         with self.assertRaises(PermissionError):self.adapter.plan(self.runtime,self.model,initial,actions)
-        self.registry.freeze(self.evaluator,self.model);decision=self.adapter.plan(self.runtime,self.model,initial,actions)
+        self.registry.freeze(self.evaluator,self.model);decision=self.adapter.plan(self.evaluator,self.model,initial,actions)
         self.assertTrue(decision['simulation_only']);self.assertFalse(decision['deployment_authorized'])
         self.add('unrelated',True)
-        with self.assertRaises(StaleRevision):self.adapter.validate_dispatch(self.runtime,decision,initial,actions,5)
+        with self.assertRaises(StaleRevision):self.adapter.validate_dispatch(self.evaluator,decision,initial,actions,5)
     def test_real_coordinator_checkpoint_preserves_conflict_after_restart(self):
         conflict=self.conflict();coordinator=Coordinator(self.world,trainer=self.trainer,evaluator=self.evaluator,policy=self.policy)
         run=coordinator.create();coordinator.resume(run,stop_after='compile')
@@ -105,3 +105,49 @@ class WorldUncertaintyTests(unittest.TestCase):
         result=release.monitor(self.runtime,expected_generation=state['generation'],observed_ok=True,elapsed_ms=1)
         self.assertNotEqual(result['status'],'simulated_pass');self.assertIsNone(release.status(self.operator)['active'])
         self.assertEqual(len(self.ledger.open_conflicts(self.runtime,'task')),1)
+
+    def test_registered_planner_rechecks_conflicts_and_restart_adapter(self):
+        from nerve_awim.world_model.planner import plan_registered
+        from nerve_awim.world_model.contracts import REVISION
+        self.registry.freeze(self.evaluator,self.model)
+        initial=self.world.episodes(self.trainer)[0]['initial']
+        actions=sorted(set(r['action'] for r in self.rules))
+        plan=plan_registered(self.world,self.evaluator,self.model,initial,actions,revision=REVISION,research_evaluation=True)
+        self.assertIn('uncertainty',plan)
+        with self.assertRaises(PermissionError):plan_registered(self.world,self.runtime,self.model,initial,actions,revision=REVISION)
+        self.conflict()
+        with self.assertRaises(PermissionError):plan_registered(self.world,self.evaluator,self.model,initial,actions,revision=REVISION,research_evaluation=True)
+        bare=WorldLedger(self.path,self.auth)
+        with self.assertRaises(PermissionError):plan_registered(bare,self.evaluator,self.model,initial,actions,revision=REVISION,research_evaluation=True)
+    def test_learned_frame_plan_then_conflict_then_restart(self):
+        from nerve_awim.world_model.generalization import infer
+        from nerve_awim.world_model.study import record
+        cases=[{'id':'learn-'+str(n),'family':'workflow','initial':{'family':'workflow','stage':0,'approved':True,'case':n}} for n in (10,20)]
+        # Actual host-observed training transitions; no selection/final use.
+        record(self.world,self.trainer,cases,'train')
+        proposal=infer(self.world.episodes(self.trainer))
+        self.assertTrue(proposal['rules'])
+        for rule in proposal['rules']:
+            self.adapter.bind_rule(self.operator,task_id='task',rule_id=rule['rule_id'],claim_ids=['base'],review_ref='learned-rule-review')
+        model=self.registry.put(self.trainer,proposal['rules'],compile_rules(proposal['rules'],backend=proposal['backend']),Policy(enabled=True,model_backend='declarative-frame-v1'))
+        self.registry.freeze(self.evaluator,model)
+        unseen={'family':'workflow','stage':0,'approved':True,'case':30}
+        decision=self.adapter.plan(self.evaluator,model,unseen,['inspect','validate','finish'])
+        self.assertEqual(decision['actions'],['inspect','validate','finish'])
+        self.assertEqual(self.adapter.validate_dispatch(self.evaluator,decision,unseen,['inspect','validate','finish'],5),'inspect')
+        self.conflict()
+        with self.assertRaises(PermissionError):self.adapter.validate_dispatch(self.evaluator,decision,unseen,['inspect','validate','finish'],5)
+        restarted=WorldModelUncertainty(self.ledger,WorldLedger(self.path,self.auth))
+        with self.assertRaises(PermissionError):restarted.plan(self.evaluator,model,unseen,['inspect','validate','finish'])
+    def test_final_receipt_recovery_keeps_current_uncertainty_without_reexecution(self):
+        from nerve_awim.world_model.evaluator import Evaluator
+        self.registry.freeze(self.evaluator,self.model)
+        evaluator=Evaluator(self.world,self.policy)
+        evaluator.reserve_final(self.evaluator,'synthetic-final-recovery')
+        evaluator.evaluate(self.evaluator,self.model,'final',run_id='synthetic-final-recovery')
+        conflict=self.conflict()
+        recovered=evaluator.recover_final(self.evaluator,self.model,run_id='synthetic-final-recovery')
+        self.assertIn(conflict.conflict_id,recovered['uncertainty']['conflict_ids'])
+        self.assertFalse(recovered['eligibility'])
+        with self.world.db() as con:
+            self.assertEqual(con.execute('SELECT COUNT(*) FROM wm_final_reports').fetchone()[0],1)

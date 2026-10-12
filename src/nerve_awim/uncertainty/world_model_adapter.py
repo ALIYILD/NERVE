@@ -98,21 +98,26 @@ class WorldModelUncertainty:
 
     def plan(self, actor, model_id, initial, allowed_actions):
         from ..world_model.registry import Registry
-        from ..world_model.planner import plan
+        from ..world_model.planner import plan_registered
         model = Registry(self.world).get(actor, model_id)
-        if model['state'] not in ('frozen','eligible'):
-            raise PermissionError('frozen world model required for scoped simulation planning')
-        report = self.require_supported(actor, model['rules'])
-        result = plan(model['program'], initial, allowed_actions)
-        return {**result, 'model_id':model_id, 'uncertainty':report, 'simulation_only':True, 'deployment_authorized':False}
+        result = plan_registered(self.world,actor,model_id,initial,allowed_actions,
+                                 revision=model['environment_revision'],
+                                 research_evaluation=actor.role=='evaluator')
+        # The scoped adapter remains conservative even when the opt-in mode is
+        # off: its explicit contract always requires current source support.
+        report = self.require_supported(actor,model['rules'])
+        return {**result,'uncertainty':report,'simulation_only':True,'deployment_authorized':False}
 
     def validate_dispatch(self, actor, decision, observed, allowed_actions, remaining_actions):
         from ..world_model.registry import Registry
         from ..world_model.planner import validate_dispatch
         with self.world.db() as con:
             model = Registry(self.world).get(actor, decision['model_id'])
-            if model['state'] not in ('frozen','eligible'):
-                raise PermissionError('revoked or unfrozen world model cannot dispatch')
+            research=decision.get('research_evaluation') is True
+            self.world.scope(actor,'evaluator' if research else 'runtime')
+            required=('frozen','eligible') if research else ('eligible',)
+            if model['state'] not in required:
+                raise PermissionError('revoked, unfrozen or ineligible world model cannot dispatch')
             current = self.require_supported(actor, model['rules'], con=con)
             if decision.get('uncertainty', {}).get('task_revisions') != current['task_revisions']:
                 raise StaleRevision('world-model plan invalidated by evidence; replan')
@@ -151,6 +156,9 @@ def checkpoint_state(world_ledger, actor, body, *, con):
     adapter=getattr(world_ledger,'_uncertainty_adapter',None)
     if adapter is None:raise PermissionError('persisted world uncertainty requires its host adapter')
     rules=body.get('proposal',{}).get('rules',[])
+    if body.get('model_id'):
+        from ..world_model.registry import Registry
+        rules=Registry(world_ledger).get(actor,body['model_id'])['rules']
     report=adapter.report(actor,rules,con=con)
     # Preserve source-linked conflicts even before a proposal has been generated.
     for row in con.execute('SELECT DISTINCT task FROM uc_world_rules WHERE tenant=? AND agent=?',(actor.tenant,actor.agent)):

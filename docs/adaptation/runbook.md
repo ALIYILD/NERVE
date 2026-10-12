@@ -96,3 +96,53 @@ on the fresh held-out split and rejected. Its capable-control success gain is ze
 p95 overhead remains above the ceiling. Do not reuse either consumed held-out batch
 for another revised candidate. The v2 fixture suite does not establish clinical or
 provider-backed learning benefit.
+
+
+## Repository task administration
+
+Run each command from the repository with `PYTHONPATH=src`:
+
+```sh
+python3 scripts/agentos_bridge.py adaptation-status --repository . --state <state-directory> --task-id <task-id> --report status.json
+python3 scripts/agentos_bridge.py adaptation-reset --repository . --state <state-directory> --task-id <task-id> --reason operator-clear-memory --report reset.json
+python3 scripts/agentos_bridge.py adaptation-kill --repository . --state <state-directory> --reason operator-stop --report kill.json
+```
+
+These commands reauthenticate the local repository operator against the explicitly
+selected state database and resolved repository root. The canonical root path hashes
+to a separate agent and subject scope; it is a local namespace, not a remote identity
+credential. Use the same repository and state directory as the run. Synthetic administration remains separate with `--synthetic`; selecting
+both scopes is rejected. Missing state is an error.
+
+Status can inspect a completed or expired task. Reset clears active memory but
+preserves status, receipts, constraints and action budgets. Kill persists across
+processes and blocks subsequent dispatch in that database's selected repository scope;
+it does not kill unrelated processes. There is no automatic unkill command.
+A restarted coordinator cannot disable a persisted active task's guards by choosing
+`off` or `shadow`; incompatible configuration is rejected before tool dispatch.
+
+The v2 benchmark predates this administrative hardening. Its source manifest is
+preserved under `continuation/admin/previous-source-manifest.json`; it is not a
+current-revision benefit claim, and its consumed holdout has not been rerun.
+
+
+## Root binding and existing state
+
+New repository runs bind grants, corrections and the kill switch to the canonical
+resolved root. Two repositories can share a database without sharing permissions
+or kill switches. A symlink alias resolves to the same scope. Moving a repository
+to a different canonical path requires review; existing tasks are not reassigned.
+Task IDs remain globally unique within the database.
+
+Databases containing earlier unbound repository tasks or an earlier agent-wide
+kill switch are rejected by the root-bound CLI. Keep these databases unchanged for
+review and select a fresh `--state` directory for new work. There is no automatic
+migration because old records cannot prove which repository owned the task.
+Their original `build_repository(database)` API scope can still inspect receipts
+with an explicitly issued local operator grant. A new state directory starts a
+separate local experiment; it does not resume, migrate or unlock an old killed task.
+
+Observed commands and results are in
+[the root isolation trace](continuation/root-scope/commands.json): NERVE recovery
+succeeds; the other root cannot inspect its task; killing NERVE blocks its next run;
+the other root still completes its own source inventory.

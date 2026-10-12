@@ -170,10 +170,13 @@ class MemoryService:
                 raise ValueError('exact query schema required')
             result = self.gateway.retrieve(grant.actor, MemoryRequest(grant.scope, body['query'], limit=body['limit']))
             # Trusted records are evidence data, not instructions or clinical decisions.
-            return 200, {'records': [asdict(record) for record in result.records],
+            payload = {'records': [asdict(record) for record in result.records],
                          'kv_status': result.kv_status, 'fallback_reason': result.fallback_reason,
                          'source_digest': result.source_digest, 'review_required': True,
                          'synthetic_only': True}
+            if hasattr(result, 'uncertainty'):
+                payload.update(uncertainty=result.uncertainty, guidance_authority=False)
+            return 200, payload
         if path.endswith('/experiences') or path.endswith('/feedback'):
             if set(body) != base | {'content', 'source_id'}:
                 raise ValueError('exact proposal schema required')

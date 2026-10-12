@@ -1,0 +1,88 @@
+{
+  "operation_completed": true,
+  "result": {
+    "baseline_success": 0,
+    "candidate_success": 6,
+    "deployment_authorized": false,
+    "eligibility": false,
+    "evidence_mode": "real local read-only repository tools; deterministic learned workflow",
+    "fidelity": {
+      "reviewer": "independent-structural-v1",
+      "scope": "finite exact-transition DSL; not a formal proof or provider review",
+      "status": "pass"
+    },
+    "holdout_status": "consumed",
+    "limitations": [
+      "learned inventory/verify/handoff order, not code repair or general software intelligence",
+      "small curated local source sample; no statistical generalization claim",
+      "trusted research host restricts all actions; no production model activation"
+    ],
+    "model_id": "4da3e986fd8d77afdfab12fc1890436a8e4bbbfe8e95293ca1d7564ef2bbda64",
+    "provider_calls": 0,
+    "replay": {
+      "compared": 6,
+      "failures": [],
+      "goal_matches": 6,
+      "replay_pass": true,
+      "unknown_fraction": 0.0
+    },
+    "results": [
+      {
+        "artifact": "/private/tmp/nerve-all-workstreams-evidence/ci/nerve-world-model-repository-ci/candidate/source-9806b66692d71d181b99b08a2b8e34e94f3031cda08c42956e0a0c38f8802111.json",
+        "baseline_success": false,
+        "candidate_success": true,
+        "path": "src/nerve_awim/host_lease.py",
+        "read_only_tool_calls": 3,
+        "simulated_nodes": 18,
+        "source_id": "source-9806b66692d71d181b99b08a2b8e34e94f3031cda08c42956e0a0c38f8802111"
+      },
+      {
+        "artifact": "/private/tmp/nerve-all-workstreams-evidence/ci/nerve-world-model-repository-ci/candidate/source-3dc5cdf957b3de5ebbcd1ca4d153aa3983bec1b4de5c73aacb2471e065bc941f.json",
+        "baseline_success": false,
+        "candidate_success": true,
+        "path": "src/nerve_awim/hermes_learning.py",
+        "read_only_tool_calls": 3,
+        "simulated_nodes": 18,
+        "source_id": "source-3dc5cdf957b3de5ebbcd1ca4d153aa3983bec1b4de5c73aacb2471e065bc941f"
+      },
+      {
+        "artifact": "/private/tmp/nerve-all-workstreams-evidence/ci/nerve-world-model-repository-ci/candidate/source-66cf9e4fc7238ce6dc95d22ccf87117431aff572379448f02b3d66aa1ea35cef.json",
+        "baseline_success": false,
+        "candidate_success": true,
+        "path": "src/nerve_awim/worldcore_v20.py",
+        "read_only_tool_calls": 3,
+        "simulated_nodes": 18,
+        "source_id": "source-66cf9e4fc7238ce6dc95d22ccf87117431aff572379448f02b3d66aa1ea35cef"
+      },
+      {
+        "artifact": "/private/tmp/nerve-all-workstreams-evidence/ci/nerve-world-model-repository-ci/candidate/source-f1c94645a2dbd958a2685c1bad4eece6ddb850ccc79a152c74da4b15b19613ee.json",
+        "baseline_success": false,
+        "candidate_success": true,
+        "path": "src/nerve_awim/observed_runtime_v29.py",
+        "read_only_tool_calls": 3,
+        "simulated_nodes": 18,
+        "source_id": "source-f1c94645a2dbd958a2685c1bad4eece6ddb850ccc79a152c74da4b15b19613ee"
+      },
+      {
+        "artifact": "/private/tmp/nerve-all-workstreams-evidence/ci/nerve-world-model-repository-ci/candidate/source-941603c7b57778ed08e58f927160754c7a1971b7484c55198bedcb9fab8a9366.json",
+        "baseline_success": false,
+        "candidate_success": true,
+        "path": "src/nerve_awim/runtime_v28.py",
+        "read_only_tool_calls": 3,
+        "simulated_nodes": 18,
+        "source_id": "source-941603c7b57778ed08e58f927160754c7a1971b7484c55198bedcb9fab8a9366"
+      },
+      {
+        "artifact": "/private/tmp/nerve-all-workstreams-evidence/ci/nerve-world-model-repository-ci/candidate/source-4c565104be55fc337b3048925433ded5e3b7a8609945764439cb045a657c195c.json",
+        "baseline_success": false,
+        "candidate_success": true,
+        "path": "src/nerve_awim/learn_mcp.py",
+        "read_only_tool_calls": 3,
+        "simulated_nodes": 18,
+        "source_id": "source-4c565104be55fc337b3048925433ded5e3b7a8609945764439cb045a657c195c"
+      }
+    ],
+    "source_files_modified": false,
+    "tasks": 6
+  }
+}

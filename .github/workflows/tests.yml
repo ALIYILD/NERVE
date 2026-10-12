@@ -271,6 +271,11 @@ jobs:
       - name: Verify NERVE world-model entry point
         run: python scripts/nerve_world_model.py doctor --json
 
+      - name: Verify connected learning, adaptation, memory, cues and uncertainty
+        env:
+          PYTHONPATH: src
+        run: python -m nerve_awim integrated-learning --repository . --directory /tmp/nerve-integrated-ci
+
       - name: Smoke test learned frame rules and repository tool wiring
         env:
           PYTHONPATH: src

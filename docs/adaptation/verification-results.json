@@ -3,26 +3,15 @@
     {
       "command": "PYTHONPATH=src /private/tmp/nerve-adaptation-ci-venv/bin/python -m unittest discover -s tests -q",
       "exit_code": 0,
-      "tests": 1007,
-      "evidence": "continuation/full-tests-python312.log"
+      "tests": 1013,
+      "evidence": "continuation/root-scope/full-tests-python312.log"
     },
     {
-      "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+      "command": "PYTHONPATH=src /private/tmp/nerve-adaptation-ci-venv/bin/python -m unittest discover -s tests -p 'test_adaptation*.py' -q",
       "exit_code": 0,
-      "tests": 46,
-      "evidence": "continuation/adaptation-tests.log"
-    },
-    {
-      "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc*.py' -q",
-      "exit_code": 0,
-      "tests": 86,
-      "evidence": "continuation/arc-tests.log"
-    },
-    {
-      "command": "node --test tests/test_checkpoint_discovery.cjs",
-      "exit_code": 0,
-      "tests": 7,
-      "evidence": "continuation/node-tests.log"
+      "tests": 52,
+      "evidence": "continuation/root-scope/adaptation-tests.log",
+      "note": "Before addition of repository_scope report field; full suite above covers final code."
     },
     {
       "command": "git diff --check",
@@ -59,5 +48,54 @@
   "live_provider_verified": false,
   "deployment_performed": false,
   "current_code_heldout_evaluated": true,
-  "candidate_state": "rejected"
+  "candidate_state": "rejected",
+  "prior_revision_checks": [
+    {
+      "command": "PYTHONPATH=src /private/tmp/nerve-adaptation-ci-venv/bin/python -m unittest discover -s tests -q",
+      "exit_code": 0,
+      "tests": 1007,
+      "evidence": "continuation/full-tests-python312.log"
+    },
+    {
+      "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+      "exit_code": 0,
+      "tests": 46,
+      "evidence": "continuation/adaptation-tests.log"
+    },
+    {
+      "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc*.py' -q",
+      "exit_code": 0,
+      "tests": 86,
+      "evidence": "continuation/arc-tests.log"
+    },
+    {
+      "command": "node --test tests/test_checkpoint_discovery.cjs",
+      "exit_code": 0,
+      "tests": 7,
+      "evidence": "continuation/node-tests.log"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "runtime_and_evaluation_scope": "Current CLI isolation trace: continuation/root-scope/commands.json. Prior performance evaluations are historical; no holdout reuse.",
+  "prior_administrative_revision_checks": [
+    {
+      "command": "PYTHONPATH=src /private/tmp/nerve-adaptation-ci-venv/bin/python -m unittest discover -s tests -q",
+      "exit_code": 0,
+      "tests": 1010,
+      "evidence": "continuation/admin/full-tests-python312.log"
+    },
+    {
+      "command": "PYTHONPATH=src /private/tmp/nerve-adaptation-ci-venv/bin/python -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+      "exit_code": 0,
+      "tests": 49,
+      "evidence": "continuation/admin/adaptation-tests.log"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ]
 }

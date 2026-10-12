@@ -1,0 +1,37 @@
+{
+  "updated_at": "2026-10-12T21:36:10.751015+00:00",
+  "status": "implemented_and_locally_verified",
+  "branch": "codex/uncertainty-integration",
+  "python_version": "3.12.12",
+  "python_tests": {
+    "passed": 1345,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 258.632,
+    "log_sha256": "9794281895e3c7cbe65521d05724783fdc82a335b41c30902eaab576a3a01030"
+  },
+  "node_tests": {
+    "passed": 7,
+    "failed": 0
+  },
+  "merged_workflow_checks": {
+    "passed": 62,
+    "failed": 0
+  },
+  "connected_entrypoints": {
+    "package": "offline_verified",
+    "agentos_bridge": "offline_verified",
+    "ci": "offline_verified"
+  },
+  "live_provider_calls": 0,
+  "provider_spend_usd": 0,
+  "general_self_improvement_proven": false,
+  "deployment_activated": false,
+  "remaining": [
+    "Fresh matched live-provider evaluation and capable baseline benefit",
+    "Verified Galahad GPU/KV runtime and deployment prerequisites",
+    "Complete remaining Memento release gates",
+    "Live JEV/GBrain/Obsidian verification beyond existing integrations"
+  ],
+  "resume": "See all-workstreams-report.md; use a new output directory for each study and do not reuse consumed holdouts."
+}
