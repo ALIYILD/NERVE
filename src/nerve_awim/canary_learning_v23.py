@@ -91,6 +91,7 @@ class CanaryLearning:
             self._stop(con, scope, canary, reason)
 
     def execute(self, actor, canary, task, *, guard=None):
+        self.engine.reject_arc_bypass(actor, task)
         scope = self.engine._scope(actor, 'runtime')
         with self.engine._db() as con:
             self._row(con, scope, canary)

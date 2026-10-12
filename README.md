@@ -4,6 +4,76 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## Independent Watchtower / Guardian (observe-only development)
+
+The separate [safety control plane](docs/watchtower/ARCHITECTURE.md) provides
+bounded read-only telemetry, independent infrastructure probes, incident evidence,
+an MFA owner portal, notification adapters and explicitly scoped containment.
+NERVE's existing execution and learning paths do not import or depend on it.
+Live enforcement is disabled; production IAM, coverage, identity and provider
+verification remain deployment gates. See the [evidence report](docs/watchtower/ACCEPTANCE.md)
+and [recovery runbook](docs/watchtower/RUNBOOK.md).
+
+```bash
+PYTHONPATH=safety python -m nerve_guardian demo --report /tmp/guardian-demo.json
+```
+
+## Opt-in Cognitive Cue Engine
+
+The [Cognitive Cue Engine](docs/cce/runbook.md) adds model/tokenizer-bound cue
+selection, bounded paired experiments, optional Hermes instruction cues and
+advisory JEV review using NERVE's existing authority, audit and memory interfaces.
+It defaults off. Synthetic results cannot activate cues; clinical cues remain
+disabled. Paper reproduction and live deployment are separate, outstanding gates.
+See the [15-loop plan](docs/cce/implementation-plan.md),
+[Claude Code master prompt](docs/cce/claude-cli-prompt.md) and
+[verification status](docs/cce/verification.md).
+The [installed-host wiring](docs/cce/host-integration.md) connects the Agent OS
+bridge and native Hermes worker, with `cce-status`, inspection and revocation.
+An optional [local research adapter](docs/cce/local-research.md) supports verified
+installed Qwen models, frozen datasets and measured token receipts. Its bounded
+arithmetic smoke has run locally; no cue effectiveness or deployment is claimed.
+
+```bash
+PYTHONPATH=src python -m nerve_awim.cue_cli demo
+```
+
+## Opt-in Memento 3 world-model research
+
+NERVE can learn bounded operational rules from observed transitions, compare
+candidates, plan through existing read-only repository tools, and recover
+completed final reports across coordinator restarts. Agent OS evidence, offline
+Hermes proposals and host-bound MCP inspection use the existing NERVE interfaces.
+
+```bash
+python scripts/nerve_world_model.py doctor
+python scripts/nerve_world_model.py --db /tmp/nerve-memento-demo.sqlite3 demo
+# Equivalent package entry point:
+PYTHONPATH=src python -m nerve_awim world-model doctor
+```
+
+Use a fresh demo database. See the [commands and host integration guide](docs/world-model/README.md),
+[measured capabilities](docs/world-model/capability-report.md), and
+[remaining plan work](docs/world-model/backlog.json). This feature is disabled by
+default, uses no live provider, and does not authorize deployment. The complete
+Memento 3 plan is still in progress.
+
+## Opt-in task adaptation and external-memory research
+
+Task-scoped verified corrections now extend the ARC dispatcher with persistent
+receipts, bounded replanning, checkpoint recovery and an operator kill switch.
+Production defaults remain off. The `adaptation-run` CLI now verifies real local
+repository inventories, with an explicit correction/recovery scenario. See
+[observed NERVE behavior](docs/adaptation/continuation/observed-behavior.md).
+Synthetic CLI demonstrations, frozen evaluations
+and a separate budgeted NumPy fast-memory experiment are documented in the
+[adaptation runbook](docs/adaptation/runbook.md).
+
+The synthetic adaptation candidate failed its overhead gate, and trained external
+memory underperformed exact structured memory. Neither is production-approved.
+See the [readiness report](docs/adaptation/final-readiness.md) for measured results,
+code versions and remaining integration boundaries.
+
 ## v2.1 opt-in repository task shadow learning
 
 The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed study
@@ -39,7 +109,7 @@ The [v2.3 canary controller](docs/canary-learning-v23.md) lets a trusted operato
 approve limited trial traffic for a passed candidate. It checks candidate outputs,
 automatically falls back on canary failures, and requires separate approval for
 full promotion. This local API is tested with repository tasks; it is not wired to
-Clinical OS or external LLM traffic.
+a downstream clinical application or external LLM traffic.
 
 The [shadow adapter](docs/shadow-task-learning-v21.md) now executes selected real
 repository tasks with the active tool, then independently judges outputs and
@@ -50,7 +120,8 @@ handler latency is reported; provider costs remain explicitly unknown.
 The active AST tool is the strong fixed baseline. In the cross-process check,
 both baseline and candidate score 5/5 on disjoint files, so the proposal is
 rejected and no release changes. This is an executable research workflow, not a
-live Clinical OS integration or a claim of general self-improvement.
+live integration with a downstream clinical application or a claim of general
+self-improvement.
 
 ```bash
 PYTHONPATH=src python scripts/verify_shadow_v21.py
@@ -71,8 +142,6 @@ The public repository currently includes a minimal core, the v1.2 delayed-observ
 ## Architecture
 
 `Sensors → Perception → WorldCore → NERVE Decision Layer → Safe Action → Feedback → Evaluated Memory/Model Updates`
-
-See the academic research proposal at https://deepsynaps.ai/blogs/nerve-awim-adaptive-world-intelligence-research and the [AI Lab model page](https://deepsynaps.ai/awim).
 
 ## Install
 
@@ -105,7 +174,7 @@ Apache License 2.0. See `LICENSE`.
 
 ## Citation
 
-NERVE-AWIM contributors (2026). *NERVE-AWIM: A Bio-Inspired Adaptive World Intelligence Architecture*. Research software and specification, DeepSynaps AI Lab.
+NERVE-AWIM contributors (2026). *NERVE-AWIM: A Bio-Inspired Adaptive World Intelligence Architecture*. Research software and specification.
 
 ## Security
 
@@ -626,7 +695,7 @@ PYTHONPATH=src python -m nerve_awim.worldcore_recursion_v19
 Absolute completion, abort and violation gates, non-regression constraints
 and a distinct holdout evaluation remain frozen. The scheduled workflow
 generates a separate `worldcore-research.json` artifact; **no controller
-setting is applied** to deployed NERVE, robots, or DeepSynaps devices.
+setting is applied** to deployed NERVE, robots, or neuromodulation devices.
 
 GitHub Actions scheduling is best-effort, not an always-on service.
 Artifacts can expire and caches can be evicted. Checkpoints are written atomically,
@@ -656,6 +725,7 @@ and a capable fixed AST tool also **8/8**. Approval changed the executed route;
 rollback restored the original behaviour in an isolated temporary runtime.
 This is tool-selection learning on a small public-code workload, not LLM weight
 training or evidence of broad autonomous intelligence. The demo's operator is
-simulated; remote authentication and live Clinical OS integration are not supplied.
+simulated; remote authentication and live integration with a downstream clinical
+application are not supplied.
 
 See [host integration, evidence gates and boundaries](docs/governed-outcome-learning-v20.md).

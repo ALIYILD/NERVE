@@ -1,0 +1,12 @@
+{
+  "observed_date": "2026-10-12",
+  "shadow_status": "no_candidate",
+  "guard_result": "no_exact_accepted_candidate",
+  "activation_authorized": false,
+  "native_sessions_reserved": 20,
+  "shadow_episodes": 0,
+  "queue_revision_unchanged": "17a0e5577105f8fdea293b2acc9405b4e610009cbb9814dbe9ba86aab68d8198",
+  "queue_manifest_unchanged": "61884de327fdd6b9fc9d530aea06703ef9f7a5a4421ff6e1d9bfa0632048606b",
+  "tests_passed": 821,
+  "limitation": "Live guard checks only. No model inference, candidate performance, or learned improvement measured."
+}

@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "plan_complete": false,
+  "loops": [
+    {
+      "loop": "00",
+      "status": "complete",
+      "evidence": "repo-map.md; baseline-evidence.json",
+      "remaining_or_decision": "Isolated checkout, source mapping and baseline recorded."
+    },
+    {
+      "loop": "01",
+      "status": "partial",
+      "evidence": "contracts.py; strict policy tests",
+      "remaining_or_decision": "Strict schema-guarded frame operations and legacy-compatible policy loading added. Full proposed Transition/ModelManifest/VerificationReport/LearningRun typed records remain."
+    },
+    {
+      "loop": "02",
+      "status": "partial",
+      "evidence": "ledger.py; concurrent receipt and process recovery tests",
+      "remaining_or_decision": "Ordered receipts, idempotency and transactional imports work; full action/provider/latency provenance contract remains. Explicit v1-to-v2 migration preserves consumed holdouts and adds durable final report receipts."
+    },
+    {
+      "loop": "03",
+      "status": "partial",
+      "evidence": "registry.py; rulebook.py; tampering tests",
+      "remaining_or_decision": "Artifacts now pin trusted interpreter/evaluator source hashes and Python major/minor. Rule lifecycle and precise evidence deletion dependencies remain."
+    },
+    {
+      "loop": "04",
+      "status": "partial",
+      "evidence": "reflection.py; hidden-state and mismatch tests",
+      "remaining_or_decision": "Retain versus code repair now requires actual replay failure references; evidence-derived generalization added. Provider-based hypotheses and richer failure classification remain."
+    },
+    {
+      "loop": "05",
+      "status": "partial",
+      "evidence": "sandbox.py; worker.py; escape rejection tests",
+      "remaining_or_decision": "Finite DSL only. Arbitrary Python deliberately unavailable. macOS hard memory isolation and timeout/oversized-output fault injection remain."
+    },
+    {
+      "loop": "06",
+      "status": "partial",
+      "evidence": "replay.py; fidelity.py; wrong-code/goal tests",
+      "remaining_or_decision": "Full visible-state episode replay and independent structural review work; hidden-state learning and provider fidelity review are unavailable."
+    },
+    {
+      "loop": "07",
+      "status": "partial",
+      "evidence": "evaluator.py; consumed-final crash/nonreuse tests",
+      "remaining_or_decision": "Study reserves final sources before induction, freezes before final generation, and records one-use consumption. Separate hostile-provider/evaluator OS boundary and semantic cross-store clone detection remain. Generic evaluator now commits hashed final report receipts for coordinator recovery; incomplete claims remain consumed. Standalone study runners still use their separate one-use protocol."
+    },
+    {
+      "loop": "08",
+      "status": "partial",
+      "evidence": "planner.py; stale observation and budget tests",
+      "remaining_or_decision": "Host-bound registered planner denies runtime use of ineligible models and checks revision/integrity; evaluators may exercise frozen candidates. Research-only read-only dispatch rechecks real source hashes. Operational effect outboxes remain."
+    },
+    {
+      "loop": "09",
+      "status": "partial",
+      "evidence": "population.py; disagreement/probe test",
+      "remaining_or_decision": "Exact and generalized candidates now compete inside the durable coordinator under bounded candidate/population counts and a traceable selection objective. Simulation disagreement probes remain supported; iterative hypothesis-driven data gathering remains."
+    },
+    {
+      "loop": "10",
+      "status": "partial",
+      "evidence": "coordinator.py; checkpoint/fencing/process tests",
+      "remaining_or_decision": "Frame induction, candidate replay/selection, category work reservations, immutable policy and restart integrated. Complete multigeneration revision, live provider accounting and non-idempotent external outboxes remain."
+    },
+    {
+      "loop": "11",
+      "status": "partial",
+      "evidence": "adapters.py; hermes_learning.py; real AgentOS and pending-memory tests",
+      "remaining_or_decision": "Existing AST inventory, independent token verifier and AgentOS evidence handoff exercised on six unseen local files; offline Hermes bridge remains. Live budgeted provider wiring remains unavailable."
+    },
+    {
+      "loop": "12",
+      "status": "partial",
+      "evidence": "adapters.shadow; counterfactual test",
+      "remaining_or_decision": "Pure observed-action shadow output works; full family-level success/error/latency/cost comparison remains."
+    },
+    {
+      "loop": "13",
+      "status": "partial",
+      "evidence": "release.py; simulated rollback test",
+      "remaining_or_decision": "Atomic simulated bundles, stale generation rejection and integrity fallback work. Operational canary/promotion is intentionally unavailable pending eligibility and authenticated host integration."
+    },
+    {
+      "loop": "14",
+      "status": "partial",
+      "evidence": "cli.py; mcp.py; real stdio and CLI tests",
+      "remaining_or_decision": "Local synthetic CLI and host-bound MCP inspection work; proposal tools and real operator commands are denied, not implemented."
+    },
+    {
+      "loop": "15",
+      "status": "partial",
+      "evidence": "benchmarks/world_model/benchmark.py",
+      "remaining_or_decision": "Fresh 240-case study compares weak baseline, capable control, exact memory and learned frame rules. A second fresh-seed cohort adds actual retained-history and selected-population controls. Synthetic scope remains narrow; no advantage over capable control is claimed."
+    },
+    {
+      "loop": "16",
+      "status": "partial",
+      "evidence": "retention.py; transfer/drift/tombstone tests",
+      "remaining_or_decision": "Fresh-workload retention and recent-family-only ablation added. Proposal-only transfer and conservative tombstones preserved; precise dependent cleanup and physical deletion remain."
+    },
+    {
+      "loop": "17",
+      "status": "partial",
+      "evidence": "adapters.sensor_observation; existing runtime outage test",
+      "remaining_or_decision": "Simulation outage preserves unavailable. No learned stochastic predictions, calibration metrics or patient/device readiness."
+    },
+    {
+      "loop": "18",
+      "status": "partial",
+      "evidence": "README.md; CI additions; CLI demo",
+      "remaining_or_decision": "Generalization, repository source integrity, malformed operations, frame reconstruction and category-budget recovery tests added. Full arbitrary-code fault-injection and live-provider CI remain unavailable."
+    },
+    {
+      "loop": "19",
+      "status": "partial",
+      "evidence": "implementation-report.md; verification.json",
+      "remaining_or_decision": "Integrated tests and CI scripts executed. Full 00\u201319 acceptance is not met; remaining implementation work is not disguised as an external blocker."
+    }
+  ],
+  "continuation_checkpoint": "generalized frame rules and real read-only repository study"
+}

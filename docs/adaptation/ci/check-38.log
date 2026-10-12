@@ -1,0 +1,24 @@
+{
+  "cross_tenant_provider_calls": 0,
+  "cross_tenant_results": 0,
+  "disclaimer": "Semantic provider is an answer-keyed fixture, NOT Mem0 OSS. Differences in recall are constructed. Timing is only local test overhead, not actual embedder/vector/database latency. No real-world accuracy, speed or safety claims.",
+  "families": 5,
+  "queries": 10,
+  "results": {
+    "lexical": {
+      "exact_recall_at_1": 1.0,
+      "p50_local_ms": 0.4924,
+      "p95_local_ms": 0.5196,
+      "paraphrase_recall_at_1": 0.0,
+      "recall_at_1": 0.5
+    },
+    "semantic": {
+      "exact_recall_at_1": 1.0,
+      "p50_local_ms": 0.4629,
+      "p95_local_ms": 0.5457,
+      "paraphrase_recall_at_1": 1.0,
+      "recall_at_1": 1.0
+    }
+  },
+  "trust_contract": "only exact-scope approved ledger IDs are returned"
+}

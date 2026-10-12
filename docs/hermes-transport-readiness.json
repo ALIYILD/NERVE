@@ -1,0 +1,10 @@
+{
+  "revision": "c0ef5af5205dbdc25e9e44acd66873b4bb3503c9",
+  "python": "3.14.7",
+  "real_model_calls": 0,
+  "fixture_turns": 2,
+  "status": "transport_contract_passed",
+  "duplicate_json_rejected": true,
+  "fixture_requests": 3,
+  "blocked_python_connections": 0
+}

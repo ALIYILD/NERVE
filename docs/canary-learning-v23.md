@@ -3,7 +3,8 @@
 `CanaryLearning` adds an opt-in trial stage between a passed held-out evaluation
 and full operator-approved activation. It currently supports one task context per
 tenant/agent scope and trusted pure/read-only handlers. It is a local host API,
-not a Clinical OS integration, remote authentication service or process sandbox.
+not a downstream clinical application integration, remote authentication service
+or process sandbox.
 
 ## Host workflow
 

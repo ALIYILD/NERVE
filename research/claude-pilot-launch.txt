@@ -1,0 +1,9 @@
+One authorized pilot, 2026-10-11, maximum USD 10 total, secret claude_git.
+Launch token 20261011-b7f93. Do not reuse or automatically rerun.
+Diagnostic continuation 20261011-c2e41: carry forward USD 3.01536 from
+run 38143335565 (HTTP 400, no confirmed usage). Original total cap remains USD 10.
+User confirmed replacement credential. Continuation 20261011-d8a72 carries
+USD 6.03072 from both previous attempts; original total cap remains USD 10.
+Continuation run 38144982026 failed with credential-related HTTP 400.
+Total uncertain reservations USD 9.04608; confirmed usage cost zero.
+20261011-e92c4 is a non-generating credential format/models endpoint check only.

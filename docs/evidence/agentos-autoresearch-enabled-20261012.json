@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-10-12T18:03:34.733952+00:00",
+  "upstream_commit": "228791fb499afffb54b46200aca536f79142f117",
+  "controller": {
+    "enabled": true,
+    "configured": true,
+    "profile": "qa-release",
+    "status": "queued_budget",
+    "latest": {
+      "kind": "study",
+      "outcome": "wait",
+      "result": {
+        "cohort": "audit-composition-20261012-v1",
+        "manifest_sha256": "61884de327fdd6b9fc9d530aea06703ef9f7a5a4421ff6e1d9bfa0632048606b",
+        "profile": "qa-release",
+        "remaining_sessions": 0,
+        "requested_day": "2026-10-12",
+        "required_sessions": 8,
+        "revision": "17a0e5577105f8fdea293b2acc9405b4e610009cbb9814dbe9ba86aab68d8198",
+        "status": "queued_budget"
+      },
+      "created": 1791828187
+    },
+    "inbox": {},
+    "outcomes": {
+      "wait": 1
+    },
+    "remaining_sessions": 0,
+    "activation_authorized": false,
+    "limitation": "Experimental simulated-audit skill learning only; no operational activation or general improvement claim."
+  },
+  "audit_pending": {
+    "profile": "qa-release",
+    "cohort": "audit-composition-20261012-v1",
+    "requested_day": "2026-10-12",
+    "status": "queued_budget",
+    "required_sessions": 8,
+    "remaining_sessions": 0
+  },
+  "validation": {
+    "tests_passed": 839,
+    "skill_valid": true,
+    "scheduler_loaded": true,
+    "interval_seconds": 900,
+    "last_exit_status": 0
+  },
+  "native_calls_this_change": 0,
+  "measured_new_improvement": false,
+  "limitation": "One frozen learning study, followed by fresh simulated shadow task intake. New learning trials require new reviewed cohorts."
+}

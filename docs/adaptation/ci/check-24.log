@@ -1,0 +1,16 @@
+{
+  "decisions_match": true,
+  "note": "No demonstrated acceleration; threads share one Python process.",
+  "parallel": {
+    "rejected": 3,
+    "selected": null,
+    "status": "rejected",
+    "wall_seconds": 0.167111
+  },
+  "serial": {
+    "rejected": 3,
+    "selected": null,
+    "status": "rejected",
+    "wall_seconds": 0.165277
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-10-12T19:57:55.760561+00:00",
+  "registered_cohorts": [
+    {
+      "id": "audit-composition-20261012-v2",
+      "manifest_sha256": "5a38ad73b614409e887d0b4724b66b4e3e2ee79751db5ef744c955a318c67acc",
+      "profile": "qa-release",
+      "created": 1791833093
+    }
+  ],
+  "legacy_pending": {
+    "profile": "qa-release",
+    "cohort": "audit-composition-20261012-v1",
+    "requested_day": "2026-10-12",
+    "status": "queued_budget",
+    "required_sessions": 8,
+    "remaining_sessions": 0,
+    "revision": "17a0e5577105f8fdea293b2acc9405b4e610009cbb9814dbe9ba86aab68d8198",
+    "manifest_sha256": "61884de327fdd6b9fc9d530aea06703ef9f7a5a4421ff6e1d9bfa0632048606b"
+  },
+  "follow_on_studies_started": 0,
+  "tests_passed": 875,
+  "native_calls_this_change": 0,
+  "improvement_measured": false,
+  "limitation": "Second independently reviewed simulated cohort registered; evaluated skill exports are experimental and unmonitored. More fresh reviewed cohorts are required for further independent trials."
+}

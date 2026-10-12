@@ -1,0 +1,13 @@
+{
+  "id": "demo-resume",
+  "family": "resume",
+  "success": true,
+  "correction_reuse": 0,
+  "recovery": 0,
+  "scope_or_policy_denials": 0,
+  "receipts": 2,
+  "final_status": "completed",
+  "checkpoint_created": true,
+  "provider_calls": 0,
+  "provider_cost_usd": 0
+}

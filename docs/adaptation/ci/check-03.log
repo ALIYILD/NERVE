@@ -1,0 +1,67 @@
+{
+  "multi_regime": {
+    "adaptive": {
+      "goal_error": 0.14420816160503666,
+      "late_goal_error": 0.22819858590858208,
+      "late_prediction_error": 0.09220998693143764,
+      "late_state_error": 0.08653882873964133
+    },
+    "config": {
+      "delay": 2,
+      "dropout": 0.12,
+      "regimes": [
+        [
+          0,
+          0.27
+        ],
+        [
+          20,
+          0.48
+        ],
+        [
+          40,
+          0.15
+        ],
+        [
+          60,
+          0.4
+        ]
+      ],
+      "seeds": 20,
+      "steps": 80
+    },
+    "drift": {
+      "goal_error": 0.15801499477967676,
+      "late_goal_error": 0.21437349635602285,
+      "late_prediction_error": 0.08625396863204643,
+      "late_state_error": 0.08506330851409052
+    },
+    "frozen": {
+      "goal_error": 0.1064292486567647,
+      "late_goal_error": 0.18728715537721297,
+      "late_prediction_error": 0.0878022825654981,
+      "late_state_error": 0.08666050635286403
+    }
+  },
+  "single_change": {
+    "adaptive": {
+      "goal_error": 0.38278757153237825,
+      "late_goal_error": 0.33581427374101513,
+      "late_prediction_error": 0.13880694867857957,
+      "late_state_error": 0.15463783570494033
+    },
+    "config": {
+      "change_step": 30,
+      "delay": 2,
+      "dropout": 0.12,
+      "seeds": 20,
+      "steps": 60
+    },
+    "frozen": {
+      "goal_error": 0.27175553525430146,
+      "late_goal_error": 0.30595393813814836,
+      "late_prediction_error": 0.15671330485540338,
+      "late_state_error": 0.148172348490978
+    }
+  }
+}

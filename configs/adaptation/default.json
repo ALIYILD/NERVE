@@ -1,0 +1,14 @@
+{
+  "enabled": false,
+  "mode": "off",
+  "backend": "structured",
+  "max_action_steps": 20,
+  "max_replans": 3,
+  "max_tool_retries": 2,
+  "task_deadline_seconds": 120,
+  "max_context_tokens": 4000,
+  "provider_spend_limit": 0,
+  "cross_subject_memory": false,
+  "automatic_global_promotion": false,
+  "require_verified_corrections": true
+}

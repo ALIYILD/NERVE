@@ -2,7 +2,8 @@
 
 This bundle adds scoped readiness, startup validation, supervised-service settings
 and non-overwriting backup/restore. It does not provision an identity provider,
-TLS endpoint, VM, Clinical OS connection or model provider. No system service is
+TLS endpoint, VM, downstream clinical application connection or model provider.
+No system service is
 installed or started by the repository change.
 
 ## Readiness and startup checks

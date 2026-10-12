@@ -44,8 +44,9 @@ the existing host-issued local capabilities. Host/database access is trusted.
 
 The latency budget includes handler execution and judging and is checked after
 completion. It cannot interrupt hung code. Production process/resource deadlines,
-authenticated callers, monitoring retention, provider billing and Clinical OS
-integration remain host work. Baseline failures and database failures propagate;
+authenticated callers, monitoring retention, provider billing and downstream
+clinical application integration remain host work. Baseline failures and database
+failures propagate;
 the prior approved route is not guaranteed correct. Already delivered results
 cannot be recalled. Handlers must be pure/read-only because fallback can execute
 a second strategy. This first-failure rule is an operational guard, not a

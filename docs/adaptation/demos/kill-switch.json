@@ -1,0 +1,50 @@
+{
+  "scenario": "kill-switch",
+  "stopped": true,
+  "state": {
+    "action_receipts": {
+      "b8207e056ce44c389daf7e8abe4a7781": "6f6f9d3d2927498dbaa9981d2c2309de"
+    },
+    "active_correction_ids": [],
+    "completed_steps": [
+      "b8207e056ce44c389daf7e8abe4a7781"
+    ],
+    "config": {
+      "automatic_global_promotion": false,
+      "backend": "structured",
+      "cross_subject_memory": false,
+      "enabled": true,
+      "max_action_steps": 20,
+      "max_context_tokens": 4000,
+      "max_replans": 3,
+      "max_tool_retries": 2,
+      "mode": "active-development",
+      "provider_spend_limit": 0,
+      "require_verified_corrections": true,
+      "task_deadline_seconds": 120
+    },
+    "constraints": [
+      "preserve-facts"
+    ],
+    "episode": "df451a1aa26b41e2bfd5bc5d40f50162",
+    "expiry": 1791837431.42879,
+    "goal": "synthetic-goal",
+    "last_event": "8123208db2eb4205a115163f633bec27",
+    "last_outcome_status": "verified",
+    "memory_backend_version": "adaptation-v1",
+    "pending_steps": [],
+    "recent_failures": [],
+    "replans": 0,
+    "schema_version": "adaptation-v1",
+    "sequence": 5,
+    "status": "review-required",
+    "steps": 1,
+    "tool_failures": {},
+    "unresolved_questions": [],
+    "unverified_observations": [],
+    "verified_facts": [],
+    "version": 6,
+    "task_id": "demo-kill-switch",
+    "subject_scope": "subject-a"
+  }
+}

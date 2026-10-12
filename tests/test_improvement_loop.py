@@ -42,6 +42,8 @@ class LoopTests(unittest.TestCase):
         report = self.run_loop(predict=lambda task, lesson: task['n'] if lesson and task['n'] < 8 else -1)
         self.assertEqual(report['status'], 'no_verified_improvement')
         self.assertIsNotNone(report['final'])
+        self.assertIsNone(report['selected_lesson'])
+        self.assertIsNotNone(report['selection_winner'])
 
     def test_duplicate_candidates_do_not_repeat_evaluation(self):
         report = self.run_loop(propose=lambda request: 'same')
@@ -74,3 +76,32 @@ class LoopTests(unittest.TestCase):
         report = self.run_loop(predict=predict)
         self.assertIsNone(report['selected_lesson'])
         self.assertTrue(all(h['status'] == 'reverted' for h in report['history']))
+
+    def test_acquired_retained_capability_cannot_be_forgotten(self):
+        regression = [Episode('r'+str(n), 'evaluation', {'n':n}, n) for n in range(20,25)]
+        def predict(task, lesson):
+            n = task['n']
+            if n >= 20:
+                return n if lesson == 'first' else -1
+            if n < 8:
+                return n if lesson == 'second' or (lesson == 'first' and n == 3) else -1
+            return n if lesson else -1
+        report = self.run_loop(regression=regression, iterations=2,
+            propose=lambda request: 'first' if request['iteration'] == 1 else 'second', predict=predict)
+        self.assertEqual(report['history'][0]['status'], 'kept')
+        second = report['history'][1]
+        self.assertEqual(second['regression']['losses'], 0)
+        self.assertEqual(second['incumbent_regression']['losses'], 5)
+        self.assertEqual(second['status'], 'reverted')
+        self.assertEqual(report['selected_lesson'], 'first')
+
+    def test_final_regression_removes_selected_lesson(self):
+        def predict(task, lesson):
+            n = task['n']
+            if n < 8:
+                return n if lesson else -1
+            return n if not lesson else -1
+        report = self.run_loop(predict=predict)
+        self.assertEqual(report['final']['losses'], 5)
+        self.assertIsNone(report['selected_lesson'])
+        self.assertIsNotNone(report['selection_winner'])

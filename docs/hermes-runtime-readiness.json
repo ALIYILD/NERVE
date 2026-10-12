@@ -1,0 +1,10 @@
+{
+  "revision": "c0ef5af5205dbdc25e9e44acd66873b4bb3503c9",
+  "python": "3.14.7",
+  "imported": true,
+  "constructed": true,
+  "model_calls": 0,
+  "tool_count": 0,
+  "status": "ready_for_isolated_provider_test",
+  "blocked_python_connections": 8
+}

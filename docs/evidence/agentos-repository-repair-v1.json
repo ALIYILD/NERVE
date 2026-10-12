@@ -1,0 +1,245 @@
+{
+  "id": "repair-e7cfaef475f34e0abd8bf5558a0d53fd",
+  "profile": "backend-engineer",
+  "scope": "agentos-repository-repair-v1",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "judge_revision": "b370da9a93039271caaf3f22d92696f747612904409c941e088228f9f264800e",
+  "result": {
+    "selection": {
+      "tasks": 3,
+      "evaluated": true,
+      "baseline_hits": 3,
+      "lesson_hits": 3,
+      "wins": 0,
+      "losses": 0
+    },
+    "retention": {
+      "tasks": 0,
+      "baseline_hits": 0,
+      "lesson_hits": 0,
+      "wins": 0,
+      "losses": 0,
+      "evaluated": false
+    },
+    "final": {
+      "tasks": 0,
+      "baseline_hits": 0,
+      "lesson_hits": 0,
+      "wins": 0,
+      "losses": 0,
+      "evaluated": false
+    },
+    "status": "no_gain",
+    "lesson_id": null,
+    "scope": "agentos-repository-repair-v1",
+    "general_improvement_proven": false
+  },
+  "native_sessions": [
+    {
+      "phase": "train",
+      "arm": "baseline",
+      "ok": true,
+      "profile": "backend-engineer",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90,
+      "elapsed_seconds": 20.935,
+      "budget": {
+        "max_tokens": 4096,
+        "max_iterations": 2,
+        "timeout_seconds": 90
+      },
+      "cost_usd": null
+    },
+    {
+      "phase": "proposal",
+      "ok": true,
+      "profile": "nina-memory-librarian",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90
+    },
+    {
+      "phase": "selection",
+      "arm": "lesson",
+      "ok": true,
+      "profile": "backend-engineer",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90,
+      "elapsed_seconds": 27.515,
+      "budget": {
+        "max_tokens": 4096,
+        "max_iterations": 2,
+        "timeout_seconds": 90
+      },
+      "cost_usd": null
+    },
+    {
+      "phase": "selection",
+      "arm": "baseline",
+      "ok": true,
+      "profile": "backend-engineer",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90,
+      "elapsed_seconds": 73.178,
+      "budget": {
+        "max_tokens": 4096,
+        "max_iterations": 2,
+        "timeout_seconds": 90
+      },
+      "cost_usd": null
+    }
+  ],
+  "artifacts": [
+    {
+      "task_id": "repair-d281e0537f54",
+      "phase": "train",
+      "arm": "baseline",
+      "output": "def _normalise_trim(value):\n    if not isinstance(value, str):\n        raise ValueError(\"demo email must be nonempty and <=180 characters\")\n    stripped = value.strip()\n    if not 1 <= len(stripped) <= 180:\n        raise ValueError(\"demo email must be nonempty and <=180 characters\")\n    return stripped.lower()",
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 4,
+        "tests_total": 4,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-4b3d7308839c",
+      "phase": "train",
+      "arm": "baseline",
+      "output": "MAX_COUNTER = 2**53 - 1\ndef _counter(value):\n    if type(value) is not int or not 0 <= value <= MAX_COUNTER:\n        raise ValueError(\"invalid checkpoint counter\")\n    return value",
+      "check": {
+        "passed": false,
+        "category": "patch_rejected",
+        "tests_passed": 0,
+        "tests_total": 5,
+        "scope": "agentos-repository-repair-v1"
+      }
+    },
+    {
+      "task_id": "repair-a36efae70de9",
+      "phase": "selection",
+      "arm": "lesson",
+      "output": {
+        "code": "def canonical(value):\n    encoded = json.dumps(value, sort_keys=True, allow_nan=False, separators=(',', ':'))\n    if len(encoded.encode()) > 16384:\n        raise ValueError('bounded JSON value required')\n    return encoded"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 4,
+        "tests_total": 4,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-450736edb1f1",
+      "phase": "selection",
+      "arm": "lesson",
+      "output": {
+        "code": "def _path(name):\n    if (type(name) is not str or not name or '\\\\' in name or '\\x00' in name\n            or PurePosixPath(name).is_absolute() or ':' in name\n            or any(part in ('', '.', '..') for part in name.split('/'))):\n        raise ValueError('unsafe bundle path')\n    return name"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 7,
+        "tests_total": 7,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-28cb95df931e",
+      "phase": "selection",
+      "arm": "lesson",
+      "output": {
+        "code": "def mcnemar_exact_p(better, worse):\n    \"\"\"Two-sided exact binomial conditional p-value, descriptive only.\"\"\"\n    if (type(better) is not int or type(worse) is not int\n            or better < 0 or worse < 0):\n        raise ValueError(\"nonnegative integer discordance counts required\")\n    n = better + worse\n    if n == 0:\n        return 1.0\n    if n > 10000:\n        raise ValueError(\"too many discordant pairs\")\n    k = min(better, worse)\n    probability = 2.0 * sum(comb(n, i) for i in range(k + 1)) / (2 ** n)\n    return min(1.0, probability)"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 6,
+        "tests_total": 6,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-a36efae70de9",
+      "phase": "selection",
+      "arm": "baseline",
+      "output": {
+        "code": "def canonical(value):\n    encoded = json.dumps(value, sort_keys=True, allow_nan=False, separators=(',', ':'))\n    if len(encoded.encode()) > 16384:\n        raise ValueError('bounded JSON value required')\n    return encoded"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 4,
+        "tests_total": 4,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-450736edb1f1",
+      "phase": "selection",
+      "arm": "baseline",
+      "output": {
+        "code": "def _path(name):\n    if (type(name) is not str or not name or '\\\\' in name or '\\x00' in name\n            or PurePosixPath(name).is_absolute() or ':' in name\n            or any(part in ('', '.', '..') for part in name.split('/'))):\n        raise ValueError('unsafe bundle path')\n    return name"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 7,
+        "tests_total": 7,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-28cb95df931e",
+      "phase": "selection",
+      "arm": "baseline",
+      "output": {
+        "code": "def mcnemar_exact_p(better, worse):\n    \"\"\"Two-sided exact binomial conditional p-value, descriptive only.\"\"\"\n    if (type(better) is not int or type(worse) is not int\n            or better < 0 or worse < 0):\n        raise ValueError(\"nonnegative integer discordance counts required\")\n    n = better + worse\n    if n == 0:\n        return 1.0\n    k = min(better, worse)\n    # Conditional on discordances, null probability is 1/2.\n    # Math.comb keeps this dependency-free; upper bound prevents\n    # astronomically large intermediate integers on untrusted data.\n    if n > 10000:\n        raise ValueError(\"too many discordant pairs\")\n    probability = 2.0 * sum(comb(n, i) for i in range(k + 1)) / (2 ** n)\n    return min(1.0, probability)"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 6,
+        "tests_total": 6,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    }
+  ],
+  "limitation": "Repository-derived injected faults, not resolved production tickets. Small disjoint function set; measured paired results do not prove general improvement."
+}

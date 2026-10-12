@@ -1,0 +1,48 @@
+{
+  "limitations": "Existing synthetic benchmarks; no compute parity proof, real WorldCore control, or agent network execution.",
+  "reference": {
+    "memory": 0.12174815996541855,
+    "nonlinear": 0.21194650586749747,
+    "sensory": 0.07098051774842515
+  },
+  "report_only_holdout": {
+    "reference": {
+      "memory": 0.11819443712107598,
+      "nonlinear": 0.20554685686157867,
+      "sensory": 0.0711970376558969
+    },
+    "selected": {
+      "memory": 0.11819443712107598,
+      "nonlinear": 0.20554685686157867,
+      "sensory": 0.0711970376558969
+    }
+  },
+  "selected": "unified",
+  "selected_validation": {
+    "memory": 0.12174815996541855,
+    "nonlinear": 0.21194650586749747,
+    "sensory": 0.07098051774842515
+  },
+  "trials": [
+    {
+      "architecture": "specialist",
+      "decision": "reject",
+      "proposal_id": "specialist-network",
+      "validation": {
+        "memory": 0.17218663994532307,
+        "nonlinear": 0.21194650586749747,
+        "sensory": 0.07098051774842515
+      }
+    },
+    {
+      "architecture": "unified",
+      "decision": "reject",
+      "proposal_id": "single-learner",
+      "validation": {
+        "memory": 0.12174815996541855,
+        "nonlinear": 0.21194650586749747,
+        "sensory": 0.07098051774842515
+      }
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "agreement_fraction": 0.6666666666666666,
+  "cases": [
+    {
+      "candidate_for_human_review": false,
+      "case": "constraint_violation",
+      "deterministic_regression": true,
+      "match": false,
+      "model_risk": 0.15,
+      "predicted_regression": false
+    },
+    {
+      "candidate_for_human_review": false,
+      "case": "lower_completion",
+      "deterministic_regression": true,
+      "match": true,
+      "model_risk": 0.85,
+      "predicted_regression": true
+    },
+    {
+      "candidate_for_human_review": false,
+      "case": "no_change",
+      "deterministic_regression": false,
+      "match": false,
+      "model_risk": 0.75,
+      "predicted_regression": true
+    },
+    {
+      "candidate_for_human_review": false,
+      "case": "prediction_regression",
+      "deterministic_regression": true,
+      "match": true,
+      "model_risk": 0.8,
+      "predicted_regression": true
+    },
+    {
+      "candidate_for_human_review": true,
+      "case": "safer_goal",
+      "deterministic_regression": false,
+      "match": true,
+      "model_risk": 0.1,
+      "predicted_regression": false
+    },
+    {
+      "candidate_for_human_review": false,
+      "case": "unexpected_abort",
+      "deterministic_regression": true,
+      "match": true,
+      "model_risk": 0.9,
+      "predicted_regression": true
+    }
+  ],
+  "comparison_cases": 6,
+  "confusion": {
+    "false_negative": 1,
+    "false_positive": 1,
+    "true_negative": 1,
+    "true_positive": 3
+  },
+  "deterministic_wall_seconds": 7e-05,
+  "guardrail": "Jev results never change independent acceptance decisions.",
+  "limitations": "Constructed cases. The fixture is NOT evidence of Jev accuracy or speed; live observations require a separate authenticated run.",
+  "model_request_elapsed_seconds": 0.0,
+  "provider_tokens": {
+    "input_tokens": 0,
+    "output_tokens": 0
+  },
+  "reviewer": "synthetic-fixture-not-jev"
+}

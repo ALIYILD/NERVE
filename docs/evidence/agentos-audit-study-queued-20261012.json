@@ -1,0 +1,19 @@
+{
+  "queue": {
+    "profile": "qa-release",
+    "cohort": "audit-composition-20261012-v1",
+    "requested_day": "2026-10-12",
+    "status": "queued_budget",
+    "required_sessions": 8,
+    "remaining_sessions": 0,
+    "revision": "17a0e5577105f8fdea293b2acc9405b4e610009cbb9814dbe9ba86aab68d8198",
+    "manifest_sha256": "61884de327fdd6b9fc9d530aea06703ef9f7a5a4421ff6e1d9bfa0632048606b"
+  },
+  "observed_native_sessions_reserved": 20,
+  "observed_audit_studies": 0,
+  "observed_audit_evidence_reservations": 0,
+  "scheduler_interval_seconds": 900,
+  "scheduler_loaded": true,
+  "validation_tests_passed": 796,
+  "model_experiment_completed": false
+}

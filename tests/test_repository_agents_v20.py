@@ -13,6 +13,7 @@ class RepositoryAgentsTests(unittest.TestCase):
             ('def K(): pass', ['K']),
             ('async def 𝒇(): pass', ['f']),
             ('def cafe\u0301(): pass', ['café']),
+            ('def a\u0301b\u0327(): pass', ['áb̧']),
             ('def Ａ(): pass\ndef A(): pass', ['A']),
             ('def 東京(): pass', ['東京']),
         ):

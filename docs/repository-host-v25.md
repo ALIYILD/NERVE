@@ -8,7 +8,8 @@ This pilot connects signed HTTP requests to the existing repository tool and
 shadow-learning engine. It serves the capable AST inventory tool and gathers
 independently judged evidence without changing its release. It is a loopback
 service for a trusted host behind a TLS proxy, not a deployed public service or
-Clinical OS integration. No external LLM calls, credentials or billing are used.
+downstream clinical application integration. No external LLM calls, credentials
+or billing are used.
 
 ## Provision and run
 

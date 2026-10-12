@@ -1,0 +1,18 @@
+{
+  "receipt_sha256": "c170fe37f186b413f13e5e2cc9bcf29f04784ec2bd3b011ee9134da545fad838",
+  "kind": "post-run-fixture-review",
+  "original_receipt_unchanged": true,
+  "independent_review_blinded_to_model_output": true,
+  "invalid_or_ambiguous_cases": [
+    "f"
+  ],
+  "reason": "Case f asks whether a report independently establishes reachability. The provided circular provenance can refute independence; gold unknown instead describes uncertainty about actual reachability. Refuted is defensible.",
+  "usable_case_diagnostics": {
+    "cases": 7,
+    "correct": 6,
+    "failed_case": "e",
+    "failure": "Catalog listing with no inference receipt supports unknown execution, not refuted execution."
+  },
+  "promotion_authorized": false,
+  "limitation": "Post-run diagnostic exclusion, not a revised benchmark score or improvement experiment. The full v1 score must not be used as reliable performance evidence. Corrected v2 fixture has not been run."
+}
