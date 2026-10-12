@@ -33,7 +33,7 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
                   provider, judge, generator_id, evaluator_id, max_calls,
                   max_cost_usd, discovery_cost_cap_usd, per_call_cost_cap_usd,
                   permission_granted=False, clinical=False, risk='low',
-                  experiment_clock=perf_counter):
+                  experiment_clock=perf_counter, dataset=None):
     """Discover one proposal, screen selection, evaluate untouched holdout, stop.
 
     ``discovery_execute`` is a trusted adapter with the existing Hermes execute
@@ -66,6 +66,12 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
     if len(manifest.holdout) < 30:
         raise ValueError('at least 30 heldout pairs required before discovery')
     selections, holdouts = tuple(selection_tasks), tuple(holdout_tasks)
+    if dataset is not None:
+        from .cue_dataset import validate_dataset
+        dataset = validate_dataset(dataset)
+        if (dataset.manifest != manifest or dataset.selection_tasks != selections
+                or dataset.holdout_tasks != holdouts):
+            raise ValueError('cycle tasks must match complete frozen dataset')
     for split, tasks in (('selection', selections), ('holdout', holdouts)):
         if (any(not isinstance(t, ExperimentTask) for t in tasks)
                 or len(tasks) != len(getattr(manifest, split))
@@ -87,7 +93,8 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
 
     # Atomic reservation occurs before the first remote dispatch. It is never
     # recycled after absent candidates, synthetic evidence or callback failures.
-    reservation = coordinator.reserve_study(trainer, manifest)
+    reservation = (coordinator.reserve_dataset(trainer, dataset) if dataset is not None
+                   else coordinator.reserve_study(trainer, manifest))
     calls, cost, candidate = 0, 0., None
     discovery_synthetic = True
     selection_digest = None
@@ -100,6 +107,8 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
                    'attempted_calls': calls, 'known_cost_usd': cost,
                    'selection_digest': selection_digest, 'holdout_digest': holdout_digest,
                    'activated': False}
+        if dataset is not None:
+            summary['dataset_digest'] = dataset.digest
         with coordinator.engine._db() as con:
             coordinator.engine._state(con, scope)
             coordinator.engine._event(con, scope, 'cce_cycle', summary)

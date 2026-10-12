@@ -5,6 +5,7 @@ tool permissions or clinical approval. Outcomes/receipts must come from trusted
 host evaluators; SQL and host Python code are within the existing trust boundary.
 """
 from dataclasses import asdict
+from hashlib import sha256
 import json
 import math
 import time
@@ -44,6 +45,13 @@ class GovernedCueCoordinator:
                 tenant TEXT, agent TEXT, contract TEXT, cue_id TEXT, version INTEGER,
                 digest TEXT, candidate TEXT,
                 PRIMARY KEY(tenant,agent,contract,cue_id,version));
+              CREATE TABLE IF NOT EXISTS cce_dataset_studies (
+                reservation TEXT PRIMARY KEY, tenant TEXT, agent TEXT, contract TEXT,
+                dataset_digest TEXT, candidate TEXT);
+              CREATE TABLE IF NOT EXISTS cce_dataset_fingerprints (
+                tenant TEXT, agent TEXT, kind TEXT, fingerprint TEXT, split TEXT,
+                reservation TEXT,
+                PRIMARY KEY(tenant,agent,kind,fingerprint));
             ''')
 
     def _scope(self, actor, *roles):
@@ -57,7 +65,18 @@ class GovernedCueCoordinator:
             raise LookupError('cue candidate not available in current scope/contract')
         return row
 
-    def _reserve(self, con, scope, manifest):
+    def _dataset_required(self, con, scope):
+        return con.execute('SELECT 1 FROM cce_dataset_studies WHERE tenant=? AND agent=? LIMIT 1',
+                           scope).fetchone() is not None
+
+    def _candidate_dataset_valid(self, con, scope, candidate):
+        return (not self._dataset_required(con, scope) or con.execute(
+            'SELECT 1 FROM cce_dataset_studies WHERE candidate=? AND tenant=? AND agent=? AND contract=?',
+            (candidate, *scope, self.engine.contract)).fetchone() is not None)
+
+    def _reserve(self, con, scope, manifest, *, dataset_bound=False):
+        if self._dataset_required(con, scope) and not dataset_bound:
+            raise ValueError('dataset-bound scope cannot downgrade to ID-only reservations')
         reservation = uuid.uuid4().hex
         for split in ('discovery', 'selection', 'holdout'):
             for task in getattr(manifest, split):
@@ -69,6 +88,41 @@ class GovernedCueCoordinator:
                     (*scope, self.engine.contract, task, split, reservation))
         con.execute('INSERT INTO cce_studies VALUES(?,?,?,?,?,?)',
             (reservation, *scope, self.engine.contract, _json(asdict(manifest)), 'reserved'))
+        return reservation
+
+    def reserve_dataset(self, actor, dataset):
+        """Persist content/family protection before callbacks, across contract revisions.
+
+        Protection is scoped to tenant/agent. Historical ID-only studies cannot
+        be reconstructed. Family labels are host declarations, not semantic proof.
+        Once enabled for a scope, ID-only reservation paths cannot downgrade it.
+        """
+        from .cue_dataset import validate_dataset
+        scope = self._scope(actor, 'trainer')
+        dataset = validate_dataset(dataset)
+        identities = set()
+        for task_id, family, split in dataset.families:
+            identities.add(('family', sha256(family.encode()).hexdigest(), split))
+        for split in ('discovery', 'selection', 'holdout'):
+            for task in getattr(dataset, split + '_tasks'):
+                identities.add(('content', sha256(task.instruction.strip().encode()).hexdigest(), split))
+        with self.engine._db() as con:
+            con.execute('BEGIN IMMEDIATE')
+            self.engine._state(con, scope)
+            for kind, fingerprint, split in identities:
+                previous = con.execute('SELECT split FROM cce_dataset_fingerprints WHERE tenant=? AND agent=? AND kind=? AND fingerprint=?',
+                    (*scope, kind, fingerprint)).fetchone()
+                if previous and (previous['split'] != split or split == 'holdout'):
+                    raise ValueError('reserved content/family reused or moved between splits')
+            reservation = self._reserve(con, scope, dataset.manifest, dataset_bound=True)
+            con.execute('INSERT INTO cce_dataset_studies VALUES(?,?,?,?,?,NULL)',
+                (reservation, *scope, self.engine.contract, dataset.digest))
+            for kind, fingerprint, split in identities:
+                con.execute('INSERT OR IGNORE INTO cce_dataset_fingerprints VALUES(?,?,?,?,?,?)',
+                    (*scope, kind, fingerprint, split, reservation))
+            self.engine._event(con, scope, 'cce_dataset_reserved',
+                {'reservation': reservation, 'dataset_digest': dataset.digest,
+                 'counts': dataset.telemetry()['counts']})
         return reservation
 
     def reserve_study(self, actor, manifest):
@@ -119,11 +173,17 @@ class GovernedCueCoordinator:
                     (reservation, *scope, self.engine.contract)).fetchone()
                 if registered is None or registered['status'] != 'reserved' or registered['manifest'] != _json(asdict(manifest)):
                     raise ValueError('fresh matching scoped study reservation required')
+                if self._dataset_required(con, scope) and con.execute(
+                        'SELECT 1 FROM cce_dataset_studies WHERE reservation=? AND tenant=? AND agent=? AND contract=?',
+                        (reservation, *scope, self.engine.contract)).fetchone() is None:
+                    raise ValueError('dataset-bound scope requires matching dataset reservation')
             con.execute('INSERT INTO cce_candidates VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',
                 (candidate, *scope, self.engine.contract, _json(asdict(cue)), _json(asdict(profile)),
                  task_type, generator_id, _json({'dataset': asdict(manifest),
                     'model_config': asdict(model_config)}), None, 'pending', None))
             con.execute("UPDATE cce_studies SET status='consumed' WHERE id=?", (reservation,))
+            con.execute('UPDATE cce_dataset_studies SET candidate=? WHERE reservation=?',
+                        (candidate, reservation))
             self.engine._event(con, scope, 'cce_proposed', {'candidate': candidate, 'cue_hash': cue.content_hash})
         return candidate
 
@@ -139,6 +199,8 @@ class GovernedCueCoordinator:
         with self.engine._db() as con:
             con.execute('BEGIN IMMEDIATE')
             row = self._row(con, scope, candidate)
+            if not self._candidate_dataset_valid(con, scope, candidate):
+                raise PermissionError('dataset-bound evidence required after scope upgrade')
             if row['status'] != 'pending':
                 raise ValueError('candidate can be evaluated only once')
             cue = Cue(**json.loads(row['cue']))
@@ -186,6 +248,8 @@ class GovernedCueCoordinator:
             cue = Cue(**json.loads(row['cue']))
             if row['status'] != 'passed' or safety_reason(cue):
                 raise PermissionError('independently passed candidate required')
+            if not self._candidate_dataset_valid(con, scope, candidate):
+                raise PermissionError('dataset-bound evidence required after scope upgrade')
             if row['task_type'].lower() in ('clinical', 'medical', 'diagnosis', 'treatment'):
                 raise PermissionError('clinical cues remain disabled')
             expires = min(self.clock() + valid_for, cue.expires_at or float('inf'), row['expires'])
@@ -223,7 +287,8 @@ class GovernedCueCoordinator:
                 (*scope, self.engine.contract, task_type, profile.key)).fetchone()
             if route and route['active']:
                 row = self._row(con, scope, route['active'])
-                if row['status'] == 'approved' and row['expires'] > self.clock():
+                if (row['status'] == 'approved' and row['expires'] > self.clock()
+                        and self._candidate_dataset_valid(con, scope, row['id'])):
                     cue = Cue(**json.loads(row['cue']))
                     registry.register(cue)
                     registry.approve(cue.cue_id, cue.version, approval_id=row['id'])
@@ -263,7 +328,13 @@ class GovernedCueCoordinator:
         scope = self._scope(actor, 'auditor', 'operator', 'evaluator', 'trainer')
         with self.engine._db() as con:
             row = self._row(con, scope, candidate)
+            dataset = con.execute('SELECT dataset_digest FROM cce_dataset_studies WHERE candidate=? AND tenant=? AND agent=? AND contract=?',
+                                  (candidate, *scope, self.engine.contract)).fetchone()
+            dataset_status = {'required': self._dataset_required(con, scope),
+                              'bound': dataset is not None,
+                              'digest': dataset['dataset_digest'] if dataset else None}
         return {'candidate': row['id'], 'status': row['status'], 'task_type': row['task_type'],
+                'dataset': dataset_status,
                 'profile_key': ModelProfile(**json.loads(row['profile'])).key,
                 'generator_id': row['generator'],
                 'expires': row['expires'], 'evaluation': json.loads(row['report']) if row['report'] else None}

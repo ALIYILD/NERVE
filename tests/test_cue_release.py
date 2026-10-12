@@ -49,6 +49,19 @@ class CueReleaseTests(unittest.TestCase):
         self.assertNotIn('pairs',result)
         self.assertNotIn('cue',result)
 
+    def test_dataset_cutover_blocks_legacy_readiness(self):
+        candidate=dict(self.candidate,dataset={'required':True,'bound':False,'digest':None})
+        result=self.build(candidate_status=candidate,staging=self.stage,rollback=self.rollback)
+        self.assertFalse(result['ready'])
+        self.assertEqual(result['blockers'],['dataset_binding_required'])
+        self.assertEqual(result['dataset'],candidate['dataset'])
+        candidate['dataset']['required']=False
+        self.assertTrue(result['dataset']['required'])
+        for invalid in (None, {'required':True,'bound':False,'digest':'a'*64},
+                        {'required':True,'bound':True,'digest':None}):
+            with self.assertRaises(ValueError):
+                self.build(candidate_status=dict(self.candidate,dataset=invalid))
+
     def test_staging_fixtures_stale_future_and_wrong_bindings_fail(self):
         for override in ({'synthetic':True},{'worker_attested':False},{'cue_applied':False},
                          {'smoke_passed':False},{'candidate':'other'},{'report_digest':'b'*64},

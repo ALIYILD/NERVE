@@ -424,7 +424,7 @@ def main():
         'audit-shadow','audit-shadow-status','autoresearch-enable','autoresearch-pause',
         'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort',
         'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile',
-        'cce-local-inspect','cce-local-smoke'))
+        'cce-local-inspect','cce-local-smoke','cce-dataset-status'))
     parser.add_argument('--cue-candidate',help='Scoped CCE candidate identifier')
     parser.add_argument('--cue-review',help='Operator review reference for cue approval or revocation')
     parser.add_argument('--cue-generation',type=int,help='Expected CCE route generation from cce-route')
@@ -473,6 +473,10 @@ def main():
                 if not args.profile:
                     parser.error('CCE route inspection requires --profile')
                 result=cues.route_status(args.profile)
+            elif args.command=='cce-dataset-status':
+                if not args.profile:
+                    parser.error('CCE dataset status requires --profile')
+                result=cues.dataset_status(args.profile)
             else:
                 if not args.profile or not args.cue_candidate:
                     parser.error('CCE candidate commands require --profile and --cue-candidate')

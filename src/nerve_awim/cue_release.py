@@ -84,6 +84,7 @@ _ACTIONS = {
     'rollback_missing': 'Verify scoped cue revocation restores the no-cue baseline in staging.',
     'rollback_invalid': 'Repeat a live no-cue rollback drill for this candidate and exact profile.',
     'unsupported_task': 'Use the supported low-risk nonclinical handoff context only.',
+    'dataset_binding_required': 'Collect fresh evidence through the dataset-bound cycle; legacy evidence cannot be retroactively bound.',
 }
 
 
@@ -123,13 +124,28 @@ def build_release_manifest(*, profile_name, profile, host_status, candidate_stat
     if entry.get('task_type') != 'handoff' or profile.supported_modes != ('instruction',):
         block('unsupported_task')
     candidate, report, metrics, decision = None, None, None, None
+    dataset = None
     state, expires = None, None
     if candidate_status is None:
         block('candidate_missing')
     else:
         if (type(candidate_status) is not dict or
-                set(candidate_status) != {'candidate','status','task_type','expires','evaluation','profile_key','generator_id'}):
+                set(candidate_status) not in (
+                    {'candidate','status','task_type','expires','evaluation','profile_key','generator_id'},
+                    {'candidate','status','task_type','expires','evaluation','profile_key','generator_id','dataset'})):
             raise ValueError('coordinator.status snapshot required')
+        dataset = candidate_status.get('dataset')
+        if 'dataset' in candidate_status:
+            if (type(dataset) is not dict or set(dataset) != {'required','bound','digest'}
+                    or type(dataset['required']) is not bool or type(dataset['bound']) is not bool):
+                raise ValueError('typed dataset binding status required')
+            if dataset['bound']:
+                _digest(dataset['digest'])
+            elif dataset['digest'] is not None:
+                raise ValueError('unbound dataset cannot claim a digest')
+            if dataset['required'] and not dataset['bound']:
+                block('dataset_binding_required')
+            dataset = dict(dataset)
         candidate = _id(candidate_status['candidate'])
         if candidate_status['profile_key'] != profile.key: block('profile_mismatch')
         if candidate_status['generator_id'] != generator_id:
@@ -180,6 +196,7 @@ def build_release_manifest(*, profile_name, profile, host_status, candidate_stat
         block('rollback_invalid')
     value = {'schema_version':1, 'kind':'cce-release-readiness', 'profile_name':profile_name,
         'profile_key':profile.key, 'candidate':candidate, 'candidate_state':state,
+        'dataset':dataset,
         'checked_at':now, 'evidence_expires':expires, 'ready':not blockers,
         'authorization_granted':False, 'blockers':blockers,
         'next_steps':[_ACTIONS.get(reason, 'Resolve '+reason+' with fresh independent evidence.') for reason in blockers],

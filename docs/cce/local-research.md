@@ -76,6 +76,38 @@ manifest to discovery; keep expected answers in trusted host graders. The existi
 `run_experiment` accepts the resulting task tuples. No arbitrary dataset receives
 the arithmetic smoke grader automatically.
 
+## Durable research reservations
+
+For governed research, use `CueHost.run_dataset_cycle(profile, dataset, ...)`
+with a loaded dataset and the same trusted callbacks/budgets as `run_cycle`.
+It validates the complete frozen object again, binds the actual selection and
+holdout tasks, and atomically reserves IDs, stripped instruction hashes and
+declared family hashes before invoking discovery. Candidate summaries and release
+readiness retain the dataset digest; raw instructions and answers are not stored
+in the reservation tables.
+
+The first successful reservation upgrades that tenant/agent scope to dataset-bound
+evidence. Later ID-only studies cannot downgrade it. Legacy candidates cannot be
+evaluated, approved or served after the upgrade; selection falls back to no cue
+while existing audit records remain intact. Collect fresh bound evidence rather
+than attaching new metadata to an old approval. The upgraded protection survives
+restart and contract revisions. Inspect its counts without a provider call:
+
+```bash
+python3 scripts/agentos_bridge.py cce-dataset-status --profile qa-release
+```
+
+Previously reserved holdout content or families cannot be reused in any partition,
+even when IDs, source metadata, expected answers or other labels change. Discovery
+and selection content may recur only in the same partition. Failed discovery does
+not release reservations; conflicting reservations roll back atomically.
+
+This protection is per tenant/agent, not a global cross-agent corpus registry.
+Historical ID-only studies lack enough data for content backfilling. Semantic
+paraphrases with changed family labels remain a host curation responsibility.
+The two-task local transport smoke is deliberately separate from this governed
+cycle and cannot satisfy its untouched-holdout gate.
+
 ## Serving limitations and sources
 
 Ollama's generation response identifies a model name, while its model inventory
