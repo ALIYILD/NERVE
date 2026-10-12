@@ -147,3 +147,21 @@ See the official [generation API](https://docs.ollama.com/api/generate),
 [running models](https://docs.ollama.com/api/ps),
 [model metadata](https://docs.ollama.com/api-reference/show-model-details), and
 [GGUF tokenizer specification](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md#tokenizer).
+
+## Scheduled research admission
+
+The bridge accepts immutable CCE jobs through `cce-job-submit --task` and reports
+them through `cce-job-status`. The existing autoresearch tick handles one eligible
+job under its host lock and calls `CueHost.run_dataset_cycle`; it does not create
+a second agent architecture. Scheduled jobs require schema 2 data, explicit
+research permission and a complete discovery/selection/regression/holdout budget
+(at least 65 calls for the smallest permitted partitions). The host must supply
+the registered discovery, provider and grader callbacks; task JSON cannot import
+them. Missing adapters wait without inference. Interrupted execution is not
+replayed and never resets consumed dataset reservations.
+
+The local smoke adapter is not installed as a scheduled research adapter. Its
+confidence remains unknown, it has no discovery callback, and it cannot attest
+the production worker. Its measured arithmetic result does not satisfy calibration
+or representative handoff/regression evidence requirements. Neither local smoke
+nor queued job admission approves a cue.

@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import re
 import sqlite3
+import sys
 import time
 
 from nerve_awim.agentos_learning import atomic_json
@@ -23,7 +24,14 @@ _registry_spec.loader.exec_module(registry)
 _runner_spec = importlib.util.spec_from_file_location('_autoresearch_cohort_runner', Path(__file__).with_name('agentos_cohort_study.py'))
 cohort_runner = importlib.util.module_from_spec(_runner_spec)
 _runner_spec.loader.exec_module(cohort_runner)
-LIMITATION = 'Experimental simulated-audit skill learning only; no operational activation or general improvement claim.'
+# Share one module identity with the bridge and injected trusted adapter registry.
+cue_jobs = sys.modules.get('agentos_cue_jobs')
+if cue_jobs is None:
+    _cue_spec = importlib.util.spec_from_file_location('agentos_cue_jobs', Path(__file__).with_name('agentos_cue_jobs.py'))
+    cue_jobs = importlib.util.module_from_spec(_cue_spec)
+    sys.modules['agentos_cue_jobs'] = cue_jobs
+    _cue_spec.loader.exec_module(cue_jobs)
+LIMITATION = 'Experimental audit and explicitly queued CCE research only; no operational activation or general improvement claim.'
 
 
 def database(host):
@@ -65,7 +73,7 @@ def status(host):
                 latest=dict(kind=latest[0], outcome=latest[1], result=json.loads(latest[2]), created=latest[3]) if latest else None,
                 inbox=counts, outcomes=outcomes, remaining_sessions=studies.remaining(host),
                 registered_cohorts=registry.status(host),
-                registered_study=cohort_runner.status(host),
+                registered_study=cohort_runner.status(host), cce_jobs=cue_jobs.status(host),
                 activation_authorized=False, limitation=LIMITATION)
 
 
@@ -183,11 +191,21 @@ def _registered_work(host, native):
     return None
 
 
-def tick(host, native):
-    """One study OR one shadow pair; scheduled caller supplies repetition/backoff."""
+def tick(host, native, *, cue_adapters=None):
+    """One queued CCE job OR audit work; existing scheduler supplies repetition.
+
+    The caller holds the existing host lock. A waiting queued cue job has priority
+    and deliberately suppresses unrelated audit dispatches until resolved; this
+    prevents surprising provider calls while its required adapters are missing.
+    Built-in bridge calls supply no measured CCE adapters and therefore wait.
+    """
     current = status(host)
     if not current['enabled']:
         return dict(status='paused', activation_authorized=False)
+    recovered_cues = cue_jobs.recover(host)
+    if recovered_cues.get('abandoned'):
+        return _event(host, 'cce_recovery', 'crash',
+                      dict(status='interrupted_no_replay', jobs=recovered_cues['abandoned']))
     path = database(host)
     # A process crash must never silently replay exposed evidence.
     with sqlite3.connect(path) as db:
@@ -201,6 +219,24 @@ def tick(host, native):
             db.execute("UPDATE episodes SET state='failed',result=? WHERE state='running'", (studies.encode(dict(reason='interrupted_no_replay')),))
         _refresh_exports(host)
         return _event(host, 'recovery', 'crash', dict(status='interrupted_no_replay', tasks=interrupted))
+    existing = studies.status(host)
+    if existing['status'] == 'running':
+        with sqlite3.connect(studies.database(host)) as db:
+            db.execute("UPDATE studies SET status='failed',result=? WHERE status='running'",
+                       (studies.encode(dict(status='failed', reason='interrupted_no_replay')),))
+        return _event(host, 'recovery', 'crash', dict(status='interrupted_no_replay'))
+    recovered_cohorts = cohort_runner.recover(host)
+    if recovered_cohorts:
+        return _event(host, 'recovery', 'crash',
+                      dict(status='interrupted_no_replay', studies=recovered_cohorts))
+    cue_result = cue_jobs.tick(host, adapters=cue_adapters)
+    if cue_result is not None:
+        state = cue_result.get('status')
+        cycle_state = (cue_result.get('result') or {}).get('state')
+        outcome = ('keep' if state == 'completed' and cycle_state == 'awaiting_approval' else
+                   'discard' if state == 'completed' else
+                   'crash' if state in ('failed', 'interrupted_no_replay') else 'wait')
+        return _event(host, 'cce_job', outcome, cue_result)
     candidate = shadow._candidate(host)
     shadow_state = shadow.status(host)
     # Exported advice remains an immutable experimental record; eligibility is live.
@@ -237,11 +273,6 @@ def tick(host, native):
         if result['status'] == 'deferred_daily_budget':
             outcome = 'wait'
         return _event(host, 'shadow', outcome, result)
-    existing = studies.status(host)
-    if existing['status'] == 'running':
-        with sqlite3.connect(studies.database(host)) as db:
-            db.execute("UPDATE studies SET status='failed',result=? WHERE status='running'", (studies.encode(dict(status='failed', reason='interrupted_no_replay')),))
-        return _event(host, 'recovery', 'crash', dict(status='interrupted_no_replay'))
     if existing['status'] != 'not_run':
         # Fixed holdouts have been consumed: never hunt for a lucky retry.
         researched = _registered_tick(host, native)
