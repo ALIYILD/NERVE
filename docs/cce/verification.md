@@ -11,6 +11,7 @@ cue has been enabled and no model or clinical deployment has been performed.
 | Check | Observed result |
 | --- | --- |
 | Complete Python suite after host wiring | **1,027 passed**, 35.928 seconds |
+| Integrated suite with published world-model work and adaptation guard | **1,080 run, 1,079 passed, 1 skipped**, 77.911 seconds |
 | CCE-specific suite | **82 passed**, including bounded cycle, independent receipts, persistent governance, bridge/native-worker wiring, Hermes and JEV contracts |
 | Node checkpoint discovery | **7 passed** |
 | `git diff --check` | Passed |
@@ -30,8 +31,11 @@ The full suite needs permission to invoke its existing nested macOS sandbox.
 The initial restricted run had 36 failures and 60 errors, caused by unavailable
 nested sandboxing and the starting commit's unconditional import of an absent
 optional `adaptation` module. The ARC repair invokes that hook only when an
-adaptation object is attached; attached-module errors still propagate. After this
-repair and the required test permission, the final full suite passed. Existing
+adaptation object is attached; attached-module errors still propagate. A follow-up
+regression test also verifies that a persisted, scoped adaptation task is denied
+when its coordinator is missing. Unregistered tasks remain usable without the
+optional module. After the initial repair and required test permission, the host
+wiring suite passed. Existing
 ARC action, approval and verification logic is otherwise unchanged.
 
 Independent review also found and repaired persisted cue-version mutation and a
