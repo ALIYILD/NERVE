@@ -1,0 +1,40 @@
+{
+  "version": "local-memory-readiness-v2",
+  "model": "qwen2.5-coder:1.5b",
+  "expected_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+  "synthetic_only": true,
+  "diagnostic_only": true,
+  "persistent_kv_restored": false,
+  "environment": {
+    "python": "3.10.0",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit"
+  },
+  "source_sha256": {
+    "scripts/probe_local_memory_readiness.py": "f6217b8d355cf602f946a253b967201bfca179cb33462f243bf9ec1ac3b47cfb",
+    "scripts/benchmark_local_memory.py": "2440760626c0d18da5f491c2fc856fec778a0b9f55d99252144eda13e0019fa8",
+    "src/nerve_awim/memory_gateway/inference.py": "6d3c262f6a52187da1371741fe21993fe51235ea0ad6a956dfb1c2528d17e9d6",
+    "src/nerve_awim/memory_gateway/gateway.py": "cd41f9f0a44af8331e1db04e43493b8c83cec5512edb3269a1e6a8dc9726f876"
+  },
+  "preload_attempted": true,
+  "inference_attempted": true,
+  "accepted_completions": 0,
+  "weight_training": false,
+  "max_preload_calls": 1,
+  "max_inference_calls": 1,
+  "preload_timeout_seconds": 45,
+  "inference_timeout_seconds": 30,
+  "max_output_tokens": 32,
+  "limitation": "single readiness probe; not accuracy or improvement evidence",
+  "metadata_before": {
+    "model": "qwen2.5-coder:1.5b",
+    "digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668"
+  },
+  "preload": {
+    "wall_seconds": 4.222087611007737
+  },
+  "status": "not_ready",
+  "failure_stage": "approved_probe",
+  "failure_stage_seconds": 25.936927839997225,
+  "failure_reason": "invalid_response",
+  "failure_detail": "output_limit"
+}

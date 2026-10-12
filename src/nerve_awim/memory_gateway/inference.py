@@ -5,11 +5,56 @@ model response is untrusted and requires review. No clinical execution occurs.
 """
 from dataclasses import asdict
 import json
+import socket
 from math import isfinite
 from threading import BoundedSemaphore, Lock
 import time
+from typing import Literal
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler, ProxyHandler
+
+
+InferenceFailureReason = Literal['timeout', 'transport', 'invalid_response', 'circuit_open', 'capacity']
+InferenceFailureDetail = Literal['response_size', 'completion_shape', 'model_mismatch',
+                                 'output_limit', 'finish_reason', 'message_shape',
+                                 'tool_call', 'content', 'usage']
+_FAILURE_DETAILS = ('response_size', 'completion_shape', 'model_mismatch', 'output_limit',
+                    'finish_reason', 'message_shape', 'tool_call', 'content', 'usage')
+
+
+class _InvalidResponse(ValueError):
+    def __init__(self, detail: InferenceFailureDetail):
+        if type(detail) is not str or detail not in _FAILURE_DETAILS:
+            raise ValueError('invalid inference failure detail')
+        self.detail = detail
+        super().__init__('invalid inference response')
+
+
+class InferenceUnavailable(RuntimeError):
+    """Sanitized failure with a fixed reason for trusted host diagnostics only."""
+
+    def __init__(self, reason: InferenceFailureReason, detail: InferenceFailureDetail | None = None):
+        if type(reason) is not str or reason not in ('timeout', 'transport', 'invalid_response', 'circuit_open', 'capacity'):
+            raise ValueError('invalid inference failure reason')
+        self.reason: InferenceFailureReason = reason
+        if detail is not None and (reason != 'invalid_response' or type(detail) is not str
+                                   or detail not in _FAILURE_DETAILS):
+            raise ValueError('invalid inference failure detail')
+        self.detail = detail
+        super().__init__('inference_unavailable')
+
+
+def _failure_reason(error: Exception) -> InferenceFailureReason:
+    if isinstance(error, socket.timeout):
+        return 'timeout'
+    if isinstance(error, HTTPError):
+        return 'transport'
+    if isinstance(error, URLError):
+        return 'timeout' if isinstance(error.reason, socket.timeout) else 'transport'
+    if isinstance(error, ValueError):
+        return 'invalid_response'
+    return 'transport'
 
 
 class _NoRedirect(HTTPRedirectHandler):
@@ -44,10 +89,10 @@ class LocalInferenceAdapter:
         with self._lock:
             if self._opened_at is not None:
                 if time.monotonic() - self._opened_at < 30:
-                    raise RuntimeError('inference_unavailable')
+                    raise InferenceUnavailable('circuit_open')
                 self._opened_at, self._failures = None, 0
         if not self._slots.acquire(blocking=False):
-            raise RuntimeError('inference_unavailable')
+            raise InferenceUnavailable('capacity')
         try:
             payload = {'model': self.model, 'temperature': 0, 'stream': False,
                        'max_tokens': self.max_output_tokens, 'messages': [
@@ -63,38 +108,45 @@ class LocalInferenceAdapter:
             with self._opener.open(request, timeout=self.timeout) as response:
                 raw = response.read(65537)
             if len(raw) > 65536:
-                raise ValueError('response size exceeded')
+                raise _InvalidResponse('response_size')
             result = json.loads(raw)
             if type(result) is not dict or type(result.get('choices')) is not list or len(result['choices']) != 1:
-                raise ValueError('invalid completion')
+                raise _InvalidResponse('completion_shape')
             if result.get('model') != self.model:
-                raise ValueError('unexpected model identifier')
+                raise _InvalidResponse('model_mismatch')
             choice = result['choices'][0]
-            if (type(choice) is not dict or type(choice.get('message')) is not dict
-                    or choice.get('finish_reason') != 'stop'
-                    or choice['message'].get('role') != 'assistant'
-                    or choice['message'].get('function_call')):
-                raise ValueError('invalid completion')
+            if type(choice) is not dict:
+                raise _InvalidResponse('completion_shape')
+            if choice.get('finish_reason') != 'stop':
+                raise _InvalidResponse('output_limit' if choice.get('finish_reason') == 'length'
+                                       else 'finish_reason')
+            if type(choice.get('message')) is not dict or choice['message'].get('role') != 'assistant':
+                raise _InvalidResponse('message_shape')
+            if choice['message'].get('function_call') or choice['message'].get('tool_calls'):
+                raise _InvalidResponse('tool_call')
             content = choice['message'].get('content')
-            if type(content) is not str or not 1 <= len(content) <= 16384 or choice['message'].get('tool_calls'):
-                raise ValueError('bounded text completion required')
+            if type(content) is not str or not 1 <= len(content) <= 16384:
+                raise _InvalidResponse('content')
             usage = result.get('usage') or {}
             if type(usage) is not dict:
-                raise ValueError('invalid usage')
+                raise _InvalidResponse('usage')
             usage = {k: usage[k] for k in ('prompt_tokens', 'completion_tokens', 'total_tokens') if k in usage}
             if any(type(v) is not int or not 0 <= v <= 10000000 for v in usage.values()):
-                raise ValueError('invalid usage')
+                raise _InvalidResponse('usage')
             if usage.get('completion_tokens', 0) > self.max_output_tokens:
-                raise ValueError('provider exceeded requested output budget')
+                raise _InvalidResponse('output_limit')
             with self._lock:
                 self._failures, self._opened_at = 0, None
             return content, usage
-        except Exception:
+        except Exception as error:
             with self._lock:
                 self._failures += 1
                 if self._failures >= 3:
                     self._opened_at = time.monotonic()
-            raise RuntimeError('inference_unavailable') from None
+            reason = _failure_reason(error)
+            detail = (error.detail if isinstance(error, _InvalidResponse) else 'completion_shape') \
+                if reason == 'invalid_response' else None
+            raise InferenceUnavailable(reason, detail) from None
         finally:
             self._slots.release()
 

@@ -1,0 +1,22 @@
+{
+  "previous_commit": "94d00ab1d9de902b9923493fd4773eb5f879b715",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests": 1164,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 64.588,
+  "authorized_local_process_and_server_permissions": true,
+  "independent_offline_tests": 18,
+  "source_hashes_verified": true,
+  "real_diagnostic_attempts": 2,
+  "preloads_completed": 2,
+  "inference_attempts": 2,
+  "accepted_completions": 0,
+  "final_reason": "invalid_response",
+  "final_detail": "output_limit",
+  "prior_benchmark_retried": false,
+  "deployed": false,
+  "default_policy_changed": false,
+  "model_weights_trained": false,
+  "gpu_tested": false
+}

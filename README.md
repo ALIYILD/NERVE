@@ -716,3 +716,7 @@ Optional per-observation discounting now weights old verified outcomes less heav
 ### Prospective online adaptation
 
 A fixed discounted-feedback policy scored **84.33% versus 75.44%** for the existing learner across 2,048 fresh synthetic online episodes per arm, with no scenario regression. It is a candidate for review; defaults remain unchanged. The separate real local-model smoke attempt failed at the 30-second deadline. See [protocol, complete results and reproduction](docs/galahad/24-online-adaptation-and-local-model.md).
+
+### Local model readiness diagnostics
+
+The local inference adapter now provides sanitized host-side failure categories while retaining generic public errors. A separate preload/probe CLI identified an output-limit failure on the CPU model; no incomplete completion was accepted. [Evidence and reproduction](docs/galahad/25-local-runtime-readiness.md).
