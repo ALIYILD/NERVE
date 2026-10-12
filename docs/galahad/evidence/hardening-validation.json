@@ -1,0 +1,30 @@
+{
+  "revision": "5802bb8372f9355ad4f5cb99fa305600c2bbaa4a",
+  "branch": "feature/galahad-persistent-memory",
+  "full_suite": {
+    "passed": 1038,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 54.909
+  },
+  "gate_counts": {
+    "cpu": 163,
+    "security": 159,
+    "api": 58,
+    "faults": 5
+  },
+  "gate_counts_overlap": true,
+  "http_null_demo": "pass",
+  "http_unavailable_galahad_demo": "pass",
+  "official_mcp_stdio": "pass",
+  "pip_check": "pass",
+  "real_model_inference": "not_tested",
+  "gpu_restore": "blocked",
+  "licence": "unverified",
+  "deployed": false,
+  "environment": {
+    "python": "3.10.0",
+    "platform": "Darwin x86_64"
+  }
+}
