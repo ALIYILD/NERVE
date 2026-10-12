@@ -8,7 +8,7 @@ Upstream changes one training artifact, evaluates it under a fixed budget, recor
 
 The mutable artifact is a bounded lesson for one declared task scope. The host owns the evaluator, evidence split, accounting, and acceptance rules. A candidate cannot alter those rules to improve its score. Native Hermes receives training feedback to propose advice; selection, retention, and final evidence are separate from the proposal. Baseline and learned arms use the same model and execution limits, with randomized order. Exact decisions and citations are checked by the host.
 
-The current audit study requires selection and final gains, no paired regressions, and no unsupported positive decisions. A tie does not establish improvement. Acceptance makes a candidate eligible for simulated shadow monitoring, with full receipts binding its lesson, model, evaluator, and budget. A later paired loss, invalid positive, drift, expiry, or interrupted monitoring run can remove eligibility. Shadow status never authorizes operational activation.
+The audit studies require selection and final gains, no paired regressions, and no unsupported positive decisions. A tie does not establish improvement. The original study makes a candidate eligible for simulated shadow monitoring, with receipts binding its lesson, model, evaluator, and budget. A later paired loss, invalid positive, drift, expiry, or interrupted monitoring run can remove eligibility. Newly registered cohort studies export evaluated experimental advice; they do not yet enter that monitoring path. Neither track authorizes operational activation.
 
 This is task-scoped procedural learning. Synthetic evidence can establish behavior on the evaluated cases; it cannot establish generalized intelligence, clinical reliability, successful production repair, or improvement on unrelated tasks.
 
@@ -41,7 +41,26 @@ python3 scripts/agentos_bridge.py autoresearch-submit --task /absolute/path/to/t
 
 The task must contain exactly `id`, `family`, and `bundle`; the bundle follows the typed schema in `src/nerve_awim/agentos_audit_evidence.py` and requires `simulated: true`. Admission checks canonical identity and family against development cases, study cases, and queued evidence. This intake is for monitoring an accepted candidate; it does not create a new training cohort. A producer must supply independently grounded tasks. The controller does not manufacture its own supposedly independent evidence.
 
-When the candidate needs more monitoring evidence, status reports `awaiting_fresh_evidence`. Once the fixed study is consumed without an eligible candidate, it reports `awaiting_fresh_cohort`. Adding another reviewed, disjoint training/selection/retention/final cohort remains a separate implementation step. This version therefore provides persistent research orchestration and fresh-task monitoring, not unlimited automatic candidate generation.
+When the candidate needs more monitoring evidence, status reports `awaiting_fresh_evidence`. After the original study finishes, the scheduler also consumes new registered cohorts, one per tick, whenever there is no pending legacy shadow task. Once all registered cohorts are consumed without an eligible legacy candidate, it reports `awaiting_fresh_cohort`.
+
+## Register a fresh learning cohort
+
+The host can now admit additional reviewed cohorts without changing the original evaluator, study source, or pending queue:
+
+```sh
+python3 scripts/agentos_bridge.py autoresearch-register-cohort \
+  --task docs/evidence/agentos-audit-composition-v2.json \
+  --review docs/evidence/agentos-audit-composition-v2-independent-review.json \
+  --profile qa-release
+```
+
+Each JSON cohort contains `id`, `scope`, `limitation`, and `splits` with exactly 2 training, 4 selection, 4 retention, and 6 final cases. Cases contain `id`, `family`, `bundle`, and independently authored `expected` answers. The review binds the canonical JSON SHA-256 through `manifest_sha256`, identifies a `reviewer` and `method`, and attests `gold`, `novelty`, and `split_separation` in `checks`. This is a local host review record, not authenticated reviewer identity. Candidate model output must never serve as its own review.
+
+Admission reserves all case identities and families atomically, checks typed gold against the fixed evaluator, and rejects overlap with earlier cohorts, controls, shadow episodes, or the monitoring inbox. A canonical hash detects cosmetic reuse; independent review must still assess substantive novelty. Registered content and reviews are immutable. Changing an admitted file does not change the stored cohort. Registry/evaluator/runner revisions are bound when an experiment first attempts to run; drift stops a deferred experiment.
+
+The v2 cohort adds 16 public simulated compositions independently checked against the previous 30 cases. It shares the same reasoning primitives and is not a sample of independent production incidents. It supplies one additional learning experiment; more experiments require further independently reviewed cohorts. Advice is proposed afresh against each cohort's baseline, not cumulatively merged into an incumbent skill. No test generator or unlimited source of independent tasks is claimed.
+
+`cohort-registry.sqlite3` preserves admission and evidence reservations. `cohort-study.sqlite3` records consumption, prepaid calls, exact requests, responses, and outcomes. Every accepted result is regraded against its frozen input and receipts before export to `autoresearch-cohort-skills/<study-id>/`. Its eligibility is explicitly `experimental_unmonitored`; later controller visits revalidate it and mark mismatches ineligible. Interrupted studies remain consumed and are never replayed. The existing original study remains first in the queue.
 
 Underlying audit inspection commands are:
 

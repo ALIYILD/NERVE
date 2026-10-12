@@ -17,6 +17,12 @@ _spec = importlib.util.spec_from_file_location('_autoresearch_shadow', Path(__fi
 shadow = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(shadow)
 studies = shadow.studies
+_registry_spec = importlib.util.spec_from_file_location('_autoresearch_registry', Path(__file__).with_name('agentos_cohort_registry.py'))
+registry = importlib.util.module_from_spec(_registry_spec)
+_registry_spec.loader.exec_module(registry)
+_runner_spec = importlib.util.spec_from_file_location('_autoresearch_cohort_runner', Path(__file__).with_name('agentos_cohort_study.py'))
+cohort_runner = importlib.util.module_from_spec(_runner_spec)
+_runner_spec.loader.exec_module(cohort_runner)
 LIMITATION = 'Experimental simulated-audit skill learning only; no operational activation or general improvement claim.'
 
 
@@ -58,6 +64,8 @@ def status(host):
     return dict(enabled=bool(enabled), configured=bool(configured), profile=profile, status=(json.loads(latest[2]).get('status', 'enabled') if latest else 'enabled') if enabled else 'paused',
                 latest=dict(kind=latest[0], outcome=latest[1], result=json.loads(latest[2]), created=latest[3]) if latest else None,
                 inbox=counts, outcomes=outcomes, remaining_sessions=studies.remaining(host),
+                registered_cohorts=registry.status(host),
+                registered_study=cohort_runner.status(host),
                 activation_authorized=False, limitation=LIMITATION)
 
 
@@ -73,8 +81,8 @@ def submit(host, task):
     if len(encoded.encode()) > 1_000_000:
         raise ValueError('task exceeds size limit')
     identity = shadow.cohort.canonical_identity(task)
-    known = [row for rows in shadow.cohort.cohort()['splits'].values() for row in rows] + shadow.development_cases()
-    if any(identity == shadow.cohort.canonical_identity(row) or task['family'] == row['family'] for row in known):
+    identities, families = registry.known_evidence(host)
+    if identity in identities or task['family'] in families:
         return dict(status='reused_evidence', activation_authorized=False)
     with sqlite3.connect(database(host)) as db:
         changed = db.execute("INSERT OR IGNORE INTO inbox VALUES(?,?,?,?,'pending',NULL)",
@@ -119,6 +127,62 @@ def _refresh_exports(host, shadow_state=None):
         atomic_json(exported.parent / 'eligibility.json', dict(status=state, checked_at=int(time.time()), activation_authorized=False))
 
 
+def _cohort_export(host, verified):
+    directory = host.directory / 'autoresearch-cohort-skills' / verified['study_id']
+    directory.mkdir(parents=True, exist_ok=True)
+    content = ('---\nname: nerve-audit-experimental\ndescription: Evaluated advice for isolated simulated audit experiments.\n---\n\n'
+               'Experimental only; no operational activation or ongoing shadow monitoring.\n\n' + verified['lesson'] + '\n')
+    target = directory / 'SKILL.md'
+    if target.exists() and target.read_text() != content:
+        raise ValueError('experimental skill artifact mismatch')
+    if not target.exists():
+        with target.open('x') as handle:
+            handle.write(content)
+    atomic_json(directory / 'provenance.json', verified)
+    atomic_json(directory / 'eligibility.json', dict(status='experimental_unmonitored',
+                activation_authorized=False, checked_at=int(time.time())))
+    return str(target)
+
+
+def _registered_tick(host, native):
+    """Persist errors as outcomes; evidence remains consumed after any failure."""
+    try:
+        return _registered_work(host, native)
+    except Exception as error:
+        return _event(host, 'reviewed_cohort', 'crash', dict(status='cohort_review_required', reason=type(error).__name__))
+
+
+def _registered_work(host, native):
+    """Consume a new reviewed cohort, never regenerate or reuse a final set."""
+    runner = cohort_runner
+    recovered = runner.recover(host)
+    if recovered:
+        return _event(host, 'recovery', 'crash', dict(status='interrupted_no_replay', studies=recovered))
+    # Recover missing exports without rerunning inference; refresh their eligibility.
+    with sqlite3.connect(runner.database(host)) as db:
+        accepted = [row[0] for row in db.execute("SELECT id FROM studies WHERE status='shadow_accepted'")]
+    for ident in accepted:
+        try:
+            _cohort_export(host, runner.verify_candidate(host, ident))
+        except Exception:
+            directory = host.directory / 'autoresearch-cohort-skills' / ident
+            if re.fullmatch(r'cohort-[a-f0-9]{32}', ident) and directory.is_dir():
+                atomic_json(directory / 'eligibility.json', dict(status='ineligible',
+                            activation_authorized=False, checked_at=int(time.time())))
+    for entry in registry.pending(host):
+        if runner.consumed(host, entry['id']):
+            continue
+        result = runner.run(host, native, entry)
+        state = result['status']
+        outcome = ('keep' if state == 'shadow_accepted' else 'wait' if state in
+                   ('queued_budget', 'queued_revision_mismatch') else 'crash' if state == 'failed' else 'discard')
+        if outcome == 'keep':
+            verified = runner.verify_candidate(host, result['study_id'])
+            result['experimental_skill'] = _cohort_export(host, verified)
+        return _event(host, 'reviewed_cohort', outcome, result)
+    return None
+
+
 def tick(host, native):
     """One study OR one shadow pair; scheduled caller supplies repetition/backoff."""
     current = status(host)
@@ -150,6 +214,9 @@ def tick(host, native):
         with sqlite3.connect(path) as db:
             row = db.execute("SELECT id,task FROM inbox WHERE state='pending' ORDER BY rowid LIMIT 1").fetchone()
         if row is None:
+            researched = _registered_tick(host, native)
+            if researched is not None:
+                return researched
             return _event(host, 'wait', 'wait', dict(status='awaiting_fresh_evidence', experimental_skill=artifact))
         if studies.remaining(host) < 2:
             return _event(host, 'wait', 'wait', dict(status='waiting_budget', required_sessions=2, next_budget_reset_at=(int(time.time()) // 86400 + 1) * 86400))
@@ -177,6 +244,9 @@ def tick(host, native):
         return _event(host, 'recovery', 'crash', dict(status='interrupted_no_replay'))
     if existing['status'] != 'not_run':
         # Fixed holdouts have been consumed: never hunt for a lucky retry.
+        researched = _registered_tick(host, native)
+        if researched is not None:
+            return researched
         return _event(host, 'wait', 'wait', dict(status='awaiting_fresh_cohort', study_status=existing['status'], candidate_status=shadow_state['status']))
     try:
         result = studies.study(host, native, profile=current['profile'])

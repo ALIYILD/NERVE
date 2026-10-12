@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "gold": true,
+    "novelty": true,
+    "split_separation": true
+  },
+  "manifest_sha256": "5a38ad73b614409e887d0b4724b66b4e3e2ee79751db5ef744c955a318c67acc",
+  "method": "Manually inspected all 16 bundles, deriving decisions and applicable root IDs from source capability, provenance, identity and inclusive freshness rules independently of the author and executable oracle. Recorded the independent gold map in tests/test_agentos_cohort_review.py, then verified exact citations and oracle agreement. Confirmed 16 distinct canonical compositions and no overlap with the 14 public development controls or 16 v1 cases; checked disjoint IDs and families across 2 train, 4 selection, 4 retention and 6 final cases. Novelty is limited to new simulated compositions: transitive observation laundering, request rebinding, cross-identity joins, conflicting price directions, derived consensus and excluded-window evidence. These are meaningful adversarial variations, not newly independent reasoning primitives or real incidents; identities and labels alone do not establish novelty. Selection/retention/final remain withheld from the native proposer, although all fixtures and this review are public to developers. This record is a local host review attestation, not authenticated reviewer identity, live activation authorization or proof of model improvement. Review and tests made no native model calls.",
+  "reviewer": "Codex independent reviewer /root/fresh_review"
+}

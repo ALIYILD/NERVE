@@ -189,6 +189,11 @@ def monitor(host,native,task,study_id=None):
             raise ValueError('invalid task '+key)
     oracle.validate_bundle(task['bundle'])
     identity=cohort.canonical_identity(task)
+    registry_path=host.directory/'cohort-registry.sqlite3'
+    if registry_path.exists():
+        with sqlite3.connect(f'file:{registry_path}?mode=ro',uri=True) as db:
+            if db.execute('SELECT 1 FROM evidence WHERE identity=? OR family=?',(identity,task['family'])).fetchone():
+                return dict(status='reused_evidence',study_id=sid,activation_authorized=False)
     reserved=[r for group in cohort.cohort()['splits'].values() for r in group]+development_cases()
     if identity in {cohort.canonical_identity(r) for r in reserved} or task['family'] in {r['family'] for r in reserved}:
         return dict(status='reused_evidence',study_id=sid,activation_authorized=False)

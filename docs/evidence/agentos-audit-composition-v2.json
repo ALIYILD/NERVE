@@ -1,0 +1,1365 @@
+{
+  "id": "audit-composition-20261012-v2",
+  "limitation": "Explicitly simulated public multi-source compositions. Splits share four predicates and reasoning primitives with prior cohorts. New provenance and identity compositions are held out from the lesson proposer, not secret from developers. Structural novelty is not independent production evidence, broad transfer, or operational approval.",
+  "scope": "agentos-audit-composition-v1",
+  "splits": {
+    "final": [
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "execution_success",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider",
+            "request_id": "target-request"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "root-fail",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "root-fail"
+              ],
+              "fields": {
+                "text": "Simulated summary repeats its parent observations."
+              },
+              "id": "repair-report",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "repair-report"
+              ],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "claimed-repair",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "repair-request",
+                "success": true
+              },
+              "id": "other-pass",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "root-fail"
+            }
+          ],
+          "decision": "contradicted"
+        },
+        "family": "composition-v2-execution-negative-transitive-repair",
+        "id": "audit-v2-execution-negative-transitive-repair"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "catalog_listed",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "yes",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": false
+              },
+              "id": "no",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "no"
+              ],
+              "fields": {
+                "listed": false
+              },
+              "id": "derived-no-a",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "derived-no-a"
+              ],
+              "fields": {
+                "listed": false
+              },
+              "id": "derived-no-b",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.listed",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "no"
+            },
+            {
+              "fields": [
+                "fields.listed",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "yes"
+            }
+          ],
+          "decision": "unknown"
+        },
+        "family": "composition-v2-catalog-conflict-with-derived-consensus",
+        "id": "audit-v2-catalog-conflict-with-derived-consensus"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "zero_price",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "observed-free",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "observed-free"
+              ],
+              "fields": {
+                "input_usd": 0.01,
+                "output_usd": 0
+              },
+              "id": "inferred-paid",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "inferred-paid"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0.01
+              },
+              "id": "repeated-paid",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0.01,
+                "output_usd": 0.01
+              },
+              "id": "future-paid",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1001,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "observed-free"
+            }
+          ],
+          "decision": "supported"
+        },
+        "family": "composition-v2-price-root-and-provenance-inversion",
+        "id": "audit-v2-price-root-and-provenance-inversion"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "credential_present",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "present": true
+              },
+              "id": "present",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": false
+              },
+              "id": "missing",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": false
+              },
+              "id": "other-model-missing",
+              "kind": "credential_probe",
+              "model": "simulated/other:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": true
+              },
+              "id": "other-provider-present",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-other-provider"
+            },
+            {
+              "derived_from": [
+                "present",
+                "missing"
+              ],
+              "fields": {
+                "present": true
+              },
+              "id": "reconciled-present",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "missing"
+            },
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "present"
+            }
+          ],
+          "decision": "unknown"
+        },
+        "family": "composition-v2-credential-conflict-cross-identity-reconciliation",
+        "id": "audit-v2-credential-conflict-cross-identity-reconciliation"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "execution_success",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider",
+            "request_id": "target-request"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "other-request",
+                "success": true
+              },
+              "id": "wrong-request",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "wrong-model",
+              "kind": "execution_receipt",
+              "model": "simulated/other:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "wrong-provider",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-other-provider"
+            },
+            {
+              "derived_from": [
+                "wrong-request",
+                "wrong-model",
+                "wrong-provider"
+              ],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "joined-target",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "joined-target"
+              ],
+              "fields": {
+                "text": "Simulated summary repeats its parent observations."
+              },
+              "id": "joined-report",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [],
+          "decision": "unknown"
+        },
+        "family": "composition-v2-execution-near-miss-provenance-bridge",
+        "id": "audit-v2-execution-near-miss-provenance-bridge"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "catalog_listed",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": false
+              },
+              "id": "absent",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "successful-execution",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "successful-execution"
+              ],
+              "fields": {
+                "listed": true
+              },
+              "id": "inferred-listing",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "future-listing",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1001,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.listed",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "absent"
+            }
+          ],
+          "decision": "contradicted"
+        },
+        "family": "composition-v2-catalog-absence-despite-execution",
+        "id": "audit-v2-catalog-absence-despite-execution"
+      }
+    ],
+    "retention": [
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "catalog_listed",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "model-a",
+              "kind": "catalog",
+              "model": "simulated/a:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "model-b",
+              "kind": "catalog",
+              "model": "simulated/b:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "model-a",
+                "model-b"
+              ],
+              "fields": {
+                "listed": true
+              },
+              "id": "joined-target",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": false
+              },
+              "id": "target-expired",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 899,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [],
+          "decision": "unknown"
+        },
+        "family": "composition-v2-catalog-model-join-fabrication",
+        "id": "audit-v2-catalog-model-join-fabrication"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "execution_success",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider",
+            "request_id": "target-request"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "target-pass",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "target-fail",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "other-request",
+                "success": false
+              },
+              "id": "other-fail-a",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "other-request",
+                "success": false
+              },
+              "id": "other-fail-b",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "target-fail"
+            },
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "target-pass"
+            }
+          ],
+          "decision": "unknown"
+        },
+        "family": "composition-v2-execution-target-conflict-other-consensus",
+        "id": "audit-v2-execution-target-conflict-other-consensus"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "zero_price",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0.05,
+                "output_usd": 0
+              },
+              "id": "input-paid",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0.05
+              },
+              "id": "output-paid",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "elsewhere-free",
+              "kind": "pricing",
+              "model": "simulated/other:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "elsewhere-free"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "projected-free",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "input-paid"
+            },
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "output-paid"
+            }
+          ],
+          "decision": "contradicted"
+        },
+        "family": "composition-v2-price-paid-consensus-free-projection",
+        "id": "audit-v2-price-paid-consensus-free-projection"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "credential_present",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "present": true
+              },
+              "id": "current-present",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": false
+              },
+              "id": "future-missing",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1001,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": false
+              },
+              "id": "expired-missing",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 899,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "future-missing",
+                "expired-missing"
+              ],
+              "fields": {
+                "present": false
+              },
+              "id": "derived-missing",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "current-present"
+            }
+          ],
+          "decision": "supported"
+        },
+        "family": "composition-v2-credential-present-window-and-echo",
+        "id": "audit-v2-credential-present-window-and-echo"
+      }
+    ],
+    "selection": [
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "zero_price",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "free",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0.01,
+                "output_usd": 0
+              },
+              "id": "input-paid",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0.02
+              },
+              "id": "output-paid",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "free"
+            },
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "input-paid"
+            },
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "output-paid"
+            }
+          ],
+          "decision": "unknown"
+        },
+        "family": "composition-v2-price-conflicting-directions",
+        "id": "audit-v2-price-conflicting-directions"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "catalog_listed",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "listed",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "listed"
+              ],
+              "fields": {
+                "listed": false
+              },
+              "id": "derived-absence",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "derived-absence"
+              ],
+              "fields": {
+                "text": "Simulated summary repeats its parent observations."
+              },
+              "id": "absence-report",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "absence-report"
+              ],
+              "fields": {
+                "listed": false
+              },
+              "id": "echo-absence",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.listed",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "listed"
+            }
+          ],
+          "decision": "supported"
+        },
+        "family": "composition-v2-catalog-root-with-derived-disagreement",
+        "id": "audit-v2-catalog-root-with-derived-disagreement"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "execution_success",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider",
+            "request_id": "target-request"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "other-request",
+                "success": false
+              },
+              "id": "other-failure",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "other-failure"
+              ],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "rebound-failure",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "target-pass",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "wrong-provider-failure",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-other-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "target-pass"
+            }
+          ],
+          "decision": "supported"
+        },
+        "family": "composition-v2-execution-rebound-request",
+        "id": "audit-v2-execution-rebound-request"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "credential_present",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "present": false
+              },
+              "id": "missing-a",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 910,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": false
+              },
+              "id": "missing-b",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": true
+              },
+              "id": "elsewhere-present",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-other-provider"
+            },
+            {
+              "derived_from": [
+                "elsewhere-present"
+              ],
+              "fields": {
+                "present": true
+              },
+              "id": "projected-present",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "missing-a"
+            },
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "missing-b"
+            }
+          ],
+          "decision": "contradicted"
+        },
+        "family": "composition-v2-credential-negative-consensus-and-projection",
+        "id": "audit-v2-credential-negative-consensus-and-projection"
+      }
+    ],
+    "train": [
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "execution_success",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider",
+            "request_id": "target-request"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "pass",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "fail",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "different-request",
+                "success": true
+              },
+              "id": "other-pass",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "pass",
+                "other-pass"
+              ],
+              "fields": {
+                "text": "Simulated summary repeats its parent observations."
+              },
+              "id": "echo",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "fail"
+            },
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "pass"
+            }
+          ],
+          "decision": "unknown"
+        },
+        "family": "composition-v2-request-conflict-and-echo",
+        "id": "audit-v2-request-conflict-and-echo"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "credential_present",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "listing",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "listing"
+              ],
+              "fields": {
+                "present": true
+              },
+              "id": "inferred-key",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "inferred-key"
+              ],
+              "fields": {
+                "text": "Simulated summary repeats its parent observations."
+              },
+              "id": "key-report",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "key-report"
+              ],
+              "fields": {
+                "present": true
+              },
+              "id": "repeated-key",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [],
+          "decision": "unknown"
+        },
+        "family": "composition-v2-credential-transitive-laundering",
+        "id": "audit-v2-credential-transitive-laundering"
+      }
+    ]
+  }
+}

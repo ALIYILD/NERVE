@@ -344,6 +344,9 @@ def publish(host, extra=None):
         'Autoresearch: '+str(status['autoresearch'].get('status','paused'))+
         '; enabled='+str(status['autoresearch'].get('enabled',False))+
         '. Bounded experiments resume on the 15-minute scheduler; fresh evidence and budget are required.\n\n'+
+        'Registered follow-on cohorts: '+str(len(status['autoresearch'].get('registered_cohorts',[])))+
+        '; latest follow-on study: '+str(status['autoresearch'].get('registered_study',{}).get('status','not_run'))+
+        '. Accepted follow-on advice remains experimental and unmonitored.\n\n'+
         'Receipts: `~/.agentic-os/nerve/status.json`; [[Journal/nerve]].\n')
     (VAULT/'Memory/nerve-status.md').write_text(note)
     return status
@@ -394,9 +397,10 @@ def main():
     parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review',
         'repository-study','repository-run','repository-tasks','repository-diagnose','audit-study','audit-status',
         'audit-shadow','audit-shadow-status','autoresearch-enable','autoresearch-pause',
-        'autoresearch-status','autoresearch-tick','autoresearch-submit'))
+        'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort'))
     parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
+    parser.add_argument('--review',type=Path,help='Independent host review record for cohort admission')
     parser.add_argument('--state',type=Path,default=STATE)
     parser.add_argument('--task-id')
     parser.add_argument('--study-id',help='Accepted audit study to monitor in shadow mode')
@@ -420,6 +424,11 @@ def main():
                         raise ValueError('autoresearch-submit requires --task with fresh host-owned simulated evidence')
                     from agentos_audit_bench import read_json
                     result=autoresearch.submit(host,read_json(args.task))
+                elif args.command=='autoresearch-register-cohort':
+                    if args.task is None or args.review is None:
+                        raise ValueError('cohort registration requires --task and --review')
+                    from agentos_audit_bench import read_json
+                    result=autoresearch.registry.admit(host,read_json(args.task),read_json(args.review),profile=args.profile)
                 else:
                     result=autoresearch.status(host)
             finally:

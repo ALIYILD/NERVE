@@ -1,0 +1,153 @@
+{
+  "authoring": "Expected decisions and applicable root IDs were authored explicitly before oracle comparison; the oracle did not generate gold.",
+  "cases": [
+    {
+      "applicable_roots": [
+        "fail",
+        "pass"
+      ],
+      "expected_decision": "unknown",
+      "id": "audit-v2-request-conflict-and-echo",
+      "rationale": "Matching root receipts disagree. The other request cannot settle this conflict; the echo adds no observation. Both matching roots must be cited."
+    },
+    {
+      "applicable_roots": [],
+      "expected_decision": "unknown",
+      "id": "audit-v2-credential-transitive-laundering",
+      "rationale": "There is no credential root. A catalog observation followed by two derived credential records and an intervening summary never becomes a credential observation."
+    },
+    {
+      "applicable_roots": [
+        "free",
+        "input-paid",
+        "output-paid"
+      ],
+      "expected_decision": "unknown",
+      "id": "audit-v2-price-conflicting-directions",
+      "rationale": "One free root conflicts with two paid roots. Both input-only and output-only charges negate zero price; all three observations apply, with no majority rule."
+    },
+    {
+      "applicable_roots": [
+        "listed"
+      ],
+      "expected_decision": "supported",
+      "id": "audit-v2-catalog-root-with-derived-disagreement",
+      "rationale": "The listed root applies. A two-step chain manufacturing absence from that root supplies no independent contrary observation."
+    },
+    {
+      "applicable_roots": [
+        "target-pass"
+      ],
+      "expected_decision": "supported",
+      "id": "audit-v2-execution-rebound-request",
+      "rationale": "The boundary target pass applies. Rewriting the request identifier in a derived receipt cannot turn the other request into a target failure; provider-mismatched failure is excluded."
+    },
+    {
+      "applicable_roots": [
+        "missing-a",
+        "missing-b"
+      ],
+      "expected_decision": "contradicted",
+      "id": "audit-v2-credential-negative-consensus-and-projection",
+      "rationale": "Both matching missing-key roots apply. A present key at another provider and its derived target projection do not contradict them."
+    },
+    {
+      "applicable_roots": [],
+      "expected_decision": "unknown",
+      "id": "audit-v2-catalog-model-join-fabrication",
+      "rationale": "Two other-model listings cannot establish a target listing through a join. The only matching root is expired, leaving no applicable observation."
+    },
+    {
+      "applicable_roots": [
+        "target-fail",
+        "target-pass"
+      ],
+      "expected_decision": "unknown",
+      "id": "audit-v2-execution-target-conflict-other-consensus",
+      "rationale": "The two target roots conflict, including the boundary pass. Other-request failure consensus does not resolve target evidence or belong in citations."
+    },
+    {
+      "applicable_roots": [
+        "input-paid",
+        "output-paid"
+      ],
+      "expected_decision": "contradicted",
+      "id": "audit-v2-price-paid-consensus-free-projection",
+      "rationale": "Input-only and output-only charges independently contradict zero price. A different-model free price and its derived target projection are not applicable roots."
+    },
+    {
+      "applicable_roots": [
+        "current-present"
+      ],
+      "expected_decision": "supported",
+      "id": "audit-v2-credential-present-window-and-echo",
+      "rationale": "The present root is fresh. Future and expired missing-key records are outside the window; their joined derived missing-key record adds no independent evidence."
+    },
+    {
+      "applicable_roots": [
+        "root-fail"
+      ],
+      "expected_decision": "contradicted",
+      "id": "audit-v2-execution-negative-transitive-repair",
+      "rationale": "A repair summary and derived success do not supersede the root failure. The independent successful receipt belongs to a different request."
+    },
+    {
+      "applicable_roots": [
+        "no",
+        "yes"
+      ],
+      "expected_decision": "unknown",
+      "id": "audit-v2-catalog-conflict-with-derived-consensus",
+      "rationale": "The independent yes/no roots conflict. Repeated derived no records cannot create a majority or erase the yes citation."
+    },
+    {
+      "applicable_roots": [
+        "observed-free"
+      ],
+      "expected_decision": "supported",
+      "id": "audit-v2-price-root-and-provenance-inversion",
+      "rationale": "Only the fresh free root applies. Two derived paid records remain derived across the chain, and the future independent price is inapplicable."
+    },
+    {
+      "applicable_roots": [
+        "missing",
+        "present"
+      ],
+      "expected_decision": "unknown",
+      "id": "audit-v2-credential-conflict-cross-identity-reconciliation",
+      "rationale": "The matching roots conflict. Evidence for another model/provider and a derived reconciliation cannot resolve that conflict."
+    },
+    {
+      "applicable_roots": [],
+      "expected_decision": "unknown",
+      "id": "audit-v2-execution-near-miss-provenance-bridge",
+      "rationale": "Each root misses a required identity dimension. Combining all three into a derived target receipt and summary does not create a matching independent root."
+    },
+    {
+      "applicable_roots": [
+        "absent"
+      ],
+      "expected_decision": "contradicted",
+      "id": "audit-v2-catalog-absence-despite-execution",
+      "rationale": "The catalog absence root applies. An execution receipt proves its own predicate, not catalog membership; a derived listing and future listing do not overturn absence."
+    }
+  ],
+  "checks": {
+    "canonical_disjointness": {
+      "new_cases": 16,
+      "passed": true,
+      "prior_cases": 30
+    },
+    "independent_review": "passed; see agentos-audit-composition-v2-independent-review.json",
+    "oracle_agreement": {
+      "cases": 16,
+      "passed": true
+    }
+  },
+  "cohort_file": "agentos-audit-composition-v2.json",
+  "cohort_id": "audit-composition-20261012-v2",
+  "cohort_sha256": "637af470b0d633aef3c51212df74758595b1cfe667276b77430f10a4db8bbd3d",
+  "limitations": "Explicitly simulated public multi-source compositions. Splits share four predicates and reasoning primitives with prior cohorts. New provenance and identity compositions are held out from the lesson proposer, not secret from developers. Structural novelty is not independent production evidence, broad transfer, or operational approval.",
+  "model_calls": 0,
+  "schema": "agentos-audit-cohort-review-v1"
+}
