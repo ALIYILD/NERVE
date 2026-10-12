@@ -33,6 +33,19 @@ PROMPT_TEMPLATE = ('<|im_start|>system\n'
                    '<|im_start|>assistant\n')
 HANDOFF_RESPONSE_CONTRACT = 'handoff-confidence-v1'
 HANDOFF_RENDERER = 'qwen2-chatml-handoff-confidence-v1'
+# Ollama /api/generate accepts a JSON Schema object in `format`:
+# https://docs.ollama.com/api/generate
+HANDOFF_RESPONSE_SCHEMA = {
+    'type': 'object',
+    'properties': {
+        'status': {'type': 'string', 'enum': ['done', 'failed', 'unknown']},
+        'passed': {'type': 'boolean'},
+        'memory_saved': {'type': 'boolean'},
+        'confidence': {'type': 'number', 'minimum': 0, 'maximum': 1},
+    },
+    'required': ['status', 'passed', 'memory_saved', 'confidence'],
+    'additionalProperties': False,
+}
 HANDOFF_PROMPT_TEMPLATE = ('<|im_start|>system\n'
     'Complete this public research task. Response contract: handoff-confidence-v1.\n'
     'The user task is exactly JSON with keys id, exit_code, artifact_exists, qa_passed, memory_written. '
@@ -171,13 +184,24 @@ class OllamaCueAdapter:
             return HANDOFF_PROMPT_TEMPLATE
         raise OllamaCueError('frozen_local_configuration_changed')
 
+    def _response_schema(self):
+        return _json(_canonical(HANDOFF_RESPONSE_SCHEMA)) if self.response_contract == HANDOFF_RESPONSE_CONTRACT else None
+
+    def _template_identity(self):
+        if self.response_contract is None:
+            # Preserve all previously measured unstructured smoke identities.
+            return sha256(self._prompt_template().encode()).hexdigest()
+        return _hash({'renderer': self.renderer, 'response_contract': self.response_contract,
+                      'prompt_template': self._prompt_template(), 'format': self._response_schema()})
+
     @property
     def renderer(self):
         return RENDERER if self.response_contract is None else HANDOFF_RENDERER
 
     def _confidence_metadata(self):
         return ({'response_contract': HANDOFF_RESPONSE_CONTRACT,
-                 'confidence_source': 'model_self_report', 'confidence_calibrated': False}
+                 'confidence_source': 'model_self_report', 'confidence_calibrated': False,
+                 'response_schema_digest': _hash(self._response_schema())}
                 if self.response_contract == HANDOFF_RESPONSE_CONTRACT else {})
 
     def _handoff_answer(self, raw):
@@ -356,7 +380,7 @@ class OllamaCueAdapter:
             if self._snapshot is not None and observed != self._snapshot:
                 raise OllamaCueError('frozen_local_identity_changed')
             self._snapshot = observed
-            template = sha256(self._prompt_template().encode()).hexdigest()
+            template = self._template_identity()
             tokenizer_revision = _hash({'gguf_artifact': artifacts['model_blob'],
                                         'executor_version': server['server_version']})
             self._profile = ModelProfile('ollama-local-research', self.model, self.expected_digest,
@@ -365,7 +389,8 @@ class OllamaCueAdapter:
                 self.profile.tokenizer, self.profile.tokenizer_revision, template, _hash(self.options),
                 self.options['temperature'], self.options['num_predict'],
                 _hash({'raw': True, 'context_tokens': self.options['num_ctx'], **server,
-                       **({'renderer': self.renderer, 'response_contract': self.response_contract}
+                       **({'renderer': self.renderer, 'response_contract': self.response_contract,
+                           'format': self._response_schema()}
                           if self.response_contract is not None else {})}), self.profile.key)
             self._stage = None
             return {'schema': 'nerve-cce-ollama-profile-v1', 'profile': asdict(self.profile),
@@ -383,7 +408,7 @@ class OllamaCueAdapter:
             if not isinstance(request, ProviderRequest) or request.model != self.model_config:
                 raise ValueError('frozen local model configuration required')
             if (self.model != self.model_config.model or _hash(self.options) != self.model_config.sampling_digest
-                    or sha256(self._prompt_template().encode()).hexdigest() != self.model_config.template_digest):
+                    or self._template_identity() != self.model_config.template_digest):
                 raise OllamaCueError('frozen_local_configuration_changed')
             if (type(request.task_id) is not str or not 1 <= len(request.task_id) <= 512
                     or type(request.instruction) is not str or not request.instruction.strip()
@@ -425,7 +450,8 @@ class OllamaCueAdapter:
                 self._stage = 'generation'
                 response = self._request('/api/generate', {'model': self.model, 'raw': True,
                     'stream': False, 'keep_alive': '60s', 'options': dict(self.options),
-                    'prompt': prompt})
+                    'prompt': prompt, **({'format': self._response_schema()}
+                                         if self.response_contract is not None else {})})
                 if (response.get('model') != self.model or response.get('done') is not True
                         or response.get('done_reason') not in ('stop', 'length')
                         or type(response.get('response')) is not str
