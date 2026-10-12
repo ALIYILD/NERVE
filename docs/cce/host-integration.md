@@ -56,7 +56,7 @@ registers nor activates cues. The callback host still enforces billing, output-t
 limits, timeout and retries; call-count bounds alone are not a billing guarantee.
 
 `CueHost.run_cycle(profile, permission_granted=True, ...)` invokes the existing
-bounded selection/holdout cycle with host-owned scope and profile. It takes the
+bounded selection/regression/holdout cycle with host-owned scope and profile. It takes the
 same trusted discovery/provider/judge callbacks and explicit budgets as
 `run_cue_cycle`; there is no callback import or execution from agent JSON. It
 persists `cce-last-cycle.json` and exports candidate evidence to pending memory.
@@ -121,3 +121,13 @@ The CCE change preserves pre-existing uncommitted ARC/adaptation work in the mai
 checkout. Those unrelated changes are not part of the CCE publication. Research
 GPU reproduction, eligible live evidence and clinical/staging deployment remain
 the separate gates documented in the [verification ledger](verification.md).
+
+Schema 2 datasets add a required retained-capability regression partition. The
+host passes its frozen tasks into the same cycle; callers cannot override them.
+After a scope reserves its first regression study, the coordinator requires a
+persisted passing regression gate before holdout evaluation, approval or serving.
+`cce-inspect` includes the scoped requirement and stored evaluation;
+`cce-readiness` recomputes the gate and exports its digest and decision only.
+See [retained-capability screening](local-research.md#retained-capability-screening)
+for the criteria and limitations. This is opt-in research infrastructure, with no
+new scheduler or automatic production activation.

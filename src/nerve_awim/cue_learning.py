@@ -12,7 +12,8 @@ import time
 import uuid
 
 from .cue_engine import Cue, CueRegistry, CueRouter, CueSelection, ModelProfile, safety_reason
-from .cue_evaluation import evaluate_pairs, promotion_decision, IndependentReceipt, ModelParity
+from .cue_evaluation import (evaluate_pairs, promotion_decision, regression_decision,
+    IndependentReceipt, ModelParity, DatasetManifest, EvaluationReport)
 from .governed_learning_v20 import GovernedLearning, _id, _json
 
 
@@ -45,6 +46,10 @@ class GovernedCueCoordinator:
                 tenant TEXT, agent TEXT, contract TEXT, cue_id TEXT, version INTEGER,
                 digest TEXT, candidate TEXT,
                 PRIMARY KEY(tenant,agent,contract,cue_id,version));
+              CREATE TABLE IF NOT EXISTS cce_regression_studies (
+                reservation TEXT PRIMARY KEY, tenant TEXT, agent TEXT, contract TEXT, candidate TEXT);
+              CREATE TABLE IF NOT EXISTS cce_regression_reports (
+                candidate TEXT PRIMARY KEY, evidence TEXT);
               CREATE TABLE IF NOT EXISTS cce_dataset_studies (
                 reservation TEXT PRIMARY KEY, tenant TEXT, agent TEXT, contract TEXT,
                 dataset_digest TEXT, candidate TEXT);
@@ -74,11 +79,59 @@ class GovernedCueCoordinator:
             'SELECT 1 FROM cce_dataset_studies WHERE candidate=? AND tenant=? AND agent=? AND contract=?',
             (candidate, *scope, self.engine.contract)).fetchone() is not None)
 
+    def _regression_required(self, con, scope, row=None):
+        return (bool(row and json.loads(row['manifest'])['dataset'].get('regression'))
+                or con.execute('SELECT 1 FROM cce_regression_studies WHERE tenant=? AND agent=? LIMIT 1',
+                               scope).fetchone() is not None)
+
+    def _bound_report(self, row, pairs, *, split):
+        cue = Cue(**json.loads(row['cue']))
+        profile = ModelProfile(**json.loads(row['profile']))
+        registered = json.loads(row['manifest'])
+        report = evaluate_pairs(row['id'], DatasetManifest(**registered['dataset']), pairs,
+            split=split, profile_key=profile.key, cue_digest=cue.content_hash, task_type=row['task_type'])
+        model = report.pairs[0].baseline.model
+        if asdict(model) != registered['model_config']:
+            raise ValueError('inference configuration differs from preregistered experiment')
+        for name in ('provider', 'model', 'revision', 'tokenizer', 'tokenizer_revision'):
+            if getattr(model, name) != getattr(profile, name):
+                raise ValueError('observation model metadata differs from registered profile')
+        return report
+
+    def _regression_evidence(self, con, candidate):
+        row = con.execute('SELECT evidence FROM cce_regression_reports WHERE candidate=?', (candidate,)).fetchone()
+        return json.loads(row['evidence']) if row else None
+
+    def _candidate_regression_valid(self, con, scope, row):
+        if not self._regression_required(con, scope, row):
+            return True
+        if not json.loads(row['manifest'])['dataset'].get('regression'):
+            return False
+        if con.execute('SELECT 1 FROM cce_regression_studies WHERE candidate=? AND tenant=? AND agent=? AND contract=?',
+                       (row['id'], *scope, self.engine.contract)).fetchone() is None:
+            return False
+        try:
+            stored = self._regression_evidence(con, row['id'])
+            if type(stored) is not dict or set(stored) != {'report', 'metrics', 'receipt', 'decision'}:
+                return False
+            report = EvaluationReport.from_dict(stored['report'])
+            checked = self._bound_report(row, report.pairs, split='regression')
+            if checked != report:
+                return False
+            receipt = IndependentReceipt(**stored['receipt'])
+            decision = regression_decision(checked, (receipt,), generator_id=row['generator'])
+            return (decision.eligible and stored['metrics'] == checked.metrics
+                    and _json(stored['decision']) == _json(decision.to_dict()))
+        except (ValueError, TypeError, KeyError):
+            return False
+
     def _reserve(self, con, scope, manifest, *, dataset_bound=False):
         if self._dataset_required(con, scope) and not dataset_bound:
             raise ValueError('dataset-bound scope cannot downgrade to ID-only reservations')
+        if self._regression_required(con, scope) and not manifest.regression:
+            raise ValueError('regression-bound scope cannot downgrade to regressionless reservations')
         reservation = uuid.uuid4().hex
-        for split in ('discovery', 'selection', 'holdout'):
+        for split in ('discovery', 'selection', 'holdout', 'regression'):
             for task in getattr(manifest, split):
                 previous = con.execute('SELECT split FROM cce_partitions WHERE tenant=? AND agent=? AND contract=? AND task=?',
                     (*scope, self.engine.contract, task)).fetchone()
@@ -87,7 +140,10 @@ class GovernedCueCoordinator:
                 con.execute('INSERT OR IGNORE INTO cce_partitions VALUES(?,?,?,?,?,?)',
                     (*scope, self.engine.contract, task, split, reservation))
         con.execute('INSERT INTO cce_studies VALUES(?,?,?,?,?,?)',
-            (reservation, *scope, self.engine.contract, _json(asdict(manifest)), 'reserved'))
+            (reservation, *scope, self.engine.contract, _json(manifest.to_dict()), 'reserved'))
+        if manifest.regression:
+            con.execute('INSERT INTO cce_regression_studies VALUES(?,?,?,?,NULL)',
+                        (reservation, *scope, self.engine.contract))
         return reservation
 
     def reserve_dataset(self, actor, dataset):
@@ -103,7 +159,7 @@ class GovernedCueCoordinator:
         identities = set()
         for task_id, family, split in dataset.families:
             identities.add(('family', sha256(family.encode()).hexdigest(), split))
-        for split in ('discovery', 'selection', 'holdout'):
+        for split in ('discovery', 'selection', 'holdout', 'regression'):
             for task in getattr(dataset, split + '_tasks'):
                 identities.add(('content', sha256(task.instruction.strip().encode()).hexdigest(), split))
         with self.engine._db() as con:
@@ -161,6 +217,8 @@ class GovernedCueCoordinator:
         with self.engine._db() as con:
             con.execute('BEGIN IMMEDIATE')
             self.engine._state(con, scope)
+            if self._regression_required(con, scope) and not manifest.regression:
+                raise ValueError('regression-bound scope requires regression-bearing proposal')
             if con.execute('SELECT 1 FROM cce_versions WHERE tenant=? AND agent=? AND contract=? AND cue_id=? AND version=?',
                            (*scope, self.engine.contract, cue.cue_id, cue.version)).fetchone():
                 raise ValueError('cue identity/version already registered; create a new version')
@@ -171,17 +229,23 @@ class GovernedCueCoordinator:
             else:
                 registered = con.execute('SELECT manifest,status FROM cce_studies WHERE id=? AND tenant=? AND agent=? AND contract=?',
                     (reservation, *scope, self.engine.contract)).fetchone()
-                if registered is None or registered['status'] != 'reserved' or registered['manifest'] != _json(asdict(manifest)):
+                if registered is None or registered['status'] != 'reserved' or DatasetManifest(**json.loads(registered['manifest'])) != manifest:
                     raise ValueError('fresh matching scoped study reservation required')
                 if self._dataset_required(con, scope) and con.execute(
                         'SELECT 1 FROM cce_dataset_studies WHERE reservation=? AND tenant=? AND agent=? AND contract=?',
                         (reservation, *scope, self.engine.contract)).fetchone() is None:
                     raise ValueError('dataset-bound scope requires matching dataset reservation')
+                if manifest.regression and con.execute(
+                        'SELECT 1 FROM cce_regression_studies WHERE reservation=? AND tenant=? AND agent=? AND contract=? AND candidate IS NULL',
+                        (reservation, *scope, self.engine.contract)).fetchone() is None:
+                    raise ValueError('regression-bound proposal requires matching reservation')
             con.execute('INSERT INTO cce_candidates VALUES(?,?,?,?,?,?,?,?,?,?,?,?)',
                 (candidate, *scope, self.engine.contract, _json(asdict(cue)), _json(asdict(profile)),
-                 task_type, generator_id, _json({'dataset': asdict(manifest),
+                 task_type, generator_id, _json({'dataset': manifest.to_dict(),
                     'model_config': asdict(model_config)}), None, 'pending', None))
             con.execute("UPDATE cce_studies SET status='consumed' WHERE id=?", (reservation,))
+            con.execute('UPDATE cce_regression_studies SET candidate=? WHERE reservation=?',
+                        (candidate, reservation))
             con.execute('UPDATE cce_dataset_studies SET candidate=? WHERE reservation=?',
                         (candidate, reservation))
             self.engine._event(con, scope, 'cce_proposed', {'candidate': candidate, 'cue_hash': cue.content_hash})
@@ -203,18 +267,9 @@ class GovernedCueCoordinator:
                 raise PermissionError('dataset-bound evidence required after scope upgrade')
             if row['status'] != 'pending':
                 raise ValueError('candidate can be evaluated only once')
-            cue = Cue(**json.loads(row['cue']))
-            profile = ModelProfile(**json.loads(row['profile']))
-            registered = json.loads(row['manifest'])
-            report = evaluate_pairs(candidate, DatasetManifest(**registered['dataset']), pairs,
-                profile_key=profile.key, cue_digest=cue.content_hash, task_type=row['task_type'])
-            # A self-declared profile hash cannot disguise changed provider IDs.
-            model = report.pairs[0].baseline.model
-            if asdict(model) != registered['model_config']:
-                raise ValueError('inference configuration differs from preregistered experiment')
-            for field in ('provider', 'model', 'revision', 'tokenizer', 'tokenizer_revision'):
-                if getattr(model, field) != getattr(profile, field):
-                    raise ValueError('observation model metadata differs from registered profile')
+            if not self._candidate_regression_valid(con, scope, row):
+                raise PermissionError('successful bound regression evidence required before holdout')
+            report = self._bound_report(row, pairs, split='holdout')
             receipt = IndependentReceipt(evaluator_id, candidate, report.digest, accepted)
             decision = promotion_decision(report, (receipt,), generator_id=row['generator'])
             stored = {'report': report.to_dict(), 'metrics': report.metrics,
@@ -222,6 +277,33 @@ class GovernedCueCoordinator:
             con.execute('UPDATE cce_candidates SET report=?,status=?,expires=? WHERE id=?',
                 (_json(stored), 'passed' if decision.eligible else 'rejected', self.clock() + 604800, candidate))
             self.engine._event(con, scope, 'cce_evaluated', {'candidate': candidate,
+                'report_digest': report.digest, 'eligible': decision.eligible, 'reasons': list(decision.reasons)})
+        return stored
+
+    def evaluate_regression(self, actor, candidate, pairs, *, evaluator_id, accepted=True):
+        """Persist one independently attested retained-capability gate before holdout."""
+        scope = self._scope(actor, 'evaluator')
+        _id(evaluator_id)
+        with self.engine._db() as con:
+            con.execute('BEGIN IMMEDIATE')
+            row = self._row(con, scope, candidate)
+            if not self._candidate_dataset_valid(con, scope, candidate):
+                raise PermissionError('dataset-bound evidence required after scope upgrade')
+            if row['status'] != 'pending' or self._regression_evidence(con, candidate) is not None:
+                raise ValueError('regression can be evaluated once for a pending candidate')
+            if (not json.loads(row['manifest'])['dataset'].get('regression') or con.execute(
+                    'SELECT 1 FROM cce_regression_studies WHERE candidate=? AND tenant=? AND agent=? AND contract=?',
+                    (candidate, *scope, self.engine.contract)).fetchone() is None):
+                raise PermissionError('preregistered bound regression partition required')
+            report = self._bound_report(row, pairs, split='regression')
+            receipt = IndependentReceipt(evaluator_id, candidate, report.digest, accepted)
+            decision = regression_decision(report, (receipt,), generator_id=row['generator'])
+            stored = {'report': report.to_dict(), 'metrics': report.metrics,
+                      'receipt': asdict(receipt), 'decision': decision.to_dict()}
+            con.execute('INSERT INTO cce_regression_reports VALUES(?,?)', (candidate, _json(stored)))
+            if not decision.eligible:
+                con.execute("UPDATE cce_candidates SET status='rejected' WHERE id=?", (candidate,))
+            self.engine._event(con, scope, 'cce_regression_evaluated', {'candidate': candidate,
                 'report_digest': report.digest, 'eligible': decision.eligible, 'reasons': list(decision.reasons)})
         return stored
 
@@ -250,6 +332,8 @@ class GovernedCueCoordinator:
                 raise PermissionError('independently passed candidate required')
             if not self._candidate_dataset_valid(con, scope, candidate):
                 raise PermissionError('dataset-bound evidence required after scope upgrade')
+            if not self._candidate_regression_valid(con, scope, row):
+                raise PermissionError('successful bound regression evidence required for activation')
             if row['task_type'].lower() in ('clinical', 'medical', 'diagnosis', 'treatment'):
                 raise PermissionError('clinical cues remain disabled')
             expires = min(self.clock() + valid_for, cue.expires_at or float('inf'), row['expires'])
@@ -288,7 +372,8 @@ class GovernedCueCoordinator:
             if route and route['active']:
                 row = self._row(con, scope, route['active'])
                 if (row['status'] == 'approved' and row['expires'] > self.clock()
-                        and self._candidate_dataset_valid(con, scope, row['id'])):
+                        and self._candidate_dataset_valid(con, scope, row['id'])
+                        and self._candidate_regression_valid(con, scope, row)):
                     cue = Cue(**json.loads(row['cue']))
                     registry.register(cue)
                     registry.approve(cue.cue_id, cue.version, approval_id=row['id'])
@@ -330,11 +415,13 @@ class GovernedCueCoordinator:
             row = self._row(con, scope, candidate)
             dataset = con.execute('SELECT dataset_digest FROM cce_dataset_studies WHERE candidate=? AND tenant=? AND agent=? AND contract=?',
                                   (candidate, *scope, self.engine.contract)).fetchone()
+            regression_status = {'required': self._regression_required(con, scope, row),
+                                 'evaluation': self._regression_evidence(con, candidate)}
             dataset_status = {'required': self._dataset_required(con, scope),
                               'bound': dataset is not None,
                               'digest': dataset['dataset_digest'] if dataset else None}
         return {'candidate': row['id'], 'status': row['status'], 'task_type': row['task_type'],
-                'dataset': dataset_status,
+                'dataset': dataset_status, 'regression': regression_status,
                 'profile_key': ModelProfile(**json.loads(row['profile'])).key,
                 'generator_id': row['generator'],
                 'expires': row['expires'], 'evaluation': json.loads(row['report']) if row['report'] else None}
@@ -346,6 +433,8 @@ class GovernedCueCoordinator:
             raise PermissionError('memory scope differs from cue scope')
         status = self.status(actor, candidate)
         report = status.pop('evaluation')
+        regression = status['regression'].pop('evaluation')
+        status['regression']['report_digest'] = regression['decision']['report_digest'] if regression else None
         status['report_digest'] = report['decision']['report_digest'] if report else None
         status['note'] = 'Research evidence only; memory cannot authorize cue deployment.'
         return ledger.propose(memory_actor, context='cognitive-cues', content=_json(status),

@@ -152,11 +152,12 @@ class CueHost:
         """Bind all partitions and durable content protection to the host cycle."""
         from .cue_dataset import validate_dataset
         dataset = validate_dataset(dataset)
-        if {'manifest', 'selection_tasks', 'holdout_tasks'}.intersection(parameters):
+        if {'manifest', 'selection_tasks', 'holdout_tasks', 'regression_tasks'}.intersection(parameters):
             raise ValueError('dataset owns manifest and evaluation tasks')
         return self.run_cycle(profile, permission_granted=permission_granted,
             dataset=dataset, manifest=dataset.manifest,
             selection_tasks=dataset.selection_tasks, holdout_tasks=dataset.holdout_tasks,
+            regression_tasks=dataset.regression_tasks,
             **parameters)
 
     def dataset_status(self, profile):

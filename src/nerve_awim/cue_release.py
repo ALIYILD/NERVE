@@ -11,7 +11,7 @@ from math import isfinite
 import time
 
 from .cue_engine import ModelProfile
-from .cue_evaluation import EvaluationReport, IndependentReceipt, promotion_decision
+from .cue_evaluation import EvaluationReport, IndependentReceipt, promotion_decision, regression_decision
 from .governed_learning_v20 import _id
 
 
@@ -77,6 +77,9 @@ _ACTIONS = {
     'candidate_not_active': 'Verify the approved candidate is the current scoped route.',
     'evidence_expired': 'Collect fresh evidence and a current time-limited approval.',
     'evaluation_missing': 'Complete the frozen holdout using trusted measured observations.',
+    'regression_missing': 'Complete the required independent retained-capability evaluation before release.',
+    'regression_invalid': 'Repair invalid regression evidence or its exact holdout bindings.',
+    'regression_evidence_mismatch': 'Investigate altered regression metrics or decision records.',
     'evaluation_invalid': 'Repair invalid evidence or bindings; never invent missing metrics.',
     'stored_evidence_mismatch': 'Investigate altered report, metrics or decision records.',
     'staging_missing': 'Run a controlled staging worker with exact runtime attestation and smoke checks.',
@@ -125,15 +128,23 @@ def build_release_manifest(*, profile_name, profile, host_status, candidate_stat
         block('unsupported_task')
     candidate, report, metrics, decision = None, None, None, None
     dataset = None
+    regression_required, regression_report, regression_verdict = False, None, None
     state, expires = None, None
     if candidate_status is None:
         block('candidate_missing')
     else:
+        required_keys = {'candidate','status','task_type','expires','evaluation','profile_key','generator_id'}
         if (type(candidate_status) is not dict or
-                set(candidate_status) not in (
-                    {'candidate','status','task_type','expires','evaluation','profile_key','generator_id'},
-                    {'candidate','status','task_type','expires','evaluation','profile_key','generator_id','dataset'})):
+                not required_keys <= set(candidate_status) or
+                set(candidate_status) - required_keys - {'dataset', 'regression'}):
             raise ValueError('coordinator.status snapshot required')
+        regression_status = candidate_status.get('regression')
+        if 'regression' in candidate_status:
+            if (type(regression_status) is not dict or
+                    set(regression_status) != {'required', 'evaluation'} or
+                    type(regression_status['required']) is not bool):
+                raise ValueError('typed regression status required')
+            regression_required = regression_status['required']
         dataset = candidate_status.get('dataset')
         if 'dataset' in candidate_status:
             if (type(dataset) is not dict or set(dataset) != {'required','bound','digest'}
@@ -182,6 +193,35 @@ def build_release_manifest(*, profile_name, profile, host_status, candidate_stat
             except (ValueError, TypeError, KeyError, AttributeError):
                 report, metrics, decision = None, None, None
                 block('evaluation_invalid')
+        # The frozen report itself requires this gate even for historical snapshots
+        # that omit (or incorrectly clear) the coordinator requirement metadata.
+        regression_required = regression_required or bool(report and report.manifest.regression)
+        regression_evidence = regression_status['evaluation'] if regression_status is not None else None
+        if regression_evidence is None:
+            if regression_required:
+                block('regression_missing')
+        else:
+            try:
+                if type(regression_evidence) is not dict or set(regression_evidence) != {'report','metrics','receipt','decision'}:
+                    raise ValueError('strict stored regression evaluation required')
+                regression_report = EvaluationReport.from_dict(regression_evidence['report'])
+                regression_receipt = IndependentReceipt(**regression_evidence['receipt'])
+                regression_verdict = regression_decision(regression_report, (regression_receipt,), generator_id=generator_id)
+                if (report is None or regression_report.candidate_id != candidate or
+                        regression_report.profile_key != profile.key or
+                        regression_report.cue_digest != report.cue_digest or
+                        regression_report.task_type != report.task_type or
+                        regression_report.manifest != report.manifest or
+                        regression_report.pairs[0].baseline.model != report.pairs[0].baseline.model):
+                    block('regression_invalid')
+                if (_hash(regression_evidence['metrics']) != _hash(regression_report.metrics) or
+                        _hash(regression_evidence['decision']) != _hash(regression_verdict.to_dict())):
+                    block('regression_evidence_mismatch')
+                for reason in regression_verdict.reasons:
+                    block('regression:' + reason)
+            except (ValueError, TypeError, KeyError, AttributeError, IndexError):
+                regression_report, regression_verdict = None, None
+                block('regression_invalid')
     if staging is None:
         block('staging_missing')
     elif (report is None or staging.candidate != candidate or staging.profile_key != profile.key or
@@ -197,6 +237,9 @@ def build_release_manifest(*, profile_name, profile, host_status, candidate_stat
     value = {'schema_version':1, 'kind':'cce-release-readiness', 'profile_name':profile_name,
         'profile_key':profile.key, 'candidate':candidate, 'candidate_state':state,
         'dataset':dataset,
+        'regression':{'required':regression_required,
+                      'report_digest':regression_report.digest if regression_report else None,
+                      'decision':regression_verdict.to_dict() if regression_verdict else None},
         'checked_at':now, 'evidence_expires':expires, 'ready':not blockers,
         'authorization_granted':False, 'blockers':blockers,
         'next_steps':[_ACTIONS.get(reason, 'Resolve '+reason+' with fresh independent evidence.') for reason in blockers],

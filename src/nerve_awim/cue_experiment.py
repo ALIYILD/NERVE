@@ -113,7 +113,7 @@ def run_experiment(candidate_id, cue, manifest, tasks, model, provider, judge, *
         raise PermissionError('clinical research cues remain disabled')
     if not isinstance(model, ModelParity) or model.profile_key != cue.profile_key:
         raise ValueError('exact candidate model binding required')
-    if not isinstance(manifest, DatasetManifest) or split not in ('selection', 'holdout'):
+    if not isinstance(manifest, DatasetManifest) or split not in ('selection', 'holdout', 'regression'):
         raise ValueError('frozen evaluation split required')
     frozen = tuple(tasks)
     if any(not isinstance(t, ExperimentTask) for t in frozen):

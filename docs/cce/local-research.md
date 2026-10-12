@@ -108,6 +108,34 @@ paraphrases with changed family labels remain a host curation responsibility.
 The two-task local transport smoke is deliberately separate from this governed
 cycle and cannot satisfy its untouched-holdout gate.
 
+## Retained-capability screening
+
+Schema 2 adds a required nonempty `regression` array alongside discovery,
+selection and holdout. Each entry uses the same task fields. Task IDs, instruction
+content and families must remain disjoint across all four partitions. Schema 1
+and historical report digests remain supported for scopes that have not upgraded.
+
+The dataset-bound cycle budgets every call before discovery, then runs selection,
+regression and the untouched holdout in that order. Regression requires an
+independent evaluator receipt, measured nonsynthetic outcomes, no loss of any
+previously correct paired answer, safe candidate outcomes, available nonworsening
+calibration, and nonworsening mean/p95 latency and provider fees. Improvement on
+other examples cannot cancel a lost capability. These are conservative screening
+rules; reusable regression results do not establish unbiased effectiveness.
+
+The first regression reservation upgrades its tenant/agent scope. Later studies
+cannot omit the gate, including across contract revisions. Older candidates fall
+back to no cue until fresh qualifying evidence is collected. The coordinator
+persists the regression verdict before accepting holdout evidence and checks it
+again during approval and selection. Release readiness independently recomputes
+its verdict and bindings. A passing gate never grants deployment or clinical
+permission. Reuse is permitted only within the regression partition; holdout
+content remains reserved even when screening fails.
+
+No real retained-capability benchmark has been run by this implementation. Hosts
+must curate representative tasks, authenticate graders and collect actual model
+receipts before relying on this gate operationally.
+
 ## Serving limitations and sources
 
 Ollama's generation response identifies a model name, while its model inventory
