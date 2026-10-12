@@ -16,6 +16,7 @@ from ..memory_retrieval_v18 import SecureMemoryRetriever
 from .contracts import MemoryMetrics, MemoryRequest, MemoryScope
 from .contracts import MemoryRetrievalResult
 from .null_kv_adapter import NullKVProvider
+from .lifecycle import install_quota, QUOTA_ERROR
 
 
 class MemoryGateway:
@@ -27,6 +28,7 @@ class MemoryGateway:
         self.retriever = retriever or SecureMemoryRetriever(ledger)
         if self.retriever.ledger is not ledger:
             raise ValueError('retriever must use the authoritative ledger')
+        install_quota(self.ledger.path, max_records_per_scope)
         self.provider = provider or NullKVProvider()
         self._lock = RLock()
         self._metrics = {}
@@ -64,16 +66,24 @@ class MemoryGateway:
                 records = self.ledger.retrieve(actor, context=request.scope.context,
                                               query=request.query, limit=request.limit)
                 reason = 'retrieval_backend_unavailable'
+            # Materialise bounded advisory IDs BEFORE the authoritative snapshot.
+            # A lazy ranker can revoke an earlier candidate during enumeration.
+            identifiers = list(dict.fromkeys(record.memory_id for record in islice(records, 20)))
+            self._require(actor, request.scope, 'read')
+            allowed = {}
+            if identifiers:
+                placeholders = ','.join('?' for _ in identifiers)
+                with sqlite3.connect(self.ledger.path) as con:
+                    rows = con.execute('''SELECT * FROM trusted_memory_v18
+                        WHERE tenant_id=? AND agent_id=? AND context=? AND status='approved'
+                        AND (valid_until IS NULL OR valid_until>?) AND memory_id IN ('''
+                        + placeholders + ')', (actor.tenant_id, actor.agent_id, request.scope.context,
+                                              int(time.time()), *identifiers)).fetchall()
+                allowed = {row[0]: self.ledger._record(row) for row in rows}
             selected, blocks, size = [], [], 0
-            for record in islice(records, 20):
-                # Re-read after an advisory ranker returns; it may have blocked
-                # while another host revoked, superseded or deleted a source.
-                try:
-                    current = self.ledger.status(actor, record.memory_id)
-                except LookupError:
-                    continue
-                if (current.context != request.scope.context or current.status != 'approved'
-                        or (current.valid_until is not None and current.valid_until <= int(time.time()))):
+            for identifier in identifiers:
+                current = allowed.get(identifier)
+                if current is None:
                     continue
                 if sha256(current.content.encode()).hexdigest() != current.source_sha256:
                     continue
@@ -102,18 +112,15 @@ class MemoryGateway:
                 valid_until=None, supersedes_id=None):
         with self._lock:
             self._require(actor, scope, 'propose')
-            # Single-host quota: all writers must use this gateway instance.
-            # A future multi-process service needs transactional ledger quotas.
-            with sqlite3.connect(self.ledger.path) as con:
-                count = con.execute('''SELECT COUNT(*) FROM trusted_memory_v18
-                    WHERE tenant_id=? AND agent_id=? AND context=?''',
-                    (scope.tenant_id, scope.agent_id, scope.context)).fetchone()[0]
-            if count >= self.max_records_per_scope:
-                raise ValueError('scope record quota reached')
             if supersedes_id is not None:
                 self._record_in_scope(actor, supersedes_id, scope)
-            return self.ledger.propose(actor, context=scope.context, content=content,
-                source_id=source_id, kind=kind, valid_until=valid_until, supersedes_id=supersedes_id)
+            try:
+                return self.ledger.propose(actor, context=scope.context, content=content,
+                    source_id=source_id, kind=kind, valid_until=valid_until, supersedes_id=supersedes_id)
+            except sqlite3.IntegrityError as error:
+                if str(error) == QUOTA_ERROR:
+                    raise ValueError('scope record quota reached') from None
+                raise
 
     def _record_in_scope(self, actor, memory_id, scope):
         self._require(actor, scope, 'read')

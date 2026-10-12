@@ -11,7 +11,7 @@ Trust boundaries: operator-pinned OIDC keys and offline subject grants → WSGI 
 | Wrong-model KV / cross-tenant reuse | Restore admission closed pending verified runtime; identity compatibility is fail-closed | Real Galahad key enforcement and multi-tenant connector isolation blocked |
 | Stale source / failed invalidation | Scoped revoke/delete; provider invalidation status returned | Physical KV erase, snapshots, replicas and backups unverified |
 | Raw payload in telemetry | Gateway metrics expose counts only; generic errors; no request-body logging | Reverse proxy and infrastructure logs must be reviewed separately |
-| Cache growth / request floods | 12 KB request limit, 64 principals, per-principal request rate, bounded retrieval | Persistent DB quota, distributed rate limiting and slow-client protection require infrastructure |
+| Cache growth / request floods | 12 KB request limit, 64 principals, per-principal request rate, bounded retrieval | Persistent SQLite quota now covers concurrent and legacy writers; distributed rate limiting and hosting read deadlines remain required |
 | Disk theft / encryption key mismatch | No clinical data permitted; KV provider disabled | SQLite plaintext; no KMS, encrypted durable store, backup restore or erasure proof |
 | Prompt injection persistence | Pending proposal, offline approval, evidence JSON boundary, no executable agent output | Delimiting is not a complete prompt-injection defence; no clinical inference endpoint |
 | Service outage / connector failure | Sanitised failure, approved text fallback; security errors never become unscoped fallback | Hardware faults, failover and deployment TLS not verified |
@@ -19,4 +19,4 @@ Trust boundaries: operator-pinned OIDC keys and offline subject grants → WSGI 
 
 Tests use freshly generated RSA keys and synthetic text. `test_memory_service.py` covers signature/issuer/audience/expiry failures, scope overrides, unauthenticated body handling, role intersection, grant revocation, body/rate limits, pending feedback, administrative context isolation and provenance. Gateway/provider suites cover their separate boundaries. No finite test suite proves absence of all leakage.
 
-Production gates remain blocked: transport TLS validation, approved encryption/key management, security monitoring, durable user consent and identity lifecycle, storage quotas, independent penetration testing, software supply-chain review, backup/deletion evidence and clinical governance. No mandatory security decision is delegated to JEV or an agent.
+Production gates remain blocked: transport TLS validation, approved encryption/key management, security monitoring, durable user consent and identity lifecycle, KV storage quotas, independent penetration testing, software supply-chain review, backup/deletion evidence and clinical governance. No mandatory security decision is delegated to JEV or an agent.

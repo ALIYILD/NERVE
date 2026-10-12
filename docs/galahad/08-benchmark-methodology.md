@@ -15,3 +15,7 @@ GPU prefix-cache and Galahad restore arms, actual prefill/restore latency, time-
 The separate existing v1.8 memory benchmark baseline is documented in `00-repository-audit.md`: its semantic arm is answer-keyed mock retrieval, not Mem0. This new experiment reuses the v1.9 inspectable public corpus and exposes that limitation; it is not blind ingestion or paper-scale anti-cheat reproduction.
 
 Next hardware gate requires a compatible licensed Linux runtime, independently observed connector configuration, exact token/model identity, encrypted-store checks, cold/warm/restore/recompute separation, process-restart restoration, corruption and scope controls, random planted facts/decoys, and held-out answer keys. None of those GPU gates is represented as passing by CPU tests.
+
+## Continuation: batched validation
+
+`evidence/cpu-benchmark-cycle4.json` records 100 samples after batching authoritative revalidation into one bounded SQLite query. Existing ledger median 0.677586 ms; gateway median 1.500563 ms (p95 1.646569 ms). The earlier 30-sample gateway median was 4.134935 ms, but these sequential runs are not a controlled causal comparison. Gateway still has measurable overhead over direct ledger retrieval; no model inference or KV speedup is measured. Historical evidence is retained unchanged.

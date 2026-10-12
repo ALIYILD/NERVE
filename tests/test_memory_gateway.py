@@ -189,6 +189,7 @@ class MemoryGatewayTests(unittest.TestCase):
                 MemoryRequest(**dict({'scope': self.scope, 'query': 'evidence'}, **changes))
 
     def test_scope_quota_counts_pending_and_rejected_records(self):
+        self.ledger = TrustedMemoryLedger(Path(self.tmp.name) / 'quota.sqlite', self.authority)
         self.gateway = MemoryGateway(self.ledger, max_records_per_scope=1)
         mid = self.record(approve=False)
         with self.assertRaises(ValueError):
@@ -198,6 +199,20 @@ class MemoryGatewayTests(unittest.TestCase):
             self.record(approve=False)
         self.gateway.delete(self.actor, mid, scope=self.scope)
         self.record(approve=False)
+
+    def test_lazy_ranker_revocation_rechecked_after_materialisation(self):
+        first, second = self.record(), self.record()
+        records = [self.ledger.status(self.actor, mid) for mid in (first, second)]
+        ledger, actor = self.ledger, self.actor
+        class LazyRanker:
+            def retrieve(self, *args, **kwargs):
+                yield records[0]
+                ledger.revoke(actor, first, evaluator_id='host')
+                yield records[1]
+        ranker = LazyRanker()
+        ranker.ledger = ledger
+        self.gateway.retriever = ranker
+        self.assertEqual([r.memory_id for r in self.retrieve().records], [second])
 
 
 if __name__ == '__main__':

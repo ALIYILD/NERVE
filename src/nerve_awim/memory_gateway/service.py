@@ -71,17 +71,16 @@ class MemoryService:
         self.limit, self._buckets, self._lock = requests_per_minute, {}, RLock()
 
     def __call__(self, environ, start_response):
-        with self._lock:
-            try:
-                status, result = self._request(environ)
-            except PermissionError:
-                status, result = 403, {'error': 'scope_or_role_denied'}
-            except LookupError:
-                status, result = 404, {'error': 'memory_not_found'}
-            except (ValueError, TypeError, UnicodeError, RecursionError):
-                status, result = 400, {'error': 'invalid_request'}
-            except Exception:
-                status, result = 503, {'error': 'memory_service_unavailable'}
+        try:
+            status, result = self._request(environ)
+        except PermissionError:
+            status, result = 403, {'error': 'scope_or_role_denied'}
+        except LookupError:
+            status, result = 404, {'error': 'memory_not_found'}
+        except (ValueError, TypeError, UnicodeError, RecursionError):
+            status, result = 400, {'error': 'invalid_request'}
+        except Exception:
+            status, result = 503, {'error': 'memory_service_unavailable'}
         names = {200: 'OK', 201: 'Created', 400: 'Bad Request', 401: 'Unauthorized',
                  403: 'Forbidden', 404: 'Not Found', 411: 'Length Required',
                  413: 'Payload Too Large', 415: 'Unsupported Media Type',
@@ -116,12 +115,15 @@ class MemoryService:
         # Recheck capability revocation even for metadata-only requests.
         permission = {'reader': 'read', 'writer': 'propose', 'admin': 'delete' if record_id else 'read'}[role]
         self.gateway.ledger.authority.require(grant.actor, permission)
-        window = int(time.monotonic() // 60)
-        previous, count = self._buckets.get(identity.subject, (window, 0))
-        count = count if previous == window else 0
-        if count >= self.limit:
-            return 429, {'error': 'request_limit'}
-        self._buckets[identity.subject] = window, count + 1
+        # Only shared rate accounting is serialized. Never hold this lock
+        # across client reads, identity verification or gateway/provider I/O.
+        with self._lock:
+            window = int(time.monotonic() // 60)
+            previous, count = self._buckets.get(identity.subject, (window, 0))
+            count = count if previous == window else 0
+            if count >= self.limit:
+                return 429, {'error': 'request_limit'}
+            self._buckets[identity.subject] = window, count + 1
         if method == 'GET':
             if path.endswith('/capabilities'):
                 return 200, {'version': 'v1', 'synthetic_only': True, 'inference': False,
@@ -138,6 +140,11 @@ class MemoryService:
         if len(length) > 8 or int(length) > 12000:
             return 413, {'error': 'body_limit'}
         raw = env['wsgi.input'].read(int(length))
+        # Uploads can stall after initial authentication. Expiry and local
+        # capability revocation must still win before parsing or acting.
+        if identity.expires_at <= int(time.time()):
+            return 401, {'error': 'invalid_identity'}
+        self.gateway.ledger.authority.require(grant.actor, permission)
         if len(raw) != int(length):
             raise ValueError('incomplete body')
         def unique(pairs):

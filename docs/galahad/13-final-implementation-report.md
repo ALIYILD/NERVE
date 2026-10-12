@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Continuation:** see [14-continuation-report.md](14-continuation-report.md) for the latest 951-test checkpoint, atomic quotas, concurrent API handling and one-use external holdout interface. The evidence below records the initial 926-test checkpoint; its single-host quota and request-lock limitations were subsequently addressed.
+
 Status: partial master-plan implementation; locally verified CPU research checkpoint. No deployment, push, PR or merge. Real persistent KV restoration is not implemented or tested.
 
 ## Revision and workspace

@@ -12,4 +12,4 @@ ADR 2: CPU-first text-only prefill, no invented Galahad deposit/restore methods.
 
 ADR 3: preserve existing pending/approved/rejected/superseded/revoked states and approval capability. There is no public approval endpoint. Evidence is encoded as JSON data, not instructions. This does not solve downstream prompt injection.
 
-ADR 4: single trusted host process; in-process serialization and scope quotas do not constitute distributed transactions or durable network grants. No clinical data, automatic promotion, remote shell or deployment.
+ADR 4: trusted host service; SQLite quota triggers cover concurrent database writers, while service rate limits and host capability revocation remain process-local rather than durable network grants. No clinical data, automatic promotion, remote shell or deployment.

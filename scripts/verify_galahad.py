@@ -10,9 +10,11 @@ import os
 ROOT = Path(__file__).resolve().parents[1]
 GROUPS = {
     'cpu': ('test_memory_gateway.py', 'test_galahad_provider.py',
-            'test_memory_gateway_evaluation.py', 'test_memory_service.py'),
-    'security': ('test_memory_gateway.py', 'test_memory_service.py', 'test_galahad_provider.py'),
-    'faults': ('test_memory_gateway.py', 'test_galahad_provider.py'),
+            'test_memory_gateway_evaluation.py', 'test_memory_service.py',
+            'test_memory_lifecycle.py', 'test_memory_holdout.py'),
+    'security': ('test_memory_gateway.py', 'test_memory_service.py', 'test_galahad_provider.py',
+                 'test_memory_lifecycle.py', 'test_memory_holdout.py'),
+    'faults': ('test_memory_gateway.py', 'test_galahad_provider.py', 'test_memory_lifecycle.py'),
     'api': ('test_memory_service.py',),
     'baseline': ('test*.py',),
 }

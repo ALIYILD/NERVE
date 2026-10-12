@@ -141,6 +141,101 @@ class MemoryServiceTests(unittest.TestCase):
         self.assertEqual(self.request()[0], 200)
         self.assertEqual(self.request()[0], 429)
 
+    def test_stalled_upload_does_not_block_another_principal(self):
+        from concurrent.futures import ThreadPoolExecutor
+        from threading import Event
+        bob = self.auth.issue('tenant-b', 'agent-b', permissions=('read',))
+        scope = synthetic_scope('tenant-b', 'agent-b', application='clinical', user='bob',
+            clinic='synthetic-clinic-b', patient='synthetic-patient-b', session='session-b')
+        grant = MemoryGrant('bob', bob, scope, 'synthetic-clinic-b',
+                            'synthetic-patient-b', frozenset({'reader'}))
+        self.service = MemoryService(self.gateway, verifier=self.verifier, grants=[self.grant, grant])
+        entered, release = Event(), Event()
+        raw = json.dumps(dict(clinic_id='synthetic-clinic', patient_id='synthetic-patient',
+                              query='fixture', limit=5)).encode()
+        class StalledInput:
+            def read(self, length):
+                entered.set()
+                if not release.wait(5):
+                    raise TimeoutError('test upload release timed out')
+                return raw[:length]
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            blocked = pool.submit(self.request, body=raw, **{'wsgi.input': StalledInput()})
+            try:
+                self.assertTrue(entered.wait(2), 'authenticated upload never reached body read')
+                independent = pool.submit(self.request, '/v1/memory/health', method='GET',
+                                          token=self.token(sub='bob'))
+                self.assertEqual(independent.result(timeout=2)[0], 200)
+                self.assertFalse(blocked.done(), 'test did not keep the upload stalled')
+            finally:
+                release.set()
+            self.assertEqual(blocked.result(timeout=2)[0], 200)
+
+    def test_revoked_during_body_read_cannot_reach_any_action(self):
+        from unittest.mock import patch
+        base = dict(clinic_id='synthetic-clinic', patient_id='synthetic-patient')
+        cases = [('/v1/memory/query', 'POST', {**base, 'query': 'fixture', 'limit': 5}),
+                 ('/v1/memory/experiences', 'POST', {**base, 'content': 'fixture', 'source_id': 's'}),
+                 ('/v1/memory/feedback', 'POST', {**base, 'content': 'fixture', 'source_id': 's'}),
+                 ('/v1/memory/revoke', 'POST', {**base, 'memory_id': 'a'}),
+                 ('/v1/memory/records/a', 'DELETE', base),
+                 ('/v1/inference/respond', 'POST', base)]
+        for path, method, body in cases:
+            with self.subTest(path=path):
+                actor = self.auth.issue('tenant-a', 'agent-a', permissions=('read', 'propose', 'approve', 'delete'))
+                grant = MemoryGrant('alice', actor, self.scope, 'synthetic-clinic',
+                                    'synthetic-patient', self.grant.roles)
+                self.service = MemoryService(self.gateway, verifier=self.verifier, grants=[grant])
+                raw = json.dumps(body).encode()
+                authority = self.auth
+                class RevokingInput:
+                    def read(self, length):
+                        authority.revoke(actor)
+                        return raw[:length]
+                with patch.multiple(self.gateway, retrieve=unittest.mock.DEFAULT,
+                                    propose=unittest.mock.DEFAULT, revoke=unittest.mock.DEFAULT,
+                                    delete=unittest.mock.DEFAULT) as calls:
+                    code, result, _ = self.request(path, method=method, body=raw,
+                                                  **{'wsgi.input': RevokingInput()})
+                    self.assertEqual(code, 403)
+                    self.assertEqual(result, {'error': 'scope_or_role_denied'})
+                    for action in calls.values():
+                        action.assert_not_called()
+
+    def test_token_expired_during_upload_cannot_reach_action(self):
+        from unittest.mock import patch
+        now = int(time.time())
+        token = self.token(exp=now + 30)
+        raw = json.dumps(dict(clinic_id='synthetic-clinic', patient_id='synthetic-patient',
+                              query='fixture', limit=5)).encode()
+        with patch('nerve_awim.memory_gateway.service.time.time', return_value=now) as clock:
+            class ExpiringInput:
+                def read(self, length):
+                    clock.return_value = now + 30
+                    return raw[:length]
+            with patch.object(self.gateway, 'retrieve') as retrieve:
+                code, result, _ = self.request(body=raw, token=token,
+                                              **{'wsgi.input': ExpiringInput()})
+                self.assertEqual(code, 401)
+                self.assertEqual(result, {'error': 'invalid_identity'})
+                retrieve.assert_not_called()
+
+    def test_concurrent_requests_share_atomic_rate_budget(self):
+        from concurrent.futures import ThreadPoolExecutor
+        from threading import Barrier
+        from unittest.mock import patch
+        self.service.limit = 3
+        barrier = Barrier(8)
+        token = self.token()
+        def request():
+            barrier.wait(timeout=3)
+            return self.request('/v1/memory/capabilities', method='GET', token=token)[0]
+        with patch('nerve_awim.memory_gateway.service.time.monotonic', return_value=120):
+            with ThreadPoolExecutor(max_workers=8) as pool:
+                codes = list(pool.map(lambda _: request(), range(8)))
+        self.assertEqual(codes.count(200), 3)
+        self.assertEqual(codes.count(429), 5)
+
     def test_unsupported_routes_and_inference(self):
         self.assertEqual(self.request('/v1/memory/approve')[0], 404)
         self.assertEqual(self.request('/v1/inference/respond', body=dict(clinic_id='synthetic-clinic', patient_id='synthetic-patient'))[0], 501)
