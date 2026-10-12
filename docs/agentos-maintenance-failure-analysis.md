@@ -68,3 +68,5 @@ Nineteen native sessions were reserved for October 12 in total, including the ov
 ## Validation
 
 The final NERVE suite passed 735 tests. This includes the real concurrent SQLite snapshot regression, source-health edge cases, producer admission/runtime/model metadata behavior, optional host-review veto, output contract, and isolated v3 behavioral evaluation. Both original study arms and the immutable experiment receipt remain unchanged by these follow-up integration fixes. The final endpoint-semantics prompt clarification is covered by contract tests; a further live audit of that exact prompt has not been run.
+
+All eleven bounded recovery/audit runs (17–27) ultimately completed. The [terminal receipt](evidence/agentos-maintenance-recovery-20261012.json) records durations, model-QA and host-review verdicts, and artifact hashes. None of the three audits is effectively accepted. NERVE collection added zero successful observations from them.

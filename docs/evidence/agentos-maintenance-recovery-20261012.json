@@ -1,0 +1,175 @@
+{
+  "observed_date": "2026-10-12",
+  "runs": [
+    {
+      "id": 17,
+      "task_id": "t_6f9d7f82",
+      "status": "done",
+      "started_at": 1791799034,
+      "ended_at": 1791799134,
+      "outcome": "completed",
+      "duration_seconds": 100
+    },
+    {
+      "id": 18,
+      "task_id": "t_7f5229d5",
+      "status": "done",
+      "started_at": 1791799155,
+      "ended_at": 1791799230,
+      "outcome": "completed",
+      "duration_seconds": 75
+    },
+    {
+      "id": 19,
+      "task_id": "t_f3fe000e",
+      "status": "done",
+      "started_at": 1791799276,
+      "ended_at": 1791799367,
+      "outcome": "completed",
+      "duration_seconds": 91
+    },
+    {
+      "id": 20,
+      "task_id": "t_ab3d2ba2",
+      "status": "done",
+      "started_at": 1791799758,
+      "ended_at": 1791799895,
+      "outcome": "completed",
+      "duration_seconds": 137
+    },
+    {
+      "id": 21,
+      "task_id": "t_89b55a43",
+      "status": "done",
+      "started_at": 1791799758,
+      "ended_at": 1791799847,
+      "outcome": "completed",
+      "duration_seconds": 89
+    },
+    {
+      "id": 22,
+      "task_id": "t_ff0a3f52",
+      "status": "done",
+      "started_at": 1791799939,
+      "ended_at": 1791800031,
+      "outcome": "completed",
+      "duration_seconds": 92
+    },
+    {
+      "id": 23,
+      "task_id": "t_6e39085d",
+      "status": "done",
+      "started_at": 1791800060,
+      "ended_at": 1791800146,
+      "outcome": "completed",
+      "duration_seconds": 86
+    },
+    {
+      "id": 24,
+      "task_id": "t_91f59f0d",
+      "status": "done",
+      "started_at": 1791800180,
+      "ended_at": 1791800266,
+      "outcome": "completed",
+      "duration_seconds": 86
+    },
+    {
+      "id": 25,
+      "task_id": "t_05bd01a9",
+      "status": "done",
+      "started_at": 1791800180,
+      "ended_at": 1791800261,
+      "outcome": "completed",
+      "duration_seconds": 81
+    },
+    {
+      "id": 26,
+      "task_id": "t_3f3769e2",
+      "status": "done",
+      "started_at": 1791800301,
+      "ended_at": 1791800499,
+      "outcome": "completed",
+      "duration_seconds": 198
+    },
+    {
+      "id": 27,
+      "task_id": "t_d277cdc3",
+      "status": "done",
+      "started_at": 1791800542,
+      "ended_at": 1791800664,
+      "outcome": "completed",
+      "duration_seconds": 122
+    }
+  ],
+  "missions": [
+    {
+      "mission": "2026-10-05",
+      "run_ids": [
+        17,
+        18,
+        19
+      ],
+      "qa_accepted": false,
+      "host_accepted": null,
+      "effective_accepted": false,
+      "host_issues": [],
+      "artifacts_sha256": {
+        "routing.json": "9b74c349a04ce7036296a1ced5abe16a9db80606c2011347c86425174c4ed22b",
+        "scheduling.json": "4d1fce58f74b3fd59ae5f4f50b5bd9f262a2d12a57f3ad67e1e1a76bd2c3514f",
+        "verification.json": "6d664e2aa14baf32b32eb18cec446683a1b2ec721cb164084eb01dc13e9c45c5",
+        "summary.md": "196583ada50b3c7300bc1f2b26932038f064fa267cdde8e321e5379ea9f3d13d"
+      }
+    },
+    {
+      "mission": "2026-10-12",
+      "run_ids": [
+        20,
+        21,
+        22,
+        23
+      ],
+      "qa_accepted": true,
+      "host_accepted": false,
+      "effective_accepted": false,
+      "host_issues": [
+        "scheduling.no_paid_model_routes=true is unsupported: compact evidence omits model/provider/pricing; QA cites the worker assertion rather than independent evidence."
+      ],
+      "artifacts_sha256": {
+        "routing.json": "f34869e5b09b5ed11fa384be7f8fba3230c7bce2aa5e516993182bf8ab16e6c1",
+        "scheduling.json": "253d8bb929c4d8d25cdfd6ba7699c0de120f5bd0a4c0c2eb2b30d848d5ff21c7",
+        "verification.json": "7c80ba50ada4782a9e3af3de1cddc9f0faa562261b210d997f2cab2a88bbacae",
+        "summary.md": "85b81210e6cc7a1e62f07ed469988b885e32f2e52c6613b02fc7e3d1ed30c66a"
+      }
+    },
+    {
+      "mission": "2026-10-12-source-recheck",
+      "run_ids": [
+        24,
+        25,
+        26,
+        27
+      ],
+      "qa_accepted": true,
+      "host_accepted": false,
+      "effective_accepted": false,
+      "host_issues": [
+        "routing.json notes wrongly interpret local API ok=true as primary model reachability. That endpoint establishes credential presence only; primary availability/execution are not established."
+      ],
+      "artifacts_sha256": {
+        "routing.json": "d08687587e1c969798254be70dcfb9cd7caee7bc967bc0309983344228bbf7c0",
+        "scheduling.json": "0fa048e74552de643d1e542432828d9011be86660b766b896d5d0e09fa2a4aae",
+        "verification.json": "db09930f2ec6f242e49664f43fe3b9a6aefe40f07d6bb9b7f7a6ed4bc41da814",
+        "summary.md": "d61c9ec80719df66a5661b4dddc7e2be8c3cd593b6ad0f973f31fd2f3cb61d24"
+      }
+    }
+  ],
+  "validation": {
+    "unit_and_integration_tests": 735,
+    "result": "passed"
+  },
+  "native_sessions_reserved_today": 19,
+  "daily_session_limit": 20,
+  "claude_accounted_usd": 0,
+  "claude_cap_usd": 25,
+  "limitation": "Execution completion is separate from source-verified audit correctness. All three audits remain unaccepted. This is engineering recovery evidence, not a learned-policy gain."
+}
