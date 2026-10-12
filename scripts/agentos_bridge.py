@@ -399,7 +399,22 @@ def main():
         'audit-shadow','audit-shadow-status','autoresearch-enable','autoresearch-pause',
         'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort',
         'arc-run','arc-inspect','arc-replay','arc-evaluate','arc-improve','arc-candidate-status',
-        'arc-release-status','arc-stage','arc-promote','arc-rollback','arc-reconcile'))
+        'arc-release-status','arc-stage','arc-promote','arc-rollback','arc-reconcile',
+        'adaptation-inspect','adaptation-validate-config','adaptation-replay','adaptation-evaluate',
+        'adaptation-run','adaptation-demo','adaptation-status','adaptation-reset','adaptation-kill',
+        'research-fast-memory-train','research-fast-memory-evaluate'))
+    parser.add_argument('--repository',type=Path,help='Authorized local repository for read-only adaptation')
+    parser.add_argument('--candidate')
+    parser.add_argument('--config',type=Path)
+    parser.add_argument('--budget',type=Path)
+    parser.add_argument('--suite',type=Path)
+    parser.add_argument('--checkpoint',type=Path)
+    parser.add_argument('--output',type=Path)
+    parser.add_argument('--synthetic',action='store_true')
+    parser.add_argument('--scenario')
+    parser.add_argument('--reason')
+    parser.add_argument('--split',choices=('development','heldout'),default='development')
+    parser.add_argument('--adaptation-mode',choices=('off','shadow','active-development'),default='active-development')
     parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
     parser.add_argument('--review',type=Path,help='Independent host review record for cohort admission')
@@ -421,8 +436,11 @@ def main():
     parser.add_argument('--review-target',choices=('handoff','repository-experiments','repository-taskbench','repository-runner'),default='handoff')
     args=parser.parse_args()
     requested_profile=args.profile
-    if args.command.startswith('arc-'):
-        from nerve_awim.arc_cli import dispatch
+    if args.command.startswith(('arc-','adaptation-','research-fast-memory-')):
+        if args.command.startswith('arc-'):
+            from nerve_awim.arc_cli import dispatch
+        else:
+            from nerve_awim.adaptation_cli import dispatch
         with host_lock(args.state):
             try:
                 result=dispatch(args)

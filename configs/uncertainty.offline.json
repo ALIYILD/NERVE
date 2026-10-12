@@ -1,0 +1,10 @@
+{
+  "call_timeout_seconds": 30,
+  "checks_per_conflict": 3,
+  "checks_per_task": 12,
+  "mode": "offline",
+  "paid_budget_usd": 0,
+  "policy": "uncertainty-pilot-v1",
+  "provider": "scripted-fixture",
+  "task_timeout_seconds": 180
+}

@@ -1,0 +1,478 @@
+{
+  "baseline": {
+    "token_weight": 3,
+    "trigram_weight": 0
+  },
+  "baseline_holdout": {
+    "accuracy": 0.6666666666666666,
+    "cross_tenant_leaks": 0,
+    "hits": 4,
+    "queries": 6
+  },
+  "baseline_validation": {
+    "accuracy": 0.6666666666666666,
+    "cross_tenant_leaks": 0,
+    "hits": 4,
+    "queries": 6
+  },
+  "candidates_evaluated": 16,
+  "generations_run": 4,
+  "known_population_size": 17,
+  "limitations": "Constructed retrieval dataset and data-only mutations. Not autonomous AlphaEvolve, not general intelligence or proven speedup.",
+  "lineage": [
+    {
+      "evaluated": [
+        {
+          "accepted": false,
+          "candidate_for_selection": true,
+          "genome": {
+            "token_weight": 3,
+            "trigram_weight": 1
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 4,
+            "trigram_weight": 0
+          },
+          "training": {
+            "accuracy": 0.8333333333333334,
+            "cross_tenant_leaks": 0,
+            "hits": 5,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 0.6666666666666666,
+            "cross_tenant_leaks": 0,
+            "hits": 4,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": true,
+          "candidate_for_selection": true,
+          "genome": {
+            "token_weight": 2,
+            "trigram_weight": 1
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 5,
+            "trigram_weight": 0
+          },
+          "training": {
+            "accuracy": 0.8333333333333334,
+            "cross_tenant_leaks": 0,
+            "hits": 5,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 0.6666666666666666,
+            "cross_tenant_leaks": 0,
+            "hits": 4,
+            "queries": 6
+          }
+        }
+      ],
+      "generation": 1,
+      "parent": {
+        "token_weight": 3,
+        "trigram_weight": 0
+      },
+      "selection": "improved"
+    },
+    {
+      "evaluated": [
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 2,
+            "trigram_weight": 0
+          },
+          "training": {
+            "accuracy": 0.8333333333333334,
+            "cross_tenant_leaks": 0,
+            "hits": 5,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 0.6666666666666666,
+            "cross_tenant_leaks": 0,
+            "hits": 4,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 2,
+            "trigram_weight": 2
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 1,
+            "trigram_weight": 2
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 1,
+            "trigram_weight": 1
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        }
+      ],
+      "generation": 2,
+      "parent": {
+        "token_weight": 2,
+        "trigram_weight": 1
+      },
+      "selection": "no_eligible_improvement"
+    },
+    {
+      "evaluated": [
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 4,
+            "trigram_weight": 4
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 4,
+            "trigram_weight": 1
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 3,
+            "trigram_weight": 3
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 3,
+            "trigram_weight": 4
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        }
+      ],
+      "generation": 3,
+      "parent": {
+        "token_weight": 2,
+        "trigram_weight": 1
+      },
+      "selection": "no_eligible_improvement"
+    },
+    {
+      "evaluated": [
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 3,
+            "trigram_weight": 2
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 5,
+            "trigram_weight": 3
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 5,
+            "trigram_weight": 4
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        },
+        {
+          "accepted": false,
+          "candidate_for_selection": false,
+          "genome": {
+            "token_weight": 0,
+            "trigram_weight": 5
+          },
+          "training": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          },
+          "validation": {
+            "accuracy": 1.0,
+            "cross_tenant_leaks": 0,
+            "hits": 6,
+            "queries": 6
+          }
+        }
+      ],
+      "generation": 4,
+      "parent": {
+        "token_weight": 2,
+        "trigram_weight": 1
+      },
+      "selection": "no_eligible_improvement"
+    }
+  ],
+  "population_archive": [
+    {
+      "token_weight": 0,
+      "trigram_weight": 5
+    },
+    {
+      "token_weight": 1,
+      "trigram_weight": 1
+    },
+    {
+      "token_weight": 1,
+      "trigram_weight": 2
+    },
+    {
+      "token_weight": 2,
+      "trigram_weight": 0
+    },
+    {
+      "token_weight": 2,
+      "trigram_weight": 1
+    },
+    {
+      "token_weight": 2,
+      "trigram_weight": 2
+    },
+    {
+      "token_weight": 3,
+      "trigram_weight": 0
+    },
+    {
+      "token_weight": 3,
+      "trigram_weight": 1
+    },
+    {
+      "token_weight": 3,
+      "trigram_weight": 2
+    },
+    {
+      "token_weight": 3,
+      "trigram_weight": 3
+    },
+    {
+      "token_weight": 3,
+      "trigram_weight": 4
+    },
+    {
+      "token_weight": 4,
+      "trigram_weight": 0
+    },
+    {
+      "token_weight": 4,
+      "trigram_weight": 1
+    },
+    {
+      "token_weight": 4,
+      "trigram_weight": 4
+    },
+    {
+      "token_weight": 5,
+      "trigram_weight": 0
+    },
+    {
+      "token_weight": 5,
+      "trigram_weight": 3
+    },
+    {
+      "token_weight": 5,
+      "trigram_weight": 4
+    }
+  ],
+  "remaining_candidates": 18,
+  "report_only_holdout": {
+    "accuracy": 0.8333333333333334,
+    "cross_tenant_leaks": 0,
+    "hits": 5,
+    "queries": 6
+  },
+  "reset_on_validation_drift": false,
+  "retained_learning": "best evaluated data-only recipe across generations",
+  "safety": "No source edits, secret keys, network calls or deployment; all promotions require independent external human approval.",
+  "search_space_size": 35,
+  "selected": {
+    "token_weight": 2,
+    "trigram_weight": 1
+  },
+  "selected_validation": {
+    "accuracy": 1.0,
+    "cross_tenant_leaks": 0,
+    "hits": 6,
+    "queries": 6
+  },
+  "status": "candidate_for_human_review",
+  "stop_reason": "patience_reached",
+  "study_protocol": "nerve-recursive-data-only-v19"
+}

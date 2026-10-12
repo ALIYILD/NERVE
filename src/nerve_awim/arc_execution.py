@@ -127,14 +127,19 @@ class ArcRuntime:
                 parent=self._row(con,actor,parent_decision_id)
                 if parent['task'] != task_id: raise ValueError('parent belongs to a different task')
                 if parent['status'] in {'executing','uncertain'}: raise RuntimeError('uncertain execution requires reconciliation before replanning')
+            from .adaptation import task_hook
+            task_hook(self,con,actor,task_id,'before_plan',parent=parent_decision_id,tool=tool,evidence_refs=refs)
             now=self.clock(); did=uuid.uuid4().hex
             required=bool(approval_required or spec.risk=='write')
             record=DecisionRecord(did,task_id,did,scope[0],actor._nonce,scope[1],task_id,now,now+expires_in,fingerprint,goal,[],list(unknowns or []),refs,concise_rationale,'Completion is checked after execution',goal,{'registered_tool':tool,'validated_arguments_ref':digest(arguments),'idempotency_key':did},['cross-scope access','unapproved external submission'],completion_criteria,'registered-deterministic-verifier',{'reason':'No calibrated confidence available','confidence_if_calibrated':None},required,None,self.engine.contract,model_version,prompt_version,'awaiting_approval' if required else 'ready',parent_decision_id)
             con.execute('INSERT INTO arc_decisions VALUES(?,?,?,?,?,?,?,?,?,?,?)',(did,*scope,task_id,domain,record.to_json(),_json(arguments),record.status,0,None,None))
+            task_hook(self,con,actor,task_id,'planned',did,parent_decision_id)
             self.engine._event(con,scope,'arc_proposed',{'decision':did,'correlation':task_id})
         return record
 
     def generate(self, actor, *, provider, task_id, evidence_refs, domain='nonclinical'):
+        if getattr(self, 'adaptation', None) is not None and self.adaptation.config.mode == 'active-development':
+            raise PermissionError('adaptation provider budget is zero USD')
         """Existing configured provider adapter supplied by host; max one repair.
 
         Provider must own timeout and usage accounting. Only redacted references
@@ -194,6 +199,8 @@ class ArcRuntime:
         row=self._row(con,actor,task.task_id)
         if row['status']!='executing': raise PermissionError('dispatch cancelled or already consumed')
         record,args=self._validate(con,actor,row)
+        from .adaptation import task_hook
+        task_hook(self,con,actor,row['task'],'before_execute',row['id'])
         state=self.engine._state(con,(actor.tenant,actor.agent)); routes=self.engine._release(con,(actor.tenant,actor.agent),state['active'])
         if routes[task.context]!=record.action['registered_tool']: raise PermissionError('approved route changed; obtain new decision')
         from .arc_operations import release_dispatch_guard
@@ -210,6 +217,8 @@ class ArcRuntime:
             mode=self._mode(con,actor,self.tools[record.action['registered_tool']].context)
             if mode=='shadow': return {'status':'shadow','decision_id':decision_id,'effects':False}
             if mode!='enforce': raise PermissionError('ARC execution is disabled')
+            from .adaptation import task_hook
+            task_hook(self,con,actor,row['task'],'before_execute',decision_id)
             con.execute("UPDATE arc_decisions SET status='executing',version=version+1 WHERE id=? AND version=?",(decision_id,row['version']))
             self.engine._event(con,scope,'arc_dispatch_intent',{'decision':decision_id,'correlation':record.correlation_id})
         spec=self.tools[record.action['registered_tool']]; permit=object(); task=AgentTask(decision_id,spec.context,args)
@@ -224,7 +233,9 @@ class ArcRuntime:
         if transport=='success':
             with self.engine._db() as con: con.execute("UPDATE arc_decisions SET status='awaiting_verification',version=version+1 WHERE id=? AND status='executing'",(decision_id,))
             # Only transient readback is retried; the effect itself is never replayed.
-            for attempt in range(3):
+            adaptation=getattr(self,'adaptation',None)
+            retries=adaptation.config.max_tool_retries if adaptation and adaptation.config.mode=='active-development' else 2
+            for attempt in range(retries+1):
                 # Deadline checks bound admission, not a running host callback.
                 if self.clock() >= record.expires_at: break
                 with self.engine._db() as con:
@@ -238,7 +249,7 @@ class ArcRuntime:
                     lifecycle='succeeded' if semantic=='verified' else 'failed'
                     break
                 except (TimeoutError,ConnectionError):
-                    if attempt==2: break
+                    if attempt==retries: break
                     remaining=record.expires_at-self.clock()
                     if remaining <= 0: break
                     self.sleeper(min(.01 * (2 ** attempt), remaining))
@@ -251,6 +262,7 @@ class ArcRuntime:
                 lifecycle='uncertain'
                 outcome=replace(outcome,semantic_status='unverifiable',discrepancy='Cancellation or rollback during execution requires reconciliation',retry_classification='reconcile_required')
             con.execute('UPDATE arc_decisions SET outcome=?,status=?,version=version+1 WHERE id=?',(outcome.to_json(),lifecycle,decision_id))
+            task_hook(self,con,actor,current['task'],'record_outcome',decision_id,outcome)
             self.engine._event(con,scope,'arc_outcome',{'decision':decision_id,'semantic_status':outcome.semantic_status,'transport_status':outcome.transport_status,'correlation':record.correlation_id})
         return outcome
 
@@ -317,6 +329,10 @@ def _observed(method):
     def wrapped(self,actor,*args,**kwargs):
         try: return method(self,actor,*args,**kwargs)
         except Exception as exc:
+            if method.__name__=='propose' and getattr(self,'adaptation',None) is not None:
+                task_id=args[0] if args else kwargs.get('task_id')
+                try: self.adaptation.stop_exhausted(actor,task_id)
+                except (PermissionError,ValueError): pass
             try:
                 scope=self._scope(actor)
                 text=str(exc).lower()

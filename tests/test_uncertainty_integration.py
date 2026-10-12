@@ -90,12 +90,43 @@ class UncertaintyIntegrationTests(unittest.TestCase):
     def test_real_arc_dispatch_gates_relevant_conflict(self):
         self.conflict()
         source='def f(): pass';ref=self.c['runtime'].snapshot(self.actor,'input',source)
-        decision=self.c['runtime'].propose(self.actor,'arc-task','inventory',{'payload':source},[ref],'Inventory',['objective'])
+        decision=self.c['runtime'].propose(self.actor,self.task,'inventory',{'payload':source},[ref],'Inventory',['objective'])
         self.policy.assess(self.actor,self.task,decision.decision_id,'inventory',['left'],required=True)
         self.policy.bind(self.actor,decision.decision_id)
         outcome=self.c['runtime'].execute(self.actor,decision.decision_id)
         self.assertNotEqual(outcome.semantic_status,'verified')
         self.assertEqual(self.c['receipt'].get('dispatches',0),0)
+
+    def test_arc_task_cannot_retarget_and_child_cannot_drop_parent_dependencies(self):
+        self.conflict()
+        source='def f(): pass';ref=self.c['runtime'].snapshot(self.actor,'input',source)
+        runtime=self.c['runtime']
+        parent=runtime.propose(self.actor,self.task,'inventory',{'payload':source},[ref],'Inventory',['objective'])
+        with self.assertRaises(PermissionError):
+            self.policy.assess(self.actor,'clean-task',parent.decision_id,'inventory',[])
+        self.policy.assess(self.actor,'clean-task','unrelated-assessment','inventory',[])
+        with self.assertRaises(PermissionError):
+            self.policy.bind(self.actor,'unrelated-assessment',parent.decision_id)
+        self.policy.assess(self.actor,self.task,parent.decision_id,'inventory',['left'],required=True)
+        child_source='def g(): pass';child_ref=runtime.snapshot(self.actor,'input',child_source)
+        child=runtime.propose(self.actor,self.task,'inventory',{'payload':child_source},[child_ref],'Inventory',['objective'],parent_decision_id=parent.decision_id)
+        assessment=self.policy.assess(self.actor,self.task,child.decision_id,'inventory',[])
+        self.assertEqual(assessment.status,'verify_first')
+        self.assertIn('left',assessment.dependency_claim_ids)
+        self.policy.bind(self.actor,child.decision_id)
+        outcome=runtime.execute(self.actor,child.decision_id)
+        self.assertNotEqual(outcome.semantic_status,'verified')
+        self.assertEqual(self.c['receipt'].get('dispatches',0),0)
+
+    def test_claim_expiry_invalidates_dispatch_without_a_ledger_write(self):
+        now=[100.0];self.policy.clock=lambda:now[0]
+        source=self.ledger.register_source(self.actor,'expiring-source',{'value':True})
+        self.ledger.add_claim(self.actor,Claim('expiring','synthetic',self.task,'subject','status',True,valid_from=90.,valid_to=110.,**source))
+        self.policy.assess(self.actor,self.task,'expiring-decision','inventory',['expiring'],required=True)
+        now[0]=111.
+        with self.engine._db() as con:
+            with self.assertRaisesRegex(RuntimeError,'expired'):
+                self.policy.recheck(con,self.actor,'expiring-decision','inventory')
 
     def test_direct_dispatch_and_restart_cannot_drop_enabled_assessment(self):
         self.claim('fact','value')
@@ -136,6 +167,76 @@ class UncertaintyIntegrationTests(unittest.TestCase):
         result=self.output.render(self.actor,self.task,[{'claim_id':'fact'}])
         self.assertEqual(result['unresolved'],[]);self.assertEqual(result['qualified'],[])
         self.assertEqual(result['text'],'status: "value"')
+
+    def test_empty_required_dependency_and_missing_checkpoint_state_do_not_proceed(self):
+        result=self.policy.assess(self.actor,self.task,'missing','inventory',[],required=True)
+        self.assertEqual(result.status,'verify_first')
+        self.assertIn('missing_required_evidence',result.remaining_unknowns)
+        self.assertEqual(self.propagator.envelope(self.actor,'never-observed')['state'],'unavailable')
+
+    def test_bound_execution_cannot_be_replaced_with_weaker_new_assessment(self):
+        self.conflict()
+        self.policy.assess(self.actor,self.task,'strict','inventory',['left'],required=True)
+        self.policy.bind(self.actor,'strict','operation')
+        self.policy.assess(self.actor,self.task,'weak','inventory',['left'])
+        with self.assertRaises(PermissionError):self.policy.bind(self.actor,'weak','operation')
+
+    def test_other_task_assessment_cannot_authorize_result(self):
+        self.claim('fact','value')
+        record=self.policy.assess(self.actor,self.task,'decision','inventory',['fact'])
+        with self.assertRaises(PermissionError):
+            self.output.render(self.actor,'other-task',[],assessments=[record])
+
+    def test_malformed_output_dependency_lists_fall_back_without_crash(self):
+        self.conflict()
+        for deps in (None, {'forged':True}, [None, {'forged':True}]):
+            result=self.output.render(self.actor,self.task,[{'claim_id':'left','text':'unsupported','dependency_claim_ids':deps}])
+            self.assertTrue(result['deterministic_fallback'])
+            self.assertEqual(result['supported'],[])
+            self.assertEqual(len(result['unresolved']),1)
+
+    def test_new_conflict_during_final_render_is_included(self):
+        self.claim('left','present')
+        original=self.ledger.source
+        inserted=[]
+        def racing_source(*args,**kwargs):
+            result=original(*args,**kwargs)
+            if not inserted:
+                inserted.append(True)
+                self.claim('right','absent');self.ledger.detect(self.actor,self.task)
+            return result
+        self.ledger.source=racing_source
+        result=self.output.render(self.actor,self.task,[{'claim_id':'left'}])
+        self.assertEqual(result['supported'],[])
+        self.assertEqual(len(result['unresolved']),1)
+        self.assertIn('ledger_changed',result['unavailable'])
+        self.assertEqual(result['uncertainty_state_revision'],self.ledger.revision(self.actor,self.task))
+
+    def test_unknown_and_expired_prerequisites_cannot_be_confirmed(self):
+        from dataclasses import replace
+        self.claim('unknown',None)
+        result=self.policy.assess(self.actor,self.task,'unknown-decision','inventory',['unknown'],required=True)
+        self.assertEqual(result.status,'unavailable')
+        rendered=self.output.render(self.actor,self.task,[{'claim_id':'unknown'}])
+        self.assertEqual(rendered['supported'],[])
+        original=self.claim('original','known')
+        # Claims are immutable; an expired observation has its own identity.
+        original=next(c for c in self.ledger.claims(self.actor,self.task) if c.claim_id=='original')
+        self.ledger.add_claim(self.actor,replace(original,claim_id='expired',valid_from=0,valid_to=1))
+        assessed=self.policy.assess(self.actor,self.task,'expired-decision','inventory',['expired'],required=True)
+        self.assertEqual(assessed.status,'unavailable')
+        self.assertEqual(self.output.render(self.actor,self.task,[{'claim_id':'expired'}])['supported'],[])
+
+    def test_negative_consent_is_never_rendered_or_authorized_as_positive(self):
+        from dataclasses import replace
+        self.claim('raw',True)
+        original=next(c for c in self.ledger.claims(self.actor,self.task) if c.claim_id=='raw')
+        self.ledger.add_claim(self.actor,replace(original,claim_id='consent-no',predicate='consent',polarity=False))
+        assessment=self.policy.assess(self.actor,self.task,'consent-decision','inventory',['consent-no'],mandatory='consent')
+        self.assertEqual(assessment.status,'defer_affected_action')
+        rendered=self.output.render(self.actor,self.task,[{'claim_id':'consent-no'}])
+        self.assertIn('consent: false',rendered['text'])
+        self.assertNotIn('consent: true',rendered['text'])
 
     def seed_memory(self):
         authority=MemoryAuthority();memory=TrustedMemoryLedger(self.path,authority)

@@ -1,0 +1,1199 @@
+{
+  "cases": [
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-service-ready",
+      "id": "operational-service-ready-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-service-ready",
+      "predicate": "service-ready",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-service-ready",
+      "id": "operational-service-ready-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-service-ready",
+      "predicate": "service-ready",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-backup-generation",
+      "id": "operational-backup-generation-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-backup-generation",
+      "predicate": "backup-generation",
+      "relevant": true,
+      "required": false,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-backup-generation",
+      "id": "operational-backup-generation-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": true,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-backup-generation",
+      "predicate": "backup-generation",
+      "relevant": true,
+      "required": false,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-health-endpoint",
+      "id": "operational-health-endpoint-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-health-endpoint",
+      "predicate": "health-endpoint",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": true
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-health-endpoint",
+      "id": "operational-health-endpoint-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-health-endpoint",
+      "predicate": "health-endpoint",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": true
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-quota-ledger",
+      "id": "operational-quota-ledger-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-quota-ledger",
+      "predicate": "quota-ledger",
+      "relevant": false,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-quota-ledger",
+      "id": "operational-quota-ledger-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-quota-ledger",
+      "predicate": "quota-ledger",
+      "relevant": false,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-deployment-region",
+      "id": "operational-deployment-region-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-deployment-region",
+      "predicate": "deployment-region",
+      "relevant": true,
+      "required": true,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-deployment-region",
+      "id": "operational-deployment-region-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": true,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-deployment-region",
+      "predicate": "deployment-region",
+      "relevant": true,
+      "required": true,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-maintenance-window",
+      "id": "operational-maintenance-window-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-maintenance-window",
+      "predicate": "maintenance-window",
+      "relevant": true,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "operational",
+      "family": "operational-maintenance-window",
+      "id": "operational-maintenance-window-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "operational-maintenance-window",
+      "predicate": "maintenance-window",
+      "relevant": true,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-module-count",
+      "id": "repository-module-count-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-module-count",
+      "predicate": "module-count",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-module-count",
+      "id": "repository-module-count-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-module-count",
+      "predicate": "module-count",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-build-exit",
+      "id": "repository-build-exit-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-build-exit",
+      "predicate": "build-exit",
+      "relevant": true,
+      "required": false,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-build-exit",
+      "id": "repository-build-exit-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": true,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-build-exit",
+      "predicate": "build-exit",
+      "relevant": true,
+      "required": false,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-lockfile-revision",
+      "id": "repository-lockfile-revision-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-lockfile-revision",
+      "predicate": "lockfile-revision",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": true
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-lockfile-revision",
+      "id": "repository-lockfile-revision-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-lockfile-revision",
+      "predicate": "lockfile-revision",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": true
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-test-receipt",
+      "id": "repository-test-receipt-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-test-receipt",
+      "predicate": "test-receipt",
+      "relevant": false,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-test-receipt",
+      "id": "repository-test-receipt-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-test-receipt",
+      "predicate": "test-receipt",
+      "relevant": false,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-artifact-checksum",
+      "id": "repository-artifact-checksum-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-artifact-checksum",
+      "predicate": "artifact-checksum",
+      "relevant": true,
+      "required": true,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-artifact-checksum",
+      "id": "repository-artifact-checksum-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": true,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-artifact-checksum",
+      "predicate": "artifact-checksum",
+      "relevant": true,
+      "required": true,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-dependency-version",
+      "id": "repository-dependency-version-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-dependency-version",
+      "predicate": "dependency-version",
+      "relevant": true,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "repository",
+      "family": "repository-dependency-version",
+      "id": "repository-dependency-version-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "repository-dependency-version",
+      "predicate": "dependency-version",
+      "relevant": true,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-assessment-current",
+      "id": "synthetic-clinical-assessment-current-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-assessment-current",
+      "predicate": "assessment-current",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-assessment-current",
+      "id": "synthetic-clinical-assessment-current-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-assessment-current",
+      "predicate": "assessment-current",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-medication-status",
+      "id": "synthetic-clinical-medication-status-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-medication-status",
+      "predicate": "medication-status",
+      "relevant": true,
+      "required": false,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-medication-status",
+      "id": "synthetic-clinical-medication-status-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": true,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-medication-status",
+      "predicate": "medication-status",
+      "relevant": true,
+      "required": false,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "train",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-allergy-record",
+      "id": "synthetic-clinical-allergy-record-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-allergy-record",
+      "predicate": "allergy-record",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": true
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-allergy-record",
+      "id": "synthetic-clinical-allergy-record-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-allergy-record",
+      "predicate": "allergy-record",
+      "relevant": true,
+      "required": true,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": true
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-consent-record",
+      "id": "synthetic-clinical-consent-record-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-consent-record",
+      "predicate": "consent-record",
+      "relevant": false,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-consent-record",
+      "id": "synthetic-clinical-consent-record-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-consent-record",
+      "predicate": "consent-record",
+      "relevant": false,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "selection",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-referral-prerequisite",
+      "id": "synthetic-clinical-referral-prerequisite-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-referral-prerequisite",
+      "predicate": "referral-prerequisite",
+      "relevant": true,
+      "required": true,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-referral-prerequisite",
+      "id": "synthetic-clinical-referral-prerequisite-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": true,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-referral-prerequisite",
+      "predicate": "referral-prerequisite",
+      "relevant": true,
+      "required": true,
+      "resolvable": true,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": true
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-observation-method",
+      "id": "synthetic-clinical-observation-method-control",
+      "labels": {
+        "conflict": false,
+        "human_review": null,
+        "material": false,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-observation-method",
+      "predicate": "observation-method",
+      "relevant": true,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    },
+    {
+      "claims": [
+        {
+          "lineage": "primary",
+          "source_id": "record-primary",
+          "value": true
+        },
+        {
+          "lineage": "secondary",
+          "source_id": "record-secondary",
+          "value": false
+        }
+      ],
+      "domain": "synthetic-clinical",
+      "family": "synthetic-clinical-observation-method",
+      "id": "synthetic-clinical-observation-method-conflict",
+      "labels": {
+        "conflict": true,
+        "human_review": null,
+        "material": true,
+        "resolvable": false,
+        "subjective_materiality": null
+      },
+      "pair_id": "synthetic-clinical-observation-method",
+      "predicate": "observation-method",
+      "relevant": true,
+      "required": false,
+      "resolvable": false,
+      "source_count": 2,
+      "split": "sealed-final",
+      "synthetic": true,
+      "verifier_failure": false
+    }
+  ],
+  "limitations": [
+    "Deterministic synthetic labels, not blinded human review.",
+    "18 source families with paired controls; small smoke pilot, not population evidence.",
+    "Existing HermesAgentRuntime with scripted factory, no live Hermes provider or model-quality measurement.",
+    "Prompt-only arm supplies instruction to the same adversarial scripted factory; this does not estimate an LLM prompt effect."
+  ],
+  "version": "paired-conflicts-v1"
+}

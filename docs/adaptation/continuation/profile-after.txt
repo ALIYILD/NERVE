@@ -1,0 +1,33 @@
+         100832 function calls (97372 primitive calls) in 0.757 seconds
+
+   Ordered by: cumulative time
+   List reduced from 291 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+       12    0.000    0.000    0.758    0.063 adaptation_replay.py:61(episode)
+       24    0.000    0.000    0.302    0.013 adaptation_replay.py:48(step)
+       48    0.001    0.000    0.302    0.006 arc_execution.py:328(wrapped)
+       12    0.000    0.000    0.241    0.020 adaptation_replay.py:18(build)
+      660    0.001    0.000    0.241    0.000 {built-in method builtins.next}
+      672    0.002    0.000    0.241    0.000 governed_learning_v20.py:125(_db)
+     2448    0.218    0.000    0.218    0.000 {method 'execute' of 'sqlite3.Connection' objects}
+       24    0.002    0.000    0.217    0.009 arc_execution.py:209(execute)
+      336    0.001    0.000    0.189    0.001 contextlib.py:139(__exit__)
+       36    0.184    0.005    0.184    0.005 {method 'executescript' of 'sqlite3.Connection' objects}
+      324    0.159    0.000    0.159    0.000 {method '__exit__' of 'sqlite3.Connection' objects}
+       12    0.000    0.000    0.116    0.010 adaptation_replay.py:54(correction)
+       60    0.001    0.000    0.115    0.002 adaptation.py:444(wrapped)
+       12    0.000    0.000    0.092    0.008 governed_learning_v20.py:73(__init__)
+       24    0.001    0.000    0.085    0.004 arc_execution.py:103(propose)
+       12    0.000    0.000    0.076    0.006 arc_execution.py:28(__init__)
+      120    0.001    0.000    0.065    0.001 adaptation.py:429(task_hook)
+      336    0.000    0.000    0.055    0.000 contextlib.py:130(__enter__)
+      120    0.003    0.000    0.055    0.000 adaptation.py:104(_event)
+      336    0.053    0.000    0.053    0.000 {built-in method _sqlite3.connect}
+       12    0.000    0.000    0.050    0.004 adaptation_replay.py:41(start)
+       12    0.000    0.000    0.050    0.004 adaptation.py:215(snapshot)
+      216    0.002    0.000    0.042    0.000 adaptation.py:85(_row)
+       12    0.000    0.000    0.040    0.003 adaptation.py:48(__init__)
+       12    0.000    0.000    0.036    0.003 adaptation.py:231(propose_correction)
+
+

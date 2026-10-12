@@ -83,7 +83,17 @@ class PromotionMonitor:
                 guard(con, scope, state)
             reason = row['phase']
             fallback = None
-            if row['phase'] == 'active':
+            uncertainty_denied = False
+            if row['phase'] == 'active' and self._current(row, state):
+                release = con.execute('SELECT candidate FROM gl_releases WHERE id=? AND tenant=? AND agent=?', (row['release'], *scope)).fetchone()
+                if release and release['candidate']:
+                    from .uncertainty.release import require_eligibility
+                    try: require_eligibility(con, self.engine, actor, release['candidate'])
+                    except (PermissionError, ValueError, LookupError):
+                        self._finish(con, scope, row, state, 'uncertainty_ineligible')
+                        uncertainty_denied = True
+                        reason = 'uncertainty_ineligible'
+            if row['phase'] == 'active' and not uncertainty_denied:
                 if not self._current(row, state):
                     self._finish(con, scope, row, state, 'active_release_changed')
                     reason = 'active_release_changed'

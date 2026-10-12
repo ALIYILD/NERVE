@@ -1,11 +1,42 @@
 """Persistent zero-cost read verification reservations; no arbitrary network tools.
 
-Host handlers must be bounded/cancellable adapters. Deadline admission and late
-receipt rejection do not forcibly terminate arbitrary in-process Python code.
+The caller has a wall-clock response deadline and bounded read-worker slots.
+A timed-out trusted callback may still finish in its daemon worker; its late
+result cannot update the ledger, and its request remains uncertain, never retried.
 """
 from dataclasses import dataclass,replace
 import json
 import uuid
+from queue import Queue, Empty
+from threading import Thread, BoundedSemaphore
+
+_READ_WORKERS = BoundedSemaphore(4)
+
+class ReadTimeout(TimeoutError):
+    pass
+
+def bounded_read(handler, request, seconds):
+    """Bound host response latency, not a sandbox for arbitrary Python handlers."""
+    if not _READ_WORKERS.acquire(blocking=False):
+        raise ConnectionError("verification workers busy")
+    receipt = Queue(maxsize=1)
+    def run():
+        try:
+            receipt.put((True, handler(request)))
+        except BaseException as error:
+            receipt.put((False, error))
+        finally:
+            _READ_WORKERS.release()
+    Thread(target=run, daemon=True, name="nerve-verification-read").start()
+    try:
+        ok, result = receipt.get(timeout=seconds)
+    except Empty:
+        raise ReadTimeout("read completion unknown; reconciliation required") from None
+    if not ok:
+        if isinstance(result, Exception):
+            raise result
+        raise RuntimeError("read worker unavailable")
+    return result
 from .contracts import VerificationAttempt,OPEN,bounded
 from .ledger import digest
 from ..governed_learning_v20 import _id
@@ -60,7 +91,7 @@ class Verifier:
             con.execute('UPDATE uc_budgets SET checks=checks+1,reserved_seconds=reserved_seconds+? WHERE tenant=? AND agent=? AND task=?',(self.call_seconds,*scope))
             ledger._event(con,scope,'verification_reserved',{'attempt_id':attempt.attempt_id,'conflict_id':conflict_id})
         try:
-            result=spec.handler(json.loads(json.dumps(request)))
+            result=bounded_read(spec.handler,json.loads(json.dumps(request)),min(self.call_seconds,max(.001,self.task_seconds-(ledger.clock()-budget['started']))))
             if ledger.clock()-now>self.call_seconds:raise TimeoutError('readback deadline exceeded')
             if type(result) is not dict or result.get('outcome') not in {'supports','refutes','inconclusive'}:raise ValueError('invalid verification result')
             refs=result.get('evidence_refs',[])
@@ -68,6 +99,8 @@ class Verifier:
             outcome=result['outcome'] if refs else 'inconclusive'
             attempt=replace(attempt,status='completed',finished_at=ledger.clock(),evidence_refs=refs,source_lineage=sorted(set(s['lineage'] for s in sources)),outcome=outcome)
             boundary='unresolved_disagreement' if refs else 'unresolved_no_source'
+        except ReadTimeout:
+            attempt=replace(attempt,status='uncertain',finished_at=ledger.clock(),outcome='failed');boundary='verifier_unavailable'
         except Exception:
             attempt=replace(attempt,status='failed',finished_at=ledger.clock(),outcome='failed');boundary='verifier_unavailable'
         with ledger.engine._db() as con:

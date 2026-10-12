@@ -59,6 +59,8 @@ class CanaryLearning:
             if (candidate['status'] != 'passed' or candidate['base_generation'] != expected_generation
                     or state['generation'] != expected_generation or candidate['base_release'] != state['active']):
                 raise ValueError('passed candidate against current approved generation required')
+            from .uncertainty.release import require_eligibility
+            require_eligibility(con, self.engine, actor, candidate_id)
             if con.execute('''SELECT 1 FROM gl_canaries WHERE tenant=? AND agent=?
                     AND phase IN ('active','ready')''', scope).fetchone():
                 raise ValueError('finish or stop the existing canary first')
@@ -107,6 +109,12 @@ class CanaryLearning:
             state = self.engine._state(con, scope)
             if guard is not None:
                 guard(con, scope, state)
+            if row['phase'] in ('active', 'ready'):
+                from .uncertainty.release import require_eligibility
+                try: require_eligibility(con, self.engine, actor, row['candidate'])
+                except (PermissionError, ValueError, LookupError):
+                    self._stop(con, scope, canary, 'uncertainty_ineligible')
+                    row = {**dict(row), 'phase': 'stopped'}
             if row['phase'] not in ('active', 'ready'):
                 reason = row['phase']
             elif state['generation'] != row['base_generation'] or state['active'] != row['base_release']:
@@ -220,6 +228,8 @@ class CanaryLearning:
             candidate = self.engine._candidate(con, scope, row['candidate'])
             if candidate['status'] != 'passed':
                 raise ValueError('candidate no longer eligible')
+            from .uncertainty.release import require_eligibility
+            require_eligibility(con, self.engine, actor, row['candidate'])
             routes = self.engine._routes(json.loads(candidate['routes']))
             con.execute('INSERT INTO gl_releases VALUES(?,?,?,?,?,?)',
                         (row['release'], *scope, self.engine.contract, _json(routes), row['candidate']))

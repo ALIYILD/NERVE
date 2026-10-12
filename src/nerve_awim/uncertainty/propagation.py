@@ -2,6 +2,7 @@
 import json
 import time
 from ..governed_learning_v20 import _id, _json
+from .reconciliation import usable
 
 
 class Propagator:
@@ -22,19 +23,23 @@ class Propagator:
             con.execute('BEGIN')
             revision = self.ledger.revision(actor, task_id, con=con)
             conflicts = self.ledger.open_conflicts(actor, task_id, decision_id=decision_id, con=con)
-        unavailable = []
-        for claim in self.ledger.claims(actor, task_id):
-            try: self.ledger.source(actor, claim.source_ref, claim.source_revision)
-            except (PermissionError, LookupError): unavailable.append(claim.claim_id)
+            observed = self.ledger.claims(actor, task_id, con=con)
+            unavailable = []
+            for claim in observed:
+                if not usable(claim, self.ledger.clock()): unavailable.append(claim.claim_id)
+                try: self.ledger.source(actor, claim.source_ref, claim.source_revision, con=con)
+                except (PermissionError, LookupError): unavailable.append(claim.claim_id)
+        unavailable = sorted(set(unavailable))
         ids = sorted(c.conflict_id for c in conflicts)
-        claims = sorted({cid for c in conflicts for cid in c.claim_ids})
+        claims = sorted({c.claim_id for c in observed})
+        decisions = sorted({d for c in conflicts for d in c.affected_decision_ids})
         envelope = {'schema_version': 'uncertainty-handoff-v1',
             'scope': {'tenant_id': actor.tenant, 'agent_id': actor.agent},
             'task_id': task_id, 'ledger_revision': revision,
             'open_conflict_ids': ids[:max_items],
-            'impacted_decisions': sorted({d for c in conflicts for d in c.affected_decision_ids})[:max_items],
-            'unknowns': sorted({c.kind for c in conflicts} | ({'source_unavailable'} if unavailable else set())), 'evidence_refs': claims[:max_items],
-            'state': 'unavailable' if unavailable else 'incomplete' if len(ids) > max_items or len(claims) > max_items else 'complete',
+            'impacted_decisions': decisions[:max_items],
+            'unknowns': sorted({c.kind for c in conflicts} | ({'source_unavailable'} if unavailable else set()) | ({'ledger_unavailable'} if revision == 0 else set())), 'evidence_refs': claims[:max_items],
+            'state': 'unavailable' if unavailable or revision == 0 else 'incomplete' if len(ids) > max_items or len(claims) > max_items or len(decisions) > max_items else 'complete',
             'unavailable_claim_ids': unavailable[:max_items],
             'open_conflict_count': len(ids), 'decision_id': decision_id}
         return envelope

@@ -27,3 +27,9 @@ def contradicts(a,b):
 def family(claim):
     # Applicable interval stays in key to avoid unrelated historical disputes.
     return json.dumps([claim.subject_ref,claim.predicate,claim.context,claim.valid_from,claim.valid_to,normalized(claim)[1]],sort_keys=True)
+
+
+def usable(claim, now):
+    """Current decisions cannot treat an explicit unknown as a known prerequisite."""
+    return (claim.extraction_status == 'verified' and claim.normalized_value is not None
+            and claim.valid_from <= now and (claim.valid_to is None or now < claim.valid_to))

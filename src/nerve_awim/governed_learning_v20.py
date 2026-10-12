@@ -381,6 +381,8 @@ class GovernedLearning:
                 raise ValueError('stale approval; re-evaluate against the current release')
             if candidate['status'] != 'passed':
                 raise ValueError('independent holdout gate has not passed')
+            from .uncertainty.release import require_eligibility
+            require_eligibility(con, self, actor, candidate_id)
             routes = self._routes(json.loads(candidate['routes']))
             release = uuid.uuid4().hex
             con.execute('INSERT INTO gl_releases VALUES(?,?,?,?,?,?)',

@@ -64,6 +64,10 @@ class Coordinator:
 
     def checkpoint(self, run_id, owner, fence, phase, body):
         with self.ledger.db() as db:
+            from ..uncertainty.world_model_adapter import checkpoint_state
+            state = checkpoint_state(self.ledger, self.trainer, body, con=db)
+            if state is not None:
+                body['uncertainty'] = state
             updated = db.execute('UPDATE wm_runs SET phase=?,body=?,lease_until=? WHERE scope=? AND id=? '
                 'AND owner=? AND fence=? AND lease_until>?',
                 (phase,canonical(body),time.time()+30,self.scope,run_id,owner,fence,time.time())).rowcount
@@ -161,6 +165,10 @@ class Coordinator:
                 completed, phase = phase,next_phase
                 if stop_after == completed:
                     break
+        except PermissionError:
+            body['stop_reason'] = 'uncertainty_review_or_authority_required'
+            body['eligibility'] = False
+            self.checkpoint(run_id,owner,fence,'stopped',body)
         except BudgetExhausted:
             body['stop_reason'] = 'work_budget'
             self.checkpoint(run_id,owner,fence,'stopped',body)

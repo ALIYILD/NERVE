@@ -1,0 +1,33 @@
+         142724 function calls (136528 primitive calls) in 0.787 seconds
+
+   Ordered by: cumulative time
+   List reduced from 290 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+       12    0.000    0.000    0.788    0.066 adaptation_replay.py:60(episode)
+       24    0.000    0.000    0.299    0.012 adaptation_replay.py:47(step)
+       48    0.000    0.000    0.299    0.006 arc_execution.py:328(wrapped)
+      708    0.001    0.000    0.275    0.000 {built-in method builtins.next}
+      720    0.002    0.000    0.275    0.000 governed_learning_v20.py:125(_db)
+       12    0.000    0.000    0.267    0.022 adaptation_replay.py:17(build)
+       36    0.223    0.006    0.223    0.006 {method 'executescript' of 'sqlite3.Connection' objects}
+       24    0.002    0.000    0.216    0.009 arc_execution.py:209(execute)
+      360    0.001    0.000    0.184    0.001 contextlib.py:139(__exit__)
+     2496    0.181    0.000    0.181    0.000 {method 'execute' of 'sqlite3.Connection' objects}
+       60    0.000    0.000    0.142    0.002 adaptation.py:437(wrapped)
+      348    0.134    0.000    0.134    0.000 {method '__exit__' of 'sqlite3.Connection' objects}
+       12    0.000    0.000    0.108    0.009 adaptation.py:48(__init__)
+      360    0.000    0.000    0.093    0.000 contextlib.py:130(__enter__)
+       12    0.000    0.000    0.092    0.008 adaptation_replay.py:53(correction)
+      360    0.092    0.000    0.092    0.000 {built-in method _sqlite3.connect}
+       24    0.001    0.000    0.083    0.003 arc_execution.py:103(propose)
+      120    0.001    0.000    0.079    0.001 adaptation.py:422(task_hook)
+       12    0.000    0.000    0.073    0.006 governed_learning_v20.py:73(__init__)
+       12    0.000    0.000    0.071    0.006 adaptation.py:395(close_task)
+       12    0.000    0.000    0.061    0.005 arc_execution.py:28(__init__)
+      240    0.002    0.000    0.058    0.000 adaptation.py:82(_row)
+       24    0.001    0.000    0.048    0.002 governed_learning_v20.py:407(execute)
+      360    0.047    0.000    0.047    0.000 {method 'close' of 'sqlite3.Connection' objects}
+      144    0.002    0.000    0.042    0.000 adaptation.py:101(_event)
+
+

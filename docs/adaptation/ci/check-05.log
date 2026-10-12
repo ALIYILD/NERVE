@@ -1,0 +1,30 @@
+{
+  "disclaimer": "synthetic results; heuristic intervals and safety envelopes are not validated",
+  "results": {
+    "gate": {
+      "completed_steps": 80,
+      "constraint_violations": 1.6,
+      "final_goal_error": 0.9178679972192416,
+      "infeasible_episodes": 0,
+      "late_goal_error": 0.8777722261614769,
+      "late_prediction_error": 0.049368253781087175
+    },
+    "risk": {
+      "completed_steps": 80,
+      "constraint_violations": 0,
+      "final_goal_error": 0.252646691245085,
+      "infeasible_episodes": 0,
+      "late_goal_error": 0.17440247592574187,
+      "late_prediction_error": 0.05436371985734682
+    },
+    "ungated": {
+      "completed_steps": 80,
+      "constraint_violations": 0,
+      "final_goal_error": 0.15801499477967676,
+      "infeasible_episodes": 0,
+      "late_goal_error": 0.21437349635602285,
+      "late_prediction_error": 0.08625396863204643
+    }
+  },
+  "seeds": 20
+}

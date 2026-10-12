@@ -57,6 +57,8 @@ class Registry:
         if assess(model['rules'],model['program'])['status'] != 'pass':
             raise IntegrityError('fidelity disagreement')
         with self.ledger.db() as db:
+            from ..uncertainty.world_model_adapter import guard
+            guard(self.ledger, actor, model['rules'], con=db)
             db.execute("UPDATE wm_artifacts SET state='frozen' WHERE scope=? AND id=? AND state='candidate'",(scope,model_id))
         return model_id
 

@@ -1,0 +1,25 @@
+{
+  "code_commit": "a4942ea01fe89e0b1051370f655bea4f338eedea",
+  "files": {
+    "src/nerve_awim/adaptation_evaluation.py": "c10e4efc86d1cc1a260553605849504bf01479e5d50abf85c1b3a85edf1b5bef",
+    "src/nerve_awim/adaptation_replay.py": "ddd6ea03e7504e8708f0af99c53bda203013f32c84a6e422d9237ac7c82e3a22",
+    "src/nerve_awim/adaptation.py": "38394c3ff44c50e33f89ea0b672905851b8977ed6c9ae348ec2d13a45076d29f",
+    "src/nerve_awim/adaptation_cli.py": "0f2aa01236b0ceade6ee913cc25cdf44c3991d3dc6f899a139b5d1cf75d5fd13",
+    "src/nerve_awim/arc_execution.py": "287039643762d56cc168f7efc2a3842d652488af7395a6f8b56f76858989dd25",
+    "scripts/agentos_bridge.py": "d9a8bbc7511f24cc8dc29490dd99b85f23d7eeaf4f5ac4e1d34a6410739bb711",
+    "research/fast_weight_memory/sequence_model.py": "fb05f50dbbd3d6fc2c68511162ad83e28c5dfa411489ba0dee83a75df0bc72b6",
+    "research/fast_weight_memory/__init__.py": "cd558aaa827c7f4ebf11a876ba84e2d8b8cde02ede5e08f562347edea623b263",
+    "research/fast_weight_memory/experiment.py": "9a122397ec6af36d66cfd74c68053ac0d81d51ba99c231dc0194bad281ee1060",
+    "research/fast_weight_memory/module.py": "9bb966ed43e255d807b65259bd97f3e86a8f11ccb2fdbe2d194a6079a15ff9e2",
+    "configs/adaptation/research-budget.json": "b701bd3234d4b65e7e8a987ab8c801b7af820a817d67f7b7f01b6b5ca32cd7c7",
+    "configs/adaptation/research-suite.json": "ba716beb8536783509a881dae247733493103e40a92ad5120ad923c2715c8f48",
+    "configs/adaptation/research-config.json": "27da8919c8494a9fdbcb01c307dbca31c9dc408cd070fde9b9b7df714304fdb8",
+    "configs/adaptation/default.json": "af7f8b423df14af4586381f4df1c99a4881bcd64781adbc833e5c36c94b59ada",
+    "configs/adaptation/suite-v1.json": "d64d3517ceda9d6ab71b420e899f52a9465afb73e6b40299a8ff08d2c764b130",
+    "tests/test_adaptation.py": "dc47c3be5dda90fa6ed09527f898c419c1b02b0f38777c920e64e515cb5fd0e9",
+    "tests/test_adaptation_fast_memory.py": "2d04ca10665205106ec18d595c881a561b05a46baaba8caa51d692f502bed4a9",
+    "tests/test_adaptation_evaluation.py": "ea3b6b95954933b9ca9ef7a709e6ed59f6d6dbddcb2f60d4159bc658c548babd"
+  },
+  "dirty_worktree": true,
+  "note": "ARC prerequisite commit advanced during shared-checkout work. Working source hashes, not HEAD alone, identify these experiments."
+}

@@ -4,6 +4,37 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## Persistent uncertainty and combined recovery
+
+The optional uncertainty ledger preserves source-linked conflicts across Hermes
+handoffs, memory retrieval, ARC dispatch, task recovery and Memento rule review.
+Affected actions require current evidence; independent work can continue.
+Run the zero-cost combined demonstration with a fresh state path:
+
+```sh
+PYTHONPATH=src python3 -m nerve_awim.uncertainty.combined_demo --state /tmp/nerve-combined-demo.sqlite3
+```
+
+This demonstrates deterministic correction reuse and conflict handling, not an
+LLM capability gain. See the [operator guide](docs/uncertainty/operator-guide.md)
+and [implementation evidence](docs/uncertainty/implementation-report.md).
+
+## Opt-in task adaptation and external-memory research
+
+Task-scoped verified corrections now extend the ARC dispatcher with persistent
+receipts, bounded replanning, checkpoint recovery and an operator kill switch.
+Production defaults remain off. The `adaptation-run` CLI now verifies real local
+repository inventories, with an explicit correction/recovery scenario. See
+[observed NERVE behavior](docs/adaptation/continuation/observed-behavior.md).
+Synthetic CLI demonstrations, frozen evaluations
+and a separate budgeted NumPy fast-memory experiment are documented in the
+[adaptation runbook](docs/adaptation/runbook.md).
+
+The synthetic adaptation candidate failed its overhead gate, and trained external
+memory underperformed exact structured memory. Neither is production-approved.
+See the [readiness report](docs/adaptation/final-readiness.md) for measured results,
+code versions and remaining integration boundaries.
+
 ## v2.1 opt-in repository task shadow learning
 
 The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed study

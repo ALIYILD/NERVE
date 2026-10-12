@@ -2,7 +2,7 @@
   "start_commit": "57074d9",
   "branch": "codex/uncertainty-integration",
   "checkout": "/Users/aliyildirim/nerve-uncertainty",
-  "updated_at": "2026-10-12T20:36:05.632045+00:00",
+  "updated_at": "2026-10-12T20:54:47.175811+00:00",
   "bootstrap": {
     "status": "passed",
     "evidence": [
@@ -13,33 +13,49 @@
   },
   "loops": {
     "20": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "implemented_focused_tests_passed",
+      "evidence": [
+        "Scoped additive ledger, source lineage, reconciliation, audited CAS closure/reopening and concurrency tests implemented."
+      ]
     },
     "21": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "integration_in_progress",
+      "evidence": [
+        "Memento 2d42201 merged; actual registry/release/checkpoint hooks tested.",
+        "Hermes learning/memory handoff and restart tested.",
+        "Waiting for adaptation window final source manifest."
+      ]
     },
     "22": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "implemented_focused_tests_passed",
+      "evidence": [
+        "Durable check budgets, deduplication, host predicates and actual response deadlines tested."
+      ]
     },
     "23": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "implemented_focused_tests_passed",
+      "evidence": [
+        "Actual governed dispatcher, source expiry/unknown/negative-consent and candidate/canary/monitor gates tested."
+      ]
     },
     "24": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "implemented_focused_tests_passed",
+      "evidence": [
+        "Actual Hermes learning and memory hooks; canonical final/API/report/stream invariants and source-change race tests passed."
+      ]
     },
     "25": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "final_evidence_pending",
+      "evidence": [
+        "12 evaluation and 7 CLI focused tests passed.",
+        "All 47 existing offline CI commands passed (controlled evidence directory).",
+        "Full regression running; final frozen benchmark waits for combined source."
+      ]
     }
   },
   "integration": {
-    "memento": "waiting_for_other_window_commit",
-    "adaptation": "waiting_for_other_window_commit"
+    "memento": "merged_2d42201_and_wired",
+    "adaptation": "waiting_for_matching_final_source_manifest"
   },
-  "next_action": "Implement uncertainty core while other windows complete; then integrate and test committed versions."
+  "next_action": "Wait for adaptation handoff, import reviewed files, run combined tests, freeze final evaluation and record limitations."
 }

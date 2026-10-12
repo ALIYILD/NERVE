@@ -62,10 +62,15 @@ def propose_world_rules(ledger, actor, *, runtime, offline_fixture=False):
     if offline_fixture is not True:
         raise PermissionError('live world-model proposals require a budgeted provider adapter')
     from .world_model.contracts import exact, Rule
+    from .uncertainty.world_model_adapter import checkpoint_state
+    with ledger.db() as con:
+        uncertainty_state = checkpoint_state(ledger, actor, {}, con=con)
     episodes = ledger.episodes(actor, 'train')
     evidence = {row['id']: row for episode in episodes for row in episode['transitions']}
     request = {'evidence': episodes, 'output_schema': 'Exactly rules: list of world-model Rule v1 records.',
                'authority': 'untrusted proposals only; no evaluation or deployment access'}
+    if uncertainty_state is not None:
+        request['uncertainty'] = uncertainty_state
     result = runtime.execute('skill_builder', request, tenant=actor.tenant, agent=actor.agent)
     exact(result, ('rules',))
     if type(result['rules']) is not list or not 1 <= len(result['rules']) <= 256:
@@ -75,5 +80,11 @@ def propose_world_rules(ledger, actor, *, runtime, offline_fixture=False):
         for reference in rule['supporting_transition_ids'] + rule['contradicting_transition_ids']:
             if reference not in evidence:
                 raise ValueError('invented or nontraining evidence reference')
-    return {'rules': rules, 'evidence_mode': 'offline runtime fixture',
-            'eligibility': False, 'deployment_authorized': False}
+    response = {'rules': rules, 'evidence_mode': 'offline runtime fixture',
+                'eligibility': False, 'deployment_authorized': False}
+    if uncertainty_state is not None:
+        # Rebuild after the call: omitting conflict IDs in provider JSON cannot
+        # discard them, and newly arrived evidence supersedes the sent envelope.
+        with ledger.db() as con:
+            response['uncertainty'] = checkpoint_state(ledger, actor, {'proposal':{'rules':rules}}, con=con)
+    return response

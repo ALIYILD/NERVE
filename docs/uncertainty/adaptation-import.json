@@ -1,0 +1,36 @@
+{
+  "imported_at": "2026-10-12T20:55:20.400121+00:00",
+  "source_checkout": "/Users/aliyildirim/nerve-review",
+  "source_branch": "codex/robottt-task-adaptation-20261012",
+  "source_manifest": {
+    "code_commit": "a4942ea01fe89e0b1051370f655bea4f338eedea",
+    "files": {
+      "configs/adaptation/default.json": "af7f8b423df14af4586381f4df1c99a4881bcd64781adbc833e5c36c94b59ada",
+      "configs/adaptation/repository-suite-v2.json": "119af8c2532179038b39adfa67fecbd49227971fa3f82c68f865edb6f7dc32e8",
+      "configs/adaptation/research-budget.json": "b701bd3234d4b65e7e8a987ab8c801b7af820a817d67f7b7f01b6b5ca32cd7c7",
+      "configs/adaptation/research-config.json": "27da8919c8494a9fdbcb01c307dbca31c9dc408cd070fde9b9b7df714304fdb8",
+      "configs/adaptation/research-suite.json": "ba716beb8536783509a881dae247733493103e40a92ad5120ad923c2715c8f48",
+      "configs/adaptation/suite-v1.json": "d64d3517ceda9d6ab71b420e899f52a9465afb73e6b40299a8ff08d2c764b130",
+      "research/fast_weight_memory/__init__.py": "cd558aaa827c7f4ebf11a876ba84e2d8b8cde02ede5e08f562347edea623b263",
+      "research/fast_weight_memory/experiment.py": "9a122397ec6af36d66cfd74c68053ac0d81d51ba99c231dc0194bad281ee1060",
+      "research/fast_weight_memory/module.py": "9bb966ed43e255d807b65259bd97f3e86a8f11ccb2fdbe2d194a6079a15ff9e2",
+      "research/fast_weight_memory/sequence_model.py": "fb05f50dbbd3d6fc2c68511162ad83e28c5dfa411489ba0dee83a75df0bc72b6",
+      "scripts/agentos_bridge.py": "48401616bd1ce920d918c800b5a49bee88914d81525fc72f80b36afd1ea4effa",
+      "src/nerve_awim/adaptation.py": "568e450c878b39c8986b0125398f477da1783fecbf5eb1c28f1f10753ef72108",
+      "src/nerve_awim/adaptation_cli.py": "e48135dc3c6a1b5adc6147fbb1985b7c9ee380379783d3de3d182790441391ad",
+      "src/nerve_awim/adaptation_evaluation.py": "e3f0cb8ad15f0eb641664fc577caf1d1591cd507e40606f2b67e363238472028",
+      "src/nerve_awim/adaptation_replay.py": "691189d5de7e0edf2b5c86019afb44760cbf154deee945223d1078a8660dd360",
+      "src/nerve_awim/adaptation_repository.py": "136792cbda818e6e367be62be77996e77a9d323592ce31b707444b73d3d80233",
+      "src/nerve_awim/adaptation_repository_evaluation.py": "472a2a2a29ae844a675f55c688bb12f4731eca73fc44d4637b1401bd6fcf7e96",
+      "src/nerve_awim/arc_execution.py": "287039643762d56cc168f7efc2a3842d652488af7395a6f8b56f76858989dd25",
+      "tests/test_adaptation.py": "dc47c3be5dda90fa6ed09527f898c419c1b02b0f38777c920e64e515cb5fd0e9",
+      "tests/test_adaptation_evaluation.py": "ea3b6b95954933b9ca9ef7a709e6ed59f6d6dbddcb2f60d4159bc658c548babd",
+      "tests/test_adaptation_fast_memory.py": "2d04ca10665205106ec18d595c881a561b05a46baaba8caa51d692f502bed4a9",
+      "tests/test_adaptation_repository.py": "4eb69efad492bc61d8261d8e72b3b44df4ea0755007b352584c42fab553b7909"
+    },
+    "dirty_worktree": true,
+    "note": "Continuation source hashes; historical source manifest retained under continuation/source-manifest-v1.json. Fresh v2 heldout matches the current implementation digest."
+  },
+  "method": "Validated complete ready snapshot before copying; no writes to source checkout",
+  "prior_evidence": "Imported historical reports belong to their recorded digests; combined code requires new validation."
+}

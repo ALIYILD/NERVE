@@ -3,10 +3,13 @@ import json
 from pathlib import Path
 from .policy import relevant
 from .propagation import Propagator
+from .reconciliation import normalized, usable
 
 
 def claim_text(claim):
-    return claim.predicate + ': ' + json.dumps(claim.normalized_value, sort_keys=True, allow_nan=False)
+    value = normalized(claim)[0] if type(claim.normalized_value) is bool else claim.normalized_value
+    negation = 'not ' if type(value) is not bool and not claim.polarity else ''
+    return claim.predicate + ': ' + negation + json.dumps(value, sort_keys=True, allow_nan=False) + (' ' + claim.units if claim.units else '')
 
 
 class OutputGuard:
@@ -29,7 +32,7 @@ class OutputGuard:
                 raise ValueError('invented dependency claims')
             deps = set(ids) | {claim.claim_id}
             if value.get('decision_id'):
-                assessment = self.policy.get(actor, value['decision_id'])
+                assessment = self.policy.get(actor, value['decision_id'], task_id=task_id)
                 deps.update(assessment.dependency_claim_ids)
             if value.get('text', claim_text(claim)) != claim_text(claim):
                 raise ValueError('unsupported prose cannot override structured source claim')
@@ -64,7 +67,7 @@ class OutputGuard:
                     deps.add(cid)
                     decision_id = value.get('decision_id')
                     if decision_id:
-                        try: deps.update(self.policy.get(actor, decision_id).dependency_claim_ids)
+                        try: deps.update(self.policy.get(actor, decision_id, task_id=task_id).dependency_claim_ids)
                         except (PermissionError, LookupError): decision_id = None
                     clean.append({'claim_id': cid, 'dependency_claim_ids': sorted(deps), 'text': claim_text(known[cid]), 'decision_id': decision_id})
 
@@ -79,13 +82,13 @@ class OutputGuard:
                 for cid in value['dependency_claim_ids']:
                     dependency = claims[cid]
                     self.ledger.source(actor, dependency.source_ref, dependency.source_revision)
-                missing = claim.extraction_status != 'verified'
+                missing = any(not usable(claims[cid], self.policy.clock()) for cid in value['dependency_claim_ids'])
             except (PermissionError, LookupError):
                 missing = True
             affected = [c.conflict_id for c in conflicts if relevant(c, value.get('decision_id'), value['dependency_claim_ids'])]
             item = {**value, 'source_refs': [claim.source_ref]}
             if missing:
-                qualified.append({**item, 'qualification': 'Source unavailable or extraction unverified', 'conflict_ids': affected})
+                qualified.append({**item, 'qualification': 'Evidence unavailable, unknown, or outside its applicability interval', 'conflict_ids': affected})
                 unavailable.append(claim.claim_id)
             elif affected:
                 qualified.append({**item, 'qualification': 'Disputed; do not treat as confirmed', 'conflict_ids': affected})
@@ -99,7 +102,7 @@ class OutputGuard:
         actions = []
         for supplied in assessments:
             ident = supplied if type(supplied) is str else supplied.decision_id
-            record = self.policy.get(actor, ident)
+            record = self.policy.get(actor, ident, task_id=task_id)
             stale = record.ledger_revision != revision or record.expires_at <= self.policy.clock()
             actions.append({'decision_assessment_id': ident,
                 'decision_status': 'unavailable' if stale else record.status,
@@ -109,6 +112,13 @@ class OutputGuard:
             qualified.extend({**item, 'qualification': 'Evidence changed during rendering; reassess', 'conflict_ids': []} for item in supported)
             supported = []
             unavailable.append('ledger_changed')
+            with self.ledger.engine._db() as con:
+                con.execute('BEGIN')
+                revision = self.ledger.revision(actor, task_id, con=con)
+                latest = self.ledger.open_conflicts(actor, task_id, con=con)
+            unresolved = [{'conflict_id': c.conflict_id, 'affected_conclusion': c.claim_ids,
+                           'status': c.status, 'evidence_refs': c.claim_ids, 'completed_checks': c.checks,
+                           'next_check': 'Refresh assessment using the changed evidence'} for c in latest]
             for action in actions:
                 action['decision_status'] = 'unavailable'
                 action['action_ids'] = []

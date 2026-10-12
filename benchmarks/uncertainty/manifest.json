@@ -1,0 +1,25 @@
+{
+  "counts": {
+    "sealed-final": 12,
+    "selection": 12,
+    "train": 12
+  },
+  "dataset_sha256": "2249e21a2f9cfe062f9c8507b9ccef0239bceb1a2a24cf1c23435a1222fc2b2c",
+  "frozen_before_execution": true,
+  "policy": {
+    "accuracy_noninferiority_margin": 0.02,
+    "bootstrap_repetitions": 1000,
+    "default_mode": "shadow",
+    "evidence_free_resolutions": 0,
+    "latency_seconds_per_case_max": 2.0,
+    "matched_answer_coverage_required": true,
+    "minimum_clusters": 5,
+    "paid_cost_usd_max": 0.0,
+    "planted_preservation_minimum": 1.0,
+    "tenant_authority_restricted_violations": 0,
+    "unnecessary_escalation_increase_max": 0.0,
+    "verification_calls_per_conflict_max": 3,
+    "verification_calls_per_task_max": 12,
+    "version": "uncertainty-pilot-v1"
+  }
+}

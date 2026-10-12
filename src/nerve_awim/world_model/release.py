@@ -35,6 +35,8 @@ class SimulatedRelease:
                 'retrieval_pointer':model['rulebook_hash'],'revision':model['environment_revision'],
                 'latency_ms':latency_ms,'simulation_only':True,'deployment_authorized':False}
         with self.ledger.db() as db:
+            from ..uncertainty.world_model_adapter import guard
+            guard(self.ledger, actor, model['rules'], con=db)
             current=db.execute('SELECT * FROM wm_releases WHERE scope=?',(scope,)).fetchone()
             generation=current['generation'] if current else 0
             if generation != expected_generation:
@@ -61,6 +63,12 @@ class SimulatedRelease:
             # Check integrity inside the same transaction without a nested connection.
             artifact=db.execute('SELECT body,state FROM wm_artifacts WHERE scope=? AND id=?',(scope,bundle['model_id'])).fetchone()
             integrity=bool(artifact and digest(json.loads(artifact['body'])) == bundle['model_id'] and artifact['state'] != 'revoked')
+            if integrity:
+                from ..uncertainty.world_model_adapter import guard
+                try:
+                    guard(self.ledger, actor, json.loads(artifact['body'])['rules'], con=db)
+                except PermissionError:
+                    integrity=False
             if observed_ok and elapsed_ms <= bundle['latency_ms'] and integrity:
                 return {'status':'simulated_pass','deployment_authorized':False}
             previous=body['previous_bundle']
@@ -68,6 +76,12 @@ class SimulatedRelease:
                 artifact=db.execute('SELECT body,state FROM wm_artifacts WHERE scope=? AND id=?',(scope,previous['model_id'])).fetchone()
                 if not artifact or digest(json.loads(artifact['body'])) != previous['model_id'] or artifact['state'] == 'revoked':
                     previous=None
+                else:
+                    from ..uncertainty.world_model_adapter import guard
+                    try:
+                        guard(self.ledger, actor, json.loads(artifact['body'])['rules'], con=db)
+                    except PermissionError:
+                        previous=None
             body.update(active_bundle=previous,previous_bundle=None,reason='simulated_regression_or_integrity',
                         plan_cache_generation=current['generation']+1)
             db.execute('UPDATE wm_releases SET generation=generation+1,active=?,previous=NULL,body=? WHERE scope=?',

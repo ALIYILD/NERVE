@@ -44,3 +44,23 @@ class VerificationTests(unittest.TestCase):
     def test_paid_tool_and_raised_limits_rejected(self):
         with self.assertRaises(ValueError):ToolSpec(lambda x:x,lambda x:True,('source_disagreement',),cost=.01)
         with self.assertRaises(ValueError):Verifier(self.ledger,tools={},max_conflict=4)
+    def test_wall_timeout_returns_and_late_worker_cannot_resolve_or_replay(self):
+        import threading
+        import time
+        c=self.conflict();release=threading.Event();finished=threading.Event();calls=[]
+        def slow(request):
+            calls.append(1)
+            release.wait(.5)
+            finished.set()
+            return {'outcome':'supports','evidence_refs':[{'source_ref':'source-one','source_revision':'v1'}]}
+        v=Verifier(self.ledger,tools={'primary':ToolSpec(slow,lambda r:True,('source_disagreement',))},call_seconds=.025)
+        try:
+            started=time.monotonic();out=v.check(self.actor,c.conflict_id,'primary',{'query':1})
+            self.assertLess(time.monotonic()-started,.3)
+            self.assertEqual(out['attempt']['status'],'uncertain')
+            repeated=v.check(self.actor,c.conflict_id,'primary',{'query':1},retry_reason='transient_transport_failure')
+            self.assertEqual(repeated['boundary'],'verifier_unavailable');self.assertEqual(len(calls),1)
+        finally:
+            release.set();finished.wait(1)
+        self.assertEqual(v.resume(self.actor,out['attempt']['attempt_id'])['attempt']['status'],'uncertain')
+        self.assertNotEqual(self.ledger.get_conflict(self.actor,c.conflict_id).status,'resolved')

@@ -1,0 +1,10 @@
+{
+  "limitations": "equal observations and update counts, but different parameterisations; no LLM or tool-call measurement",
+  "results": {
+    "single_memory": 0.12109866906610897,
+    "specialist_fixed": 0.24554753236501473,
+    "specialist_memory": 0.17179616238519207
+  },
+  "seeds": 20,
+  "updates_per_method": 120
+}

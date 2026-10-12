@@ -2,6 +2,7 @@
 import json
 import time
 from .contracts import DecisionAssessment
+from .reconciliation import normalized, usable
 from ..governed_learning_v20 import _id, _json
 
 POLICY_REVISION = 'uncertainty-policy-v1'
@@ -39,12 +40,33 @@ class Policy:
             raise ValueError('unknown mandatory prerequisite')
         if type(expires_in) not in (int, float) or not 0 < expires_in <= 3600:
             raise ValueError('bounded assessment expiry required')
+        # ARC owns the original task and parent relationship. A summary cannot
+        # retarget an existing action to a cleaner task or omit parent evidence.
+        inherited = []
+        with self.ledger.engine._db() as con:
+            if con.execute("SELECT 1 FROM sqlite_master WHERE name='arc_decisions'").fetchone():
+                arc = con.execute('SELECT task,record FROM arc_decisions WHERE id=? AND tenant=? AND agent=?',
+                                  (decision_id, *scope)).fetchone()
+                if arc:
+                    if arc['task'] != task_id: raise PermissionError('ARC assessment belongs to a different task')
+                    parent = json.loads(arc['record']).get('parent_decision_id')
+                    if parent:
+                        inherited = self.ledger.dependencies(actor, task_id, parent).get('claim_ids', [])
+                        binding = con.execute('SELECT config FROM uc_policy_bindings WHERE tenant=? AND agent=? AND decision=?', (*scope, parent)).fetchone()
+                        if binding:
+                            parent_policy = json.loads(binding['config'])
+                            required = required or parent_policy['required']
+                            if parent_policy['impact'] == 'restricted': impact = 'restricted'
+                            if parent_policy['mandatory']:
+                                if mandatory and mandatory != parent_policy['mandatory']:
+                                    raise PermissionError('child requires separate assessments for distinct mandatory prerequisites')
+                                mandatory = parent_policy['mandatory']
         claims = {c.claim_id: c for c in self.ledger.claims(actor, task_id)}
         known = set(claims)
         if type(dependency_claim_ids) not in (list, tuple) or not set(dependency_claim_ids) <= known:
             raise ValueError('unknown or cross-scope dependency claims')
         existing = self.ledger.dependencies(actor, task_id, decision_id)
-        deps = sorted(set(dependency_claim_ids) | set(existing.get('claim_ids', existing.get('claims', []))))
+        deps = sorted(set(dependency_claim_ids) | set(inherited) | set(existing.get('claim_ids', existing.get('claims', []))))
         self.ledger.link(actor, task_id, decision_id, deps)
         with self.ledger.engine._db() as con:
             con.execute('BEGIN IMMEDIATE')
@@ -55,16 +77,19 @@ class Policy:
             revision = self.ledger.revision(actor, task_id, con=con)
             conflicts = self.ledger.open_conflicts(actor, task_id, con=con)
             affected = [c for c in conflicts if relevant(c, decision_id, deps, required)]
-            mandatory_present = any(claims[cid].predicate == mandatory and claims[cid].extraction_status == 'verified' and
-                (claims[cid].normalized_value is True if mandatory in {'consent', 'authorization'} else bool(claims[cid].normalized_value)) for cid in deps)
+            mandatory_present = any(claims[cid].predicate == mandatory and usable(claims[cid], self.clock()) and normalized(claims[cid])[2] and
+                (normalized(claims[cid])[0] is True if mandatory in {'consent', 'authorization'} else bool(normalized(claims[cid])[0])) for cid in deps)
             unavailable = []
             for cid in deps:
+                if not usable(claims[cid], self.clock()): unavailable.append(cid)
                 try: self.ledger.source(actor, claims[cid].source_ref, claims[cid].source_revision, con=con)
                 except (PermissionError, LookupError): unavailable.append(cid)
             if unavailable:
                 status = 'unavailable'
             elif mandatory is not None and (not mandatory_present or affected):
                 status = 'defer_affected_action'
+            elif required and not deps:
+                status = 'verify_first'
             elif affected and (required or impact == 'restricted'):
                 status = 'verify_first' if all(c.kind != 'tool_status_unknown' for c in affected) else 'unavailable'
             elif affected:
@@ -74,7 +99,7 @@ class Policy:
             permitted = status in {'proceed', 'proceed_with_qualification'}
             record = DecisionAssessment(decision_id, deps, [c.conflict_id for c in affected], status,
                 [action_id] if permitted else [], [] if permitted else [action_id],
-                [c.kind for c in affected] + ([mandatory] if mandatory and not mandatory_present else []) + (['source_unavailable'] if unavailable else []),
+                [c.kind for c in affected] + ([mandatory] if mandatory and not mandatory_present else []) + (['source_unavailable'] if unavailable else []) + (['missing_required_evidence'] if required and not deps else []),
                 'Only affected dependencies constrain this action; existing permissions still apply',
                 POLICY_REVISION, revision, self.clock() + expires_in)
             con.execute('INSERT OR REPLACE INTO uc_assessments VALUES(?,?,?,?,?,?)',
@@ -92,19 +117,26 @@ class Policy:
                 raise ValueError('scoped assessment required before binding')
             previous = con.execute('SELECT decision FROM uc_dispatch_bindings WHERE tenant=? AND agent=? AND execution_task=?', (*scope, execution_task_id or decision_id)).fetchone()
             if previous and previous['decision'] != decision_id: raise PermissionError('execution uncertainty binding cannot be replaced')
-            assessment = con.execute('SELECT action FROM uc_assessments WHERE tenant=? AND agent=? AND decision=?', (*scope, decision_id)).fetchone()
+            assessment = con.execute('SELECT action,task FROM uc_assessments WHERE tenant=? AND agent=? AND decision=?', (*scope, decision_id)).fetchone()
+            if con.execute("SELECT 1 FROM sqlite_master WHERE name='arc_decisions'").fetchone():
+                arc = con.execute('SELECT id,task,record FROM arc_decisions WHERE id=? AND tenant=? AND agent=?',
+                                  (execution_task_id or decision_id, *scope)).fetchone()
+                if arc and (arc['id'] != decision_id or arc['task'] != assessment['task'] or
+                            json.loads(arc['record'])['action']['registered_tool'] != assessment['action']):
+                    raise PermissionError('ARC dispatch requires its own task-bound action assessment')
             for context, strategy in self.ledger.engine._registry:
                 if strategy == assessment['action']:
                     con.execute('INSERT OR IGNORE INTO uc_contexts VALUES(?,?,?)', (*scope, context))
             con.execute('INSERT OR REPLACE INTO uc_dispatch_bindings VALUES(?,?,?,?)',
                         (*scope, execution_task_id or decision_id, decision_id))
 
-    def get(self, actor, decision_id):
+    def get(self, actor, decision_id, *, task_id=None):
         scope = self.ledger.engine._scope(actor, 'runtime', 'operator', 'auditor', 'evaluator', 'trainer')
         with self.ledger.engine._db() as con:
-            row = con.execute('SELECT record FROM uc_assessments WHERE tenant=? AND agent=? AND decision=?',
+            row = con.execute('SELECT record,task FROM uc_assessments WHERE tenant=? AND agent=? AND decision=?',
                               (*scope, decision_id)).fetchone()
         if row is None: raise LookupError('scoped decision assessment unavailable')
+        if task_id is not None and row['task'] != task_id: raise PermissionError('assessment belongs to a different task')
         return DecisionAssessment.from_json(row['record'])
 
     def recheck(self, con, actor, decision_id, action_id=None):
@@ -117,6 +149,12 @@ class Policy:
             raise RuntimeError('uncertainty ledger changed; reassessment required')
         if record.expires_at <= self.clock() or record.policy_revision != POLICY_REVISION:
             raise RuntimeError('uncertainty assessment expired or incompatible')
+        claims = {c.claim_id:c for c in self.ledger.claims(actor, row['task'], con=con)}
+        for cid in record.dependency_claim_ids:
+            claim = claims.get(cid)
+            if claim is None or not usable(claim, self.clock()):
+                raise RuntimeError('prerequisite expired or unavailable; reassessment required')
+            self.ledger.source(actor, claim.source_ref, claim.source_revision, con=con)
         if record.status not in {'proceed', 'proceed_with_qualification'}:
             raise PermissionError('unresolved prerequisite blocks this action')
         if action_id is not None and action_id not in record.permitted_action_ids:

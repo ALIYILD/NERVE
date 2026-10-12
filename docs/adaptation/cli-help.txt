@@ -1,0 +1,61 @@
+usage: agentos_bridge.py [-h] [--repository REPOSITORY]
+                         [--candidate CANDIDATE] [--config CONFIG]
+                         [--budget BUDGET] [--suite SUITE]
+                         [--checkpoint CHECKPOINT] [--output OUTPUT]
+                         [--synthetic] [--scenario SCENARIO] [--reason REASON]
+                         [--split {development,heldout}]
+                         [--adaptation-mode {off,shadow,active-development}]
+                         [--profile PROFILE] [--task TASK] [--review REVIEW]
+                         [--source SOURCE] [--report REPORT]
+                         [--decision-id DECISION_ID]
+                         [--manifest-id MANIFEST_ID] [--review-ref REVIEW_REF]
+                         [--observed-status {succeeded,failed,cancelled}]
+                         [--arc-mode {off,shadow,enforce}] [--context CONTEXT]
+                         [--canary-limit CANARY_LIMIT]
+                         [--candidate-budget CANDIDATE_BUDGET] [--restart]
+                         [--state STATE] [--task-id TASK_ID]
+                         [--study-id STUDY_ID] [--cohort {v1,v2,v3}]
+                         [--review-target {handoff,repository-experiments,repository-taskbench,repository-runner}]
+                         {status,cycle,study,probe,run,recall,sync-gbrain,jev-review,claude-review,repository-study,repository-run,repository-tasks,repository-diagnose,audit-study,audit-status,audit-shadow,audit-shadow-status,autoresearch-enable,autoresearch-pause,autoresearch-status,autoresearch-tick,autoresearch-submit,autoresearch-register-cohort,arc-run,arc-inspect,arc-replay,arc-evaluate,arc-improve,arc-candidate-status,arc-release-status,arc-stage,arc-promote,arc-rollback,arc-reconcile,adaptation-inspect,adaptation-validate-config,adaptation-replay,adaptation-evaluate,adaptation-run,adaptation-demo,adaptation-status,adaptation-reset,adaptation-kill,research-fast-memory-train,research-fast-memory-evaluate}
+
+Connect NERVE to the existing local Agent OS, with durable learning receipts.
+
+positional arguments:
+  {status,cycle,study,probe,run,recall,sync-gbrain,jev-review,claude-review,repository-study,repository-run,repository-tasks,repository-diagnose,audit-study,audit-status,audit-shadow,audit-shadow-status,autoresearch-enable,autoresearch-pause,autoresearch-status,autoresearch-tick,autoresearch-submit,autoresearch-register-cohort,arc-run,arc-inspect,arc-replay,arc-evaluate,arc-improve,arc-candidate-status,arc-release-status,arc-stage,arc-promote,arc-rollback,arc-reconcile,adaptation-inspect,adaptation-validate-config,adaptation-replay,adaptation-evaluate,adaptation-run,adaptation-demo,adaptation-status,adaptation-reset,adaptation-kill,research-fast-memory-train,research-fast-memory-evaluate}
+
+options:
+  -h, --help            show this help message and exit
+  --repository REPOSITORY
+                        Authorized local repository for read-only adaptation
+  --candidate CANDIDATE
+  --config CONFIG
+  --budget BUDGET
+  --suite SUITE
+  --checkpoint CHECKPOINT
+  --output OUTPUT
+  --synthetic
+  --scenario SCENARIO
+  --reason REASON
+  --split {development,heldout}
+  --adaptation-mode {off,shadow,active-development}
+  --profile PROFILE
+  --task TASK
+  --review REVIEW       Independent host review record for cohort admission
+  --source SOURCE       Local Python file for the read-only ARC inventory
+                        workflow
+  --report REPORT       ARC benchmark report destination
+  --decision-id DECISION_ID
+  --manifest-id MANIFEST_ID
+  --review-ref REVIEW_REF
+  --observed-status {succeeded,failed,cancelled}
+  --arc-mode {off,shadow,enforce}
+  --context CONTEXT
+  --canary-limit CANARY_LIMIT
+  --candidate-budget CANDIDATE_BUDGET
+  --restart
+  --state STATE
+  --task-id TASK_ID
+  --study-id STUDY_ID   Accepted audit study to monitor in shadow mode
+  --cohort {v1,v2,v3}   Repository task cohort; default selects fresh evidence
+                        automatically
+  --review-target {handoff,repository-experiments,repository-taskbench,repository-runner}

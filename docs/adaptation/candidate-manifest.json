@@ -1,0 +1,27 @@
+[
+  {
+    "dataset": "adaptation:3a13db2a29148c3a1304418d8bec121871446aed3fab32074a48ff649215d824",
+    "candidate": "adaptation-v1",
+    "revision": "7198065df9e66cd2992f76a1ab74c638970f220c14a0358848303726fd331992",
+    "definition": {
+      "candidate_id": "adaptation-v1",
+      "parent_version": "structured-v1",
+      "artifact_digest": "7198065df9e66cd2992f76a1ab74c638970f220c14a0358848303726fd331992",
+      "code_commit": "a4942ea01fe89e0b1051370f655bea4f338eedea",
+      "data_manifest_digest": "3a13db2a29148c3a1304418d8bec121871446aed3fab32074a48ff649215d824",
+      "split_manifest_digest": "0e4fa445113236673d2e9af586d106ceb0703b2220c3045474fc2de90217fb0c",
+      "encoder_version": "none",
+      "configuration": {
+        "mode": "active-development"
+      },
+      "seeds": [
+        730
+      ],
+      "approvals": [],
+      "deployment_state": "draft",
+      "rollback_target": null
+    },
+    "state": "rejected",
+    "report_reference": "track-a-heldout.json"
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "seed": 101,
+  "epochs": 25,
+  "episodes": 8,
+  "length": 64,
+  "segment": 16
+}

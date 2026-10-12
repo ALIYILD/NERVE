@@ -29,3 +29,7 @@ Read the full supplied specification and inspected primary paper https://arxiv.o
 ## Working order
 
 20 contracts/ledger and 22 verification share a durable store; 21 propagation, 23 policy and 24 output share an authoritative adapter; 25 evaluation/CLI uses the same runtime. Maintain loop checkpoints and tests. Wait for other-window commits before Memento/adaptation merge, resolve hooks in this isolated tree, run combined acceptance/CI, retain unresolved blockers honestly. No live provider, patient/device actions or production deployment authorized by this handoff.
+
+## Completed integration handoff
+
+Memento committed `2d42201` and was merged as `ead0457`. The adaptation window published a complete matching 22-file source manifest after its continuation; its reviewed snapshot was imported without modifying the original checkout. `adaptation-import.json` preserves exact source hashes and provenance. Both are now exercised together through the existing ARC dispatcher, shared host authority and SQLite store; the combined demo and tests cover correction reuse, new conflicts, Memento freeze, independent work, restart and reset. Production Agent OS entrypoints remain opt-in and require host-provided adapters.
