@@ -724,3 +724,7 @@ The local inference adapter now provides sanitized host-side failure categories 
 ### Opt-in CPU inference research
 
 A separate CPU research profile permits one request at a time, up to 128 output tokens and a 90-second socket timeout. One real pinned local-model request through the scoped gateway completed with the correct synthetic marker and source citation in 72.7 seconds. Standard defaults remain unchanged. See [measured evidence and reproduction](docs/galahad/26-cpu-research-inference.md).
+
+### Matched real-model evidence study
+
+Eight actual local CPU-model requests completed through the scoped memory gateway. Relevant evidence yielded all four expected codes, with citations in three responses; all four irrelevant controls incorrectly attributed a decoy code to the requested object. This exposes a grounding failure, not a successful learning result. The full suite passed 1,182 tests. See [protocol, responses and reproduction](docs/galahad/27-real-model-evidence-study.md).
