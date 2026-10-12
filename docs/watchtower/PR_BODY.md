@@ -4,7 +4,7 @@ The implementation includes separate Watchtower/Guardian entrypoints, an externa
 
 Validation:
 - 1,124 existing NERVE tests passed before and after implementation.
-- 70 safety tests passed, including 13 independent adversarial tests and a signed-MFA HTTP recovery/replay test.
+- 78 safety tests passed, including 13 independent adversarial tests and a signed-MFA HTTP recovery/replay test.
 - A real disposable TERM-ignoring child was stopped, prevented from recreating, and restarted through the controlled fixture flow.
 - 12,000 actual AST inventories remained correct during the bounded local passive-collection comparison; median change was approximately +2.7%. This is not a production performance guarantee.
 
@@ -15,3 +15,5 @@ See `docs/watchtower/ACCEPTANCE.md`, `INDEPENDENT_REVIEW.md`, `COVERAGE.json` an
 Branch context: development started from locally present commit `23d7900` (existing CCE readiness wiring), one inherited commit beyond the remote integration branch at discovery. That pre-existing commit is preserved, not authored as Watchtower work. This PR targets the prior NERVE integration branch to keep it separate from production/main.
 
 Notification lifecycle follow-ups enforce bounded shutdown and exclusive outbox ownership, with tests for stalled providers, process-exit recovery, path aliases and partial worker startup failure.
+
+Strict offline configuration validation now runs before service state creation or collector startup. Report publication uses exclusive temporary files to prevent predictable staging names from overwriting monitored inputs. Both inert deployment examples are validated in CI.

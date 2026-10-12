@@ -2,6 +2,14 @@ test_loopback_server_authorization_and_xss (test_admin.AdminTests.test_loopback_
 test_owner_subject_does_not_authorize_delegated_or_machine_token (test_admin.AdminTests.test_owner_subject_does_not_authorize_delegated_or_machine_token) ... ok
 test_pinned_owner_mfa_and_freshness (test_admin.AdminTests.test_pinned_owner_mfa_and_freshness) ... ok
 test_remote_bind_denied (test_admin.AdminTests.test_remote_bind_denied) ... ok
+test_ambiguous_json_and_unsafe_configuration_files_rejected (test_config.ConfigurationTests.test_ambiguous_json_and_unsafe_configuration_files_rejected) ... ok
+test_bad_watchtower_config_starts_no_collector (test_config.ConfigurationTests.test_bad_watchtower_config_starts_no_collector) ... ok
+test_distinct_sources_preserve_both_tenants (test_config.ConfigurationTests.test_distinct_sources_preserve_both_tenants) ... ok
+test_examples_validate_without_reading_files_or_starting_services (test_config.ConfigurationTests.test_examples_validate_without_reading_files_or_starting_services) ... ok
+test_identity_and_notification_schema (test_config.ConfigurationTests.test_identity_and_notification_schema) ... ok
+test_invalid_schema_cannot_create_guardian_state (test_config.ConfigurationTests.test_invalid_schema_cannot_create_guardian_state) ... ok
+test_report_staging_does_not_overwrite_source_database (test_config.ConfigurationTests.test_report_staging_does_not_overwrite_source_database) ... ok
+test_unsafe_inventory_and_pins_rejected (test_config.ConfigurationTests.test_unsafe_inventory_and_pins_rejected) ... ok
 test_audit_failure_raises_independent_alert (test_core.CoreTests.test_audit_failure_raises_independent_alert) ... ok
 test_critical_evidence_retains_hashes_not_raw_text (test_core.CoreTests.test_critical_evidence_retains_hashes_not_raw_text) ... ok
 test_denied_restart_alert_is_bounded_and_redacted (test_core.CoreTests.test_denied_restart_alert_is_bounded_and_redacted) ... ok
@@ -70,6 +78,6 @@ test_read_only_tenant_scoped_redacted (test_telemetry.TelemetryTests.test_read_o
 test_tables_allowlisted (test_telemetry.TelemetryTests.test_tables_allowlisted) ... ok
 
 ----------------------------------------------------------------------
-Ran 70 tests in 6.353s
+Ran 78 tests in 7.099s
 
 OK

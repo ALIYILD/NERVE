@@ -1,6 +1,7 @@
 {
   "base_commit": "23d7900a9e614e313cb70dd8402545960e091de6",
   "files": {
+    ".github/workflows/watchtower.yml": "a7d2ce3b87ad88b07db990e7d3b79dfcb4309aa1fe0ad7a149a56e225e66beb4",
     "deploy/watchtower/guardian.example.json": "75bd87faf3a3f5925212a2f46864b5d9c2971c7cc93eac515a28f00e0b6c091e",
     "deploy/watchtower/inventory.example.json": "8ab1ecd38e87be773fd8083c122f8f0ac0ba56e7048b7f573cd290061b2ee635",
     "deploy/watchtower/nerve-guardian.service.example": "d0ff313791b163610c888ca09293b56d8342d225ed7702bd0151c706984394cc",
@@ -8,9 +9,10 @@
     "deploy/watchtower/nerve-watchtower.service.example": "dc885b54c67f97aa17da51991d034911084efa39f57afbdcabbc770e6087d439",
     "deploy/watchtower/watchtower.example.json": "de200c6c3f2f9c6bb97a9b428f5b830b556d140cd0dbab17ffd7e31834a15623",
     "safety/nerve_guardian/__init__.py": "c37e899d84c505113f9e13febe6c51f8c4201b0ebe0d7dd16b7fc27f06dae7c4",
-    "safety/nerve_guardian/__main__.py": "e04eec510ce977b1d4560d4d1cf44fda3f8a68a4def296899aff03692c142587",
+    "safety/nerve_guardian/__main__.py": "ac0679b2fa57a79832381389f876d11090b2e68edeaf9305a3cd929bea48b75f",
     "safety/nerve_guardian/analysis.py": "1beec81d55ac3e704bb50ec182e0ddcc74c85f16f81ad8e99282b010d948e899",
     "safety/nerve_guardian/auth.py": "a794137dbafef03789446733725b61bea66315c21f3a7ccb04e4d32908308be7",
+    "safety/nerve_guardian/config.py": "8a8114e4c4989fe9bb066809624934d7ca27e59b651666e321ff7ed9929b1cdd",
     "safety/nerve_guardian/core.py": "63538b6a6ae34114d4c715e7e129ada297bd6693ece65ab0842099039c6f98fc",
     "safety/nerve_guardian/demo.py": "763b01b211db1c6d310e4bdfb3a28efcbe49d513ccb0b5c5f13adaf056121bf6",
     "safety/nerve_guardian/health.py": "61f7c2633614ba2fb43cfc47a115b2620597895f15b9a267b696498e2232162f",
@@ -24,7 +26,9 @@
     "safety/nerve_guardian/telemetry.py": "52302e08eaff5f01fd255e6e5cfa03cca446debeec871cdbe06f11949ba96c38",
     "safety/nerve_guardian/web.py": "ae52c7dfd78dfb6e4f24af7c633f785cfc44a3dce4cf0914cf2a1c88e5b920d2",
     "safety/requirements.txt": "759acbecefd3179430465877e7cc83d404ee143457000781ef145cd5d16b7d6a",
+    "scripts/verify_watchtower.py": "b9e3f4600794b1eb5714a6f4da7aee9280066d95e001c2833157326939ddc42e",
     "tests/watchtower/test_admin.py": "4e19249b29848bf42cbc215099e7c5c44f1667d09f7006bc6bd0f0cafd667664",
+    "tests/watchtower/test_config.py": "28ec06d9e7e508640bc175536e46399f828218c8d2a33267401c4ce8d1605969",
     "tests/watchtower/test_core.py": "fb63ca85da0a0973573a1b2f067b17551042b849aef36f037f38912876ae0df1",
     "tests/watchtower/test_health.py": "452e19a58efb424cf9c50f8ea143ffcdad2ce6d9cbd33d4f9eb291a20e973aed",
     "tests/watchtower/test_http_recovery.py": "2ed621354f842fe26379ca1b6b63f6ebfcfae6fb5fab72ec119fc865d0997dff",
@@ -32,8 +36,6 @@
     "tests/watchtower/test_infrastructure.py": "d4646dde59b3bbabfd18a502356d065324272f2bc6fa872c085d8e93fdda4370",
     "tests/watchtower/test_notifications.py": "f5a87f83c8642f49eb70902f6b63b6e7820e1d7ed38d5098b3ea0912ee405cd8",
     "tests/watchtower/test_service.py": "2be0981e61f9ba395990ffaccc28146e2ee3d6248d6f1241b28facfa6f92483e",
-    "tests/watchtower/test_telemetry.py": "f98e7e20b5daf1ce5c7c7c97d05e254e6d47941200b444e2702b52b51ac21307",
-    "scripts/verify_watchtower.py": "b9e3f4600794b1eb5714a6f4da7aee9280066d95e001c2833157326939ddc42e",
-    ".github/workflows/watchtower.yml": "5e88d6293271fdf926c0120b03b49cccdf154db9bdff90f2a22d59005cd51667"
+    "tests/watchtower/test_telemetry.py": "f98e7e20b5daf1ce5c7c7c97d05e254e6d47941200b444e2702b52b51ac21307"
   }
 }

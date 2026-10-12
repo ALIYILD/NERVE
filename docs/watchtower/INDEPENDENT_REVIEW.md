@@ -54,3 +54,7 @@ The independent administration/alerts specialist reviewed the follow-up diff rea
 ## Exclusive notification ownership follow-up
 
 The same independent specialist reviewed the sibling-lock implementation and ran all 11 notification tests successfully. No blocking issue was found within the protected-directory/local-Unix-filesystem boundary. Tests now establish cross-process exclusion, acquisition after process exit, directory alias exclusion, rejection of replacement during a stalled delivery, and cleanup after partial thread startup failure. This supersedes the earlier requirement to rely solely on operator discipline for singleton ownership. The reviewer required preserving the lock inode and documenting unverified network-filesystem semantics; ADMIN.md records both.
+
+## Configuration and report publication review
+
+The independent alerts/admin specialist confirmed schema validation precedes runtime state/thread side effects and initially passed seven configuration tests. Review identified that the predictable `.pending` report staging path could truncate a monitored SQLite input. The implementation now uses exclusive random temporary files. The reviewer reran all eight configuration tests (0.581 seconds), confirmed byte-for-byte preservation of the real source database and removal of temporary artifacts, and reported the finding resolved with no additional blocker within the schema-only validation boundary. Filesystem identity, operational authority and credentials still require deployment verification.

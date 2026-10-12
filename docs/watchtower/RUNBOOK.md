@@ -5,6 +5,28 @@
 Use a separate Python 3.12 environment with `safety/requirements.txt`. This package
 has no NERVE runtime import and does not run on NERVE's task path.
 
+Validate configuration before starting either process:
+
+```sh
+PYTHONPATH=safety python -m nerve_guardian validate --config deploy/watchtower/guardian.example.json
+PYTHONPATH=safety python -m nerve_guardian validate --config deploy/watchtower/watchtower.example.json
+```
+
+Validation checks the complete schema without opening source databases, reading
+credentials, creating state or starting workers. It rejects unknown fields,
+nonfinite values, duplicate JSON keys, invalid owner/tenant references,
+clinical/shared/observer workloads, malformed SHA256 pins, unsafe alert URLs and
+out-of-range settings. Watchtower source names must be globally unique within
+one collector, including across tenants. Paths must be absolute and normalized;
+state, anchor and enforcement directories must not overlap lexically.
+
+`valid_schema: true` establishes syntax and configuration consistency only.
+Provisioning, actual file identities (including directory symlinks), ownership,
+credentials, public-key validity, service existence and independent authority
+still require deployment verification. `validate` rejects armed development
+configurations. Runtime entrypoints apply the same schema checks before creating
+state or starting collectors; explicit live activation remains separately gated.
+
 ```sh
 PYTHONPATH=safety python -m unittest discover -s tests/watchtower -v
 PYTHONPATH=safety python -m nerve_guardian demo --report /tmp/guardian-demo.json

@@ -4,28 +4,44 @@ import json
 import os
 from pathlib import Path
 import signal
+import stat
+import tempfile
 import threading
 import time
 from .store import Store,canonical
+from .config import validate_config
 
 
 def read_config(path):
-    path=Path(path)
-    if path.is_symlink() or not path.is_file() or path.stat().st_size>65536:
-        raise ValueError('bounded regular configuration required')
-    if path.stat().st_mode & 0o022:raise PermissionError('configuration must not be group/world writable')
-    config=json.loads(path.read_text())
+    def unique_fields(pairs):
+        result={}
+        for key,value in pairs:
+            if key in result:raise ValueError('duplicate configuration field')
+            result[key]=value
+        return result
+    def invalid_constant(value):raise ValueError('nonfinite configuration number')
+    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
+    with os.fdopen(fd,'rb') as source:
+        info=os.fstat(source.fileno())
+        if not stat.S_ISREG(info.st_mode) or info.st_size>65536:
+            raise ValueError('bounded regular configuration required')
+        if info.st_mode & 0o022:raise PermissionError('configuration must not be group/world writable')
+        data=source.read(65537)
+        if len(data)>65536:raise ValueError('bounded configuration required')
+    config=json.loads(data,object_pairs_hook=unique_fields,parse_constant=invalid_constant)
     if not isinstance(config,dict):raise ValueError('configuration object required')
     return config
 
 
 def atomic_json(path,value):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True,mode=0o700)
-    temporary=path.with_suffix('.pending')
-    fd=os.open(temporary,os.O_WRONLY|os.O_CREAT|os.O_TRUNC|os.O_NOFOLLOW,0o600)
-    with os.fdopen(fd,'w') as out:
-        out.write(canonical(value)+'\n');out.flush();os.fsync(out.fileno())
-    os.replace(temporary,path)
+    fd,temporary=tempfile.mkstemp(prefix='.guardian-report-',dir=path.parent)
+    try:
+        with os.fdopen(fd,'w') as out:
+            out.write(canonical(value)+'\n');out.flush();os.fsync(out.fileno())
+        os.replace(temporary,path)
+    finally:
+        Path(temporary).unlink(missing_ok=True)
 
 
 def build_guardian(config,*,allow_live=False):
@@ -36,6 +52,7 @@ def build_guardian(config,*,allow_live=False):
     armed=config.get('armed',False)
     if type(armed) is not bool or (armed and not allow_live):raise PermissionError('live enforcement requires explicit independent operator activation')
     if armed and os.geteuid()!=0:raise PermissionError('live controller requires separate administrator identity')
+    validate_config(config,'guardian')
     tenants=config['tenants']
     inventory={tenant:[ManagedUnit(**unit) for unit in entry['units']] for tenant,entry in tenants.items()}
     store=Store(config['state_directory'],config['anchor_directory'])
@@ -109,6 +126,7 @@ def run_service(config,*,once=False,allow_live=False):
 
 
 def run_watchtower(config,*,once=False):
+    validate_config(config,'watchtower')
     from .telemetry import SQLiteMetadataSource,BoundedCollector
     from .analysis import BehaviourAnalysis
     sources=[SQLiteMetadataSource(**source) for source in config['sources']]
@@ -145,7 +163,7 @@ def main():
         config=read_config(args.config)
         if args.command=='validate':
             if config.get('armed',False):raise PermissionError('development configuration must be observe-only')
-            result={'valid_json':True,'armed':False,'production_readiness':'unverified'}
+            result=validate_config(config)
         elif args.command=='watchtower':result=run_watchtower(config,once=args.once)
         else:result=run_service(config,once=args.once,allow_live=args.allow_live_enforcement)
     if args.report:atomic_json(args.report,result)

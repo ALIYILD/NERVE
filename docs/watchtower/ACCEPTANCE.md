@@ -8,7 +8,7 @@ Implemented on isolated branch `feat/nerve-watchtower`, based on local NERVE com
 |---|---|---|
 | Unmodified baseline | 1,124 tests passed | [baseline](evidence/baseline.log) |
 | Existing NERVE regression | 1,124 tests passed | [regression](evidence/regression.log) |
-| Safety suite | 70 tests passed | [test log](evidence/safety-tests.log) |
+| Safety suite | 78 tests passed | [test log](evidence/safety-tests.log) |
 | Independent adversarial review | 13 attack tests passed; demonstrated defects repaired | [review](INDEPENDENT_REVIEW.md) |
 | Passive CLI collector | Actual read-only SQLite aggregate collection, no source writes | [collector entrypoint](evidence/watchtower-entrypoint.json) |
 | Guardian CLI on unprovisioned host | Correctly UNKNOWN, enforcement disabled | [service entrypoint](evidence/service-entrypoint.json) |
@@ -54,3 +54,7 @@ The safety suite now passes 66 tests. New failure tests establish bounded shutdo
 ## Exclusive notification ownership follow-up
 
 The combined safety suite passes 70 tests, including 11 notification tests independently rerun by the alerts specialist. A persistent private sibling lock prevents overlapping notifier owners from racing delivery status updates. A real subprocess test verifies ownership is released on process exit. Initial database-inode locking failed against macOS SQLite locks; the final sibling-lock implementation passes the full suite. No runtime integration, production settings or live notification delivery changed.
+
+## Configuration validation and safe report publication
+
+The safety suite now passes 78 tests. Both deployment examples validate through the CLI without creating state or starting services. Invalid schemas are rejected before runtime side effects, including inventory exclusions, owner scope, alert configuration, duplicate source names, numeric bounds and ambiguous JSON. Pure schema validation does not establish actual path identity or production readiness. Independent review identified predictable report staging that could truncate a monitored input; exclusive random temporary files now preserve the real SQLite source in the regression test. Existing NERVE runtime code remains unchanged.
