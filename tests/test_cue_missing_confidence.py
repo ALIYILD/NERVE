@@ -38,6 +38,7 @@ class MissingConfidenceTests(unittest.TestCase):
     def test_historical_digest_preserved_when_optional_usage_unknown(self):
         report=self.report()
         old_schema=asdict(report)
+        old_schema['manifest'].pop('regression',None)
         for pair in old_schema['pairs']:
             for arm in ('baseline','candidate'):
                 del pair[arm]['input_tokens']; del pair[arm]['output_tokens']

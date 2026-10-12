@@ -16,6 +16,8 @@ operational cue has been enabled and no model or clinical deployment has been pe
 | Local model/dataset/evaluation integration, full suite | **1,149 run, 1,148 passed, 1 skipped**, 93.969 seconds |
 | Durable dataset reservations and cutover, full suite | **1,179 run, 1,178 passed, 1 skipped**, 143.784 seconds; final readiness snapshot metadata also passed its eight focused tests |
 | CCE-specific tests after durable dataset integration | **181 passed**, including relabeling, split movement, transaction rollback, restart, legacy cutover and prior local/host contracts |
+| Retained-capability gate integration, full suite | **1,221 run, 1,220 passed, 1 skipped**, 77.308 seconds |
+| CCE-specific tests after retained-capability integration | **223 passed**, including schema compatibility, pre-holdout ordering, persistence, scope cutover, evidence tampering and release recomputation |
 | Node checkpoint discovery | **7 passed** |
 | `git diff --check` | Passed |
 | Offline commissioning CLI | 30 paired tasks / 60 fixture calls, zero external provider calls; candidate rejected, no active cue, pending memory export |
@@ -76,6 +78,13 @@ within that scope, preserves historical records and exposes read-only status.
 Cross-agent semantic deduplication and legacy content backfilling remain outside
 the available evidence; changed paraphrases still need honest family annotation.
 
+Retained-capability screening now runs between selection and untouched holdout
+for schema 2 datasets. Its independent verdict is persisted and revalidated at
+holdout admission, approval, routing and release review. Scope cutover survives
+contract changes; old candidates cannot bypass the new gate. All 42 additional
+tests use contract doubles, not measured model-effectiveness evidence. No real
+retained-capability benchmark or operational activation is claimed.
+
 ## Loop ledger
 
 “Verified” below means the stated local software gate, not live model effectiveness
@@ -95,7 +104,7 @@ or clinical assurance. The complete objective is **not** claimed complete.
 | 10 Memory | Verified | Existing authority/database/audit and pending trusted-memory export; cross-scope denial, persistence, expiry and outcome revocation |
 | 11 Safety | Verified | Clinical/high-risk exclusion, permission gates, cue/receipt tampering and scoped approval tests; clinical deployment remains prohibited |
 | 12 Performance/cost | Partial | Local context/output/call limits, measured tokens, durations and zero external fees; compute cost unmeasured and no performance benefit demonstrated |
-| 13 Recursive improvement | Partial | Dataset-bound host cycles with durable ID/content/family reservations, safe legacy cutover, pending memory and operator approval tested; no automatic live cycle dispatch, retained-capability benchmark or production canary connection |
+| 13 Recursive improvement | Partial | Dataset-bound host cycles with durable ID/content/family reservations, safe legacy cutover, pending memory and operator approval tested; persisted retained-capability screening tested; no real retained-capability benchmark, automatic live cycle dispatch or production canary connection |
 | 14 API/docs | Verified | Local Python APIs, offline CLI, runbook, full fifteen-loop specification and Claude Code prompt |
 | 15 Staging/deployment | Blocked | Offline release manifest recomputes eligibility and identifies missing staging/rollback receipts; no validated live profile, eligible live candidate or controlled traffic evidence |
 

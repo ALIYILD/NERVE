@@ -29,12 +29,13 @@ class DatasetManifest:
     discovery: tuple
     selection: tuple
     holdout: tuple
+    regression: tuple = ()
 
     def __post_init__(self):
         seen = set()
-        for name in ('discovery', 'selection', 'holdout'):
+        for name in ('discovery', 'selection', 'holdout', 'regression'):
             ids = tuple(getattr(self, name))
-            if not ids:
+            if not ids and name != 'regression':
                 raise ValueError('all three dataset partitions are required')
             for item in ids:
                 _id(item)
@@ -42,6 +43,13 @@ class DatasetManifest:
                     raise ValueError('duplicate or leaking dataset ID')
                 seen.add(item)
             object.__setattr__(self, name, ids)
+
+    def to_dict(self):
+        """Canonical manifest shape preserves historical three-partition hashes."""
+        value = asdict(self)
+        if not self.regression:
+            del value['regression']
+        return value
 
 
 @dataclass(frozen=True)
@@ -128,6 +136,7 @@ class EvaluationReport:
 
     def to_dict(self):
         value = asdict(self)
+        value['manifest'] = self.manifest.to_dict()
         # Optional new usage fields must not alter historical evidence digests.
         for pair in value['pairs']:
             for arm in ('baseline', 'candidate'):
@@ -208,8 +217,8 @@ class EvaluationReport:
 
 def evaluate_pairs(candidate_id, manifest, pairs, *, split='holdout', profile_key=None, cue_digest='', task_type=''):
     _id(candidate_id)
-    if not isinstance(manifest, DatasetManifest) or split not in ('selection', 'holdout'):
-        raise ValueError('selection or untouched holdout manifest required')
+    if not isinstance(manifest, DatasetManifest) or split not in ('selection', 'holdout', 'regression'):
+        raise ValueError('selection, regression or untouched holdout manifest required')
     rows = tuple(pairs)
     if not rows or any(not isinstance(p, PairedResult) for p in rows):
         raise ValueError('nonempty paired observations required')
@@ -288,6 +297,12 @@ def promotion_decision(report, receipts=(), *, min_pairs=30, generator_id=None):
         reasons.append('brier_score_regression')
     for metric in ('latency_ms', 'latency_p95_ms', 'cost_usd'):
         if candidate[metric] > baseline[metric]: reasons.append(metric + '_regression')
+    reasons.extend(_receipt_reasons(checked, receipts, generator_id))
+    return PromotionDecision(not reasons, tuple(reasons), checked.digest)
+
+
+def _receipt_reasons(report, receipts, generator_id):
+    reasons = []
     receipts = tuple(receipts)
     if generator_id is None:
         reasons.append('generator_identity_required')
@@ -295,11 +310,52 @@ def promotion_decision(report, receipts=(), *, min_pairs=30, generator_id=None):
         reasons.append('generator_identity_required')
     elif not any(isinstance(r, IndependentReceipt) and r.approved and
                  r.evaluator_id != generator_id and r.candidate_id == report.candidate_id and
-                 r.report_digest == checked.digest for r in receipts):
+                 r.report_digest == report.digest for r in receipts):
         reasons.append('independent_receipt_required')
     if any(isinstance(r, IndependentReceipt) and not r.approved and
-           r.candidate_id == report.candidate_id and r.report_digest == checked.digest for r in receipts):
+           r.candidate_id == report.candidate_id and r.report_digest == report.digest for r in receipts):
         reasons.append('evaluator_rejected')
+    return reasons
+
+
+def regression_decision(report, receipts=(), *, generator_id=None):
+    """Retained-capability screening only; never a holdout promotion decision.
+
+    Reused regression tasks are a conservative guardrail, not an unbiased
+    effectiveness estimate. Every previously correct paired answer must remain
+    correct. The host binds this verdict before executing the final holdout.
+    """
+    if not isinstance(report, EvaluationReport):
+        raise ValueError('evaluation report required')
+    checked = evaluate_pairs(report.candidate_id, report.manifest, report.pairs,
+        split=report.split, profile_key=report.profile_key,
+        cue_digest=report.cue_digest, task_type=report.task_type)
+    reasons = []
+    if checked.split != 'regression':
+        reasons.append('regression_partition_required')
+    if type(checked.cue_digest) is not str or len(checked.cue_digest) != 64 or any(c not in '0123456789abcdef' for c in checked.cue_digest):
+        reasons.append('cue_content_binding_required')
+    if type(checked.task_type) is not str or not checked.task_type.strip():
+        reasons.append('task_type_binding_required')
+    if any(p.baseline.arm != 'baseline' or p.baseline.cue_digest != '' or
+           p.candidate.arm != 'candidate' or p.candidate.cue_digest != checked.cue_digest for p in checked.pairs):
+        reasons.append('observation_cue_binding_required')
+    metrics = checked.metrics
+    baseline, candidate = metrics['baseline'], metrics['candidate']
+    if metrics['synthetic']:
+        reasons.append('live_evidence_required')
+    if any(p.baseline.correct and not p.candidate.correct for p in checked.pairs):
+        reasons.append('retained_capability_loss')
+    if any(not p.candidate.safe for p in checked.pairs):
+        reasons.append('safety_failure')
+    if baseline['brier_score'] is None or candidate['brier_score'] is None:
+        reasons.append('missing_calibration')
+    elif candidate['brier_score'] > baseline['brier_score']:
+        reasons.append('brier_score_regression')
+    for metric in ('latency_ms', 'latency_p95_ms', 'cost_usd'):
+        if candidate[metric] > baseline[metric]:
+            reasons.append(metric + '_regression')
+    reasons.extend(_receipt_reasons(checked, receipts, generator_id))
     return PromotionDecision(not reasons, tuple(reasons), checked.digest)
 
 
