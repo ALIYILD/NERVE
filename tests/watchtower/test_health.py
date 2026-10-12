@@ -20,7 +20,8 @@ class HealthTests(unittest.TestCase):
         self.temp.cleanup()
 
     def write(self, **changes):
-        report = {'timestamp': time.time(), 'status': 'OBSERVED_SCOPE_ONLY', 'tenants': ['private-tenant']}
+        report = {'timestamp': time.time(), 'status': 'OBSERVED_SCOPE_ONLY',
+                  'tenants': {'private-tenant': {'risk': 'NORMAL', 'state': 'OBSERVING'}}}
         report.update(changes)
         self.path.write_text(json.dumps(report))
         self.path.chmod(0o600)
@@ -61,6 +62,20 @@ class HealthTests(unittest.TestCase):
         def unavailable(argv, **kwargs):
             raise subprocess.TimeoutExpired(argv, 5)
         self.assertEqual('UNKNOWN', check('guardian.service', self.path, runner=unavailable)['status'])
+
+    def test_healthy_aggregate_cannot_mask_failing_tenant(self):
+        for details in ({'risk': 'UNKNOWN', 'state': 'OBSERVING'},
+                        {'risk': 'CRITICAL', 'state': 'AWAITING_OWNER_REVIEW'},
+                        {'risk': 'WARNING', 'state': 'OBSERVING'},
+                        {'risk': 'invalid', 'state': 'OBSERVING'},
+                        {'risk': 'NORMAL', 'state': 'RESTARTING'},
+                        {'state': 'OBSERVING'}, {'risk': 'NORMAL'}, None):
+            self.write(tenants={'healthy': {'risk': 'NORMAL', 'state': 'OBSERVING'}, 'failing': details})
+            result = check('guardian.service', self.path, runner=self.runner)
+            self.assertEqual('UNKNOWN', result['status'])
+            self.assertEqual('TENANT_ATTENTION_REQUIRED', result['health_report'])
+        self.write(tenants=['private-tenant'])
+        self.assertEqual('UNKNOWN', check('guardian.service', self.path, runner=self.runner)['status'])
 
     def test_no_arbitrary_unit_or_writable_symlink_report(self):
         for unit in ('--all', 'guardian.service;id', '*.service', '../guardian.service'):

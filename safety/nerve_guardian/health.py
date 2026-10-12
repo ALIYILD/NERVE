@@ -64,7 +64,14 @@ def check(unit, health_file, max_age=30, runner=None):
         if (type(stamp) not in (float, int) or not math.isfinite(stamp)
                 or not 0 <= now - stamp <= max_age or not 0 <= now - info.st_mtime <= max_age
                 or report.get('status') != 'OBSERVED_SCOPE_ONLY'
-                or not isinstance(report.get('tenants'), (dict, list)) or not report['tenants']):
+                or not isinstance(report.get('tenants'), dict) or not report['tenants']):
+            return result
+        if any(not isinstance(tenant, str) or not tenant or not isinstance(details, dict)
+               or details.get('risk') != 'NORMAL' or details.get('state') != 'OBSERVING'
+               for tenant, details in report['tenants'].items()):
+            # An active Guardian can be reporting an incident or incomplete
+            # visibility. Nonzero external health must not mask either state.
+            result['health_report'] = 'TENANT_ATTENTION_REQUIRED'
             return result
         # Never echo tenant details, health text, private paths or provider errors.
         result.update(status='OBSERVED_SCOPE_ONLY', health_report='FRESH_SCOPE_ONLY',
