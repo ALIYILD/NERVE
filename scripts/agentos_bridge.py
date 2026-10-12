@@ -369,6 +369,8 @@ def publish(host, extra=None):
         'Autoresearch: '+str(status['autoresearch'].get('status','paused'))+
         '; enabled='+str(status['autoresearch'].get('enabled',False))+
         '. Bounded experiments resume on the 15-minute scheduler; fresh evidence and budget are required.\n\n'+
+        'CCE jobs: '+json.dumps(status['autoresearch'].get('cce_jobs',{}).get('counts',{}),sort_keys=True)+
+        '. Explicit queued jobs wait for measured adapters; cancel a pending job to resume audit work. No cue activation is automatic.\n\n'+
         'Registered follow-on cohorts: '+str(len(status['autoresearch'].get('registered_cohorts',[])))+
         '; latest follow-on study: '+str(status['autoresearch'].get('registered_study',{}).get('status','not_run'))+
         '. Accepted follow-on advice remains experimental and unmonitored.\n\n'+
@@ -424,7 +426,8 @@ def main():
         'audit-shadow','audit-shadow-status','autoresearch-enable','autoresearch-pause',
         'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort',
         'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile',
-        'cce-local-inspect','cce-local-smoke','cce-dataset-status'))
+        'cce-local-inspect','cce-local-smoke','cce-dataset-status','cce-job-submit','cce-job-status','cce-job-cancel'))
+    parser.add_argument('--cue-job',help='Pending CCE job identifier to cancel without replay')
     parser.add_argument('--cue-candidate',help='Scoped CCE candidate identifier')
     parser.add_argument('--cue-review',help='Operator review reference for cue approval or revocation')
     parser.add_argument('--cue-generation',type=int,help='Expected CCE route generation from cce-route')
@@ -462,6 +465,19 @@ def main():
                     enabled=execute,permission_granted=execute,max_calls=4,max_output_tokens=32)
                 result=run_local_smoke(adapter) if execute else adapter.inspect()
                 atomic_json(host.directory/(args.command+'.json'),result)
+            elif args.command in ('cce-job-submit','cce-job-status','cce-job-cancel'):
+                import agentos_cue_jobs as cue_jobs
+                if args.command=='cce-job-submit':
+                    if args.task is None:
+                        parser.error('cce-job-submit requires --task with a frozen CCE job specification')
+                    result=cue_jobs.submit(host,cue_jobs.load_spec(args.task))
+                elif args.command=='cce-job-cancel':
+                    if not args.cue_job:
+                        parser.error('cce-job-cancel requires --cue-job')
+                    result=cue_jobs.cancel(host,args.cue_job)
+                else:
+                    result=cue_jobs.status(host)
+                atomic_json(host.directory/'cce-jobs.json',cue_jobs.status(host))
             elif args.command=='cce-status':
                 result=cues.status(args.profile)
             elif args.command=='cce-profile':

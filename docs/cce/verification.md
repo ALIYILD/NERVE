@@ -18,6 +18,8 @@ operational cue has been enabled and no model or clinical deployment has been pe
 | CCE-specific tests after durable dataset integration | **181 passed**, including relabeling, split movement, transaction rollback, restart, legacy cutover and prior local/host contracts |
 | Retained-capability gate integration, full suite | **1,221 run, 1,220 passed, 1 skipped**, 77.308 seconds |
 | CCE-specific tests after retained-capability integration | **223 passed**, including schema compatibility, pre-holdout ordering, persistence, scope cutover, evidence tampering and release recomputation |
+| Scheduled CCE job integration, full suite | **1,242 run, 1,241 passed, 1 skipped**, 69.343 seconds |
+| Scheduled job focused checks | **21 new tests passed**: 10 durable queue tests and 11 autoresearch/bridge tests; 15 existing autoresearch tests also passed |
 | Node checkpoint discovery | **7 passed** |
 | `git diff --check` | Passed |
 | Offline commissioning CLI | 30 paired tasks / 60 fixture calls, zero external provider calls; candidate rejected, no active cue, pending memory export |
@@ -107,7 +109,7 @@ or clinical assurance. The complete objective is **not** claimed complete.
 | 10 Memory | Verified | Existing authority/database/audit and pending trusted-memory export; cross-scope denial, persistence, expiry and outcome revocation |
 | 11 Safety | Verified | Clinical/high-risk exclusion, permission gates, cue/receipt tampering and scoped approval tests; clinical deployment remains prohibited |
 | 12 Performance/cost | Partial | Local context/output/call limits, measured tokens, durations and zero external fees; compute cost unmeasured and no performance benefit demonstrated |
-| 13 Recursive improvement | Partial | Dataset-bound host cycles with durable ID/content/family reservations, safe legacy cutover, pending memory and operator approval tested; persisted retained-capability screening tested; no real retained-capability benchmark, automatic live cycle dispatch or production canary connection |
+| 13 Recursive improvement | Partial | Dataset-bound host cycles with durable ID/content/family reservations, safe legacy cutover, pending memory and operator approval tested; persisted retained-capability screening tested; durable jobs join the existing scheduled loop but lack a trusted live adapter; no real retained-capability benchmark or production canary connection |
 | 14 API/docs | Verified | Local Python APIs, offline CLI, runbook, full fifteen-loop specification and Claude Code prompt |
 | 15 Staging/deployment | Blocked | Offline release manifest recomputes eligibility and identifies missing staging/rollback receipts; no validated live profile, eligible live candidate or controlled traffic evidence |
 
@@ -144,3 +146,25 @@ The [master Claude Code prompt](claude-cli-prompt.md) and [complete implementati
 plan](implementation-plan.md) provide the continuation instructions. Missing
 external evidence must stay visible rather than being replaced with simulated
 success or a blanket “15/15 complete.”
+
+## Scheduled CCE job boundary
+
+The durable job path joins the existing autoresearch tick and host lock, reuses
+`autoresearch.sqlite3`, and leaves operator approval separate. Its installed
+adapter registry supplies no live callbacks by default, so scheduling does not
+imply provider dispatch. Specifications cannot import callbacks. A job is claimed
+before execution and interrupted work is sealed without automatic replay.
+
+Schema 2 jobs require at least 30 untouched holdout pairs plus selection and
+regression, costing at least 65 model calls including discovery. The native
+Hermes 20-call daily cap, unavailable immutable model/tokenizer identity and
+missing calibrated confidence/complete measurement receipts remain live blockers.
+The local Ollama transport smoke also lacks answer confidence and worker
+attestation. No live scheduled CCE experiment or automatic activation is claimed.
+The full suite and focused queue/integration checks above passed with trusted
+contract doubles. They establish software behavior, not live model effectiveness.
+
+At the inspected installation, autoresearch was enabled for `qa-release`, with
+zero native sessions remaining in that day's budget. No live CCE configuration
+or queued CCE jobs had been installed. This is an installation snapshot, not a
+claim that the new scheduled path has produced model evidence.

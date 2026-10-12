@@ -19,6 +19,9 @@ python3 scripts/agentos_bridge.py cce-demo --state /tmp/nerve-cce-demo-state
 python3 scripts/agentos_bridge.py cce-inspect --profile qa-release --cue-candidate CANDIDATE_ID
 python3 scripts/agentos_bridge.py cce-route --profile qa-release
 python3 scripts/agentos_bridge.py cce-dataset-status --profile qa-release
+python3 scripts/agentos_bridge.py cce-job-status
+python3 scripts/agentos_bridge.py cce-job-cancel --cue-job JOB_ID
+python3 scripts/agentos_bridge.py cce-job-submit --task /path/to/cce-job.json
 python3 scripts/agentos_bridge.py cce-readiness --profile qa-release --cue-candidate CANDIDATE_ID
 python3 scripts/agentos_bridge.py cce-approve --profile qa-release --cue-candidate CANDIDATE_ID --cue-generation 0 --cue-review REVIEW_ID --cue-valid-for 86400
 python3 scripts/agentos_bridge.py cce-revoke --profile qa-release --cue-candidate CANDIDATE_ID --cue-review REVIEW_ID
@@ -62,8 +65,9 @@ same trusted discovery/provider/judge callbacks and explicit budgets as
 persists `cce-last-cycle.json` and exports candidate evidence to pending memory.
 A cycle requires at least 30 holdout tasks before reservation or spending and
 stops at rejection or pending operator approval. No live billing adapter is
-installed for the currently unpinned OpenRouter worker, and no automatic scheduler
-dispatch or activation is added.
+installed for the currently unpinned OpenRouter worker. Durable jobs can enter the
+existing scheduled loop, but they wait without dispatch until the host supplies a
+trusted adapter. Scheduling never activates a candidate.
 
 Use `CueHost.run_dataset_cycle(...)` for content-bound research. Its first durable
 dataset reservation upgrades the scope, prevents ID-only downgrade and stops
@@ -131,3 +135,79 @@ persisted passing regression gate before holdout evaluation, approval or serving
 See [retained-capability screening](local-research.md#retained-capability-screening)
 for the criteria and limitations. This is opt-in research infrastructure, with no
 new scheduler or automatic production activation.
+
+## Durable jobs in the existing scheduled loop
+
+`agentos_cue_jobs` stores immutable CCE job specifications in the existing
+`autoresearch.sqlite3`, with outcomes in its existing event ledger. The bridge's
+`cycle` command and `agentos_autoresearch.tick` supply scheduling and the existing
+host lock. There is no additional service or scheduler. `cce-job-submit --task`
+admits a bounded frozen specification; `cce-job-status` exposes redacted job state.
+Submission requires an already configured exact profile; that profile may be
+disabled while the job is queued. Submission grants neither cue approval nor
+operational activation.
+
+Host code supplies the trusted adapter registry. A JSON adapter identifier cannot
+import a Python module, select an arbitrary callback, or execute supplied code.
+The installed registry is empty by default: jobs remain pending when no matching
+adapter is installed. Disabled CCE configuration or a mismatched profile also
+prevents dispatch. A ready tick claims at most one job before executing its
+bounded dataset cycle. Interrupted running work is sealed without replay; exposed
+evaluation content is never retried automatically.
+
+The scheduled path requires a frozen schema 2 dataset with at least 30 holdout
+tasks. One discovery call, one paired selection task, one paired regression task
+and 30 paired holdout tasks require at least 65 calls. The native Hermes bridge's
+20-call daily limit cannot fund that cycle. Its current response also lacks exact
+model/tokenizer attestation, complete CCE usage/billing receipts and answer
+confidence. Host adapters must preserve existing call ledgers and enforce the
+full budget; scheduling does not waive those requirements. Missing confidence
+cannot be filled with a grader's correctness verdict or a constant probability.
+
+Existing autoresearch audit bundles cannot be silently relabeled as handoff
+benchmarks. `CueHost` owns the low-risk handoff classification, while dataset
+curation and independent grading remain explicit host responsibilities. A
+qualifying cycle ends at pending operator approval and pending memory export.
+
+### Exact job specification
+
+`--task` reads a bounded regular UTF-8 JSON file (at most 5 MiB). Duplicate keys,
+nonfinite numbers and additional fields are rejected. The object contains exactly:
+
+| Field | Required value |
+| --- | --- |
+| `job_id`, `profile` | Unique job identifier and configured host profile name |
+| `dataset` | Complete frozen schema 2 dataset object, including all four partitions |
+| `model` | Complete `ModelParity` object for the configured profile |
+| `generator_id`, `evaluator_id` | Explicit separate discovery and evaluation identities |
+| `adapter_id`, `adapter_revision` | Identifier and exact revision of a trusted host registry entry |
+| `max_calls` | Bounded integer covering discovery and every paired task |
+| `max_cost_usd` | Total research budget |
+| `discovery_cost_cap_usd` | Maximum discovery fee |
+| `per_call_cost_cap_usd` | Maximum fee per evaluation request |
+| `permission_granted` | Literal `true` for the bounded research job |
+
+`model` contains exactly `provider`, `model`, `revision`, `tokenizer`,
+`tokenizer_revision`, `template_digest`, `sampling_digest`, `temperature`,
+`max_tokens`, `context_digest`, and `profile_key`. These values must describe the
+actual trusted transport; a submission cannot manufacture provider attestation.
+The complete dataset schema is specified in `cue_dataset.py`. Expected answers
+remain in the local job specification and trusted grader, not discovery input or
+redacted status. Do not put credentials in a job specification.
+
+A host registry entry contains `revision`, `discovery_execute`, `provider`,
+`judge`, and `preflight`. The callable `preflight(host, admission)` must return
+literal `True` before claim. It receives model/profile identity, dataset digest
+and budgets, without task content, and must check durable daily/provider budget
+availability without inference. Missing preflight, failure or a non-true result
+leaves the job waiting. Both existing autoresearch configuration and CCE must be
+enabled; a queued job cannot enable either.
+
+`cce-job-cancel --cue-job JOB_ID` changes a pending job to `cancelled`. It does
+not delete its immutable specification, reset evidence reservations or requeue
+the job. Running or completed work cannot be cancelled through this command.
+
+Queued CCE work takes priority over ordinary audit research. A waiting CCE job
+suppresses unrelated audit dispatch for that tick; cancel the pending job to
+resume audit work. The queue accepts at most 32 pending/running jobs and reports
+the latest 64 jobs. Its nested dataset remains subject to the 4 MiB dataset cap.
