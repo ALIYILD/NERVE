@@ -397,10 +397,23 @@ def main():
     parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review',
         'repository-study','repository-run','repository-tasks','repository-diagnose','audit-study','audit-status',
         'audit-shadow','audit-shadow-status','autoresearch-enable','autoresearch-pause',
-        'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort'))
+        'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort',
+        'arc-run','arc-inspect','arc-replay','arc-evaluate','arc-improve','arc-candidate-status',
+        'arc-release-status','arc-stage','arc-promote','arc-rollback','arc-reconcile'))
     parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
     parser.add_argument('--review',type=Path,help='Independent host review record for cohort admission')
+    parser.add_argument('--source',type=Path,help='Local Python file for the read-only ARC inventory workflow')
+    parser.add_argument('--report',type=Path,help='ARC benchmark report destination')
+    parser.add_argument('--decision-id')
+    parser.add_argument('--manifest-id')
+    parser.add_argument('--review-ref')
+    parser.add_argument('--observed-status',choices=('succeeded','failed','cancelled'))
+    parser.add_argument('--arc-mode',choices=('off','shadow','enforce'),default='shadow')
+    parser.add_argument('--context',default='inventory')
+    parser.add_argument('--canary-limit',type=int,default=5)
+    parser.add_argument('--candidate-budget',type=int,default=3)
+    parser.add_argument('--restart',action='store_true')
     parser.add_argument('--state',type=Path,default=STATE)
     parser.add_argument('--task-id')
     parser.add_argument('--study-id',help='Accepted audit study to monitor in shadow mode')
@@ -408,6 +421,19 @@ def main():
     parser.add_argument('--review-target',choices=('handoff','repository-experiments','repository-taskbench','repository-runner'),default='handoff')
     args=parser.parse_args()
     requested_profile=args.profile
+    if args.command.startswith('arc-'):
+        from nerve_awim.arc_cli import dispatch
+        with host_lock(args.state):
+            try:
+                result=dispatch(args)
+            except (ValueError,PermissionError,RuntimeError,LookupError) as error:
+                # Provider errors and evidence payloads do not enter ordinary CLI logs.
+                result={'status':'blocked','reason_category':type(error).__name__,
+                        'guidance':'Inspect the scoped episode or command arguments; no fallback execution was attempted.'}
+                print(json.dumps(result,indent=2))
+                raise SystemExit(2)
+            print(json.dumps(result,indent=2))
+        return
     args.profile=args.profile or ('backend-engineer' if args.command.startswith('repository-') or args.command=='cycle' else 'qa-release')
     with host_lock(args.state):
         host=AgentOSLearning(args.state)
