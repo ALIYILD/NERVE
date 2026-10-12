@@ -47,7 +47,9 @@ capable scripted control; see [capability-report.md](capability-report.md).
 ## Storage, configuration and recovery
 
 `init --config configs/world_model.offline.json` explicitly adds versioned `wm_*`
-tables in one transaction; it does not alter legacy tables. Never point this
+tables in one transaction; it does not alter legacy tables. Schema version 2
+adds final report receipts; explicitly run `init` to upgrade a version 1 research
+store. Existing consumed holdouts remain consumed, with no invented reports. Never point this
 research tool at production storage. The supplied configuration has `enabled:
 false`; copy it outside Git and explicitly set `enabled: true` for `run` or
 `resume`. The `demo` command explicitly opts into a synthetic experiment.
@@ -60,8 +62,12 @@ A run checkpoints each phase, a content hash, attempts, work reservations, and
 lease fence. A new process can `resume --run-id ... --config ...` with the exact
 original policy. An expired claim can be recovered after 30 seconds. An active
 claim rejects a second worker. Phase retries stop after three attempts. A final
-evaluation interrupted after consumption stops honestly without reopening its
-evidence. Stop reasons distinguish resource exhaustion, missing evidence,
+evaluation commits its aggregate report separately from the coordinator checkpoint.
+A restart recovers that report without executing final cases again or reserving
+evaluation work twice. An interruption before report commit stops honestly
+without reopening evidence. Report recovery requires evaluator authority and
+valid model/runtime fingerprints. This is trusted local storage, not a separate
+evaluator security boundary. Stop reasons distinguish resource exhaustion, missing evidence,
 verification failure and inconclusive independent gain. No external writes are
 dispatched; an external-effect outbox is not implemented.
 

@@ -28,6 +28,32 @@ class Evaluator:
                     db.execute('INSERT INTO wm_final VALUES(?,?,?,?,0)',(scope,episode['source'],run_id,None))
         return [e['source'] for e in episodes]
 
+    def recover_final(self, actor, model_id, *, run_id):
+        """Read a committed report without executing or reopening final evidence.
+
+        A claim without a report is deliberately unrecoverable. Storage is trusted;
+        hashes detect accidental corruption, not a malicious database administrator.
+        """
+        scope = self.ledger.scope(actor, 'evaluator')
+        self.registry.get(actor, model_id)  # Includes runtime fingerprint validation.
+        with self.ledger.db() as db:
+            row = db.execute('SELECT * FROM wm_final_reports WHERE scope=? AND run=?',
+                             (scope, run_id)).fetchone()
+            if row is None:
+                return None
+            if row['model'] != model_id:
+                raise IntegrityError('final report model mismatch')
+            if row['report'] is None:
+                raise IntegrityError('final consumed without committed report')
+            report = json.loads(row['report'])
+            claims = db.execute('SELECT * FROM wm_final WHERE scope=? AND run=?',
+                                (scope, run_id)).fetchall()
+            if (digest(report) != row['report_hash'] or report['model_id'] != model_id
+                    or report['evidence_hashes'] != [row['evidence_hash']]
+                    or not claims or any(not r['consumed'] or r['model'] != model_id for r in claims)):
+                raise IntegrityError('final report integrity failure')
+            return report
+
     def evaluate(self, actor, model_id, split, *, run_id=None):
         scope = self.ledger.scope(actor,'evaluator')
         if split not in ('selection','regression','final'):
@@ -48,6 +74,8 @@ class Evaluator:
                 rows = db.execute('SELECT * FROM wm_final WHERE scope=? AND run=?',(scope,run_id)).fetchall()
                 if {r['source'] for r in rows} != {e['source'] for e in episodes} or any(r['consumed'] for r in rows):
                     raise IntegrityError('final evidence missing or already consumed')
+                db.execute('INSERT INTO wm_final_reports VALUES(?,?,?,?,NULL,NULL)',
+                           (scope,run_id,model_id,digest(episodes)))
                 db.execute('UPDATE wm_final SET model=?,consumed=1 WHERE scope=? AND run=?',(model_id,scope,run_id))
         # No final details are returned to the proposer. The trusted host receives aggregates.
         result = replay(model['program'],episodes)
@@ -68,10 +96,19 @@ class Evaluator:
             family['candidate_success'] += int(success)
             # Explicit fixed baseline: attempt the last stage directly. Host observation
             # must be supplied separately; absent baseline outcome stays unknown.
-        return {'model_id':model_id,'split':split,'replay_pass':result['replay_pass'],
+        report = {'model_id':model_id,'split':split,'replay_pass':result['replay_pass'],
                 'fidelity_status':fidelity['status'],'unknown_fraction':result['unknown_fraction'],
                 'metrics_by_family':families,'failures':[] if split == 'final' else result['failures'],
                 'evaluator_revision':'exact-episodes-v1','evidence_hashes':[digest(episodes)],
                 'holdout_status':'consumed' if split == 'final' else 'not_opened',
                 'eligibility':False,'deployment_authorized':False,
                 'limitation':'baseline comparison and semantic split independence not established'}
+
+        if split == 'final':
+            with self.ledger.db() as db:
+                updated = db.execute('UPDATE wm_final_reports SET report=?,report_hash=? '
+                    'WHERE scope=? AND run=? AND model=? AND evidence_hash=? AND report IS NULL',
+                    (canonical(report),digest(report),scope,run_id,model_id,digest(episodes)))
+                if updated.rowcount != 1:
+                    raise IntegrityError('final report commit conflict')
+        return report

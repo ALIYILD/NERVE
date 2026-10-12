@@ -33,17 +33,24 @@ SCHEMA = (
 )
 
 
+RECEIPTS = """CREATE TABLE wm_final_reports(scope TEXT, run TEXT, model TEXT,
+ evidence_hash TEXT, report TEXT, report_hash TEXT, PRIMARY KEY(scope,run))"""
+
+
 def migrate(path):
     """Explicit transaction; does not change legacy tables or their schema version."""
     with sqlite3.connect(path) as db:
         db.execute('BEGIN IMMEDIATE')
         exists = db.execute("SELECT 1 FROM sqlite_master WHERE name='wm_schema'").fetchone()
         if exists:
-            if db.execute('SELECT version FROM wm_schema').fetchall() != [(1,)]:
+            if db.execute('SELECT version FROM wm_schema').fetchall() not in ([(1,)], [(2,)]):
                 raise IntegrityError('unsupported world-model migration version')
         else:
             for statement in SCHEMA:
                 db.execute(statement)
+        if db.execute("SELECT version FROM wm_schema").fetchall() == [(1,)]:
+            db.execute(RECEIPTS)
+            db.execute("UPDATE wm_schema SET version=2")
 
 
 class Ledger:
@@ -53,7 +60,7 @@ class Ledger:
         self.path, self.authority = str(Path(path)), authority
         self._local = threading.local()
         with self.db() as db:
-            if [tuple(r) for r in db.execute('SELECT version FROM wm_schema')] != [(1,)]:
+            if [tuple(r) for r in db.execute('SELECT version FROM wm_schema')] != [(2,)]:
                 raise IntegrityError('explicit migration required')
 
     @contextmanager

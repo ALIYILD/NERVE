@@ -125,3 +125,25 @@ restricted declarative backend is the supported path.
 All study models remain `eligibility=false` and `deployment_authorized=false`.
 That distinction is deliberate: a narrow research result cannot authorize
 production, clinical or device actions.
+
+
+## Durable final report recovery
+
+The next continuation adds schema version 2 and an evaluator-only report recovery
+path. Final consumption and a model/evidence-bound claim commit together before
+execution. The aggregate report and its hash commit before the coordinator moves
+to its next phase. A restart after that commit restores the report without replay
+or another evaluation work reservation. A crash before report commit leaves the
+holdout consumed and stops the run. Competing evaluators cannot both dispatch the
+same reserved final evidence.
+
+Migration is explicit and preserves version 1 consumed claims without fabricating
+missing reports. Hashes detect corruption within trusted local storage; this is
+not a hostile-provider isolation boundary or cross-store reuse protection. The
+standalone study runners retain their existing separate consumption protocols.
+The 240-task and six-file measurements above remain historical results from the
+prior implementation; no new independent capability gain is claimed here.
+
+Validation: **925 Python tests and 7 Node tests passed**. The offline demo also
+completed with zero provider calls and spend. Artifact hashes for this increment
+are in `recovery-evidence.json`.

@@ -18,7 +18,7 @@
       "loop": "02",
       "status": "partial",
       "evidence": "ledger.py; concurrent receipt and process recovery tests",
-      "remaining_or_decision": "Ordered receipts, idempotency and transactional imports work; full action/provider/latency provenance contract remains."
+      "remaining_or_decision": "Ordered receipts, idempotency and transactional imports work; full action/provider/latency provenance contract remains. Explicit v1-to-v2 migration preserves consumed holdouts and adds durable final report receipts."
     },
     {
       "loop": "03",
@@ -48,7 +48,7 @@
       "loop": "07",
       "status": "partial",
       "evidence": "evaluator.py; consumed-final crash/nonreuse tests",
-      "remaining_or_decision": "Study reserves final sources before induction, freezes before final generation, and records one-use consumption. Separate hostile-provider/evaluator OS boundary and semantic cross-store clone detection remain."
+      "remaining_or_decision": "Study reserves final sources before induction, freezes before final generation, and records one-use consumption. Separate hostile-provider/evaluator OS boundary and semantic cross-store clone detection remain. Generic evaluator now commits hashed final report receipts for coordinator recovery; incomplete claims remain consumed. Standalone study runners still use their separate one-use protocol."
     },
     {
       "loop": "08",

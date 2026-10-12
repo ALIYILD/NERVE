@@ -198,9 +198,11 @@ class Coordinator:
                     self.registry.freeze(self.evaluator,body['model_id'])
                 elif phase == 'final':
                     episodes = self.ledger.episodes(self.evaluator,'final')
-                    self._reserve_work(run_id,owner,fence,101*len(episodes),body=body,category="evaluation_and_planning")
                     try:
-                        body['reports']['final'] = self.review.evaluate(self.evaluator,body['model_id'],'final',run_id=run_id)
+                        recovered = self.review.recover_final(self.evaluator,body['model_id'],run_id=run_id)
+                        if recovered is None:
+                            self._reserve_work(run_id,owner,fence,101*len(episodes),body=body,category="evaluation_and_planning")
+                        body['reports']['final'] = recovered if recovered is not None else self.review.evaluate(self.evaluator,body['model_id'],'final',run_id=run_id)
                     except IntegrityError:
                         body['stop_reason'] = 'final_consumed_without_recoverable_report'
                         self.checkpoint(run_id,owner,fence,'stopped',body)
