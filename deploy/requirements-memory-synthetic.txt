@@ -2,3 +2,5 @@
 # No Galahad, GPU runtime or licence activation dependency.
 -r requirements-pilot.txt
 mcp==2.3.0
+# OpenAPI response-contract verification.
+jsonschema>=4.23,<5

@@ -20,9 +20,9 @@ class BoundMemorySession:
                 or type(self.can_read) is not bool or type(self.can_propose) is not bool):
             raise TypeError('trusted gateway, actor, scope and explicit permissions required')
         if self.can_read:
-            self._gateway._require(self._actor, self._scope, 'read')
+            self._gateway._require(self._actor, self._scope, 'read', allow_revoked=True)
         if self.can_propose:
-            self._gateway._require(self._actor, self._scope, 'propose')
+            self._gateway._require(self._actor, self._scope, 'propose', allow_revoked=True)
 
     def query(self, query, limit=5):
         if not self.can_read:

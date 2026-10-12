@@ -41,15 +41,18 @@ class MemoryService:
         ('POST', '/v1/memory/experiences'): 'writer',
         ('POST', '/v1/memory/feedback'): 'writer',
         ('POST', '/v1/memory/revoke'): 'admin',
+        ('POST', '/v1/memory/scopes/revoke'): 'admin',
+        ('DELETE', '/v1/memory/scopes/current'): 'admin',
         ('POST', '/v1/inference/respond'): 'reader',
     }
 
-    def __init__(self, gateway, *, verifier, grants, requests_per_minute=60):
+    def __init__(self, gateway, *, verifier, grants, requests_per_minute=60, inference=None):
         if type(verifier) is not PinnedOIDCVerifier:
             raise TypeError('operator-pinned OIDC verifier required')
         if type(requests_per_minute) is not int or not 1 <= requests_per_minute <= 600:
             raise ValueError('bounded rate limit required')
         self.gateway, self.verifier = gateway, verifier
+        self.inference = inference
         self.grants = {}
         for grant in grants:
             if (type(grant) is not MemoryGrant or type(grant.subject) is not str
@@ -113,8 +116,12 @@ class MemoryService:
         if grant is None or role not in grant.roles or 'nerve-memory-' + role not in identity.roles:
             return 403, {'error': 'scope_or_role_denied'}
         # Recheck capability revocation even for metadata-only requests.
-        permission = {'reader': 'read', 'writer': 'propose', 'admin': 'delete' if record_id else 'read'}[role]
-        self.gateway.ledger.authority.require(grant.actor, permission)
+        maintenance = role == 'admin' and (record_id is not None or path in
+            ('/v1/memory/scopes/revoke', '/v1/memory/scopes/current'))
+        permission = {'reader': 'read', 'writer': 'propose',
+                      'admin': 'delete' if record_id or path.endswith('/scopes/current') else
+                      'approve' if path.endswith('/scopes/revoke') else 'read'}[role]
+        self.gateway._require(grant.actor, grant.scope, permission, allow_revoked=maintenance)
         # Only shared rate accounting is serialized. Never hold this lock
         # across client reads, identity verification or gateway/provider I/O.
         with self._lock:
@@ -126,7 +133,7 @@ class MemoryService:
             self._buckets[identity.subject] = window, count + 1
         if method == 'GET':
             if path.endswith('/capabilities'):
-                return 200, {'version': 'v1', 'synthetic_only': True, 'inference': False,
+                return 200, {'version': 'v1', 'synthetic_only': True, 'inference': self.inference is not None,
                              'review_required': True, 'approval_endpoint': False}
             if path.endswith('/metrics'):
                 return 200, self.gateway.metrics(grant.actor, grant.scope)
@@ -144,7 +151,7 @@ class MemoryService:
         # capability revocation must still win before parsing or acting.
         if identity.expires_at <= int(time.time()):
             return 401, {'error': 'invalid_identity'}
-        self.gateway.ledger.authority.require(grant.actor, permission)
+        self.gateway._require(grant.actor, grant.scope, permission, allow_revoked=maintenance)
         if len(raw) != int(length):
             raise ValueError('incomplete body')
         def unique(pairs):
@@ -161,10 +168,26 @@ class MemoryService:
         if body.get('clinic_id') != grant.clinic_id or body.get('patient_id') != grant.patient_id:
             raise PermissionError('clinical context denied')
         base = {'clinic_id', 'patient_id'}
-        if path == '/v1/inference/respond':
+        if path in ('/v1/memory/scopes/revoke', '/v1/memory/scopes/current'):
             if set(body) != base:
-                raise ValueError('exact inference placeholder schema required')
-            return 501, {'error': 'inference_not_implemented', 'synthetic_only': True}
+                raise ValueError('exact scope lifecycle schema required')
+            if method == 'DELETE':
+                return 200, self.gateway.delete_scope(grant.actor, scope=grant.scope)
+            return 200, self.gateway.revoke_scope(grant.actor, scope=grant.scope,
+                                                 evaluator_id='api-host-review')
+        if path == '/v1/inference/respond':
+            if self.inference is None:
+                if set(body) not in (base, base | {'query', 'limit'}):
+                    raise ValueError('exact inference schema required')
+                return 501, {'error': 'inference_not_implemented', 'synthetic_only': True}
+            if set(body) != base | {'query', 'limit'}:
+                raise ValueError('exact inference schema required')
+            result = self.inference.respond(self.gateway, grant.actor,
+                MemoryRequest(grant.scope, body['query'], limit=body['limit']))
+            if identity.expires_at <= int(time.time()):
+                return 401, {'error': 'invalid_identity'}
+            self.gateway._require(grant.actor, grant.scope, 'read')
+            return 200, result
         if path.endswith('/query'):
             if set(body) != base | {'query', 'limit'}:
                 raise ValueError('exact query schema required')

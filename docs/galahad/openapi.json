@@ -3,7 +3,7 @@
   "info": {
     "title": "NERVE synthetic memory research API",
     "version": "1.0.0",
-    "description": "Evidence retrieval only. No live clinical deployment. Inference returns 501. Scope fixed by offline grants."
+    "description": "Synthetic-only evidence retrieval and optional loopback inference. No live clinical deployment or persistent KV restoration. Scope fixed by offline grants."
   },
   "paths": {
     "/v1/memory/capabilities": {
@@ -1663,7 +1663,7 @@
     },
     "/v1/inference/respond": {
       "post": {
-        "operationId": "unsupportedInference",
+        "operationId": "respond",
         "security": [
           {
             "bearerAuth": []
@@ -1676,6 +1676,470 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnsupportedInference"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "411": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Untrusted synthetic synthesis or abstention; always requires review",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InferenceResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "clinic_id",
+                      "patient_id"
+                    ],
+                    "properties": {
+                      "clinic_id": {
+                        "type": "string",
+                        "pattern": "^synthetic-"
+                      },
+                      "patient_id": {
+                        "type": "string",
+                        "pattern": "^synthetic-"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "clinic_id",
+                      "patient_id",
+                      "query",
+                      "limit"
+                    ],
+                    "properties": {
+                      "clinic_id": {
+                        "type": "string",
+                        "pattern": "^synthetic-"
+                      },
+                      "patient_id": {
+                        "type": "string",
+                        "pattern": "^synthetic-"
+                      },
+                      "query": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      "limit": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 20
+                      }
+                    }
+                  }
+                ],
+                "description": "Configured inference requires query and limit. Clinic/patient-only shape is retained for the default unconfigured 501 response."
+              }
+            }
+          }
+        },
+        "description": "Optional host-configured local-model synthesis using approved synthetic evidence. Absent adapter returns 501; no KV restoration."
+      }
+    },
+    "/v1/memory/scopes/revoke": {
+      "post": {
+        "operationId": "revokeScope",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Durable exact-scope lifecycle action; revocation tombstone retained",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScopeRevocationResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "411": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitised error; no token, payload or traceback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "clinic_id",
+                  "patient_id"
+                ],
+                "properties": {
+                  "clinic_id": {
+                    "type": "string",
+                    "pattern": "^synthetic-"
+                  },
+                  "patient_id": {
+                    "type": "string",
+                    "pattern": "^synthetic-"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/memory/scopes/current": {
+      "delete": {
+        "operationId": "deleteScope",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Durable exact-scope lifecycle action; revocation tombstone retained",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScopeDeletionResult"
                 }
               }
             }
@@ -2026,7 +2490,7 @@
             "const": true
           },
           "inference": {
-            "const": false
+            "type": "boolean"
           },
           "review_required": {
             "const": true
@@ -2149,6 +2613,205 @@
           },
           "synthetic_only": {
             "const": true
+          }
+        }
+      },
+      "InferenceResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "output",
+          "status",
+          "records",
+          "source_digest",
+          "model",
+          "usage",
+          "kv_status",
+          "persistent_kv_restored",
+          "review_required",
+          "synthetic_only"
+        ],
+        "properties": {
+          "output": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "abstained",
+              "generated_requires_review"
+            ]
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "memory_id",
+                "tenant_id",
+                "agent_id",
+                "context",
+                "kind",
+                "content",
+                "source_id",
+                "source_sha256",
+                "status",
+                "evaluator_id",
+                "outcome_score",
+                "created_at",
+                "valid_until",
+                "supersedes_id"
+              ],
+              "properties": {
+                "memory_id": {
+                  "type": "string"
+                },
+                "tenant_id": {
+                  "type": "string"
+                },
+                "agent_id": {
+                  "type": "string"
+                },
+                "context": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "source_id": {
+                  "type": "string"
+                },
+                "source_sha256": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "evaluator_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "outcome_score": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "created_at": {
+                  "type": "integer"
+                },
+                "valid_until": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "supersedes_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "source_digest": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "usage": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "prompt_tokens": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000000
+              },
+              "completion_tokens": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000000
+              },
+              "total_tokens": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000000
+              }
+            }
+          },
+          "kv_status": {
+            "const": "prefill"
+          },
+          "persistent_kv_restored": {
+            "const": false
+          },
+          "review_required": {
+            "const": true
+          },
+          "synthetic_only": {
+            "const": true
+          }
+        }
+      },
+      "ScopeRevocationResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status",
+          "records_revoked",
+          "trace_id",
+          "cache_purge_confirmed"
+        ],
+        "properties": {
+          "status": {
+            "const": "scope_revoked"
+          },
+          "records_revoked": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "trace_id": {
+            "type": "string"
+          },
+          "cache_purge_confirmed": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ScopeDeletionResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status",
+          "records_deleted",
+          "trace_id",
+          "cache_purge_confirmed",
+          "backup_erasure_verified"
+        ],
+        "properties": {
+          "status": {
+            "const": "scope_deleted"
+          },
+          "records_deleted": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "trace_id": {
+            "type": "string"
+          },
+          "cache_purge_confirmed": {
+            "type": "boolean"
+          },
+          "backup_erasure_verified": {
+            "const": false
           }
         }
       }

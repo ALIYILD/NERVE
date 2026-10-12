@@ -1,0 +1,18 @@
+# Reference Prometheus rules only; not deployed. Export has no tenant labels.
+groups:
+  - name: nerve-memory-research
+    rules:
+      - alert: NerveMemoryInvalidationFailure
+        expr: increase(nerve_memory_invalidation_failures_total[5m]) > 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: Memory provider purge could not be confirmed
+      - alert: NerveMemoryRetrievalFailure
+        expr: increase(nerve_memory_retrieval_failures_total[5m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Optional retrieval backend is failing

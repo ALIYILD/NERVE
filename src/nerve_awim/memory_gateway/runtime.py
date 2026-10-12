@@ -13,6 +13,7 @@ from ..memory_v18 import MemoryAuthority, TrustedMemoryLedger
 from ..oidc_v27 import PinnedOIDCVerifier
 from .galahad_adapter import GalahadKVProvider
 from .gateway import MemoryGateway
+from .inference import LocalInferenceAdapter
 from .null_kv_adapter import NullKVProvider
 from .service import MemoryGrant, MemoryService, synthetic_scope
 from .session import BoundMemorySession
@@ -103,7 +104,8 @@ class MemoryRuntime:
 
 def build_runtime(config, *, base_dir, required_subject=None):
     """Trusted host factory. All config and grants validate before DB creation."""
-    _exact(config, _CONFIG_FIELDS)
+    if type(config) is not dict or set(config) not in (_CONFIG_FIELDS, _CONFIG_FIELDS | {'inference'}):
+        raise ValueError('exact configuration schema required')
     if type(config['version']) is not int or config['version'] != 1 or config['synthetic_only'] is not True:
         raise ValueError('version 1 synthetic-only runtime required')
     if config['provider'] not in ('null', 'galahad'):
@@ -142,6 +144,10 @@ def build_runtime(config, *, base_dir, required_subject=None):
         if not any(subject == required_subject and roles & {'reader', 'writer'}
                    for subject, _, _, _, roles in validated):
             raise ValueError('configured reader or writer subject required')
+    inference = None
+    if 'inference' in config:
+        _exact(config['inference'], {'base_url', 'model', 'max_output_tokens', 'timeout_seconds'})
+        inference = LocalInferenceAdapter(**config['inference'])
     # Everything above is read-only. Neither invalid late grants nor bad keys
     # may leave a new database or mutate an existing ledger.
     authority = MemoryAuthority()
@@ -157,7 +163,7 @@ def build_runtime(config, *, base_dir, required_subject=None):
     provider = NullKVProvider() if config['provider'] == 'null' else GalahadKVProvider()
     ledger = TrustedMemoryLedger(ledger_path, authority)
     gateway = MemoryGateway(ledger, provider=provider, max_records_per_scope=quota)
-    service = MemoryService(gateway, verifier=verifier, grants=host_grants)
+    service = MemoryService(gateway, verifier=verifier, grants=host_grants, inference=inference)
     sessions = {grant.subject: BoundMemorySession(gateway, grant.actor, grant.scope,
                 can_read='reader' in grant.roles, can_propose='writer' in grant.roles)
                 for grant in host_grants if grant.roles & {'reader', 'writer'}}

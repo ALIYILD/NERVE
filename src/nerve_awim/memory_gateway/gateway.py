@@ -17,6 +17,8 @@ from .contracts import MemoryMetrics, MemoryRequest, MemoryScope
 from .contracts import MemoryRetrievalResult
 from .null_kv_adapter import NullKVProvider
 from .lifecycle import install_quota, QUOTA_ERROR
+from .policy import DurableMemoryPolicy, REVOKED_ERROR
+from ..memory_v18 import _id
 
 
 class MemoryGateway:
@@ -29,15 +31,18 @@ class MemoryGateway:
         if self.retriever.ledger is not ledger:
             raise ValueError('retriever must use the authoritative ledger')
         install_quota(self.ledger.path, max_records_per_scope)
+        self.policy = DurableMemoryPolicy(self.ledger.path)
         self.provider = provider or NullKVProvider()
         self._lock = RLock()
         self._metrics = {}
 
-    def _require(self, actor, scope, permission):
+    def _require(self, actor, scope, permission, *, allow_revoked=False):
         self.ledger.authority.require(actor, permission)
         if type(scope) is not MemoryScope or (scope.tenant_id, scope.agent_id) != (
                 actor.tenant_id, actor.agent_id):
             raise PermissionError('scope denied')
+        if not allow_revoked and self.policy.is_revoked(scope):
+            raise PermissionError('scope has been revoked')
 
     def _count(self, scope, name, amount=1):
         # Bounded to prevent untrusted context strings growing telemetry forever.
@@ -118,12 +123,14 @@ class MemoryGateway:
                 return self.ledger.propose(actor, context=scope.context, content=content,
                     source_id=source_id, kind=kind, valid_until=valid_until, supersedes_id=supersedes_id)
             except sqlite3.IntegrityError as error:
+                if str(error) == REVOKED_ERROR:
+                    raise PermissionError('scope has been revoked') from None
                 if str(error) == QUOTA_ERROR:
                     raise ValueError('scope record quota reached') from None
                 raise
 
-    def _record_in_scope(self, actor, memory_id, scope):
-        self._require(actor, scope, 'read')
+    def _record_in_scope(self, actor, memory_id, scope, *, allow_revoked=False):
+        self._require(actor, scope, 'read', allow_revoked=allow_revoked)
         record = self.ledger.status(actor, memory_id)
         if record.context != scope.context:
             raise LookupError('memory not found in authorised scope')
@@ -136,6 +143,7 @@ class MemoryGateway:
             confirmed = False
         if not confirmed:
             self._count(scope, 'invalidation_failures')
+            self.policy.audit(scope, 'provider_invalidation_failed', 'partial')
         return confirmed
 
     def decide(self, actor, memory_id, *, scope, approve, evaluator_id, score=None):
@@ -152,16 +160,39 @@ class MemoryGateway:
         with self._lock:
             self._require(actor, scope, 'approve')
             self._record_in_scope(actor, memory_id, scope)
-            self.ledger.revoke(actor, memory_id, evaluator_id=evaluator_id)
+            _id(evaluator_id, 'evaluator')
+            self.policy.revoke_source(scope, memory_id, evaluator_id)
             return {'status': 'revoked', 'cache_purge_confirmed': self._invalidate(scope)}
 
     def delete(self, actor, memory_id, *, scope):
         with self._lock:
-            self._require(actor, scope, 'delete')
-            self._record_in_scope(actor, memory_id, scope)
-            self.ledger.forget(actor, memory_id)
+            self._require(actor, scope, 'delete', allow_revoked=True)
+            self._record_in_scope(actor, memory_id, scope, allow_revoked=True)
+            self.policy.delete(scope, memory_id)
             return {'status': 'deleted_from_local_ledger', 'cache_purge_confirmed': self._invalidate(scope),
                     'backup_erasure_verified': False}
+
+    def revoke_scope(self, actor, *, scope, evaluator_id):
+        """Host/admin operation: durable across processes and new capabilities."""
+        with self._lock:
+            self._require(actor, scope, 'approve', allow_revoked=True)
+            _id(evaluator_id, 'evaluator')
+            count, trace = self.policy.revoke(scope, evaluator_id)
+            return {'status': 'scope_revoked', 'records_revoked': count, 'trace_id': trace,
+                    'cache_purge_confirmed': self._invalidate(scope)}
+
+    def delete_scope(self, actor, *, scope):
+        """Delete local evidence/utility rows and retain a deny tombstone."""
+        with self._lock:
+            self._require(actor, scope, 'delete', allow_revoked=True)
+            count, trace = self.policy.delete(scope)
+            return {'status': 'scope_deleted', 'records_deleted': count, 'trace_id': trace,
+                    'cache_purge_confirmed': self._invalidate(scope), 'backup_erasure_verified': False}
+
+    def audit_events(self, actor, *, scope, limit=50):
+        with self._lock:
+            self._require(actor, scope, 'delete', allow_revoked=True)
+            return self.policy.events(scope, limit)
 
     def revoke_actor(self, actor):
         """Trusted host only. Capability revocation does not claim cache erasure."""

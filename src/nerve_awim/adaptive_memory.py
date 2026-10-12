@@ -27,6 +27,12 @@ class OutcomeMemoryRanker:
                 episode TEXT, payload_hash TEXT, memory TEXT, revision TEXT,
                 status TEXT, success INTEGER,
                 UNIQUE(tenant,agent,episode), UNIQUE(tenant,agent,payload_hash))''')
+            # Gateway-owned ledgers preserve utility cleanup even when this
+            # optional ranker is created after the gateway. Legacy-only stores
+            # retain their existing schema/behaviour.
+            if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='memory_scope_revocations_v1'").fetchone():
+                from .memory_gateway.policy import install_utility_cleanup
+                install_utility_cleanup(con)
 
     @staticmethod
     def _active(record, now):

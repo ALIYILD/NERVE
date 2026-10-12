@@ -1,13 +1,43 @@
 # Synthetic operations runbook
 
-Use Python 3.10+ locally; repository CI uses 3.12 and PyJWT[crypto]. Keep Galahad optional. Run commands from repository root with PYTHONPATH=src as shown in the final report. All fixture stores/keys are temporary; never supply real patient records.
+Use Python 3.10+ locally; repository CI uses 3.12 and PyJWT[crypto]. Keep Galahad optional. Use only synthetic fixtures; no real patient records or production databases. Reference alert rules and exported metrics are supplied as local artifacts, not a deployed monitoring service.
 
-CPU: python3 scripts/verify_galahad.py cpu. Security: same script security. Fault fixtures: same script faults. API: same script api. Full regression: same script baseline. A loopback HTTP fixture requires permission to bind locally. Readiness: same script readiness exits 2 while deployment gates are blocked. Galahad preflight exits 2 for unsupported/unverified environments and never activates a licence.
+## Verification and evidence-based readiness
 
-Fault coverage: database corruption, source checksum mismatch, ranking unavailable, provider health failure, provider invalidation failure, expired/revoked capabilities, missing stores, stale records and wrong context. Ledger reopen and killing an uncommitted SQLite writer are tested; rollback preserves quota capacity. This is semantic-ledger recovery, not kill/restart KV restoration. Real key mismatch, GPU connector crash, full NVMe, eviction, durable encrypted cache restart and physical erasure require supported runtime infrastructure and remain blocked.
+The existing `scripts/verify_galahad.py` runs fixed test groups. `scripts/memory_operations.py` wraps those actual commands and records strict, bounded, atomic JSON manifests containing counts, success, time, Git revision and a SHA256 fingerprint of source/scripts/tests/deployment/workflow files. The fingerprint catches uncommitted changes. Raw subprocess output, source text, credentials and local paths are not written to manifests. Each subprocess is bounded to 300 seconds. Run from repository root:
 
-SQLite scope quotas now constrain concurrent processes sharing an opted-in ledger; mismatched quota configuration fails on restart. Multi-process rate limiting, durable grant revocation, crash recovery and backups remain unvalidated for production. A TLS reverse proxy must enforce upload/read deadlines, bounded headers/body, connection limits and safe access logging; the WSGI lock covers only rate accounting, and concurrent workers are needed so one blocked upload does not occupy the only worker. Token expiry and capability are rechecked after body reads. Never expose it directly on the Internet. Client allows HTTPS, or explicitly opted-in loopback HTTP for tests, and refuses redirects carrying credentials.
+```sh
+PYTHONPATH=src python3 scripts/memory_operations.py verify --gate cpu --output /tmp/nerve-cpu.json
+PYTHONPATH=src python3 scripts/memory_operations.py verify --gate security --output /tmp/nerve-security.json
+PYTHONPATH=src python3 scripts/memory_operations.py verify --gate api --output /tmp/nerve-api.json
+PYTHONPATH=src python3 scripts/memory_operations.py faults --output /tmp/nerve-faults.json
+PYTHONPATH=src python3 scripts/memory_operations.py readiness --evidence /tmp/nerve-cpu.json /tmp/nerve-security.json /tmp/nerve-api.json /tmp/nerve-faults.json
+```
 
-Metrics contain counters only. Alert integration/dashboard provisioning is not deployed. Investigate rising retrieval_failures or invalidation_failures, or health.status=unavailable; disable any experimental provider and retain ordinary approved text prefill. Failed purge is unresolved until independently verified; do not report erasure. Restoring a ledger backup can resurrect records; durable tombstones and consent reconciliation are required before any production backup design.
+Run after source changes stop. Loopback HTTP tests may require an approved unsandboxed run. Readiness passes the **CPU research gate only** when all four gate manifests pass, are complete, match the current revision and source fingerprint, and are no more than 24 hours old. Missing, duplicate, failed, stale, future-dated or changed-source evidence cannot produce readiness. Return code 0 means CPU research evidence is ready; 2 means not ready. GPU restoration, licensing, shadow/canary deployment and clinical governance remain separate unmet gates. The previous static readiness command is not evidence of passing these gates.
 
-Rollback: stop the synthetic service and omit the new package. Existing modules/configurations were not changed. No migration, deployment or model activation must be reverted.
+Manifests are trusted local operator evidence, not signed attestations. A malicious host can fabricate files or alter the verifier; source custody and review remain necessary. Atomic writes use a same-directory temporary file, fsync and replacement, mode 0600. This provides local write integrity and does not claim encryption, durable backup or tamper-resistant audit retention.
+
+## Fault and lifecycle checks
+
+The executable fault command creates only temporary SQLite stores. It checks gateway reopen with approved data, durable scope quota rejection, failed provider invalidation followed by successful exclusion of revoked evidence, missing database health without silently recreating it, and corrupt-database denial. These are real CPU SQLite operations and an explicitly simulated unavailable KV provider. It is not a GPU restore, encryption-key, disk-full or connector-crash test.
+
+Existing gateway tests additionally cover checksum mismatch, unavailable ranking, capability revocation, wrong context and stale records. Existing lifecycle tests exercise interrupted uncommitted writers and quota recovery. Real encrypted KV restart, full NVMe, key mismatch, eviction and physical erasure require independently supported runtime infrastructure. Never call semantic-ledger restart proof of durable KV restoration.
+
+Scope quotas constrain concurrent processes sharing the gateway-owned database; incompatible persisted quota settings fail on reopen. A TLS reverse proxy must enforce upload/read deadlines, header/body bounds, connection limits and sanitised access logging. The WSGI server remains synthetic-only, and concurrent worker capacity is necessary to avoid one stalled upload occupying the only worker. Do not expose the research process directly on the Internet.
+
+## Metrics and alerts
+
+The gateway already owns counters; `observability.prometheus_metrics` exports only its exact typed nonnegative counters as label-free Prometheus text. No second counter store is created. Obtain counters through the authorised scoped gateway/service, then use:
+
+```sh
+PYTHONPATH=src python3 scripts/memory_operations.py metrics --counters /tmp/authorised-counters.json
+```
+
+Unknown fields, booleans, negative or unbounded values are rejected. Exported text contains no plaintext tenant, patient, source, query, credential or scope labels. Aggregation and access control belong to the trusted host. Counters reset with the current gateway process; do not interpret them as durable audit history.
+
+`deploy/memory-alerts.yml` is an undeployed Prometheus rule reference for invalidation and retrieval failures. No dashboard or alert receiver is provisioned. Investigate rising failures; preserve authorised approved-text fallback. Failed purge remains unconfirmed until independently verified and must never be described as erasure.
+
+The lifecycle integration can call `build_audit_event(event,status)` for allowlisted metadata with a random UUID4 trace identifier and timestamp. Export contains no scope, payload, record ID or credential. The coordinator's durable policy store owns persistence and authorisation; the helper itself does not persist, encrypt or authenticate events. Host-created UUID correlation is not caller identity. Source/scope deletion audit and backup erasure remain different properties.
+
+Rollback: stop the optional synthetic memory host and omit its configuration. Preserve the existing NERVE safety gates. Reverting a backup can resurrect source rows or authorisations; reconcile current durable revocations and externally governed retention before reuse. No automatic production rollback, model deployment or clinical promotion occurs.

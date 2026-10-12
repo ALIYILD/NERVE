@@ -12,12 +12,14 @@ GROUPS = {
     'cpu': ('test_memory_gateway.py', 'test_galahad_provider.py',
             'test_memory_gateway_evaluation.py', 'test_memory_service.py',
             'test_memory_lifecycle.py', 'test_memory_holdout.py', 'test_memory_runtime.py',
-            'test_memory_agent_wiring.py', 'test_memory_gateway_mcp.py'),
+            'test_memory_agent_wiring.py', 'test_memory_gateway_mcp.py', 'test_memory_policy.py',
+                 'test_memory_inference.py', 'test_memory_operations.py', 'test_galahad_gpu_smoke.py'),
     'security': ('test_memory_gateway.py', 'test_memory_service.py', 'test_galahad_provider.py',
                  'test_memory_lifecycle.py', 'test_memory_holdout.py', 'test_memory_runtime.py',
-                 'test_memory_agent_wiring.py', 'test_memory_gateway_mcp.py'),
-    'faults': ('test_memory_gateway.py', 'test_galahad_provider.py', 'test_memory_lifecycle.py'),
-    'api': ('test_memory_service.py', 'test_memory_runtime.py'),
+                 'test_memory_agent_wiring.py', 'test_memory_gateway_mcp.py', 'test_memory_policy.py',
+                 'test_memory_inference.py', 'test_memory_operations.py', 'test_galahad_gpu_smoke.py'),
+    'faults': ('test_memory_gateway.py', 'test_galahad_provider.py', 'test_memory_lifecycle.py', 'test_memory_policy.py', 'test_memory_operations.py'),
+    'api': ('test_memory_service.py', 'test_memory_runtime.py', 'test_memory_inference.py'),
     'baseline': ('test*.py',),
 }
 
@@ -25,12 +27,13 @@ GROUPS = {
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('gate', choices=tuple(GROUPS) + ('readiness',))
+    parser.add_argument('--evidence', nargs='*', default=[])
     args = parser.parse_args()
     if args.gate == 'readiness':
-        print(json.dumps({'clinical_deployment': 'blocked', 'gpu_restore': 'blocked',
-            'commercial_licence': 'unverified', 'cpu_tests': 'run cpu gate for current evidence',
-            'shadow_deployment': 'not_deployed', 'canary': 'not_authorised'}, indent=2))
-        return 2
+        env = dict(os.environ, PYTHONPATH=str(ROOT / 'src'))
+        return subprocess.run([sys.executable, str(ROOT / 'scripts/memory_operations.py'),
+                               'readiness', '--evidence', *args.evidence],
+                              cwd=ROOT, env=env, timeout=30).returncode
     env = dict(os.environ, PYTHONPATH=str(ROOT / 'src'))
     failed = False
     for pattern in GROUPS[args.gate]:
