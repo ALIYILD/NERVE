@@ -177,7 +177,8 @@ def status(host):
                 if type(stored.get('result')) is dict:
                     summary['outcome']['result'] = {key: stored['result'][key] for key in
                         ('state','reason','candidate','attempted_calls','known_cost_usd','dataset_digest',
-                         'selection_digest','regression_digest','holdout_digest','memory_id','activated')
+                         'selection_digest','regression_digest','holdout_digest','memory_id','activated',
+                         'learning_context_digest','learning_context_candidates')
                         if key in stored['result']}
             result['jobs'].append(summary)
     return result
@@ -274,7 +275,8 @@ def tick(host, adapters=None):
                 'discovery_cost_cap_usd', 'per_call_cost_cap_usd', 'permission_granted')},
             **{name: adapter[name] for name in ('discovery_execute', 'provider', 'judge')})
         keys = ('state', 'reason', 'candidate', 'attempted_calls', 'known_cost_usd', 'dataset_digest',
-                'selection_digest', 'regression_digest', 'holdout_digest', 'memory_id', 'activated')
+                'selection_digest', 'regression_digest', 'holdout_digest', 'memory_id', 'activated',
+                'learning_context_digest', 'learning_context_candidates')
         safe = {key: result[key] for key in keys if key in result}
         state = 'failed' if result['state'] == 'blocked' else 'completed'
         outcome = {'status': state, 'job_id': spec['job_id'], 'result': safe, 'activation_authorized': False}

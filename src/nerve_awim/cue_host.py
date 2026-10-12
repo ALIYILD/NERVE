@@ -136,7 +136,7 @@ class CueHost:
         model_profile = self._enabled_profile(profile)
         if permission_granted is not True:
             raise PermissionError('explicit research dispatch permission required')
-        reserved = {'coordinator', 'trainer', 'evaluator', 'profile', 'task_type'}
+        reserved = {'coordinator', 'trainer', 'evaluator', 'profile', 'task_type', 'learning_context'}
         if reserved.intersection(parameters):
             raise ValueError('host owns scope, profile and task classification')
         coordinator = self._coordinator(profile)
@@ -215,8 +215,27 @@ class CueHost:
         """Collect pending proposals through the existing Hermes host callback."""
         from .cue_discovery import discover_cue_pool
         model = self._enabled_profile(profile)
+        if permission_granted is not True:
+            raise PermissionError('explicit discovery permission required')
+        if 'learning_context' in budgets:
+            raise ValueError('host owns scoped evaluator feedback context')
+        # Preserve collection-only discovery on hosts with no feedback. This
+        # read-only presence check never bootstraps governance or copies text.
+        has_feedback = False
+        with sqlite3.connect(self.host.path.resolve().as_uri() + '?mode=ro', uri=True) as con:
+            tables = {row[0] for row in con.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+            if {'cce_feedback', 'cce_candidates'}.issubset(tables):
+                has_feedback = con.execute(
+                    'SELECT 1 FROM cce_feedback f JOIN cce_candidates c ON f.candidate=c.id '
+                    'WHERE c.tenant=? AND c.agent=? AND c.contract=? AND c.task_type=? LIMIT 1',
+                    (TENANT, profile, CONTRACT, 'handoff')).fetchone() is not None
+        context = None
+        if has_feedback:
+            coordinator = self._coordinator(profile)
+            context = coordinator.learning_context(self._actor(profile, 'trainer'), model, 'handoff')
         result = discover_cue_pool(execute, manifest, model, 'handoff', tenant=TENANT,
-            agent=profile, generator_id=generator_id, permission_granted=permission_granted, **budgets)
+            agent=profile, generator_id=generator_id, permission_granted=permission_granted,
+            learning_context=context, **budgets)
         atomic_json(self.host.directory / 'cce-last-discovery.json', result.telemetry())
         return result
 

@@ -92,6 +92,15 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
     if not all(callable(f) for f in (discovery_execute, provider, judge, experiment_clock)):
         raise ValueError('trusted host adapters required')
 
+    # Snapshot only scoped evaluator feedback before reserving fresh evidence.
+    # No arbitrary memory, episode IDs or historical test scores enter discovery.
+    from .cue_feedback import validate_learning_context, learning_context_digest
+    learning_context = validate_learning_context(
+        coordinator.learning_context(trainer, profile, task_type),
+        profile_key=profile.key, task_type=task_type)
+    history_count = len(learning_context['candidates'])
+    history_digest = learning_context_digest(learning_context) if history_count else None
+
     # Atomic reservation occurs before the first remote dispatch. It is never
     # recycled after absent candidates, synthetic evidence or callback failures.
     reservation = (coordinator.reserve_dataset(trainer, dataset) if dataset is not None
@@ -109,6 +118,9 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
                    'attempted_calls': calls, 'known_cost_usd': cost,
                    'selection_digest': selection_digest, 'holdout_digest': holdout_digest,
                    'activated': False}
+        if history_count:
+            summary['learning_context_digest'] = history_digest
+            summary['learning_context_candidates'] = history_count
         if manifest.regression:
             summary['regression_digest'] = regression_digest
         if dataset is not None:
@@ -142,7 +154,8 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
         return receipt
 
     try:
-        proposals = discover_candidates(discover, manifest, tenant=scope[0], agent=scope[1], max_candidates=1)
+        proposals = discover_candidates(discover, manifest, tenant=scope[0], agent=scope[1],
+            max_candidates=1, learning_context=learning_context)
     except Exception:
         return finish('blocked', 'discovery_failed_or_unknown_cost')
     if not proposals:

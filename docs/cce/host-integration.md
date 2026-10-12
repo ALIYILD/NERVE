@@ -211,3 +211,40 @@ Queued CCE work takes priority over ordinary audit research. A waiting CCE job
 suppresses unrelated audit dispatch for that tick; cancel the pending job to
 resume audit work. The queue accepts at most 32 pending/running jobs and reports
 the latest 64 jobs. Its nested dataset remains subject to the 4 MiB dataset cap.
+
+## Evaluator feedback informs later discovery
+
+The coordinator can supply prior cue outcomes to the existing discovery callback
+as bounded historical data. It joins candidate feedback under the exact tenant,
+agent, contract, model profile and task type. Only approved or revoked candidates
+with feedback qualify; cue text is revalidated with the existing safety filter.
+The snapshot includes safe cue text and its content hash, candidate state, and
+aggregate outcome counts. It excludes candidate/episode IDs, task text, answers,
+selection/holdout/regression metrics and approval credentials. At most eight
+candidates and 64 observations per candidate fit within an 8 KiB snapshot.
+
+Its source is explicitly `trusted_evaluator_feedback`. Existing feedback records
+do not prove that a cue was applied operationally: they lack a durable binding to
+a worker application receipt, and feedback can revoke an unapproved candidate.
+This history therefore carries neither an operational-application assertion nor
+causal evidence. A high success count does not establish that the cue helped.
+
+The host freezes history internally before discovery. Agent/job JSON cannot
+supply a replacement history or use it to authorize activation. The discovery
+callback receives it as untrusted historical data, never as instructions to
+execute. The cycle audit records only its digest and aggregate metadata, not cue
+text. Empty history preserves the original discovery request payload. No separate
+CLI exposes historical cue text.
+
+This closes an input path from trusted evaluator feedback to new proposals; it
+does not prove improved reasoning. Every proposal still needs fresh frozen
+selection, regression and holdout evaluation followed by operator approval. A
+revoked cue is historical data, never reinstated by memory or discovery.
+
+Historical `cue_digest` is SHA256 of the exact UTF-8 cue text, not the
+metadata-bound `Cue.content_hash` used by experiment receipts. Duplicate text
+keeps only the most recent eligible candidate's latest 64 observations; counts
+are not pooled across versions. The snapshot digest binds the frozen in-memory
+discovery invocation. No full snapshot is retained for later reconstruction.
+Cue safety validation is a bounded instruction filter, not a privacy classifier;
+hosts must keep sensitive data out of historical cue text.
