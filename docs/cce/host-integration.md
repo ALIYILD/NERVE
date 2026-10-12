@@ -18,6 +18,7 @@ python3 scripts/agentos_bridge.py cce-profile --profile qa-release
 python3 scripts/agentos_bridge.py cce-demo --state /tmp/nerve-cce-demo-state
 python3 scripts/agentos_bridge.py cce-inspect --profile qa-release --cue-candidate CANDIDATE_ID
 python3 scripts/agentos_bridge.py cce-route --profile qa-release
+python3 scripts/agentos_bridge.py cce-dataset-status --profile qa-release
 python3 scripts/agentos_bridge.py cce-readiness --profile qa-release --cue-candidate CANDIDATE_ID
 python3 scripts/agentos_bridge.py cce-approve --profile qa-release --cue-candidate CANDIDATE_ID --cue-generation 0 --cue-review REVIEW_ID --cue-valid-for 86400
 python3 scripts/agentos_bridge.py cce-revoke --profile qa-release --cue-candidate CANDIDATE_ID --cue-review REVIEW_ID
@@ -63,6 +64,12 @@ A cycle requires at least 30 holdout tasks before reservation or spending and
 stops at rejection or pending operator approval. No live billing adapter is
 installed for the currently unpinned OpenRouter worker, and no automatic scheduler
 dispatch or activation is added.
+
+Use `CueHost.run_dataset_cycle(...)` for content-bound research. Its first durable
+dataset reservation upgrades the scope, prevents ID-only downgrade and stops
+legacy candidates from being served or newly approved. Fresh dataset-bound
+evidence is then required. See [reservation and migration rules](local-research.md#durable-research-reservations).
+`cce-dataset-status` reports scoped counts without bootstrapping the cue engine.
 
 ## Configuration and approval
 

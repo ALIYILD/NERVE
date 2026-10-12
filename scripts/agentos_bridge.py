@@ -429,7 +429,7 @@ def main():
         'adaptation-run','adaptation-demo','adaptation-status','adaptation-reset','adaptation-kill',
         'research-fast-memory-train','research-fast-memory-evaluate',
         'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile',
-        'cce-local-inspect','cce-local-smoke'))
+        'cce-local-inspect','cce-local-smoke','cce-dataset-status'))
     parser.add_argument('--repository',type=Path,help='Authorized local repository for read-only adaptation')
     parser.add_argument('--candidate')
     parser.add_argument('--config',type=Path)
@@ -517,6 +517,10 @@ def main():
                 if not args.profile:
                     parser.error('CCE route inspection requires --profile')
                 result=cues.route_status(args.profile)
+            elif args.command=='cce-dataset-status':
+                if not args.profile:
+                    parser.error('CCE dataset status requires --profile')
+                result=cues.dataset_status(args.profile)
             else:
                 if not args.profile or not args.cue_candidate:
                     parser.error('CCE candidate commands require --profile and --cue-candidate')

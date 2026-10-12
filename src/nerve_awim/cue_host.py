@@ -148,6 +148,39 @@ class CueHost:
         atomic_json(self.host.directory / 'cce-last-cycle.json', result)
         return result
 
+    def run_dataset_cycle(self, profile, dataset, *, permission_granted=False, **parameters):
+        """Bind all partitions and durable content protection to the host cycle."""
+        from .cue_dataset import validate_dataset
+        dataset = validate_dataset(dataset)
+        if {'manifest', 'selection_tasks', 'holdout_tasks'}.intersection(parameters):
+            raise ValueError('dataset owns manifest and evaluation tasks')
+        return self.run_cycle(profile, permission_granted=permission_granted,
+            dataset=dataset, manifest=dataset.manifest,
+            selection_tasks=dataset.selection_tasks, holdout_tasks=dataset.holdout_tasks,
+            **parameters)
+
+    def dataset_status(self, profile):
+        """Provider-free inspection without bootstrapping or exposing task data."""
+        _id(profile)
+        result = {'profile': profile, 'protection': 'legacy_ids', 'dataset_studies': 0,
+                  'content_fingerprints': 0, 'family_fingerprints': 0,
+                  'scope': 'tenant/agent across contract revisions',
+                  'legacy_content_backfilled': False}
+        with sqlite3.connect(self.host.path) as con:
+            tables = {r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+            if 'cce_dataset_studies' in tables:
+                result['dataset_studies'] = con.execute(
+                    'SELECT COUNT(*) FROM cce_dataset_studies WHERE tenant=? AND agent=?',
+                    (TENANT, profile)).fetchone()[0]
+            if result['dataset_studies']:
+                result['protection'] = 'content_and_family'
+            if 'cce_dataset_fingerprints' in tables:
+                for kind, count in con.execute('SELECT kind,COUNT(*) FROM cce_dataset_fingerprints WHERE tenant=? AND agent=? GROUP BY kind',
+                                               (TENANT, profile)):
+                    if kind in ('content', 'family'):
+                        result[kind + '_fingerprints'] = count
+        return result
+
     def approve(self, profile, candidate, *, expected_generation, reason, valid_for=86400):
         """Local operator command, independent of discovery/evaluation callbacks."""
         model = self._enabled_profile(profile)

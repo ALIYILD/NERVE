@@ -181,3 +181,71 @@ def load_dataset(path, *, max_bytes=MAX_DATASET_BYTES, max_tasks=MAX_DATASET_TAS
             raise ValueError('dataset exceeds byte cap')
         raw = handle.read(max_bytes + 1)
     return parse_dataset_json(raw, max_bytes=max_bytes, max_tasks=max_tasks)
+
+
+def validate_dataset(dataset):
+    """Revalidate a supplied frozen object before durable study reservations.
+
+    A dataclass constructor or ``dataclasses.replace`` is not an attestation.
+    Rebuild the strict source schema from actual task/family content, reparse it,
+    then require matching digest, manifest, ordering and every frozen field.
+    Return the freshly validated object. No expected answers leave this function.
+    """
+    if type(dataset) is not FrozenCueDataset or type(dataset.manifest) is not DatasetManifest:
+        raise ValueError('exact frozen dataset and manifest records required')
+    if type(dataset.digest) is not str or not re.fullmatch(r'[a-f0-9]{64}', dataset.digest):
+        raise ValueError('canonical dataset digest required')
+    _identifier(dataset.dataset_id)
+    _text(dataset.source_uri, limit=2048)
+    _text(dataset.source_revision, limit=256)
+    if type(dataset.families) is not tuple or not 3 <= len(dataset.families) <= MAX_DATASET_TASKS:
+        raise ValueError('bounded immutable task family records required')
+    family_by_task = {}
+    content_bytes = len(dataset.dataset_id.encode()) + len(dataset.source_uri.encode()) + len(dataset.source_revision.encode())
+    for entry in dataset.families:
+        if type(entry) is not tuple or len(entry) != 3:
+            raise ValueError('exact task, family, split tuple required')
+        task_id, family_id, split = entry
+        _identifier(task_id); _identifier(family_id)
+        if type(split) is not str or split not in _SPLITS or task_id in family_by_task:
+            raise ValueError('duplicate or invalid task family mapping')
+        family_by_task[task_id] = (family_id, split)
+        content_bytes += len(task_id.encode()) + len(family_id.encode()) + len(split.encode())
+        if content_bytes > MAX_DATASET_BYTES:
+            raise ValueError('dataset exceeds byte cap')
+    reconstructed = {}
+    count = 0
+    for split in _SPLITS:
+        tasks = getattr(dataset, split + '_tasks')
+        manifest_ids = getattr(dataset.manifest, split)
+        if type(tasks) is not tuple or not tasks or type(manifest_ids) is not tuple:
+            raise ValueError('immutable nonempty dataset partitions required')
+        count += len(tasks)
+        if count > MAX_DATASET_TASKS:
+            raise ValueError('dataset exceeds task cap')
+        records = []
+        for task in tasks:
+            if type(task) is not ExperimentTask:
+                raise ValueError('exact experiment task records required')
+            _identifier(task.task_id)
+            _text(task.instruction, limit=65536)
+            _text(task.expected, limit=65536)
+            membership = family_by_task.get(task.task_id)
+            if membership is None or membership[1] != split:
+                raise ValueError('missing or mismatched task family mapping')
+            content_bytes += len(task.instruction.encode()) + len(task.expected.encode())
+            if content_bytes > MAX_DATASET_BYTES:
+                raise ValueError('dataset exceeds byte cap')
+            records.append({'task_id': task.task_id, 'family_id': membership[0],
+                            'instruction': task.instruction, 'expected': task.expected})
+        reconstructed[split] = records
+    if count != len(family_by_task):
+        raise ValueError('extra or missing task family mappings')
+    schema = {'schema_version': 1, 'dataset_id': dataset.dataset_id,
+              'source': {'uri': dataset.source_uri, 'revision': dataset.source_revision},
+              'splits': reconstructed}
+    checked = parse_dataset_json(json.dumps(schema, sort_keys=True, separators=(',', ':'),
+                                           ensure_ascii=False, allow_nan=False))
+    if checked != dataset:
+        raise ValueError('dataset digest, manifest, order or content differs from canonical data')
+    return checked
