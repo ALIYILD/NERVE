@@ -143,12 +143,23 @@ The public repository currently includes a minimal core, the v1.2 delayed-observ
 
 `Sensors → Perception → WorldCore → NERVE Decision Layer → Safe Action → Feedback → Evaluated Memory/Model Updates`
 
-## Run the test suite
+## Install
 
-With Python 3.10+ and the source tree available:
+From a clone of this repository:
 
 ```bash
-PYTHONPATH=src python -m unittest discover -s tests -q
+pip install -e .
+pip install -e ".[auth,mcp]"
+```
+
+The base install is stdlib-only. The `auth` and `mcp` extras match the optional dependency pins already used in this repository. Configure any required LLM/API key environment variables in your local environment; do not commit secrets.
+
+## Run the test suite
+
+With Python 3.12+ and an editable install (or `PYTHONPATH=src` for a source checkout):
+
+```bash
+python -m unittest discover -s tests -q
 ```
 
 The standalone v1.2 archive was checked locally with **92 tests passed**. The public repository has a smaller test suite; see GitHub Actions for its actual status. These results are not external validation.
