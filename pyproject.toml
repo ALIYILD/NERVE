@@ -16,7 +16,10 @@ auth = ["PyJWT[crypto]>=2.10,<3"]
 mcp = ["mcp==2.3.0"]
 
 [tool.setuptools.packages.find]
-where = ["src"]
+# nerve_awim.autoresearch_v03/v08 import the top-level benchmarks package, so
+# ship it with the wheel instead of relying on the source checkout.
+where = ["src", "."]
+include = ["nerve_awim*", "benchmarks*"]
 
 [tool.setuptools.dynamic]
 version = { attr = "nerve_awim.__version__" }
