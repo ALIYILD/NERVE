@@ -16,7 +16,7 @@ from .session import BoundMemorySession
 
 class VerifiedOutcomeLearning:
     def __init__(self, gateway, reviewer, scope, evaluator, evaluator_revision, window=3,
-                 max_observations=10000):
+                 max_observations=10000, tie_break="relevance"):
         if type(gateway) is not MemoryGateway or type(gateway.retriever) is not SecureMemoryRetriever:
             raise TypeError('authoritative gateway and secure retriever required')
         if not callable(evaluator):
@@ -40,7 +40,7 @@ class VerifiedOutcomeLearning:
             if gateway.retriever.utility is not None:
                 raise ValueError('existing utility evaluator cannot be overwritten')
             self.ranker = OutcomeMemoryRanker(gateway.ledger, evaluator=judge,
-                evaluator_revision=evaluator_revision, window=window)
+                evaluator_revision=evaluator_revision, window=window, tie_break=tie_break)
             with sqlite3.connect(gateway.ledger.path) as con:
                 con.execute('''CREATE TABLE IF NOT EXISTS memory_learning_limits_v1 (
                     tenant TEXT, agent TEXT, maximum INTEGER NOT NULL,

@@ -13,12 +13,15 @@ from .memory_v18 import _id
 
 
 class OutcomeMemoryRanker:
-    def __init__(self, ledger, *, evaluator, evaluator_revision, window=20):
+    def __init__(self, ledger, *, evaluator, evaluator_revision, window=20, tie_break="relevance"):
         if not callable(evaluator):
             raise TypeError('trusted host evaluator required')
         _id(evaluator_revision, 'evaluator revision')
         if type(window) is not int or not 3 <= window <= 100:
             raise ValueError('window must be between 3 and 100')
+        if type(tie_break) is not str or tie_break not in ('relevance', 'least_recent'):
+            raise ValueError('registered tie-breaking policy required')
+        self.tie_break = tie_break
         self.ledger, self.evaluator = ledger, evaluator
         self.revision, self.window = evaluator_revision, window
         with sqlite3.connect(ledger.path) as con:
@@ -85,6 +88,7 @@ class OutcomeMemoryRanker:
 
         Recent-window Beta(1,1) means are heuristic preferences, not calibrated
         confidence or evidence that this memory causally improved performance.
+        Default ties preserve relevance; least_recent is opt-in exact-tie exploration.
         Unseen memories have neutral score 0.5; relevance order breaks ties.
         """
         self.ledger.authority.require(actor, 'read')
@@ -105,10 +109,15 @@ class OutcomeMemoryRanker:
                     continue
                 if not self._active(current, now):
                     continue
-                rows = con.execute('''SELECT success FROM memory_utility
+                rows = con.execute('''SELECT success,sequence FROM memory_utility
                     WHERE tenant=? AND agent=? AND memory=? AND revision=? AND status='judged'
                     ORDER BY sequence DESC LIMIT ?''',
                     (actor.tenant_id, actor.agent_id, current.memory_id, self.revision, self.window)).fetchall()
                 utility = (1 + sum(row[0] for row in rows)) / (2 + len(rows))
-                ranked.append((-utility, index, current))
-        return [row[2] for row in sorted(ranked, key=lambda row: row[:2])]
+                # Equal recent utility can otherwise trap the policy on the
+                # same repeatedly failing memory. Opt-in bounded exploration
+                # tries the least recently judged candidate only on exact ties.
+                recent = rows[0][1] if rows else -1
+                tie = recent if self.tie_break == 'least_recent' else index
+                ranked.append((-utility, tie, index, current))
+        return [row[3] for row in sorted(ranked, key=lambda row: row[:3])]

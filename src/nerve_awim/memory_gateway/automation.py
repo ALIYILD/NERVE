@@ -30,7 +30,8 @@ class AutomaticLearningRun:
         scope = learning.scope
         self.key = (scope.tenant_id, scope.agent_id, run_id)
         self.config = json.dumps({'context': scope.context, 'revision': learning.ranker.revision,
-            'window': learning.ranker.window, 'max_episodes': max_episodes,
+            'window': learning.ranker.window, 'tie_break': learning.ranker.tie_break,
+            'max_episodes': max_episodes,
             'max_failures': max_failures,
             'agent_database_hash': sha256(str(self.agent_database).encode()).hexdigest()}, sort_keys=True)
         with sqlite3.connect(self.path) as con:
@@ -60,9 +61,17 @@ class AutomaticLearningRun:
             con.execute('BEGIN IMMEDIATE')
             con.execute('INSERT OR IGNORE INTO memory_automatic_runs_v1 VALUES(?,?,?,?,?,?,0,0)',
                         (*self.key, self.config, max_episodes, max_failures))
-            if con.execute('SELECT config FROM memory_automatic_runs_v1 WHERE tenant=? AND agent=? AND run=?',
-                           self.key).fetchone()[0] != self.config:
-                raise ValueError('frozen run configuration mismatch')
+            stored = con.execute('SELECT config FROM memory_automatic_runs_v1 WHERE tenant=? AND agent=? AND run=?',
+                                 self.key).fetchone()[0]
+            if stored != self.config:
+                # The pre-tie-policy runner implicitly used relevance. Preserve
+                # its exact contract and consumption, never migrate to exploration.
+                legacy = json.loads(self.config)
+                legacy.pop('tie_break')
+                if learning.ranker.tie_break != 'relevance' or json.loads(stored) != legacy:
+                    raise ValueError('frozen run configuration mismatch')
+                con.execute('UPDATE memory_automatic_runs_v1 SET config=? WHERE tenant=? AND agent=? AND run=?',
+                            (self.config, *self.key))
 
     @property
     def path(self):

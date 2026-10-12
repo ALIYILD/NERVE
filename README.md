@@ -689,3 +689,18 @@ PYTHONPATH=src python scripts/memory_autoadapt_demo.py
 The16-episode synthetic drift fixture changes its strategy without host-selected
 routes or separate feedback calls. This is narrow registered-tool adaptation,
 not general autonomous intelligence. See [execution, limits and evidence](docs/galahad/20-automatic-adaptation.md).
+
+## Measuring improvements to NERVE itself
+
+The self-study compares the current adaptive-memory policy with six registered
+window/tie-breaking configurations, using validation-only selection and frozen
+held-out probes. An opt-in least-recent tie policy addresses repeated-failure
+lock-in; it does not grant access or automatically replace the current default.
+
+```sh
+PYTHONPATH=src python benchmarks/memory_self_improvement.py --output /tmp/nerve-self-study.json
+```
+
+The experiment uses actual registered synthetic tools, matched initial state,
+fixed controls and explicit no-improvement outcomes. It is not model-weight
+training or proof of real scientific discovery. See [protocol and measured results](docs/galahad/21-nerve-self-improvement.md).
