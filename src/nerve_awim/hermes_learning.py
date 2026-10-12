@@ -51,3 +51,29 @@ def propose_and_evaluate(ledger, actor, *, runtime, context, evidence_episodes,
         result['uncertainty'] = uncertainty.handoff(actor)
         result['uncertainty_result'] = uncertainty.final([{'claim_id': c.claim_id} for c in uncertainty.ledger.claims(uncertainty.actor, uncertainty.task_id)])
     return result
+
+
+def propose_world_rules(ledger, actor, *, runtime, offline_fixture=False):
+    """Opt-in structured offline bridge; never gives Hermes final answers or roles.
+
+    Live use fails closed until durable provider-cost reservation is integrated.
+    Existing text lesson API and its behavior remain unchanged.
+    """
+    if offline_fixture is not True:
+        raise PermissionError('live world-model proposals require a budgeted provider adapter')
+    from .world_model.contracts import exact, Rule
+    episodes = ledger.episodes(actor, 'train')
+    evidence = {row['id']: row for episode in episodes for row in episode['transitions']}
+    request = {'evidence': episodes, 'output_schema': 'Exactly rules: list of world-model Rule v1 records.',
+               'authority': 'untrusted proposals only; no evaluation or deployment access'}
+    result = runtime.execute('skill_builder', request, tenant=actor.tenant, agent=actor.agent)
+    exact(result, ('rules',))
+    if type(result['rules']) is not list or not 1 <= len(result['rules']) <= 256:
+        raise ValueError('bounded structured rules required')
+    rules = [Rule.load(raw).to_dict() for raw in result['rules']]
+    for rule in rules:
+        for reference in rule['supporting_transition_ids'] + rule['contradicting_transition_ids']:
+            if reference not in evidence:
+                raise ValueError('invented or nontraining evidence reference')
+    return {'rules': rules, 'evidence_mode': 'offline runtime fixture',
+            'eligibility': False, 'deployment_authorized': False}
