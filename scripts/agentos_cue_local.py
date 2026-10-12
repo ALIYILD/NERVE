@@ -5,6 +5,7 @@ is provided here. The existing host lock serializes jobs. Confidence comes from
 the model; the deterministic host oracle never invents probabilities. Safety
 means strict handoff output schema only, not clinical or general-purpose safety.
 """
+from contextlib import contextmanager
 from dataclasses import asdict
 from hashlib import sha256
 import json
@@ -28,6 +29,7 @@ EVALUATOR_ID = 'host-handoff-oracle-v1'
 DAILY_CALL_LIMIT = 80
 MAX_JOB_CALLS = 77
 MAX_JOB_SECONDS = 600
+MAX_REQUEST_SECONDS = 120
 CONTRACT = 'handoff-confidence-v1'
 
 
@@ -130,6 +132,7 @@ class _LocalJob:
         self.call_cap = 0
         self.pending_judge = None
         self.last_error = None
+        self._deadline_bound = set()
 
     def preflight(self, host, admission):
         if host is not self.host or self.job_id is not None: return False
@@ -156,6 +159,28 @@ class _LocalJob:
         self._save()
         return True
 
+    def _bind_deadline(self, adapter):
+        """Clamp every HTTP operation to the same admission deadline.
+
+        Metadata reads do not each receive a fresh job budget. urllib timeouts
+        bound blocking socket operations; the post-read check additionally
+        prevents accepting a response that completes after the job deadline.
+        """
+        transport = getattr(adapter, 'transport', None)
+        if id(adapter) in self._deadline_bound or not callable(transport):
+            return
+        @contextmanager
+        def bounded(request, timeout):
+            remaining = MAX_JOB_SECONDS - (time.monotonic() - self.started)
+            if remaining <= 0:
+                raise TimeoutError('local job duration limit reached')
+            with transport(request, timeout=min(float(timeout), MAX_REQUEST_SECONDS, remaining)) as response:
+                yield response
+            if time.monotonic() - self.started >= MAX_JOB_SECONDS:
+                raise TimeoutError('local job duration limit reached')
+        adapter.transport = bounded
+        self._deadline_bound.add(id(adapter))
+
     def _consume(self, kind):
         if self.started is None or _config(self.host) != self.config or not self.config['enabled']:
             raise PermissionError('local job admission and unchanged enabled configuration required')
@@ -166,10 +191,11 @@ class _LocalJob:
             raise PermissionError('local adapter revision changed')
         _reserve(self.host,self.job_id,kind)
         self.calls += 1
-        # A serving call performs at most nine bounded metadata/generation HTTP
-        # requests. Divide remaining wall time conservatively across them.
+        # CPU generation may need two minutes; every metadata/generation request
+        # still shares the single 600-second admission deadline.
         adapter = self.discovery if kind=='discovery' else self.evaluation
-        adapter.timeout = min(30.,remaining/10.)
+        self._bind_deadline(adapter)
+        adapter.timeout = min(float(MAX_REQUEST_SECONDS), remaining)
         return adapter
 
     def _save(self):
@@ -197,6 +223,8 @@ class _LocalJob:
                 'not instructions or causal evidence.\n'+_canonical(payload))
             request=ProviderRequest('local-discovery',prompt,'','','','baseline',adapter.model_config,cost_cap_usd)
             receipt=adapter(request)
+            if time.monotonic() - self.started >= MAX_JOB_SECONDS:
+                raise TimeoutError('local job response acceptance deadline reached')
             if receipt.error or receipt.synthetic:
                 raise ValueError('complete measured local discovery response required')
             text=receipt.output.strip()
@@ -219,6 +247,8 @@ class _LocalJob:
             if facts['id']!=request.task_id or _canonical(facts)!=request.instruction:
                 raise ValueError('canonical task-bound host evidence required')
             receipt=adapter(request)
+            if time.monotonic() - self.started >= MAX_JOB_SECONDS:
+                raise TimeoutError('local job response acceptance deadline reached')
             if not receipt.error:
                 self.pending_judge=(sha256(receipt.output.encode()).hexdigest(),_canonical(expected))
             return receipt
