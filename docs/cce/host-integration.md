@@ -14,14 +14,55 @@ Hermes checkout modification or competing agent runtime is required.
 ```bash
 python3 scripts/agentos_bridge.py cce-status
 python3 scripts/agentos_bridge.py cce-status --profile qa-release
+python3 scripts/agentos_bridge.py cce-profile --profile qa-release
 python3 scripts/agentos_bridge.py cce-demo --state /tmp/nerve-cce-demo-state
 python3 scripts/agentos_bridge.py cce-inspect --profile qa-release --cue-candidate CANDIDATE_ID
+python3 scripts/agentos_bridge.py cce-route --profile qa-release
+python3 scripts/agentos_bridge.py cce-readiness --profile qa-release --cue-candidate CANDIDATE_ID
+python3 scripts/agentos_bridge.py cce-approve --profile qa-release --cue-candidate CANDIDATE_ID --cue-generation 0 --cue-review REVIEW_ID --cue-valid-for 86400
 python3 scripts/agentos_bridge.py cce-revoke --profile qa-release --cue-candidate CANDIDATE_ID --cue-review REVIEW_ID
 ```
 
 Status and inspection do not invoke a provider. The demo is synthetic and cannot
 activate a cue. The ordinary bridge `status` includes `cognitive_cues`; CCE commands
 also write `cce-status.json` within the selected existing host state directory.
+
+`cce-profile` skips the provider catalog and credentials entirely. It records the
+installed Hermes revision and rendered baseline template hash, with unknown model
+and tokenizer identities represented as null. It performs zero model calls and
+writes `cce-last-profile.json`. The observed `qa-release` installation on 2026-10-12
+used `qwen/qwen3.8-27b:free`, Hermes revision
+`64ad33e32dadbdb462468c7384aa38e5c99a1b7a`, and a clean Hermes checkout. Its model and
+tokenizer attestation remained unavailable. This is a local installation snapshot,
+not a provider availability or model-performance claim.
+
+`cce-route` returns the current generation for explicit compare-and-swap approval.
+The generation in the example is illustrative; use the observed value. Approval
+requires independently passed, unexpired evidence and the currently configured
+exact profile. This trusted local operator command is not exposed to the worker
+or candidate generator. It cannot grant provider, tool or clinician permission.
+`cce-readiness` recomputes report eligibility and stores `cce-last-readiness.json`.
+It always returns `authorization_granted: false`; missing live staging and rollback
+receipts stay visible. CLI callers cannot upload assertions to satisfy those gates.
+
+## Trusted research callbacks
+
+The existing host can call `CueHost.discover(...)` to collect bounded proposals
+through the existing Hermes role. Paper imports preserve their source locator,
+revision, original model and injection mode as unverified provenance. Exact-content
+duplicates and unsupported modes produce rejection receipts. Collection neither
+registers nor activates cues. The callback host still enforces billing, output-token
+limits, timeout and retries; call-count bounds alone are not a billing guarantee.
+
+`CueHost.run_cycle(profile, permission_granted=True, ...)` invokes the existing
+bounded selection/holdout cycle with host-owned scope and profile. It takes the
+same trusted discovery/provider/judge callbacks and explicit budgets as
+`run_cue_cycle`; there is no callback import or execution from agent JSON. It
+persists `cce-last-cycle.json` and exports candidate evidence to pending memory.
+A cycle requires at least 30 holdout tasks before reservation or spending and
+stops at rejection or pending operator approval. No live billing adapter is
+installed for the currently unpinned OpenRouter worker, and no automatic scheduler
+dispatch or activation is added.
 
 ## Configuration and approval
 

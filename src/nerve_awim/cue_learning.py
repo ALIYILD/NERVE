@@ -264,6 +264,8 @@ class GovernedCueCoordinator:
         with self.engine._db() as con:
             row = self._row(con, scope, candidate)
         return {'candidate': row['id'], 'status': row['status'], 'task_type': row['task_type'],
+                'profile_key': ModelProfile(**json.loads(row['profile'])).key,
+                'generator_id': row['generator'],
                 'expires': row['expires'], 'evaluation': json.loads(row['report']) if row['report'] else None}
 
     def export_memory(self, actor, candidate, ledger, memory_actor):

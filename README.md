@@ -4,6 +4,20 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## Independent Watchtower / Guardian (observe-only development)
+
+The separate [safety control plane](docs/watchtower/ARCHITECTURE.md) provides
+bounded read-only telemetry, independent infrastructure probes, incident evidence,
+an MFA owner portal, notification adapters and explicitly scoped containment.
+NERVE's existing execution and learning paths do not import or depend on it.
+Live enforcement is disabled; production IAM, coverage, identity and provider
+verification remain deployment gates. See the [evidence report](docs/watchtower/ACCEPTANCE.md)
+and [recovery runbook](docs/watchtower/RUNBOOK.md).
+
+```bash
+PYTHONPATH=safety python -m nerve_guardian demo --report /tmp/guardian-demo.json
+```
+
 ## Opt-in Cognitive Cue Engine
 
 The [Cognitive Cue Engine](docs/cce/runbook.md) adds model/tokenizer-bound cue
