@@ -1,0 +1,119 @@
+# Final implementation report — 12 October 2026
+
+Status: partial master-plan implementation; locally verified CPU research checkpoint. No deployment, push, PR or merge. Real persistent KV restoration is not implemented or tested.
+
+## Revision and workspace
+
+- Worktree: /Users/aliyildirim/nerve-galahad
+- Branch: feature/galahad-persistent-memory
+- Baseline: ca1e2d92608654ab5d88c2a5866037656caf4a29
+- Implementation checkpoint: 4e20333749656535aa7bcb877a3d8d083b463dab
+- This report is committed separately; `git rev-parse HEAD` gives final documentation commit.
+- PR: none created. Existing uncommitted work in other worktrees preserved.
+
+## Delivered and reused
+
+Added typed gateway contracts, scoped verified text retrieval, bounded context assembly, source integrity checks, pending proposals, host review, context-checked supersession/revocation/deletion, scope quotas and sanitised counters. Added optional metadata-only Galahad adapter, Null provider, canonical model/scope/prompt/token/source identity and non-activating preflight. Unknown runtime compatibility cannot enable restoration.
+
+Added pinned-OIDC WSGI service, offline host grants, clinic/patient fixture matching, pending-only feedback, administrative checks, OpenAPI and HTTPS reference client. Tested real signed JWTs and actual loopback HTTP. No production IdP or Clinical OS application was connected. Inference endpoint returns 501; query returns evidence with review_required=true.
+
+Reused MemoryAuthority, TrustedMemoryLedger, SecureMemoryRetriever, PinnedOIDCVerifier, RecursiveEvolutionLoop, RetrievalGenome, EvalScore and existing retrieval scorer. Preserved all existing source, agent, MCP, JEV, deployment and CI files. New CI workflow has not run remotely. Existing adaptive ranker remains injectable through the existing retriever.
+
+## Validation evidence
+
+Python 3.10.0 / Darwin x86_64. Existing CI target Python 3.12 Linux not newly executed here.
+
+| Check | Result |
+|---|---|
+| Baseline full suite | 875 passed, 52.565 s |
+| Final full suite | 926 passed, 53.385 s; zero failures/errors/skips |
+| New gateway/provider/evaluation/API tests | 17 / 9 / 4 / 21 passed = 51 |
+| Existing Node discovery | 7 passed |
+| Existing smoke commands | 6 passed; exact commands in evidence/existing-checks.json |
+| Syntax and whitespace | compileall and git diff --check passed |
+| Dependency scan | four existing locked packages; no known vulnerabilities |
+| Galahad preflight/readiness | exit 2, expected BLOCKED |
+
+Initial sandbox full-suite run had 36 subtest failures and 3 errors from process isolation/loopback restrictions; approved permission-enabled baseline passed. New real HTTP fixture likewise required loopback binding permission. These failed runs were environmental and were not relabelled as successful.
+
+## Measured CPU study
+
+Thirty sequential local wall-clock samples, eight synthetic records, same query/scope/limit. Median existing ledger retrieval: 0.555331 ms; gateway + Null provider: 4.134935 ms. Empty no-memory dispatch: 0.000279 ms, explicitly unequal capability. First/subsequent and p95 measurements appear in evidence/cpu-benchmark.json. Gateway integrity/status rechecks add overhead. No inference speedup is claimed.
+
+Existing bounded loop evaluated 12 data-only candidates over three generations, selected token/trigram weights 2/1. Constructed validation: 6/6 vs baseline 4/6; report-only holdout: 5/6 vs 4/6. Public fixtures are not sealed independent research evidence, and nothing was promoted. GPU memory/energy, prefill, TTFT, token costs, prefix cache comparisons and KV restore latency remain null/unmeasured.
+
+## Security review and remaining limits
+
+Independent reviewer reproduced and coordinator fixed: excessive advisory results; content corruption retaining false source provenance; legacy cross-context supersession. Regression tests cover each. Defined fixtures also cover tenant/agent/context denial, role intersection, expired/revoked authority, pending/rejected evidence, provider/ranker failures, failed invalidation, corrupt/missing stores and scoped quotas. No unresolved known leakage was observed in these fixtures; this is not a universal isolation proof.
+
+The ledger remains plaintext research SQLite. Single-host quotas/rate limits are not distributed enforcement; trusted legacy writers can bypass gateway quotas. Provider invalidation failure is reported explicitly; backups/replicas and physical erasure are not verified. The WSGI process requires trusted ingress deadlines/TLS/connection limits. No prompt-injection immunity, sealed evaluation, audit sink/dashboard, or production encryption/key ownership is claimed.
+
+## Blockers and proposed follow-up
+
+This Mac has no installed Galahad/vLLM or verified GPU. Upstream compatibility/version and trust-domain guidance require reconciliation; licence rights, tenant-safe runtime identity binding, encrypted deletion and durable restart restoration require actual supported Linux infrastructure. No proprietary licence was accepted or service activated. Metadata checks are not a GPU smoke test.
+
+Real connector deposit/restore, tensor/logit equivalence, kill/restart KV recovery, cache quotas/eviction, key mismatch/full-disk fault tests and matched inference controls remain BLOCKED. Independently sealed holdouts, broader policy candidates, automated existing-agent hooks, multi-process durable consent/revocation and operational dashboards remain future engineering, not completed features. No redundant unrestricted executor was created.
+
+Clinical scope is synthetic-only. Live clinical governance, consent/auth integration, deployment/security assessments and formal approvals remain separate unresolved gates. No EPR writes, treatments, diagnoses or clinical recommendations were made.
+
+## Exact reproduction
+
+```sh
+cd /Users/aliyildirim/nerve-galahad
+python3 scripts/verify_galahad.py baseline
+python3 scripts/verify_galahad.py cpu
+python3 scripts/verify_galahad.py security
+python3 scripts/verify_galahad.py faults
+python3 scripts/verify_galahad.py api
+PYTHONPATH=src python3 scripts/galahad_benchmark.py --samples 30
+PYTHONPATH=src python3 scripts/galahad_preflight.py
+python3 scripts/verify_galahad.py readiness
+python3 -m compileall -q src/nerve_awim/memory_gateway scripts/verify_galahad.py
+pip-audit --no-deps --disable-pip -r deploy/requirements-pilot-linux-x86_64.lock
+node --test tests/test_checkpoint_discovery.cjs
+git diff --check
+```
+
+Tests require the repository's existing PyJWT[crypto] dependency. Preflight and readiness deliberately exit 2; neither activates a runtime. Baseline/API tests need permission for temporary local servers and process-isolation fixtures. No special GPU command is supplied because no verified runnable restoration harness exists yet.
+
+## Changed files
+
+37 files added in the implementation checkpoint, plus this report. No existing files modified. Null provider and fault injectors are CPU fixtures; JWT/SQLite/HTTP are real local execution; KV and clinical deployment remain blocked/proposed.
+
+- `.github/workflows/galahad-memory.yml`
+- `docs/galahad/00-repository-audit.md`
+- `docs/galahad/01-architecture.md`
+- `docs/galahad/02-provider-compatibility.md`
+- `docs/galahad/03-memory-gateway.md`
+- `docs/galahad/04-retrieval-policy.md`
+- `docs/galahad/05-agent-integration.md`
+- `docs/galahad/06-recursive-optimisation.md`
+- `docs/galahad/07-threat-model.md`
+- `docs/galahad/08-benchmark-methodology.md`
+- `docs/galahad/09-clinical-os-api.md`
+- `docs/galahad/10-operations-runbook.md`
+- `docs/galahad/11-clinical-safety-boundaries.md`
+- `docs/galahad/12-release-readiness.md`
+- `docs/galahad/evidence/cpu-benchmark.json`
+- `docs/galahad/evidence/dependency-audit.json`
+- `docs/galahad/evidence/existing-checks.json`
+- `docs/galahad/evidence/preflight.json`
+- `docs/galahad/evidence/validation.json`
+- `docs/galahad/openapi.json`
+- `scripts/galahad_benchmark.py`
+- `scripts/galahad_preflight.py`
+- `scripts/verify_galahad.py`
+- `src/nerve_awim/memory_gateway/__init__.py`
+- `src/nerve_awim/memory_gateway/client.py`
+- `src/nerve_awim/memory_gateway/compatibility.py`
+- `src/nerve_awim/memory_gateway/contracts.py`
+- `src/nerve_awim/memory_gateway/evaluation.py`
+- `src/nerve_awim/memory_gateway/galahad_adapter.py`
+- `src/nerve_awim/memory_gateway/gateway.py`
+- `src/nerve_awim/memory_gateway/kv_adapter.py`
+- `src/nerve_awim/memory_gateway/null_kv_adapter.py`
+- `src/nerve_awim/memory_gateway/service.py`
+- `tests/test_galahad_provider.py`
+- `tests/test_memory_gateway.py`
+- `tests/test_memory_gateway_evaluation.py`
+- `tests/test_memory_service.py`
