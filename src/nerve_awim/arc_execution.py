@@ -15,6 +15,13 @@ from .governed_learning_v20 import _json, _id
 
 def digest(value): return sha256(_json(value).encode()).hexdigest()
 
+def task_hook(runtime, *args, **kwargs):
+    # Optional adaptation must not break base ARC when its module is absent.
+    # If explicitly attached, import/hook failures still propagate fail-closed.
+    if getattr(runtime, 'adaptation', None) is not None:
+        from .adaptation import task_hook as adaptation_hook
+        return adaptation_hook(runtime, *args, **kwargs)
+
 @dataclass(frozen=True)
 class ToolSpec:
     context: str
@@ -127,7 +134,6 @@ class ArcRuntime:
                 parent=self._row(con,actor,parent_decision_id)
                 if parent['task'] != task_id: raise ValueError('parent belongs to a different task')
                 if parent['status'] in {'executing','uncertain'}: raise RuntimeError('uncertain execution requires reconciliation before replanning')
-            from .adaptation import task_hook
             task_hook(self,con,actor,task_id,'before_plan',parent=parent_decision_id)
             now=self.clock(); did=uuid.uuid4().hex
             required=bool(approval_required or spec.risk=='write')
@@ -199,7 +205,6 @@ class ArcRuntime:
         row=self._row(con,actor,task.task_id)
         if row['status']!='executing': raise PermissionError('dispatch cancelled or already consumed')
         record,args=self._validate(con,actor,row)
-        from .adaptation import task_hook
         task_hook(self,con,actor,row['task'],'before_execute',row['id'])
         state=self.engine._state(con,(actor.tenant,actor.agent)); routes=self.engine._release(con,(actor.tenant,actor.agent),state['active'])
         if routes[task.context]!=record.action['registered_tool']: raise PermissionError('approved route changed; obtain new decision')
@@ -217,7 +222,6 @@ class ArcRuntime:
             mode=self._mode(con,actor,self.tools[record.action['registered_tool']].context)
             if mode=='shadow': return {'status':'shadow','decision_id':decision_id,'effects':False}
             if mode!='enforce': raise PermissionError('ARC execution is disabled')
-            from .adaptation import task_hook
             task_hook(self,con,actor,row['task'],'before_execute',decision_id)
             con.execute("UPDATE arc_decisions SET status='executing',version=version+1 WHERE id=? AND version=?",(decision_id,row['version']))
             self.engine._event(con,scope,'arc_dispatch_intent',{'decision':decision_id,'correlation':record.correlation_id})
