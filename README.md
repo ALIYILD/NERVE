@@ -672,3 +672,20 @@ simulated; remote authentication and live integration with a downstream clinical
 application are not supplied.
 
 See [host integration, evidence gates and boundaries](docs/governed-outcome-learning-v20.md).
+
+
+## Bounded automatic memory adaptation (synthetic research)
+
+The optional gateway runner now executes approved registered strategies, obtains
+a trusted independent outcome evaluation and records utility feedback automatically.
+Future episodes adapt to recent verified outcomes. Budgets, pending crash claims
+and replay protection persist across restart; strict execution refuses absent or
+invalid evidence. It does not train model weights or automatically approve new memories.
+
+```sh
+PYTHONPATH=src python scripts/memory_autoadapt_demo.py
+```
+
+The16-episode synthetic drift fixture changes its strategy without host-selected
+routes or separate feedback calls. This is narrow registered-tool adaptation,
+not general autonomous intelligence. See [execution, limits and evidence](docs/galahad/20-automatic-adaptation.md).

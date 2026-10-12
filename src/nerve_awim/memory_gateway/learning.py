@@ -69,10 +69,12 @@ class VerifiedOutcomeLearning:
             raise ValueError('approved unexpired intact source required')
         return record
 
-    def observe(self, memory_id, episode_id, task, output):
+    def observe(self, memory_id, episode_id, task, output, *, expected_record=None):
         """Host only. Replay protection and raw-data minimisation use NERVE's ranker."""
         with self.gateway._lock:
             before = self._checked(memory_id)
+            if expected_record is not None and before != expected_record:
+                raise ValueError('selected memory changed before feedback')
             result = self.ranker.observe(self.reviewer, memory_id=memory_id,
                 episode_id=episode_id, task=task, output=output)
             try:

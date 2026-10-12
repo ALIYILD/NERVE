@@ -48,6 +48,23 @@ def _unique_hint_fields(pairs):
     return result
 
 
+def approved_memory_hint(content, registry):
+    """Decode only the fixed data-only strategy schema against a host registry."""
+    try:
+        hint = json.loads(content, object_pairs_hook=_unique_hint_fields)
+    except (ValueError, TypeError, RecursionError):
+        return None
+    if (type(hint) is not dict
+            or set(hint) != {'schema', 'task', 'extract', 'normalise'}
+            or hint['schema'] != 'nerve-demo-strategy-v1'
+            or hint['task'] != 'email-normalization'
+            or type(hint['extract']) is not str or type(hint['normalise']) is not str
+            or ('extract', hint['extract']) not in registry
+            or ('normalise', hint['normalise']) not in registry):
+        return None
+    return hint['extract'], hint['normalise']
+
+
 STRATEGIES = (
     RegisteredStrategy("raw", "extract", _extract_raw),
     RegisteredStrategy("json-field", "extract", _extract_json),
@@ -63,7 +80,11 @@ FIXTURES = (
 
 
 class DemoAgentBridge:
-    def __init__(self, path, *, agent_id="external-demo", max_workers=4, memory_session=None):
+    def __init__(self, path, *, agent_id="external-demo", max_workers=4, memory_session=None,
+                 require_verified_memory=False):
+        if type(require_verified_memory) is not bool or (require_verified_memory and memory_session is None):
+            raise ValueError("strict execution requires a bound memory session")
+        self.require_verified_memory = require_verified_memory
         if memory_session is not None:
             from .memory_gateway.session import BoundMemorySession
             if type(memory_session) is not BoundMemorySession:
@@ -160,20 +181,14 @@ class DemoAgentBridge:
         evidence = self.memory_session.query('email normalization', limit=20)
         hints, provenance = set(), []
         for record in evidence['records']:
-            try:
-                hint = json.loads(record['content'], object_pairs_hook=_unique_hint_fields)
-            except (ValueError, TypeError, RecursionError):
+            hint = approved_memory_hint(record['content'], self.agent.registry)
+            if hint is None:
                 continue
-            if (type(hint) is not dict
-                    or set(hint) != {'schema', 'task', 'extract', 'normalise'}
-                    or hint['schema'] != 'nerve-demo-strategy-v1'
-                    or hint['task'] != 'email-normalization'
-                    or type(hint['extract']) is not str or type(hint['normalise']) is not str
-                    or ('extract', hint['extract']) not in self.agent.registry
-                    or ('normalise', hint['normalise']) not in self.agent.registry):
-                continue
-            hints.add((hint['extract'], hint['normalise']))
+            hints.add(hint)
             provenance.append({key: record[key] for key in ('memory_id', 'source_id', 'source_sha256')})
+        if self.require_verified_memory and (len(hints) != 1 or len(provenance) != 1
+                or evidence['fallback_reason'] == 'retrieval_backend_unavailable'):
+            raise ValueError('strict execution requires one approved ranked strategy')
         if len(hints) == 1:
             extract, normalise = next(iter(hints))
             result = self.execute_plan(task_id=task_id, email_document=email_document,
@@ -184,7 +199,8 @@ class DemoAgentBridge:
             result = self._run_default(task_id, email_document, policy)
             status = 'conflicting_hints' if hints else 'no_valid_hint'
         result['verified_memory'] = {'status': status, 'provenance': provenance,
-                                      'kv_status': evidence['kv_status']}
+                                      'kv_status': evidence['kv_status'],
+                                      'fallback_reason': evidence['fallback_reason']}
         result['outcome_memory'] = {'status': 'not_requested'}
         if self.memory_session.can_propose:
             # Completion is not correctness. No raw task/email/output or reward
