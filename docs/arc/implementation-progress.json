@@ -1,8 +1,8 @@
 {
   "base_commit": "ca1e2d92608654ab5d88c2a5866037656caf4a29",
-  "branch": "main",
+  "branch": "codex/arc-loops-00-15",
   "initial_dirty_files": [],
-  "updated_at": "2026-10-12T20:02:00.870892+00:00",
+  "updated_at": "2026-10-12T20:21:00.445495+00:00",
   "loops": {
     "00": {
       "status": "passed",
@@ -16,64 +16,246 @@
       ]
     },
     "01": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Versioned contracts",
+      "files": [
+        "arc_contracts.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_runtime.py' -v"
+      ],
+      "evidence": [
+        "Round trips, bad versions, scope, argument validation; additive schema migration tested separately."
+      ]
     },
     "02": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Immutable evidence",
+      "files": [
+        "arc_execution.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_runtime.py' -v",
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_review.py' -v"
+      ],
+      "evidence": [
+        "Hash/time snapshots, freshness and changed-evidence rejection; adversarial wording cannot authorize tools."
+      ]
     },
     "03": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Bounded provider decisions",
+      "files": [
+        "arc_provider.py",
+        "arc_execution.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_provider.py' -v",
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_runtime.py' -v"
+      ],
+      "evidence": [
+        "Existing native transport adapter, one repair, invented evidence/invalid output/outage blocked; valid proposal dispatched."
+      ],
+      "limitations": [
+        "No live provider invocation: native Hermes daily allowance reserved; no new paid calls. Existing transport tested via injected callback."
+      ]
     },
     "04": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Authorization",
+      "files": [
+        "governed_learning_v20.py",
+        "arc_execution.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_runtime.py' -v",
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_review.py' -v"
+      ],
+      "evidence": [
+        "Scoped capabilities, bound independent approval, tamper/expiry/bypass rejection at dispatch."
+      ]
     },
     "05": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Durable lifecycle",
+      "files": [
+        "arc_execution.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_runtime.py' -v"
+      ],
+      "evidence": [
+        "Concurrent deduplication, persisted intent, cancellation, restart and uncertain-write reconciliation."
+      ]
     },
     "06": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Semantic verification",
+      "files": [
+        "arc_execution.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_runtime.py' -v"
+      ],
+      "evidence": [
+        "Empty/partial outcomes, five-decision bound, two read retries, bounded backoff/deadline and no-progress stop."
+      ]
     },
     "07": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Reviewed memory",
+      "files": [
+        "arc_execution.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_review.py' -v",
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_runtime.py' -v"
+      ],
+      "evidence": [
+        "Scoped reviewed examples; expiry/retraction/deletion exclude guidance; audit provenance retained."
+      ]
     },
     "08": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Real local workflow",
+      "files": [
+        "arc_workflows.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_workflows.py' -v",
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_cli.py' -v"
+      ],
+      "evidence": [
+        "Actual AST inventory and independent token verification through GovernedLearning; real CLI receipt local-demo.json."
+      ]
     },
     "09": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Synthetic referral adapter",
+      "files": [
+        "arc_workflows.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_workflows.py' -v"
+      ],
+      "evidence": [
+        "Typed synthetic boundary; missing/stale/conflicting/foreign facts; exact citations; no external submission."
+      ],
+      "limitations": [
+        "Real DeepSynaps referral API contract/environment absent; typed synthetic boundary only."
+      ]
     },
     "10": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Fact-sensitive pairs",
+      "files": [
+        "arc_workflows.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_workflows.py' -v",
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_review.py' -v"
+      ],
+      "evidence": [
+        "All six critical fact changes plus irrelevant/adversarial wording and false completion covered."
+      ]
     },
     "11": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Frozen benchmark",
+      "files": [
+        "arc_evaluation.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_evaluation.py' -v"
+      ],
+      "evidence": [
+        "60 scenarios, family-disjoint 30/15/15; source/hash-bound reports and consumed holdout tracking."
+      ],
+      "limitations": [
+        "Public, correlated synthetic smoke cases; now consumed for tuning. No population or clinical performance claim."
+      ]
     },
     "12": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "passed",
+      "title": "Bounded candidates",
+      "files": [
+        "arc_evaluation.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_evaluation.py' -v"
+      ],
+      "evidence": [
+        "Three inert strategies, failure lineage, equivalent full/full comparison, regressive/tied candidates rejected; interruption/budget guards."
+      ],
+      "limitations": [
+        "No improving candidate selected. No model weight updates or learned benefit demonstrated."
+      ]
     },
     "13": {
-      "status": "pending",
-      "evidence": []
+      "status": "passed",
+      "title": "Release and rollback",
+      "files": [
+        "arc_operations.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_review.py' -v",
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_cli.py' -v",
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_schema_migration.py' -v"
+      ],
+      "evidence": [
+        "Existing release-linked manifests, shadow no effects, independent review, bounded canary, compatible rollback preserves previous budget."
+      ]
     },
     "14": {
-      "status": "pending",
-      "evidence": []
+      "status": "passed",
+      "title": "CLI and visibility",
+      "files": [
+        "arc_cli.py",
+        "scripts/agentos_bridge.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_cli.py' -v",
+        "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc_review.py' -v"
+      ],
+      "evidence": [
+        "Existing CLI extended; scoped redacted inspection/replay, evaluation, candidates, release, reconciliation and rollback."
+      ]
     },
     "15": {
-      "status": "pending",
-      "evidence": []
+      "status": "passed",
+      "files": [
+        "docs/arc/completion-report.md",
+        "docs/arc/runbook.md",
+        "docs/arc/test-results.txt",
+        "tests/test_arc_schema_migration.py"
+      ],
+      "commands": [
+        "PYTHONPATH=src python3 -m unittest discover -s tests",
+        "node --test tests/test_checkpoint_discovery.cjs"
+      ],
+      "evidence": [
+        "Isolated final regression: 961 Python tests passed in 74.760s; 7 Node tests passed.",
+        "86 ARC acceptance tests included; historical schema migration and rollback pass.",
+        "Real local CLI, synthetic referral, shadow/rollback receipts reproduced in local-demo.json.",
+        "Final isolated source revision matches regenerated diagnostic benchmark receipts.",
+        "No new dependencies; diff whitespace and credential-pattern checks passed."
+      ],
+      "limitations": [
+        "Live provider and clinical API verification remain unavailable; no paid calls or production activation.",
+        "All three candidate strategies rejected; no learned gain demonstrated."
+      ],
+      "next_step": "Use the runbook to reproduce. Obtain fresh reviewed holdout and authorized real integration contracts before subsequent promotion work."
     }
-  }
+  },
+  "unrelated_work_preserved": [
+    "configs/",
+    "docs/adaptation/",
+    "src/nerve_awim/adaptation.py",
+    "src/nerve_awim/adaptation_replay.py",
+    "tests/test_adaptation.py"
+  ],
+  "initial_branch": "main",
+  "checkout": "/Users/aliyildirim/nerve-arc-handoff",
+  "implementation_commit": "8f3e1d4",
+  "unrelated_work_note": "Concurrent adaptation work changed the original checkout branch and edited ARC hooks. Original work preserved; final ARC branch isolated, hooks excluded, complete suite and receipts rerun."
 }

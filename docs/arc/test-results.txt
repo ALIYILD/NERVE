@@ -1,0 +1,18 @@
+Checkout: /Users/aliyildirim/nerve-arc-handoff
+Branch: codex/arc-loops-00-15
+Implementation commit: 8f3e1d4
+
+PYTHONPATH=src python3 -m unittest discover -s tests
+Ran 961 tests in 74.760s
+OK
+
+node --test tests/test_checkpoint_discovery.cjs
+tests 7
+pass 7
+fail 0
+skipped 0
+
+Baseline: 875 Python tests, 7 Node tests passed.
+Final Python suite includes 86 ARC tests and 875 existing tests.
+Actual subprocess CLI demos: inventory/restart, inspect/replay, synthetic draft, shadow promotion and rollback passed.
+Benchmark receipts reproduced on source revision 4e5fb0e64f7e6c2d8bbfbb365ea3e0082586c988711f6283cc980b23961df5b0.

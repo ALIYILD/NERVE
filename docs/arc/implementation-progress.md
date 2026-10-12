@@ -31,7 +31,31 @@ Research inspected: https://arxiv.org/html/2610.12386v1 and https://arc-robot-re
 
 ## Loop ledger
 
-00 in_progress — discovery recorded; baseline Python running; Node checkpoint suite 7/7 passed.
-01–15 pending — assigned coherent runtime, workflow and evaluation workstreams. No acceptance claimed yet.
+All unblocked implementation loops completed. Final isolated aggregate regression: 961 Python tests and 7 Node tests passed. Full commands, limitations and resumable status are in the JSON ledger.
 
-00 passed — baseline875 Python tests and7 Node tests passed; no pre-existing failure. Core runtime01–07, workflows08–10 and evaluation11–12 in progress.
+| Loop | Status | Evidence |
+|---|---|---|
+| 00 | passed | Clean baseline: 875 Python and 7 Node tests |
+| 01 | passed | `test_arc_runtime.py` — Round trips, bad versions, scope, argument validation; additive schema migration tested separately. |
+| 02 | passed | `test_arc_runtime.py; test_arc_review.py` — Hash/time snapshots, freshness and changed-evidence rejection; adversarial wording cannot authorize tools. |
+| 03 | passed | `test_arc_provider.py; test_arc_runtime.py` — Existing native transport adapter, one repair, invented evidence/invalid output/outage blocked; valid proposal dispatched. |
+| 04 | passed | `test_arc_runtime.py; test_arc_review.py` — Scoped capabilities, bound independent approval, tamper/expiry/bypass rejection at dispatch. |
+| 05 | passed | `test_arc_runtime.py` — Concurrent deduplication, persisted intent, cancellation, restart and uncertain-write reconciliation. |
+| 06 | passed | `test_arc_runtime.py` — Empty/partial outcomes, five-decision bound, two read retries, bounded backoff/deadline and no-progress stop. |
+| 07 | passed | `test_arc_review.py; test_arc_runtime.py` — Scoped reviewed examples; expiry/retraction/deletion exclude guidance; audit provenance retained. |
+| 08 | passed | `test_arc_workflows.py; test_arc_cli.py` — Actual AST inventory and independent token verification through GovernedLearning; real CLI receipt local-demo.json. |
+| 09 | passed | `test_arc_workflows.py` — Typed synthetic boundary; missing/stale/conflicting/foreign facts; exact citations; no external submission. |
+| 10 | passed | `test_arc_workflows.py; test_arc_review.py` — All six critical fact changes plus irrelevant/adversarial wording and false completion covered. |
+| 11 | passed | `test_arc_evaluation.py` — 60 scenarios, family-disjoint 30/15/15; source/hash-bound reports and consumed holdout tracking. |
+| 12 | passed | `test_arc_evaluation.py` — Three inert strategies, failure lineage, equivalent full/full comparison, regressive/tied candidates rejected; interruption/budget guards. |
+| 13 | passed | `test_arc_review.py; test_arc_cli.py; test_arc_schema_migration.py` — Existing release-linked manifests, shadow no effects, independent review, bounded canary, compatible rollback preserves previous budget. |
+| 14 | passed | `test_arc_cli.py; test_arc_review.py` — Existing CLI extended; scoped redacted inspection/replay, evaluation, candidates, release, reconciliation and rollback. |
+| 15 | passed | 961 Python tests, 7 Node tests; migration, actual CLI receipts, source review and completion report |
+
+Loops were implemented in parallel workstreams; this integrated checkpoint records their completed acceptance results. Existing baseline and focused gates were not weakened. External-provider and real-clinical verification remain explicitly unavailable, rather than represented as live tests.
+
+Unrelated adaptation/configuration files appeared during implementation and are excluded from ARC commits.
+
+## Final isolation checkpoint
+
+Final checkout: `/Users/aliyildirim/nerve-arc-handoff`, branch `codex/arc-loops-00-15`, implementation commit `8f3e1d4`. Concurrent unrelated work changed the original checkout and introduced adaptation hooks during integration. That work was preserved in place; this isolated branch excludes its hooks and files. The full regression and benchmark receipts were rerun on the isolated ARC implementation. See [completion-report.md](completion-report.md) for final results, external blockers and reproduction commands.

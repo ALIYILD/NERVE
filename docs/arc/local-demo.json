@@ -1,0 +1,181 @@
+{
+  "inventory": {
+    "action": "inventory",
+    "mode": "full",
+    "permitted": true,
+    "unknowns": [],
+    "verified": true,
+    "decision_id": "8f9401aa74d3419a853fbedcd753346b",
+    "outcome_id": "2fb68174d62741d2afa6c66c6fa0479a",
+    "offline": true,
+    "synthetic": false,
+    "status": "succeeded",
+    "semantic_status": "verified",
+    "value": [
+      "ast_inventory",
+      "regex_inventory",
+      "repository_judge",
+      "token_inventory"
+    ],
+    "dispatches": 1,
+    "restart_same_outcome": true
+  },
+  "inspect": {
+    "episodes": [
+      {
+        "decision_id": "8f9401aa74d3419a853fbedcd753346b",
+        "task_id": "real-inventory-handoff",
+        "correlation_id": "real-inventory-handoff",
+        "status": "succeeded",
+        "version": 3,
+        "tool": "inventory",
+        "evidence": [
+          {
+            "source_id": "input",
+            "version": "2448bd2355d2afec0da392b82b65ce475677b8c5775147e8d29aef6c1e3644a3"
+          }
+        ],
+        "transport_status": "success",
+        "semantic_status": "verified",
+        "criterion_results": {
+          "objective": true
+        },
+        "retry_classification": "no_automatic_retry"
+      }
+    ],
+    "metrics": {
+      "decision_statuses": {
+        "succeeded": 1
+      },
+      "events": {
+        "arc_dispatch_intent": 1,
+        "arc_outcome": 1,
+        "arc_proposed": 1
+      },
+      "labels": "No patient or source payload labels"
+    }
+  },
+  "replay": {
+    "replay": "recorded-redacted-episode",
+    "effects": false,
+    "episode": {
+      "decision_id": "8f9401aa74d3419a853fbedcd753346b",
+      "task_id": "real-inventory-handoff",
+      "correlation_id": "real-inventory-handoff",
+      "status": "succeeded",
+      "version": 3,
+      "tool": "inventory",
+      "evidence": [
+        {
+          "source_id": "input",
+          "version": "2448bd2355d2afec0da392b82b65ce475677b8c5775147e8d29aef6c1e3644a3"
+        }
+      ],
+      "transport_status": "success",
+      "semantic_status": "verified",
+      "criterion_results": {
+        "objective": true
+      },
+      "retry_classification": "no_automatic_retry"
+    }
+  },
+  "staged": {
+    "manifest_id": "44d5d3c395eb4cddbf97c76e1506be2e",
+    "status": "staged",
+    "production_activation": false
+  },
+  "promoted": {
+    "manifests": [
+      {
+        "id": "44d5d3c395eb4cddbf97c76e1506be2e",
+        "context": "inventory",
+        "release": "d3bdcc5ccd3e44bd883378f6406a31b6",
+        "generation": 0,
+        "versions": "{\"model\":\"deterministic-v1\",\"policy\":\"arc-workflows-v1-full\",\"prompt\":\"arc-v1\",\"schema\":\"nerve-arc-v1\",\"strategy\":\"registered-workflows-v1\"}",
+        "mode": "shadow",
+        "previous_mode": "off",
+        "canary_limit": 5,
+        "used": 0,
+        "status": "active"
+      }
+    ],
+    "modes": {
+      "inventory": "shadow"
+    },
+    "default_mode": "off",
+    "production_activation": false
+  },
+  "shadow": {
+    "action": "inventory",
+    "mode": "full",
+    "permitted": true,
+    "unknowns": [],
+    "verified": false,
+    "decision_id": "c125af1d7ffc4dc18092f37539d77923",
+    "outcome_id": null,
+    "offline": true,
+    "synthetic": false,
+    "status": "shadow",
+    "value": null,
+    "dispatches": 0
+  },
+  "rollback": {
+    "manifests": [
+      {
+        "id": "44d5d3c395eb4cddbf97c76e1506be2e",
+        "context": "inventory",
+        "release": "d3bdcc5ccd3e44bd883378f6406a31b6",
+        "generation": 0,
+        "versions": "{\"model\":\"deterministic-v1\",\"policy\":\"arc-workflows-v1-full\",\"prompt\":\"arc-v1\",\"schema\":\"nerve-arc-v1\",\"strategy\":\"registered-workflows-v1\"}",
+        "mode": "shadow",
+        "previous_mode": "off",
+        "canary_limit": 5,
+        "used": 0,
+        "status": "rolled_back"
+      }
+    ],
+    "modes": {
+      "inventory": "off"
+    },
+    "default_mode": "off",
+    "production_activation": false
+  },
+  "referral": {
+    "action": "prepare-draft",
+    "mode": "full",
+    "permitted": true,
+    "unknowns": [],
+    "verified": true,
+    "decision_id": "adff9a5780574e61a7daadab54afe767",
+    "outcome_id": "6ba9e67c6bb94ef4904fc01c7b69523c",
+    "offline": true,
+    "synthetic": true,
+    "status": "succeeded",
+    "semantic_status": "verified",
+    "value": {
+      "schema_version": "synthetic-referral-v1",
+      "synthetic": true,
+      "findings": "Synthetic assessed needs",
+      "assessment_id": "synthetic-1",
+      "citations": [
+        {
+          "source_id": "assessment",
+          "field": "findings",
+          "source_hash": "0372b3fa767dee0ef5bc22296f82bf19477afb067b8b59685ff17c2729032342"
+        }
+      ],
+      "unknowns": [],
+      "review_state": "awaiting_clinician_review",
+      "submitted": false
+    },
+    "dispatches": 1
+  },
+  "verification_boundary": {
+    "real_local_tools": true,
+    "real_provider": false,
+    "real_clinical_api": false,
+    "paid_cost_usd": 0,
+    "checkout": "nerve-arc-handoff",
+    "branch": "codex/arc-loops-00-15"
+  }
+}
