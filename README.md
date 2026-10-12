@@ -704,3 +704,7 @@ PYTHONPATH=src python benchmarks/memory_self_improvement.py --output /tmp/nerve-
 The experiment uses actual registered synthetic tools, matched initial state,
 fixed controls and explicit no-improvement outcomes. It is not model-weight
 training or proof of real scientific discovery. See [protocol and measured results](docs/galahad/21-nerve-self-improvement.md).
+
+### Bounded memory-policy research generations
+
+The durable research loop evaluates a finite candidate grid, records rejected candidates, stops after two stalled generations, and freezes selection before one holdout evaluation. Its first run completed 4,700 synthetic tool executions and retained the current policy because no candidate passed every improvement gate. All 1,114 regression tests pass. This is local policy research; model weights and deployment remain unchanged. See [execution evidence and reproduction](docs/galahad/22-bounded-research-loop.md).

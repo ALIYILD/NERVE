@@ -31,7 +31,7 @@ class AutomaticLearningRun:
         self.key = (scope.tenant_id, scope.agent_id, run_id)
         self.config = json.dumps({'context': scope.context, 'revision': learning.ranker.revision,
             'window': learning.ranker.window, 'tie_break': learning.ranker.tie_break,
-            'max_episodes': max_episodes,
+            'decay_half_life': learning.ranker.decay_half_life, 'max_episodes': max_episodes,
             'max_failures': max_failures,
             'agent_database_hash': sha256(str(self.agent_database).encode()).hexdigest()}, sort_keys=True)
         with sqlite3.connect(self.path) as con:
@@ -66,9 +66,14 @@ class AutomaticLearningRun:
             if stored != self.config:
                 # The pre-tie-policy runner implicitly used relevance. Preserve
                 # its exact contract and consumption, never migrate to exploration.
-                legacy = json.loads(self.config)
-                legacy.pop('tie_break')
-                if learning.ranker.tie_break != 'relevance' or json.loads(stored) != legacy:
+                legacy = json.loads(stored)
+                if type(legacy) is not dict:
+                    raise ValueError('frozen run configuration mismatch')
+                if 'tie_break' not in legacy:
+                    legacy['tie_break'] = 'relevance'
+                if 'decay_half_life' not in legacy:
+                    legacy['decay_half_life'] = None
+                if legacy != json.loads(self.config):
                     raise ValueError('frozen run configuration mismatch')
                 con.execute('UPDATE memory_automatic_runs_v1 SET config=? WHERE tenant=? AND agent=? AND run=?',
                             (self.config, *self.key))

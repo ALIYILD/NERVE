@@ -1,5 +1,8 @@
 # Final implementation report — 12 October 2026
 
+**Latest bounded loop:** [22-bounded-research-loop.md](22-bounded-research-loop.md) records 1,114 passing tests and 4,700 actual synthetic tool executions across two generations. No candidate passed all improvement gates; the current policy was retained (75/100 frozen holdout). No weight training or deployment.
+
+
 **Latest self-study:** [21-nerve-self-improvement.md](21-nerve-self-improvement.md) documents the opt-in failure-tie fix, matched policy experiment and1,093 passing tests. Held-out selected/current accuracy tied73/100 with scenario regression, so the default was retained.
 
 **Latest automatic adaptation:** [20-automatic-adaptation.md](20-automatic-adaptation.md) records the bounded automatic execution→evaluation→feedback path, durable budgets/replay claims and synthetic drift evidence. This does not complete the GPU or clinical gates.

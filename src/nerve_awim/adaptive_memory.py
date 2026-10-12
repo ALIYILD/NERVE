@@ -13,7 +13,8 @@ from .memory_v18 import _id
 
 
 class OutcomeMemoryRanker:
-    def __init__(self, ledger, *, evaluator, evaluator_revision, window=20, tie_break="relevance"):
+    def __init__(self, ledger, *, evaluator, evaluator_revision, window=20, tie_break="relevance",
+                 decay_half_life=None):
         if not callable(evaluator):
             raise TypeError('trusted host evaluator required')
         _id(evaluator_revision, 'evaluator revision')
@@ -21,6 +22,9 @@ class OutcomeMemoryRanker:
             raise ValueError('window must be between 3 and 100')
         if type(tie_break) is not str or tie_break not in ('relevance', 'least_recent'):
             raise ValueError('registered tie-breaking policy required')
+        if decay_half_life is not None and (type(decay_half_life) is not int or not 1 <= decay_half_life <= 100):
+            raise ValueError('decay half-life must be None or 1..100 judged episodes')
+        self.decay_half_life = decay_half_life
         self.tie_break = tie_break
         self.ledger, self.evaluator = ledger, evaluator
         self.revision, self.window = evaluator_revision, window
@@ -114,6 +118,17 @@ class OutcomeMemoryRanker:
                     ORDER BY sequence DESC LIMIT ?''',
                     (actor.tenant_id, actor.agent_id, current.memory_id, self.revision, self.window)).fetchall()
                 utility = (1 + sum(row[0] for row in rows)) / (2 + len(rows))
+                if self.decay_half_life is not None and rows:
+                    # Count authorised same-context judged episodes since this
+                    # source was used, not global SQL sequence gaps (which can
+                    # contain other tenants, contexts or evaluator revisions).
+                    age = con.execute("""SELECT COUNT(*) FROM memory_utility u
+                        JOIN trusted_memory_v18 m ON m.memory_id=u.memory
+                        AND m.tenant_id=u.tenant AND m.agent_id=u.agent
+                        WHERE u.tenant=? AND u.agent=? AND m.context=? AND u.revision=?
+                        AND u.status='judged' AND u.sequence>?""",
+                        (actor.tenant_id, actor.agent_id, current.context, self.revision, rows[0][1])).fetchone()[0]
+                    utility = 0.5 + (utility - 0.5) * 2 ** (-age / self.decay_half_life)
                 # Equal recent utility can otherwise trap the policy on the
                 # same repeatedly failing memory. Opt-in bounded exploration
                 # tries the least recently judged candidate only on exact ties.
