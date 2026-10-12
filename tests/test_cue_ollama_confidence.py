@@ -3,9 +3,12 @@ from dataclasses import replace
 from hashlib import sha256
 import json
 import unittest
+from copy import deepcopy
+from unittest.mock import patch
+import nerve_awim.cue_ollama as implementation
 
 from nerve_awim.cue_ollama import (HANDOFF_PROMPT_TEMPLATE, HANDOFF_RENDERER,
-    HANDOFF_RESPONSE_CONTRACT, PROMPT_TEMPLATE, OllamaCueError)
+    HANDOFF_RESPONSE_CONTRACT, HANDOFF_RESPONSE_SCHEMA, PROMPT_TEMPLATE, OllamaCueError)
 import test_cue_ollama as fixtures
 
 
@@ -28,7 +31,10 @@ class OllamaConfidenceTests(unittest.TestCase):
         ordinary=self.adapter(); ordinary_report=ordinary.inspect()
         protocol=self.configured(); report=protocol.inspect()
         self.assertEqual(ordinary.profile.template_revision,sha256(PROMPT_TEMPLATE.encode()).hexdigest())
-        self.assertEqual(protocol.profile.template_revision,sha256(HANDOFF_PROMPT_TEMPLATE.encode()).hexdigest())
+        expected_identity=sha256(json.dumps({'renderer':HANDOFF_RENDERER,'response_contract':HANDOFF_RESPONSE_CONTRACT,
+            'prompt_template':HANDOFF_PROMPT_TEMPLATE,'format':HANDOFF_RESPONSE_SCHEMA},
+            sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+        self.assertEqual(protocol.profile.template_revision,expected_identity)
         self.assertNotEqual(ordinary.profile.key,protocol.profile.key)
         self.assertNotEqual(ordinary.model_config.context_digest,protocol.model_config.context_digest)
         self.assertEqual(report['renderer'],HANDOFF_RENDERER)
@@ -100,6 +106,42 @@ class OllamaConfidenceTests(unittest.TestCase):
         self.assertEqual(receipt.output,'')
         self.assertEqual(adapter.summary()['truncations'],1)
         self.assertEqual(adapter.summary()['last_error'],'handoff_response_truncated')
+
+    def test_generate_schema_only_for_handoff_and_default_request_unchanged(self):
+        ordinary=self.adapter();ordinary.inspect()
+        ordinary(self.request(ordinary))
+        normal=next(body for path,body in self.transport.calls if path=='/api/generate')
+        self.assertNotIn('format',normal)
+        adapter=self.configured();self.response(.6)
+        adapter(self.request(adapter))
+        structured=[body for path,body in self.transport.calls if path=='/api/generate'][-1]
+        self.assertEqual(structured['format'],HANDOFF_RESPONSE_SCHEMA)
+        schema=structured['format']
+        self.assertFalse(schema['additionalProperties'])
+        self.assertEqual(set(schema['required']),{'status','passed','memory_saved','confidence'})
+        self.assertEqual(schema['properties']['confidence'],{'type':'number','minimum':0,'maximum':1})
+        self.assertEqual(schema['properties']['status']['enum'],['done','failed','unknown'])
+        self.assertTrue(structured['raw'])
+        self.assertFalse(structured['stream'])
+
+    def test_schema_change_invalidates_profile_and_model_before_generation(self):
+        original=self.configured()
+        ordinary=self.adapter();ordinary.inspect()
+        changed=deepcopy(HANDOFF_RESPONSE_SCHEMA)
+        changed['properties']['confidence']['maximum']=.99
+        with patch.object(implementation,'HANDOFF_RESPONSE_SCHEMA',changed):
+            new=self.configured()
+            self.assertNotEqual(original.profile.key,new.profile.key)
+            self.assertNotEqual(original.model_config.template_digest,new.model_config.template_digest)
+            self.assertNotEqual(original.model_config.context_digest,new.model_config.context_digest)
+            unchanged=self.adapter();unchanged.inspect()
+            self.assertEqual(ordinary.profile.key,unchanged.profile.key)
+            self.assertEqual(ordinary.model_config,unchanged.model_config)
+            before=len(self.transport.calls)
+            with self.assertRaisesRegex(OllamaCueError,'configuration_changed'):
+                original(self.request(original))
+            self.assertEqual(len(self.transport.calls),before)
+        self.assertEqual(self.transport.generated,0)
 
     def test_protocol_mutation_after_inspection_rejected_before_dispatch(self):
         adapter=self.configured();adapter.response_contract=None
