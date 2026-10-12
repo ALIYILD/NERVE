@@ -1,6 +1,7 @@
 """Bounded independent notification outbox; no provider errors or secrets logged."""
 import json
 import math
+import fcntl
 from contextlib import contextmanager
 import os
 import queue
@@ -103,13 +104,51 @@ class Notifier:
         self.stop = threading.Event()
         self.closing = threading.Event()
         self.lifecycle_lock = threading.Lock()
-        with self._db() as db:
-            db.execute('CREATE TABLE IF NOT EXISTS outbox (tenant TEXT, incident TEXT, event TEXT, channel TEXT, payload TEXT, attempts INTEGER DEFAULT 0, status TEXT DEFAULT "pending", next_try REAL DEFAULT 0, PRIMARY KEY(tenant,incident,event,channel))')
-        os.chmod(self.database, 0o600)
-        self.threads = [threading.Thread(target=self._dispatch, daemon=True)]
-        self.threads += [threading.Thread(target=self._deliver, args=(channel,), daemon=True) for channel in adapters]
-        for thread in self.threads:
-            thread.start()
+        # Separate lock file avoids interfering with SQLite locks on macOS.
+        # Resolve directory aliases; reject file aliases and shared permissions.
+        # The Guardian-only directory must prohibit replacement of either inode.
+        self.database = str(Path(self.database).parent.resolve() / Path(self.database).name)
+        self.owner_fd = self._private_file(self.database + '.owner.lock')
+        self.threads = []
+        ready = threading.Event()
+        def start_worker(target, *args):
+            ready.wait()
+            if not self.stop.is_set():
+                target(*args)
+        try:
+            try:
+                fcntl.flock(self.owner_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                raise RuntimeError('notification outbox already has an active owner') from None
+            os.close(self._private_file(self.database))
+            with self._db() as db:
+                db.execute('CREATE TABLE IF NOT EXISTS outbox (tenant TEXT, incident TEXT, event TEXT, channel TEXT, payload TEXT, attempts INTEGER DEFAULT 0, status TEXT DEFAULT "pending", next_try REAL DEFAULT 0, PRIMARY KEY(tenant,incident,event,channel))')
+            workers = [threading.Thread(target=start_worker, args=(self._dispatch,), daemon=True)]
+            workers += [threading.Thread(target=start_worker, args=(self._deliver, channel), daemon=True) for channel in adapters]
+            for thread in workers:
+                thread.start()
+                self.threads.append(thread)
+            ready.set()
+        except BaseException:
+            self.stop.set()
+            ready.set()
+            for thread in self.threads:
+                thread.join()
+            os.close(self.owner_fd)
+            self.owner_fd = None
+            raise
+
+    @staticmethod
+    def _private_file(path):
+        fd = os.open(path, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW | os.O_NONBLOCK, 0o600)
+        try:
+            info = os.fstat(fd)
+            if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or info.st_uid != os.geteuid() or info.st_mode & 0o077:
+                raise PermissionError('outbox and lock must be private regular files owned by Guardian')
+            return fd
+        except BaseException:
+            os.close(fd)
+            raise
 
     @contextmanager
     def _db(self):
@@ -207,4 +246,10 @@ class Notifier:
         self.stop.set()
         for thread in self.threads:
             thread.join(timeout=max(0, deadline - time.monotonic()))
-        return not self.pending.unfinished_tasks and not any(thread.is_alive() for thread in self.threads)
+        workers_stopped = not any(thread.is_alive() for thread in self.threads)
+        if workers_stopped:
+            with self.lifecycle_lock:
+                if self.owner_fd is not None:
+                    os.close(self.owner_fd)
+                    self.owner_fd = None
+        return not self.pending.unfinished_tasks and workers_stopped

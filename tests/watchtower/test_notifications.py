@@ -44,6 +44,8 @@ class NotificationTests(unittest.TestCase):
                 self.assertFalse(notifier.close(timeout=.1))
                 self.assertLess(time.monotonic()-start, .5)
                 self.assertEqual(notifier.status('a')[0]['status'], 'pending')
+                with self.assertRaisesRegex(RuntimeError, 'active owner'):
+                    Notifier(path, {'email': lambda alert: None})
             finally:
                 release.set()
                 self.assertTrue(notifier.close(timeout=2))
@@ -64,6 +66,71 @@ class NotificationTests(unittest.TestCase):
                     with self.assertRaises(ValueError): notifier.close(timeout)
                 self.assertFalse(notifier.closing.is_set())
             finally: self.assertTrue(notifier.close())
+
+    def test_exclusive_outbox_owner_across_processes_and_exit_recovery(self):
+        import select
+        import subprocess
+        import sys
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root)/'outbox.db'
+            script = "from nerve_guardian.notifications import Notifier; import sys; n=Notifier(sys.argv[1], {'email': lambda a: None}); print('ready', flush=True); sys.stdin.readline()"
+            child = subprocess.Popen([sys.executable, '-c', script, str(path)], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+            try:
+                self.assertTrue(select.select([child.stdout], [], [], 5)[0])
+                self.assertEqual(child.stdout.readline().strip(), 'ready')
+                with self.assertRaisesRegex(RuntimeError, 'active owner'):
+                    Notifier(path, {'email': lambda alert: None})
+            finally:
+                child.communicate('\n', timeout=5)
+            self.assertEqual(child.returncode, 0)
+            restored = Notifier(path, {'email': lambda alert: None})
+            self.assertTrue(restored.close())
+
+    def test_directory_alias_cannot_create_second_owner(self):
+        with tempfile.TemporaryDirectory() as root:
+            directory = Path(root)/'real'; directory.mkdir()
+            alias = Path(root)/'alias'; alias.symlink_to(directory, target_is_directory=True)
+            notifier = Notifier(directory/'outbox.db', {'email': lambda alert: None})
+            try:
+                with self.assertRaisesRegex(RuntimeError, 'active owner'):
+                    Notifier(alias/'outbox.db', {'email': lambda alert: None})
+            finally: self.assertTrue(notifier.close())
+
+    def test_partial_thread_start_failure_releases_owner(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root)/'outbox.db'
+            original = threading.Thread.start
+            started = []
+            def start(thread):
+                if started: raise RuntimeError('synthetic thread startup failure')
+                original(thread)
+                started.append(thread)
+            with patch.object(threading.Thread, 'start', start):
+                with self.assertRaisesRegex(RuntimeError, 'startup failure'):
+                    Notifier(path, {'email': lambda alert: None})
+            self.assertTrue(all(not thread.is_alive() for thread in started))
+            notifier = Notifier(path, {'email': lambda alert: None})
+            self.assertTrue(notifier.close())
+
+    def test_unsafe_outbox_files_and_constructor_failure_release(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root)/'outbox.db'
+            path.touch(mode=0o600)
+            link = Path(root)/'symlink.db'; link.symlink_to(path)
+            with self.assertRaises(OSError): Notifier(link, {'email': lambda alert: None})
+            hard = Path(root)/'hard.db'; os.link(path, hard)
+            with self.assertRaises(PermissionError): Notifier(hard, {'email': lambda alert: None})
+            hard.unlink()
+            path.chmod(0o644)
+            with self.assertRaises(PermissionError): Notifier(path, {'email': lambda alert: None})
+            path.chmod(0o600)
+            with patch.object(Notifier, '_db', side_effect=RuntimeError('synthetic storage outage')):
+                with self.assertRaisesRegex(RuntimeError, 'storage outage'):
+                    Notifier(path, {'email': lambda alert: None})
+            restored = Notifier(path, {'email': lambda alert: None})
+            self.assertTrue(restored.close())
 
     def wait_for(self, test, seconds=4):
         end = time.monotonic()+seconds

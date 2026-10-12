@@ -7,7 +7,7 @@
   "checks": {
     "baseline_tests": 1124,
     "regression_tests": 1124,
-    "safety_tests": 66,
+    "safety_tests": 70,
     "independent_adversarial_tests": 13,
     "real_disposable_process_demo": true,
     "live_provider_delivery": false

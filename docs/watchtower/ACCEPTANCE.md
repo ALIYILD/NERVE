@@ -8,7 +8,7 @@ Implemented on isolated branch `feat/nerve-watchtower`, based on local NERVE com
 |---|---|---|
 | Unmodified baseline | 1,124 tests passed | [baseline](evidence/baseline.log) |
 | Existing NERVE regression | 1,124 tests passed | [regression](evidence/regression.log) |
-| Safety suite | 66 tests passed | [test log](evidence/safety-tests.log) |
+| Safety suite | 70 tests passed | [test log](evidence/safety-tests.log) |
 | Independent adversarial review | 13 attack tests passed; demonstrated defects repaired | [review](INDEPENDENT_REVIEW.md) |
 | Passive CLI collector | Actual read-only SQLite aggregate collection, no source writes | [collector entrypoint](evidence/watchtower-entrypoint.json) |
 | Guardian CLI on unprovisioned host | Correctly UNKNOWN, enforcement disabled | [service entrypoint](evidence/service-entrypoint.json) |
@@ -50,3 +50,7 @@ No live kill switch, provider notification, production installation, merge or de
 ## Notification shutdown follow-up
 
 The safety suite now passes 66 tests. New failure tests establish bounded shutdown with a stalled dispatcher or provider, enqueue rejection after closing, UNKNOWN closing health, and persisted pending delivery recovery. No live provider calls were made. Prior baseline/regression and benchmark results above remain historical evidence; this follow-up changes only the independent notification package and its tests. All PR checks passed for the preceding commit; CI reruns for the follow-up commit.
+
+## Exclusive notification ownership follow-up
+
+The combined safety suite passes 70 tests, including 11 notification tests independently rerun by the alerts specialist. A persistent private sibling lock prevents overlapping notifier owners from racing delivery status updates. A real subprocess test verifies ownership is released on process exit. Initial database-inode locking failed against macOS SQLite locks; the final sibling-lock implementation passes the full suite. No runtime integration, production settings or live notification delivery changed.

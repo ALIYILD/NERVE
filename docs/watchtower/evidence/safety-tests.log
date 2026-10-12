@@ -45,11 +45,15 @@ test_tampering_missing_stale_and_unauthorized_restart (test_infrastructure.Infra
 test_timeout_is_unknown (test_infrastructure.InfrastructureTests.test_timeout_is_unknown) ... ok
 test_credential_permissions_and_https (test_notifications.NotificationTests.test_credential_permissions_and_https) ... ok
 test_database_connections_closed_on_success_and_error (test_notifications.NotificationTests.test_database_connections_closed_on_success_and_error) ... ok
+test_directory_alias_cannot_create_second_owner (test_notifications.NotificationTests.test_directory_alias_cannot_create_second_owner) ... ok
+test_exclusive_outbox_owner_across_processes_and_exit_recovery (test_notifications.NotificationTests.test_exclusive_outbox_owner_across_processes_and_exit_recovery) ... ok
 test_https_provider_contract_and_sanitized_failure (test_notifications.NotificationTests.test_https_provider_contract_and_sanitized_failure) ... ok
 test_parallel_channels_dedup_retry_and_tenant_isolation (test_notifications.NotificationTests.test_parallel_channels_dedup_retry_and_tenant_isolation) ... ok
+test_partial_thread_start_failure_releases_owner (test_notifications.NotificationTests.test_partial_thread_start_failure_releases_owner) ... ok
 test_shutdown_bounds_stalled_dispatch_and_rejects_new_alerts (test_notifications.NotificationTests.test_shutdown_bounds_stalled_dispatch_and_rejects_new_alerts) ... ok
 test_shutdown_rejects_invalid_budgets_without_closing (test_notifications.NotificationTests.test_shutdown_rejects_invalid_budgets_without_closing) ... ok
 test_stalled_provider_does_not_block_close_and_pending_recovers (test_notifications.NotificationTests.test_stalled_provider_does_not_block_close_and_pending_recovers) ... ok
+test_unsafe_outbox_files_and_constructor_failure_release (test_notifications.NotificationTests.test_unsafe_outbox_files_and_constructor_failure_release) ... ok
 test_config_rejects_world_writable (test_service.ServiceTests.test_config_rejects_world_writable) ... ok
 test_passive_collector_real_sqlite_cli_contract (test_service.ServiceTests.test_passive_collector_real_sqlite_cli_contract) ... ok
 test_poisoned_report_has_no_arbitrary_payload (test_service.ServiceTests.test_poisoned_report_has_no_arbitrary_payload) ... ok
@@ -66,6 +70,6 @@ test_read_only_tenant_scoped_redacted (test_telemetry.TelemetryTests.test_read_o
 test_tables_allowlisted (test_telemetry.TelemetryTests.test_tables_allowlisted) ... ok
 
 ----------------------------------------------------------------------
-Ran 66 tests in 7.724s
+Ran 70 tests in 6.353s
 
 OK
