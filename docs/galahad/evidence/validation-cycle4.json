@@ -1,0 +1,29 @@
+{
+  "baseline_checkpoint": "0507f7aae5a157565b1260e5b5807dd105ea136b",
+  "previous_tests": 926,
+  "final_tests": 951,
+  "added_tests": 25,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "seconds": 44.607,
+  "new_package_suites": {
+    "gateway": 18,
+    "provider": 9,
+    "evaluation": 4,
+    "service_client": 25,
+    "lifecycle": 8,
+    "holdout": 12
+  },
+  "quota_race": {
+    "processes": 4,
+    "attempts": 32,
+    "admitted": 5,
+    "rejected": 27,
+    "limit": 5
+  },
+  "crash_recovery": "real killed uncommitted SQLite writer; rollback verified, not KV",
+  "holdout": "temporary synthetic fixtures; external one-use interface tested; no independent production holdout evaluated",
+  "gpu_restore": "blocked",
+  "clinical_deployment": "none"
+}

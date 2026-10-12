@@ -1,0 +1,17 @@
+name: optional-memory-cpu-gates
+on:
+  push:
+  pull_request:
+jobs:
+  synthetic-memory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'PyJWT[crypto]>=2.10,<3'
+      - run: python -m compileall -q src/nerve_awim/memory_gateway scripts/verify_galahad.py
+      - run: python scripts/verify_galahad.py cpu
+      - run: PYTHONPATH=src python scripts/galahad_benchmark.py --samples 30
+      # No GPU, commercial activation, shadow, canary or clinical deployment.
