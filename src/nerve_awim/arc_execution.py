@@ -15,12 +15,19 @@ from .governed_learning_v20 import _json, _id
 
 def digest(value): return sha256(_json(value).encode()).hexdigest()
 
-def task_hook(runtime, *args, **kwargs):
+def task_hook(runtime, con, actor, task, method, *args, **kwargs):
     # Optional adaptation must not break base ARC when its module is absent.
     # If explicitly attached, import/hook failures still propagate fail-closed.
-    if getattr(runtime, 'adaptation', None) is not None:
-        from .adaptation import task_hook as adaptation_hook
-        return adaptation_hook(runtime, *args, **kwargs)
+    if getattr(runtime, 'adaptation', None) is None:
+        # A missing optional module is valid only for tasks that never opted in.
+        # Restarting without the coordinator must not remove a persisted guard.
+        if con.execute("SELECT 1 FROM sqlite_master WHERE name='adaptation_tasks' AND type='table'").fetchone():
+            if con.execute('SELECT 1 FROM adaptation_tasks WHERE id=? AND tenant=? AND agent=?',
+                           (task, actor.tenant, actor.agent)).fetchone():
+                raise PermissionError('persisted adaptation requires coordinator')
+        return
+    from .adaptation import task_hook as adaptation_hook
+    return adaptation_hook(runtime, con, actor, task, method, *args, **kwargs)
 
 @dataclass(frozen=True)
 class ToolSpec:
