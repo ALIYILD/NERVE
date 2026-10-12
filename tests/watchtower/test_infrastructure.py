@@ -1,4 +1,6 @@
 import hashlib
+import fcntl
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -80,6 +82,9 @@ class InfrastructureTests(unittest.TestCase):
         self.assertTrue(rebuilt.restart('tenant', 'incident-1')['verified'])
         self.assertFalse(rebuilt.latch('tenant')['latched'])
         self.assertFalse((rebuilt.blocks / 'nerve-test.service').exists())
+        journal = [json.loads(line) for line in rebuilt._path('tenant').with_suffix('.actions.jsonl').read_text().splitlines()]
+        self.assertEqual(['mask', 'stop', 'unmask', 'start'], [x['action'] for x in journal if x['phase'] == 'intent'])
+        self.assertEqual(8, len(journal))
 
     def test_disabled_unknown_and_excluded_inventory(self):
         disabled = SystemdController(self.inventory, self.root / 'disabled', runner=self.supervisor)
@@ -110,6 +115,59 @@ class InfrastructureTests(unittest.TestCase):
         result = self.controller.contain('tenant', 'i')
         self.assertFalse(result['verified'])
         self.assertEqual('UNKNOWN', result['coverage'][0]['status'])
+
+    def test_missing_unit_and_unobservable_cgroup_are_unknown(self):
+        def missing(argv, **kwargs):
+            result = self.supervisor(argv, **kwargs)
+            if argv[3] == 'show':
+                result.stdout = result.stdout.replace('LoadState=loaded', 'LoadState=not-found')
+            return result
+        self.controller.runner = missing
+        self.assertEqual('UNKNOWN', self.controller.verify('tenant')['coverage'][0]['status'])
+        for group in ('/../../unmanaged', '/absent/group', '/'):
+            def unmanaged(argv, **kwargs):
+                result = self.supervisor(argv, **kwargs)
+                if argv[3] == 'show':
+                    result.stdout = result.stdout.replace('ControlGroup=', 'ControlGroup=' + group)
+                return result
+            self.controller.runner = unmanaged
+            result = self.controller.verify('tenant')
+            self.assertFalse(result['verified'])
+            self.assertEqual('UNKNOWN', result['coverage'][0]['status'])
+
+    def test_idempotent_containment_conflict_and_distinct_parent_lock(self):
+        parent_lock = os.open(self.root / 'state' / 'controller.lock', os.O_CREAT | os.O_RDWR, 0o600)
+        try:
+            fcntl.flock(parent_lock, fcntl.LOCK_EX)
+            self.assertTrue(self.controller.contain('tenant', 'first')['verified'])
+            self.assertTrue(self.controller.contain('tenant', 'first')['verified'])
+        finally:
+            os.close(parent_lock)
+        with self.assertRaises(ValueError):
+            self.controller.contain('tenant', 'second')
+        self.assertEqual('first', self.controller.latch('tenant')['incident_id'])
+
+    def test_private_paths_and_symlink_latches(self):
+        exposed = self.root / 'exposed'
+        exposed.mkdir(mode=0o755)
+        with self.assertRaises(ValueError):
+            SystemdController(self.inventory, exposed, runner=self.supervisor)
+        target = self.root / 'fake-state'
+        target.write_text('{"incident_id":"fake","latched":false}')
+        self.controller._path('tenant').symlink_to(target)
+        with self.assertRaises(OSError):
+            self.controller.restart('tenant', 'fake')
+
+    def test_restart_timeout_recontains(self):
+        self.controller.contain('tenant', 'i')
+        def runner(argv, **kwargs):
+            if argv[3] == 'start':
+                raise subprocess.TimeoutExpired(argv, 20)
+            return self.supervisor(argv, **kwargs)
+        self.controller.runner = runner
+        self.assertFalse(self.controller.restart('tenant', 'i')['verified'])
+        self.assertTrue(self.controller.verify('tenant')['verified'])
+        self.assertTrue((self.controller.blocks / 'nerve-test.service').exists())
 
     def test_cgroup_descendants_prevent_confirmation(self):
         group = self.root / 'cgroups' / 'system.slice' / 'nerve-test.service'
@@ -156,6 +214,17 @@ class InfrastructureTests(unittest.TestCase):
         self.assertIn('unauthorized_restart', [x['kind'] for x in probe.sample('tenant')])
         protected.unlink()
         self.assertIn('visibility_loss', [x['kind'] for x in probe.sample('tenant')])
+
+    def test_protected_file_pin_and_symlink_are_not_trusted(self):
+        with self.assertRaises(ValueError):
+            InfrastructureProbe(self.controller, protected_files={'tenant': {'policy': 'invalid'}})
+        target = self.root / 'policy'
+        target.write_text('approved')
+        link = self.root / 'link'
+        link.symlink_to(target)
+        probe = InfrastructureProbe(self.controller, protected_files={'tenant': {link: hashlib.sha256(b'approved').hexdigest()}})
+        observation = next(o for o in probe.sample('tenant') if o['source'] == 'protected_files')
+        self.assertEqual('UNKNOWN', observation['status'])
 
 
 if __name__ == '__main__':

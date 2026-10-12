@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import time
 from contextlib import contextmanager
 
 
@@ -54,6 +55,11 @@ class SystemdController:
             raise ValueError('private block directory required')
         if enabled and runner is None and (os.geteuid() != 0 or self.state_dir.stat().st_uid != 0):
             raise PermissionError('live controller requires administrator-owned state and root identity')
+        if enabled and runner is None:
+            for path in (self.blocks.resolve(), self.state_dir.resolve(), *self.state_dir.resolve().parents):
+                info = path.stat()
+                if info.st_uid != 0 or info.st_mode & 0o022:
+                    raise PermissionError('live enforcement paths must have protected root-owned ancestors')
 
     def _block(self, unit, blocked):
         path = self.blocks / unit
@@ -78,9 +84,15 @@ class SystemdController:
 
     @contextmanager
     def _lock(self):
-        with open(self.state_dir / 'controller.lock', 'a') as lock:
-            fcntl.flock(lock, fcntl.LOCK_EX)
+        # Distinct from the incident service's controller.lock: nesting those
+        # locks on separate descriptors for the same inode would deadlock.
+        fd = os.open(self.state_dir / 'enforcement.lock', os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX)
             yield
+        finally:
+            fcntl.flock(fd, fcntl.LOCK_UN)
+            os.close(fd)
 
     def _save(self, tenant, record):
         path = self._path(tenant)
@@ -99,7 +111,17 @@ class SystemdController:
 
     def latch(self, tenant):
         path = self._path(tenant)
-        return json.loads(path.read_text()) if path.exists() else None
+        try:
+            fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+        except FileNotFoundError:
+            return None
+        with os.fdopen(fd) as source:
+            record = json.loads(source.read(4097))
+        if (not isinstance(record, dict) or set(record) != {'incident_id', 'latched'}
+                or not isinstance(record['incident_id'], str) or not 1 <= len(record['incident_id']) <= 128
+                or type(record['latched']) is not bool):
+            raise ValueError('invalid persisted containment latch')
+        return record
 
     def _command(self, verb, name):
         argv = ['/usr/bin/systemctl', '--no-pager', '--no-ask-password', verb, name]
@@ -112,6 +134,34 @@ class SystemdController:
             return result.returncode == 0, result.stdout[:16384]
         except (OSError, subprocess.TimeoutExpired):
             return False, ''
+
+    def _action(self, tenant, incident_id, verb, unit):
+        """Persist intent before effect; retain ambiguous intent on a crash.
+
+        This protected recovery journal supplements the parent hash-chained audit;
+        it is not a claim of tamper-proof storage against the administrator.
+        """
+        path = self._path(tenant).with_suffix('.actions.jsonl')
+        record = {'incident_id': incident_id, 'unit': unit, 'action': verb}
+
+        def journal(phase, **fields):
+            payload = json.dumps(dict(record, phase=phase, observed_at=time.time(), **fields),
+                                 sort_keys=True).encode() + b'\n'
+            fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW, 0o600)
+            with os.fdopen(fd, 'ab') as out:
+                out.write(payload)
+                out.flush()
+                os.fsync(out.fileno())
+            directory = os.open(self.state_dir, os.O_RDONLY)
+            try:
+                os.fsync(directory)
+            finally:
+                os.close(directory)
+
+        journal('intent')
+        ok, _ = self._command(verb, unit)
+        journal('result', ok=ok)
+        return {'unit': unit, 'action': verb, 'ok': ok}
 
     def measure(self, name):
         ok, output = self._command('show', name)
@@ -154,8 +204,7 @@ class SystemdController:
         actions = []
         for unit in self.inventory[tenant]:
             for verb in ('mask', 'stop'):
-                ok, _ = self._command(verb, unit.name)
-                actions.append({'unit': unit.name, 'action': verb, 'ok': ok})
+                actions.append(self._action(tenant, incident_id, verb, unit.name))
         result = self.verify(tenant)
         result['actions'] = actions
         return result
@@ -180,8 +229,9 @@ class SystemdController:
                 for verb in ('unmask', 'start'):
                     if verb == 'start':
                         self._block(unit.name, False)
-                    ok, _ = self._command(verb, unit.name)
-                    actions.append({'unit': unit.name, 'action': verb, 'ok': ok})
+                    action = self._action(tenant, incident_id, verb, unit.name)
+                    ok = action['ok']
+                    actions.append(action)
                     if not ok:
                         result = self._contain(tenant, incident_id)
                         result.update(verified=False, actions=actions + result['actions'])

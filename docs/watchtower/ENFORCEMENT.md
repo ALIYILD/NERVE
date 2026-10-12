@@ -108,7 +108,7 @@ an attacker who controls that heartbeat writer and keeps it fresh.
 | Cross-host replicas and unmonitored processes | Unknown; no universal shutdown claim |
 | Clinical dependency safety | Explicit exclusion; actual deployment dependency inventory still required |
 
-Seven automated tests passed with
+Twelve automated tests passed with
 `PYTHONPATH=safety python3 -m unittest discover -s tests/watchtower -p test_infrastructure.py -v`.
 They cover real disposable process termination, persistent test-supervisor mask
 and controller reconstruction, wrong incident rejection, disabled controller,
@@ -117,3 +117,15 @@ populated descendant cgroup rejection, failed restart recontainment, modified or
 missing protected files, stale heartbeat and observed unauthorised restart.
 No production shutdown, real systemd enforcement, IAM revocation, email or
 Telegram delivery was performed by these tests.
+
+
+Additional review hardened controller versus parent lock separation, rejected
+unprotected root ancestors for live controller state, validated bounded latch
+records with no symlink reads, and made protected-file reads bounded regular-file
+reads without following symlinks. Tests additionally exercise missing systemd
+units, missing/escaping cgroups, restart timeouts and conflicting incident latches.
+Protected per-tenant `.actions.jsonl` records fsynced action intents before each
+systemd change and outcomes afterwards. An interrupted intent is deliberately
+ambiguous and must be reconciled through `verify`; it is not a successful action.
+This recovery journal supplements the parent incident audit and requires a
+reviewed retention/export policy; it is not tamper-proof against administrators.
