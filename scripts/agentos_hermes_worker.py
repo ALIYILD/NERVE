@@ -13,6 +13,7 @@ import json
 import os
 from pathlib import Path
 import re
+import subprocess
 import sys
 import tempfile
 
@@ -33,6 +34,57 @@ def baseline_system_message(soul):
 
 def template_identity(system_message):
     return hashlib.sha256(system_message.encode()).hexdigest()
+
+
+def inspect_native_profile(profile, actual_model, configured_model, soul, *,
+                           hermes_revision=None, hermes_worktree_clean=None,
+                           availability_checked=True):
+    """Describe observed transport identity without importing or calling a model.
+
+    A checkout revision identifies Hermes source, not hosted model weights.
+    Missing provider/tokenizer attestation stays explicit and cannot be copied
+    into a deployable ModelProfile. Raw SOUL text is never returned.
+    """
+    for value in (profile, actual_model, configured_model):
+        if type(value) is not str or not value.strip() or len(value.encode()) > 256:
+            raise ValueError('bounded observed profile identity required')
+    if type(soul) is not str:
+        raise ValueError('installed SOUL text required')
+    if hermes_revision is not None and (type(hermes_revision) is not str
+            or re.fullmatch(r'[a-f0-9]{40,64}', hermes_revision) is None):
+        raise ValueError('observed source revision required')
+    if hermes_worktree_clean is not None and type(hermes_worktree_clean) is not bool:
+        raise ValueError('explicit source worktree state required')
+    if type(availability_checked) is not bool:
+        raise ValueError('explicit availability observation required')
+    return {'schema': 'nerve-cce-native-profile-v1', 'installed_profile': profile,
+            'provider': 'openrouter', 'model': actual_model,
+            'configured_model': configured_model,
+            'availability_fallback': actual_model != configured_model,
+            'availability_checked': availability_checked,
+            'hermes_revision': hermes_revision,
+            'hermes_worktree_clean': hermes_worktree_clean,
+            'template_revision': template_identity(baseline_system_message(soul)),
+            'revision': None, 'tokenizer': None, 'tokenizer_revision': None,
+            'transport_modes': ['instruction'], 'supported_modes': [],
+            'attested': False, 'model_calls': 0,
+            'blocking_reasons': ['provider_revision_unavailable', 'tokenizer_identity_unavailable']}
+
+
+def inspect_hermes_checkout(checkout):
+    """Best-effort read-only source identity; never substitutes for attestation."""
+    try:
+        revision = subprocess.check_output(
+            ['git', '-C', str(checkout), 'rev-parse', 'HEAD'],
+            text=True, timeout=5, stderr=subprocess.DEVNULL).strip()
+        if re.fullmatch(r'[a-f0-9]{40,64}', revision) is None:
+            return None, None
+        changes = subprocess.check_output(
+            ['git', '-C', str(checkout), 'status', '--porcelain', '--untracked-files=all'],
+            text=True, timeout=5, stderr=subprocess.DEVNULL)
+        return revision, not bool(changes.strip())
+    except (OSError, subprocess.SubprocessError):
+        return None, None
 
 
 def _canonical_hash(value):
@@ -131,6 +183,18 @@ def main():
     config = yaml.safe_load((root/'config.yaml').read_text())
     model = config['model']['default']
     original_model=model
+    if request.get('inspect_profile') is True:
+        if request.get('inspect') is not True:
+            raise ValueError('profile inspection cannot request inference')
+        soul = (root/'SOUL.md').read_text()[:16000] if (root/'SOUL.md').exists() else profile
+        revision, clean = inspect_hermes_checkout(installed / 'hermes-agent')
+        print(json.dumps({'ok': True, 'profile': profile, 'requested_model': model,
+            'configured_model': model, 'availability_fallback': False,
+            'native_hermes': False, 'tools': 0, 'value': None,
+            'cce_profile': inspect_native_profile(profile, model, model, soul,
+                hermes_revision=revision, hermes_worktree_clean=clean,
+                availability_checked=False)}))
+        return
     available=request.get('available_models',[])
     if model not in available:
         choices=[entry.get('model') for entry in config.get('fallback_providers',[]) if isinstance(entry,dict)]
@@ -145,9 +209,12 @@ def main():
     system_message, cce_receipt = apply_cce_envelope(cce_envelope, model, baseline_system_message(soul))
     cce_output = {'cce': cce_receipt} if 'cce' in request else {}
     if request.get('inspect') is True:
+        revision, clean = inspect_hermes_checkout(installed / 'hermes-agent')
         print(json.dumps({'ok':True,'profile':profile,'requested_model':model,
                           'configured_model':original_model,'availability_fallback':model!=original_model,
-                          'native_hermes':False,'tools':0,'value':None, **cce_output}))
+                          'native_hermes':False,'tools':0,'value':None,
+                          'cce_profile': inspect_native_profile(profile, model, original_model, soul,
+                              hermes_revision=revision, hermes_worktree_clean=clean), **cce_output}))
         return
     max_tokens=request.get('max_tokens',2048)
     if type(max_tokens) is not int or not 512 <= max_tokens <= 8192:

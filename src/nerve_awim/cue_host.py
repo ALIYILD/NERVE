@@ -119,6 +119,73 @@ class CueHost:
         coordinator.revoke(self._actor(profile, 'operator'), candidate, reason=reason)
         return coordinator.status(self._actor(profile, 'auditor'), candidate)
 
+    def _enabled_profile(self, profile):
+        _id(profile)
+        profiles, state = self._config()
+        if state != 'enabled' or profile not in profiles:
+            raise PermissionError('enabled exact host profile required')
+        return profiles[profile]
+
+    def run_cycle(self, profile, *, permission_granted=False, **parameters):
+        """Existing host invokes one bounded research step with trusted adapters.
+
+        Callback code and billing/evaluation receipts belong to the trusted host,
+        never to a JSON task or agent proposal. This does not start a scheduler.
+        """
+        from .cue_cycle import run_cue_cycle
+        model_profile = self._enabled_profile(profile)
+        if permission_granted is not True:
+            raise PermissionError('explicit research dispatch permission required')
+        reserved = {'coordinator', 'trainer', 'evaluator', 'profile', 'task_type'}
+        if reserved.intersection(parameters):
+            raise ValueError('host owns scope, profile and task classification')
+        coordinator = self._coordinator(profile)
+        result = run_cue_cycle(coordinator, self._actor(profile, 'trainer'),
+            self._actor(profile, 'evaluator'), profile=model_profile, task_type='handoff',
+            permission_granted=True, **parameters)
+        if result['candidate'] is not None:
+            result['memory_id'] = self.export_memory(profile, result['candidate'])
+        atomic_json(self.host.directory / 'cce-last-cycle.json', result)
+        return result
+
+    def approve(self, profile, candidate, *, expected_generation, reason, valid_for=86400):
+        """Local operator command, independent of discovery/evaluation callbacks."""
+        model = self._enabled_profile(profile)
+        coordinator = self._coordinator(profile)
+        status = coordinator.status(self._actor(profile, 'auditor'), candidate)
+        if status['profile_key'] != model.key or status['task_type'] != 'handoff':
+            raise PermissionError('candidate differs from current host configuration')
+        return coordinator.activate(self._actor(profile, 'operator'), candidate,
+            expected_generation=expected_generation, reason=reason, valid_for=valid_for)
+
+    def route_status(self, profile):
+        model = self._enabled_profile(profile)
+        return self._coordinator(profile).route_status(self._actor(profile, 'auditor'), model, 'handoff')
+
+    def readiness(self, profile, candidate):
+        """Recompute readiness from persisted evidence; CLI cannot supply attestations."""
+        from .cue_release import build_release_manifest
+        _id(profile); _id(candidate)
+        profiles, state = self._config()
+        model = profiles.get(profile)
+        if model is None:
+            return {'ready': False, 'authorization_granted': False,
+                    'blockers': ['host_' + state if state != 'enabled' else 'unconfigured_profile'],
+                    'rollback_target': 'no-cue'}
+        status = self.inspect(profile, candidate)
+        return build_release_manifest(profile_name=profile, profile=model,
+            host_status=self.status(profile), candidate_status=status,
+            generator_id=status['generator_id'])
+
+    def discover(self, profile, execute, manifest, *, generator_id, permission_granted=False, **budgets):
+        """Collect pending proposals through the existing Hermes host callback."""
+        from .cue_discovery import discover_cue_pool
+        model = self._enabled_profile(profile)
+        result = discover_cue_pool(execute, manifest, model, 'handoff', tenant=TENANT,
+            agent=profile, generator_id=generator_id, permission_granted=permission_granted, **budgets)
+        atomic_json(self.host.directory / 'cce-last-discovery.json', result.telemetry())
+        return result
+
     def _result(self, profile, reason, *, envelope=None, candidate=None, profile_key=None):
         receipt = {'profile': profile, 'reason': reason, 'candidate': candidate,
                    'profile_key': profile_key, 'envelope_prepared': envelope is not None,

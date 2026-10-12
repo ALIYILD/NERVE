@@ -80,7 +80,7 @@ def jev_review(host):
     return result
 
 
-def native(host, profile, prompt, *, max_tokens=2048, inspect=False, cue_context=None):
+def native(host, profile, prompt, *, max_tokens=2048, inspect=False, cue_context=None, inspect_profile=False):
     """Installed runtime, bounded text, no tools, free model, process timeout."""
     # Only an operational caller supplies this trusted context. Research and
     # no-cue comparison arms retain the unchanged default request contract.
@@ -91,7 +91,11 @@ def native(host, profile, prompt, *, max_tokens=2048, inspect=False, cue_context
             raise PermissionError('unsupported operational cue context')
         cue_preparation = CueHost(host).prepare(profile, 'handoff', permission_granted=True)
     catalog=host.directory/'free-models.json'
-    if not catalog.exists() or datetime.now().timestamp()-catalog.stat().st_mtime>86400:
+    if inspect_profile:
+        if inspect is not True:
+            raise ValueError('profile inspection cannot dispatch inference')
+        available=[]
+    elif not catalog.exists() or datetime.now().timestamp()-catalog.stat().st_mtime>86400:
         # System curl uses macOS's maintained CA trust; never disable TLS checks.
         raw=subprocess.check_output(['curl','--fail','--silent','--show-error','--max-time','20',
             'https://openrouter.ai/api/v1/models'],timeout=25)
@@ -124,6 +128,8 @@ def native(host, profile, prompt, *, max_tokens=2048, inspect=False, cue_context
         try:
             request = {'profile':profile,'prompt':prompt,
                 'available_models':available,'max_tokens':max_tokens,'inspect':inspect}
+            if inspect_profile:
+                request['inspect_profile']=True
             if cue_preparation is not None:
                 request['cce'] = cue_preparation['envelope']
             out, err = process.communicate(json.dumps(request),timeout=90)
@@ -417,9 +423,11 @@ def main():
         'repository-study','repository-run','repository-tasks','repository-diagnose','audit-study','audit-status',
         'audit-shadow','audit-shadow-status','autoresearch-enable','autoresearch-pause',
         'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort',
-        'cce-status','cce-inspect','cce-revoke','cce-demo'))
+        'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile'))
     parser.add_argument('--cue-candidate',help='Scoped CCE candidate identifier')
-    parser.add_argument('--cue-review',help='Operator review reference for cue revocation')
+    parser.add_argument('--cue-review',help='Operator review reference for cue approval or revocation')
+    parser.add_argument('--cue-generation',type=int,help='Expected CCE route generation from cce-route')
+    parser.add_argument('--cue-valid-for',type=float,default=86400,help='CCE approval lifetime in seconds (at most seven days)')
     parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
     parser.add_argument('--review',type=Path,help='Independent host review record for cohort admission')
@@ -440,13 +448,31 @@ def main():
                 result=demo()
             elif args.command=='cce-status':
                 result=cues.status(args.profile)
+            elif args.command=='cce-profile':
+                if not args.profile:
+                    parser.error('CCE profile inspection requires --profile')
+                result=native(host,args.profile,'',inspect=True,inspect_profile=True)
+                atomic_json(host.directory/'cce-last-profile.json',result)
+            elif args.command=='cce-route':
+                if not args.profile:
+                    parser.error('CCE route inspection requires --profile')
+                result=cues.route_status(args.profile)
             else:
                 if not args.profile or not args.cue_candidate:
-                    parser.error('CCE inspection/revocation requires --profile and --cue-candidate')
+                    parser.error('CCE candidate commands require --profile and --cue-candidate')
                 if args.command=='cce-revoke':
                     if not args.cue_review:
                         parser.error('CCE revocation requires --cue-review')
                     result=cues.revoke(args.profile,args.cue_candidate,reason=args.cue_review)
+                elif args.command=='cce-approve':
+                    if not args.cue_review or args.cue_generation is None:
+                        parser.error('CCE approval requires --cue-review and --cue-generation')
+                    result=cues.approve(args.profile,args.cue_candidate,
+                        expected_generation=args.cue_generation,reason=args.cue_review,
+                        valid_for=args.cue_valid_for)
+                elif args.command=='cce-readiness':
+                    result=cues.readiness(args.profile,args.cue_candidate)
+                    atomic_json(host.directory/'cce-last-readiness.json',result)
                 else:
                     result=cues.inspect(args.profile,args.cue_candidate)
             atomic_json(host.directory/'cce-status.json',cues.status())
