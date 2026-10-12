@@ -1,0 +1,251 @@
+{
+  "id": "repair-7d93df87d86b47bf9f61f0011bee63cd",
+  "profile": "backend-engineer",
+  "scope": "agentos-repository-repair-v1",
+  "cohort": "v3",
+  "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "judge_revision": "18260b7ddd8fe484ec59ebe23740c7964ab64a2d5c0b3160b6d73a5aacdd0b5c",
+  "result": {
+    "selection": {
+      "tasks": 3,
+      "evaluated": true,
+      "baseline_hits": 3,
+      "lesson_hits": 3,
+      "wins": 0,
+      "losses": 0
+    },
+    "retention": {
+      "tasks": 0,
+      "baseline_hits": 0,
+      "lesson_hits": 0,
+      "wins": 0,
+      "losses": 0,
+      "evaluated": false
+    },
+    "final": {
+      "tasks": 0,
+      "baseline_hits": 0,
+      "lesson_hits": 0,
+      "wins": 0,
+      "losses": 0,
+      "evaluated": false
+    },
+    "status": "no_gain",
+    "lesson_id": null,
+    "scope": "agentos-repository-repair-v1",
+    "general_improvement_proven": false
+  },
+  "native_sessions": [
+    {
+      "phase": "train",
+      "arm": "baseline",
+      "ok": true,
+      "profile": "backend-engineer",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90,
+      "elapsed_seconds": 36.483,
+      "budget": {
+        "max_tokens": 4096,
+        "max_iterations": 2,
+        "timeout_seconds": 90
+      },
+      "cost_usd": null
+    },
+    {
+      "phase": "proposal",
+      "ok": true,
+      "profile": "nina-memory-librarian",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90
+    },
+    {
+      "phase": "selection",
+      "arm": "lesson",
+      "ok": true,
+      "profile": "backend-engineer",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90,
+      "elapsed_seconds": 41.45,
+      "budget": {
+        "max_tokens": 4096,
+        "max_iterations": 2,
+        "timeout_seconds": 90
+      },
+      "cost_usd": null
+    },
+    {
+      "phase": "selection",
+      "arm": "baseline",
+      "ok": true,
+      "profile": "backend-engineer",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "timeout_seconds": 90,
+      "elapsed_seconds": 76.706,
+      "budget": {
+        "max_tokens": 4096,
+        "max_iterations": 2,
+        "timeout_seconds": 90
+      },
+      "cost_usd": null
+    }
+  ],
+  "artifacts": [
+    {
+      "task_id": "repair-f76ebcccff81",
+      "phase": "train",
+      "arm": "baseline",
+      "output": {
+        "code": "def latest_run_by_task(runs):\n    \"\"\"Select latest (started_at, id) per task; input ordering is irrelevant.\"\"\"\n    result = {}\n    for run in runs:\n        if not run.get('task_id') or type(run.get('started_at')) is not int or not run.get('id'):\n            continue\n        old = result.get(run['task_id'])\n        if old is None or (run['started_at'], run['id']) > (old['started_at'], old['id']):\n            result[run['task_id']] = dict(run)\n    return result\n"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 6,
+        "tests_total": 6,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-b6d3013c0c3a",
+      "phase": "train",
+      "arm": "baseline",
+      "output": {
+        "code": "def schedule_inventory(jobs):\n    \"\"\"Count distinct enabled job IDs by supported kind, retaining invalid count.\"\"\"\n    counts = dict(cron=0, interval=0, once=0, invalid=0)\n    seen = set()\n    for job in jobs:\n        ident = job.get('id')\n        if type(ident) is not str or not ident or ident in seen:\n            counts['invalid'] += 1\n            continue\n        seen.add(ident)\n        if job.get('enabled') is not True:\n            continue\n        kind = job.get('kind')\n        if kind not in ('cron', 'interval', 'once'):\n            counts['invalid'] += 1\n        else:\n            counts[kind] += 1\n    return counts\n"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 6,
+        "tests_total": 6,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-4781f136cf5c",
+      "phase": "selection",
+      "arm": "lesson",
+      "output": {
+        "code": "def timeout_diagnosis(run, limit, tick_grace=60):\n    \"\"\"Watchdog classification is not an inference about provider availability.\"\"\"\n    if type(limit) is not int or limit <= 0 or type(tick_grace) is not int or tick_grace < 0:\n        raise ValueError('invalid watchdog policy')\n    if run.get('status') != 'timed_out':\n        return 'not_timeout'\n    start, end = run.get('started_at'), run.get('finished_at')\n    if type(start) is not int or type(end) is not int or end < start:\n        return 'missing_timing'\n    elapsed = end - start\n    if elapsed < limit:\n        return 'early_timeout'\n    if elapsed <= limit + tick_grace:\n        return 'watchdog_window'\n    return 'late_watchdog'"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 8,
+        "tests_total": 8,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-46bbdb80452e",
+      "phase": "selection",
+      "arm": "lesson",
+      "output": {
+        "code": "def dependency_readiness(task, tasks):\n    \"\"\"Strict evidence gate: archived is not done, unlike scheduler release rules.\"\"\"\n    rows = {}\n    duplicates = set()\n    for row in tasks:\n        ident = row.get('id')\n        if ident in rows:\n            duplicates.add(ident)\n        rows[ident] = row\n    dependencies = task.get('depends_on', [])\n    if type(dependencies) is not list or any(type(x) is not str for x in dependencies):\n        return 'invalid'\n    if task.get('id') in dependencies or any(x in duplicates for x in dependencies):\n        return 'invalid'\n    if any(x not in rows for x in dependencies):\n        return 'missing'\n    if any(rows[x].get('status') != 'done' for x in dependencies):\n        return 'waiting'\n    return 'ready'"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 7,
+        "tests_total": 7,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-2cbf8f5f1001",
+      "phase": "selection",
+      "arm": "lesson",
+      "output": {
+        "code": "def retry_disposition(task, runs, now, cooldown):\n    \"\"\"Bounded advisory using authoritative consecutive failure counters.\"\"\"\n    maximum = task.get('max_consecutive_failures')\n    failures = task.get('consecutive_failures')\n    if type(maximum) is not int or maximum < 1 or type(failures) is not int or failures < 0 or type(now) is not int or type(cooldown) is not int or cooldown < 0:\n        return 'invalid'\n    attempts = [r for r in runs if r.get('task_id') == task.get('id')]\n    if not attempts:\n        return 'no_attempt'\n    if any(type(r.get('started_at')) is not int or not r.get('id') for r in attempts):\n        return 'unknown'\n    latest = sorted(attempts, key=lambda r: (r['started_at'], r['id']))[-1]\n    if latest.get('status') in ('running', 'claimed'):\n        return 'active'\n    if latest.get('status') == 'done':\n        return 'complete'\n    if latest.get('status') not in ('timed_out', 'failed', 'reclaimed'):\n        return 'unknown'\n    if failures >= maximum:\n        return 'exhausted'\n    ended = latest.get('finished_at')\n    if type(ended) is not int or ended > now:\n        return 'unknown'\n    if now - ended < cooldown:\n        return 'cooldown'\n    return 'eligible'"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 9,
+        "tests_total": 9,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-4781f136cf5c",
+      "phase": "selection",
+      "arm": "baseline",
+      "output": {
+        "code": "def timeout_diagnosis(run, limit, tick_grace=60):\n    \"\"\"Watchdog classification is not an inference about provider availability.\"\"\"\n    if type(limit) is not int or limit <= 0 or type(tick_grace) is not int or tick_grace < 0:\n        raise ValueError('invalid watchdog policy')\n    if run.get('status') != 'timed_out':\n        return 'not_timeout'\n    start, end = run.get('started_at'), run.get('finished_at')\n    if type(start) is not int or type(end) is not int or end < start:\n        return 'missing_timing'\n    elapsed = end - start\n    if elapsed < limit:\n        return 'early_timeout'\n    if elapsed <= limit + tick_grace:\n        return 'watchdog_window'\n    return 'late_watchdog'"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 8,
+        "tests_total": 8,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-46bbdb80452e",
+      "phase": "selection",
+      "arm": "baseline",
+      "output": {
+        "code": "def dependency_readiness(task, tasks):\n    \"\"\"Strict evidence gate: archived is not done, unlike scheduler release rules.\"\"\"\n    rows = {}\n    duplicates = set()\n    for row in tasks:\n        ident = row.get('id')\n        if ident in rows:\n            duplicates.add(ident)\n        rows[ident] = row\n    dependencies = task.get('depends_on', [])\n    if type(dependencies) is not list or any(type(x) is not str for x in dependencies):\n        return 'invalid'\n    if task.get('id') in dependencies or any(x in duplicates for x in dependencies):\n        return 'invalid'\n    if any(x not in rows for x in dependencies):\n        return 'missing'\n    if any(rows[x].get('status') != 'done' for x in dependencies):\n        return 'waiting'\n    return 'ready'"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 7,
+        "tests_total": 7,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    },
+    {
+      "task_id": "repair-2cbf8f5f1001",
+      "phase": "selection",
+      "arm": "baseline",
+      "output": {
+        "code": "def retry_disposition(task, runs, now, cooldown):\n    \"\"\"Bounded advisory using authoritative consecutive failure counters.\"\"\"\n    maximum = task.get('max_consecutive_failures')\n    failures = task.get('consecutive_failures')\n    if type(maximum) is not int or maximum < 1 or type(failures) is not int or failures < 0 or type(now) is not int or type(cooldown) is not int or cooldown < 0:\n        return 'invalid'\n    attempts = [r for r in runs if r.get('task_id') == task.get('id')]\n    if not attempts:\n        return 'no_attempt'\n    if any(type(r.get('started_at')) is not int or not r.get('id') for r in attempts):\n        return 'unknown'\n    latest = sorted(attempts, key=lambda r: (r['started_at'], r['id']))[-1]\n    if latest.get('status') in ('running', 'claimed'):\n        return 'active'\n    if latest.get('status') == 'done':\n        return 'complete'\n    if latest.get('status') not in ('timed_out', 'failed', 'reclaimed'):\n        return 'unknown'\n    if failures >= maximum:\n        return 'exhausted'\n    ended = latest.get('finished_at')\n    if type(ended) is not int or ended > now:\n        return 'unknown'\n    if now - ended < cooldown:\n        return 'cooldown'\n    return 'eligible'"
+      },
+      "check": {
+        "passed": true,
+        "category": "passed",
+        "tests_passed": 9,
+        "tests_total": 9,
+        "scope": "agentos-repository-repair-v1",
+        "memory_limit_enforced": false
+      }
+    }
+  ],
+  "limitation": "Repository-derived injected faults, not resolved production tickets. Small disjoint function set; measured paired results do not prove general improvement."
+}

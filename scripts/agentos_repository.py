@@ -25,8 +25,8 @@ def ledger(host):
 
 
 def cohorts():
-    from nerve_awim import agentos_taskbench_v2
-    return {'v1':bench, 'v2':agentos_taskbench_v2}
+    from nerve_awim import agentos_taskbench_v2, agentos_taskbench_v3
+    return {'v1':bench, 'v2':agentos_taskbench_v2, 'v3':agentos_taskbench_v3}
 
 
 def revision(cohort='v1'):
@@ -101,8 +101,18 @@ def predict(host, native, profile, tasks, *, model, lesson=None):
     prompt=('Repair each supplied Python function to meet its requirements. '
         'Return only a JSON object keyed by task id; each value must be '
         '{"code":"the complete replacement function source"}. '
+        'The exact outer shape is {"<task id>":{"code":"def <function>(...):\\n    ..."}} '
+        'with one entry for every supplied task id. '
+        'Each task source includes the function to repair and may include dependency '
+        'definitions above it. Those dependencies are IMMUTABLE CONTEXT supplied by '
+        'the host, not part of your replacement. Reference their existing names inside '
+        'the function; never copy or redefine them in the output. '
+        'Each code string must contain exactly one def statement with its body. '
+        'No top-level assignments, constants, helper functions, imports, or test calls. '
         'Preserve the named function and signature. No tools are available. '
-        'Follow the supplied patch contract. Do not include explanations.\n'+
+        'Follow the supplied patch contract. Return raw JSON without Markdown fences '
+        'or explanations. Invalid patches are rejected as submitted; no repair retry '
+        'or automatic extraction is performed.\n'+
         ('Evaluated procedural advice, subordinate to each task: '+lesson+'\n' if lesson else '')+
         'Tasks: '+json.dumps([bench.public_task(t) for t in tasks]))
     started=time.monotonic()

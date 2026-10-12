@@ -233,6 +233,16 @@ def collect_missions(host):
                 if verification.get('accepted') is not True or not verification.get('checks') or verification.get('issues'):
                     rejected += 1
                     continue
+                # A host review may veto an optimistic agent QA verdict. It is
+                # optional for historical missions, but present evidence fails closed.
+                host_review_path = manifest_path.parent/'host-review.json'
+                if host_review_path.exists():
+                    review = json.loads(host_review_path.read_text())
+                    if (type(review) is not dict or review.get('accepted') is not True
+                            or type(review.get('checks')) is not list or not review['checks']
+                            or type(review.get('issues')) is not list or review['issues']):
+                        rejected += 1
+                        continue
                 # Independent verifier must itself have completed on a distinct
                 # profile, and both promised worker artifacts must be present.
                 if not all((manifest_path.parent/name).is_file() for name in ('routing.json','scheduling.json')):
@@ -350,7 +360,7 @@ def main():
     parser.add_argument('--task',type=Path)
     parser.add_argument('--state',type=Path,default=STATE)
     parser.add_argument('--task-id')
-    parser.add_argument('--cohort',choices=('v1','v2'),help='Repository task cohort; default selects fresh evidence automatically')
+    parser.add_argument('--cohort',choices=('v1','v2','v3'),help='Repository task cohort; default selects fresh evidence automatically')
     parser.add_argument('--review-target',choices=('handoff','repository-experiments','repository-taskbench','repository-runner'),default='handoff')
     args=parser.parse_args()
     args.profile=args.profile or ('backend-engineer' if args.command.startswith('repository-') or args.command=='cycle' else 'qa-release')

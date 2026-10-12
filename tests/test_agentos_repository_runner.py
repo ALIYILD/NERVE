@@ -1,6 +1,7 @@
 """Orchestration contracts with fake inference and a host-owned fake judge.
 
 These tests spend no provider credits and execute no generated repair code.
+Patch-format tests additionally exercise the real static validator.
 """
 from contextlib import ExitStack
 import importlib.util
@@ -290,6 +291,52 @@ class RepositoryRunnerTests(unittest.TestCase):
         result=runner.study(self.host,self.native(mode='tie'),'qa',self.vault,cohort='v1')
         self.assertEqual(result['result']['status'],'no_gain')
         self.assertFalse(pending.exists())
+
+
+class RepositoryPromptContractTests(unittest.TestCase):
+    def setUp(self):
+        self.task=next(t for t in runner.bench.dataset()['train'] if 'MAX_COUNTER =' in t.preamble)
+        self.public=runner.bench.public_task(self.task)
+        self.calls=[]
+
+    def native(self, output):
+        def invoke(host,profile,prompt,**kwargs):
+            self.calls.append((prompt,kwargs))
+            return dict(requested_model='fake-free',**runner.BUDGET,
+                        value={self.public['id']:output})
+        return invoke
+
+    def test_both_arms_share_explicit_context_contract_and_unchanged_public_task(self):
+        output=runner.bench.reference_solution(self.task)
+        with patch.object(runner.bench,'evaluate',return_value={'passed':True}):
+            for lesson in (None,'Check exact types.'):
+                runner.predict(None,self.native(output),'qa',[self.task],model='fake-free',lesson=lesson)
+        baseline,learned=[entry[0] for entry in self.calls]
+        advice='Evaluated procedural advice, subordinate to each task: Check exact types.\n'
+        self.assertEqual(baseline,learned.replace(advice,''))
+        self.assertIn('IMMUTABLE CONTEXT supplied by the host',baseline)
+        self.assertIn('No top-level assignments, constants, helper functions, imports, or test calls.',baseline)
+        self.assertIn('Return raw JSON without Markdown fences',baseline)
+        self.assertEqual(json.loads(baseline.split('\nTasks: ',1)[1]),[self.public])
+        self.assertNotIn('checks',json.loads(baseline.split('\nTasks: ',1)[1])[0])
+        self.assertEqual(self.calls[0][1],self.calls[1][1])
+        self.assertEqual(self.calls[0][1],{'max_tokens':runner.BUDGET['max_tokens']})
+
+    def test_copied_dependency_is_rejected_unchanged_without_retry(self):
+        output={'code':self.task.preamble+self.task.original}
+        values,checks,_=runner.predict(None,self.native(output),'qa',[self.task],model='fake-free')
+        self.assertEqual(len(self.calls),1)
+        self.assertEqual(values[self.public['id']],output)
+        self.assertEqual(checks[self.public['id']]['category'],'patch_rejected')
+        self.assertFalse(checks[self.public['id']]['passed'])
+
+    def test_function_only_passes_static_contract_but_fenced_output_does_not(self):
+        valid=runner.bench.reference_solution(self.task)
+        self.assertEqual(runner.bench.validate_patch(self.task,valid),self.task.original)
+        fenced={'code':'```python\n'+self.task.original+'\n```'}
+        _,checks,_=runner.predict(None,self.native(fenced),'qa',[self.task],model='fake-free')
+        self.assertEqual(checks[self.public['id']]['category'],'patch_rejected')
+        self.assertEqual(len(self.calls),1)
 
 
 if __name__=='__main__':

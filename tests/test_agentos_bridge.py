@@ -150,6 +150,48 @@ class AgentOSBridgeTests(unittest.TestCase):
         self.assertEqual(bridge.collect_missions(fresh)['added'], 1)
         self.assertEqual(fresh.status()['missions'][0]['passed'], 0)
 
+    def test_host_review_vetoes_successful_independent_qa(self):
+        path = self.root/'.hermes/kanban/boards/agentos-maintenance/kanban.db'
+        path.parent.mkdir(parents=True)
+        with sqlite3.connect(path) as db:
+            db.execute('CREATE TABLE tasks(id INTEGER,status TEXT)')
+            db.execute('CREATE TABLE task_runs(id INTEGER,task_id INTEGER,profile TEXT,started_at REAL,ended_at REAL,outcome TEXT)')
+            db.executemany('INSERT INTO tasks VALUES(?,?)', [(1,'done'),(2,'done')])
+            db.executemany('INSERT INTO task_runs VALUES(?,?,?,?,?,?)', [
+                (1,1,'worker',10,20,'completed'), (2,2,'verifier',10,20,'completed')])
+        mission = self.vault/'Journal/maintenance-missions/reviewed'
+        mission.mkdir(parents=True)
+        (mission/'mission.json').write_text(json.dumps(dict(verifier_id=2,worker_ids=[1])))
+        (mission/'verification.json').write_text(json.dumps(dict(accepted=True,checks=['worker assertion'],issues=[])))
+        for name in ('routing.json','scheduling.json'):
+            (mission/name).write_text('{}')
+        review = mission/'host-review.json'
+        rejected = [
+            dict(accepted=False,checks=['route evidence'],issues=['unsupported no_paid_routes']),
+            dict(accepted=True,checks=['route evidence'],issues=['unsupported no_paid_routes']),
+            dict(accepted=1,checks=['route evidence'],issues=[]),
+            dict(accepted=True,checks=[],issues=[]),
+            dict(accepted=True,checks='assertion',issues=[]),
+            dict(accepted=True,checks=['route evidence']),
+            dict(accepted=True,checks=['route evidence'],issues=False),
+            [], None,
+        ]
+        for index, value in enumerate(rejected):
+            with self.subTest(review=value):
+                review.write_text(json.dumps(value))
+                host = AgentOSLearning(self.root/('reject-'+str(index)))
+                result = bridge.collect_missions(host)
+                self.assertEqual(result['added'],0)
+                self.assertEqual(result['unverified_missions'],1)
+        review.write_text('{invalid')
+        self.assertEqual(bridge.collect_missions(self.host)['unverified_missions'],1)
+        self.assertEqual(self.host.status()['missions'],[])
+        review.write_text(json.dumps(dict(accepted=True,checks=['independent route evidence'],issues=[])))
+        self.assertEqual(bridge.collect_missions(self.host)['added'],1)
+        review.unlink()
+        legacy = AgentOSLearning(self.root/'legacy-state')
+        self.assertEqual(bridge.collect_missions(legacy)['added'],1)
+
     def run_study(self, gain):
         seen, proposals = [], []
         def batch(host, profile, tasks, lesson=None):
