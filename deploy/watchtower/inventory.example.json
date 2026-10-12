@@ -1,0 +1,12 @@
+{
+  "enabled": false,
+  "state_directory": "/var/lib/nerve-guardian",
+  "tenants": {
+    "REPLACE_WITH_REVIEWED_TENANT": {
+      "units": ["nerve-repository-pilot.service"],
+      "clinical": false,
+      "shared": false
+    }
+  },
+  "uncovered": ["unmanaged processes", "containers", "remote hosts", "IAM", "network", "external tools", "deployment credentials"]
+}
