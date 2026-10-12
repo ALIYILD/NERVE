@@ -248,3 +248,31 @@ are not pooled across versions. The snapshot digest binds the frozen in-memory
 discovery invocation. No full snapshot is retained for later reconstruction.
 Cue safety validation is a bounded instruction filter, not a privacy classifier;
 hosts must keep sensitive data out of historical cue text.
+
+## Opt-in local live research
+
+The existing autoresearch tick can now load the built-in
+`ollama-local-handoff-v1` adapter for pending jobs when
+`cce-local-research.json` explicitly enables an installed, digest-pinned local
+model. Its exact schema is `{"enabled": true, "model": "qwen2.5-coder:1.5b",
+"model_digest": "<installed manifest SHA256>"}`. Missing, disabled or malformed
+configuration still exposes no local callbacks. The ordinary CCE profile must
+also be configured with the exact `inspect_binding(host)` identity.
+
+This adapter uses the existing research callback and experiment runner; it adds
+no scheduler or agent controller. An immutable ledger caps local generation
+attempts at 80 per UTC day, separately from the unchanged hosted-provider cap.
+Each job has at most 77 calls and a 600-second admission budget; synchronous
+metadata and file operations are not forcibly cancellable. Calls in progress use
+bounded HTTP timeouts. Failed attempts remain charged to the local call ledger.
+
+The model supplies its own answer probability. A separate deterministic grader
+checks the answer against the task facts; it never creates confidence scores.
+Self-reported probabilities are not assumed calibrated. Strict schema safety is
+limited to public handoff tasks. Local electricity and hardware cost are not
+measured, and local research identity cannot authorize production worker use.
+
+See [the frozen two-study programme](local-live.md). To stop local inference, set
+`enabled` to false in `cce-local-research.json`; every subsequent callback checks
+that configuration. `autoresearch-pause` pauses future scheduled research ticks.
+Neither option deletes evidence or resets budgets.

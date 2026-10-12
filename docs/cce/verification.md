@@ -22,6 +22,8 @@ operational cue has been enabled and no model or clinical deployment has been pe
 | Scheduled job focused checks | **21 new tests passed**: 10 durable queue tests and 11 autoresearch/bridge tests; 15 existing autoresearch tests also passed |
 | Evaluator-feedback discovery integration, final full suite | **1,259 run, 1,258 passed, 1 skipped**, 81.552 seconds |
 | Feedback-focused additions | **17 new tests passed**: 11 scoped context/validation, five discovery/cycle integration and one queue redaction test |
+| Local scheduled adapter integration, full suite | **1,276 run, 1,275 passed, 1 skipped**, 68.727 seconds |
+| Local protocol/registry additions | **17 new tests passed**: six response-contract and 11 registry/oracle/budget tests |
 | Node checkpoint discovery | **7 passed** |
 | `git diff --check` | Passed |
 | Offline commissioning CLI | 30 paired tasks / 60 fixture calls, zero external provider calls; candidate rejected, no active cue, pending memory export |
@@ -197,3 +199,9 @@ The first feedback integration run exposed one legacy discovery compatibility
 failure: creating governance state when no feedback existed. The host now checks
 for scoped feedback read-only and retains the prior no-bootstrap behavior when
 none exists. The final full suite above passed after that repair.
+
+The opt-in local handoff protocol now supplies model-self-reported probabilities
+with independent host grading, source/model identity checks and a separate durable
+80-call daily ledger. Two public procedural datasets were frozen before inference.
+Tests above establish software behavior; measured commissioning outcomes belong
+in [local live research](local-live.md), not in fixture effectiveness claims.

@@ -259,7 +259,8 @@ def tick(host, adapters=None):
             return wait('waiting_for_budget')
         admission = {'job_id': spec['job_id'], 'profile': spec['profile'], 'dataset_digest': frozen.digest,
                      'model': asdict(model), **{name: spec[name] for name in
-                     ('max_calls', 'max_cost_usd', 'discovery_cost_cap_usd', 'per_call_cost_cap_usd')}}
+                     ('max_calls', 'max_cost_usd', 'discovery_cost_cap_usd', 'per_call_cost_cap_usd',
+                      'generator_id', 'evaluator_id', 'adapter_id', 'adapter_revision')}}
         try:
             ready = adapter['preflight'](host, admission)
         except Exception:

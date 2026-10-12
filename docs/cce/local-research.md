@@ -189,3 +189,14 @@ are not pooled across versions. The snapshot digest binds the frozen in-memory
 discovery invocation. No full snapshot is retained for later reconstruction.
 Cue safety validation is a bounded instruction filter, not a privacy classifier;
 hosts must keep sensitive data out of historical cue text.
+
+## Separate live handoff protocol
+
+The default arithmetic smoke keeps confidence unavailable. The opt-in
+`handoff-confidence-v1` protocol instead requests a model-provided probability
+for its complete structured answer and pins that response contract into the
+model profile. Strict parsing rejects missing, nonfinite, duplicate or malformed
+fields; error receipts retain measured token usage but do not invent confidence.
+The local research registry supplies an independent handoff oracle and durable
+call accounting. See [local live research](local-live.md); this is a separate
+protocol and dataset, not retrospective calibration of the earlier smoke.
