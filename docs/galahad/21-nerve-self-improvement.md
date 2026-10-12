@@ -35,3 +35,28 @@ PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p test_memory_sel
 ```
 
 The output path must not already exist. Protocol and selected-policy hashes let reviewers identify exactly what was measured. The full study is fixed and bounded; it does not start a continuous scheduler or give agents permission to assign rewards or approve memories.
+
+## Measured result and decision
+
+Code: `a5f83c69e50743bb38b640d6e3be9582413272d4` on `feature/galahad-persistent-memory`. Full suite: **1,093 passed** in54.233seconds, zero failures/errors/skips. This includes six exploration/compatibility regressions and eight study-contract tests. Compileall and whitespace checks passed. No remote CI, push, PR, merge, deployment or model-weight training occurred.
+
+The first actual full study executed4,400 tool pipelines in176 isolated trials. It selected window10/relevance from validation (34/40 probes), versus current window3/relevance31/40. The least-recent variants tied their corresponding windows on validation, so the unchanged relevance policy won the preregistered tie rule.
+
+| Held-out arm | Correct probes /100 |
+|---|---:|
+| Current default: window3/relevance |73|
+| Validation-selected: window10/relevance |73|
+| Fixed lower-only tool |55|
+| Fixed trim-lower tool |45|
+
+Selected versus current produced five paired wins and five paired losses. Scenario deltas: stationary0, abrupt0, mixed+3, recurrent−3. Descriptive seed-cluster95% interval for accuracy difference:−0.09 to+0.09; exact descriptive paired p=1.0. **Recommendation: retain the current default.** The selected configuration had no total gain and regressed on recurrent tasks. No configuration was promoted.
+
+Every frozen probe passed the unchanged-utility snapshot check. All arms had equal25 tool executions per trial; total study wall time was100.870seconds on Python3.10.0/macOS x86_64, with other regression work sharing the host during part of the run. Those CPU times are execution evidence, not a representative latency/speedup benchmark. No inference-token, energy or monetary-cost improvement is claimed.
+
+The training-only equal-failure regression separately demonstrates that least-recent ties escape a specific lock-in. The broader study did not establish an aggregate advantage for that candidate; it remains explicitly opt-in. This distinction is essential: fixing one constructed failure is not proof of broadly better adaptation.
+
+The result shows why NERVE needs comparative testing: a longer window looked better on validation but traded mixed-task gains for recurrent-task regressions. Future policy research needs a newly frozen protocol and untouched evaluation corpus, rather than tuning against this now-observed holdout. Real scientific tasks, actual model integrations and independent domain evaluation remain future work.
+
+Evidence: [complete preregistered study and trace](evidence/self-improvement-study-v1.json), [test validation](evidence/self-improvement-validation.json). The following documentation commit does not change the tested executable code.
+
+Added files: `memory_gateway/self_study.py`, `benchmarks/memory_self_improvement.py`, exploration/study tests and this report. Modified existing `adaptive_memory.py`, gateway learning/automatic-run configuration, verification groups and README. Existing ledger, gateway, agents, independent outcome evaluator and paired-statistics engine are reused.

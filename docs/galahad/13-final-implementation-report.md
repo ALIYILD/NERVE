@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest self-study:** [21-nerve-self-improvement.md](21-nerve-self-improvement.md) documents the opt-in failure-tie fix, matched policy experiment and1,093 passing tests. Held-out selected/current accuracy tied73/100 with scenario regression, so the default was retained.
+
 **Latest automatic adaptation:** [20-automatic-adaptation.md](20-automatic-adaptation.md) records the bounded automatic execution→evaluation→feedback path, durable budgets/replay claims and synthetic drift evidence. This does not complete the GPU or clinical gates.
 
 **Latest learning continuation:** [19-outcome-learning.md](19-outcome-learning.md) documents executable, host-verified adaptive sessions and actual strategy changes across restart, with1,055 full-suite passes plus the final deletion-semantics regression.
