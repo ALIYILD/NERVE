@@ -5,7 +5,7 @@ from .learning_study import validate_stream
 
 
 def propose_and_evaluate(ledger, actor, *, runtime, context, evidence_episodes,
-                         evaluator_revision, study, predict, judge):
+                         evaluator_revision, study, predict, judge, uncertainty=None):
     """Host supplies approved research evidence, task data and independent judge.
 
     Raw web research is not performed here. Runtime gets no expected answers.
@@ -13,8 +13,13 @@ def propose_and_evaluate(ledger, actor, *, runtime, context, evidence_episodes,
     """
     ledger.authority.require(actor, 'read')
     ledger.authority.require(actor, 'propose')
+    from .uncertainty.adapters import memory_boundary
+    memory_boundary(ledger, actor, context, uncertainty)
     study = validate_stream(study)
     def generate(request):
+        envelope = uncertainty.handoff(actor) if uncertainty is not None else None
+        if envelope is not None:
+            request = {**request, 'uncertainty': envelope}
         research = runtime.execute('research', {**request, 'output_schema':
             'Return exactly summary (string) and episodes (unchanged ordered IDs).'},
             tenant=actor.tenant_id, agent=actor.agent_id)
@@ -23,14 +28,26 @@ def propose_and_evaluate(ledger, actor, *, runtime, context, evidence_episodes,
                 or research['episodes'] != expected or type(research['summary']) is not str \
                 or not 1 <= len(research['summary']) <= 2048:
             raise ValueError('bounded source-linked research summary required')
-        return runtime.execute('skill_builder', {**request, 'research_summary':research['summary'],
+        if uncertainty is not None:
+            request = {**request, 'uncertainty': uncertainty.handoff(actor, envelope)}
+        built = runtime.execute('skill_builder', {**request, 'research_summary':research['summary'],
             'output_schema':'Return exactly lesson (string) and episodes (unchanged ordered IDs).'},
             tenant=actor.tenant_id, agent=actor.agent_id)
+        if uncertainty is not None:
+            uncertainty.handoff(actor, request['uncertainty'])
+            uncertainty.permit_learning(actor)
+        return built
     proposal = generate_skill_proposal(ledger, actor, context=context,
         episodes=evidence_episodes, evaluator_revision=evaluator_revision,
         generator=generate)
     record = ledger.status(actor, proposal)
     evaluation = evaluate_lesson(record.content, study, predict=predict, judge=judge)
-    return {'proposal_id':proposal, 'memory_status':ledger.status(actor, proposal).status,
+    result = {'proposal_id':proposal, 'memory_status':ledger.status(actor, proposal).status,
             'evaluation':evaluation, 'promotion_authorized':False,
             'runtime_contract':'Hermes text-only v1; host owns provider isolation'}
+
+    if uncertainty is not None:
+        uncertainty.permit_learning(actor)
+        result['uncertainty'] = uncertainty.handoff(actor)
+        result['uncertainty_result'] = uncertainty.final([{'claim_id': c.claim_id} for c in uncertainty.ledger.claims(uncertainty.actor, uncertainty.task_id)])
+    return result

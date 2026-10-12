@@ -218,9 +218,11 @@ class TrustedMemoryLedger:
                 (memory_id, actor.tenant_id, actor.agent_id),
             )
 
-    def retrieve(self, actor, *, context, query, limit=5, now=None):
+    def retrieve(self, actor, *, context, query, limit=5, now=None, uncertainty=None):
         self.authority.require(actor, "read")
         _id(context, "context")
+        from .uncertainty.adapters import memory_boundary, memory_result
+        memory_boundary(self, actor, context, uncertainty)
         if type(query) is not str or len(query) > 256:
             raise ValueError("bounded query required")
         if type(limit) is not int or not 1 <= limit <= 20:
@@ -251,9 +253,9 @@ class TrustedMemoryLedger:
             rank = (overlap / max(1, len(tokens)), utility, record.created_at)
             scored.append((rank, record))
         scored.sort(key=lambda p: (p[0], p[1].memory_id), reverse=True)
-        return [record for _, record in scored[:limit]]
+        return memory_result(uncertainty, actor, [record for _, record in scored[:limit]])
 
-    def approved_pool(self, actor, *, context, now=None, limit=500):
+    def approved_pool(self, actor, *, context, now=None, limit=500, uncertainty=None):
         """Authorised approved pool for optional semantic re-ranking.
 
         Unlike lexical retrieve, this yields all approved in-scope memories
@@ -262,6 +264,8 @@ class TrustedMemoryLedger:
         """
         self.authority.require(actor, "read")
         _id(context, "context")
+        from .uncertainty.adapters import memory_boundary, memory_result
+        memory_boundary(self, actor, context, uncertainty)
         if type(limit) is not int or not 1 <= limit <= 1000:
             raise ValueError("invalid pool limit")
         if now is None:
@@ -277,7 +281,7 @@ class TrustedMemoryLedger:
                    ORDER BY created_at DESC, memory_id DESC LIMIT ?""",
                 (actor.tenant_id, actor.agent_id, context, now, limit),
             ).fetchall()
-        return [self._record(row) for row in rows]
+        return memory_result(uncertainty, actor, [self._record(row) for row in rows])
 
     def status(self, actor, memory_id):
         self.authority.require(actor, "read")

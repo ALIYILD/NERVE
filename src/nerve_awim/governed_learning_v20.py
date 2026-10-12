@@ -212,6 +212,9 @@ class GovernedLearning:
         scope = self._scope(actor, *ROLES)
         task, _ = self._task(task)
         with self._db() as con:
+            if con.execute("SELECT 1 FROM sqlite_master WHERE name='uc_contexts'").fetchone():
+                if con.execute('SELECT 1 FROM uc_contexts WHERE tenant=? AND agent=? AND context=?', (*scope, task.context)).fetchone():
+                    raise PermissionError('uncertainty-enabled context requires assessment at dispatcher')
             mode = None
             if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='arc_modes'").fetchone():
                 row = con.execute('SELECT mode FROM arc_modes WHERE tenant=? AND agent=? AND context=?', (*scope, task.context)).fetchone()
@@ -422,6 +425,8 @@ class GovernedLearning:
             if guard is not None:
                 guard(con, scope, state)
             routes = self._release(con, scope, state['active'])
+            from .uncertainty.policy import dispatch_guard as uncertainty_dispatch_guard
+            uncertainty_dispatch_guard(con, self, actor, task, routes[task.context])
         strategy = routes[task.context]
         value = self._registry[(task.context, strategy)](deepcopy(task.payload))
         return {'value': value, 'strategy': strategy, 'release': state['active'],

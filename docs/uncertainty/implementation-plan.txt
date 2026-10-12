@@ -1,0 +1,526 @@
+# NERVE — Persistent uncertainty and conflict handling
+# CLI implementation plan: loops 20–25
+
+Prepared: 12 October 2026
+Target repository: https://github.com/ALIYILD/NERVE
+Companion: NERVE_Memento3_CLI_Loop_Plan.txt (loops 00–19)
+Status: implementation instructions; no implementation or deployment claimed.
+All new paths, APIs and commands below are proposed until implemented and tested.
+
+## START HERE — instruction for Claude Code or Codex CLI
+
+Implement this plan in ALIYILD/NERVE. Read the full document, applicable AGENTS.md,
+CONTRIBUTING.md, current source and CI before editing. Work in an isolated branch
+or worktree, preserve existing user changes, and extend existing NERVE services.
+
+Build loops 20–25 in dependency order. Each loop follows inspect → implement →
+test → diagnose → repair → checkpoint. Complete all unblocked implementation and
+verification without repeatedly asking whether to continue. After three failed
+repair attempts for one issue, record a precise blocker and continue independent
+work. Do not weaken tests, authority checks or acceptance criteria to finish.
+
+This is an implementation assignment, not a request for another plan. Deliver
+working integrations, migrations, tests, an offline demonstration and a report
+with exact commands and results. Keep provider-backed evidence separate from
+scripted fixtures. Missing credentials do not block offline implementation.
+
+If the Memento package already exists, wire its rulebook, planner, registry and
+coordinator. If it does not, implement the uncertainty core against current NERVE
+entry points and define tested adapter contracts. Mark Memento end-to-end wiring
+blocked until that package exists; do not fake or duplicate its implementation.
+
+Do not invent live API endpoints. Inspect the current checkout to find actual
+integration points. Follow existing authorization for remote writes, PRs, merge
+and deployment. This plan grants no production, patient or device action authority.
+
+## 1. Objective and research interpretation
+
+NERVE must preserve decision-relevant uncertainty from evidence intake through
+agent handoff, planning, learning, checkpoint recovery and final output. It must
+verify efficiently, continue unaffected work and make unresolved dependencies
+visible. Generic disclaimers and arbitrary confidence numbers do not satisfy this.
+
+Research source: Accurate but Not Humble: Evaluating Epistemic Humility in LLM
+Agents under Knowledge Conflict, https://arxiv.org/abs/2610.12360.
+The paper evaluates Identify, Solve and Escalate behavior. It reports that agents
+may detect conflicts early but fail to preserve or communicate them later; greater
+accuracy does not necessarily imply better uncertainty behavior. Its released
+evaluation uses bounded follow-up tool use as a Solve proxy. That proxy is not
+proof of factual resolution. Its interventions also expose accuracy trade-offs.
+
+Everything below is a proposed engineering adaptation, not an experimentally
+validated NERVE result. Keep three things distinct: conflict status, calibrated
+prediction uncertainty and permission to act. One cannot substitute for another.
+
+## 2. Current grounding and prerequisites
+
+Earlier targeted inspection used NERVE commit:
+ca1e2d92608654ab5d88c2a5866037656caf4a29
+The current checkout may differ. Repeat discovery before implementation.
+
+Previously inspected integration candidates:
+- src/nerve_awim/memory_v18.py: scoped memory proposal/approval/revocation.
+- src/nerve_awim/hermes_learning.py: source-linked text proposals.
+- src/nerve_awim/agentos_learning.py: host-judged evidence handoff.
+- src/nerve_awim/improvement_loop.py: bounded proposals and separated evaluation.
+- src/nerve_awim/governed_learning_v20.py: scoped roles and governed releases.
+- src/nerve_awim/learn_mcp.py: existing local experimental MCP entry point.
+- src/nerve_awim/promotion_monitor_v24.py: post-promotion monitoring.
+- src/nerve_awim/observed_runtime_v29.py: simulation observation wrapper.
+- .github/workflows/tests.yml: current Python unittest and research checks.
+
+Use these as discovery targets, not guaranteed compatible interfaces. In-process
+capability objects are not remote authentication. Preserve their documented
+limits. Do not convert ordinary recalled text into a release or action authority.
+
+Bootstrap tasks before loop 20:
+1. Record branch, HEAD, applicable instructions, relevant dependencies and baseline.
+2. Locate actual intake, memory retrieval, handoff, dispatch and response paths.
+3. Identify any existing uncertainty/conflict modules and reuse them.
+4. Create docs/uncertainty/repo-map.md and an implementation backlog with evidence.
+5. Read CI and run required baseline checks; preserve pre-existing failure records.
+
+## 3. Proposed package and integration hooks
+
+src/nerve_awim/uncertainty/
+  contracts.py       Typed claims, conflicts, checks and decisions
+  ledger.py          Durable scoped records and event history
+  detection.py       Candidate contradiction and missing-evidence detection
+  reconciliation.py Entity, time, units, context and source-lineage matching
+  propagation.py    Handoff, checkpoint and retrieval integration
+  verification.py   Bounded tool-based evidence collection
+  resolution.py     Evidence-backed closure and reopening
+  policy.py         Decision-specific action and escalation gates
+  output_guard.py   Claim-to-evidence/output consistency validation
+  evaluation.py     Offline benchmark scoring and metrics
+  adapters.py       Existing NERVE and optional Memento integrations
+  cli.py            Scoped operator interface
+
+Suggested tests: tests/test_uncertainty_*.py
+Synthetic fixtures: benchmarks/uncertainty/
+Proposed configuration: configs/uncertainty.offline.json
+Runtime evidence belongs in controlled storage, not source control.
+
+Required hook sequence:
+intake → normalize claims → register possible conflict → reconcile context →
+persist status → bounded verification → resolution assessment → gate affected
+decision → dispatch if permitted → validate final output → record outcomes.
+
+Insert hooks at existing boundaries. A new package used only by its own demo does
+not count as integrated. Start with one real Agent OS or Hermes execution path,
+then cover every currently supported path that can bypass that path's gates.
+
+## 4. Typed data contracts
+
+Claim:
+  claim_id, schema_version, tenant_id, task_id, subject_ref, predicate,
+  normalized_value, value_type, units, polarity, valid_from, valid_to,
+  observed_at, retrieved_at, context, source_ref, source_revision,
+  source_lineage_id, evidence_hash, provenance_class, extraction_status
+
+Source timestamps do not establish which assertion is true. Separate when a fact
+applies, when it was recorded and when it was retrieved. Different patients,
+time periods, measurement methods or units must not create false contradictions.
+
+Conflict:
+  conflict_id, scope, claim_ids, kind, status, affected_decision_ids,
+  affected_rule_ids, materiality, detected_at, updated_at, revision,
+  owner_role, checks, resolution_ref, reopened_from, expiry_review_at
+
+Kinds: source_disagreement, prior_vs_evidence, missing_required_evidence,
+stale_evidence, ambiguous_identity, measurement_uncertainty, tool_status_unknown.
+Do not label every missing field a contradiction. Unknown prior beliefs remain
+unknown; do not demand hidden chain-of-thought or infer it from an answer alone.
+
+Statuses:
+  suspected → confirmed_open → investigating → resolved
+  suspected → dismissed_with_evidence
+  investigating → unresolved_reported
+  resolved/dismissed_with_evidence → reopened
+
+unresolved_reported remains OPEN for decision gating. A task ending, budget
+exhaustion or an escalation never resolves the underlying conflict automatically.
+
+VerificationAttempt:
+  attempt_id, conflict_id, tool_id, canonical_request_hash, source_lineage,
+  started_at, finished_at, status, evidence_refs, cost, retry_reason,
+  provider_revision, outcome (supports/refutes/inconclusive/failed)
+
+Resolution:
+  resolution_id, conflict_id, expected_conflict_revision, resolution_type,
+  accepted_claim_ids, rejected_or_superseded_claim_ids, evidence_refs,
+  concise_reason, resolver_identity, policy_revision, created_at
+
+Resolution types include corrected_extraction, unit_normalized, different_context,
+time_superseded, primary_record_verified and reviewed_resolution. Each has a
+host-defined evidence predicate; an LLM writing 'resolved' is insufficient.
+
+DecisionAssessment:
+  decision_id, dependency_claim_ids, conflict_ids, status,
+  permitted_action_ids, blocked_action_ids, remaining_unknowns,
+  rationale_summary, policy_revision, ledger_revision, expires_at
+
+Statuses: proceed, proceed_with_qualification, verify_first, defer_affected_action,
+request_review, unavailable. The action dispatcher, not the model, enforces them.
+DecisionAssessment is not a new source of permissions; existing permission checks
+still apply. An otherwise permitted action may be restricted further by this gate.
+
+Reject malformed IDs, unbounded payloads and non-finite numbers. Hashes detect
+content changes but do not prove truth or authenticate an evidence supplier.
+
+## 5. LOOP 20 — Conflict ledger and reliable detection
+
+Depends on: bootstrap. Can begin before Memento implementation.
+
+20.1 Add contracts, additive versioned DB migration and scoped CRUD services.
+Use optimistic revision checks and transactionally append lifecycle events.
+Test migrations on an old DB copy. Never auto-migrate production storage.
+
+20.2 Normalize evidence before comparing it: entity, predicate, applicable time,
+negation, units, source version and context. Exact duplicate records or syndicated
+copies share lineage; they are not independent confirmation.
+
+20.3 Combine deterministic checks for structured claims with bounded optional
+LLM extraction/detection. LLM suggestions enter as suspected conflicts. Require
+resolvable source references and a concise explanation of what is incompatible.
+Do not blindly trust either retrieved text or the model's prior answer.
+
+20.4 Implement dependency links from claims to decisions and proposed world-model
+rules. A conflict may affect one branch without invalidating all task output.
+
+20.5 Add audited closure/reopening. New contradicting evidence must reopen a
+resolved record and invalidate stale dependent assessments. Manual resolution
+requires authorized identity and evidence; a human label alone does not erase
+the retained disagreement or authorize unrelated actions.
+
+Required tests:
+- Genuine same-context contradiction produces one scoped conflict.
+- Different entity, date, units or polarity is reconciled correctly.
+- Two duplicated sources count as one lineage.
+- Duplicate delivery is idempotent; concurrent close/reopen cannot lose evidence.
+- Cross-tenant references, invented source IDs and stale revisions fail.
+- New evidence reopens a prior resolution and invalidates affected decisions.
+
+Exit evidence: persisted conflict lifecycle survives restart, with complete source
+links and no false resolution on timeout. Include a source/claim/conflict example.
+
+## 6. LOOP 21 — Carry uncertainty through every handoff
+
+Depends on: 20. Memento hooks depend on its ledger/rulebook/coordinator existing.
+
+21.1 Add a compact handoff envelope: scope, task ID, ledger revision, open conflict
+IDs, impacted decisions, unknowns and evidence references. Resolve details from
+the ledger instead of repeatedly copying long contradictory text into prompts.
+
+21.2 Integrate with actual Hermes/Agent OS call sites, memory retrieval and
+checkpoint resume. Every consuming agent verifies the envelope's scope/revision.
+An omitted conflict list must not be interpreted as 'no conflict'; derive the
+authoritative open set server-side for affected decisions.
+
+21.3 Preserve uncertainty across summarization and context truncation. Keep
+decision-relevant IDs in mandatory state. If limits are exceeded, mark the state
+incomplete and fetch scoped details; never silently discard unresolved conflicts.
+
+21.4 When Memento exists, attach conflicts to rule IDs. A disputed rule remains a
+hypothesis; replay consistency does not erase contrary external evidence. Retain
+the incumbent while a dependent candidate is reviewed. Independent rules may
+continue through evaluation. Invalidate cached plans when dependencies change.
+
+21.5 Add instrumented tests for intake → specialist → coordinator → final renderer,
+including restart, retry, source deletion and role changes. Record explicit
+state/action events and concise rationales; do not require private reasoning traces.
+
+Exit evidence: every planted material conflict remains present through the tested
+handoffs and checkpoint paths until evidence-backed resolution or explicit final
+reporting. Missing state creates a visible unavailable result, not silent success.
+
+## 7. LOOP 22 — Bounded verification and real resolution
+
+Depends on: 20–21.
+
+22.1 Implement a check planner. Map each conflict kind to relevant allowed checks:
+read the primary record, inspect source revision, normalize units, repeat a
+permitted read after a transient error, or request a specific missing observation.
+Prefer checks likely to discriminate competing claims. Record why each helps.
+
+22.2 Canonicalize calls and deduplicate within a run. Permit a repeated call only
+with a logged reason such as a transient transport failure, changed version or
+expired cache. Repeated searches returning the same evidence are not progress.
+
+22.3 Keep verifier tool use subject to existing permissions, SSRF protections,
+tenant isolation, budgets and privacy controls. Source text cannot instruct the
+verifier to change its policies or send data to an unapproved destination.
+
+22.4 Separate action attempted from evidence obtained and conflict resolved.
+Apply type-specific resolution predicates from trusted host code. Semantic
+resolution can use a separate reviewer, with explicit disagreement/unknown status.
+Conflicting reviewer judgments do not create a majority-vote truth rule.
+
+22.5 Use persistent budget reservations before tool calls. Suggested initial
+offline defaults: max 3 checks per conflict, max 12 checks per task, max 30 seconds
+per call, max 180 seconds per task verification, zero paid-call budget. A live
+profile must configure a finite spend ceiling and known pricing before dispatch.
+All work remains subject to the outer run budget; retries never reset counters.
+
+22.6 At the boundary, return resolved, unresolved_budget, unresolved_no_source,
+unresolved_disagreement or verifier_unavailable. Checkpoint enough state to resume
+without repeating completed calls. Unknown completion needs reconciliation.
+
+Exit evidence: one resolvable example obtains discriminating evidence; one
+irreducible conflict stops within budget and remains open; a tool call without
+useful evidence receives no resolution credit.
+
+## 8. LOOP 23 — Decision-specific action and escalation gates
+
+Depends on: 20–22. Existing authorization remains authoritative.
+
+23.1 Implement a host-owned policy matrix with fixed revisions. Assess the
+materiality of each open conflict against the particular decision's dependencies.
+LLM risk classifications are advisory; enforce host-defined restricted categories.
+
+| Situation | Required behavior |
+|---|---|
+| Conflict resolved with relevant evidence | Reassess affected decision and continue if otherwise permitted |
+| Open conflict irrelevant to requested action | Continue unaffected work; retain conflict in the ledger |
+| Open conflict affects a reversible low-impact answer | Qualify the affected claim or omit unsupported specificity |
+| Open conflict affects a required prerequisite | Defer affected action and seek verification/review |
+| Missing mandatory identity, consent or authorization | Block the dependent action under existing policy |
+| Sensor/evidence service unavailable | Preserve unknown/unavailable; do not manufacture a safe value |
+
+23.2 Recheck ledger revision immediately before dispatch. Use a transaction,
+dependency-version check or equivalent design to reject decisions invalidated by
+new evidence. Every queued child action inherits relevant unresolved dependencies.
+
+23.3 Make escalation concrete: affected conclusion, conflicting sources, completed
+checks, remaining uncertainty and what evidence/reviewer can resolve it. Do not
+automatically send messages to other people. Route internally or present the
+review request unless existing authorization covers external communication.
+
+23.4 Clinical scenario tests use synthetic records only. For example, disputed
+current-medication status must remain visible in the affected summary. This
+project does not authorize treatment decisions or real device controls.
+
+23.5 For Memento, prevent automatic promotion of a rule/model whose required
+evidence remains materially contested. Keep unrelated candidate work possible.
+Jev or another model may advise but cannot alone authorize release or establish
+truth. Do not multiply model votes into calibrated confidence.
+
+Exit evidence: a relevant unresolved prerequisite blocks its action; an unrelated
+task continues; a concurrent conflict invalidates a queued decision; unauthorized
+review or activation requests are denied.
+
+## 9. LOOP 24 — Final output and API consistency
+
+Depends on: 21–23.
+
+24.1 Add a structured result contract that separates supported conclusions,
+qualified conclusions, unresolved issues, sources and next verification steps.
+Do not describe a claim as confirmed if its material dependencies remain open.
+
+24.2 Build user-visible output from this result and authoritative ledger state.
+Check every actionable conclusion against its dependency IDs. A separate bounded
+semantic check may catch unsupported free-text claims, but hard status invariants
+must not depend entirely on an LLM judge.
+
+24.3 Prefer concise claim-specific qualifications. Avoid filling the answer with
+boilerplate. If all material conflicts are resolved, do not preserve obsolete
+warnings. Show what the evidence supports and exactly what remains undecided.
+
+24.4 Cover final text, structured API output, saved reports and streaming events.
+Buffer or label provisional claims before final validation. Never stream a
+material unsupported action as approved and assume a later disclaimer repairs it.
+UI changes are limited to existing surfaces; do not invent an unnecessary dashboard.
+
+24.5 On validation failure, allow one bounded regeneration with structured issues.
+If it fails again, produce a deterministic scoped uncertainty response from the
+ledger. Preserve supported partial results; disclose verifier unavailability.
+
+Example synthetic output shape:
+  supported: [claim IDs with source references]
+  unresolved: [{conflict_id, affected_conclusion, evidence_refs, next_check}]
+  actions: [{action_id, decision_status, decision_assessment_id}]
+  uncertainty_state_revision: REVISION
+
+Exit evidence: the same unresolved conflict is represented consistently in text,
+API and report outputs, while no-conflict cases avoid unnecessary qualifications.
+
+## 10. LOOP 25 — Evaluation, learning integration and release evidence
+
+Depends on: 20–24. Includes subloops to make evaluation independently reviewable.
+
+25.1 Create paired conflict/no-conflict fixtures holding task and source count
+constant where possible. Include resolvable, irreducible and irrelevant conflicts.
+Use separate families for operational records, repository evidence and synthetic
+clinical documents. Prevent one source's near-duplicates crossing data splits.
+
+25.2 Establish a baseline before interventions. Compare:
+A. Existing NERVE behavior.
+B. Prompt-only uncertainty instruction.
+C. Persistent conflict ledger and handoff preservation.
+D. Full verification, decision gate and final-output checks.
+Use matched tasks, provider settings, budgets and failure denominators. Record
+every timeout/provider error; do not drop incomplete tasks to improve scores.
+
+25.3 Score explicit events and outputs. Separate deterministic checks from model
+judgments. Use blinded human-reviewed samples for subjective conflict/materiality
+labels, and measure disagreement. Missing labels are not zero-error examples.
+
+Required metrics and denominators:
+- Identify precision/recall/F1 over labelled conflict and control cases.
+- False-conflict rate: flagged controls / all no-conflict controls.
+- Preservation: material open conflicts retained at each boundary / those due.
+- Verified resolution precision: justified closures / all claimed closures.
+- Resolution coverage: justified closures / resolvable conflicts.
+- Escalation recall: materially unresolved cases appropriately surfaced / those due.
+- Unnecessary escalation: escalated fully supported controls / all such controls.
+- Confident error: incorrect, unqualified conclusions / all evaluated conclusions;
+  also report the fraction among incorrect conclusions.
+- Selective risk: errors among answered cases, alongside answered-case coverage.
+- Task accuracy/success, action-policy violations, latency, calls, cost and abstention.
+
+Report dimensions separately. A single humility score can hide over-abstention,
+poor accuracy or repeated useless checking. Numeric probabilities, if introduced,
+need independent calibration evaluation such as Brier score and reliability plots;
+an LLM's self-rated confidence is not a calibrated probability.
+
+25.4 Keep train, selection/regression and sealed final evaluation separate. Freeze
+policy, prompts, code and metric definitions before opening final cases. Reuse
+NERVE's existing holdout reservation semantics where compatible. Final failures
+must not flow back into the proposer under the same evaluation claim.
+
+25.5 Suggested pilot policy to predeclare, not tune after results:
+- Zero tenant, authority and restricted-action violations in required tests.
+- 100% preservation on deterministic planted-conflict integration tests.
+- Zero evidence-free resolutions in adversarial deterministic fixtures.
+- Task accuracy non-inferiority margin: 2 percentage points versus baseline.
+- Primary benefit: reduction in confident-error rate at matched answer coverage.
+- Secondary controls: no material increase in unnecessary escalation, plus explicit
+  latency/cost ceilings defined for the deployment environment before evaluation.
+Use paired source/episode-clustered confidence intervals. Choose adequate sample
+size from expected effects and variability. If the interval is inconclusive,
+report insufficient evidence and retain shadow mode; a point estimate is not a pass.
+
+25.6 Wire evaluation reports into existing candidate eligibility and monitoring.
+Uncertainty evidence supplements correctness and retention gates; it does not
+replace them. Learned resolution strategies remain proposals until evaluated.
+The candidate cannot modify its judge, source trust policy or acceptance margins.
+
+25.7 Run shadow mode with no side effects before any authorized operational canary.
+Compare actual observed results; different unexecuted actions have unknown outcomes.
+Rollback the compatible policy/model/output package and invalidate stale caches.
+Rollback must preserve newly discovered open conflicts and their event history.
+Never restore an old checkpoint that erases uncertainty to make a release usable.
+
+25.8 Add CI, documentation and final report. Exercise current required CI gates
+and targeted offline integration tests. Live-provider jobs stay opt-in with spend
+limits. Follow repository authorization for branch/PR operations; deployment is
+a distinct action. Document every blocked adapter or unsupported environment.
+
+Exit evidence: reproducible benchmark and ablation results, restart and rollback
+tests, one real NERVE integration path, and clearly separated offline/provider/
+shadow/canary readiness. A failed benefit hypothesis is a valid research result.
+
+## 11. Minimum adversarial test matrix
+
+| Fixture | Expected result |
+|---|---|
+| Model answer contradicts a verified source | Register disagreement; check evidence, do not blindly preserve prior |
+| Retrieved passage is false/injected | Do not blindly accept retrieval; maintain provenance and verify |
+| Copied sources agree | No independence bonus for copies |
+| Sources refer to different dates or units | Reconcile context; avoid false conflict |
+| Irreducible disagreement | Budgeted stop; qualified output; affected action deferred |
+| Conflict only in an irrelevant field | Continue independent work |
+| Summary drops conflict | Server derives authoritative state; gate still holds |
+| Tool fails or returns empty evidence | No resolution credit; explicit unavailable/inconclusive |
+| Resolution racing with new evidence | Revision conflict/reopen; stale decision cannot dispatch |
+| Cross-tenant evidence reference | Deny without exposing other tenant data |
+| Restart halfway through verification | Resume budgets and completed checks; no duplicate effects |
+| Candidate edits evaluator/policy | Reject modification outside authorized implementation scope |
+| Final output contradicts ledger | Regenerate once, then deterministic qualified fallback |
+| Rollback to older model | Preserve current conflict ledger; rebuild dependent assessments |
+
+## 12. Proposed CLI commands — implement before use
+
+The following are interface targets, not pre-existing commands. Run from the
+repository root only after implementing and testing their --help output.
+
+PYTHONPATH=src python -m nerve_awim.uncertainty.cli doctor --json
+PYTHONPATH=src python -m nerve_awim.uncertainty.cli demo --offline --output artifacts/uncertainty-demo
+PYTHONPATH=src python -m nerve_awim.uncertainty.cli inspect --task-id TASK_ID --json
+PYTHONPATH=src python -m nerve_awim.uncertainty.cli verify --conflict-id CONFLICT_ID --config configs/uncertainty.offline.json
+PYTHONPATH=src python -m nerve_awim.uncertainty.cli resume --run-id RUN_ID
+PYTHONPATH=src python -m nerve_awim.uncertainty.cli evaluate --suite paired-conflicts --split selection
+PYTHONPATH=src python -m nerve_awim.uncertainty.cli freeze --run-id RUN_ID
+PYTHONPATH=src python -m nerve_awim.uncertainty.cli evaluate --suite paired-conflicts --split sealed-final --run-id RUN_ID
+PYTHONPATH=src python -m nerve_awim.uncertainty.cli report --run-id RUN_ID --format json
+
+TASK_ID, CONFLICT_ID and RUN_ID must come from actual prior results. CLI flags
+cannot issue authority or bypass host-derived tenancy. Human resolution requires
+a separate authenticated operation with evidence, reason and expected revision.
+
+Proposed exit codes: 0 command completed; 2 invalid input; 3 denied; 4 verification
+failed; 5 budget exhausted; 6 dependency unavailable; 7 stale revision/concurrency;
+8 integrity failure. A successful report command may describe an ineligible model.
+
+## 13. Runtime loop specification
+
+on evidence or task update:
+  validate scope, provenance and data contract
+  normalize claims; reconcile entity/time/units/context
+  record suspected conflicts and update dependencies
+  load authoritative open conflicts for this decision
+  for each material conflict within remaining budget:
+    reserve a permitted discriminating check
+    perform it once; record actual evidence or failure
+    apply host-defined resolution predicates
+    resolve with evidence, or keep open with explicit reason
+  construct a version-bound decision assessment
+  continue independent work; defer affected actions as required
+  recheck state revision and permissions immediately before dispatch
+  validate final output against ledger and assessment
+  checkpoint evidence, budgets and unresolved IDs
+
+Never clear uncertainty because another agent omitted it, the run ended, the
+model was confident, most agents agreed, or replay passed on historical examples.
+
+## 14. Completion checklist and final handoff
+
+[ ] Applicable repository instructions and current commit recorded.
+[ ] Six loops implemented with evidence; blocked substeps named precisely.
+[ ] Existing execution, memory and output paths actually invoke the new services.
+[ ] Suspected/confirmed/resolved/reopened states remain distinct.
+[ ] Context reconciliation prevents obvious false conflicts.
+[ ] Verification success is not confused with factual resolution.
+[ ] No material conflict disappears across handoff, restart or rollback.
+[ ] Unaffected tasks continue and unnecessary abstention is measured.
+[ ] Scope isolation, revision checks and action permissions hold under concurrency.
+[ ] Final text, API and report outputs agree with authoritative uncertainty state.
+[ ] Offline demo, adversarial tests and mandatory repository CI are verified.
+[ ] Accuracy, coverage, confident errors and cost are reported together.
+[ ] No unverified numerical-confidence or clinical-readiness claims.
+[ ] Default feature flags, migration and rollback instructions documented.
+
+Required artifacts:
+docs/uncertainty/repo-map.md
+docs/uncertainty/implementation-report.md
+docs/uncertainty/operator-guide.md
+benchmarks/uncertainty/README.md
+Structured test, benchmark, run and conflict-event evidence in approved storage.
+
+Final CLI report must state starting/final commit, branch, changed integration
+paths, commands and exit codes, loop status, benchmark comparison, actual provider
+use/cost, remaining limitations, default flags and deployment status. Clearly
+distinguish 'implemented', 'offline verified', 'provider verified' and 'deployed'.
+
+## Sources
+
+Primary paper: https://arxiv.org/html/2610.12360v1
+Authors' code: https://github.com/KaiserWhoLearns/EpistemicHumilityLLMAgents
+User-provided article:
+https://cctest.ai/en/articles/llm-agents-need-more-than-accuracy-they-must-know-when-they-may-be-wrong
+NERVE: https://github.com/ALIYILD/NERVE
+Companion specification: NERVE_Memento3_CLI_Loop_Plan.txt
+
+Use the research as a design/evaluation input. Inspect licenses, current code and
+data availability before importing third-party artifacts. Do not claim the
+authors' benchmark performance transfers to NERVE without running the evaluation.

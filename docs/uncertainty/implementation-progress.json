@@ -1,0 +1,45 @@
+{
+  "start_commit": "57074d9",
+  "branch": "codex/uncertainty-integration",
+  "checkout": "/Users/aliyildirim/nerve-uncertainty",
+  "updated_at": "2026-10-12T20:36:05.632045+00:00",
+  "bootstrap": {
+    "status": "passed",
+    "evidence": [
+      "Full plan read and copied",
+      "repo-map.md architecture and instructions recorded",
+      "Exact base baseline: 961 Python +7 Node passed in prior handoff"
+    ]
+  },
+  "loops": {
+    "20": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "21": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "22": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "23": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "24": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "25": {
+      "status": "in_progress",
+      "evidence": []
+    }
+  },
+  "integration": {
+    "memento": "waiting_for_other_window_commit",
+    "adaptation": "waiting_for_other_window_commit"
+  },
+  "next_action": "Implement uncertainty core while other windows complete; then integrate and test committed versions."
+}
