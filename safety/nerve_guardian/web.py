@@ -70,6 +70,11 @@ def create_server(engine, verifier, *, host='127.0.0.1', port=0):
             except Exception:
                 self.send(503, {'error': 'administration unavailable', 'status': 'UNKNOWN'})
         def do_POST(self):
+            principal=None
+            def denied():
+                if hasattr(engine,'record_denial'):
+                    try:engine.record_denial(principal.tenant if principal else None)
+                    except Exception:pass
             try:
                 if self.path not in ('/api/request-restart', '/api/approve-restart', '/api/keep-stopped'):
                     return self.send(404, {'error': 'not found'})
@@ -96,7 +101,8 @@ def create_server(engine, verifier, *, host='127.0.0.1', port=0):
                 else:
                     result = engine.keep_stopped(principal, body['incident_id'])
                 self.send(200, result)
-            except AuthorizationError:
+            except (AuthorizationError,PermissionError):
+                denied()
                 self.send(403, {'error': 'owner authentication denied'})
             except (ValueError, TypeError, KeyError):
                 self.send(400, {'error': 'invalid or denied request'})

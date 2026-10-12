@@ -4,10 +4,13 @@ After=network.target
 ConditionPathExists=/etc/nerve-guardian/ENABLED
 
 [Service]
-# The core service entrypoint must be supplied by the reviewed deployment.
-# This deliberately cannot activate a controller or invent an executable.
-Type=oneshot
-ExecStart=/usr/bin/false
+# Separate immutable installation; sample config remains observe-only.
+Type=simple
+Environment=PYTHONPATH=/opt/nerve-safety/safety
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/opt/nerve-safety/.venv/bin/python -m nerve_guardian service --config /etc/nerve-guardian/config.json
+Restart=on-failure
+RestartSec=5
 User=root
 Group=root
 StateDirectory=nerve-guardian

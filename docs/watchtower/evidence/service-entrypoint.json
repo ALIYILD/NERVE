@@ -1,0 +1,74 @@
+{
+  "synthetic_source": true,
+  "live_enforcement": false,
+  "result": {
+    "demo": {
+      "schema": "nerve-guardian-v1",
+      "tenant": "demo",
+      "timestamp": 1791842028.121672,
+      "synthetic": false,
+      "mode": "observe-only",
+      "visibility": "UNKNOWN",
+      "risk": "UNKNOWN",
+      "emergency_state": "OBSERVING",
+      "telemetry": [
+        {
+          "tenant": "demo",
+          "source": "app",
+          "observed_at": 1791842027.680659,
+          "status": "NOTICE",
+          "counters": {
+            "gl_events": 1
+          },
+          "source_type": "application_untrusted",
+          "gaps": [
+            "independent_activity_completeness_unverified"
+          ]
+        }
+      ],
+      "observer": [
+        {
+          "source": "systemd",
+          "kind": "visibility_loss",
+          "status": "UNKNOWN",
+          "observed_at": 1791842028.1126459,
+          "independent": true,
+          "evidence": {
+            "unit": "nerve-demo-uninstalled.service"
+          }
+        },
+        {
+          "source": "host_filesystem",
+          "kind": "observer_heartbeat",
+          "status": "NORMAL",
+          "observed_at": 1791842028.1126459,
+          "independent": true,
+          "evidence": {}
+        },
+        {
+          "source": "coverage_inventory",
+          "kind": "visibility_loss",
+          "status": "UNKNOWN",
+          "observed_at": 1791842028.1126459,
+          "independent": true,
+          "evidence": {
+            "signal": "cross_source_event_counts_and_unmanaged_process_coverage_unavailable"
+          }
+        }
+      ],
+      "incidents": [],
+      "coverage": [],
+      "gaps": [
+        "unmanaged_workloads",
+        "external_iam_and_network_not_enforced",
+        "production_coverage_unverified"
+      ],
+      "notifications": [],
+      "notification_health": {
+        "status": "UNKNOWN",
+        "reason": "not_configured"
+      },
+      "audit_integrity": "verified"
+    }
+  }
+}

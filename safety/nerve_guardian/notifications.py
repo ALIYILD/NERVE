@@ -86,7 +86,7 @@ class Notifier:
     can lose uncommitted queue entries; incidents remain the authoritative resend source.
     Provider success means accepted, not read by the owner.
     """
-    FIELDS = ('tenant', 'incident_id', 'event', 'severity', 'timestamp', 'containment_status', 'verification_status', 'evidence_reference', 'dashboard_url', 'next_action_code')
+    FIELDS = ('tenant', 'incident_id', 'event', 'severity', 'timestamp', 'containment_status', 'verification_status', 'evidence_reference', 'dashboard_url', 'next_action_code', 'timestamp_utc', 'affected_service')
 
     def __init__(self, database, adapters, *, capacity=256, max_attempts=3, rate_seconds=1):
         if not 1 <= capacity <= 4096 or not 1 <= max_attempts <= 5 or rate_seconds < 0:
@@ -176,7 +176,7 @@ class Notifier:
     def health(self):
         with self._db() as db:
             failed = db.execute('SELECT COUNT(*) FROM outbox WHERE status="failed"').fetchone()[0]
-        return {'failed_deliveries': failed, 'status': 'UNKNOWN' if self.dropped or self.storage_failures or failed else 'AVAILABLE', 'queue_dropped': self.dropped,
+        return {'failed_deliveries': failed, 'workers_alive':all(t.is_alive() for t in self.threads), 'status': 'UNKNOWN' if self.dropped or self.storage_failures or failed or not all(t.is_alive() for t in self.threads) else 'AVAILABLE', 'queue_dropped': self.dropped,
             'storage_failures': self.storage_failures, 'delivery_semantics': 'provider acceptance; duplicate delivery possible after crash'}
 
     def close(self):

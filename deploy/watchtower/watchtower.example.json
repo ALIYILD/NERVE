@@ -1,0 +1,5 @@
+{
+  "interval_seconds": 5,
+  "report_path": "/var/lib/nerve-watchtower/telemetry.json",
+  "sources": [{"path": "/var/lib/nerve/pilot.db", "tenant": "pilot", "source": "repository-pilot", "tables": ["gl_events", "gl_candidates", "gl_releases"], "max_seconds": 0.1}]
+}
