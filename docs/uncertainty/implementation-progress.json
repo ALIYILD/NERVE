@@ -2,7 +2,7 @@
   "start_commit": "57074d9",
   "branch": "codex/uncertainty-integration",
   "checkout": "/Users/aliyildirim/nerve-uncertainty",
-  "updated_at": "2026-10-12T20:54:47.175811+00:00",
+  "updated_at": "2026-10-12T21:02:36.816603+00:00",
   "bootstrap": {
     "status": "passed",
     "evidence": [
@@ -13,49 +13,114 @@
   },
   "loops": {
     "20": {
-      "status": "implemented_focused_tests_passed",
+      "status": "implemented_offline_verified",
       "evidence": [
         "Scoped additive ledger, source lineage, reconciliation, audited CAS closure/reopening and concurrency tests implemented."
       ]
     },
     "21": {
-      "status": "integration_in_progress",
+      "status": "implemented_offline_verified",
       "evidence": [
-        "Memento 2d42201 merged; actual registry/release/checkpoint hooks tested.",
-        "Hermes learning/memory handoff and restart tested.",
-        "Waiting for adaptation window final source manifest."
+        "Real Hermes and trusted-memory handoff tests passed.",
+        "Memento 2d42201 merged and actual registry/coordinator/release hooks tested.",
+        "Adaptation matching22-file final snapshot imported;3 combined tests and4-component demo passed."
       ]
     },
     "22": {
-      "status": "implemented_focused_tests_passed",
+      "status": "implemented_offline_verified",
       "evidence": [
         "Durable check budgets, deduplication, host predicates and actual response deadlines tested."
       ]
     },
     "23": {
-      "status": "implemented_focused_tests_passed",
+      "status": "implemented_offline_verified",
       "evidence": [
         "Actual governed dispatcher, source expiry/unknown/negative-consent and candidate/canary/monitor gates tested."
       ]
     },
     "24": {
-      "status": "implemented_focused_tests_passed",
+      "status": "implemented_offline_verified",
       "evidence": [
         "Actual Hermes learning and memory hooks; canonical final/API/report/stream invariants and source-change race tests passed."
       ]
     },
     "25": {
-      "status": "final_evidence_pending",
+      "status": "implemented_offline_verified",
       "evidence": [
-        "12 evaluation and 7 CLI focused tests passed.",
-        "All 47 existing offline CI commands passed (controlled evidence directory).",
-        "Full regression running; final frozen benchmark waits for combined source."
+        "1121Python tests and7Node passed, no skips.",
+        "86 uncertainty tests,46 adaptation tests passed.",
+        "51 offline CI commands verified (Memento demo required freshstate; reused-state exit8 retained), plus2 folded CPUresearchcommands passed.",
+        "Final scripted evaluation: unsupported certainty6/12to0/12, coverage12/12; factual benefit inconclusive, eligibilityfalse."
       ]
     }
   },
   "integration": {
-    "memento": "merged_2d42201_and_wired",
-    "adaptation": "waiting_for_matching_final_source_manifest"
+    "memento": "merged_2d42201_and_combined_verified",
+    "adaptation": "manifest_verified_snapshot_imported_and_combined_verified"
   },
-  "next_action": "Wait for adaptation handoff, import reviewed files, run combined tests, freeze final evaluation and record limitations."
+  "next_action": "Use the documented combined demo; keep production flags off and shadow eligibility. A fresh independent labelled provider study and reviewed live host contracts are required for promotion.",
+  "implementation_commit": "3cbb7e0",
+  "source_revision": "56590516c37869a1a3830f758e39700e0c88bf2ef5d9aac00d733556cc6c500a",
+  "verification": {
+    "implementation_commit": "3cbb7e0",
+    "source_revision": "56590516c37869a1a3830f758e39700e0c88bf2ef5d9aac00d733556cc6c500a",
+    "full_python": {
+      "passed": 1121,
+      "skipped": 0,
+      "exit_code": 0,
+      "seconds": 104.245,
+      "log": "full-tests.log"
+    },
+    "node": {
+      "passed": 7,
+      "exit_code": 0,
+      "log": "node-tests.log"
+    },
+    "uncertainty": {
+      "passed": 86,
+      "exit_code": 0,
+      "log": "uncertainty-tests.log"
+    },
+    "adaptation": {
+      "passed": 46,
+      "exit_code": 0,
+      "log": "adaptation-tests.log"
+    },
+    "ci": {
+      "commands": 51,
+      "initial_final_run_passed": 50,
+      "expected_reused_state_refusal": {
+        "exit_code": 8,
+        "log": "ci/check-46.log"
+      },
+      "fresh_state_rerun": {
+        "exit_code": 0,
+        "log": "ci/check-46-fresh.log",
+        "command": "PYTHONPATH=src /private/tmp/nerve-adaptation-ci-venv/bin/python -m nerve_awim.world_model.cli --db /private/tmp/nerve-uncertainty-evidence/ci/world-model-final-fresh.sqlite3 demo --json"
+      },
+      "all_commands_verified_with_fresh_demo_state": true
+    },
+    "additional_folded_ci_commands": [
+      {
+        "command": "research-fast-memory-train",
+        "exit_code": 0,
+        "log": "research-training.log"
+      },
+      {
+        "command": "research-fast-memory-evaluate",
+        "exit_code": 0,
+        "log": "research-scaling.log"
+      }
+    ],
+    "live_provider_requests": 0,
+    "paid_cost_usd": 0,
+    "deployment_performed": false
+  },
+  "evidence_directory": "/private/tmp/nerve-uncertainty-evidence",
+  "remaining_gates": [
+    "Independent labelled provider/human evaluation absent; factual accuracy/noninferiority unknown.",
+    "Live host connectors and domain reviewer authority not verified; no deployment.",
+    "Adaptation overhead and fast-memory benefit gates failed; candidates not promoted.",
+    "Memento source workstream retains its documented partial-loop backlog."
+  ]
 }

@@ -29,5 +29,3 @@
        24    0.001    0.000    0.048    0.002 governed_learning_v20.py:407(execute)
       360    0.047    0.000    0.047    0.000 {method 'close' of 'sqlite3.Connection' objects}
       144    0.002    0.000    0.042    0.000 adaptation.py:101(_event)
-
-

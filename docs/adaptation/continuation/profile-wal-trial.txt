@@ -29,5 +29,3 @@
        24    0.001    0.000    0.058    0.002 governed_learning_v20.py:407(execute)
       336    0.057    0.000    0.057    0.000 {built-in method _sqlite3.connect}
       120    0.002    0.000    0.048    0.000 adaptation.py:433(task_hook)
-
-
