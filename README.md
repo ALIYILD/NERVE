@@ -4,6 +4,23 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## Opt-in Cognitive Cue Engine
+
+The [Cognitive Cue Engine](docs/cce/runbook.md) adds model/tokenizer-bound cue
+selection, bounded paired experiments, optional Hermes instruction cues and
+advisory JEV review using NERVE's existing authority, audit and memory interfaces.
+It defaults off. Synthetic results cannot activate cues; clinical cues remain
+disabled. Paper reproduction and live deployment are separate, outstanding gates.
+See the [15-loop plan](docs/cce/implementation-plan.md),
+[Claude Code master prompt](docs/cce/claude-cli-prompt.md) and
+[verification status](docs/cce/verification.md).
+The [installed-host wiring](docs/cce/host-integration.md) connects the Agent OS
+bridge and native Hermes worker, with `cce-status`, inspection and revocation.
+
+```bash
+PYTHONPATH=src python -m nerve_awim.cue_cli demo
+```
+
 ## v2.1 opt-in repository task shadow learning
 
 The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed study

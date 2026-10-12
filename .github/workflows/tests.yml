@@ -17,6 +17,10 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Verify research checkpoint provenance discovery
         run: node --test tests/test_checkpoint_discovery.cjs
+      - name: Verify offline cognitive cue commissioning and fail-closed activation
+        env:
+          PYTHONPATH: src
+        run: python -m nerve_awim.cue_cli demo --output /tmp/nerve-cce-demo.json
       - name: Run chronological adaptive-memory capable-control study
         env:
           PYTHONPATH: src
