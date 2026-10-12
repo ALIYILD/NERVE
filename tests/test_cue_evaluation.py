@@ -47,7 +47,7 @@ class CueEvaluationTests(unittest.TestCase):
         with self.assertRaises(ValueError): self.report(profile_key='another')
 
     def test_missing_nonfinite_and_boolean_metrics(self):
-        for field, value in [('confidence', None), ('confidence', float('nan')),
+        for field, value in [('confidence', float('nan')),
                              ('cost_usd', None), ('cost_usd', -1),
                              ('latency_ms', float('inf')), ('correct', 1),
                              ('confidence', True), ('confidence', 1.1)]:

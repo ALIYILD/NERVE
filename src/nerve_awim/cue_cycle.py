@@ -33,8 +33,8 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
                   provider, judge, generator_id, evaluator_id, max_calls,
                   max_cost_usd, discovery_cost_cap_usd, per_call_cost_cap_usd,
                   permission_granted=False, clinical=False, risk='low',
-                  experiment_clock=perf_counter):
-    """Discover one proposal, screen selection, evaluate untouched holdout, stop.
+                  experiment_clock=perf_counter, dataset=None, regression_tasks=()):
+    """Discover, screen selection and retained capabilities, then evaluate holdout.
 
     ``discovery_execute`` is a trusted adapter with the existing Hermes execute
     signature plus ``cost_cap_usd`` and a DiscoveryReceipt return value. It must
@@ -66,15 +66,22 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
     if len(manifest.holdout) < 30:
         raise ValueError('at least 30 heldout pairs required before discovery')
     selections, holdouts = tuple(selection_tasks), tuple(holdout_tasks)
-    for split, tasks in (('selection', selections), ('holdout', holdouts)):
+    regressions = tuple(regression_tasks)
+    if dataset is not None:
+        from .cue_dataset import validate_dataset
+        dataset = validate_dataset(dataset)
+        if (dataset.manifest != manifest or dataset.selection_tasks != selections
+                or dataset.holdout_tasks != holdouts or dataset.regression_tasks != regressions):
+            raise ValueError('cycle tasks must match complete frozen dataset')
+    for split, tasks in (('selection', selections), ('regression', regressions), ('holdout', holdouts)):
         if (any(not isinstance(t, ExperimentTask) for t in tasks)
                 or len(tasks) != len(getattr(manifest, split))
                 or {t.task_id for t in tasks} != set(getattr(manifest, split))):
             raise ValueError('exact frozen tasks required for each partition')
-    instruction_hashes = [sha256(t.instruction.strip().encode()).hexdigest() for t in selections + holdouts]
+    instruction_hashes = [sha256(t.instruction.strip().encode()).hexdigest() for t in selections + regressions + holdouts]
     if len(instruction_hashes) != len(set(instruction_hashes)):
         raise ValueError('duplicate instruction content across evaluation partitions')
-    required_calls = 1 + 2 * (len(selections) + len(holdouts))
+    required_calls = 1 + 2 * (len(selections) + len(regressions) + len(holdouts))
     if type(max_calls) is not int or not required_calls <= max_calls <= 20000:
         raise ValueError('complete cycle must fit bounded provider call budget')
     for amount in (max_cost_usd, discovery_cost_cap_usd, per_call_cost_cap_usd):
@@ -85,12 +92,23 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
     if not all(callable(f) for f in (discovery_execute, provider, judge, experiment_clock)):
         raise ValueError('trusted host adapters required')
 
+    # Snapshot only scoped evaluator feedback before reserving fresh evidence.
+    # No arbitrary memory, episode IDs or historical test scores enter discovery.
+    from .cue_feedback import validate_learning_context, learning_context_digest
+    learning_context = validate_learning_context(
+        coordinator.learning_context(trainer, profile, task_type),
+        profile_key=profile.key, task_type=task_type)
+    history_count = len(learning_context['candidates'])
+    history_digest = learning_context_digest(learning_context) if history_count else None
+
     # Atomic reservation occurs before the first remote dispatch. It is never
     # recycled after absent candidates, synthetic evidence or callback failures.
-    reservation = coordinator.reserve_study(trainer, manifest)
+    reservation = (coordinator.reserve_dataset(trainer, dataset) if dataset is not None
+                   else coordinator.reserve_study(trainer, manifest))
     calls, cost, candidate = 0, 0., None
     discovery_synthetic = True
     selection_digest = None
+    regression_digest = None
 
     def finish(state, reason, holdout_digest=None):
         if candidate is not None and state in ('blocked', 'rejected', 'skipped'):
@@ -100,6 +118,13 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
                    'attempted_calls': calls, 'known_cost_usd': cost,
                    'selection_digest': selection_digest, 'holdout_digest': holdout_digest,
                    'activated': False}
+        if history_count:
+            summary['learning_context_digest'] = history_digest
+            summary['learning_context_candidates'] = history_count
+        if manifest.regression:
+            summary['regression_digest'] = regression_digest
+        if dataset is not None:
+            summary['dataset_digest'] = dataset.digest
         with coordinator.engine._db() as con:
             coordinator.engine._state(con, scope)
             coordinator.engine._event(con, scope, 'cce_cycle', summary)
@@ -129,7 +154,8 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
         return receipt
 
     try:
-        proposals = discover_candidates(discover, manifest, tenant=scope[0], agent=scope[1], max_candidates=1)
+        proposals = discover_candidates(discover, manifest, tenant=scope[0], agent=scope[1],
+            max_candidates=1, learning_context=learning_context)
     except Exception:
         return finish('blocked', 'discovery_failed_or_unknown_cost')
     if not proposals:
@@ -155,10 +181,19 @@ def run_cue_cycle(coordinator, trainer, evaluator, *, profile, model, task_type,
         metrics = selected.metrics
         if metrics['synthetic']:
             return finish('skipped', 'synthetic_selection')
+        if any(metrics[arm]['brier_score'] is None for arm in ('baseline', 'candidate')):
+            return finish('rejected', 'missing_calibration')
         if (metrics['paired_accuracy_delta'] <= 0 or metrics['candidate']['safety'] < 1
                 or any(metrics['candidate'][m] > metrics['baseline'][m]
                        for m in ('brier_score', 'latency_ms', 'cost_usd'))):
             return finish('rejected', 'selection_gate_failed')
+        if regressions:
+            retained = experiment(regressions, 'regression')
+            regression_digest = retained.digest
+            retained_result = coordinator.evaluate_regression(evaluator, candidate, retained.pairs,
+                                                               evaluator_id=evaluator_id)
+            if not retained_result['decision']['eligible']:
+                return finish('rejected', 'regression_gate_failed')
         report = experiment(holdouts, 'holdout')
     except ExperimentBlocked as exc:
         return finish('blocked', exc.reason)

@@ -44,7 +44,7 @@ class ProviderRequest:
 class ProviderReceipt:
     """Trusted adapter receipt; confidence is a measured probability, not inferred."""
     output: str
-    confidence: float
+    confidence: float | None
     model: ModelParity
     cost_usd: float
     evidence_id: str
@@ -52,11 +52,18 @@ class ProviderReceipt:
     error: bool = False
     cue_digest: str = ''
     arm: str = ''
+    input_tokens: int | None = None
+    output_tokens: int | None = None
 
     def __post_init__(self):
         if type(self.output) is not str or len(self.output) > 1000000:
             raise ValueError('bounded provider output required')
-        _number(self.confidence, upper=1); _number(self.cost_usd); _id(self.evidence_id)
+        if self.confidence is not None:
+            _number(self.confidence, upper=1)
+        for tokens in (self.input_tokens, self.output_tokens):
+            if tokens is not None and (type(tokens) is not int or tokens < 0):
+                raise ValueError('measured nonnegative integer token counts required')
+        _number(self.cost_usd); _id(self.evidence_id)
         if self.arm not in ('', 'baseline', 'candidate') or type(self.cue_digest) is not str:
             raise ValueError('cue receipt binding required')
         if self.cue_digest and (len(self.cue_digest) != 64 or any(c not in '0123456789abcdef' for c in self.cue_digest)):
@@ -106,7 +113,7 @@ def run_experiment(candidate_id, cue, manifest, tasks, model, provider, judge, *
         raise PermissionError('clinical research cues remain disabled')
     if not isinstance(model, ModelParity) or model.profile_key != cue.profile_key:
         raise ValueError('exact candidate model binding required')
-    if not isinstance(manifest, DatasetManifest) or split not in ('selection', 'holdout'):
+    if not isinstance(manifest, DatasetManifest) or split not in ('selection', 'holdout', 'regression'):
         raise ValueError('frozen evaluation split required')
     frozen = tuple(tasks)
     if any(not isinstance(t, ExperimentTask) for t in frozen):
@@ -173,7 +180,7 @@ def run_experiment(candidate_id, cue, manifest, tasks, model, provider, judge, *
             try:
                 observations[arm] = Observation(task.task_id, model, verdict.correct, verdict.safe,
                     receipt.confidence, elapsed, receipt.cost_usd, receipt.evidence_id, receipt.synthetic,
-                    request.cue_digest, arm)
+                    request.cue_digest, arm, receipt.input_tokens, receipt.output_tokens)
             except ValueError:
                 failed += 1
                 raise blocked('invalid_measured_observation') from None

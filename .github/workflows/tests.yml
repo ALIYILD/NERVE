@@ -238,6 +238,31 @@ jobs:
           PYTHONPATH: src
         run: python scripts/verify_canary_v23.py
 
+      - name: Verify opt-in declarative world-model recovery and authority boundaries
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests/world_model -v
+
+      - name: Run scripted offline world-model demo
+        env:
+          PYTHONPATH: src
+        run: python -m nerve_awim.world_model.cli --db /tmp/nerve-world-model-ci.sqlite3 demo --json
+
+      - name: Record world-model generalization and ablation limitations
+        env:
+          PYTHONPATH: src
+        run: python benchmarks/world_model/benchmark.py
+
+      - name: Verify NERVE world-model entry point
+        run: python scripts/nerve_world_model.py doctor --json
+
+      - name: Smoke test learned frame rules and repository tool wiring
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m nerve_awim world-model study --directory /tmp/nerve-world-model-frame-ci --final-per-family 2 --final-seed 19003
+          python -m nerve_awim world-model repository-study --repository . --directory /tmp/nerve-world-model-repository-ci
+
   adaptation-research:
     runs-on: ubuntu-latest
     steps:

@@ -6,25 +6,26 @@
         "live_evidence_required",
         "accuracy_gain_required",
         "weak_paired_evidence",
-        "latency_ms_regression"
+        "latency_ms_regression",
+        "latency_p95_ms_regression"
       ],
-      "report_digest": "7617f7ba651aaee9cb42ab11e2adccc80eb0be234cc6d7168d70424cd5562951"
+      "report_digest": "42f65b7e939e64cb367435d08c9857228fa281bcae7074a407b9a4eb434cf73e"
     },
     "metrics": {
       "baseline": {
         "accuracy": 1.0,
         "brier_score": 0.0,
         "cost_usd": 0.0,
-        "latency_ms": 0.005288100995433827,
-        "latency_p95_ms": 0.012864999007433653,
+        "latency_ms": 0.005665100373638173,
+        "latency_p95_ms": 0.007996000931598246,
         "safety": 1.0
       },
       "candidate": {
         "accuracy": 1.0,
         "brier_score": 0.0,
         "cost_usd": 0.0,
-        "latency_ms": 0.00987839933562403,
-        "latency_p95_ms": 0.011910000466741621,
+        "latency_ms": 0.010445899291274449,
+        "latency_p95_ms": 0.012980002793483436,
         "safety": 1.0
       },
       "descriptive_mcnemar_p": 1.0,
@@ -40,12 +41,12 @@
     },
     "receipt": {
       "approved": true,
-      "candidate_id": "adbb27dd29bc4b859319ab4ef240bbc2",
+      "candidate_id": "48f876ff74564536881d1e022b8c4c57",
       "evaluator_id": "deterministic-judge",
-      "report_digest": "7617f7ba651aaee9cb42ab11e2adccc80eb0be234cc6d7168d70424cd5562951"
+      "report_digest": "42f65b7e939e64cb367435d08c9857228fa281bcae7074a407b9a4eb434cf73e"
     },
     "report": {
-      "candidate_id": "adbb27dd29bc4b859319ab4ef240bbc2",
+      "candidate_id": "48f876ff74564536881d1e022b8c4c57",
       "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
       "manifest": {
         "discovery": [
@@ -96,7 +97,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-0-baseline",
-            "latency_ms": 0.012864999007433653,
+            "latency_ms": 0.015650992281734943,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -121,7 +122,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-0-candidate",
-            "latency_ms": 0.011910000466741621,
+            "latency_ms": 0.013556986232288182,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -148,7 +149,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-1-baseline",
-            "latency_ms": 0.005084002623334527,
+            "latency_ms": 0.005572001100517809,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -173,7 +174,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-1-candidate",
-            "latency_ms": 0.010791991371661425,
+            "latency_ms": 0.011454001651145518,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -200,7 +201,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-10-baseline",
-            "latency_ms": 0.004581001121550798,
+            "latency_ms": 0.005417998181656003,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -225,7 +226,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-10-candidate",
-            "latency_ms": 0.009320996468886733,
+            "latency_ms": 0.010161995305679739,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -252,7 +253,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-11-baseline",
-            "latency_ms": 0.004509987775236368,
+            "latency_ms": 0.005217996658757329,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -277,7 +278,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-11-candidate",
-            "latency_ms": 0.00902600004337728,
+            "latency_ms": 0.010276999091729522,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -304,7 +305,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-12-baseline",
-            "latency_ms": 0.004336005076766014,
+            "latency_ms": 0.005089008482173085,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -329,7 +330,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-12-candidate",
-            "latency_ms": 0.009180002962239087,
+            "latency_ms": 0.0101160112535581,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -356,7 +357,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-13-baseline",
-            "latency_ms": 0.004507994162850082,
+            "latency_ms": 0.005369001883082092,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -381,7 +382,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-13-candidate",
-            "latency_ms": 0.009230992873199284,
+            "latency_ms": 0.010314994142390788,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -408,7 +409,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-14-baseline",
-            "latency_ms": 0.0043670006562024355,
+            "latency_ms": 0.005228008376434445,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -433,7 +434,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-14-candidate",
-            "latency_ms": 0.009028008207678795,
+            "latency_ms": 0.010168994776904583,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -460,7 +461,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-15-baseline",
-            "latency_ms": 0.00468301004730165,
+            "latency_ms": 0.0052440009312704206,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -485,7 +486,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-15-candidate",
-            "latency_ms": 0.00921401078812778,
+            "latency_ms": 0.010410993127152324,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -512,7 +513,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-16-baseline",
-            "latency_ms": 0.004536006599664688,
+            "latency_ms": 0.005014997441321611,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -537,7 +538,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-16-candidate",
-            "latency_ms": 0.009473005775362253,
+            "latency_ms": 0.010570001904852688,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -564,7 +565,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-17-baseline",
-            "latency_ms": 0.019015002180822194,
+            "latency_ms": 0.005270994734019041,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -589,7 +590,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-17-candidate",
-            "latency_ms": 0.009543000487610698,
+            "latency_ms": 0.010331001249141991,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -616,7 +617,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-18-baseline",
-            "latency_ms": 0.00459399598184973,
+            "latency_ms": 0.005231006070971489,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -641,7 +642,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-18-candidate",
-            "latency_ms": 0.02399200457148254,
+            "latency_ms": 0.009841998689807951,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -668,7 +669,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-19-baseline",
-            "latency_ms": 0.004409012035466731,
+            "latency_ms": 0.005271998816169798,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -693,7 +694,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-19-candidate",
-            "latency_ms": 0.009213996236212552,
+            "latency_ms": 0.012980002793483436,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -720,7 +721,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-2-baseline",
-            "latency_ms": 0.004597008228302002,
+            "latency_ms": 0.005109002813696861,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -745,7 +746,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-2-candidate",
-            "latency_ms": 0.00924199412111193,
+            "latency_ms": 0.010674004442989826,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -772,7 +773,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-20-baseline",
-            "latency_ms": 0.004387999069876969,
+            "latency_ms": 0.005095003871247172,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -797,7 +798,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-20-candidate",
-            "latency_ms": 0.00910699600353837,
+            "latency_ms": 0.00986098893918097,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -824,7 +825,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-21-baseline",
-            "latency_ms": 0.004561996320262551,
+            "latency_ms": 0.005251000402495265,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -849,7 +850,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-21-candidate",
-            "latency_ms": 0.009180002962239087,
+            "latency_ms": 0.010044997907243669,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -876,7 +877,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-22-baseline",
-            "latency_ms": 0.004509987775236368,
+            "latency_ms": 0.0050779926823452115,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -901,7 +902,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-22-candidate",
-            "latency_ms": 0.008910996257327497,
+            "latency_ms": 0.00997299503069371,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -928,7 +929,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-23-baseline",
-            "latency_ms": 0.004473011358641088,
+            "latency_ms": 0.005345995305106044,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -953,7 +954,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-23-candidate",
-            "latency_ms": 0.009087991202250123,
+            "latency_ms": 0.010221003321930766,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -980,7 +981,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-24-baseline",
-            "latency_ms": 0.004365007043816149,
+            "latency_ms": 0.005245005013421178,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1005,7 +1006,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-24-candidate",
-            "latency_ms": 0.009206996764987707,
+            "latency_ms": 0.010105999535880983,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1032,7 +1033,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-25-baseline",
-            "latency_ms": 0.0044670014176517725,
+            "latency_ms": 0.005255002179183066,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1057,7 +1058,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-25-candidate",
-            "latency_ms": 0.009072988177649677,
+            "latency_ms": 0.010207004379481077,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1084,7 +1085,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-26-baseline",
-            "latency_ms": 0.004389003152027726,
+            "latency_ms": 0.005085006705485284,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1109,7 +1110,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-26-candidate",
-            "latency_ms": 0.009085997589863837,
+            "latency_ms": 0.009837007382884622,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1136,7 +1137,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-27-baseline",
-            "latency_ms": 0.004496992914937437,
+            "latency_ms": 0.005150999641045928,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1161,7 +1162,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-27-candidate",
-            "latency_ms": 0.00936200376600027,
+            "latency_ms": 0.010189993190579116,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1188,7 +1189,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-28-baseline",
-            "latency_ms": 0.004305999027565122,
+            "latency_ms": 0.005055000656284392,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1213,7 +1214,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-28-candidate",
-            "latency_ms": 0.00933599949348718,
+            "latency_ms": 0.010019997716881335,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1240,7 +1241,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-29-baseline",
-            "latency_ms": 0.0046770001063123345,
+            "latency_ms": 0.0052440009312704206,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1265,7 +1266,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-29-candidate",
-            "latency_ms": 0.009342009434476495,
+            "latency_ms": 0.010315998224541545,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1292,7 +1293,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-3-baseline",
-            "latency_ms": 0.004878995241597295,
+            "latency_ms": 0.005303998477756977,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1317,7 +1318,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-3-candidate",
-            "latency_ms": 0.009375988156534731,
+            "latency_ms": 0.010395990102551877,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1344,7 +1345,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-4-baseline",
-            "latency_ms": 0.004489003913477063,
+            "latency_ms": 0.005164998583495617,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1369,7 +1370,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-4-candidate",
-            "latency_ms": 0.00943899794947356,
+            "latency_ms": 0.010324001777917147,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1396,7 +1397,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-5-baseline",
-            "latency_ms": 0.004551999154500663,
+            "latency_ms": 0.005230001988820732,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1421,7 +1422,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-5-candidate",
-            "latency_ms": 0.009383002179674804,
+            "latency_ms": 0.010310002835467458,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1448,7 +1449,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-6-baseline",
-            "latency_ms": 0.00451300002168864,
+            "latency_ms": 0.005068010068498552,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1473,7 +1474,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-6-candidate",
-            "latency_ms": 0.009240000508725643,
+            "latency_ms": 0.010011004633270204,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1500,7 +1501,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-7-baseline",
-            "latency_ms": 0.004522997187450528,
+            "latency_ms": 0.007996000931598246,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1525,7 +1526,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-7-candidate",
-            "latency_ms": 0.009473005775362253,
+            "latency_ms": 0.010162999387830496,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1552,7 +1553,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-8-baseline",
-            "latency_ms": 0.004382003680802882,
+            "latency_ms": 0.005422989488579333,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1577,7 +1578,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-8-candidate",
-            "latency_ms": 0.009181007044389844,
+            "latency_ms": 0.010033007129095495,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1604,7 +1605,7 @@
             "cost_usd": 0.0,
             "cue_digest": "",
             "evidence_id": "holdout-9-baseline",
-            "latency_ms": 0.004586006980389357,
+            "latency_ms": 0.005274996510706842,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1629,7 +1630,7 @@
             "cost_usd": 0.0,
             "cue_digest": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",
             "evidence_id": "holdout-9-candidate",
-            "latency_ms": 0.009401992429047823,
+            "latency_ms": 0.010506002581678331,
             "model": {
               "context_digest": "44fd87f62c6049e8e19a61d49704b4d984f1d815b36f3391f04df005e855885d",
               "max_tokens": 128,
@@ -1661,8 +1662,8 @@
   "provider_calls": 0,
   "router_timing": {
     "iterations": 1000,
-    "median_ms": 0.020006002159789205,
-    "p95_ms": 0.041457999031990767,
+    "median_ms": 0.02174399560317397,
+    "p95_ms": 0.05660500028170645,
     "scope": "local disabled router only; no provider latency or improvement claim"
   },
   "schema": "nerve-cce-demo-v1",
@@ -1679,14 +1680,20 @@
     "task_type": "research"
   },
   "source_sha256": {
-    "cue_cli.py": "9231fcddcd16fab63c56d6ba9d4154762fbc92d8f0c1688b6ddcf6f4f2ec6ffc",
-    "cue_cycle.py": "1f58d587c3766fa711c0216470322851dfeabc33cdc0bccd146f1c97b646d879",
+    "cue_cli.py": "322eef42ab4877720f5f16f63da29c0e99b71b3249fadbbd21ac85c300ba7395",
+    "cue_cycle.py": "6e14d455fdc404a6421bcd72dc7b8529449770aeac4ac1a8bef0422ca6729fb7",
+    "cue_dataset.py": "18718b8fc2d9f1b84567950f72d610536876159d538576c06ab1a4ee0504b845",
+    "cue_discovery.py": "de597b3d2207d915a2cbdaf925321e667b535f11a7fd1a83d014cea20665c987",
     "cue_engine.py": "91ce0a740b59fa310148ebd33bcd9c166b97815ff5ba730b10f76e011e1acd97",
-    "cue_evaluation.py": "d28d5834ea411935582f86c72580fcec4301132c2d8aa1b4c5d55a562ae837ba",
-    "cue_experiment.py": "99c3ed1da6b0fa98bfc574f81a90304c0c72e5fdaca6313198c92c97d526be0d",
-    "cue_host.py": "9cb5767d5312b3fbb819380678d6c90c69c8658565e867fcc2dd614de3e58209",
+    "cue_evaluation.py": "da6fd2ff21ede6b86de48c9dc714f9beb3e7ac75640ebd79c7375ee07580e831",
+    "cue_experiment.py": "98903e83af2d4767d7fbb319aab627b15a58f21b4a8ccae68f650ba90653721b",
+    "cue_feedback.py": "5900f2ebdbd4fac0939c72e0a104098d61a189b83430e167c17f0b9925813107",
+    "cue_host.py": "5f9861902e3b08a488c14f3d30a2f32a5342ac032eabc3839a2f29edc588836a",
     "cue_jev.py": "c0545a11cba6f834f8f3ba36b2e58debcdc4da05fe02175c27cf0283e6060c1c",
-    "cue_learning.py": "b5a34b7265f867ec3a9ae1e0386bbae6f7badadb1a492dd84b789ce581cc779c"
+    "cue_learning.py": "45dd19466bd3966999193ac8ae43e3ab59c9f2c78e53801e66104a2b59882244",
+    "cue_local.py": "9b12f2e7f27a8dedaadcb30ba538c90137494d389636af260d5e35612c072115",
+    "cue_ollama.py": "4f5a6459df25b11ba3f77bf335b6d868eea1b5c66fe5affd2ec54102fb5ae1f5",
+    "cue_release.py": "8f1bb2ba9bd64e6a37c544be4cbafaf44d1a7f8f8039f5968d267d8eeff6016e"
   },
   "tokenization": {
     "cue_hash": "4955529fee2d540e6d08091dd95ed22b74688472a71fd4a7268e66a4a3cf4ae3",

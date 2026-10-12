@@ -369,6 +369,8 @@ def publish(host, extra=None):
         'Autoresearch: '+str(status['autoresearch'].get('status','paused'))+
         '; enabled='+str(status['autoresearch'].get('enabled',False))+
         '. Bounded experiments resume on the 15-minute scheduler; fresh evidence and budget are required.\n\n'+
+        'CCE jobs: '+json.dumps(status['autoresearch'].get('cce_jobs',{}).get('counts',{}),sort_keys=True)+
+        '. Explicit queued jobs wait for measured adapters; cancel a pending job to resume audit work. No cue activation is automatic.\n\n'+
         'Registered follow-on cohorts: '+str(len(status['autoresearch'].get('registered_cohorts',[])))+
         '; latest follow-on study: '+str(status['autoresearch'].get('registered_study',{}).get('status','not_run'))+
         '. Accepted follow-on advice remains experimental and unmonitored.\n\n'+
@@ -428,7 +430,9 @@ def main():
         'adaptation-inspect','adaptation-validate-config','adaptation-replay','adaptation-evaluate',
         'adaptation-run','adaptation-demo','adaptation-status','adaptation-reset','adaptation-kill',
         'research-fast-memory-train','research-fast-memory-evaluate',
-        'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile'))
+        'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile',
+        'cce-local-inspect','cce-local-smoke','cce-dataset-status','cce-job-submit','cce-job-status','cce-job-cancel'))
+    parser.add_argument('--cue-job',help='Pending CCE job identifier to cancel without replay')
     parser.add_argument('--repository',type=Path,help='Authorized local repository for read-only adaptation')
     parser.add_argument('--candidate')
     parser.add_argument('--config',type=Path)
@@ -445,6 +449,9 @@ def main():
     parser.add_argument('--cue-review',help='Operator review reference for cue approval or revocation')
     parser.add_argument('--cue-generation',type=int,help='Expected CCE route generation from cce-route')
     parser.add_argument('--cue-valid-for',type=float,default=86400,help='CCE approval lifetime in seconds (at most seven days)')
+    parser.add_argument('--cue-model',help='Installed local model name for CCE research')
+    parser.add_argument('--cue-model-digest',help='Expected local model manifest SHA256')
+    parser.add_argument('--allow-local-inference',action='store_true',help='Allow four bounded local CCE smoke calls')
     parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
     parser.add_argument('--review',type=Path,help='Independent host review record for cohort admission')
@@ -490,6 +497,31 @@ def main():
             if args.command=='cce-demo':
                 from nerve_awim.cue_cli import demo
                 result=demo()
+            elif args.command in ('cce-local-inspect','cce-local-smoke'):
+                if not args.cue_model or not args.cue_model_digest:
+                    parser.error('local CCE research requires --cue-model and --cue-model-digest')
+                execute=args.command=='cce-local-smoke'
+                if execute and not args.allow_local_inference:
+                    parser.error('local smoke requires --allow-local-inference')
+                from nerve_awim.cue_ollama import OllamaCueAdapter
+                from nerve_awim.cue_local import run_local_smoke
+                adapter=OllamaCueAdapter(args.cue_model,args.cue_model_digest,
+                    enabled=execute,permission_granted=execute,max_calls=4,max_output_tokens=32)
+                result=run_local_smoke(adapter) if execute else adapter.inspect()
+                atomic_json(host.directory/(args.command+'.json'),result)
+            elif args.command in ('cce-job-submit','cce-job-status','cce-job-cancel'):
+                import agentos_cue_jobs as cue_jobs
+                if args.command=='cce-job-submit':
+                    if args.task is None:
+                        parser.error('cce-job-submit requires --task with a frozen CCE job specification')
+                    result=cue_jobs.submit(host,cue_jobs.load_spec(args.task))
+                elif args.command=='cce-job-cancel':
+                    if not args.cue_job:
+                        parser.error('cce-job-cancel requires --cue-job')
+                    result=cue_jobs.cancel(host,args.cue_job)
+                else:
+                    result=cue_jobs.status(host)
+                atomic_json(host.directory/'cce-jobs.json',cue_jobs.status(host))
             elif args.command=='cce-status':
                 result=cues.status(args.profile)
             elif args.command=='cce-profile':
@@ -501,6 +533,10 @@ def main():
                 if not args.profile:
                     parser.error('CCE route inspection requires --profile')
                 result=cues.route_status(args.profile)
+            elif args.command=='cce-dataset-status':
+                if not args.profile:
+                    parser.error('CCE dataset status requires --profile')
+                result=cues.dataset_status(args.profile)
             else:
                 if not args.profile or not args.cue_candidate:
                     parser.error('CCE candidate commands require --profile and --cue-candidate')

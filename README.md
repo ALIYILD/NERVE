@@ -30,10 +30,33 @@ See the [15-loop plan](docs/cce/implementation-plan.md),
 [verification status](docs/cce/verification.md).
 The [installed-host wiring](docs/cce/host-integration.md) connects the Agent OS
 bridge and native Hermes worker, with `cce-status`, inspection and revocation.
+An optional [local research adapter](docs/cce/local-research.md) supports verified
+installed Qwen models, frozen datasets and measured token receipts. Its bounded
+arithmetic smoke has run locally; no cue effectiveness or deployment is claimed.
 
 ```bash
 PYTHONPATH=src python -m nerve_awim.cue_cli demo
 ```
+
+## Opt-in Memento 3 world-model research
+
+NERVE can learn bounded operational rules from observed transitions, compare
+candidates, plan through existing read-only repository tools, and recover
+completed final reports across coordinator restarts. Agent OS evidence, offline
+Hermes proposals and host-bound MCP inspection use the existing NERVE interfaces.
+
+```bash
+python scripts/nerve_world_model.py doctor
+python scripts/nerve_world_model.py --db /tmp/nerve-memento-demo.sqlite3 demo
+# Equivalent package entry point:
+PYTHONPATH=src python -m nerve_awim world-model doctor
+```
+
+Use a fresh demo database. See the [commands and host integration guide](docs/world-model/README.md),
+[measured capabilities](docs/world-model/capability-report.md), and
+[remaining plan work](docs/world-model/backlog.json). This feature is disabled by
+default, uses no live provider, and does not authorize deployment. The complete
+Memento 3 plan is still in progress.
 
 ## Opt-in task adaptation and external-memory research
 

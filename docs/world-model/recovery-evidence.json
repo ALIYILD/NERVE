@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "starting_commit": "f390f21858e88b43ed82d09b57cb39a8c9fafe68",
+  "plan_complete": false,
+  "verification": {
+    "full_python": {
+      "tests": 925,
+      "exit_code": 0,
+      "seconds": 84.076
+    },
+    "focused_python_before_concurrency_test": {
+      "tests": 49,
+      "exit_code": 0
+    },
+    "node": {
+      "tests": 7,
+      "exit_code": 0
+    },
+    "demo": {
+      "exit_code": 0,
+      "provider_calls": 0,
+      "provider_spend": 0,
+      "eligibility": false,
+      "deployment_authorized": false
+    }
+  },
+  "artifacts": {
+    "recovery-focused.log": {
+      "path": "/Users/aliyildirim/nerve-memento3-evidence/recovery-focused.log",
+      "sha256": "b8450b7bd3b504a364244ef40977eea39403fc427fd1d10ad7ae6ab5d38d9af6"
+    },
+    "recovery-full-suite.log": {
+      "path": "/Users/aliyildirim/nerve-memento3-evidence/recovery-full-suite.log",
+      "sha256": "77c52f520953352418c8ff9a59eee620d0ce5ccdd12066dddc29f5d08c6fe4fc"
+    },
+    "recovery-node.log": {
+      "path": "/Users/aliyildirim/nerve-memento3-evidence/recovery-node.log",
+      "sha256": "fa47c44be0461e5c582c6d9d1a89b0329f16a0ec34c458a7d800ced4c749d4cc"
+    },
+    "recovery-demo.json": {
+      "path": "/Users/aliyildirim/nerve-memento3-evidence/recovery-demo.json",
+      "sha256": "a3a8812c6894bc1a23b6aa50254559598490726ab4e263e9a8232dab95c0c625"
+    }
+  },
+  "limitations": [
+    "Trusted local evaluator storage only",
+    "No cross-store semantic holdout reuse prevention",
+    "No new independent capability gain measurement",
+    "Standalone study runners retain their separate one-use protocols"
+  ]
+}
