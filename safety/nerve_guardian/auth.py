@@ -39,6 +39,15 @@ class OwnerVerifier:
             claims = self.jwt.decode(token, self.keys[header['kid']], algorithms=['RS256'],
                 issuer=self.issuer, audience=self.audience,
                 options={'require': ['sub', 'iss', 'aud', 'exp', 'iat', 'nbf', 'auth_time', 'jti']})
+            # Pinned subjects must represent separately administered human accounts.
+            # Delegation/service claims cannot transform an agent into that owner.
+            if any(key in claims for key in ('act', 'may_act', 'actor_token', 'obo')):
+                raise ValueError()
+            if any(claims.get(key) in ('client_credentials', 'client-credentials', 'service_account', 'agent', 'machine')
+                   for key in ('grant_type', 'gty', 'identity_type', 'actor_type', 'principal_type')):
+                raise ValueError()
+            if claims.get('is_service_account') is True or claims.get('is_agent') is True:
+                raise ValueError()
             now = int(time.time())
             if any(type(claims[k]) is not int for k in ('exp', 'iat', 'nbf', 'auth_time')):
                 raise ValueError()

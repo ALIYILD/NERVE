@@ -31,6 +31,13 @@ class AdminTests(unittest.TestCase):
             with self.assertRaises(AuthorizationError):
                 self.verifier.verify(self.token(**changes), restart=True)
 
+    def test_owner_subject_does_not_authorize_delegated_or_machine_token(self):
+        for claims in ({'act': {'sub': 'agent'}}, {'may_act': {}}, {'gty': 'client-credentials'},
+                       {'grant_type': 'client_credentials'}, {'identity_type': 'agent'},
+                       {'is_service_account': True}, {'is_agent': True}):
+            with self.assertRaises(AuthorizationError):
+                self.verifier.verify(self.token(**claims), restart=True)
+
     def test_loopback_server_authorization_and_xss(self):
         class Engine:
             called = False
