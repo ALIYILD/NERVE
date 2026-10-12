@@ -14,6 +14,54 @@ _spec.loader.exec_module(bridge)
 
 
 class AgentOSBridgeTests(unittest.TestCase):
+    def test_audit_command_queues_and_publishes_without_inference(self):
+        import contextlib
+        import io
+        import sys
+        (self.vault/'Memory').mkdir(parents=True)
+        self.host.reserve_calls('hermes-free',20,daily_limit=20)
+        with patch.object(sys,'argv',['bridge','audit-study','--state',str(self.host.directory)]), \
+             patch.object(bridge,'native',side_effect=AssertionError('budget exhausted')), \
+             patch.object(bridge,'claude_key',return_value=None),contextlib.redirect_stdout(io.StringIO()):
+            bridge.main()
+        pending=json.loads((self.host.directory/'pending-audit-study.json').read_text())
+        self.assertEqual(pending['profile'],'qa-release')
+        self.assertEqual(pending['remaining_sessions'],0)
+        status=json.loads((self.host.directory/'status.json').read_text())
+        self.assertEqual(status['audit_evidence_study']['pending']['status'],'queued_budget')
+        self.assertIn('Queued audit study: qa-release',(self.vault/'Memory/nerve-status.md').read_text())
+
+    def test_audit_queue_retries_after_reset_without_failure_trigger(self):
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        import sys
+        queue=self.host.directory/'pending-audit-study.json'
+        queue.write_text(json.dumps(dict(requested_day='2000-01-01',profile='qa-release')))
+        study=Mock(return_value={'status':'no_gain'})
+        with patch.dict(sys.modules,{'agentos_audit_study':SimpleNamespace(study=study)}):
+            self.assertEqual(bridge.retry_pending_audit(self.host),{'status':'no_gain'})
+        study.assert_called_once_with(self.host,bridge.native,'qa-release')
+
+    def test_audit_queue_same_day_does_not_invoke_native(self):
+        from types import SimpleNamespace
+        from unittest.mock import Mock
+        import sys
+        queue=self.host.directory/'pending-audit-study.json'
+        today=bridge.datetime.now(bridge.timezone.utc).strftime('%Y-%m-%d')
+        queue.write_text(json.dumps(dict(requested_day=today,profile='qa-release')))
+        study=Mock(side_effect=AssertionError('not due'))
+        with patch.dict(sys.modules,{'agentos_audit_study':SimpleNamespace(study=study)}):
+            self.assertIsNone(bridge.retry_pending_audit(self.host))
+        study.assert_not_called()
+
+    def test_invalid_audit_queue_records_error_without_model_call(self):
+        queue=self.host.directory/'pending-audit-study.json'
+        queue.write_text('{bad json')
+        with patch.object(bridge,'native',side_effect=AssertionError('no inference')):
+            result=bridge.retry_pending_audit(self.host)
+        self.assertEqual(result['status'],'failed')
+        self.assertTrue((self.host.directory/'audit-cycle-error.json').exists())
+
     def test_repository_diagnosis_does_not_infer_or_modify_receipt(self):
         source=Path(__file__).resolve().parents[1]/'docs/evidence/agentos-repository-repair-v2.json'
         raw=source.read_bytes()

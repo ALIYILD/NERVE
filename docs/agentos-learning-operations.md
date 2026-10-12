@@ -98,6 +98,17 @@ The [original v1 receipt](evidence/agentos-audit-regression-v1.json) is preserve
 
 The script now has a separately versioned v2 fixture asking directly about provider reachability instead of whether a report independently establishes it. V2 has not been run. All 20 native sessions for October 12 are reserved; no extra model calls or paid reviews were made. The coordinator's installed prompt now honors optional host-review vetoes and reports QA, host and effective verdicts separately. That prompt change is locally tested, not yet validated through another complete live mission.
 
-The [next evaluation design](agentos-next-evaluation.md) proposes a separately scoped evidence-attribution benchmark with citation checks, conflicting receipts and supported controls. Its offline typed oracle, public development controls and freeze/export/grade CLI are implemented; held-out study orchestration is not implemented or queued.
+The [next evaluation design](agentos-next-evaluation.md) proposes a separately scoped evidence-attribution benchmark with citation checks, conflicting receipts and supported controls. Its offline typed oracle, public development controls and freeze/export/grade CLI are implemented; a separate held-out composition study and paired runner are now implemented and budget-queued.
 
 Run `python3 scripts/agentos_audit_bench.py preflight` to validate the offline audit evidence foundation without model calls. See [the implemented foundation and limitations](agentos-next-evaluation.md#implemented-offline-foundation) for its schema, manifest and CLI. Development-control passes are evaluator validation, never model performance or learning gains.
+
+## Paired audit study and queue
+
+```sh
+python3 scripts/agentos_bridge.py audit-status
+python3 scripts/agentos_bridge.py audit-study --profile qa-release
+```
+
+The first study uses 2/4/4/6 multi-source cases under `agentos-audit-composition-v1`. It needs eight available native sessions; the whole maximum is prepaid and unused slots are not refunded. Do not delete the ledger to reclaim allowance or reuse cases. A queued request is stored at `~/.agentic-os/nerve/pending-audit-study.json`, bound to the profile, cohort and evaluator revision. The existing cycle retries after UTC reset while this Mac is awake. Changed queued scope requires explicit review; it cannot silently run different cases.
+
+`audit-status`, `status.json` under `audit_evidence_study`, and the Obsidian/gbrain status note distinguish the latest result from pending work. Receipts live in `audit-study.sqlite3` and `latest-audit-study.json`; frozen source/fixture snapshots live under `audit-study-snapshots/<study-id>/`. Advice remains a shadow candidate even if all paired gates pass. No operational advice is automatically activated by this runner. See the [study design and implementation limits](agentos-next-evaluation.md#implemented-first-composition-study).

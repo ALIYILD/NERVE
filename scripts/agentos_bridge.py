@@ -15,6 +15,7 @@ import uuid
 import urllib.request
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'src'))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nerve_awim.agentos_learning import (AgentOSLearning, BASELINE, CONTEXT,
     atomic_json, expected_handoff, host_lock, judge_handoff)
 from nerve_awim.improvement_loop import run_improvement_loop
@@ -274,7 +275,9 @@ def collect_missions(host):
 
 
 def publish(host, extra=None):
+    import agentos_audit_study as audit
     status=host.status()
+    status['audit_evidence_study']=audit.status(host)
     study_file=host.directory/'latest-study.json'
     if study_file.exists():
         s=json.loads(study_file.read_text())
@@ -311,6 +314,11 @@ def publish(host, extra=None):
         '; deferred on '+str(pending['requested_day'])+' UTC; '+
         str(pending.get('remaining_sessions','?'))+' of '+str(pending.get('required_sessions',8))+
         ' required native sessions available. Retries after the UTC daily budget resets.\n\n') if pending else ''
+    audit_pending=status['audit_evidence_study'].get('pending')
+    audit_note=('Queued audit study: '+str(audit_pending.get('profile','unknown'))+
+        '; requested '+str(audit_pending.get('requested_day','unknown'))+' UTC; '+
+        str(audit_pending.get('remaining_sessions','?'))+' of '+str(audit_pending.get('required_sessions',8))+
+        ' required sessions available. Scheduler retries after UTC reset while this Mac is awake.\n\n') if audit_pending else ''
     note = ('# NERVE — Agent OS learning\n\n'+
         'AWIM coordination and evaluated-memory track. [[agent-os-capability-registry]]\n\n'+
         'Updated: '+status['updated_at']+'\n\n'+
@@ -324,9 +332,29 @@ def publish(host, extra=None):
         str(status['repository_learning']['rollbacks'])+' rollbacks.\n\n'+
         'Diagnosis: '+status['repository_diagnosis']['summary']+'\n\n'+
         pending_note+
+        'Audit evidence study: '+str(status['audit_evidence_study'].get('status','not_run'))+
+        '. Results are scoped shadow evidence, not operational approval.\n\n'+
+        audit_note+
         'Receipts: `~/.agentic-os/nerve/status.json`; [[Journal/nerve]].\n')
     (VAULT/'Memory/nerve-status.md').write_text(note)
     return status
+
+
+def retry_pending_audit(host):
+    """Called under the host lock; budget-deferred audits retry after UTC reset."""
+    path=host.directory/'pending-audit-study.json'
+    if not path.exists():
+        return None
+    try:
+        pending=json.loads(path.read_text())
+        requested=datetime.strptime(pending['requested_day'],'%Y-%m-%d').date()
+        if requested >= datetime.now(timezone.utc).date():
+            return None
+        import agentos_audit_study as audit
+        return audit.study(host,native,pending['profile'])
+    except Exception as error:
+        atomic_json(host.directory/'audit-cycle-error.json',{'error_category':type(error).__name__})
+        return {'status':'failed','error_category':type(error).__name__}
 
 
 def repository_diagnosis(host):
@@ -355,7 +383,7 @@ def repository_diagnosis(host):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review',
-        'repository-study','repository-run','repository-tasks','repository-diagnose'))
+        'repository-study','repository-run','repository-tasks','repository-diagnose','audit-study','audit-status'))
     parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
     parser.add_argument('--state',type=Path,default=STATE)
@@ -367,7 +395,13 @@ def main():
     with host_lock(args.state):
         host=AgentOSLearning(args.state)
         recover_interrupted_repository(host)
-        if args.command=='repository-diagnose':
+        if args.command in ('audit-study','audit-status'):
+            import agentos_audit_study as audit
+            try:
+                result=audit.study(host,native,args.profile) if args.command=='audit-study' else audit.status(host)
+            finally:
+                publish(host)
+        elif args.command=='repository-diagnose':
             result=repository_diagnosis(host)
             publish(host)
         elif args.command in ('repository-study','repository-run','repository-tasks'):
@@ -390,6 +424,7 @@ def main():
             publish(host)
         elif args.command=='cycle':
             collected=collect_missions(host)
+            retry_pending_audit(host)
             with sqlite3.connect(host.path) as db:
                 failures=db.execute('SELECT COUNT(*) FROM nerve_missions WHERE success=0').fetchone()[0]
             gate=host.directory/'auto-study.json'
