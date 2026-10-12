@@ -8,7 +8,7 @@ Implemented on isolated branch `feat/nerve-watchtower`, based on local NERVE com
 |---|---|---|
 | Unmodified baseline | 1,124 tests passed | [baseline](evidence/baseline.log) |
 | Existing NERVE regression | 1,124 tests passed | [regression](evidence/regression.log) |
-| Safety suite | 78 tests passed | [test log](evidence/safety-tests.log) |
+| Safety suite | 80 tests passed | [test log](evidence/safety-tests.log) |
 | Independent adversarial review | 13 attack tests passed; demonstrated defects repaired | [review](INDEPENDENT_REVIEW.md) |
 | Passive CLI collector | Actual read-only SQLite aggregate collection, no source writes | [collector entrypoint](evidence/watchtower-entrypoint.json) |
 | Guardian CLI on unprovisioned host | Correctly UNKNOWN, enforcement disabled | [service entrypoint](evidence/service-entrypoint.json) |
@@ -58,3 +58,7 @@ The combined safety suite passes 70 tests, including 11 notification tests indep
 ## Configuration validation and safe report publication
 
 The safety suite now passes 78 tests. Both deployment examples validate through the CLI without creating state or starting services. Invalid schemas are rejected before runtime side effects, including inventory exclusions, owner scope, alert configuration, duplicate source names, numeric bounds and ambiguous JSON. Pure schema validation does not establish actual path identity or production readiness. Independent review identified predictable report staging that could truncate a monitored input; exclusive random temporary files now preserve the real SQLite source in the regression test. Existing NERVE runtime code remains unchanged.
+
+## Live passive observation follow-up
+
+User-authorized limited passive monitoring is now installed on the actual macOS host; see [live status](LIVE_DEPLOYMENT.md). Full Guardian production acceptance remains unestablished. The combined safety suite passes 80 tests, including 12 telemetry tests independently rerun on the deployed Python 3.10 interpreter. Learning schedules and NERVE runtime source remain unchanged.

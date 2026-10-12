@@ -67,6 +67,8 @@ test_passive_collector_real_sqlite_cli_contract (test_service.ServiceTests.test_
 test_poisoned_report_has_no_arbitrary_payload (test_service.ServiceTests.test_poisoned_report_has_no_arbitrary_payload) ... ok
 test_service_cannot_implicitly_arm (test_service.ServiceTests.test_service_cannot_implicitly_arm) ... ok
 test_adaptation_join_is_tenant_scoped (test_telemetry.TelemetryTests.test_adaptation_join_is_tenant_scoped) ... ok
+test_agentos_learning_counts_are_tenant_scoped_and_metadata_only (test_telemetry.TelemetryTests.test_agentos_learning_counts_are_tenant_scoped_and_metadata_only) ... ok
+test_agentos_learning_views_and_unscoped_tables_rejected (test_telemetry.TelemetryTests.test_agentos_learning_views_and_unscoped_tables_rejected) ... ok
 test_anomaly_never_critical_and_stale_unknown (test_telemetry.TelemetryTests.test_anomaly_never_critical_and_stale_unknown) ... ok
 test_baselines_isolated_bounded_and_decrease_warning (test_telemetry.TelemetryTests.test_baselines_isolated_bounded_and_decrease_warning) ... ok
 test_missing_not_created (test_telemetry.TelemetryTests.test_missing_not_created) ... ok
@@ -78,6 +80,6 @@ test_read_only_tenant_scoped_redacted (test_telemetry.TelemetryTests.test_read_o
 test_tables_allowlisted (test_telemetry.TelemetryTests.test_tables_allowlisted) ... ok
 
 ----------------------------------------------------------------------
-Ran 78 tests in 7.099s
+Ran 80 tests in 7.655s
 
 OK

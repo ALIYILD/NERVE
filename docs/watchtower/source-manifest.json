@@ -23,7 +23,7 @@
     "safety/nerve_guardian/static/index.html": "8b032b758700451bec625e464635e33a3688df3e57886b314ada425b0c48d3f9",
     "safety/nerve_guardian/static/style.css": "fecb7dc46b01e45f52ef347fee41652a6d5e443738a89e42ce562dd5ef90619e",
     "safety/nerve_guardian/store.py": "a8e427b3b997a62fdb23e1311ec8fb8147126f16dca087925f6b16f776d1a439",
-    "safety/nerve_guardian/telemetry.py": "52302e08eaff5f01fd255e6e5cfa03cca446debeec871cdbe06f11949ba96c38",
+    "safety/nerve_guardian/telemetry.py": "967e33da3cb8457b073694004f145475aeb051c33f1a1a1ae8daae22fd2687fe",
     "safety/nerve_guardian/web.py": "ae52c7dfd78dfb6e4f24af7c633f785cfc44a3dce4cf0914cf2a1c88e5b920d2",
     "safety/requirements.txt": "759acbecefd3179430465877e7cc83d404ee143457000781ef145cd5d16b7d6a",
     "scripts/verify_watchtower.py": "b9e3f4600794b1eb5714a6f4da7aee9280066d95e001c2833157326939ddc42e",
@@ -36,6 +36,6 @@
     "tests/watchtower/test_infrastructure.py": "d4646dde59b3bbabfd18a502356d065324272f2bc6fa872c085d8e93fdda4370",
     "tests/watchtower/test_notifications.py": "f5a87f83c8642f49eb70902f6b63b6e7820e1d7ed38d5098b3ea0912ee405cd8",
     "tests/watchtower/test_service.py": "2be0981e61f9ba395990ffaccc28146e2ee3d6248d6f1241b28facfa6f92483e",
-    "tests/watchtower/test_telemetry.py": "f98e7e20b5daf1ce5c7c7c97d05e254e6d47941200b444e2702b52b51ac21307"
+    "tests/watchtower/test_telemetry.py": "49c6072ab3cd746843f85128d75d18fa8c54b49d05ed5607df93ce2202153c50"
   }
 }

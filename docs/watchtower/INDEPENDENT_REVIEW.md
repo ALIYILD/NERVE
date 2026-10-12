@@ -58,3 +58,7 @@ The same independent specialist reviewed the sibling-lock implementation and ran
 ## Configuration and report publication review
 
 The independent alerts/admin specialist confirmed schema validation precedes runtime state/thread side effects and initially passed seven configuration tests. Review identified that the predictable `.pending` report staging path could truncate a monitored SQLite input. The implementation now uses exclusive random temporary files. The reviewer reran all eight configuration tests (0.581 seconds), confirmed byte-for-byte preservation of the real source database and removal of temporary artifacts, and reported the finding resolved with no additional blocker within the schema-only validation boundary. Filesystem identity, operational authority and credentials still require deployment verification.
+
+## Live passive metadata review
+
+The independent alerts/admin reviewer examined release 65151a7 and reran all 12 telemetry tests on Python 3.10 (0.118 seconds). Fixed parameterized count queries match the actual tenant columns; views and unscoped legacy tables are rejected, payloads are excluded, and bounded read-only protections remain. Approval concerns limited same-user passive observation only. Row totals, including zero, do not establish learning completeness, correctness or system safety. The primary agent separately verified unchanged live source bytes and advancing report timestamps; the reviewer did not independently repeat that live measurement.

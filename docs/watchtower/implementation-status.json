@@ -7,7 +7,7 @@
   "checks": {
     "baseline_tests": 1124,
     "regression_tests": 1124,
-    "safety_tests": 78,
+    "safety_tests": 80,
     "independent_adversarial_tests": 13,
     "real_disposable_process_demo": true,
     "live_provider_delivery": false
@@ -76,5 +76,7 @@
     "clinical_dependencies",
     "production_retention_endurance"
   ],
-  "next_action": "Review draft PR and provision independent staging infrastructure and test identities before any live enforcement."
+  "next_action": "Provide independent deployment host/account and owner MFA/provider secret locations; current macOS workload is unsupported by the systemd enforcement adapter.",
+  "passive_local_observer_running": true,
+  "passive_observer_release": "65151a7"
 }
