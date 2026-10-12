@@ -1,0 +1,26 @@
+[Unit]
+Description=Independent passive NERVE Watchtower collector
+After=network.target
+ConditionPathExists=/etc/nerve-watchtower/ENABLED
+
+[Service]
+Type=simple
+User=nerve-watchtower
+Group=nerve-watchtower
+Environment=PYTHONPATH=/opt/nerve-safety/safety
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/opt/nerve-safety/.venv/bin/python -m nerve_guardian watchtower --config /etc/nerve-watchtower/config.json
+Restart=on-failure
+RestartSec=5
+StateDirectory=nerve-watchtower
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectControlGroups=true
+CapabilityBoundingSet=
+ReadWritePaths=/var/lib/nerve-watchtower
+# Grant separately reviewed read-only access to each application SQLite source.
+# No Install section: this file does not activate a production service.

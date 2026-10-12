@@ -1,0 +1,116 @@
+{
+  "production_inventory_verified": false,
+  "coverage": [
+    {
+      "surface": "ARC governed tool execution",
+      "repository_evidence": [
+        "src/nerve_awim/arc_execution.py"
+      ],
+      "observability": "governed SQLite aggregate metadata",
+      "enforcement": "only if process enrolled in managed systemd unit"
+    },
+    {
+      "surface": "Repository HTTP host",
+      "repository_evidence": [
+        "src/nerve_awim/repository_host_v25.py",
+        "deploy/nerve-repository-pilot.service"
+      ],
+      "observability": "read-only metadata adapter",
+      "enforcement": "systemd adapter implemented; not live verified"
+    },
+    {
+      "surface": "Agent OS and Hermes",
+      "repository_evidence": [
+        "scripts/agentos_bridge.py",
+        "scripts/agentos_hermes_worker.py",
+        "src/nerve_awim/hermes_agents.py"
+      ],
+      "observability": "source discovered; explicit source enrollment required",
+      "enforcement": "uncovered launchd/subprocess/remote paths"
+    },
+    {
+      "surface": "MCP and legacy agents",
+      "repository_evidence": [
+        "src/nerve_awim/agent_bridge_v13.py",
+        "src/nerve_awim/learn_mcp.py"
+      ],
+      "observability": "discovered; uninstrumented",
+      "enforcement": "uncovered"
+    },
+    {
+      "surface": "Memory and learning",
+      "repository_evidence": [
+        "src/nerve_awim/memory_v18.py",
+        "src/nerve_awim/governed_learning_v20.py"
+      ],
+      "observability": "governed metadata available; raw memory excluded",
+      "enforcement": "inherits enrolled service scope only"
+    },
+    {
+      "surface": "Shadow canary and promotion",
+      "repository_evidence": [
+        "src/nerve_awim/shadow_learning_v21.py",
+        "src/nerve_awim/canary_learning_v23.py",
+        "src/nerve_awim/promotion_monitor_v24.py"
+      ],
+      "observability": "candidate/release counts",
+      "enforcement": "inherits enrolled service scope only"
+    },
+    {
+      "surface": "Recursive improvement and CCE",
+      "repository_evidence": [
+        "src/nerve_awim/recursive_evolution_v19.py",
+        "src/nerve_awim/cue_host.py"
+      ],
+      "observability": "discovered; domain-specific metrics not collected",
+      "enforcement": "external scheduled workers uncovered"
+    },
+    {
+      "surface": "Task adaptation",
+      "repository_evidence": [
+        "src/nerve_awim/adaptation.py"
+      ],
+      "observability": "task/event/correction/checkpoint aggregate metadata",
+      "enforcement": "inherits enrolled service scope only"
+    },
+    {
+      "surface": "GitHub scheduled research",
+      "repository_evidence": [
+        ".github/workflows/recursive-research.yml"
+      ],
+      "observability": "discovered; external audit source absent",
+      "enforcement": "uncovered external deployment controller"
+    },
+    {
+      "surface": "User launchd",
+      "repository_evidence": [
+        "scripts/install_agentos_schedule.py"
+      ],
+      "observability": "discovered; process truth not enrolled",
+      "enforcement": "uncovered"
+    },
+    {
+      "surface": "Clinical and DeepSynaps",
+      "repository_evidence": [
+        "src/nerve_awim/arc_workflows.py"
+      ],
+      "observability": "synthetic boundary only",
+      "enforcement": "excluded until clinical dependency review"
+    },
+    {
+      "surface": "Network IAM and deployment credentials",
+      "repository_evidence": [],
+      "observability": "UNKNOWN no independent account signal configured",
+      "enforcement": "no revocation/egress enforcement implemented"
+    },
+    {
+      "surface": "Guardian and Watchtower",
+      "repository_evidence": [
+        "safety/nerve_guardian/health.py",
+        "deploy/watchtower/nerve-guardian.service.example"
+      ],
+      "observability": "external health checker implemented",
+      "enforcement": "excluded from managed shutdown inventory"
+    }
+  ]
+}

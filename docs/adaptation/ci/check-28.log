@@ -1,0 +1,15 @@
+{
+  "accuracy": {
+    "fixed_optimal": 1.0,
+    "recency": 0.0,
+    "utility": 1.0
+  },
+  "interpretation": "Toy two-step allowlisted tools; learning picks the verified configuration, but a fixed-correct non-learning pipeline is equally accurate. Not a real LLM or MCP protocol benchmark.",
+  "recency_mean_wall_seconds": 0.016668567082282,
+  "registered_tool_invocations_per_policy": 36,
+  "seeds": 12,
+  "tasks_per_seed_per_policy": 18,
+  "training_observations": 8,
+  "utility_mean_wall_seconds": 0.016518035418509196,
+  "utility_win_seeds": 12
+}

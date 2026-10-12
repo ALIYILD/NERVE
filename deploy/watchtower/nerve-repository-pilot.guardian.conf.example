@@ -1,0 +1,10 @@
+# Administrator-reviewed drop-in for nerve-repository-pilot.service.
+# Install only after dependency/clinical review, never automatically.
+# Conditions are checked by the system manager, not by the nerve account.
+[Unit]
+ConditionPathExists=!/var/lib/nerve-guardian/blocks/nerve-repository-pilot.service
+
+[Service]
+KillMode=control-group
+SendSIGKILL=yes
+TimeoutStopSec=15

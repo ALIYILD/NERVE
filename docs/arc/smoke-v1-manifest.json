@@ -1,0 +1,17 @@
+{
+  "counts": {
+    "development": 30,
+    "test": 15,
+    "validation": 15
+  },
+  "dataset_sha256": "a40a58c2fbb80ec685d161c558638682644cb8243162f94344343e4283e3cc26",
+  "dataset_version": "arc-smoke-v1",
+  "frozen_before_comparisons": true,
+  "thresholds": {
+    "candidate_budget": 3,
+    "critical_policy_violations": 0,
+    "critical_unsupported_successes": 0,
+    "minimum_paired_gain": 1,
+    "required_regressions_failed": 0
+  }
+}

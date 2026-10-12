@@ -1,0 +1,54 @@
+{
+  "action_receipts": {
+    "5b92143b30464601897a41b7e11329d1": "6f92056e2699493f9fbdb136fa41fbc2",
+    "bbee6703ec6641acbd26a85150952a2f": "f45bb611811a4385a1599685479dfbb7",
+    "bd9231de4c1b4b0bb584d80fdee96956": "131fbb6d8abb4bab90f305d78dd0343c"
+  },
+  "active_correction_ids": [],
+  "completed_steps": [
+    "5b92143b30464601897a41b7e11329d1",
+    "bbee6703ec6641acbd26a85150952a2f"
+  ],
+  "config": {
+    "automatic_global_promotion": false,
+    "backend": "structured",
+    "cross_subject_memory": false,
+    "enabled": true,
+    "max_action_steps": 20,
+    "max_context_tokens": 4000,
+    "max_replans": 3,
+    "max_tool_retries": 2,
+    "mode": "active-development",
+    "provider_spend_limit": 0,
+    "require_verified_corrections": true,
+    "task_deadline_seconds": 120
+  },
+  "constraints": [
+    "read-only",
+    "no-source-execution",
+    "independent-verification"
+  ],
+  "episode": "de2b065bed614c5a927fcfd08fc767e7",
+  "expiry": 1791838788.325004,
+  "goal": "top-level-function-inventory",
+  "last_decision": "bbee6703ec6641acbd26a85150952a2f",
+  "last_event": "96cb8d95cf494689be82c3d30f251026",
+  "last_outcome_status": "verified",
+  "memory_backend_version": "adaptation-v1",
+  "pending_steps": [],
+  "recent_failures": [
+    "bd9231de4c1b4b0bb584d80fdee96956"
+  ],
+  "replans": 1,
+  "schema_version": "adaptation-v1",
+  "sequence": 15,
+  "status": "completed",
+  "steps": 3,
+  "tool_failures": {},
+  "unresolved_questions": [],
+  "unverified_observations": [],
+  "verified_facts": [],
+  "version": 15,
+  "task_id": "observed-admin",
+  "subject_scope": "repository"
+}

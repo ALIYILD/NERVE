@@ -1,0 +1,120 @@
+{
+  "synthetic_metadata": true,
+  "actual_operation": "nerve_awim.repository_agents_v20.ast_inventory",
+  "successful_inventories": 12000,
+  "paired_blocks": 12,
+  "calls_per_block": 500,
+  "samples_seconds_per_call": {
+    "baseline": [
+      1.8412695993902162e-05,
+      1.8643988005351277e-05,
+      1.8107989977579562e-05,
+      1.9060110003920273e-05,
+      1.99531179969199e-05,
+      1.8869247986003756e-05,
+      1.8249396001920103e-05,
+      1.8476849974831567e-05,
+      1.8650814017746597e-05,
+      1.7883875989355148e-05,
+      1.8065637996187433e-05,
+      1.8091531994286924e-05
+    ],
+    "passive_collector": [
+      1.8134113983251155e-05,
+      1.8108695978298783e-05,
+      1.78956379822921e-05,
+      1.9162936019711196e-05,
+      1.9175321998773143e-05,
+      1.8725978006841614e-05,
+      1.9286955997813493e-05,
+      1.8395899998722598e-05,
+      2.0220381993567572e-05,
+      1.8564995989436285e-05,
+      1.938997599063441e-05,
+      1.9728545972611754e-05
+    ]
+  },
+  "median_baseline_seconds": 1.8444772984366865e-05,
+  "median_with_collector_seconds": 1.8944457013276405e-05,
+  "relative_median_change": 0.027090820219530746,
+  "collector_health": [
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 0,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 0,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 0,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 1,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 1,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 1,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 1,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 0,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 1,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 0,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 1,
+      "retained": 0
+    },
+    {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 1,
+      "retained": 0
+    }
+  ],
+  "production_latency_cost_false_positive_false_negative_rates": "not established",
+  "limitations": [
+    "local short-duration CPU fixture",
+    "separate-process production overhead not measured",
+    "not a statistical non-inferiority claim"
+  ]
+}

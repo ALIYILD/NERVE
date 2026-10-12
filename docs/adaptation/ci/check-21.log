@@ -1,0 +1,14 @@
+{
+  "all_checks_pass": false,
+  "checks": {
+    "controller_absolute_eligibility": false,
+    "runtime_budget": true,
+    "simulated_recovery_transitions": true
+  },
+  "controller_rejection_reasons": [
+    "completion_below_absolute_minimum",
+    "episode_abort_detected"
+  ],
+  "elapsed_seconds": 0.13417555500927847,
+  "scope": "Research-only. No production promotion or safety certification."
+}
