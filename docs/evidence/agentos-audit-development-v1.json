@@ -1,0 +1,667 @@
+{
+  "schema": "nerve-audit-development-manifest-v1",
+  "oracle_revision": "83f2c5e092a55c103e2e8fbcd71227c9b029dd3b9e5ca63922918e1ece6d911b",
+  "runner_revision": "3b0b07bb7c2c0de03bfd4654d26ac33b3aec6485bfb73218497a015bf3e455fa",
+  "cases": [
+    {
+      "id": "dev-credential-is-not-execution",
+      "family": "capability-separation",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "execution_success",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100,
+          "request_id": "request-target"
+        },
+        "sources": [
+          {
+            "id": "key-probe",
+            "kind": "credential_probe",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "present": true
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "unknown",
+        "citations": []
+      }
+    },
+    {
+      "id": "dev-listing-is-not-execution",
+      "family": "capability-separation",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "execution_success",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100,
+          "request_id": "request-target"
+        },
+        "sources": [
+          {
+            "id": "model-list",
+            "kind": "catalog",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "listed": true
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "unknown",
+        "citations": []
+      }
+    },
+    {
+      "id": "dev-worker-qa-echo-is-not-proof",
+      "family": "derived-assertion",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "execution_success",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100,
+          "request_id": "request-target"
+        },
+        "sources": [
+          {
+            "id": "worker-claim",
+            "kind": "assertion",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "text": "Simulated worker says the request succeeded."
+            }
+          },
+          {
+            "id": "qa-echo",
+            "kind": "summary",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [
+              "worker-claim"
+            ],
+            "fields": {
+              "text": "Simulated QA repeats the worker claim."
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "unknown",
+        "citations": []
+      }
+    },
+    {
+      "id": "dev-fallback-is-not-primary",
+      "family": "model-identity",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "execution_success",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100,
+          "request_id": "request-target"
+        },
+        "sources": [
+          {
+            "id": "fallback-receipt",
+            "kind": "execution_receipt",
+            "model": "simulated/fallback:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "request_id": "request-target",
+              "success": true
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "unknown",
+        "citations": []
+      }
+    },
+    {
+      "id": "dev-exact-request-succeeded",
+      "family": "execution-result",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "execution_success",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100,
+          "request_id": "request-target"
+        },
+        "sources": [
+          {
+            "id": "success-receipt",
+            "kind": "execution_receipt",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "request_id": "request-target",
+              "success": true
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "supported",
+        "citations": [
+          {
+            "source_id": "success-receipt",
+            "fields": [
+              "fields.request_id",
+              "fields.success",
+              "model",
+              "observed_at",
+              "provider"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-exact-request-failed",
+      "family": "execution-result",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "execution_success",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100,
+          "request_id": "request-target"
+        },
+        "sources": [
+          {
+            "id": "failure-receipt",
+            "kind": "execution_receipt",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "request_id": "request-target",
+              "success": false
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "contradicted",
+        "citations": [
+          {
+            "source_id": "failure-receipt",
+            "fields": [
+              "fields.request_id",
+              "fields.success",
+              "model",
+              "observed_at",
+              "provider"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-zero-pricing-at-freshness-boundary",
+      "family": "pricing-freshness",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "zero_price",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100
+        },
+        "sources": [
+          {
+            "id": "boundary-price",
+            "kind": "pricing",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 900,
+            "derived_from": [],
+            "fields": {
+              "input_usd": 0,
+              "output_usd": 0
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "supported",
+        "citations": [
+          {
+            "source_id": "boundary-price",
+            "fields": [
+              "fields.input_usd",
+              "fields.output_usd",
+              "model",
+              "observed_at",
+              "provider"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-free-suffix-with-paid-output",
+      "family": "pricing-value",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "zero_price",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100
+        },
+        "sources": [
+          {
+            "id": "paid-output-price",
+            "kind": "pricing",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "input_usd": 0,
+              "output_usd": 0.002
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "contradicted",
+        "citations": [
+          {
+            "source_id": "paid-output-price",
+            "fields": [
+              "fields.input_usd",
+              "fields.output_usd",
+              "model",
+              "observed_at",
+              "provider"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-expired-zero-pricing",
+      "family": "pricing-freshness",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "zero_price",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100
+        },
+        "sources": [
+          {
+            "id": "expired-price",
+            "kind": "pricing",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 899,
+            "derived_from": [],
+            "fields": {
+              "input_usd": 0,
+              "output_usd": 0
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "unknown",
+        "citations": []
+      }
+    },
+    {
+      "id": "dev-conflicting-current-prices",
+      "family": "conflicting-observations",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "zero_price",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100
+        },
+        "sources": [
+          {
+            "id": "price-a-zero",
+            "kind": "pricing",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 950,
+            "derived_from": [],
+            "fields": {
+              "input_usd": 0,
+              "output_usd": 0
+            }
+          },
+          {
+            "id": "price-b-paid",
+            "kind": "pricing",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "input_usd": 0.001,
+              "output_usd": 0
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "unknown",
+        "citations": [
+          {
+            "source_id": "price-a-zero",
+            "fields": [
+              "fields.input_usd",
+              "fields.output_usd",
+              "model",
+              "observed_at",
+              "provider"
+            ]
+          },
+          {
+            "source_id": "price-b-paid",
+            "fields": [
+              "fields.input_usd",
+              "fields.output_usd",
+              "model",
+              "observed_at",
+              "provider"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-key-probe-proves-only-key-presence",
+      "family": "credential-presence",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "credential_present",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100
+        },
+        "sources": [
+          {
+            "id": "local-key-probe",
+            "kind": "credential_probe",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "present": true
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "supported",
+        "citations": [
+          {
+            "source_id": "local-key-probe",
+            "fields": [
+              "fields.present",
+              "model",
+              "observed_at",
+              "provider"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-model-explicitly-not-listed",
+      "family": "catalog-membership",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "catalog_listed",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100
+        },
+        "sources": [
+          {
+            "id": "negative-listing",
+            "kind": "catalog",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "listed": false
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "contradicted",
+        "citations": [
+          {
+            "source_id": "negative-listing",
+            "fields": [
+              "fields.listed",
+              "model",
+              "observed_at",
+              "provider"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "dev-other-request-is-not-target",
+      "family": "request-identity",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "execution_success",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100,
+          "request_id": "request-target"
+        },
+        "sources": [
+          {
+            "id": "other-request-receipt",
+            "kind": "execution_receipt",
+            "model": "simulated/primary:free",
+            "provider": "simulated-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "request_id": "request-other",
+              "success": true
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "unknown",
+        "citations": []
+      }
+    },
+    {
+      "id": "dev-other-provider-is-not-target",
+      "family": "provider-identity",
+      "bundle": {
+        "schema": "agentos-audit-evidence-v1",
+        "simulated": true,
+        "claim": {
+          "kind": "execution_success",
+          "model": "simulated/primary:free",
+          "provider": "simulated-provider",
+          "at": 1000,
+          "max_age": 100,
+          "request_id": "request-target"
+        },
+        "sources": [
+          {
+            "id": "other-provider-receipt",
+            "kind": "execution_receipt",
+            "model": "simulated/primary:free",
+            "provider": "simulated-other-provider",
+            "observed_at": 1000,
+            "derived_from": [],
+            "fields": {
+              "request_id": "request-target",
+              "success": true
+            }
+          }
+        ]
+      },
+      "expected": {
+        "decision": "unknown",
+        "citations": []
+      }
+    }
+  ],
+  "preflight": {
+    "passed": 14,
+    "total": 14,
+    "checks": [
+      {
+        "id": "dev-credential-is-not-execution",
+        "family": "capability-separation",
+        "passed": true
+      },
+      {
+        "id": "dev-listing-is-not-execution",
+        "family": "capability-separation",
+        "passed": true
+      },
+      {
+        "id": "dev-worker-qa-echo-is-not-proof",
+        "family": "derived-assertion",
+        "passed": true
+      },
+      {
+        "id": "dev-fallback-is-not-primary",
+        "family": "model-identity",
+        "passed": true
+      },
+      {
+        "id": "dev-exact-request-succeeded",
+        "family": "execution-result",
+        "passed": true
+      },
+      {
+        "id": "dev-exact-request-failed",
+        "family": "execution-result",
+        "passed": true
+      },
+      {
+        "id": "dev-zero-pricing-at-freshness-boundary",
+        "family": "pricing-freshness",
+        "passed": true
+      },
+      {
+        "id": "dev-free-suffix-with-paid-output",
+        "family": "pricing-value",
+        "passed": true
+      },
+      {
+        "id": "dev-expired-zero-pricing",
+        "family": "pricing-freshness",
+        "passed": true
+      },
+      {
+        "id": "dev-conflicting-current-prices",
+        "family": "conflicting-observations",
+        "passed": true
+      },
+      {
+        "id": "dev-key-probe-proves-only-key-presence",
+        "family": "credential-presence",
+        "passed": true
+      },
+      {
+        "id": "dev-model-explicitly-not-listed",
+        "family": "catalog-membership",
+        "passed": true
+      },
+      {
+        "id": "dev-other-request-is-not-target",
+        "family": "request-identity",
+        "passed": true
+      },
+      {
+        "id": "dev-other-provider-is-not-target",
+        "family": "provider-identity",
+        "passed": true
+      }
+    ],
+    "constant_unknown_hits": 7,
+    "uncited_supported_hits": 0,
+    "development_only": true,
+    "native_sessions": 0,
+    "promotion_authorized": false,
+    "limitation": "Public simulated development controls, not sealed holdouts, live audits, model performance, or learned-policy improvement evidence."
+  },
+  "development_only": true,
+  "promotion_authorized": false,
+  "manifest_sha256": "ba09cdd8bb977283c237d846ea2220ade9c8bcc2af947c344bd81680787a935e"
+}

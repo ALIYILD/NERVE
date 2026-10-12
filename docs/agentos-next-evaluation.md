@@ -1,6 +1,6 @@
 # Next evaluation: source-grounded audit decisions
 
-Status: proposed design only. No new cohort, model call, or promotion is authorized by this document. Difficulty and improvement remain unmeasured.
+Status: the offline development foundation is implemented (see below). The held-out partition and matched-study orchestration remain proposed. No model performance or learned improvement has been measured with this evaluator.
 
 The archived [v1](evidence/agentos-repository-repair-v1.json), [v2](evidence/agentos-repository-repair-v2.json), and [v3](evidence/agentos-repository-repair-v3.json) experiments each reached a 3/3 baseline versus 3/3 learned-advice selection tie. None opened retention or final evaluation. The current evaluator gives agents an isolated function, its precise contract, and an injected defect, then checks a replacement with host-owned tests. That tests bounded code repair; it does not test whether an auditor can identify which source establishes a claim across conflicting artifacts. More versions of these small repairs risk repeating the ceiling without measuring the operational problem.
 
@@ -46,3 +46,22 @@ Claude can independently review the oracle and concrete training/development cas
 ## Next implementation order
 
 First implement the typed evidence schema and deterministic oracle, with explicit endpoint contracts. Next create supported/unknown/contradicted development controls and have a separate reviewer challenge them. Then author and seal the split manifest, add ledger-backed orchestration under the new scope, and run one matched study only after enough daily sessions are available. Publish an unchanged receipt even if another tie results. Until then, improving source collection and rejecting unsupported audit claims are engineering fixes, not demonstrated learned-policy gains.
+
+## Implemented offline foundation
+
+`src/nerve_awim/agentos_audit_evidence.py` validates exact typed, simulated evidence and grades four narrow predicates: credential presence, catalog listing, successful execution of a named request, and zero input/output prices. Applicable observations must match model/provider, time window and, for execution, request identity. Conflicting observations produce unknown with citations to both. Cyclic or missing provenance references are invalid; derived assertions and summaries cannot become independent observations. Source authenticity is assumed from host-owned fixtures, not established by this oracle. Zero input/output prices do not imply absence of ancillary charges.
+
+`agentos_audit_fixtures.py` contains 14 public, hand-authored development controls, separately checked against the oracle. These are not the proposed sealed train/selection/retention/final partitions. The [frozen development manifest](evidence/agentos-audit-development-v1.json) binds cases, gold references, oracle source, runner source and preflight checks. The runner rejects altered revisions and rehashed changes to reviewed fixtures. Existing manifests and grade receipts cannot be overwritten by its CLI.
+
+```sh
+python3 scripts/agentos_audit_bench.py preflight
+python3 scripts/agentos_audit_bench.py freeze --output /tmp/audit-development.json
+python3 scripts/agentos_audit_bench.py tasks --manifest /tmp/audit-development.json
+python3 scripts/agentos_audit_bench.py grade --manifest /tmp/audit-development.json --answers /tmp/answers.json --output /tmp/audit-grade.json
+```
+
+Answers are an exact object keyed by exported task ID, each containing `decision` (`supported`, `contradicted`, `unknown`) and `citations` (source IDs and exact relevant field names). The earlier focused regression used `refuted`; it is a separate schema and its receipts are not silently converted. `tasks` omits gold answers, but all development cases remain public. A correct label with wrong citations fails. `unsupported_positive_count` counts wrong positive labels; citation failures are separately reported per case and also prevent passing.
+
+Preflight passed all 14 gold controls. Constant unknown passes 7/14; uncited supported passes 0/14. CLI freeze/export/grade was exercised end to end with hand-authored gold, not model output. Fifteen independent oracle tests and seven runner tests cover adversarial evidence, strict types, citations, tampering, revision drift and immutable writes. The complete NERVE suite passed 763 tests. No inference, budget reservation, learned advice, automatic job or promotion was added.
+
+This implementation deliberately does not yet interpret supersedes edges, perform multi-predicate joins, authenticate production sources, create sealed holdouts or run paired model studies. Those are the next implementation gates before the proposed experiment can run. The current public controls must never be relabeled as fresh holdouts.
