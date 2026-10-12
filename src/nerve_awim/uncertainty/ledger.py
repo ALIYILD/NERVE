@@ -151,11 +151,12 @@ class Ledger:
         if decision_id is None:return records
         deps=self.dependencies(actor,task_id,decision_id,con=con)
         return [c for c in records if decision_id in c.affected_decision_ids or set(c.claim_ids)&set(deps['claim_ids'])]
-    def link(self,actor,task_id,decision_id,claim_ids,rule_ids=()):
+    def link(self,actor,task_id,decision_id,claim_ids,rule_ids=(),*,con=None):
         scope=self.scope(actor,task_id,roles=('runtime','operator'));_id(decision_id)
         for rule in rule_ids:_id(rule)
-        with self.engine._db() as con:
-            con.execute('BEGIN IMMEDIATE')
+        own_transaction = con is None
+        with (nullcontext(con) if con is not None else self.engine._db()) as con:
+            if own_transaction: con.execute('BEGIN IMMEDIATE')
             for cid in claim_ids:
                 if self._claim(con,actor,cid).task_id!=task_id:raise PermissionError('cross-task dependency denied')
             previous=con.execute('SELECT claims,rules FROM uc_links WHERE tenant=? AND agent=? AND task=? AND decision=?',(*scope,decision_id)).fetchone()

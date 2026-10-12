@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from nerve_awim.arc_workflows import build_workflow_engine
 from nerve_awim.agent_learning_v12 import AgentTask
@@ -72,6 +73,33 @@ class UncertaintyIntegrationTests(unittest.TestCase):
         self.assertEqual(independent.status,'proceed')
         with self.assertRaises(PermissionError):
             self.policy.assess(self.actor,self.task,'required','inventory',['left'],required=False)
+
+    def test_failed_assessment_rolls_back_links_and_lifecycle_events(self):
+        self.conflict()
+        revision=self.ledger.revision(self.actor,self.task)
+        history=self.ledger.events(self.actor,self.task)
+        original=self.engine._event
+        def fail_receipt(con,scope,event,details):
+            if event=='uncertainty_assessed': raise RuntimeError('receipt storage failed')
+            return original(con,scope,event,details)
+        with patch.object(self.engine,'_event',side_effect=fail_receipt):
+            with self.assertRaisesRegex(RuntimeError,'receipt storage failed'):
+                self.policy.assess(self.actor,self.task,'atomic','inventory',['left'],required=True)
+        self.assertEqual(self.ledger.dependencies(self.actor,self.task,'atomic')['claim_ids'],[])
+        self.assertEqual(self.ledger.revision(self.actor,self.task),revision)
+        self.assertEqual(self.ledger.events(self.actor,self.task),history)
+        with self.assertRaises(LookupError):self.policy.get(self.actor,'atomic')
+        # Retry must not inherit partially committed host policy either.
+        self.assertEqual(self.policy.assess(self.actor,self.task,'atomic','inventory',['left']).status,'proceed_with_qualification')
+
+    def test_denied_policy_change_leaves_existing_dependencies_unchanged(self):
+        self.conflict();self.claim('extra','valid','other')
+        self.policy.assess(self.actor,self.task,'bound-policy','inventory',['left'],required=True)
+        revision=self.ledger.revision(self.actor,self.task)
+        with self.assertRaises(PermissionError):
+            self.policy.assess(self.actor,self.task,'bound-policy','inventory',['left','extra'],required=False)
+        self.assertEqual(self.ledger.dependencies(self.actor,self.task,'bound-policy')['claim_ids'],['left'])
+        self.assertEqual(self.ledger.revision(self.actor,self.task),revision)
 
     def test_mandatory_consent_cannot_be_replaced_by_unrelated_verified_claim(self):
         self.claim('configuration','valid','configuration')

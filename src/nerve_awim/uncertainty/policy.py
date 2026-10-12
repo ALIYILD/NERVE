@@ -44,6 +44,7 @@ class Policy:
         # retarget an existing action to a cleaner task or omit parent evidence.
         inherited = []
         with self.ledger.engine._db() as con:
+            con.execute('BEGIN IMMEDIATE')
             if con.execute("SELECT 1 FROM sqlite_master WHERE name='arc_decisions'").fetchone():
                 arc = con.execute('SELECT task,record FROM arc_decisions WHERE id=? AND tenant=? AND agent=?',
                                   (decision_id, *scope)).fetchone()
@@ -51,7 +52,7 @@ class Policy:
                     if arc['task'] != task_id: raise PermissionError('ARC assessment belongs to a different task')
                     parent = json.loads(arc['record']).get('parent_decision_id')
                     if parent:
-                        inherited = self.ledger.dependencies(actor, task_id, parent).get('claim_ids', [])
+                        inherited = self.ledger.dependencies(actor, task_id, parent, con=con).get('claim_ids', [])
                         binding = con.execute('SELECT config FROM uc_policy_bindings WHERE tenant=? AND agent=? AND decision=?', (*scope, parent)).fetchone()
                         if binding:
                             parent_policy = json.loads(binding['config'])
@@ -61,15 +62,13 @@ class Policy:
                                 if mandatory and mandatory != parent_policy['mandatory']:
                                     raise PermissionError('child requires separate assessments for distinct mandatory prerequisites')
                                 mandatory = parent_policy['mandatory']
-        claims = {c.claim_id: c for c in self.ledger.claims(actor, task_id)}
-        known = set(claims)
-        if type(dependency_claim_ids) not in (list, tuple) or not set(dependency_claim_ids) <= known:
-            raise ValueError('unknown or cross-scope dependency claims')
-        existing = self.ledger.dependencies(actor, task_id, decision_id)
-        deps = sorted(set(dependency_claim_ids) | set(inherited) | set(existing.get('claim_ids', existing.get('claims', []))))
-        self.ledger.link(actor, task_id, decision_id, deps)
-        with self.ledger.engine._db() as con:
-            con.execute('BEGIN IMMEDIATE')
+            claims = {c.claim_id: c for c in self.ledger.claims(actor, task_id, con=con)}
+            known = set(claims)
+            if type(dependency_claim_ids) not in (list, tuple) or not set(dependency_claim_ids) <= known:
+                raise ValueError('unknown or cross-scope dependency claims')
+            existing = self.ledger.dependencies(actor, task_id, decision_id, con=con)
+            deps = sorted(set(dependency_claim_ids) | set(inherited) | set(existing.get('claim_ids', existing.get('claims', []))))
+            self.ledger.link(actor, task_id, decision_id, deps, con=con)
             config = _json({'impact': impact, 'required': required, 'mandatory': mandatory, 'action': action_id, 'task': task_id})
             bound = con.execute('SELECT config FROM uc_policy_bindings WHERE tenant=? AND agent=? AND decision=?', (*scope, decision_id)).fetchone()
             if bound and bound['config'] != config: raise PermissionError('host-bound decision policy cannot be downgraded or retargeted')
@@ -112,6 +111,7 @@ class Policy:
         scope = self.ledger.engine._scope(actor, 'runtime', 'operator')
         _id(execution_task_id or decision_id)
         with self.ledger.engine._db() as con:
+            con.execute('BEGIN IMMEDIATE')
             if con.execute('SELECT 1 FROM uc_assessments WHERE tenant=? AND agent=? AND decision=?',
                            (*scope, decision_id)).fetchone() is None:
                 raise ValueError('scoped assessment required before binding')

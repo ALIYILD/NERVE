@@ -84,8 +84,13 @@ class AdaptationCoordinator:
 
     def _row(self, con, actor, task, *, mutable=False):
         scope = self.engine._scope(actor, 'runtime','operator','auditor')
-        row = con.execute('SELECT * FROM adaptation_tasks WHERE id=? AND tenant=? AND agent=?', (task,*scope)).fetchone()
-        if row is None or not con.execute('SELECT 1 FROM adaptation_grants WHERE task=? AND principal=?',(task,actor._nonce)).fetchone():
+        # Scope and task capability are checked together on every read. The
+        # grant primary key makes this a single indexed lookup, not a cache.
+        row = con.execute('SELECT tasks.* FROM adaptation_tasks AS tasks '
+                          'JOIN adaptation_grants AS grants ON grants.task=tasks.id '
+                          'WHERE tasks.id=? AND tasks.tenant=? AND tasks.agent=? AND grants.principal=?',
+                          (task,*scope,actor._nonce)).fetchone()
+        if row is None:
             raise PermissionError('task capability absent; cross-subject access denied')
         if row['schema_version'] != SCHEMA:
             raise ValueError('unsupported task checkpoint schema')
@@ -428,10 +433,12 @@ class AdaptationCoordinator:
 
 def task_hook(runtime, con, actor, task, method, *args, **kwargs):
     """Persisted opt-in fails closed if a restarted host omits its coordinator."""
-    if not con.execute("SELECT 1 FROM sqlite_master WHERE name='adaptation_tasks'").fetchone(): return
+    coordinator=getattr(runtime,'adaptation',None)
+    # An attached coordinator has initialized the schema already. Reopened
+    # hosts without it still inspect persisted opt-in state and fail closed.
+    if coordinator is None and not con.execute("SELECT 1 FROM sqlite_master WHERE name='adaptation_tasks'").fetchone(): return
     exists=con.execute('SELECT 1 FROM adaptation_tasks WHERE id=? AND tenant=? AND agent=?',(task,actor.tenant,actor.agent)).fetchone()
     if not exists: return
-    coordinator=getattr(runtime,'adaptation',None)
     if coordinator is None: raise PermissionError('persisted adaptation requires coordinator')
     if coordinator.config.mode != 'active-development': return
     return getattr(coordinator,method)(con,actor,task,*args,**kwargs)
