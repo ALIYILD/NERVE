@@ -5,7 +5,8 @@ rule-following on handoff facts. It is not the paper benchmark, a representative
 production benchmark, or evidence of general reasoning improvement. No private
 tasks or records were used. A live model run would produce measured provider
 receipts; generated questions do not justify marking those receipts synthetic.
-No model has been executed as part of creating this artifact.
+The datasets were frozen without executing a model. Subsequent live commissioning
+results are recorded below, including failures.
 
 The frozen [dataset](local-handoff-dataset.json) contains one discovery task, four
 selection tasks, four retained-capability regression tasks and 30 untouched
@@ -162,7 +163,7 @@ file exists or because an experiment completes.
 
 A result from this small rule family supports only a narrow local task claim.
 There is no independence, causal generalization, production efficacy or clinical
-safety claim. No live execution result is recorded in this document yet.
+safety claim. Live commissioning results below do not establish cue effectiveness.
 
 ## Two-study frozen programme
 
@@ -215,3 +216,81 @@ Local calls use a separate durable maximum of 80 attempts per UTC day, with a
 No paid API is selected and native Hermes limits remain unchanged; local compute
 cost is unknown. Both local research and the exact CCE host profile must be
 explicitly enabled. Completing research still cannot approve or deploy a cue.
+
+## Live commissioning: 13 October 2026, Europe/London
+
+The installed host has local research enabled for the exact inspected
+`qwen2.5-coder:1.5b` manifest
+`d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668`.
+The existing `com.aliyildirim.nerve.learning` LaunchAgent runs the installed
+bridge's `cycle` every 900 seconds. CCE uses that scheduler and its host lock.
+Production `qa-release` cue routing has no configured local research profile.
+
+Both admitted studies ran: `local-handoff-live-20261013-1` and
+`local-handoff-live-20261013-2`. Each made one measured discovery call, then its
+first evaluation timed out at 30 seconds. Both are terminal failed studies with
+reason `provider_error_or_unknown_cost`; neither reached selection, regression,
+holdout acceptance or activation. The first study took about 52.20 seconds, the
+second 48.89 seconds. Four local attempts were durably reserved. Both datasets
+remain consumed in full, including the reserved holdouts never dispatched.
+Failures do not authorize resetting or relabeling this evidence.
+
+Commit `c368650` repairs CPU timeout budgeting: admitted serving requests can
+wait up to 120 seconds while sharing the original 600-second job deadline.
+Every HTTP dispatch receives only the remaining budget; responses completing
+after the deadline are rejected, including final postflight processing. This is
+a dispatch/acceptance deadline, not forced cancellation of every socket read or
+local file operation. Daily and per-job call caps remain 80 and 77.
+
+A separate one-call diagnostic on already exposed selection data allowed
+generation to complete but failed postflight with `expected_model_unavailable`.
+The local server log recorded overlapping generation activity; concurrent model
+use is a possible cause, not established attribution. Its result was rejected
+and its reservation retained. Transport diagnostics are not promotion evidence.
+
+The installed timeout repair then completed a second diagnostic in 39.95 seconds
+with 263 input and 36 output tokens. Postflight identity checks passed, but the
+response failed the strict handoff contract (`handoff_response_invalid`). No
+answer confidence or correctness was invented for that output.
+
+Commit `05c7e52` adds the required four-field JSON Schema through Ollama's
+documented [`format` parameter](https://docs.ollama.com/api/generate). The exact
+schema is bound into both the model profile and experiment identity; existing
+unstructured research cannot authorize this changed protocol. The installed
+local profile was reinspected and updated, preserving the prior configuration.
+Default arithmetic smoke requests remain unchanged. The independent grader and
+strict answer parser remain authoritative even when structured output is used.
+
+The schema-bound installed diagnostic completed in 42.32 seconds: 263 input and
+32 output tokens, one measured receipt, no transport/format errors or truncation.
+It reported confidence 0.9 but incorrectly answered `done` instead of `unknown`
+for missing exit-code evidence. The independent host judge recorded
+`correct=false`; its `safe=true` field means only schema validity in this local
+protocol. This verifies transport and independent error detection, not reasoning
+improvement, calibrated confidence or operational safety. Seven local attempts
+were reserved across the two studies and three diagnostics, with zero external
+provider fees; local compute cost remains unknown. No further retries were made
+to turn this incorrect answer into an apparent passing benchmark.
+
+Measured failures and diagnostics are retained in
+[the commissioning receipt](live-commissioning.json). Diagnostic data are from
+an exposed selection task, never from rerunning a consumed holdout.
+
+The existing audit research programme remains enabled with an unchanged native
+20-call UTC-day cap. At commissioning, that allowance was exhausted; the next
+reset can admit the existing eight-call audit study and a previously registered
+eight-call follow-on cohort, subject to their normal revision and evidence gates.
+The scheduler replenishes call capacity, not datasets. With no fresh admitted
+cohort or operational evidence it waits rather than replaying consumed studies.
+No new CCE study is queued after these failures: the two reserved cohorts leave
+too few untouched patterns in this 81-pattern domain for another 30-task holdout.
+Further CCE efficacy research requires a genuinely new admitted evaluation set;
+changing task IDs, model profiles or partition labels does not make old evidence
+fresh. Paper reproduction additionally retains the external resource blockers
+in the [reproduction manifest](reproduction-manifest.json).
+
+The installed repository adaptation task `live-adaptation-20261012-cce-01`
+also completed: one verifier-triggered change from regex to AST inventory,
+one reuse of that correction, and three receipts. It used zero model calls and
+did not execute or modify repository source. This demonstrates task-local tool
+strategy adaptation; it does not establish model training or general improvement.
