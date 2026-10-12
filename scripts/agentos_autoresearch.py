@@ -197,7 +197,8 @@ def tick(host, native, *, cue_adapters=None):
     The caller holds the existing host lock. A waiting queued cue job has priority
     and deliberately suppresses unrelated audit dispatches until resolved; this
     prevents surprising provider calls while its required adapters are missing.
-    Built-in bridge calls supply no measured CCE adapters and therefore wait.
+    Built-in bridge calls load only the explicitly enabled local registry;
+    other missing measured adapters leave their jobs waiting.
     """
     current = status(host)
     if not current['enabled']:
@@ -229,6 +230,12 @@ def tick(host, native, *, cue_adapters=None):
     if recovered_cohorts:
         return _event(host, 'recovery', 'crash',
                       dict(status='interrupted_no_replay', studies=recovered_cohorts))
+    if cue_adapters is None and current['cce_jobs']['counts'].get('pending'):
+        local_spec = importlib.util.spec_from_file_location(
+            '_cce_local_adapter', Path(__file__).with_name('agentos_cue_local.py'))
+        local_adapter = importlib.util.module_from_spec(local_spec)
+        local_spec.loader.exec_module(local_adapter)
+        cue_adapters = local_adapter.adapters_for(host)
     cue_result = cue_jobs.tick(host, adapters=cue_adapters)
     if cue_result is not None:
         state = cue_result.get('status')
