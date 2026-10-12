@@ -1,0 +1,47 @@
+{
+  "environment": "Python 3.10.0 macOS x86_64; PYTHONPATH=src",
+  "checks": [
+    {
+      "command": "python3 scripts/adaptive_memory_study.py",
+      "exit_code": 0,
+      "elapsed_seconds": 0.206,
+      "stdout_bytes": 1454,
+      "stderr_bytes": 0
+    },
+    {
+      "command": "python3 scripts/offline_learning_suite.py",
+      "exit_code": 0,
+      "elapsed_seconds": 0.109,
+      "stdout_bytes": 5249,
+      "stderr_bytes": 0
+    },
+    {
+      "command": "python3 benchmarks/v18_memory_retrieval.py",
+      "exit_code": 0,
+      "elapsed_seconds": 0.168,
+      "stdout_bytes": 798,
+      "stderr_bytes": 0
+    },
+    {
+      "command": "python3 -m nerve_awim.recursive_evolution_v19",
+      "exit_code": 0,
+      "elapsed_seconds": 0.228,
+      "stdout_bytes": 11204,
+      "stderr_bytes": 0
+    },
+    {
+      "command": "python3 -m nerve_awim.worldcore_recursion_v19",
+      "exit_code": 0,
+      "elapsed_seconds": 1.118,
+      "stdout_bytes": 7266,
+      "stderr_bytes": 0
+    },
+    {
+      "command": "node --test tests/test_checkpoint_discovery.cjs",
+      "exit_code": 0,
+      "elapsed_seconds": 0.534,
+      "stdout_bytes": 636,
+      "stderr_bytes": 0
+    }
+  ]
+}

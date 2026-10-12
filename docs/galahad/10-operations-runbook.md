@@ -1,0 +1,13 @@
+# Synthetic operations runbook
+
+Use Python 3.10+ locally; repository CI uses 3.12 and PyJWT[crypto]. Keep Galahad optional. Run commands from repository root with PYTHONPATH=src as shown in the final report. All fixture stores/keys are temporary; never supply real patient records.
+
+CPU: python3 scripts/verify_galahad.py cpu. Security: same script security. Fault fixtures: same script faults. API: same script api. Full regression: same script baseline. A loopback HTTP fixture requires permission to bind locally. Readiness: same script readiness exits 2 while deployment gates are blocked. Galahad preflight exits 2 for unsupported/unverified environments and never activates a licence.
+
+Fault coverage: database corruption, source checksum mismatch, ranking unavailable, provider health failure, provider invalidation failure, expired/revoked capabilities, missing stores, stale records and wrong context. Ledger reopen is tested; this is not kill/restart KV restoration. Real key mismatch, GPU connector crash, full NVMe, eviction, durable encrypted cache restart and physical erasure require supported runtime infrastructure and remain blocked.
+
+Only one gateway/service owner may write a store. Multi-process rate limiting, quotas, durable grant revocation, crash recovery and backups are not production-ready. A TLS reverse proxy must enforce upload/read deadlines, bounded headers/body, connection limits and safe access logging; the WSGI service holds a process lock during requests. Never expose it directly on the Internet. Client allows HTTPS, or explicitly opted-in loopback HTTP for tests, and refuses redirects carrying credentials.
+
+Metrics contain counters only. Alert integration/dashboard provisioning is not deployed. Investigate rising retrieval_failures or invalidation_failures, or health.status=unavailable; disable any experimental provider and retain ordinary approved text prefill. Failed purge is unresolved until independently verified; do not report erasure. Restoring a ledger backup can resurrect records; durable tombstones and consent reconciliation are required before any production backup design.
+
+Rollback: stop the synthetic service and omit the new package. Existing modules/configurations were not changed. No migration, deployment or model activation must be reverted.
