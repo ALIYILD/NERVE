@@ -26,6 +26,8 @@ operational cue has been enabled and no model or clinical deployment has been pe
 | Local protocol/registry additions | **17 new tests passed**: six response-contract and 11 registry/oracle/budget tests |
 | CPU timeout repair, source and installed CCE suites | **273 passed** in each checkout; six new timeout/deadline tests; source 8.000 seconds, installed 7.510 seconds |
 | Structured-output repair, source and installed CCE suites | **275 passed** in each checkout; source 6.518 seconds, installed 10.036 seconds; exact request schema and profile/schema drift coverage |
+| Integrated restricted-environment run after concurrent main merge | **1,352 run**, 36 failure reports / three errors / one skip, 178.012 seconds; failures were blocked macOS sandbox probes and localhost HTTP test servers; unrestricted rerun required |
+| Final integrated unrestricted rerun | **1,352 run, 1,351 passed, one skipped**, 188.359 seconds; seven Node checkpoint tests and offline CCE commissioning also passed |
 | Node checkpoint discovery | **7 passed** |
 | `git diff --check` | Passed |
 | Offline commissioning CLI | 30 paired tasks / 60 fixture calls, zero external provider calls; candidate rejected, no active cue, pending memory export |

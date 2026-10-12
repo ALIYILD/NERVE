@@ -280,6 +280,9 @@ The existing audit research programme remains enabled with an unchanged native
 20-call UTC-day cap. At commissioning, that allowance was exhausted; the next
 reset can admit the existing eight-call audit study and a previously registered
 eight-call follow-on cohort, subject to their normal revision and evidence gates.
+A post-repair call to the installed `autoresearch-tick` confirmed progression
+past the failed CCE jobs to `audit-composition-20261012-v1`: `queued_budget`,
+eight required sessions, zero remaining. It made no new inference call.
 The scheduler replenishes call capacity, not datasets. With no fresh admitted
 cohort or operational evidence it waits rather than replaying consumed studies.
 No new CCE study is queued after these failures: the two reserved cohorts leave
