@@ -192,6 +192,16 @@ class SystemdController:
                 result = self._contain(tenant, incident_id)
                 result.update(verified=False, actions=actions + result['actions'])
                 return result
-            self._save(tenant, {'incident_id': incident_id, 'latched': False})
+            try:
+                self._save(tenant, {'incident_id': incident_id, 'latched': False})
+                released = self.latch(tenant) == {'incident_id': incident_id, 'latched': False}
+                released = released and all(not (self.blocks / unit.name).exists()
+                                            for unit in self.inventory[tenant])
+            except (OSError, ValueError):
+                released = False
+            if not released:
+                result = self._contain(tenant, incident_id)
+                result.update(verified=False, actions=actions + result['actions'])
+                return result
             return {'actions': actions, 'verified': True, 'coverage': coverage,
                     'gaps': ['restart health is process state only; application health must be separately checked']}
