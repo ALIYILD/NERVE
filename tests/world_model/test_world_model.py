@@ -327,6 +327,26 @@ class WorldModelTests(unittest.TestCase):
         result=subprocess.run(base+['report','--run-id',report['run_id']],env=env,capture_output=True,text=True)
         self.assertEqual(result.returncode,0,result.stderr)
         self.assertEqual(json.loads(result.stdout)['result']['phase'],'stopped')
+        recovered_command=['recover-final','--run-id',report['run_id'],'--model-id',report['model_id']]
+        entry_points=[
+            [sys.executable,'-m','nerve_awim','world-model'],
+            [sys.executable,str(Path(__file__).resolve().parents[2]/'scripts'/'nerve_world_model.py')]]
+        for entry in entry_points:
+            result=subprocess.run(entry+['--db',str(db)]+recovered_command,
+                                  env=env,capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr+result.stdout)
+            self.assertEqual(json.loads(result.stdout)['result'],report['reports']['final'])
+        result=subprocess.run(base+['evaluate','--suite','sealed-final','--run-id',report['run_id'],
+                                    '--model-id',report['model_id']],env=env,capture_output=True,text=True)
+        self.assertEqual(result.returncode,8)  # Report recovery never reopens final evidence.
+
+    def test_package_help_delegates_without_creating_store(self):
+        env={**os.environ,'PYTHONPATH':str(Path(__file__).resolve().parents[2]/'src')}
+        result=subprocess.run([sys.executable,'-m','nerve_awim','world-model','--help'],
+                              cwd=self.temp.name,env=env,capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertIn('recover-final',result.stdout)
+        self.assertFalse((Path(self.temp.name)/'.world-model').exists())
 
     def test_simulated_rollback_is_atomic_and_survives_restart(self):
         from nerve_awim.world_model.release import SimulatedRelease

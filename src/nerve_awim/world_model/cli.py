@@ -36,7 +36,7 @@ def parser():
     p.add_argument('--scope',choices=['offline-demo'],default='offline-demo',
                    help='fixed local synthetic scope; cannot select another tenant')
     sub = p.add_subparsers(dest='command',required=True)
-    for name in ('doctor','init','demo','study','repository-study','ingest','run','status','resume','verify','evaluate','freeze','shadow','report',
+    for name in ('doctor','init','demo','study','repository-study','ingest','run','status','resume','verify','evaluate','recover-final','freeze','shadow','report',
                  'authorize-canary','promote','rollback','stop'):
         s = sub.add_parser(name)
         s.add_argument('--json',action='store_true')
@@ -56,10 +56,12 @@ def parser():
             s.add_argument('--run-id',required=True)
         if name == 'report':
             s.add_argument('--format',choices=['json'],default='json')
-        if name in ('verify','evaluate','freeze','shadow','authorize-canary','promote','rollback'):
+        if name in ('verify','evaluate','recover-final','freeze','shadow','authorize-canary','promote','rollback'):
             s.add_argument('--model-id',required=True)
         if name == 'verify':
             s.add_argument('--suite',choices=['replay'],default='replay')
+        if name == 'recover-final':
+            s.add_argument('--run-id',required=True)
         if name == 'evaluate':
             s.add_argument('--suite',choices=['selection','regression','sealed-final'],required=True)
             s.add_argument('--run-id')
@@ -154,6 +156,10 @@ def main(argv=None):
                 if not result['replay_pass']:
                     print(canonical(result))
                     return 4
+            elif args.command == 'recover-final':
+                result = Evaluator(ledger).recover_final(evaluator,args.model_id,run_id=args.run_id)
+                if result is None:
+                    raise LookupError('no committed final report for this run')
             elif args.command == 'shadow':
                 from .adapters import shadow
                 exact(read_json(args.manifest),('recommended_action',))

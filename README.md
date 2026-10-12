@@ -4,6 +4,26 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## Opt-in Memento 3 world-model research
+
+NERVE can learn bounded operational rules from observed transitions, compare
+candidates, plan through existing read-only repository tools, and recover
+completed final reports across coordinator restarts. Agent OS evidence, offline
+Hermes proposals and host-bound MCP inspection use the existing NERVE interfaces.
+
+```bash
+python scripts/nerve_world_model.py doctor
+python scripts/nerve_world_model.py --db /tmp/nerve-memento-demo.sqlite3 demo
+# Equivalent package entry point:
+PYTHONPATH=src python -m nerve_awim world-model doctor
+```
+
+Use a fresh demo database. See the [commands and host integration guide](docs/world-model/README.md),
+[measured capabilities](docs/world-model/capability-report.md), and
+[remaining plan work](docs/world-model/backlog.json). This feature is disabled by
+default, uses no live provider, and does not authorize deployment. The complete
+Memento 3 plan is still in progress.
+
 ## v2.1 opt-in repository task shadow learning
 
 The [v2.2 persistent pilot runner](docs/repository-pilot-v22.md) adds sealed study

@@ -149,3 +149,25 @@ interpreter/evaluator sources and Python major/minor; runtime drift requires
 revalidation. Legacy exact policies load with their original defaults. Existing
 artifact rows are preserved; unpinned legacy artifacts cannot enter the registered
 operational/research planner without revalidation.
+
+
+## NERVE entry points
+
+From a source checkout, `python scripts/nerve_world_model.py ...` dispatches the
+same CLI without requiring a `PYTHONPATH` setting. The package entry point is
+`PYTHONPATH=src python -m nerve_awim world-model ...`. Existing module commands
+remain supported. Each entry point retains the same default-disabled policy.
+
+To retrieve a committed final report without rerunning evaluation:
+
+```bash
+python scripts/nerve_world_model.py --db /path/to/research.sqlite3 recover-final \
+  --run-id RUN_ID --model-id MODEL_ID
+```
+
+This local command uses the fixed offline demo scope. An incomplete consumed
+claim is an integrity error; a missing report is a lookup error. Recovery never
+creates a fresh evaluation reservation. For embedded hosts, use
+`Evaluator.recover_final` with the host's evaluator capability. MCP integration
+continues to require an explicit `InspectionTools(ledger, auditor)` binding passed
+to `learn_mcp.create_server(world_model_binding=...)`; it grants inspection only.

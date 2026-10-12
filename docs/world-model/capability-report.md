@@ -147,3 +147,20 @@ prior implementation; no new independent capability gain is claimed here.
 Validation: **925 Python tests and 7 Node tests passed**. The offline demo also
 completed with zero provider calls and spend. Artifact hashes for this increment
 are in `recovery-evidence.json`.
+
+
+## NERVE command and CI wiring
+
+The implemented world-model package is accessible through
+`python -m nerve_awim world-model` (with `PYTHONPATH=src`) and the standalone
+`scripts/nerve_world_model.py` launcher. Both expose durable `recover-final`
+report retrieval. The main NERVE README links the feature, its measured results,
+and its unfinished acceptance backlog. CI exercises the launcher and both the
+learned-frame and real repository workflows in addition to the existing tests.
+
+The repository integration smoke check completed 6/6 tasks using the same curated
+source set as earlier checks. The small synthetic smoke check completed 6/6 with
+frame rules. These checks validate wiring only; reused mechanics and repository
+files are not independent holdout evidence. Existing Agent OS, offline Hermes and
+host-bound MCP adapters remain opt-in. Live provider and deployment authority
+remain unavailable. Detailed verification is recorded in `wiring-evidence.json`.
