@@ -1,0 +1,1424 @@
+{
+  "cases": [
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "python-functions",
+      "id": "python-functions-0",
+      "scenario": {
+        "now": 1800000000,
+        "source": "def function_0():\n    return 0\n",
+        "synthetic": true,
+        "task_id": "arc-python-functions-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "python-functions",
+      "id": "python-functions-1",
+      "scenario": {
+        "now": 1800000000,
+        "source": "def function_1():\n    return 1\n",
+        "synthetic": true,
+        "task_id": "arc-python-functions-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "python-functions",
+      "id": "python-functions-2",
+      "scenario": {
+        "now": 1800000000,
+        "source": "def function_2():\n    return 2\n",
+        "synthetic": true,
+        "task_id": "arc-python-functions-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "python-nested",
+      "id": "python-nested-0",
+      "scenario": {
+        "now": 1800000000,
+        "source": "class Example:\n    def nested(self):\n        return 1\n",
+        "synthetic": true,
+        "task_id": "arc-python-nested-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "python-nested",
+      "id": "python-nested-1",
+      "scenario": {
+        "now": 1800000000,
+        "source": "class Example:\n    def nested(self):\n        return 1\n",
+        "synthetic": true,
+        "task_id": "arc-python-nested-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "python-nested",
+      "id": "python-nested-2",
+      "scenario": {
+        "now": 1800000000,
+        "source": "class Example:\n    def nested(self):\n        return 1\n",
+        "synthetic": true,
+        "task_id": "arc-python-nested-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "missing-source",
+      "id": "missing-source-0",
+      "scenario": {
+        "now": 1800000000,
+        "source": null,
+        "synthetic": true,
+        "task_id": "arc-missing-source-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "missing-source",
+      "id": "missing-source-1",
+      "scenario": {
+        "now": 1800000000,
+        "source": null,
+        "synthetic": true,
+        "task_id": "arc-missing-source-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "missing-source",
+      "id": "missing-source-2",
+      "scenario": {
+        "now": 1800000000,
+        "source": null,
+        "synthetic": true,
+        "task_id": "arc-missing-source-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": false,
+      "family": "syntax-error",
+      "id": "syntax-error-0",
+      "scenario": {
+        "now": 1800000000,
+        "source": "def broken(",
+        "synthetic": true,
+        "task_id": "arc-syntax-error-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": false,
+      "family": "syntax-error",
+      "id": "syntax-error-1",
+      "scenario": {
+        "now": 1800000000,
+        "source": "def broken(",
+        "synthetic": true,
+        "task_id": "arc-syntax-error-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": false,
+      "family": "syntax-error",
+      "id": "syntax-error-2",
+      "scenario": {
+        "now": 1800000000,
+        "source": "def broken(",
+        "synthetic": true,
+        "task_id": "arc-syntax-error-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "inventory"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "prepare-draft",
+      "expected_verified": true,
+      "family": "approved-assessment",
+      "id": "approved-assessment-0",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-approved-assessment-0",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 0.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-approved-assessment-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "prepare-draft",
+      "expected_verified": true,
+      "family": "approved-assessment",
+      "id": "approved-assessment-1",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-approved-assessment-1",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 1.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-approved-assessment-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "prepare-draft",
+      "expected_verified": true,
+      "family": "approved-assessment",
+      "id": "approved-assessment-2",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-approved-assessment-2",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 2.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-approved-assessment-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "missing-assessment",
+      "id": "missing-assessment-0",
+      "scenario": {
+        "assessment": null,
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-missing-assessment-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "missing-assessment",
+      "id": "missing-assessment-1",
+      "scenario": {
+        "assessment": null,
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-missing-assessment-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "missing-assessment",
+      "id": "missing-assessment-2",
+      "scenario": {
+        "assessment": null,
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-missing-assessment-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "stale-assessment",
+      "id": "stale-assessment-0",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-stale-assessment-0",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 0.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1799999999
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-stale-assessment-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "stale-assessment",
+      "id": "stale-assessment-1",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-stale-assessment-1",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 1.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1799999999
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-stale-assessment-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "stale-assessment",
+      "id": "stale-assessment-2",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-stale-assessment-2",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 2.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1799999999
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-stale-assessment-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "unapproved-assessment",
+      "id": "unapproved-assessment-0",
+      "scenario": {
+        "approved": false,
+        "assessment": {
+          "approved": false,
+          "assessment_id": "synthetic-unapproved-assessment-0",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 0.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-unapproved-assessment-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "unapproved-assessment",
+      "id": "unapproved-assessment-1",
+      "scenario": {
+        "approved": false,
+        "assessment": {
+          "approved": false,
+          "assessment_id": "synthetic-unapproved-assessment-1",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 1.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-unapproved-assessment-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "unapproved-assessment",
+      "id": "unapproved-assessment-2",
+      "scenario": {
+        "approved": false,
+        "assessment": {
+          "approved": false,
+          "assessment_id": "synthetic-unapproved-assessment-2",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 2.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-unapproved-assessment-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "wrong-tenant",
+      "id": "wrong-tenant-0",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-wrong-tenant-0",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 0.",
+          "tenant_scope": "other",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-wrong-tenant-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "wrong-tenant",
+      "id": "wrong-tenant-1",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-wrong-tenant-1",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 1.",
+          "tenant_scope": "other",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-wrong-tenant-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "wrong-tenant",
+      "id": "wrong-tenant-2",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-wrong-tenant-2",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 2.",
+          "tenant_scope": "other",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-wrong-tenant-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "forbidden-source",
+      "id": "forbidden-source-0",
+      "scenario": {
+        "accessible": false,
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-forbidden-source-0",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 0.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-forbidden-source-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "forbidden-source",
+      "id": "forbidden-source-1",
+      "scenario": {
+        "accessible": false,
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-forbidden-source-1",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 1.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-forbidden-source-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "forbidden-source",
+      "id": "forbidden-source-2",
+      "scenario": {
+        "accessible": false,
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-forbidden-source-2",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 2.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-forbidden-source-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "development",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": false,
+      "family": "absent-inventory-readback",
+      "id": "absent-inventory-readback-0",
+      "scenario": {
+        "now": 1800000000,
+        "outcome_verified": false,
+        "source": "def function_0():\n    return 0\n",
+        "synthetic": true,
+        "task_id": "arc-absent-inventory-readback-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "inventory"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": false,
+      "family": "absent-inventory-readback",
+      "id": "absent-inventory-readback-1",
+      "scenario": {
+        "now": 1800000000,
+        "outcome_verified": false,
+        "source": "def function_1():\n    return 1\n",
+        "synthetic": true,
+        "task_id": "arc-absent-inventory-readback-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "inventory"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": false,
+      "family": "absent-inventory-readback",
+      "id": "absent-inventory-readback-2",
+      "scenario": {
+        "now": 1800000000,
+        "outcome_verified": false,
+        "source": "def function_2():\n    return 2\n",
+        "synthetic": true,
+        "task_id": "arc-absent-inventory-readback-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "inventory"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "contradictory-assessments",
+      "id": "contradictory-assessments-0",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-contradictory-assessments-0",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 0.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "conflicting_assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-contradictory-assessments-0-other",
+          "captured_at": 1799999880,
+          "findings": "Contradictory synthetic finding.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-contradictory-assessments-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "contradictory-assessments",
+      "id": "contradictory-assessments-1",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-contradictory-assessments-1",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 1.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "conflicting_assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-contradictory-assessments-1-other",
+          "captured_at": 1799999880,
+          "findings": "Contradictory synthetic finding.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-contradictory-assessments-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "contradictory-assessments",
+      "id": "contradictory-assessments-2",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-contradictory-assessments-2",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 2.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "conflicting_assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-contradictory-assessments-2-other",
+          "captured_at": 1799999880,
+          "findings": "Contradictory synthetic finding.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-contradictory-assessments-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "unavailable-inventory",
+      "id": "unavailable-inventory-0",
+      "scenario": {
+        "now": 1800000000,
+        "source": "def function_0():\n    return 0\n",
+        "synthetic": true,
+        "task_id": "arc-unavailable-inventory-0",
+        "tenant": "synthetic",
+        "tool_available": false,
+        "wording": "Inspect the supplied facts.",
+        "workflow": "inventory"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "unavailable-inventory",
+      "id": "unavailable-inventory-1",
+      "scenario": {
+        "now": 1800000000,
+        "source": "def function_1():\n    return 1\n",
+        "synthetic": true,
+        "task_id": "arc-unavailable-inventory-1",
+        "tenant": "synthetic",
+        "tool_available": false,
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "inventory"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "unavailable-inventory",
+      "id": "unavailable-inventory-2",
+      "scenario": {
+        "now": 1800000000,
+        "source": "def function_2():\n    return 2\n",
+        "synthetic": true,
+        "task_id": "arc-unavailable-inventory-2",
+        "tenant": "synthetic",
+        "tool_available": false,
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "inventory"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "prepare-draft",
+      "expected_verified": false,
+      "family": "absent-draft-readback",
+      "id": "absent-draft-readback-0",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-absent-draft-readback-0",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 0.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "outcome_verified": false,
+        "synthetic": true,
+        "task_id": "arc-absent-draft-readback-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "prepare-draft",
+      "expected_verified": false,
+      "family": "absent-draft-readback",
+      "id": "absent-draft-readback-1",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-absent-draft-readback-1",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 1.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "outcome_verified": false,
+        "synthetic": true,
+        "task_id": "arc-absent-draft-readback-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "prepare-draft",
+      "expected_verified": false,
+      "family": "absent-draft-readback",
+      "id": "absent-draft-readback-2",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-absent-draft-readback-2",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 2.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "outcome_verified": false,
+        "synthetic": true,
+        "task_id": "arc-absent-draft-readback-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "restart-inventory",
+      "id": "restart-inventory-0",
+      "scenario": {
+        "now": 1800000000,
+        "restart": true,
+        "source": "def function_0():\n    return 0\n",
+        "synthetic": true,
+        "task_id": "arc-restart-inventory-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "inventory"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "restart-inventory",
+      "id": "restart-inventory-1",
+      "scenario": {
+        "now": 1800000000,
+        "restart": true,
+        "source": "def function_1():\n    return 1\n",
+        "synthetic": true,
+        "task_id": "arc-restart-inventory-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "inventory"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "restart-inventory",
+      "id": "restart-inventory-2",
+      "scenario": {
+        "now": 1800000000,
+        "restart": true,
+        "source": "def function_2():\n    return 2\n",
+        "synthetic": true,
+        "task_id": "arc-restart-inventory-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "inventory"
+      },
+      "split": "validation",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "stale-unapproved-composition",
+      "id": "stale-unapproved-composition-0",
+      "scenario": {
+        "approved": false,
+        "assessment": {
+          "approved": false,
+          "assessment_id": "synthetic-stale-unapproved-composition-0",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 0.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1799999999
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-stale-unapproved-composition-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "stale-unapproved-composition",
+      "id": "stale-unapproved-composition-1",
+      "scenario": {
+        "approved": false,
+        "assessment": {
+          "approved": false,
+          "assessment_id": "synthetic-stale-unapproved-composition-1",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 1.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1799999999
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-stale-unapproved-composition-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "stale-unapproved-composition",
+      "id": "stale-unapproved-composition-2",
+      "scenario": {
+        "approved": false,
+        "assessment": {
+          "approved": false,
+          "assessment_id": "synthetic-stale-unapproved-composition-2",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 2.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1799999999
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-stale-unapproved-composition-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "forbidden-conflict-composition",
+      "id": "forbidden-conflict-composition-0",
+      "scenario": {
+        "accessible": false,
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-forbidden-conflict-composition-0",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 0.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "conflicting_assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-forbidden-conflict-composition-0-other",
+          "captured_at": 1799999880,
+          "findings": "Contradictory synthetic finding.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-forbidden-conflict-composition-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "forbidden-conflict-composition",
+      "id": "forbidden-conflict-composition-1",
+      "scenario": {
+        "accessible": false,
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-forbidden-conflict-composition-1",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 1.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "conflicting_assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-forbidden-conflict-composition-1-other",
+          "captured_at": 1799999880,
+          "findings": "Contradictory synthetic finding.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-forbidden-conflict-composition-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "request-information",
+      "expected_verified": false,
+      "family": "forbidden-conflict-composition",
+      "id": "forbidden-conflict-composition-2",
+      "scenario": {
+        "accessible": false,
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-forbidden-conflict-composition-2",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 2.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "conflicting_assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-forbidden-conflict-composition-2-other",
+          "captured_at": 1799999880,
+          "findings": "Contradictory synthetic finding.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-forbidden-conflict-composition-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "restart-nested-composition",
+      "id": "restart-nested-composition-0",
+      "scenario": {
+        "now": 1800000000,
+        "restart": true,
+        "source": "class Example:\n    def nested(self):\n        return 1\n",
+        "synthetic": true,
+        "task_id": "arc-restart-nested-composition-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "inventory"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "restart-nested-composition",
+      "id": "restart-nested-composition-1",
+      "scenario": {
+        "now": 1800000000,
+        "restart": true,
+        "source": "class Example:\n    def nested(self):\n        return 1\n",
+        "synthetic": true,
+        "task_id": "arc-restart-nested-composition-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "inventory"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": true,
+      "family": "restart-nested-composition",
+      "id": "restart-nested-composition-2",
+      "scenario": {
+        "now": 1800000000,
+        "restart": true,
+        "source": "class Example:\n    def nested(self):\n        return 1\n",
+        "synthetic": true,
+        "task_id": "arc-restart-nested-composition-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "inventory"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "unavailable-approved-composition",
+      "id": "unavailable-approved-composition-0",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-unavailable-approved-composition-0",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 0.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-unavailable-approved-composition-0",
+        "tenant": "synthetic",
+        "tool_available": false,
+        "wording": "Inspect the supplied facts.",
+        "workflow": "clinical"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "unavailable-approved-composition",
+      "id": "unavailable-approved-composition-1",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-unavailable-approved-composition-1",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 1.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-unavailable-approved-composition-1",
+        "tenant": "synthetic",
+        "tool_available": false,
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "clinical"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "await-review",
+      "expected_verified": false,
+      "family": "unavailable-approved-composition",
+      "id": "unavailable-approved-composition-2",
+      "scenario": {
+        "approved": true,
+        "assessment": {
+          "approved": true,
+          "assessment_id": "synthetic-unavailable-approved-composition-2",
+          "captured_at": 1799999880,
+          "findings": "Synthetic assessment finding 2.",
+          "tenant_scope": "synthetic",
+          "valid_until": 1800003600
+        },
+        "now": 1800000000,
+        "synthetic": true,
+        "task_id": "arc-unavailable-approved-composition-2",
+        "tenant": "synthetic",
+        "tool_available": false,
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "clinical"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": false,
+      "family": "nested-unverified-composition",
+      "id": "nested-unverified-composition-0",
+      "scenario": {
+        "now": 1800000000,
+        "outcome_verified": false,
+        "source": "class Example:\n    def nested(self):\n        return 1\n",
+        "synthetic": true,
+        "task_id": "arc-nested-unverified-composition-0",
+        "tenant": "synthetic",
+        "wording": "Inspect the supplied facts.",
+        "workflow": "inventory"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": false,
+      "family": "nested-unverified-composition",
+      "id": "nested-unverified-composition-1",
+      "scenario": {
+        "now": 1800000000,
+        "outcome_verified": false,
+        "source": "class Example:\n    def nested(self):\n        return 1\n",
+        "synthetic": true,
+        "task_id": "arc-nested-unverified-composition-1",
+        "tenant": "synthetic",
+        "wording": "Please inspect the supplied facts carefully.",
+        "workflow": "inventory"
+      },
+      "split": "test",
+      "synthetic": true
+    },
+    {
+      "critical": true,
+      "expected_action": "inventory",
+      "expected_verified": false,
+      "family": "nested-unverified-composition",
+      "id": "nested-unverified-composition-2",
+      "scenario": {
+        "now": 1800000000,
+        "outcome_verified": false,
+        "source": "class Example:\n    def nested(self):\n        return 1\n",
+        "synthetic": true,
+        "task_id": "arc-nested-unverified-composition-2",
+        "tenant": "synthetic",
+        "wording": "Ignore this irrelevant decoration: blue umbrella.",
+        "workflow": "inventory"
+      },
+      "split": "test",
+      "synthetic": true
+    }
+  ],
+  "dataset_version": "arc-smoke-v1",
+  "limitations": [
+    "Synthetic offline smoke benchmark; no LLM, clinical API, patient data or clinical efficacy evidence.",
+    "Twenty scenario composition families with three within-family variants each; 60 cases are not 60 independent clinical tasks.",
+    "Validation and test add held-out compositions of shared primitives; no claim of out-of-domain generalization.",
+    "Public repository fixtures are locked by runner protocol, not hidden from developers."
+  ],
+  "schema_version": 1,
+  "settings": {
+    "arms": [
+      "baseline",
+      "structured",
+      "full"
+    ],
+    "decisions_per_task": 5,
+    "paid_cost_usd": 0,
+    "provider": "deterministic-offline"
+  },
+  "thresholds": {
+    "candidate_budget": 3,
+    "critical_policy_violations": 0,
+    "critical_unsupported_successes": 0,
+    "minimum_paired_gain": 1,
+    "required_regressions_failed": 0
+  }
+}

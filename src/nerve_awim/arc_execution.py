@@ -15,19 +15,11 @@ from .governed_learning_v20 import _json, _id
 
 def digest(value): return sha256(_json(value).encode()).hexdigest()
 
-def task_hook(runtime, con, actor, task, method, *args, **kwargs):
-    # Optional adaptation must not break base ARC when its module is absent.
-    # If explicitly attached, import/hook failures still propagate fail-closed.
-    if getattr(runtime, 'adaptation', None) is None:
-        # A missing optional module is valid only for tasks that never opted in.
-        # Restarting without the coordinator must not remove a persisted guard.
-        if con.execute("SELECT 1 FROM sqlite_master WHERE name='adaptation_tasks' AND type='table'").fetchone():
-            if con.execute('SELECT 1 FROM adaptation_tasks WHERE id=? AND tenant=? AND agent=?',
-                           (task, actor.tenant, actor.agent)).fetchone():
-                raise PermissionError('persisted adaptation requires coordinator')
-        return
+def task_hook(runtime, *args, **kwargs):
+    # The bundled structured guard also checks persisted opt-in when a restarted
+    # host omits its coordinator. It imports no optional research dependencies.
     from .adaptation import task_hook as adaptation_hook
-    return adaptation_hook(runtime, con, actor, task, method, *args, **kwargs)
+    return adaptation_hook(runtime, *args, **kwargs)
 
 @dataclass(frozen=True)
 class ToolSpec:
@@ -141,7 +133,7 @@ class ArcRuntime:
                 parent=self._row(con,actor,parent_decision_id)
                 if parent['task'] != task_id: raise ValueError('parent belongs to a different task')
                 if parent['status'] in {'executing','uncertain'}: raise RuntimeError('uncertain execution requires reconciliation before replanning')
-            task_hook(self,con,actor,task_id,'before_plan',parent=parent_decision_id)
+            task_hook(self,con,actor,task_id,'before_plan',parent=parent_decision_id,tool=tool,evidence_refs=refs)
             now=self.clock(); did=uuid.uuid4().hex
             required=bool(approval_required or spec.risk=='write')
             record=DecisionRecord(did,task_id,did,scope[0],actor._nonce,scope[1],task_id,now,now+expires_in,fingerprint,goal,[],list(unknowns or []),refs,concise_rationale,'Completion is checked after execution',goal,{'registered_tool':tool,'validated_arguments_ref':digest(arguments),'idempotency_key':did},['cross-scope access','unapproved external submission'],completion_criteria,'registered-deterministic-verifier',{'reason':'No calibrated confidence available','confidence_if_calibrated':None},required,None,self.engine.contract,model_version,prompt_version,'awaiting_approval' if required else 'ready',parent_decision_id)
@@ -151,7 +143,7 @@ class ArcRuntime:
         return record
 
     def generate(self, actor, *, provider, task_id, evidence_refs, domain='nonclinical'):
-        if getattr(self, 'adaptation', None) is not None:
+        if getattr(self, 'adaptation', None) is not None and self.adaptation.config.mode == 'active-development':
             raise PermissionError('adaptation provider budget is zero USD')
         """Existing configured provider adapter supplied by host; max one repair.
 
@@ -244,7 +236,9 @@ class ArcRuntime:
         if transport=='success':
             with self.engine._db() as con: con.execute("UPDATE arc_decisions SET status='awaiting_verification',version=version+1 WHERE id=? AND status='executing'",(decision_id,))
             # Only transient readback is retried; the effect itself is never replayed.
-            for attempt in range(3):
+            adaptation=getattr(self,'adaptation',None)
+            retries=adaptation.config.max_tool_retries if adaptation and adaptation.config.mode=='active-development' else 2
+            for attempt in range(retries+1):
                 # Deadline checks bound admission, not a running host callback.
                 if self.clock() >= record.expires_at: break
                 with self.engine._db() as con:
@@ -258,7 +252,7 @@ class ArcRuntime:
                     lifecycle='succeeded' if semantic=='verified' else 'failed'
                     break
                 except (TimeoutError,ConnectionError):
-                    if attempt==2: break
+                    if attempt==retries: break
                     remaining=record.expires_at-self.clock()
                     if remaining <= 0: break
                     self.sleeper(min(.01 * (2 ** attempt), remaining))
@@ -338,6 +332,10 @@ def _observed(method):
     def wrapped(self,actor,*args,**kwargs):
         try: return method(self,actor,*args,**kwargs)
         except Exception as exc:
+            if method.__name__=='propose' and getattr(self,'adaptation',None) is not None:
+                task_id=args[0] if args else kwargs.get('task_id')
+                try: self.adaptation.stop_exhausted(actor,task_id)
+                except (PermissionError,ValueError): pass
             try:
                 scope=self._scope(actor)
                 text=str(exc).lower()

@@ -1,0 +1,43 @@
+{
+  "action_receipts": {},
+  "active_correction_ids": [],
+  "completed_steps": [],
+  "config": {
+    "automatic_global_promotion": false,
+    "backend": "structured",
+    "cross_subject_memory": false,
+    "enabled": true,
+    "max_action_steps": 20,
+    "max_context_tokens": 4000,
+    "max_replans": 3,
+    "max_tool_retries": 2,
+    "mode": "active-development",
+    "provider_spend_limit": 0,
+    "require_verified_corrections": true,
+    "task_deadline_seconds": 120
+  },
+  "constraints": [
+    "read-only",
+    "no-source-execution",
+    "independent-verification"
+  ],
+  "episode": "54f64dcf6c2a4972af9fb4c4350ae41e",
+  "expiry": 1791838789.336551,
+  "goal": "top-level-function-inventory",
+  "last_event": "be2b7825ef584a018a392fd3208ccd74",
+  "memory_backend_version": "adaptation-v1",
+  "pending_steps": [],
+  "recent_failures": [],
+  "replans": 0,
+  "schema_version": "adaptation-v1",
+  "sequence": 1,
+  "status": "open",
+  "steps": 0,
+  "tool_failures": {},
+  "unresolved_questions": [],
+  "unverified_observations": [],
+  "verified_facts": [],
+  "version": 1,
+  "task_id": "stopped-after-kill",
+  "subject_scope": "repository"
+}

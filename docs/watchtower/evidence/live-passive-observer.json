@@ -1,0 +1,27 @@
+{
+  "platform": "macOS",
+  "job_label": "com.aliyildirim.nerve.watchtower",
+  "deployment_mode": "passive_same_user_observation",
+  "release": "65151a7",
+  "report_age_seconds": 14.44,
+  "report_advanced_since_smoke_test": true,
+  "collector_health": {
+    "dropped": 0,
+    "pending": 0,
+    "retained": 0,
+    "status": "OK"
+  },
+  "tenant": "agentos-local",
+  "tables": [
+    "trusted_memory_v18",
+    "memory_utility"
+  ],
+  "source_unchanged_during_smoke_test": true,
+  "release_manifest_verified": true,
+  "error_log_bytes": 0,
+  "overall_safety_status": "UNKNOWN",
+  "guardian_enforcement_active": false,
+  "independent_identity_verified": false,
+  "live_notifications_verified": false,
+  "owner_recovery_provisioned": false
+}

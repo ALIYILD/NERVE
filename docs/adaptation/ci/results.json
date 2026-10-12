@@ -1,0 +1,266 @@
+[
+  {
+    "command": "python scripts/adaptive_memory_study.py",
+    "exit_code": 0,
+    "seconds": 0.181,
+    "log": "docs/adaptation/ci/check-01.log"
+  },
+  {
+    "command": "python scripts/offline_learning_suite.py",
+    "exit_code": 0,
+    "seconds": 0.121,
+    "log": "docs/adaptation/ci/check-02.log"
+  },
+  {
+    "command": "python benchmarks/v13_benchmark.py",
+    "exit_code": 0,
+    "seconds": 1.821,
+    "log": "docs/adaptation/ci/check-03.log"
+  },
+  {
+    "command": "python benchmarks/v16_benchmark.py",
+    "exit_code": 0,
+    "seconds": 0.917,
+    "log": "docs/adaptation/ci/check-04.log"
+  },
+  {
+    "command": "python benchmarks/v17_benchmark.py",
+    "exit_code": 0,
+    "seconds": 1.232,
+    "log": "docs/adaptation/ci/check-05.log"
+  },
+  {
+    "command": "python benchmarks/v18_benchmark.py",
+    "exit_code": 0,
+    "seconds": 0.748,
+    "log": "docs/adaptation/ci/check-06.log"
+  },
+  {
+    "command": "python benchmarks/v19_benchmark.py",
+    "exit_code": 0,
+    "seconds": 0.129,
+    "log": "docs/adaptation/ci/check-07.log"
+  },
+  {
+    "command": "python benchmarks/v20_benchmark.py",
+    "exit_code": 0,
+    "seconds": 0.443,
+    "log": "docs/adaptation/ci/check-08.log"
+  },
+  {
+    "command": "python benchmarks/v21_benchmark.py",
+    "exit_code": 0,
+    "seconds": 0.382,
+    "log": "docs/adaptation/ci/check-09.log"
+  },
+  {
+    "command": "python benchmarks/v30_benchmark.py",
+    "exit_code": 0,
+    "seconds": 0.069,
+    "log": "docs/adaptation/ci/check-10.log"
+  },
+  {
+    "command": "python benchmarks/v31_benchmark.py",
+    "exit_code": 0,
+    "seconds": 0.122,
+    "log": "docs/adaptation/ci/check-11.log"
+  },
+  {
+    "command": "python benchmarks/v31_ablation.py",
+    "exit_code": 0,
+    "seconds": 0.069,
+    "log": "docs/adaptation/ci/check-12.log"
+  },
+  {
+    "command": "python benchmarks/v32_multimodal.py",
+    "exit_code": 0,
+    "seconds": 0.071,
+    "log": "docs/adaptation/ci/check-13.log"
+  },
+  {
+    "command": "python benchmarks/v33_nonlinear.py",
+    "exit_code": 0,
+    "seconds": 0.126,
+    "log": "docs/adaptation/ci/check-14.log"
+  },
+  {
+    "command": "python -m nerve_awim.autoresearch_v01",
+    "exit_code": 0,
+    "seconds": 0.073,
+    "log": "docs/adaptation/ci/check-15.log"
+  },
+  {
+    "command": "python -m nerve_awim.autoresearch_v02",
+    "exit_code": 0,
+    "seconds": 0.122,
+    "log": "docs/adaptation/ci/check-16.log"
+  },
+  {
+    "command": "python -m nerve_awim.autoresearch_v03",
+    "exit_code": 0,
+    "seconds": 0.228,
+    "log": "docs/adaptation/ci/check-17.log"
+  },
+  {
+    "command": "python -m nerve_awim.autoresearch_v04",
+    "exit_code": 0,
+    "seconds": 0.392,
+    "log": "docs/adaptation/ci/check-18.log"
+  },
+  {
+    "command": "python -m nerve_awim.autoresearch_v05",
+    "exit_code": 0,
+    "seconds": 0.28,
+    "log": "docs/adaptation/ci/check-19.log"
+  },
+  {
+    "command": "python benchmarks/v06_recovery_research.py",
+    "exit_code": 0,
+    "seconds": 0.073,
+    "log": "docs/adaptation/ci/check-20.log"
+  },
+  {
+    "command": "python -m nerve_awim.autoresearch_v08",
+    "exit_code": 0,
+    "seconds": 0.228,
+    "log": "docs/adaptation/ci/check-21.log"
+  },
+  {
+    "command": "python -m nerve_awim.autoresearch_v09",
+    "exit_code": 0,
+    "seconds": 0.342,
+    "log": "docs/adaptation/ci/check-22.log"
+  },
+  {
+    "command": "python -m unittest discover -s tests -p 'test_evolution_v01.py' -v",
+    "exit_code": 0,
+    "seconds": 0.179,
+    "log": "docs/adaptation/ci/check-23.log"
+  },
+  {
+    "command": "python benchmarks/v11_parallel_evolution.py",
+    "exit_code": 0,
+    "seconds": 0.482,
+    "log": "docs/adaptation/ci/check-24.log"
+  },
+  {
+    "command": "python benchmarks/v11_memory_effectiveness.py",
+    "exit_code": 0,
+    "seconds": 0.596,
+    "log": "docs/adaptation/ci/check-25.log"
+  },
+  {
+    "command": "python -m nerve_awim.jev_agreement_v12",
+    "exit_code": 0,
+    "seconds": 0.126,
+    "log": "docs/adaptation/ci/check-26.log"
+  },
+  {
+    "command": "python benchmarks/v12_executable_agents.py",
+    "exit_code": 0,
+    "seconds": 1.688,
+    "log": "docs/adaptation/ci/check-27.log"
+  },
+  {
+    "command": "python benchmarks/v13_external_mcp.py",
+    "exit_code": 0,
+    "seconds": 0.756,
+    "log": "docs/adaptation/ci/check-28.log"
+  },
+  {
+    "command": "python scripts/mcp_wire_v13.py",
+    "exit_code": 0,
+    "seconds": 4.747,
+    "log": "docs/adaptation/ci/check-29.log"
+  },
+  {
+    "command": "python scripts/llm_mcp_v14.py --cases 4",
+    "exit_code": 0,
+    "seconds": 1.971,
+    "log": "docs/adaptation/ci/check-30.log"
+  },
+  {
+    "command": "python scripts/llm_mcp_v14.py --mock-api --cases 4",
+    "exit_code": 0,
+    "seconds": 1.97,
+    "log": "docs/adaptation/ci/check-31.log"
+  },
+  {
+    "command": "python scripts/agent_study_v15.py --seeds 2 --cases 3",
+    "exit_code": 0,
+    "seconds": 3.179,
+    "log": "docs/adaptation/ci/check-32.log"
+  },
+  {
+    "command": "python scripts/agent_study_v15.py --limited-fixture --seeds 2 --cases 3",
+    "exit_code": 0,
+    "seconds": 3.23,
+    "log": "docs/adaptation/ci/check-33.log"
+  },
+  {
+    "command": "python scripts/agent_study_v15.py --mock-api --seeds 2 --cases 3",
+    "exit_code": 0,
+    "seconds": 3.322,
+    "log": "docs/adaptation/ci/check-34.log"
+  },
+  {
+    "command": "python scripts/agent_study_v15.py --seeds 5 --cases 2",
+    "exit_code": 0,
+    "seconds": 7.251,
+    "log": "docs/adaptation/ci/check-35.log"
+  },
+  {
+    "command": "python scripts/agent_study_v15.py --failure-fixture --seeds 2 --cases 2",
+    "exit_code": 0,
+    "seconds": 3.733,
+    "log": "docs/adaptation/ci/check-36.log"
+  },
+  {
+    "command": "python benchmarks/v17_recovery_agents.py",
+    "exit_code": 0,
+    "seconds": 0.963,
+    "log": "docs/adaptation/ci/check-37.log"
+  },
+  {
+    "command": "python benchmarks/v18_memory_retrieval.py",
+    "exit_code": 0,
+    "seconds": 0.175,
+    "log": "docs/adaptation/ci/check-38.log"
+  },
+  {
+    "command": "python -m nerve_awim.recursive_evolution_v19",
+    "exit_code": 0,
+    "seconds": 0.235,
+    "log": "docs/adaptation/ci/check-39.log"
+  },
+  {
+    "command": "python -m nerve_awim.worldcore_recursion_v19",
+    "exit_code": 0,
+    "seconds": 0.852,
+    "log": "docs/adaptation/ci/check-40.log"
+  },
+  {
+    "command": "python benchmarks/v20_governed_repository_learning.py",
+    "exit_code": 0,
+    "seconds": 0.23,
+    "log": "docs/adaptation/ci/check-41.log"
+  },
+  {
+    "command": "python scripts/verify_shadow_v21.py",
+    "exit_code": 0,
+    "seconds": 0.754,
+    "log": "docs/adaptation/ci/check-42.log"
+  },
+  {
+    "command": "python scripts/verify_repository_pilot_v22.py",
+    "exit_code": 0,
+    "seconds": 0.759,
+    "log": "docs/adaptation/ci/check-43.log"
+  },
+  {
+    "command": "python scripts/verify_canary_v23.py",
+    "exit_code": 0,
+    "seconds": 0.282,
+    "log": "docs/adaptation/ci/check-44.log"
+  }
+]

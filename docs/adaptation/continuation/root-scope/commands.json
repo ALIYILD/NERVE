@@ -1,0 +1,92 @@
+[
+  {
+    "label": "nerve-run",
+    "command": [
+      "/private/tmp/nerve-adaptation-ci-venv/bin/python",
+      "scripts/agentos_bridge.py",
+      "adaptation-run",
+      "--repository",
+      "/Users/aliyildirim/nerve-review",
+      "--state",
+      "/private/tmp/nerve-root-scope-e5e32vqy/state",
+      "--report",
+      "/Users/aliyildirim/nerve-review/docs/adaptation/continuation/root-scope/nerve-run.json",
+      "--task-id",
+      "nerve-root",
+      "--scenario",
+      "recover-regex",
+      "--restart"
+    ],
+    "exit_code": 0
+  },
+  {
+    "label": "wrong-root-status",
+    "command": [
+      "/private/tmp/nerve-adaptation-ci-venv/bin/python",
+      "scripts/agentos_bridge.py",
+      "adaptation-status",
+      "--repository",
+      "/private/tmp/nerve-root-scope-e5e32vqy/other",
+      "--state",
+      "/private/tmp/nerve-root-scope-e5e32vqy/state",
+      "--report",
+      "/Users/aliyildirim/nerve-review/docs/adaptation/continuation/root-scope/wrong-root-status.json",
+      "--task-id",
+      "nerve-root"
+    ],
+    "exit_code": 2
+  },
+  {
+    "label": "nerve-kill",
+    "command": [
+      "/private/tmp/nerve-adaptation-ci-venv/bin/python",
+      "scripts/agentos_bridge.py",
+      "adaptation-kill",
+      "--repository",
+      "/Users/aliyildirim/nerve-review",
+      "--state",
+      "/private/tmp/nerve-root-scope-e5e32vqy/state",
+      "--report",
+      "/Users/aliyildirim/nerve-review/docs/adaptation/continuation/root-scope/nerve-kill.json",
+      "--reason",
+      "local-stop"
+    ],
+    "exit_code": 0
+  },
+  {
+    "label": "nerve-blocked",
+    "command": [
+      "/private/tmp/nerve-adaptation-ci-venv/bin/python",
+      "scripts/agentos_bridge.py",
+      "adaptation-run",
+      "--repository",
+      "/Users/aliyildirim/nerve-review",
+      "--state",
+      "/private/tmp/nerve-root-scope-e5e32vqy/state",
+      "--report",
+      "/Users/aliyildirim/nerve-review/docs/adaptation/continuation/root-scope/nerve-blocked.json",
+      "--task-id",
+      "nerve-stopped"
+    ],
+    "exit_code": 2
+  },
+  {
+    "label": "other-run",
+    "command": [
+      "/private/tmp/nerve-adaptation-ci-venv/bin/python",
+      "scripts/agentos_bridge.py",
+      "adaptation-run",
+      "--repository",
+      "/private/tmp/nerve-root-scope-e5e32vqy/other",
+      "--state",
+      "/private/tmp/nerve-root-scope-e5e32vqy/state",
+      "--report",
+      "/Users/aliyildirim/nerve-review/docs/adaptation/continuation/root-scope/other-run.json",
+      "--task-id",
+      "other-root",
+      "--source",
+      "source.py"
+    ],
+    "exit_code": 0
+  }
+]

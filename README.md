@@ -4,6 +4,20 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## Independent Watchtower / Guardian (observe-only development)
+
+The separate [safety control plane](docs/watchtower/ARCHITECTURE.md) provides
+bounded read-only telemetry, independent infrastructure probes, incident evidence,
+an MFA owner portal, notification adapters and explicitly scoped containment.
+NERVE's existing execution and learning paths do not import or depend on it.
+Live enforcement is disabled; production IAM, coverage, identity and provider
+verification remain deployment gates. See the [evidence report](docs/watchtower/ACCEPTANCE.md)
+and [recovery runbook](docs/watchtower/RUNBOOK.md).
+
+```bash
+PYTHONPATH=safety python -m nerve_guardian demo --report /tmp/guardian-demo.json
+```
+
 ## Opt-in Cognitive Cue Engine
 
 The [Cognitive Cue Engine](docs/cce/runbook.md) adds model/tokenizer-bound cue
@@ -43,6 +57,22 @@ Use a fresh demo database. See the [commands and host integration guide](docs/wo
 [remaining plan work](docs/world-model/backlog.json). This feature is disabled by
 default, uses no live provider, and does not authorize deployment. The complete
 Memento 3 plan is still in progress.
+
+## Opt-in task adaptation and external-memory research
+
+Task-scoped verified corrections now extend the ARC dispatcher with persistent
+receipts, bounded replanning, checkpoint recovery and an operator kill switch.
+Production defaults remain off. The `adaptation-run` CLI now verifies real local
+repository inventories, with an explicit correction/recovery scenario. See
+[observed NERVE behavior](docs/adaptation/continuation/observed-behavior.md).
+Synthetic CLI demonstrations, frozen evaluations
+and a separate budgeted NumPy fast-memory experiment are documented in the
+[adaptation runbook](docs/adaptation/runbook.md).
+
+The synthetic adaptation candidate failed its overhead gate, and trained external
+memory underperformed exact structured memory. Neither is production-approved.
+See the [readiness report](docs/adaptation/final-readiness.md) for measured results,
+code versions and remaining integration boundaries.
 
 ## v2.1 opt-in repository task shadow learning
 

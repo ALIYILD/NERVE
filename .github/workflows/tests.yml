@@ -262,3 +262,36 @@ jobs:
         run: |
           python -m nerve_awim world-model study --directory /tmp/nerve-world-model-frame-ci --final-per-family 2 --final-seed 19003
           python -m nerve_awim world-model repository-study --repository . --directory /tmp/nerve-world-model-repository-ci
+
+  adaptation-research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install optional CPU research dependencies
+        run: python -m pip install 'numpy==2.2.6' 'PyJWT[crypto]>=2.10,<3'
+      - name: Verify adaptation and optional memory derivatives
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -p 'test_adaptation*.py' -v
+      - name: Train bounded synthetic external memory
+        env:
+          PYTHONPATH: src
+        run: >-
+          python scripts/agentos_bridge.py research-fast-memory-train --synthetic
+          --config configs/adaptation/research-config.json
+          --budget configs/adaptation/research-budget.json
+          --state /tmp/nerve-adaptation-research
+          --report /tmp/nerve-adaptation-memory.json
+      - name: Evaluate matched context scaling without promotion
+        env:
+          PYTHONPATH: src
+        run: >-
+          python scripts/agentos_bridge.py research-fast-memory-evaluate --synthetic
+          --checkpoint /tmp/nerve-adaptation-memory.json
+          --suite configs/adaptation/research-suite.json
+          --budget configs/adaptation/research-budget.json
+          --state /tmp/nerve-adaptation-research
+          --report /tmp/nerve-adaptation-scaling.json

@@ -1,0 +1,68 @@
+{
+  "accepted": false,
+  "candidates": [
+    {
+      "max_missing": 3,
+      "meets_completion_95pct": false,
+      "no_abort": false,
+      "validation": {
+        "abort": 1,
+        "completion": 0.3825,
+        "goal_penalized": 1.298437825921961,
+        "prediction_penalized": 1.2428983423500197,
+        "violations": 0
+      }
+    },
+    {
+      "max_missing": 5,
+      "meets_completion_95pct": false,
+      "no_abort": false,
+      "validation": {
+        "abort": 1,
+        "completion": 0.50625,
+        "goal_penalized": 1.0701005075014796,
+        "prediction_penalized": 0.9993839746240317,
+        "violations": 0
+      }
+    },
+    {
+      "max_missing": 8,
+      "meets_completion_95pct": false,
+      "no_abort": false,
+      "validation": {
+        "abort": 1,
+        "completion": 0.5437500000000001,
+        "goal_penalized": 1.0081809471321554,
+        "prediction_penalized": 0.9265497228644636,
+        "violations": 0
+      }
+    },
+    {
+      "max_missing": 10,
+      "meets_completion_95pct": false,
+      "no_abort": false,
+      "validation": {
+        "abort": 1,
+        "completion": 0.56875,
+        "goal_penalized": 0.9675944293526949,
+        "prediction_penalized": 0.877972032857729,
+        "violations": 0
+      }
+    },
+    {
+      "max_missing": 12,
+      "meets_completion_95pct": false,
+      "no_abort": false,
+      "validation": {
+        "abort": 1,
+        "completion": 0.59375,
+        "goal_penalized": 0.927461053247451,
+        "prediction_penalized": 0.8293304616431272,
+        "violations": 0
+      }
+    }
+  ],
+  "eligible_candidate": null,
+  "interpretation": "No autonomous restart: only outage threshold is explored under fixed strict gates.",
+  "report_only_holdout": null
+}
