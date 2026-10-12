@@ -30,8 +30,8 @@ class LocalMemoryReadinessTests(unittest.TestCase):
             self.assertEqual(timeout, 45)
             self.assertEqual(body, {'model': probe.MODEL, 'prompt': '', 'stream': False, 'keep_alive': '2m'})
             return io.BytesIO(json.dumps(self.preload).encode())
-        self.assertEqual(timeout, 30)
-        self.assertEqual(body['max_tokens'], 32)
+        self.assertEqual(timeout, getattr(self, 'expected_timeout', 30))
+        self.assertEqual(body['max_tokens'], getattr(self, 'expected_tokens', 32))
         self.assertEqual(body['temperature'], 0)
         evidence = json.loads(body['messages'][1]['content'])
         record = json.loads(evidence['evidence_jsonl'])
@@ -139,3 +139,35 @@ class LocalMemoryReadinessTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     probe.run(digest)
             network.assert_not_called()
+
+    def test_cpu_research_explicit_budget_and_gateway_execution(self):
+        self.expected_timeout, self.expected_tokens = 90, 128
+        with patch('urllib.request.OpenerDirector.open', side_effect=self.transport):
+            report = probe.run(DIGEST, cpu_research=True)
+        self.assertEqual(report['status'], 'ready', report)
+        self.assertEqual(report['runtime_profile'], 'cpu_research')
+        self.assertEqual(report['inference_timeout_seconds'], 90)
+        self.assertEqual(report['max_output_tokens'], 128)
+        self.assertEqual(len(self.calls), 4)
+        self.assertEqual(report['accepted_completions'], 1)
+
+    def test_invalid_cpu_choice_prevents_network(self):
+        with patch('urllib.request.OpenerDirector.open') as network:
+            for choice in ('true', 1, None):
+                with self.assertRaises(ValueError):
+                    probe.run(DIGEST, cpu_research=choice)
+            network.assert_not_called()
+
+    def test_output_limit_detail_is_preserved_without_accepting_answer(self):
+        def transport(request, timeout):
+            response = self.transport(request, timeout)
+            if not isinstance(request, str) and request.full_url.endswith('/v1/chat/completions'):
+                data = json.loads(response.getvalue())
+                data['choices'][0]['finish_reason'] = 'length'
+                return io.BytesIO(json.dumps(data).encode())
+            return response
+        with patch('urllib.request.OpenerDirector.open', side_effect=transport):
+            report = probe.run(DIGEST)
+        self.assertEqual(report['failure_detail'], 'output_limit')
+        self.assertEqual(report['accepted_completions'], 0)
+        self.assertNotIn('probe', report)

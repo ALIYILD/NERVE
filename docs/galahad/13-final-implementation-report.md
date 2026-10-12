@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest successful local inference:** [26-cpu-research-inference.md](26-cpu-research-inference.md) records one accepted real CPU-model completion through the scoped gateway (72.684 seconds, 262 input/15 output tokens) and 1,173 passing tests. The new profile is host-only and opt-in; no deployment or broader accuracy claim.
+
 **Latest runtime work:** [25-local-runtime-readiness.md](25-local-runtime-readiness.md) records safe inference diagnostics, two actual preload/probe attempts, a confirmed output-limit rejection, and 1,164 passing tests. No accepted local-model completion or deployment is claimed.
 
 **Latest prospective study:** [24-online-adaptation-and-local-model.md](24-online-adaptation-and-local-model.md) records a +8.89-point online synthetic adaptation gain (84.33% versus 75.44%), 1,146 passing tests, and a failed real CPU-model smoke attempt. Candidate for review only; no default promotion or deployment.

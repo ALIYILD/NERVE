@@ -49,10 +49,14 @@ def preload():
     return measured
 
 
-def run(expected_digest):
+def run(expected_digest, *, cpu_research=False):
+    if type(cpu_research) is not bool:
+        raise ValueError("explicit boolean CPU research choice required")
+    profile = "cpu_research" if cpu_research else "standard"
+    output_cap, inference_timeout = (128, 90) if cpu_research else (32, 30)
     if type(expected_digest) is not str or not re.fullmatch('[0-9a-f]{64}', expected_digest):
         raise ValueError('full operator-pinned SHA256 required')
-    report = {'version': 'local-memory-readiness-v2', 'model': MODEL,
+    report = {'version': 'local-memory-readiness-v3', 'model': MODEL,
               'expected_digest': expected_digest, 'synthetic_only': True,
               'diagnostic_only': True, 'persistent_kv_restored': False,
               'environment': {'python': platform.python_version(), 'platform': platform.platform()},
@@ -62,8 +66,8 @@ def run(expected_digest):
                                              Path(__file__).parents[1] / 'src/nerve_awim/memory_gateway/gateway.py')},
               'preload_attempted': False, 'inference_attempted': False, 'accepted_completions': 0,
               'weight_training': False, 'max_preload_calls': 1, 'max_inference_calls': 1,
-              'preload_timeout_seconds': 45, 'inference_timeout_seconds': 30,
-              'max_output_tokens': 32, 'limitation': 'single readiness probe; not accuracy or improvement evidence'}
+              'preload_timeout_seconds': 45, 'inference_timeout_seconds': inference_timeout,
+              'runtime_profile': profile, 'max_output_tokens': output_cap, 'limitation': 'single readiness probe; not accuracy or improvement evidence'}
     stage = 'metadata_before'
     stage_started = time.perf_counter()
     try:
@@ -77,7 +81,8 @@ def run(expected_digest):
         report['preload'] = preload()
         stage = 'approved_probe'
         stage_started = time.perf_counter()
-        adapter = LocalInferenceAdapter(base_url=ORIGIN, model=MODEL, max_output_tokens=32, timeout_seconds=30)
+        adapter = LocalInferenceAdapter(base_url=ORIGIN, model=MODEL, max_output_tokens=output_cap,
+                                        timeout_seconds=inference_timeout, runtime_profile=profile)
         with tempfile.TemporaryDirectory(prefix='nerve-readiness-') as directory:
             authority = MemoryAuthority()
             writer = authority.issue('synthetic', 'readiness', permissions=('read', 'propose', 'approve'))
@@ -122,12 +127,14 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True)
     parser.add_argument('--expected-digest', required=True)
+    parser.add_argument('--cpu-research', action='store_true',
+                        help='opt into one-slot CPU research profile: 128 output tokens, 90-second socket timeout')
     args = parser.parse_args(argv)
     if not re.fullmatch('[0-9a-f]{64}', args.expected_digest):
         parser.error('full operator-pinned SHA256 required')
     # Reserve the evidence file before any network activity.
     with open(args.output, 'x') as output:
-        report = run(args.expected_digest)
+        report = run(args.expected_digest, cpu_research=args.cpu_research)
         json.dump(report, output, indent=2)
         output.write('\n')
     print(json.dumps({key: report[key] for key in ('status', 'failure_stage', 'failure_reason', 'failure_detail') if key in report}))

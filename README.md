@@ -720,3 +720,7 @@ A fixed discounted-feedback policy scored **84.33% versus 75.44%** for the exist
 ### Local model readiness diagnostics
 
 The local inference adapter now provides sanitized host-side failure categories while retaining generic public errors. A separate preload/probe CLI identified an output-limit failure on the CPU model; no incomplete completion was accepted. [Evidence and reproduction](docs/galahad/25-local-runtime-readiness.md).
+
+### Opt-in CPU inference research
+
+A separate CPU research profile permits one request at a time, up to 128 output tokens and a 90-second socket timeout. One real pinned local-model request through the scoped gateway completed with the correct synthetic marker and source citation in 72.7 seconds. Standard defaults remain unchanged. See [measured evidence and reproduction](docs/galahad/26-cpu-research-inference.md).
