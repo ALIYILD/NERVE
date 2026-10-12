@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-12T21:41:42.618727+00:00",
+  "status": "queued_budget",
+  "requested_work": "Live paired baseline versus learned-advice evaluation; real-task generalization remains outstanding",
+  "native_sessions_reserved_today": 20,
+  "daily_session_limit": 20,
+  "study_sessions_required": 8,
+  "native_calls_this_attempt": 0,
+  "audit_studies_started": 0,
+  "audit_receipts_recorded": 0,
+  "pending": {
+    "profile": "qa-release",
+    "cohort": "audit-composition-20261012-v1",
+    "requested_day": "2026-10-12",
+    "status": "queued_budget",
+    "required_sessions": 8,
+    "remaining_sessions": 0,
+    "revision": "17a0e5577105f8fdea293b2acc9405b4e610009cbb9814dbe9ba86aab68d8198",
+    "manifest_sha256": "61884de327fdd6b9fc9d530aea06703ef9f7a5a4421ff6e1d9bfa0632048606b"
+  },
+  "scheduler": {
+    "loaded": true,
+    "last_exit_status": 0,
+    "interval_seconds": 900,
+    "checkout": "/Users/aliyildirim/nerve-review",
+    "condition": "Mac awake and logged-in session available"
+  },
+  "frozen_study_files_match_integrated_checkout": {
+    "scripts/agentos_audit_study.py": true,
+    "src/nerve_awim/agentos_audit_cohort.py": true,
+    "src/nerve_awim/agentos_audit_evidence.py": true
+  },
+  "next_budget_window_utc": "2026-10-13T00:00:00+00:00",
+  "task_evidence": "Public simulated audit compositions; actual native model calls planned, not production incident data",
+  "live_improvement_measured": false,
+  "provider_spend_this_attempt_usd": 0
+}
