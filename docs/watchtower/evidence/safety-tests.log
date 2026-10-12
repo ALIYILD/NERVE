@@ -62,9 +62,11 @@ test_shutdown_bounds_stalled_dispatch_and_rejects_new_alerts (test_notifications
 test_shutdown_rejects_invalid_budgets_without_closing (test_notifications.NotificationTests.test_shutdown_rejects_invalid_budgets_without_closing) ... ok
 test_stalled_provider_does_not_block_close_and_pending_recovers (test_notifications.NotificationTests.test_stalled_provider_does_not_block_close_and_pending_recovers) ... ok
 test_unsafe_outbox_files_and_constructor_failure_release (test_notifications.NotificationTests.test_unsafe_outbox_files_and_constructor_failure_release) ... ok
+test_arming_requires_owner_recovery_and_both_alert_channels (test_service.ServiceTests.test_arming_requires_owner_recovery_and_both_alert_channels) ... ok
 test_config_rejects_world_writable (test_service.ServiceTests.test_config_rejects_world_writable) ... ok
 test_passive_collector_real_sqlite_cli_contract (test_service.ServiceTests.test_passive_collector_real_sqlite_cli_contract) ... ok
 test_poisoned_report_has_no_arbitrary_payload (test_service.ServiceTests.test_poisoned_report_has_no_arbitrary_payload) ... ok
+test_root_cannot_arm_unsupported_host_or_missing_systemctl (test_service.ServiceTests.test_root_cannot_arm_unsupported_host_or_missing_systemctl) ... ok
 test_service_cannot_implicitly_arm (test_service.ServiceTests.test_service_cannot_implicitly_arm) ... ok
 test_adaptation_join_is_tenant_scoped (test_telemetry.TelemetryTests.test_adaptation_join_is_tenant_scoped) ... ok
 test_agentos_learning_counts_are_tenant_scoped_and_metadata_only (test_telemetry.TelemetryTests.test_agentos_learning_counts_are_tenant_scoped_and_metadata_only) ... ok
@@ -80,6 +82,6 @@ test_read_only_tenant_scoped_redacted (test_telemetry.TelemetryTests.test_read_o
 test_tables_allowlisted (test_telemetry.TelemetryTests.test_tables_allowlisted) ... ok
 
 ----------------------------------------------------------------------
-Ran 80 tests in 7.655s
+Ran 82 tests in 7.000s
 
 OK

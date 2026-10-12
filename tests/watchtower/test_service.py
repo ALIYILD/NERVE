@@ -3,6 +3,7 @@ from pathlib import Path
 import sqlite3
 import tempfile
 import unittest
+from unittest.mock import patch
 from nerve_guardian.__main__ import build_guardian,run_watchtower,telemetry_report,read_config
 
 class ServiceTests(unittest.TestCase):
@@ -10,6 +11,26 @@ class ServiceTests(unittest.TestCase):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
     def test_service_cannot_implicitly_arm(self):
         with self.assertRaises(PermissionError):build_guardian({'armed':True})
+    def test_root_cannot_arm_unsupported_host_or_missing_systemctl(self):
+        for system,available in [('Darwin',True),('Linux',False)]:
+            with self.subTest(system=system), patch('os.geteuid',return_value=0), patch('platform.system',return_value=system), patch('os.access',return_value=available), patch('nerve_guardian.__main__.Store',side_effect=AssertionError('state created')):
+                with self.assertRaisesRegex(PermissionError,'supported Linux'):
+                    build_guardian({'armed':True},allow_live=True)
+    def test_arming_requires_owner_recovery_and_both_alert_channels(self):
+        config={'armed':True,'state_directory':str(self.root/'state'),'anchor_directory':str(self.root/'anchor'),
+                'enforcement_directory':str(self.root/'enforcement'),'tenants':{'a':{'units':[{'name':'nerve.service'}]}}}
+        with patch('os.geteuid',return_value=0), patch('platform.system',return_value='Linux'), patch('os.access',return_value=True), patch('nerve_guardian.__main__.Store',side_effect=AssertionError('state created')):
+            with self.assertRaisesRegex(PermissionError,'owner MFA'):
+                build_guardian(config,allow_live=True)
+            config['owners']={'human':'a'}
+            config['identity']={'issuer':'https://id.example','audience':'guardian','public_key_files':{'key':'/private/key.pem'}}
+            with self.assertRaisesRegex(PermissionError,'both notification'):
+                build_guardian(config,allow_live=True)
+            config['notifications']={'email':{'endpoint':'https://mail.example','secret_path':'/private/mail','sender':'guardian@example.test','recipient':'owner@example.test'},
+                                     'telegram':{'endpoint':'https://api.telegram.org','secret_path':'/private/bot','recipient':'owner'}}
+            config['tenants']['b']={'units':[{'name':'nerve-other.service'}]}
+            with self.assertRaisesRegex(PermissionError,'every managed tenant'):
+                build_guardian(config,allow_live=True)
     def test_passive_collector_real_sqlite_cli_contract(self):
         db=self.root/'app.db'
         with sqlite3.connect(db) as con:

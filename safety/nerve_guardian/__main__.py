@@ -2,6 +2,7 @@
 import argparse
 import json
 import os
+import platform
 from pathlib import Path
 import signal
 import stat
@@ -52,7 +53,16 @@ def build_guardian(config,*,allow_live=False):
     armed=config.get('armed',False)
     if type(armed) is not bool or (armed and not allow_live):raise PermissionError('live enforcement requires explicit independent operator activation')
     if armed and os.geteuid()!=0:raise PermissionError('live controller requires separate administrator identity')
+    if armed and (platform.system()!='Linux' or not os.access('/usr/bin/systemctl',os.X_OK)):
+        raise PermissionError('live enforcement requires the supported Linux systemd host; macOS is passive-only')
     validate_config(config,'guardian')
+    if armed:
+        if not config.get('identity') or not config.get('owners'):
+            raise PermissionError('live enforcement requires configured independent owner MFA recovery')
+        if set(config.get('notifications',{}))!={'telegram','email'}:
+            raise PermissionError('live enforcement requires both notification channels configured')
+        if set(config['tenants'])-set(config['owners'].values()):
+            raise PermissionError('every managed tenant requires an authorised recovery owner')
     tenants=config['tenants']
     inventory={tenant:[ManagedUnit(**unit) for unit in entry['units']] for tenant,entry in tenants.items()}
     store=Store(config['state_directory'],config['anchor_directory'])

@@ -7,10 +7,11 @@
   "checks": {
     "baseline_tests": 1124,
     "regression_tests": 1124,
-    "safety_tests": 80,
+    "safety_tests": 82,
     "independent_adversarial_tests": 13,
     "real_disposable_process_demo": true,
-    "live_provider_delivery": false
+    "live_provider_delivery": false,
+    "ci_all_passed_commit": "103f05a"
   },
   "phases": {
     "0": {

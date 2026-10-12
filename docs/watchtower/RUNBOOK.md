@@ -169,3 +169,5 @@ Protocol references: [systemd's official systemctl source documentation](https:/
 [OpenID Connect Core](https://www.openid.net/specs/openid-connect-core-1_0.html),
 [Telegram Bot API](https://core.telegram.org/bots/api), and
 [transactional email request/receipt contract](https://resend.com/docs/api-reference/emails/send-email).
+
+Live startup additionally rejects non-Linux hosts, missing systemctl, absent owner MFA configuration, missing notification channels, and managed tenants without recovery owners. These checks do not attest actual deployment independence, credential validity or successful alert delivery. macOS remains passive-only.

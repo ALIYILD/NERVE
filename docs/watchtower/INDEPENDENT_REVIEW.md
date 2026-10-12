@@ -62,3 +62,7 @@ The independent alerts/admin specialist confirmed schema validation precedes run
 ## Live passive metadata review
 
 The independent alerts/admin reviewer examined release 65151a7 and reran all 12 telemetry tests on Python 3.10 (0.118 seconds). Fixed parameterized count queries match the actual tenant columns; views and unscoped legacy tables are rejected, payloads are excluded, and bounded read-only protections remain. Approval concerns limited same-user passive observation only. Row totals, including zero, do not establish learning completeness, correctness or system safety. The primary agent separately verified unchanged live source bytes and advancing report timestamps; the reviewer did not independently repeat that live measurement.
+
+## Live activation prerequisite review
+
+Independent review reran six service tests (0.315 seconds), confirmed unsupported-host and missing owner/channel/tenant checks precede Store construction, and found no new blocker in this change. The passive path remains unchanged. Review explicitly does not establish actual systemd availability beyond executable presence, enforceable unit coverage, independent credentials, MFA recovery or notification delivery. The infrastructure specialist separately confirmed user-domain launchd disable/bootout cannot prevent same-user manual execution; independent account migration and a compatible enforcement adapter remain prerequisites.

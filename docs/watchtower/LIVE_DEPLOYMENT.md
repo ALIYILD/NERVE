@@ -60,3 +60,26 @@ or shutdown test was performed.
 The deployment-host/account and secret-location question remains pending. Do not
 paste secret values into chat. No automatic containment, independent Guardian,
 owner recovery portal or live alerts have been enabled by this deployment.
+
+## Full-readiness audit
+
+All PR checks passed for 103f05a. The passive report remained fresh with no drops.
+This host has neither /usr/bin/systemctl nor an independent /opt/nerve-safety
+installation or /etc/nerve-guardian/config.json. Both existing workloads run
+under the developer account. A user-domain launchd disable/bootout operation
+cannot prevent that same identity from manually starting Python or creating
+another job. It is not an adequate emergency boundary.
+
+The preservation-oriented next step is a dedicated restricted NERVE service
+account with reviewed HOME/Hermes and data access, root-owned runtime and job
+definitions, and an independently administered Guardian. A macOS-specific
+controller must verify the dedicated identity's descendants, persistent restart
+blocking and controlled human recovery. Compatibility and containment tests must
+pass in isolated infrastructure before moving the existing learning schedule.
+This adapter and identity migration are not implemented by a launchctl wrapper.
+
+Live startup now rejects unsupported operating systems/missing systemctl before
+state creation, even when invoked as root. It also rejects missing owner MFA
+configuration, missing email/Telegram channels or tenants without recovery owners.
+These are necessary prerequisites, not proof of external authority or successful
+provider delivery. The current safety suite passes 82 tests.
