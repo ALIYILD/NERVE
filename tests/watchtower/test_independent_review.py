@@ -140,3 +140,19 @@ class IndependentReviewTests(unittest.TestCase):
             self.store.read()
         with self.assertRaises(IntegrityError):
             Store(self.store.directory, self.store.anchor_directory)
+
+    def test_arming_existing_observed_incident_contains_persistent_critical(self):
+        self.guardian(armed=False).tick('a')
+        self.assertEqual(self.controller.contain_calls, [])
+        snapshot = self.guardian(armed=True).tick('a')
+        self.assertEqual(len(self.controller.contain_calls), 1)
+        self.assertEqual(snapshot['emergency_state'], 'AWAITING_OWNER_REVIEW')
+
+    def test_ingested_report_counter_keys_cannot_leak_raw_data(self):
+        import time
+        from nerve_guardian.__main__ import telemetry_report
+        path = Path(self.tmp.name) / 'report.json'
+        path.write_text(json.dumps({'observations': [{'tenant': 'a', 'source': 'app',
+            'observed_at': time.time(), 'status': 'OK',
+            'counters': {'PATIENT_secret_api_key': 1}}]}))
+        self.assertNotIn('PATIENT_secret_api_key', json.dumps(telemetry_report(path, 'a')))
