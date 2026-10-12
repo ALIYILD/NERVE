@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest research:** [23-discounted-feedback-research.md](23-discounted-feedback-research.md) adds opt-in per-observation discounting, a fresh v3 study and stricter experiment-arm validation. All six candidates failed at least one improvement gate; 5,800 actual synthetic tool calls were recorded, with the unchanged baseline at 148/200 heldout probes. No default promotion or deployment.
+
 **Latest bounded loop:** [22-bounded-research-loop.md](22-bounded-research-loop.md) records 1,114 passing tests and 4,700 actual synthetic tool executions across two generations. No candidate passed all improvement gates; the current policy was retained (75/100 frozen holdout). No weight training or deployment.
 
 

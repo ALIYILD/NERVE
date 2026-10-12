@@ -31,8 +31,9 @@ def _key(config):
     return f'{config[0]}:{config[1]}:{config[2]}'
 
 
-def _cases(seed, scenario):
-    if type(seed) is not int or seed not in {s for _, seeds in SPLITS for s in seeds} or scenario not in SCENARIOS:
+def _cases(seed, scenario, *, splits=None, domain="policy-loop-v2"):
+    splits = SPLITS if splits is None else splits
+    if type(seed) is not int or seed not in {s for _, seeds in splits for s in seeds} or scenario not in SCENARIOS:
         raise ValueError('preregistered fixture required')
     rng = random.Random(seed)
     base = bool(rng.randrange(2))
@@ -45,7 +46,7 @@ def _cases(seed, scenario):
                 (base if index < change_point else not base) if scenario == 'abrupt' else
                 (base if ((index + offset) // period) % 2 == 0 else not base)
                 if scenario == 'recurrent' else (base if rng.randrange(4) != 0 else not base))
-        identifier = _digest(['policy-loop-v2', seed, scenario, index])[:24].upper()
+        identifier = _digest([domain, seed, scenario, index])[:24].upper()
         cases.append(({'document': json.dumps({'email': f'  {identifier}@EXAMPLE.TEST  '})}, trim))
     return tuple(cases)
 
@@ -74,7 +75,7 @@ def _evaluate(seed, scenario, config, fixed=None):
         decay_half_life=config[2], evaluator_revision='policy-research-transform-v2')
 
 
-def _validate(row, seed, scenario, fixed=None):
+def _validate(row, seed, scenario, fixed=None, *, config=None):
     if not isinstance(row, dict) or row.get('seed') != seed or row.get('scenario') != scenario:
         raise ValueError('invalid evaluator identity')
     outcomes = row.get('probe_outcomes')
@@ -118,33 +119,38 @@ def run_policy_research(path, run_id):
     return _run(path, run_id, _evaluate)
 
 
-def _run(path, run_id, evaluator):
+def _run(path, run_id, evaluator, *, manifest=None, validator=None):
     if not isinstance(run_id, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,63}', run_id):
         raise ValueError('invalid run identifier')
     path = Path(path)
-    manifest = protocol_manifest()
+    manifest = protocol_manifest() if manifest is None else manifest
+    candidates = tuple(tuple(c) for c in manifest['candidates'])
+    baseline_config = tuple(manifest['baseline'])
+    splits = tuple((name, tuple(manifest['splits'][name]))
+                   for name in ('train', 'validation', 'holdout'))
     _claim(path, run_id, manifest)
+    validator = _validate if validator is None else validator
     calls = 0
     cache, cycles = {}, []
     def trial(seed, scenario, config, fixed=None):
         nonlocal calls
-        if calls >= MAX_TRIAL_CALLS:
+        if calls >= manifest['max_trial_calls']:
             raise RuntimeError('trial budget exhausted')
         calls += 1
-        return _validate(evaluator(seed, scenario, config, fixed), seed, scenario, fixed)
+        return validator(evaluator(seed, scenario, config, fixed), seed, scenario, fixed, config=config)
     def candidate(config):
         key = _key(config)
         if key not in cache:
             cache[key] = {split: [trial(seed, scenario, config)
-                for seed in seeds for scenario in SCENARIOS] for split, seeds in SPLITS[:2]}
+                for seed in seeds for scenario in SCENARIOS] for split, seeds in splits[:2]}
         return cache[key]
     try:
-        baseline = candidate(BASELINE)
-        selected, stalled = BASELINE, 0
+        baseline = candidate(baseline_config)
+        selected, stalled = baseline_config, 0
         stop = 'generation_budget'
-        for generation in range(MAX_GENERATIONS):
+        for generation in range(manifest['max_generations']):
             previous, decisions = selected, []
-            for config in CANDIDATES[generation * CANDIDATES_PER_GENERATION:(generation + 1) * CANDIDATES_PER_GENERATION]:
+            for config in candidates[generation * manifest['candidates_per_generation']:(generation + 1) * manifest['candidates_per_generation']]:
                 result, incumbent = candidate(config), candidate(selected)
                 train = sum(_totals(result['train']).values())
                 val = _totals(result['validation'])
@@ -168,7 +174,7 @@ def _run(path, run_id, evaluator):
             with sqlite3.connect(path) as con:
                 con.execute('INSERT INTO policy_research_cycles_v2 VALUES (?,?,?)',
                             (run_id, generation + 1, json.dumps(evidence)))
-            if stalled >= PATIENCE:
+            if stalled >= manifest['patience']:
                 stop = 'patience_exhausted'
                 break
         selection = {'protocol_sha256': manifest['protocol_sha256'], 'selected': list(selected),
@@ -178,16 +184,16 @@ def _run(path, run_id, evaluator):
             con.execute('UPDATE policy_research_runs_v2 SET status=?,report=? WHERE run_id=?',
                         ('holdout_claimed', json.dumps(selection), run_id))
         holdout = {}
-        for name, config, fixed in (('selected', selected, None), ('baseline', BASELINE, None),
-                                    ('fixed_lower', BASELINE, 'lower-only'), ('fixed_trim', BASELINE, 'trim-lower')):
-            if name == 'baseline' and selected == BASELINE:
+        for name, config, fixed in (('selected', selected, None), ('baseline', baseline_config, None),
+                                    ('fixed_lower', baseline_config, 'lower-only'), ('fixed_trim', baseline_config, 'trim-lower')):
+            if name == 'baseline' and selected == baseline_config:
                 holdout[name] = holdout['selected']
             else:
                 holdout[name] = [trial(seed, scenario, config, fixed)
-                    for seed in SPLITS[2][1] for scenario in SCENARIOS]
+                    for seed in splits[2][1] for scenario in SCENARIOS]
         chosen, control = _totals(holdout['selected']), _totals(holdout['baseline'])
         deltas = {s: chosen[s] - control[s] for s in SCENARIOS}
-        recommend = selected != BASELINE and sum(deltas.values()) > 0 and min(deltas.values()) >= 0
+        recommend = selected != baseline_config and sum(deltas.values()) > 0 and min(deltas.values()) >= 0
         report = {'run_id': run_id, 'protocol': manifest, 'cycles': cycles,
             'candidate_results': cache, 'selected': list(selected), 'stop_reason': stop,
             'selection_sha256': _digest(selection), 'selection_frozen_before_holdout': True,

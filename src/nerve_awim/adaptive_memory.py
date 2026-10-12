@@ -14,7 +14,7 @@ from .memory_v18 import _id
 
 class OutcomeMemoryRanker:
     def __init__(self, ledger, *, evaluator, evaluator_revision, window=20, tie_break="relevance",
-                 decay_half_life=None):
+                 decay_half_life=None, discount_half_life=None):
         if not callable(evaluator):
             raise TypeError('trusted host evaluator required')
         _id(evaluator_revision, 'evaluator revision')
@@ -24,6 +24,11 @@ class OutcomeMemoryRanker:
             raise ValueError('registered tie-breaking policy required')
         if decay_half_life is not None and (type(decay_half_life) is not int or not 1 <= decay_half_life <= 100):
             raise ValueError('decay half-life must be None or 1..100 judged episodes')
+        if discount_half_life is not None and (type(discount_half_life) is not int or not 1 <= discount_half_life <= 100):
+            raise ValueError('discount half-life must be None or 1..100 judged episodes')
+        if decay_half_life is not None and discount_half_life is not None:
+            raise ValueError('choose either last-use decay or observation discounting')
+        self.discount_half_life = discount_half_life
         self.decay_half_life = decay_half_life
         self.tie_break = tie_break
         self.ledger, self.evaluator = ledger, evaluator
@@ -93,6 +98,8 @@ class OutcomeMemoryRanker:
         Recent-window Beta(1,1) means are heuristic preferences, not calibrated
         confidence or evidence that this memory causally improved performance.
         Default ties preserve relevance; least_recent is opt-in exact-tie exploration.
+        Optional discounting weights each observation by same-context episode age;
+        this is a discounted Beta heuristic, not a calibrated posterior.
         Unseen memories have neutral score 0.5; relevance order breaks ties.
         """
         self.ledger.authority.require(actor, 'read')
@@ -118,16 +125,36 @@ class OutcomeMemoryRanker:
                     ORDER BY sequence DESC LIMIT ?''',
                     (actor.tenant_id, actor.agent_id, current.memory_id, self.revision, self.window)).fetchall()
                 utility = (1 + sum(row[0] for row in rows)) / (2 + len(rows))
-                if self.decay_half_life is not None and rows:
-                    # Count authorised same-context judged episodes since this
-                    # source was used, not global SQL sequence gaps (which can
-                    # contain other tenants, contexts or evaluator revisions).
-                    age = con.execute("""SELECT COUNT(*) FROM memory_utility u
+                def observation_age(sequence):
+                    # No global sequence gaps: foreign tenants, agents, contexts,
+                    # revisions and unjudged episodes cannot age this history.
+                    return con.execute("""SELECT COUNT(*) FROM memory_utility u
                         JOIN trusted_memory_v18 m ON m.memory_id=u.memory
                         AND m.tenant_id=u.tenant AND m.agent_id=u.agent
                         WHERE u.tenant=? AND u.agent=? AND m.context=? AND u.revision=?
                         AND u.status='judged' AND u.sequence>?""",
-                        (actor.tenant_id, actor.agent_id, current.context, self.revision, rows[0][1])).fetchone()[0]
+                        (actor.tenant_id, actor.agent_id, current.context, self.revision, sequence)).fetchone()[0]
+                if self.discount_half_life is not None and rows:
+                    # One scoped window query per candidate, not one full count
+                    # per sample. Filtering memory must happen AFTER assigning
+                    # ages, so observations of other same-context memories count.
+                    # Only the bounded latest window is returned to Python.
+                    discounted_rows = con.execute("""SELECT success, age FROM (
+                        SELECT u.memory, u.success, u.sequence,
+                            ROW_NUMBER() OVER (ORDER BY u.sequence DESC) - 1 AS age
+                        FROM memory_utility u
+                        JOIN trusted_memory_v18 m ON m.memory_id=u.memory
+                        AND m.tenant_id=u.tenant AND m.agent_id=u.agent
+                        WHERE u.tenant=? AND u.agent=? AND m.context=? AND u.revision=?
+                        AND u.status='judged'
+                    ) WHERE memory=? ORDER BY sequence DESC LIMIT ?""",
+                        (actor.tenant_id, actor.agent_id, current.context, self.revision,
+                         current.memory_id, self.window)).fetchall()
+                    weighted = [(success, 2 ** (-age / self.discount_half_life))
+                                for success, age in discounted_rows]
+                    utility = (1 + sum(success * weight for success, weight in weighted)) / (2 + sum(weight for _, weight in weighted))
+                if self.decay_half_life is not None and rows:
+                    age = observation_age(rows[0][1])
                     utility = 0.5 + (utility - 0.5) * 2 ** (-age / self.decay_half_life)
                 # Equal recent utility can otherwise trap the policy on the
                 # same repeatedly failing memory. Opt-in bounded exploration

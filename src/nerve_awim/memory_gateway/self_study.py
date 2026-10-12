@@ -100,7 +100,8 @@ def _trial(seed, scenario, window=None, fixed=None, tie_break='relevance'):
 
 
 def _execute_trial(cases, seed, scenario, window=None, fixed=None, tie_break='relevance',
-                   decay_half_life=None, evaluator_revision='self-study-transform-v1'):
+                   decay_half_life=None, evaluator_revision='self-study-transform-v1',
+                   discount_half_life=None):
     """Shared host-owned fixture executor; old protocol stays in _trial above."""
     if len(cases) != FEEDBACK_COUNT + PROBE_COUNT:
         raise ValueError('fixed feedback/probe budget required')
@@ -134,7 +135,7 @@ def _execute_trial(cases, seed, scenario, window=None, fixed=None, tie_break='re
             return output == answers[digest]
         learning = VerifiedOutcomeLearning(gateway, host, scope, judge,
             evaluator_revision, window=window or BASELINE_WINDOW, tie_break=tie_break,
-            decay_half_life=decay_half_life)
+            decay_half_life=decay_half_life, discount_half_life=discount_half_life)
         session = replace(learning.session(reader), can_propose=False)
         bridge = DemoAgentBridge(root/'agent.sqlite', memory_session=session,
                                  require_verified_memory=True)
@@ -168,7 +169,8 @@ def _execute_trial(cases, seed, scenario, window=None, fixed=None, tie_break='re
         if after['count'] != (FEEDBACK_COUNT if fixed is None else 0):
             raise AssertionError('unequal or unexpected feedback consumption')
         return {'seed': seed, 'scenario': scenario, 'window': window, 'tie_break': tie_break,
-            'decay_half_life': decay_half_life, 'fixed_strategy': fixed,
+            'decay_half_life': decay_half_life, 'discount_half_life': discount_half_life,
+            'fixed_strategy': fixed,
             'feedback_outcomes': outcomes[:FEEDBACK_COUNT], 'probe_outcomes': outcomes[FEEDBACK_COUNT:],
             'feedback_strategies': strategies[:FEEDBACK_COUNT], 'probe_strategies': strategies[FEEDBACK_COUNT:],
             'probe_hits': sum(outcomes[FEEDBACK_COUNT:]), 'executions': len(outcomes),

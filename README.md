@@ -708,3 +708,7 @@ training or proof of real scientific discovery. See [protocol and measured resul
 ### Bounded memory-policy research generations
 
 The durable research loop evaluates a finite candidate grid, records rejected candidates, stops after two stalled generations, and freezes selection before one holdout evaluation. Its first run completed 4,700 synthetic tool executions and retained the current policy because no candidate passed every improvement gate. All 1,114 regression tests pass. This is local policy research; model weights and deployment remain unchanged. See [execution evidence and reproduction](docs/galahad/22-bounded-research-loop.md).
+
+### Discounted feedback research
+
+Optional per-observation discounting now weights old verified outcomes less heavily. The fresh v3 study executed 5,800 synthetic tool calls; recurrent validation improved for fast discounting, but training regressed, so the current policy was retained. See [primary-source rationale, evidence and reproduction](docs/galahad/23-discounted-feedback-research.md).

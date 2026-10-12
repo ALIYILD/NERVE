@@ -1,0 +1,24 @@
+{
+  "baseline_before": "ec73fd926c6a60272ae3b0fb1fb97d56e8781881",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests": 1129,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 65.207,
+  "execution_permissions": "authorized local servers and process isolation",
+  "initial_restricted_run": {
+    "tests": 1129,
+    "failures": 36,
+    "errors": 8,
+    "seconds": 69.912,
+    "resolved_by": "authorized rerun, no code changes"
+  },
+  "study_command": "PYTHONPATH=src .venv/bin/python scripts/run_discount_research.py --database /private/tmp/nerve-discount-v3.sqlite --run-id discount-v3 --output /private/tmp/nerve-discount-v3.json",
+  "evidence_source_hashes_match": true,
+  "actual_trials": 232,
+  "actual_tool_executions": 5800,
+  "recommendation": "retain_baseline",
+  "gpu_tested": false,
+  "model_weights_trained": false,
+  "deployed": false
+}
