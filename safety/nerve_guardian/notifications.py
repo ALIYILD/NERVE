@@ -1,5 +1,6 @@
 """Bounded independent notification outbox; no provider errors or secrets logged."""
 import json
+from contextlib import contextmanager
 import os
 import queue
 import sqlite3
@@ -42,6 +43,13 @@ class HTTPSDelivery:
         self.secret_path, self.allowed_uids = secret_path, frozenset(allowed_uids)
 
     def __call__(self, alert):
+        try:
+            return self._send(alert)
+        except Exception:
+            # urllib errors can include Telegram's token-bearing request URL.
+            raise ValueError('notification provider delivery unconfirmed') from None
+
+    def _send(self, alert):
         token = protected_secret(self.secret_path, self.allowed_uids)
         message = json.dumps(alert, sort_keys=True)
         headers = {'Content-Type': 'application/json'}
@@ -60,7 +68,14 @@ class HTTPSDelivery:
             if response.status < 200 or response.status >= 300:
                 raise ValueError('delivery failed')
             result = response.read(16385)
-            if len(result) > 16384 or (self.channel == 'telegram' and json.loads(result).get('ok') is not True):
+            if len(result) > 16384:
+                raise ValueError('delivery unconfirmed')
+            payload = json.loads(result)
+            if not isinstance(payload, dict):
+                raise ValueError('delivery unconfirmed')
+            if self.channel == 'telegram' and payload.get('ok') is not True:
+                raise ValueError('delivery unconfirmed')
+            if self.channel == 'email' and (not isinstance(payload.get('id'), str) or not payload['id']):
                 raise ValueError('delivery unconfirmed')
 
 
@@ -93,8 +108,14 @@ class Notifier:
         for thread in self.threads:
             thread.start()
 
+    @contextmanager
     def _db(self):
-        return sqlite3.connect(self.database, timeout=1)
+        connection = sqlite3.connect(self.database, timeout=1)
+        try:
+            with connection:
+                yield connection
+        finally:
+            connection.close()
 
     def enqueue(self, alert):
         # Reference-only fields: never serialize arbitrary evidence or clinical text.

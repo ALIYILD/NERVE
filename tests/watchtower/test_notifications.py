@@ -50,3 +50,61 @@ class NotificationTests(unittest.TestCase):
             for endpoint in ('http://api.telegram.org','https://evil.example','https://api.telegram.org?token=x'):
                 with self.assertRaises(ValueError):
                     HTTPSDelivery(channel='telegram',endpoint=endpoint,secret_path=path,allowed_uids={os.getuid()},recipient='test')
+
+    def test_https_provider_contract_and_sanitized_failure(self):
+        import json
+        import urllib.error
+        from unittest.mock import patch
+        class Response:
+            status = 200
+            def __init__(self, payload): self.payload = payload
+            def __enter__(self): return self
+            def __exit__(self, *args): pass
+            def read(self, limit): return self.payload[:limit]
+        class Opener:
+            def __init__(self, result): self.result=result; self.requests=[]
+            def open(self, request, timeout):
+                self.requests.append((request,timeout))
+                if isinstance(self.result, Exception): raise self.result
+                return Response(self.result)
+        with tempfile.TemporaryDirectory() as root:
+            secret=Path(root)/'secret'; secret.write_text('123:TEST_ONLY_SECRET'); secret.chmod(0o600)
+            telegram=HTTPSDelivery(channel='telegram',endpoint='https://api.telegram.org',secret_path=secret,allowed_uids={os.getuid()},recipient='test-chat')
+            email=HTTPSDelivery(channel='email',endpoint='https://mail.example/send',secret_path=secret,allowed_uids={os.getuid()},recipient='owner@example.test',sender='guardian@example.test')
+            for adapter, result in ((telegram,b'{"ok":true}'),(email,b'{"id":"test-message"}')):
+                opener=Opener(result)
+                with patch('urllib.request.build_opener',return_value=opener): adapter({'incident_id':'synthetic'})
+                self.assertEqual(opener.requests[0][1],5)
+                self.assertEqual(opener.requests[0][0].method,'POST')
+            failures = [b'{"ok":false}', b'not-json', b'[]', b'x'*16385,
+                urllib.error.HTTPError('https://api.telegram.org/bot123:TEST_ONLY_SECRET/sendMessage',429,'TEST_ONLY_SECRET',{},None)]
+            for result in failures:
+                with patch('urllib.request.build_opener',return_value=Opener(result)):
+                    with self.assertRaises(ValueError) as error: telegram({'incident_id':'synthetic'})
+                    self.assertNotIn('TEST_ONLY_SECRET',str(error.exception))
+            for result in (b'{"error":"rejected"}',b'{}',urllib.error.HTTPError('https://mail.example/send',500,'TEST_ONLY_SECRET',{},None)):
+                with patch('urllib.request.build_opener',return_value=Opener(result)):
+                    with self.assertRaises(ValueError): email({'incident_id':'synthetic'})
+            opener=Opener(failures[-1])
+            with patch('urllib.request.build_opener',return_value=opener):
+                notifier=Notifier(Path(root)/'outbox.db',{'telegram':telegram},max_attempts=2,rate_seconds=0)
+                try:
+                    notifier.enqueue(dict(tenant='a',incident_id='synthetic',event='critical'))
+                    self.wait_for(lambda: bool(notifier.status('a')) and notifier.status('a')[0]['status']=='failed')
+                    self.assertEqual(len(opener.requests),2)
+                    self.assertEqual(notifier.health()['status'],'UNKNOWN')
+                    self.assertNotIn(b'TEST_ONLY_SECRET',(Path(root)/'outbox.db').read_bytes())
+                    self.assertTrue(all(thread.is_alive() for thread in notifier.threads))
+                finally: notifier.close()
+
+    def test_database_connections_closed_on_success_and_error(self):
+        from unittest.mock import Mock, patch
+        notifier=object.__new__(Notifier); notifier.database='unused'
+        connection=Mock(); connection.__enter__=Mock(return_value=connection); connection.__exit__=Mock(return_value=False)
+        with patch('nerve_guardian.notifications.sqlite3.connect',return_value=connection):
+            with notifier._db(): pass
+            connection.close.assert_called_once()
+            connection.close.reset_mock()
+            with self.assertRaises(RuntimeError):
+                with notifier._db(): raise RuntimeError('synthetic')
+            connection.close.assert_called_once()
