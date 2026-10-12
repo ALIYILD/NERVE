@@ -24,6 +24,8 @@ operational cue has been enabled and no model or clinical deployment has been pe
 | Feedback-focused additions | **17 new tests passed**: 11 scoped context/validation, five discovery/cycle integration and one queue redaction test |
 | Local scheduled adapter integration, full suite | **1,276 run, 1,275 passed, 1 skipped**, 68.727 seconds |
 | Local protocol/registry additions | **17 new tests passed**: six response-contract and 11 registry/oracle/budget tests |
+| CPU timeout repair, source and installed CCE suites | **273 passed** in each checkout; six new timeout/deadline tests; source 8.000 seconds, installed 7.510 seconds |
+| Structured-output repair, source and installed CCE suites | **275 passed** in each checkout; source 6.518 seconds, installed 10.036 seconds; exact request schema and profile/schema drift coverage |
 | Node checkpoint discovery | **7 passed** |
 | `git diff --check` | Passed |
 | Offline commissioning CLI | 30 paired tasks / 60 fixture calls, zero external provider calls; candidate rejected, no active cue, pending memory export |
@@ -199,6 +201,16 @@ The first feedback integration run exposed one legacy discovery compatibility
 failure: creating governance state when no feedback existed. The host now checks
 for scoped feedback read-only and retains the prior no-bootstrap behavior when
 none exists. The final full suite above passed after that repair.
+
+### Live commissioning supersedes earlier installation snapshots
+
+Local research is now enabled on the installed host, and both frozen CCE jobs
+actually ran. Both failed on their first evaluation timeout and remain consumed;
+no candidate was activated. The timeout repair is installed and published.
+See [the commissioning record](local-live.md#live-commissioning-13-october-2026-europelondon)
+for measured failures, diagnostic limitations, the existing scheduler and the
+successful task-local adaptation run. Earlier paragraphs describing an empty
+queue or no configured profile are historical snapshots.
 
 The opt-in local handoff protocol now supplies model-self-reported probabilities
 with independent host grading, source/model identity checks and a separate durable
