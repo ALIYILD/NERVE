@@ -1,0 +1,86 @@
+{
+  "pid": 86591,
+  "command": [
+    "/usr/bin/caffeinate",
+    "-i",
+    "/Users/aliyildirim/nerve-galahad/.venv/bin/python",
+    "-u",
+    "/Users/aliyildirim/nerve-galahad/scripts/run_research_campaign.py",
+    "--database",
+    "/Users/aliyildirim/nerve-research-runs/overnight-20261013/campaign.sqlite",
+    "--output",
+    "/Users/aliyildirim/nerve-research-runs/overnight-20261013/report.json",
+    "--run-id",
+    "overnight-v1",
+    "--deadline-utc",
+    "2026-10-13T06:00:00Z",
+    "--stop-file",
+    "/Users/aliyildirim/nerve-research-runs/overnight-20261013/STOP",
+    "--cycles",
+    "32",
+    "--seeds-per-cycle",
+    "4",
+    "--first-seed",
+    "10000",
+    "--trial-timeout",
+    "60",
+    "--cycle-interval",
+    "600"
+  ],
+  "source_commit": "3970f2e6e2f20d9f1e04f5b8b22ccf1a24ac4dd5",
+  "started_utc": "2026-10-12T23:56:39.193199+00:00",
+  "deadline_utc": "2026-10-13T06:00:00Z",
+  "environment_override": {
+    "PYTHONPATH": "/Users/aliyildirim/nerve-galahad/src"
+  },
+  "maximum_pipeline_episodes": 65536,
+  "status": "verified_running",
+  "observed_utc": "2026-10-12T23:57:41.866391+00:00",
+  "completed_cycles": 1,
+  "completed_pipeline_episodes": 2048,
+  "phase": "waiting_between_cycles",
+  "cycle_summaries": [
+    {
+      "cycle": 1,
+      "promotion_authorized": false,
+      "recommendation": "retain_baseline",
+      "scenario_deltas": {
+        "abrupt": 7,
+        "mixed": -12,
+        "recurrent": 31,
+        "stationary": 0
+      },
+      "scenario_hits": {
+        "baseline": {
+          "abrupt": 114,
+          "mixed": 83,
+          "recurrent": 65,
+          "stationary": 125
+        },
+        "candidate": {
+          "abrupt": 121,
+          "mixed": 71,
+          "recurrent": 96,
+          "stationary": 125
+        },
+        "fixed_lower": {
+          "abrupt": 76,
+          "mixed": 50,
+          "recurrent": 62,
+          "stationary": 32
+        },
+        "fixed_trim": {
+          "abrupt": 52,
+          "mixed": 78,
+          "recurrent": 66,
+          "stationary": 96
+        }
+      },
+      "selection": "fixed hypothesis; no tuning",
+      "tasks_per_arm": 512
+    }
+  ],
+  "live_report": "/Users/aliyildirim/nerve-research-runs/overnight-20261013/report.json",
+  "stop_file": "/Users/aliyildirim/nerve-research-runs/overnight-20261013/STOP",
+  "scope": "Each trial starts a fresh learner. Cycles replicate fixed policies; learning is within trials only, not persistent across cycles."
+}
