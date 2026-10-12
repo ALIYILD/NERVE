@@ -1,0 +1,79 @@
+{
+  "base_commit": "ca1e2d92608654ab5d88c2a5866037656caf4a29",
+  "branch": "main",
+  "initial_dirty_files": [],
+  "updated_at": "2026-10-12T20:02:00.870892+00:00",
+  "loops": {
+    "00": {
+      "status": "passed",
+      "evidence": [
+        "Architecture and entrypoint map in implementation-progress.md",
+        "Baseline Python unittest:875 passed in35.188s; /private/tmp/nerve-arc-baseline.log",
+        "Node checkpoint tests:7 passed"
+      ],
+      "limitations": [
+        "No live clinical API contract present; new enforcement initially opt-in for declared workflows."
+      ]
+    },
+    "01": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "02": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "03": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "04": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "05": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "06": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "07": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "08": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "09": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "10": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "11": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "12": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "13": {
+      "status": "pending",
+      "evidence": []
+    },
+    "14": {
+      "status": "pending",
+      "evidence": []
+    },
+    "15": {
+      "status": "pending",
+      "evidence": []
+    }
+  }
+}
