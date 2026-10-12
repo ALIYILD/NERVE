@@ -65,7 +65,7 @@ class DiscoveryBatch:
 def discover_cue_pool(execute, manifest, profile, task_type, *, tenant, agent,
                       generator_id, paper_candidates=(), max_candidates=16,
                       max_calls=2, per_call_candidates=4, permission_granted=False,
-                      clinical=False, risk='low'):
+                      clinical=False, risk='low', learning_context=None):
     """Return at most 64 unapproved proposals with explicit rejection receipts.
 
     Duplicate identity is exact UTF-8 text plus injection mode for this profile.
@@ -83,6 +83,10 @@ def discover_cue_pool(execute, manifest, profile, task_type, *, tenant, agent,
         raise PermissionError('clinical cue discovery disabled')
     if not isinstance(manifest, DatasetManifest) or not isinstance(profile, ModelProfile):
         raise TypeError('frozen manifest and exact model profile required')
+    if learning_context is not None:
+        from .cue_feedback import validate_learning_context
+        learning_context = validate_learning_context(learning_context,
+            profile_key=profile.key, task_type=task_type)
     for value, lower, upper in ((max_candidates, 1, 64), (max_calls, 0, 8), (per_call_candidates, 1, 16)):
         if type(value) is not int or not lower <= value <= upper:
             raise ValueError('bounded integer discovery budgets required')
@@ -154,7 +158,8 @@ def discover_cue_pool(execute, manifest, profile, task_type, *, tenant, agent,
             return result
 
         try:
-            proposals = discover_candidates(adapter, manifest, tenant=tenant, agent=agent, max_candidates=limit)
+            proposals = discover_candidates(adapter, manifest, tenant=tenant, agent=agent,
+                max_candidates=limit, learning_context=learning_context)
         except PermissionError:
             # A denied host capability cannot be bypassed with another dispatch.
             reject('hermes', 'permission_denied', call_index=attempted)

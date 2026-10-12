@@ -165,3 +165,27 @@ confidence remains unknown, it has no discovery callback, and it cannot attest
 the production worker. Its measured arithmetic result does not satisfy calibration
 or representative handoff/regression evidence requirements. Neither local smoke
 nor queued job admission approves a cue.
+
+## Historical feedback as discovery input
+
+The governed cycle can freeze a scoped snapshot of `trusted_evaluator_feedback`
+before asking the existing research callback for a new cue. Only revalidated cue
+text/content hashes, approved/revoked state and bounded aggregate outcome counts
+reach discovery. The snapshot excludes candidate IDs, task/episode identifiers,
+answers and heldout metrics; limits are eight candidates, 64 observations each
+and 8 KiB. An empty snapshot leaves the historical request contract unchanged.
+
+These rows are evaluator observations, not proof of operational application or
+a causal cue benefit. Existing records do not bind each outcome to an actual
+worker application receipt. Historical cue text remains untrusted data, and its
+safety check does not grant authority. The audit keeps only a snapshot digest
+and aggregates. Fresh dataset reservations, regression screening, independent
+evaluation and operator approval remain mandatory for new candidates.
+
+Historical `cue_digest` is SHA256 of the exact UTF-8 cue text, not the
+metadata-bound `Cue.content_hash` used by experiment receipts. Duplicate text
+keeps only the most recent eligible candidate's latest 64 observations; counts
+are not pooled across versions. The snapshot digest binds the frozen in-memory
+discovery invocation. No full snapshot is retained for later reconstruction.
+Cue safety validation is a bounded instruction filter, not a privacy classifier;
+hosts must keep sensitive data out of historical cue text.

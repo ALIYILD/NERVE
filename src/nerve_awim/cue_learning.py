@@ -426,6 +426,56 @@ class GovernedCueCoordinator:
                 'generator_id': row['generator'],
                 'expires': row['expires'], 'evaluation': json.loads(row['report']) if row['report'] else None}
 
+    def learning_context(self, actor, profile, task_type):
+        """Read bounded evaluator observations for discovery; grant no authority.
+
+        Feedback may describe a never-applied or revoked cue. It is observational
+        host evidence, not proof of deployment, causal improvement or independence.
+        Most-recent unique text wins; counts are from that candidate's latest 64
+        observations, never combined across versions or folded into holdout results.
+        """
+        from .cue_feedback import SOURCE, cue_text_digest, validate_learning_context
+        scope = self._scope(actor, 'trainer', 'auditor', 'operator')
+        if not isinstance(profile, ModelProfile):
+            raise TypeError('exact model profile required')
+        _id(task_type)
+        snapshot = {'schema_version': 1, 'profile_key': profile.key, 'task_type': task_type,
+                    'source': SOURCE, 'causal_evidence': False, 'authorization_granted': False,
+                    'candidates': []}
+        seen = set()
+        with self.engine._db() as con:
+            self.engine._state(con, scope)
+            rows = con.execute("""SELECT c.* FROM cce_candidates c
+                WHERE c.tenant=? AND c.agent=? AND c.contract=? AND c.profile=? AND c.task_type=?
+                  AND c.status IN('approved','revoked')
+                  AND EXISTS(SELECT 1 FROM cce_feedback f WHERE f.candidate=c.id)
+                ORDER BY c.rowid DESC LIMIT 8""", (*scope, self.engine.contract,
+                    _json(asdict(profile)), task_type)).fetchall()
+            for row in rows:
+                try:
+                    cue = Cue(**json.loads(row['cue']))
+                    if (cue.profile_key != profile.key or cue.task_types != (task_type,)
+                            or cue.mode != 'instruction' or cue.mode not in profile.supported_modes or safety_reason(cue)):
+                        continue
+                    digest = cue_text_digest(cue.text)
+                    if digest in seen:
+                        continue
+                    feedback = con.execute('SELECT correct,safe FROM cce_feedback WHERE candidate=? ORDER BY rowid DESC LIMIT 64',
+                                           (row['id'],)).fetchall()
+                    if not feedback or any(type(item[key]) is not int or item[key] not in (0, 1)
+                                           for item in feedback for key in ('correct', 'safe')):
+                        continue
+                    entry = {'cue_text': cue.text, 'cue_digest': digest, 'status': row['status'],
+                             'observations': len(feedback), 'correct': sum(item['correct'] for item in feedback),
+                             'safe': sum(item['safe'] for item in feedback)}
+                    proposed = dict(snapshot, candidates=snapshot['candidates'] + [entry])
+                    snapshot = validate_learning_context(proposed, profile.key, task_type)
+                    seen.add(digest)
+                except (ValueError, TypeError, KeyError):
+                    # Invalid or oversized historical records are not agent context.
+                    continue
+        return validate_learning_context(snapshot, profile.key, task_type)
+
     def export_memory(self, actor, candidate, ledger, memory_actor):
         """Add aggregate research evidence to existing memory as a pending record."""
         scope = self._scope(actor, 'auditor', 'operator')

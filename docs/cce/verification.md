@@ -20,6 +20,8 @@ operational cue has been enabled and no model or clinical deployment has been pe
 | CCE-specific tests after retained-capability integration | **223 passed**, including schema compatibility, pre-holdout ordering, persistence, scope cutover, evidence tampering and release recomputation |
 | Scheduled CCE job integration, full suite | **1,242 run, 1,241 passed, 1 skipped**, 69.343 seconds |
 | Scheduled job focused checks | **21 new tests passed**: 10 durable queue tests and 11 autoresearch/bridge tests; 15 existing autoresearch tests also passed |
+| Evaluator-feedback discovery integration, final full suite | **1,259 run, 1,258 passed, 1 skipped**, 81.552 seconds |
+| Feedback-focused additions | **17 new tests passed**: 11 scoped context/validation, five discovery/cycle integration and one queue redaction test |
 | Node checkpoint discovery | **7 passed** |
 | `git diff --check` | Passed |
 | Offline commissioning CLI | 30 paired tasks / 60 fixture calls, zero external provider calls; candidate rejected, no active cue, pending memory export |
@@ -168,3 +170,33 @@ At the inspected installation, autoresearch was enabled for `qa-release`, with
 zero native sessions remaining in that day's budget. No live CCE configuration
 or queued CCE jobs had been installed. This is an installation snapshot, not a
 claim that the new scheduled path has produced model evidence.
+
+## Feedback-to-discovery evidence boundary
+
+The host can freeze bounded exact-scope/profile/task evaluator history and supply
+it to the existing research callback. Snapshots contain revalidated cue text and
+hashes plus bounded aggregate feedback, with no candidate/episode/task IDs,
+answers or heldout metrics. Cycle audit stores the snapshot digest and aggregate
+metadata rather than raw cue text; no standalone history CLI is added. Empty
+history retains the original discovery payload.
+
+The source label is `trusted_evaluator_feedback`, deliberately not an assertion
+of operational cue application. Existing feedback rows lack durable worker
+application provenance and may include a candidate revoked before approval.
+Counts are observational, not causal, and never authorize release or restore a
+revoked cue. This implements a feedback input path; no measured recursive model
+improvement or new live experiment is claimed. Final integration test results
+remain the coordinator's separately recorded verification.
+
+Historical `cue_digest` is SHA256 of the exact UTF-8 cue text, not the
+metadata-bound `Cue.content_hash` used by experiment receipts. Duplicate text
+keeps only the most recent eligible candidate's latest 64 observations; counts
+are not pooled across versions. The snapshot digest binds the frozen in-memory
+discovery invocation. No full snapshot is retained for later reconstruction.
+Cue safety validation is a bounded instruction filter, not a privacy classifier;
+hosts must keep sensitive data out of historical cue text.
+
+The first feedback integration run exposed one legacy discovery compatibility
+failure: creating governance state when no feedback existed. The host now checks
+for scoped feedback read-only and retains the prior no-bootstrap behavior when
+none exists. The final full suite above passed after that repair.

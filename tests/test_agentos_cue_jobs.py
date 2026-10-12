@@ -114,6 +114,19 @@ class CueJobTests(unittest.TestCase):
         with sqlite3.connect(self.host.directory/'autoresearch.sqlite3') as db:
             self.assertGreaterEqual(db.execute("SELECT COUNT(*) FROM events WHERE kind='cce_job'").fetchone()[0],3)
 
+    def test_feedback_snapshot_reference_survives_queue_without_raw_history(self):
+        self.submit();self.enable_autoresearch()
+        outcome={'state':'skipped','reason':'no_candidate','activated':False,
+                 'learning_context_digest':'a'*64,'learning_context_candidates':1,
+                 'learning_context':{'cue_text':'private historical cue'}}
+        with patch.object(CueHost,'run_dataset_cycle',return_value=outcome):
+            result=jobs.tick(self.host,self.adapters)
+        self.assertEqual(result['result']['learning_context_digest'],'a'*64)
+        summary=jobs.status(self.host)['jobs'][0]['outcome']['result']
+        self.assertEqual(summary['learning_context_candidates'],1)
+        self.assertNotIn('learning_context',summary)
+        self.assertNotIn('private',str(jobs.status(self.host)))
+
     def test_model_config_drift_waits_without_preflight_or_dispatch(self):
         self.submit();self.enable_autoresearch()
         self.profile=ModelProfile('fixture','changed','revision-1','tok','tok-1',('instruction',),'template-1')
