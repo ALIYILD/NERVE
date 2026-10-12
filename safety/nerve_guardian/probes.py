@@ -2,7 +2,10 @@
 from __future__ import annotations
 
 import hashlib
+import os
 from pathlib import Path
+import re
+import stat
 import time
 
 
@@ -14,6 +17,10 @@ class InfrastructureProbe:
         self.heartbeats = heartbeats or {}
         self.max_age = max_age
         self.clock = clock
+        for files in self.protected_files.values():
+            for path, expected in files.items():
+                if not re.fullmatch(r'[a-f0-9]{64}', expected):
+                    raise ValueError('administrator-pinned SHA-256 required')
 
     def sample(self, tenant):
         now = self.clock()
@@ -37,9 +44,15 @@ class InfrastructureProbe:
             path = Path(path)
             try:
                 # Expose the approved filename, never raw bytes or config values.
-                if path.is_symlink() or path.stat().st_size > 4 * 1024 * 1024:
-                    raise OSError('untrusted file')
-                digest = hashlib.sha256(path.read_bytes()).hexdigest()
+                fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+                with os.fdopen(fd, 'rb') as source:
+                    info = os.fstat(source.fileno())
+                    if not stat.S_ISREG(info.st_mode) or info.st_size > 4 * 1024 * 1024:
+                        raise OSError('untrusted file')
+                    contents = source.read(4 * 1024 * 1024 + 1)
+                    if len(contents) > 4 * 1024 * 1024:
+                        raise OSError('oversized file')
+                digest = hashlib.sha256(contents).hexdigest()
                 changed = digest != expected
                 add('protected_files', 'protected_file_changed' if changed else 'protected_file_intact',
                     'CRITICAL' if changed else 'NORMAL', {'file': path.name, 'sha256': digest, 'expected': expected})
