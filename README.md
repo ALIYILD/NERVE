@@ -754,3 +754,5 @@ The [adaptation followup diagnostic](docs/galahad/38-adaptation-followup.md) con
 [Opt-in consistent-dynamics and bounded-planning candidates](docs/galahad/39-consistent-dynamics-candidates.md) preserve historical filter gains during delayed replay and exercise deeper planning through the existing signed recovery boundary. They are development-tested candidates, not promoted improvements.
 
 The [diagnosis-driven dynamics study](docs/galahad/40-dynamics-factorial-study.md) automatically tests registered candidates with matched planning controls, freezes selection, and preserves unused evaluation streams when training gates fail.
+
+The [restartable research supervisor](docs/galahad/41-restartable-research-supervisor.md) connects receipt-verified research stages, resumes completed work without re-execution, and diagnoses identification coverage before requesting another registered experiment.

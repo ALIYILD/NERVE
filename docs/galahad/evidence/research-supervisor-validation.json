@@ -1,0 +1,19 @@
+{
+  "baseline_commit": "fe3ea11f9ec5cc7b5ee9892aa5d1a6d93aab9c71",
+  "branch": "feature/galahad-persistent-memory",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests_passed": 1405,
+  "failures": 0,
+  "errors": 0,
+  "elapsed_seconds": 179.330,
+  "new_targeted_tests_passed": 14,
+  "independent_predecessor_review": true,
+  "adopted_completed_nodes": 3,
+  "executed_diagnostic_nodes": 1,
+  "new_plant_episodes": 0,
+  "fresh_process_resume": true,
+  "unchanged_research_artifact_hashes": 9,
+  "terminal_status": "new_registered_experiment_required",
+  "goal_achieved": false,
+  "deployed": false
+}
