@@ -95,8 +95,8 @@ def _validate(row, seed, scenario, fixed=None, *, config=None):
     return row
 
 
-def _totals(rows):
-    return {scenario: sum(r['probe_hits'] for r in rows if r['scenario'] == scenario)
+def _totals(rows, score_field='probe_hits'):
+    return {scenario: sum(r[score_field] for r in rows if r['scenario'] == scenario)
             for scenario in SCENARIOS}
 
 
@@ -105,6 +105,10 @@ def _claim(path, run_id, manifest):
         con.execute('CREATE TABLE IF NOT EXISTS policy_research_runs_v2 (run_id TEXT PRIMARY KEY, protocol_sha256 TEXT NOT NULL, manifest TEXT NOT NULL, status TEXT NOT NULL, report TEXT)')
         con.execute('CREATE UNIQUE INDEX IF NOT EXISTS policy_research_protocol_once_v2 ON policy_research_runs_v2(protocol_sha256)')
         con.execute('CREATE TABLE IF NOT EXISTS policy_research_cycles_v2 (run_id TEXT NOT NULL, generation INTEGER NOT NULL, evidence TEXT NOT NULL, PRIMARY KEY(run_id,generation))')
+        con.execute('''CREATE TABLE IF NOT EXISTS policy_research_trials_v2 (
+            run_id TEXT NOT NULL, trial_index INTEGER NOT NULL, seed INTEGER NOT NULL,
+            scenario TEXT NOT NULL, config TEXT NOT NULL, fixed_strategy TEXT,
+            status TEXT NOT NULL, evidence TEXT, PRIMARY KEY(run_id, trial_index))''')
         con.execute('CREATE TABLE IF NOT EXISTS policy_research_datasets_v2 (dataset_sha256 TEXT PRIMARY KEY, run_id TEXT NOT NULL)')
         try:
             con.execute('INSERT INTO policy_research_runs_v2 VALUES (?,?,?,?,NULL)',
@@ -119,11 +123,16 @@ def run_policy_research(path, run_id):
     return _run(path, run_id, _evaluate)
 
 
-def _run(path, run_id, evaluator, *, manifest=None, validator=None):
+def _run(path, run_id, evaluator, *, manifest=None, validator=None, final_guard=None):
     if not isinstance(run_id, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,63}', run_id):
         raise ValueError('invalid run identifier')
     path = Path(path)
     manifest = protocol_manifest() if manifest is None else manifest
+    score_field = manifest.get('score_field', 'probe_hits')
+    executions_per_trial = manifest.get('executions_per_trial', 25)
+    if (type(score_field) is not str or type(executions_per_trial) is not int
+            or (score_field, executions_per_trial) not in (('probe_hits', 25), ('hits', 32))):
+        raise ValueError('unsupported evaluation score or execution count')
     candidates = tuple(tuple(c) for c in manifest['candidates'])
     baseline_config = tuple(manifest['baseline'])
     splits = tuple((name, tuple(manifest['splits'][name]))
@@ -132,12 +141,34 @@ def _run(path, run_id, evaluator, *, manifest=None, validator=None):
     validator = _validate if validator is None else validator
     calls = 0
     cache, cycles = {}, []
+    def totals(rows):
+        return _totals(rows, score_field)
     def trial(seed, scenario, config, fixed=None):
         nonlocal calls
         if calls >= manifest['max_trial_calls']:
             raise RuntimeError('trial budget exhausted')
         calls += 1
-        return validator(evaluator(seed, scenario, config, fixed), seed, scenario, fixed, config=config)
+        # A crash cannot erase which trial consumed the budget or replay its work.
+        with sqlite3.connect(path) as con:
+            con.execute('INSERT INTO policy_research_trials_v2 VALUES (?,?,?,?,?,?,?,NULL)',
+                (run_id, calls, seed, scenario, json.dumps(config), fixed, 'pending'))
+        try:
+            row = validator(evaluator(seed, scenario, config, fixed), seed, scenario, fixed, config=config)
+            if (type(row.get(score_field)) is not int or not 0 <= row[score_field] <= executions_per_trial
+                    or type(row.get('executions')) is not int or row['executions'] != executions_per_trial):
+                raise ValueError('evaluator score or execution count mismatch')
+            evidence = json.dumps(row, allow_nan=False)
+            if len(evidence) > 32768:
+                raise ValueError('oversized evaluator evidence')
+            with sqlite3.connect(path) as con:
+                con.execute('UPDATE policy_research_trials_v2 SET status=?,evidence=? WHERE run_id=? AND trial_index=?',
+                            ('complete', evidence, run_id, calls))
+            return row
+        except BaseException:
+            with sqlite3.connect(path) as con:
+                con.execute('UPDATE policy_research_trials_v2 SET status=?,evidence=? WHERE run_id=? AND trial_index=?',
+                            ('failed_consumed', json.dumps({'error': 'evaluation_aborted'}), run_id, calls))
+            raise
     def candidate(config):
         key = _key(config)
         if key not in cache:
@@ -152,15 +183,15 @@ def _run(path, run_id, evaluator, *, manifest=None, validator=None):
             previous, decisions = selected, []
             for config in candidates[generation * manifest['candidates_per_generation']:(generation + 1) * manifest['candidates_per_generation']]:
                 result, incumbent = candidate(config), candidate(selected)
-                train = sum(_totals(result['train']).values())
-                val = _totals(result['validation'])
+                train = sum(totals(result['train']).values())
+                val = totals(result['validation'])
                 reasons = []
-                if sum(val.values()) <= sum(_totals(incumbent['validation']).values()):
+                if sum(val.values()) <= sum(totals(incumbent['validation']).values()):
                     reasons.append('no_strict_validation_gain')
                 for reference, data in (('incumbent', incumbent), ('baseline', baseline)):
-                    if train < sum(_totals(data['train']).values()):
+                    if train < sum(totals(data['train']).values()):
                         reasons.append(reference + '_training_regression')
-                    for scenario, hits in _totals(data['validation']).items():
+                    for scenario, hits in totals(data['validation']).items():
                         if val[scenario] < hits:
                             reasons.append(reference + '_validation_regression:' + scenario)
                 if not reasons:
@@ -191,7 +222,7 @@ def _run(path, run_id, evaluator, *, manifest=None, validator=None):
             else:
                 holdout[name] = [trial(seed, scenario, config, fixed)
                     for seed in splits[2][1] for scenario in SCENARIOS]
-        chosen, control = _totals(holdout['selected']), _totals(holdout['baseline'])
+        chosen, control = totals(holdout['selected']), totals(holdout['baseline'])
         deltas = {s: chosen[s] - control[s] for s in SCENARIOS}
         recommend = selected != baseline_config and sum(deltas.values()) > 0 and min(deltas.values()) >= 0
         report = {'run_id': run_id, 'protocol': manifest, 'cycles': cycles,
@@ -199,10 +230,16 @@ def _run(path, run_id, evaluator, *, manifest=None, validator=None):
             'selection_sha256': _digest(selection), 'selection_frozen_before_holdout': True,
             'holdout': holdout, 'holdout_scenario_deltas': deltas,
             'recommendation': 'candidate_for_review' if recommend else 'retain_baseline',
-            'trial_calls': calls, 'tool_executions': calls * 25,
+            'trial_calls': calls, 'score_field': score_field, 'executions_per_trial': executions_per_trial,
+            'tool_executions': calls * executions_per_trial,
+            'pipeline_episodes': calls * executions_per_trial,
+            'primitive_tool_invocations': 2 * calls * executions_per_trial,
+            'tool_executions_field': 'compatibility alias for pipeline_episodes',
             'promotion_authorized': False, 'deployed': False, 'model_weights_trained': False,
             'scope': 'Public synthetic strategy-selection fixture; not scientific discovery or model training.',
             'cost_usd': None, 'replay_protection': 'operator-owned SQLite; not independent holdout custody'}
+        if final_guard is not None:
+            final_guard()
         with sqlite3.connect(path) as con:
             con.execute('UPDATE policy_research_runs_v2 SET status=?,report=? WHERE run_id=?',
                         ('complete', json.dumps(report, allow_nan=False), run_id))
@@ -210,5 +247,8 @@ def _run(path, run_id, evaluator, *, manifest=None, validator=None):
     except BaseException:
         with sqlite3.connect(path) as con:
             con.execute('UPDATE policy_research_runs_v2 SET status=?,report=? WHERE run_id=?',
-                        ('failed_consumed', json.dumps({'trial_calls': calls, 'error': 'evaluation_aborted'}), run_id))
+                        ('failed_consumed', json.dumps({'trial_calls': calls, 'error': 'evaluation_aborted',
+                            'score_field': score_field, 'executions_per_trial': executions_per_trial,
+                            'claimed_pipeline_episodes': calls * executions_per_trial,
+                            'cycles': cycles, 'candidate_results': cache}), run_id))
         raise

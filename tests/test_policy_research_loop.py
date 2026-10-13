@@ -182,6 +182,97 @@ class PolicyResearchLoopTests(unittest.TestCase):
         self.assertEqual(status, 'complete')
         self.assertTrue(all(d['reasons'] for c in cycles for d in c['decisions']))
 
+    def test_prospective_scoring_and_execution_counts(self):
+        manifest = {**loop.protocol_manifest(), 'score_field': 'hits',
+                    'executions_per_trial': 32}
+        def evaluate(seed, scenario, config, fixed):
+            return {'seed': seed, 'scenario': scenario, 'executions': 32,
+                    'hits': 25 if config == (3, 'relevance', 3) else 24}
+        report = loop._run(self.path, 'online', evaluate, manifest=manifest,
+                           validator=lambda row, *args, **kwargs: row)
+        self.assertEqual(report['selected'], [3, 'relevance', 3])
+        self.assertEqual(report['recommendation'], 'candidate_for_review')
+        self.assertEqual(report['holdout_scenario_deltas'], dict.fromkeys(loop.SCENARIOS, 5))
+        self.assertEqual(report['score_field'], 'hits')
+        self.assertEqual(report['tool_executions'], report['trial_calls'] * 32)
+        self.assertEqual(report['pipeline_episodes'], report['trial_calls'] * 32)
+        self.assertEqual(report['primitive_tool_invocations'], report['trial_calls'] * 64)
+
+    def test_unsupported_scoring_contract_has_no_side_effect(self):
+        for score, count in (('arbitrary', 32), ('hits', 25), ('probe_hits', 32),
+                             ('hits', 32.0), ('hits', True)):
+            with self.subTest(score=score, count=count):
+                manifest = {**loop.protocol_manifest(), 'score_field': score,
+                            'executions_per_trial': count}
+                with self.assertRaisesRegex(ValueError, 'unsupported evaluation'):
+                    loop._run(self.path, 'invalid', lambda *_: self.fail('evaluated'), manifest=manifest)
+                self.assertFalse(self.path.exists())
+
+    def test_trial_claim_precedes_execution_and_preserves_successes_on_failure(self):
+        calls = []
+        def evaluate(seed, scenario, config, fixed):
+            with sqlite3.connect(self.path) as con:
+                claims = con.execute('SELECT trial_index,seed,scenario,config,fixed_strategy,status,evidence '
+                                     'FROM policy_research_trials_v2 ORDER BY trial_index').fetchall()
+            self.assertEqual(claims[-1], (len(calls)+1, seed, scenario, json.dumps(config), fixed, 'pending', None))
+            self.assertTrue(all(c[5] == 'complete' for c in claims[:-1]))
+            calls.append(seed)
+            if len(calls) == 3:
+                raise RuntimeError('sensitive failure detail')
+            return row(seed, scenario, fixed=fixed)
+        with self.assertRaises(RuntimeError):
+            loop._run(self.path, 'journal', evaluate)
+        with sqlite3.connect(self.path) as con:
+            journal = con.execute('SELECT status,evidence FROM policy_research_trials_v2 ORDER BY trial_index').fetchall()
+            status, report = con.execute('SELECT status,report FROM policy_research_runs_v2').fetchone()
+        self.assertEqual([r[0] for r in journal], ['complete', 'complete', 'failed_consumed'])
+        self.assertEqual(json.loads(journal[0][1])['probe_hits'], 3)
+        self.assertEqual(json.loads(journal[-1][1]), {'error': 'evaluation_aborted'})
+        self.assertNotIn('sensitive', report)
+        self.assertEqual(status, 'failed_consumed')
+        self.assertEqual(json.loads(report)['claimed_pipeline_episodes'], 75)
+
+    def test_invalid_prospective_score_is_durably_rejected(self):
+        manifest = {**loop.protocol_manifest(), 'score_field': 'hits', 'executions_per_trial': 32}
+        def evaluate(seed, scenario, config, fixed):
+            return {'seed': seed, 'scenario': scenario, 'hits': True, 'executions': 32}
+        with self.assertRaisesRegex(ValueError, 'score or execution count'):
+            loop._run(self.path, 'bad-score', evaluate, manifest=manifest,
+                      validator=lambda row, *args, **kwargs: row)
+        with sqlite3.connect(self.path) as con:
+            self.assertEqual(con.execute('SELECT status FROM policy_research_trials_v2').fetchone()[0], 'failed_consumed')
+
+    def test_complete_journal_matches_trial_budget(self):
+        report = loop._run(self.path, 'complete-journal',
+                           lambda seed, scenario, config, fixed: row(seed, scenario, fixed=fixed))
+        with sqlite3.connect(self.path) as con:
+            journal = con.execute('SELECT status,evidence FROM policy_research_trials_v2').fetchall()
+        self.assertEqual(len(journal), report['trial_calls'])
+        self.assertTrue(all(status == 'complete' for status, _ in journal))
+        self.assertEqual(sum(json.loads(evidence)['executions'] for _, evidence in journal), report['tool_executions'])
+
+    def test_final_guard_failure_consumes_run_preserving_complete_journal(self):
+        guards = []
+        def guard():
+            guards.append(True)
+            with sqlite3.connect(self.path) as con:
+                self.assertEqual(con.execute('SELECT status FROM policy_research_runs_v2').fetchone()[0], 'holdout_claimed')
+                self.assertTrue(all(row[0] == 'complete' for row in con.execute('SELECT status FROM policy_research_trials_v2')))
+            raise RuntimeError('private source drift details')
+        with self.assertRaises(RuntimeError):
+            loop._run(self.path, 'guarded', lambda seed, scenario, config, fixed: row(seed, scenario, fixed=fixed),
+                      final_guard=guard)
+        self.assertEqual(guards, [True])
+        with sqlite3.connect(self.path) as con:
+            status, evidence = con.execute('SELECT status,report FROM policy_research_runs_v2').fetchone()
+            journal = con.execute('SELECT status FROM policy_research_trials_v2').fetchall()
+        self.assertEqual(status, 'failed_consumed')
+        self.assertNotIn('private', evidence)
+        self.assertEqual(len(journal), 188)
+        self.assertTrue(all(status == 'complete' for status, in journal))
+        with self.assertRaisesRegex(ValueError, 'already consumed'):
+            loop._run(self.path, 'renamed-guarded', lambda *_: self.fail('replay'))
+
     def test_real_training_trial_no_holdout(self):
         result = loop._evaluate(1001, 'abrupt', (5, 'least_recent', 3))
         loop._validate(result, 1001, 'abrupt')

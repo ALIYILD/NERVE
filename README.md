@@ -736,3 +736,7 @@ A bounded host supervisor now runs campaign cycles, matched trials and outcome-f
 ### Overnight outcome — 13 October 2026
 
 The supervisor completed 32 cycles and 65,536 synthetic pipeline episodes. The candidate improved aggregate score but regressed on mixed tasks, so the baseline was retained. Actual process restarts preserved learned preferences in all 16 comparisons. The optional V2 registry guard passed eight fresh real-model cases; full regression passed 1,261 tests. See the [morning report, limits and reproduction](docs/galahad/32-morning-report.md).
+
+### Online configuration selection
+
+The bounded coordinator now selects typed memory policies using prospective training/validation streams and a one-use final comparison, with durable evidence for every trial. A real 11,264-episode run selected a candidate scoring 830/1,024 versus baseline 815/1,024, but rejected it for a mixed-regime regression. Full regression passed 1,280 tests. [Protocol, results and reproduction](docs/galahad/33-online-policy-selection.md).

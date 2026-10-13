@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest policy-selection loop:** [33-online-policy-selection.md](33-online-policy-selection.md) connects bounded candidate selection to actual online feedback, adds durable per-trial evidence and validates 1,280 tests. The 11,264-episode experiment retained the baseline after final mixed-regime regression; no policy or model-weight promotion.
+
 **Morning outcome:** [32-morning-report.md](32-morning-report.md) records all 32 overnight cycles, 65,536 synthetic episodes, a rejected candidate despite aggregate gain, 16/16 cross-process persistence checks, 8/8 fresh guarded model cases and 1,261 passing tests. The bounded run completed; general self-training, real KV restoration and clinical deployment remain incomplete.
 
 **Latest orchestration:** [28-autonomous-research-campaign.md](28-autonomous-research-campaign.md) records the bounded campaign→trial→episode coordinator and overnight execution status. [29-registry-grounding.md](29-registry-grounding.md) records the scoped synthetic answer guard and fresh real-model validation. Neither is a claim of general autonomous discovery or weight training.
