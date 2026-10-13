@@ -776,3 +776,5 @@ The [authenticated actual-action observer](docs/galahad/49-actual-action-observe
 The [observer training replay](docs/galahad/50-observer-training-reanalysis.md) tests identical observation rules across 128 recorded trajectories. External-supervision predictions improve in every arm/regime, but drift controller-period errors worsen; unconditional substitution remains rejected.
 
 The [phase-aware forecast study](docs/galahad/51-phase-aware-forecast-study.md) preserves controller predictions and selects the actual-action observer during external supervision. Its fixed rule passed all three stages across 512 fresh synthetic episodes, reducing final-holdout mean prediction error by 18.98%. This is a shadow-forecast result; actions were unchanged and no controller or model was promoted.
+
+The [online forecast runtime](docs/galahad/52-online-forecast-runtime.md) connects that rule to an opt-in research wrapper with separately authenticated execution reports. Four development cases preserve original control trajectories and recovery events while matching replay forecasts. Missing execution evidence becomes unknown history; it cannot authorize recovery.

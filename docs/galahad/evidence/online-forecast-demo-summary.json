@@ -1,0 +1,89 @@
+{
+  "candidate_promoted": false,
+  "cases": [
+    {
+      "adaptive": false,
+      "controller_states_unchanged": true,
+      "metrics": {
+        "actions_changed": false,
+        "controller_predictions_preserved": true,
+        "legacy_mae": 0.006637115493040656,
+        "missing_forecasts": 0,
+        "routed_mae": 0.004371735381075779
+      },
+      "online_matches_replay": true,
+      "original_trajectory_sha256": "242e62857a4b86adcd334108327590322e7cfd6887c02f2f85f723ddd6db24d5",
+      "scenario": "stationary",
+      "seed": 9,
+      "trajectory_unchanged": true
+    },
+    {
+      "adaptive": true,
+      "controller_states_unchanged": true,
+      "metrics": {
+        "actions_changed": false,
+        "controller_predictions_preserved": true,
+        "legacy_mae": 0.006851155859319865,
+        "missing_forecasts": 0,
+        "routed_mae": 0.004594419551692194
+      },
+      "online_matches_replay": true,
+      "original_trajectory_sha256": "1b32729a107bd017f7583662538bf10f50f87c00fc31f2a0b6bd2650a0ad77d5",
+      "scenario": "stationary",
+      "seed": 9,
+      "trajectory_unchanged": true
+    },
+    {
+      "adaptive": false,
+      "controller_states_unchanged": true,
+      "metrics": {
+        "actions_changed": false,
+        "controller_predictions_preserved": true,
+        "legacy_mae": 0.02344131702549184,
+        "missing_forecasts": 0,
+        "routed_mae": 0.023755858749454028
+      },
+      "online_matches_replay": true,
+      "original_trajectory_sha256": "47bc24c479f0a048ca97343cc1c5ddba6a2c9b78defb5852a094762db50495b6",
+      "scenario": "drift",
+      "seed": 9,
+      "trajectory_unchanged": true
+    },
+    {
+      "adaptive": true,
+      "controller_states_unchanged": true,
+      "metrics": {
+        "actions_changed": false,
+        "controller_predictions_preserved": true,
+        "legacy_mae": 0.026165121566680993,
+        "missing_forecasts": 0,
+        "routed_mae": 0.026123746705927754
+      },
+      "online_matches_replay": true,
+      "original_trajectory_sha256": "211f61d06e032a5c9e1d1a3fad2e6add277322ec9b1fee9d5a1288160d6edf25",
+      "scenario": "drift",
+      "seed": 9,
+      "trajectory_unchanged": true
+    }
+  ],
+  "comparison_episodes": 8,
+  "deployed": false,
+  "environment": {
+    "hardware": "CPU only",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "model_weights_trained": false,
+  "new_source_sha256": {
+    "scripts/demo_online_forecast.py": "1b95a55ae839051fd7ea208879459a571fdb5971a4b5c4b4b96ca8e945800395",
+    "src/nerve_awim/forecast_runtime.py": "213536f8cc08bf326506cfa8731e536f713d2c06a8e546d1270ce55dedb4c8ff",
+    "src/nerve_awim/memory_gateway/online_forecast_demo.py": "52e5de888684261bbb6f5482783a011a96cba815eba32f1ae068f081595ec467"
+  },
+  "online_episodes": 4,
+  "performance_improvement_claimed": false,
+  "plant_steps": 960,
+  "protocol": "online-forecast-development-demo-v1",
+  "report_sha256": "6d23f50564ff3fdf32204d76c1d5e621a072d70829e3f5b18574ab68cd12053e",
+  "scope": "Development seed 9 only; online wiring and noninterference proof, not independent performance evidence.",
+  "status": "complete"
+}
