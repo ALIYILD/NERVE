@@ -1,0 +1,24 @@
+{
+  "baseline_commit": "b484ab61940cccaec619e94c78bbadbec78da6db",
+  "branch": "feature/galahad-persistent-memory",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests_passed": 1357,
+  "failures": 0,
+  "errors": 0,
+  "elapsed_seconds": 110.799,
+  "targeted_new_tests_passed": 18,
+  "independent_review": {
+    "receipt_validated": true,
+    "journal_validation_episodes": 32,
+    "journal_holdout_episodes": 0,
+    "physical_steps": 2560,
+    "online_gain_updates": 173,
+    "supervised_recoveries": 32,
+    "recorded_envelope_violations": 0,
+    "archived_report_matches_authoritative_report": true,
+    "blocking_findings": 0,
+    "episodes_rerun_for_review": 0
+  },
+  "recommendation": "retain_baseline",
+  "scope": "Local CPU synthetic within-episode dynamics adaptation; no LLM weight training, deployment, clinical validation or real Galahad restoration."
+}
