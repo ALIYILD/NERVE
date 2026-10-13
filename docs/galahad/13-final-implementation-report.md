@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest automatic research wiring:** [59-prequential-research-loop.md](59-prequential-research-loop.md) connects receipt adoption to timing diagnosis with durable claims and fresh-process resume. The actual two-node run retained baselines; restart preserved report/source bytes and modification times with one completed journal entry. Full regression passed 1,725 tests. No new episodes, policy promotion or completion of the broader goal.
+
 **Latest adaptive candidate:** [58-prequential-gain-selection.md](58-prequential-gain-selection.md) records an opt-in forecast-based gain selector and twelve matched development cases. It passed against frozen control but regressed against ungated single-use learning; the screen retained baselines. Full regression passed 1,703 tests. No fresh registered streams, default promotion, neural training or deployment.
 
 **Latest prediction diagnosis:** [57-standard-learning-diagnostic.md](57-standard-learning-diagnostic.md) validates and decomposes all 480 recorded prediction errors without new episodes. Learned gain worsens stationary conditional forecasts but improves drift forecasts; no control-policy change is authorized. Full regression passed 1,684 tests. Forecast-based gain selection remains a proposed next experiment.

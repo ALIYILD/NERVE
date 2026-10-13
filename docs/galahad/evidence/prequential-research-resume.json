@@ -1,0 +1,32 @@
+{
+  "fresh_process_exit_code": 0,
+  "status": "new_registered_hypothesis_required",
+  "before": {
+    "report": {
+      "sha256": "9845819604bca35908fec2f04f1cb4758a5a47aab0f3e4cf08255bc4feda0cb3",
+      "mtime_ns": 1791923602550830823
+    },
+    "source_artifact": {
+      "sha256": "e1bf6676ca3551a48d8ee5d55b885ab6dc0aa5f124f8eea4eca03e4778461dcb",
+      "mtime_ns": 1791923274023346774
+    }
+  },
+  "after": {
+    "report": {
+      "sha256": "9845819604bca35908fec2f04f1cb4758a5a47aab0f3e4cf08255bc4feda0cb3",
+      "mtime_ns": 1791923602550830823
+    },
+    "source_artifact": {
+      "sha256": "e1bf6676ca3551a48d8ee5d55b885ab6dc0aa5f124f8eea4eca03e4778461dcb",
+      "mtime_ns": 1791923274023346774
+    }
+  },
+  "report_and_source_unchanged": true,
+  "journal_counts": [
+    [
+      "complete",
+      1
+    ]
+  ],
+  "new_episodes": 0
+}
