@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest real-model learning loop:** [60-real-model-strategy-learning.md](60-real-model-strategy-learning.md) records eight actual completions, independently judged persistent strategy feedback and fresh-process resume without inference. Both strategies abstained universally (2/4 correct each), so no extraction improvement or promotion is established. Full regression passed 1,747 tests. This adds real model-output learning integration, not neural weight training or completion of the master plan.
+
 **Latest automatic research wiring:** [59-prequential-research-loop.md](59-prequential-research-loop.md) connects receipt adoption to timing diagnosis with durable claims and fresh-process resume. The actual two-node run retained baselines; restart preserved report/source bytes and modification times with one completed journal entry. Full regression passed 1,725 tests. No new episodes, policy promotion or completion of the broader goal.
 
 **Latest adaptive candidate:** [58-prequential-gain-selection.md](58-prequential-gain-selection.md) records an opt-in forecast-based gain selector and twelve matched development cases. It passed against frozen control but regressed against ungated single-use learning; the screen retained baselines. Full regression passed 1,703 tests. No fresh registered streams, default promotion, neural training or deployment.
