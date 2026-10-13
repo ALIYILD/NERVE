@@ -764,3 +764,5 @@ The [registered evidence-window study](docs/galahad/43-evidence-window-study.md)
 The [research outcome memory bridge](docs/galahad/44-research-outcome-memory.md) proposes verified experiment results to existing scoped memory, requires separate host review, and preserves negative findings across process restarts without promoting rejected candidates.
 
 The [research memory planner](docs/galahad/45-research-memory-planning.md) consults independently validated, approved outcome memory to propose the next research step. It recognizes known rejections while preserving study consumption, revocation and independent promotion gates.
+
+The [memory-guided research coordinator](docs/galahad/46-memory-guided-research-coordinator.md) dispatches a fixed diagnostic from a verified negative outcome, journals consumption, and reconciles completed results on restart. It stops for a new registered hypothesis without replaying experiments or promoting rejected candidates.
