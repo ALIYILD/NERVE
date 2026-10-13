@@ -92,3 +92,17 @@ The new intake also recorded two real supervisor-observed mission timeouts as
 pending research leads. Their existence does not supply benchmark gold or prove
 that a model or cue caused either timeout. The overall improvement goal remains
 unproven and active.
+
+The installed citation diagnostic subsequently used one native session on the
+already exposed v1 training cases. Both outputs had valid citation structure;
+one answer was correct and one was a reasoning error. It is a protocol check,
+not an independent gain or calibrated model evaluation. Three sessions remained.
+The explicit [pending queue review](../evidence/agentos-audit-v3-queue-review.json)
+then authorized revision
+`1dfada0526435c6a38ed8af0db66c96fb6a2a8a4730098a4e32e5117a9904f17`
+for the untouched v3 cohort. An installed tick verified `queued_budget` with
+eight required sessions and three remaining; no study was replayed and no
+reservation refunded. The next UTC daily reset is 2026-10-14 00:00 UTC; dispatch
+remains subject to the normal scheduler, model and evidence checks.
+The [live receipt](../evidence/agentos-continuity-live-20261013.json) preserves
+the failed studies, diagnostic and current queue status.
