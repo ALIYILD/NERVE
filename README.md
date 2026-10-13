@@ -758,3 +758,5 @@ The [diagnosis-driven dynamics study](docs/galahad/40-dynamics-factorial-study.m
 The [restartable research supervisor](docs/galahad/41-restartable-research-supervisor.md) connects receipt-verified research stages, resumes completed work without re-execution, and diagnoses identification coverage before requesting another registered experiment.
 
 The [observation-evidence gain candidate](docs/galahad/42-evidence-window-candidate.md) adds timestamp-ordered, prior-regularized sensor learning with optional authorized-recovery evidence forgetting. It remains opt-in pending a prospective matched comparison.
+
+The [registered evidence-window study](docs/galahad/43-evidence-window-study.md) consumes the verified identification diagnostic, audits learning directly from sensor/action evidence, and applies matched frozen/adaptive controls before conditional validation and final evaluation.
