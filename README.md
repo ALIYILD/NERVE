@@ -768,3 +768,5 @@ The [research memory planner](docs/galahad/45-research-memory-planning.md) consu
 The [memory-guided research coordinator](docs/galahad/46-memory-guided-research-coordinator.md) dispatches a fixed diagnostic from a verified negative outcome, journals consumption, and reconciles completed results on restart. It stops for a new registered hypothesis without replaying experiments or promoting rejected candidates.
 
 The [evidence-gated adaptation candidate](docs/galahad/47-evidence-gated-adaptation.md) retains its learned gain until a bounded sensor window supports a material change. An exact prediction-error audit separates state and gain terms; the candidate remains opt-in pending prospective comparison.
+
+The [registered evidence-gated study](docs/galahad/48-evidence-gated-study.md) executed 128 fresh training episodes. Horizon-1 candidates improved on the existing adaptive control but regressed drift goal error against frozen gain; the loop retained the baseline and preserved validation/holdout streams.

@@ -1,0 +1,2672 @@
+{
+  "candidate_gain_changes": 39,
+  "dataset_sha256": "74ddce0f4e6a076b64e12f1b7332b1ad41aa485d882cc94968ddddebd9630ed6",
+  "deployed": false,
+  "environment": {
+    "mode": "CPU synthetic plant; no GPU inference",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "episodes": 128,
+  "goal_achieved": false,
+  "holdout_consumed": false,
+  "learning_evidence_consumed": 1378,
+  "measured_work": {
+    "train:adaptive_consistent_h1": {
+      "accepted_observations": 195,
+      "episode_elapsed_seconds": 0.44805617493693717,
+      "episodes": 16,
+      "gain_changes": null,
+      "longer_horizon_sequences": 0
+    },
+    "train:adaptive_consistent_h3": {
+      "accepted_observations": 256,
+      "episode_elapsed_seconds": 0.6424396179208998,
+      "episodes": 16,
+      "gain_changes": null,
+      "longer_horizon_sequences": 28458
+    },
+    "train:frozen_h1": {
+      "accepted_observations": 0,
+      "episode_elapsed_seconds": 0.43856617499841377,
+      "episodes": 16,
+      "gain_changes": null,
+      "longer_horizon_sequences": 0
+    },
+    "train:frozen_h3": {
+      "accepted_observations": 0,
+      "episode_elapsed_seconds": 0.5172825209738221,
+      "episodes": 16,
+      "gain_changes": null,
+      "longer_horizon_sequences": 28458
+    },
+    "train:gated_forget_h1": {
+      "accepted_observations": 198,
+      "episode_elapsed_seconds": 0.4571693100442644,
+      "episodes": 16,
+      "gain_changes": 8,
+      "longer_horizon_sequences": 0
+    },
+    "train:gated_forget_h3": {
+      "accepted_observations": 264,
+      "episode_elapsed_seconds": 0.5467139739484992,
+      "episodes": 16,
+      "gain_changes": 11,
+      "longer_horizon_sequences": 28458
+    },
+    "train:gated_retain_h1": {
+      "accepted_observations": 200,
+      "episode_elapsed_seconds": 0.4581897279713303,
+      "episodes": 16,
+      "gain_changes": 8,
+      "longer_horizon_sequences": 0
+    },
+    "train:gated_retain_h3": {
+      "accepted_observations": 265,
+      "episode_elapsed_seconds": 0.561252782936208,
+      "episodes": 16,
+      "gain_changes": 12,
+      "longer_horizon_sequences": 28458
+    }
+  },
+  "model_weights_trained": false,
+  "plant_steps": 10240,
+  "predecessor_sha256": "2d01bee58429e6885dd80ff57e201c50ed585466913f474b775eb9b8541da2fa",
+  "protocol": {
+    "acceptance": {
+      "every_regime": "zero candidate envelope violations; active steps nondecreasing; external commands, prediction error and goal error nonincreasing",
+      "numerical_tolerance": 1e-12,
+      "online_updates_required": true,
+      "strict_sum_regime_goal_gain": 1e-05
+    },
+    "arms": [
+      "frozen_h1",
+      "frozen_h3",
+      "adaptive_consistent_h1",
+      "adaptive_consistent_h3",
+      "gated_retain_h1",
+      "gated_retain_h3",
+      "gated_forget_h1",
+      "gated_forget_h3"
+    ],
+    "candidate_space_frozen": true,
+    "child_timeout_seconds": 30,
+    "controller": {
+      "bound": 6.0,
+      "estimator": "drift",
+      "evidence_minimum": 2,
+      "horizon": 3,
+      "max_missing": 5,
+      "min_calibration_samples": 6,
+      "recovery_samples": 3,
+      "risk_aversion": 0.25,
+      "safe_position": 6.0,
+      "safe_velocity": 2.0
+    },
+    "cost": "Observed episode wall time and actual enumerated longer-horizon sequences; no timing acceptance threshold or speedup claim",
+    "elapsed_budget_seconds": 1200,
+    "error_multiplier": 3.0,
+    "evidence_window": 4,
+    "holdout": "Once after validation passes; selected candidate and identical controls",
+    "max_episodes": 320,
+    "max_plant_steps": 25600,
+    "minimum_observations": 4,
+    "minimum_shift": 0.03,
+    "plant": {
+      "drift_gains": [
+        0.27,
+        0.48,
+        0.15,
+        0.4
+      ],
+      "forced_dropout_origin_steps": [
+        35,
+        49
+      ],
+      "gain_regime_steps": 20,
+      "position_noise_std": 0.03,
+      "random_dropout_probability": 0.12,
+      "retention": 0.82,
+      "sensor_delay_steps": 1,
+      "stationary_gain": 0.27,
+      "target": 1.2,
+      "velocity_noise_std": 0.025
+    },
+    "promotion_authorized": false,
+    "protocol": "evidence-gated-study-v1",
+    "scenarios": [
+      "stationary",
+      "drift"
+    ],
+    "selection": "Train only; unchanged recovery gates against frozen_h1, matched frozen horizon and matched adaptive consistent horizon; highest summed goal gain against frozen_h1, then lexical arm name",
+    "source_sha256": {
+      "scripts/diagnose_recovery_adaptation.py": "d10fd6304a907bac290b3a45cbccd35ece5fc360db77edd7b43a5e271550f93c",
+      "scripts/run_dynamics_factorial.py": "25e8ab5fbeeea27e5ef0d7916c2c8c3c39181526a84637ca24e3cd1f3588a5bc",
+      "scripts/run_evidence_gated_study.py": "f848a67bd2fd3acb171759d44a7fbb023987331a17cdd0d7c09549c83fec8f04",
+      "scripts/run_evidence_window_study.py": "36b995a7b9783c92ca8578651d32adca24ffbc80a9cf34947cb8e18490b8730f",
+      "scripts/run_memory_research_coordinator.py": "ba489ed7a811290cfc4fb3f39e1d13427c2fb88b8791481edf585bbb9aa1f437",
+      "scripts/run_recovery_adaptation.py": "91c321e252faaf1e4397a3086cdcaf124516045f336979ad5b7d594f764a37da",
+      "scripts/run_research_supervisor.py": "96b5bb03c9a88fc3f48b634981faa515878c2fea24c85be17a33d2fe57f0d286",
+      "scripts/run_worldcore_study.py": "e10693cb0f4122c6a5294efc02c02705b6ac082e2d4200084ef6501c4da3e085",
+      "scripts/verify_supervised_recovery.py": "b573d51427cf007bbc408e8ed393656c62158c01b16e1cc90b0678a1a0b32cd3",
+      "src/nerve_awim/adaptive_calibration_v19.py": "299922a93b915996c7b809836a4eaf6b31e35f96d2807adca7281dda719a0786",
+      "src/nerve_awim/autoresearch_v04.py": "ab0477dc779eebdb9def07e4411a5e8a3bff406a4c18d8f80cba42de574c150e",
+      "src/nerve_awim/autoresearch_v05.py": "cfe99c6b8a99b74a1b0a678b6c63515e2fed70c05854e1cd61510c2a0cc46c86",
+      "src/nerve_awim/calibrated_v16.py": "5311374673061a50bac8f28c20cd560678c9b35c123aaac7473aede84f8319b8",
+      "src/nerve_awim/calibration_v15.py": "f1b49e8adac7c6951f3522663a61c7694d874d8832f53f1cb10aea628e95dd68",
+      "src/nerve_awim/consistent_dynamics.py": "d5dac9916667e1f170a1fa09be8229bd8151e0ef18351cee198eba1a788733f8",
+      "src/nerve_awim/coverage_v18.py": "27a45ac324d82b357487605b6ebb1b8dbc8f0e630c0d93c1a199b1633674e9a3",
+      "src/nerve_awim/drift_v14.py": "af8259a4dfec16b1bfc0d5993f60ea99285025803162584fb8d11aae87a9e62a",
+      "src/nerve_awim/evidence_gated_dynamics.py": "825cb68fb32216ba934b4ece8e84997ac90a3a109912c965a67f7b739e75736d",
+      "src/nerve_awim/evidence_window_dynamics.py": "0082d114689307f39c7163a73179bcfb15ed6dc28752abff7f3fe9e2f9bb32b5",
+      "src/nerve_awim/fusion_v12.py": "d5481b7ebef1e7630a65491572f8f99edfc529d97617ebdd2d00fd3bb9758de8",
+      "src/nerve_awim/identity_v26.py": "245b67c92ec8987b02704550dd494269db3d60c51270ab87b04a91487f0dc060",
+      "src/nerve_awim/integrated_v13.py": "bf28343e2ed0bf8f0089c7712fcbefb8ae7c2938505fcae67254b572af2e3e07",
+      "src/nerve_awim/memory_gateway/adaptation_followup.py": "56e4727c7b2545e2b9a940c1b18f4400a4167868e6515568a04a0d886093708a",
+      "src/nerve_awim/memory_gateway/contracts.py": "9d0b22f5b21dc53e0ccf0150f9fd21543103d4336d496d5b776ada9a6ceb450e",
+      "src/nerve_awim/memory_gateway/dynamics_factorial_episode.py": "8101b6ea4639345ecbe84a22012a037fa937a253f697673f7cb0e2675f4cb0c8",
+      "src/nerve_awim/memory_gateway/dynamics_factorial_study.py": "09a1283815b8988210eb5fa3911a6012d9e22bc8a0862e4410c5c3616e1ca450",
+      "src/nerve_awim/memory_gateway/evidence_gated_episode.py": "6e42255ab8d33762c53ba24caaff417263e52d6efbd3c999f3acc890cfa35583",
+      "src/nerve_awim/memory_gateway/evidence_gated_study.py": "8520892ee0c4c99bb731cda07b34f03163b118110e9a68c2d6a2379658314946",
+      "src/nerve_awim/memory_gateway/evidence_rejection_diagnostic.py": "66f45778a4528dfa461842a667d80c212ed282f60b96211f5bac4c279fe7134c",
+      "src/nerve_awim/memory_gateway/evidence_window_episode.py": "bddae5346475875f86f5df87356148976b2f660b170b6329a3054db1c9529216",
+      "src/nerve_awim/memory_gateway/evidence_window_study.py": "e451c0d5fd1cf52745ba757ffadc8638fbb96c7729a78a992ef67141954471cc",
+      "src/nerve_awim/memory_gateway/gateway.py": "cd41f9f0a44af8331e1db04e43493b8c83cec5512edb3269a1e6a8dc9726f876",
+      "src/nerve_awim/memory_gateway/identification_diagnostic.py": "d460bd10054f1f33c42d87d23aafe34d1059edc08997818f16e59c7ebd297574",
+      "src/nerve_awim/memory_gateway/lifecycle.py": "6096f1284fd64ed351d45eccdaf8afe8d4892a218bae5f691d77bd78ef7277d4",
+      "src/nerve_awim/memory_gateway/memory_research_coordinator.py": "40adf3deaa192676d75d59299bffc1e2175db1b0ed69e0fb18a6c12c47737cee",
+      "src/nerve_awim/memory_gateway/policy.py": "77803fb57fc502da3ac7d6a1423cd96a07645dab539d89ca6b2904b0565637d2",
+      "src/nerve_awim/memory_gateway/recovery_adaptation.py": "ddb3db10fdc417bace28898ba9f1652346884d723dc64b968c1f53f19688e99b",
+      "src/nerve_awim/memory_gateway/recovery_adaptation_study.py": "b965b4ace242160fcd889024753f5efd8ed1624c71efc90c914cb59e9a0a6847",
+      "src/nerve_awim/memory_gateway/research_memory_planner.py": "b17b4e207e59aa4adad2485e8e9a64a785fbb9419b4199e4642936be9d7ffa88",
+      "src/nerve_awim/memory_gateway/research_outcome_memory.py": "27ad9069f159bf607c0e9abd9c5a2e71d75dca7d44aac23af037f060a66eb64c",
+      "src/nerve_awim/memory_gateway/research_supervisor.py": "f8f80b51a350d1a6104c3fd24e65e3b052a0abe875f848da8e5095beb9f2e477",
+      "src/nerve_awim/memory_gateway/worldcore_study.py": "5af51977997c689840c36879727273dd02c77d8714196bf53c2dc127ec456bf1",
+      "src/nerve_awim/memory_retrieval_v18.py": "719f5f236df9f1b5caae2120f8d197fc852d2ba24ca05e6e7738e1887873be20",
+      "src/nerve_awim/memory_v18.py": "882506c5d7c2f8a0b5f46f4d62a600d79a78d23863080af010a6362b59e855c6",
+      "src/nerve_awim/parallel_agents_v11.py": "fa926aba789a243e5b738f0749f0dec90ff61582bb6408ca95193d84f3bb2a33",
+      "src/nerve_awim/recovery_policy_v23.py": "0caf4ccbf801596213fad17738e144c7c5417cb09ff52823365cee34633683f6",
+      "src/nerve_awim/recovery_v21.py": "bbf384ded4fe9f2ec783a8012e8f8d389f9790efe17c090aeabd52d2b1d52487",
+      "src/nerve_awim/recovery_v22.py": "c8c0ac7b0ef0bd72c956b5a99e22098bf104aca4edf83e7cfb9b4f0c565e934a",
+      "src/nerve_awim/recovery_v24.py": "8f7fc31ef4e01c4f59dbc194134fc9c4fc4c2446e93cfe30ac532f3d7da41eb5",
+      "src/nerve_awim/recovery_v25.py": "ee5de8bf2dbdb6b67d71bb64bd60ac2d8707cd771511e2ed379e2d53e8f550e5",
+      "src/nerve_awim/risk_v17.py": "6b7f88441d21cbce5339042d3a7c9cdc66cda41842e3ab9a9daef09974a179aa",
+      "src/nerve_awim/runtime_v28.py": "c155f4d64de07b102607899228d8187658d46662f531a886c9329f135a116c44",
+      "src/nerve_awim/worldcore_recursion_v19.py": "679d1796be8c93fb0cd514f9e139a5b757d94337ebc310f90ecec4151bcb7e19",
+      "src/nerve_awim/worldcore_v20.py": "673e5cf431f5d1900242cf261621d888dabe499d5a1891d3aca023fbecdbdd8d"
+    },
+    "splits": {
+      "holdout": [
+        43001,
+        43002,
+        43003,
+        43004,
+        43005,
+        43006,
+        43007,
+        43008,
+        43009,
+        43010,
+        43011,
+        43012,
+        43013,
+        43014,
+        43015,
+        43016
+      ],
+      "train": [
+        41001,
+        41002,
+        41003,
+        41004,
+        41005,
+        41006,
+        41007,
+        41008
+      ],
+      "validation": [
+        42001,
+        42002,
+        42003,
+        42004,
+        42005,
+        42006,
+        42007,
+        42008
+      ]
+    },
+    "validation": "Selected candidate and unique frozen and adaptive controls only; no second candidate after failure"
+  },
+  "recommendation": "retain_baseline",
+  "recorded_violations": 0,
+  "selection": {
+    "candidate": null,
+    "evaluations": {
+      "gated_forget_h1": {
+        "controls": {
+          "adaptive_consistent_h1": {
+            "paired_deltas": [
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.00040159178190701805,
+                  "mean_prediction_error": 0.00022096256675817067,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0004548832931457192,
+                  "mean_prediction_error": 0.00027132674567692874,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0008453123500452853,
+                  "mean_prediction_error": -0.001081414588128134,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0025233686064475014,
+                  "mean_prediction_error": 0.0081032659462302,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.00022865498871649237,
+                  "mean_prediction_error": -6.336911463407889e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0019021267182945945,
+                  "mean_prediction_error": 0.0043638741869194975,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -3.8873619236992445e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.38786047123459577,
+                  "mean_prediction_error": -0.038196251292854436,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0002447628208073205,
+                  "mean_prediction_error": -0.0003794724825638557,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.005136616328871496,
+                  "mean_prediction_error": 0.001611250893847331,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -5.004365593156996e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.02110871451049101,
+                  "mean_prediction_error": 0.006805942227642619,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0003656194100007948,
+                  "mean_prediction_error": -0.0005539480992805823,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.010057296993760179,
+                  "mean_prediction_error": 8.085839321679902e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.00537889765025007,
+                  "mean_prediction_error": -0.00022830288852230748,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41008
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.006487107695151845,
+                  "mean_prediction_error": 0.004359881988075569,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41008
+              }
+            ],
+            "passed": true,
+            "reasons": [],
+            "sum_regime_goal_gain": 0.048054385104007474,
+            "summaries": {
+              "drift": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.1648491848078128,
+                  "mean_prediction_error": 0.027071409543811084,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.21239155242899688,
+                  "mean_prediction_error": 0.028646390907716767,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              },
+              "stationary": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16043123068811138,
+                  "mean_prediction_error": 0.009832771750889832,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16094324817093478,
+                  "mean_prediction_error": 0.01010457948608225,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              }
+            }
+          },
+          "frozen_h1": {
+            "paired_deltas": [
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -0.0015414148492722754,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0008193294159058728,
+                  "mean_prediction_error": -0.0019648373091558854,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.029880385295692036,
+                  "mean_prediction_error": 0.002584444865602005,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0029847430215297066,
+                  "mean_prediction_error": -0.006029526363912213,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41008
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0018350568862871286,
+                  "mean_prediction_error": 0.005692216874445936,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41008
+              }
+            ],
+            "passed": false,
+            "reasons": [
+              "drift:regression:mean_goal_error",
+              "no_strict_goal_gain"
+            ],
+            "sum_regime_goal_gain": -0.0034889212180679585,
+            "summaries": {
+              "drift": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.1648491848078128,
+                  "mean_prediction_error": 0.027071409543811084,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16136026358974484,
+                  "mean_prediction_error": 0.027228799141597634,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              },
+              "stationary": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16043123068811138,
+                  "mean_prediction_error": 0.009832771750889832,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16043123068811138,
+                  "mean_prediction_error": 0.009832771750889832,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              }
+            }
+          }
+        },
+        "passed": false
+      },
+      "gated_forget_h3": {
+        "controls": {
+          "adaptive_consistent_h3": {
+            "paired_deltas": [
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 4.302133152344224e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.03742338935988376,
+                  "mean_prediction_error": 0.015712084040410655,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -5.983353611025387e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.3452979633114751,
+                  "mean_prediction_error": 0.03963378999529673,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 5.568578690464364e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.019020190346548393,
+                  "mean_prediction_error": 0.02490195205393211,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 1.5777953646878284e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.025136679533600326,
+                  "mean_prediction_error": 0.00683085678816954,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -0.0006964032308932472,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.000648339470365078,
+                  "mean_prediction_error": 0.0019073429105544923,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -0.0007492558661302932,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.005709744121214638,
+                  "mean_prediction_error": -0.0002293932384331704,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -0.00044785341173915905,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.005519692227929557,
+                  "mean_prediction_error": -0.002614671947466389,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.00013206409536273798,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41008
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.00200555437170738,
+                  "mean_prediction_error": 0.002907070070632331,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41008
+              }
+            ],
+            "passed": false,
+            "reasons": [
+              "drift:regression:mean_prediction_error",
+              "drift:regression:mean_goal_error",
+              "no_strict_goal_gain"
+            ],
+            "sum_regime_goal_gain": -0.05459380549991369,
+            "summaries": {
+              "drift": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.2027143558096069,
+                  "mean_prediction_error": 0.037276654998214954,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.1481205503096932,
+                  "mean_prediction_error": 0.02614552616407792,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              },
+              "stationary": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.13407505401248154,
+                  "mean_prediction_error": 0.010352273640728498,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.13407505401248154,
+                  "mean_prediction_error": 0.010565623250407904,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              }
+            }
+          },
+          "frozen_h1": {
+            "paired_deltas": [
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.02783704318077035,
+                  "mean_prediction_error": 0.001591373917993114,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.009572989079504018,
+                  "mean_prediction_error": 0.022050780889444874,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.02589733895220729,
+                  "mean_prediction_error": 0.0036020867296502838,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.3353497168005246,
+                  "mean_prediction_error": 0.029907312342330603,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.025249345426308162,
+                  "mean_prediction_error": 0.001783986257301591,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.013214801875585713,
+                  "mean_prediction_error": 0.01650890313567419,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.029098237256768494,
+                  "mean_prediction_error": 0.0008044346359356754,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.02583492226503961,
+                  "mean_prediction_error": 0.0026530735163645507,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.029442025245217773,
+                  "mean_prediction_error": 0.0022325490792741197,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.011040275887473028,
+                  "mean_prediction_error": 0.0006369187449387706,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.09324840470665602,
+                  "mean_prediction_error": 0.01553347576411342,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0047619640144940245,
+                  "mean_prediction_error": -0.000903890571088091,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.14533490481456057,
+                  "mean_prediction_error": -0.023407065681602036,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.003357807433772231,
+                  "mean_prediction_error": 0.0021393328961873646,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.021238923235862198,
+                  "mean_prediction_error": 0.0020151744160431667,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41008
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.033979644926018376,
+                  "mean_prediction_error": 0.007390415899086327,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41008
+              }
+            ],
+            "passed": false,
+            "reasons": [
+              "stationary:regression:mean_prediction_error",
+              "drift:regression:mean_prediction_error",
+              "drift:regression:mean_goal_error",
+              "no_strict_goal_gain"
+            ],
+            "sum_regime_goal_gain": -0.014997915544232215,
+            "summaries": {
+              "drift": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.2027143558096069,
+                  "mean_prediction_error": 0.037276654998214954,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16136026358974484,
+                  "mean_prediction_error": 0.027228799141597634,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              },
+              "stationary": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.13407505401248154,
+                  "mean_prediction_error": 0.010352273640728498,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16043123068811138,
+                  "mean_prediction_error": 0.009832771750889832,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              }
+            }
+          },
+          "frozen_h3": {
+            "paired_deltas": [
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.03991199751675045,
+                  "mean_prediction_error": -0.0012066294768940874,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.003982954213160916,
+                  "mean_prediction_error": -0.0025345732410503585,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.012691355199233756,
+                  "mean_prediction_error": -0.007422460821173815,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.027937254661126038,
+                  "mean_prediction_error": -0.010010065062125525,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0004226430330944164,
+                  "mean_prediction_error": -0.001624999999999998,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0019087027278028856,
+                  "mean_prediction_error": -0.002271052621462273,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0011145819073186958,
+                  "mean_prediction_error": -0.0034236366604762855,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41008
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.007473121349679146,
+                  "mean_prediction_error": -0.0034728224904052377,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41008
+              }
+            ],
+            "passed": false,
+            "reasons": [
+              "drift:regression:mean_goal_error",
+              "no_strict_goal_gain"
+            ],
+            "sum_regime_goal_gain": -0.0068892071887925455,
+            "summaries": {
+              "drift": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.2027143558096069,
+                  "mean_prediction_error": 0.037276654998214954,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.19582514862081435,
+                  "mean_prediction_error": 0.041272435044913416,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              },
+              "stationary": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.13407505401248154,
+                  "mean_prediction_error": 0.010352273640728498,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.13407505401248154,
+                  "mean_prediction_error": 0.010352273640728498,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              }
+            }
+          }
+        },
+        "passed": false
+      },
+      "gated_retain_h1": {
+        "controls": {
+          "adaptive_consistent_h1": {
+            "paired_deltas": [
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.00040159178190701805,
+                  "mean_prediction_error": 0.00022096256675817067,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0004548832931457192,
+                  "mean_prediction_error": 0.00027132674567692874,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0008453123500452853,
+                  "mean_prediction_error": -0.001081414588128134,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.004042780205709917,
+                  "mean_prediction_error": 0.004648183387438359,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.00022865498871649237,
+                  "mean_prediction_error": -6.336911463407889e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0019021267182945945,
+                  "mean_prediction_error": 0.0043638741869194975,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -3.8873619236992445e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.38786047123459577,
+                  "mean_prediction_error": -0.038196251292854436,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0002447628208073205,
+                  "mean_prediction_error": -0.0003794724825638557,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.005136616328871496,
+                  "mean_prediction_error": 0.001611250893847331,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -5.004365593156996e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.02110871451049101,
+                  "mean_prediction_error": 0.006805942227642619,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0003656194100007948,
+                  "mean_prediction_error": -0.0005539480992805823,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.010057296993760179,
+                  "mean_prediction_error": 8.085839321679902e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.00537889765025007,
+                  "mean_prediction_error": -0.00022830288852230748,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41008
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.006487107695151845,
+                  "mean_prediction_error": 0.004359881988075569,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41008
+              }
+            ],
+            "passed": true,
+            "reasons": [],
+            "sum_regime_goal_gain": 0.04824431155391529,
+            "summaries": {
+              "drift": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.164659258357905,
+                  "mean_prediction_error": 0.026639524223962104,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.21239155242899688,
+                  "mean_prediction_error": 0.028646390907716767,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              },
+              "stationary": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16043123068811138,
+                  "mean_prediction_error": 0.009832771750889832,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16094324817093478,
+                  "mean_prediction_error": 0.01010457948608225,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              }
+            }
+          },
+          "frozen_h1": {
+            "paired_deltas": [
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0015194115992624158,
+                  "mean_prediction_error": -0.004996497408064116,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0008193294159058728,
+                  "mean_prediction_error": -0.0019648373091558854,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.029880385295692036,
+                  "mean_prediction_error": 0.002584444865602005,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0029847430215297066,
+                  "mean_prediction_error": -0.006029526363912213,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41008
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0018350568862871286,
+                  "mean_prediction_error": 0.005692216874445936,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41008
+              }
+            ],
+            "passed": false,
+            "reasons": [
+              "drift:regression:mean_goal_error",
+              "no_strict_goal_gain"
+            ],
+            "sum_regime_goal_gain": -0.003298994768160146,
+            "summaries": {
+              "drift": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.164659258357905,
+                  "mean_prediction_error": 0.026639524223962104,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16136026358974484,
+                  "mean_prediction_error": 0.027228799141597634,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              },
+              "stationary": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16043123068811138,
+                  "mean_prediction_error": 0.009832771750889832,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16043123068811138,
+                  "mean_prediction_error": 0.009832771750889832,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              }
+            }
+          }
+        },
+        "passed": false
+      },
+      "gated_retain_h3": {
+        "controls": {
+          "adaptive_consistent_h3": {
+            "paired_deltas": [
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 4.302133152344224e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.03742338935988376,
+                  "mean_prediction_error": 0.015712084040410655,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -5.983353611025387e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.3452979633114751,
+                  "mean_prediction_error": 0.03963378999529673,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 5.568578690464364e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.019020190346548393,
+                  "mean_prediction_error": 0.02490195205393211,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 1.5777953646878284e-05,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.025136679533600326,
+                  "mean_prediction_error": 0.00683085678816954,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -0.0006964032308932472,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.000648339470365078,
+                  "mean_prediction_error": 0.0019073429105544923,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": -0.0007492558661302932,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.005709744121214638,
+                  "mean_prediction_error": -0.0002293932384331704,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0011621597074756296,
+                  "mean_prediction_error": 0.0022668459173561945,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.005519692227929557,
+                  "mean_prediction_error": -0.002614671947466389,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.00013206409536273798,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41008
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.00200555437170738,
+                  "mean_prediction_error": 0.002907070070632331,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41008
+              }
+            ],
+            "passed": false,
+            "reasons": [
+              "stationary:regression:mean_prediction_error",
+              "drift:regression:mean_prediction_error",
+              "drift:regression:mean_goal_error",
+              "no_strict_goal_gain"
+            ],
+            "sum_regime_goal_gain": -0.054448535536479215,
+            "summaries": {
+              "drift": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.2027143558096069,
+                  "mean_prediction_error": 0.037276654998214954,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.1481205503096932,
+                  "mean_prediction_error": 0.02614552616407792,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              },
+              "stationary": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.13392978404904707,
+                  "mean_prediction_error": 0.010691611056865417,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.13407505401248154,
+                  "mean_prediction_error": 0.010565623250407904,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              }
+            }
+          },
+          "frozen_h1": {
+            "paired_deltas": [
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.02783704318077035,
+                  "mean_prediction_error": 0.001591373917993114,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.009572989079504018,
+                  "mean_prediction_error": 0.022050780889444874,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.02589733895220729,
+                  "mean_prediction_error": 0.0036020867296502838,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.3353497168005246,
+                  "mean_prediction_error": 0.029907312342330603,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.025249345426308162,
+                  "mean_prediction_error": 0.001783986257301591,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.013214801875585713,
+                  "mean_prediction_error": 0.01650890313567419,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.029098237256768494,
+                  "mean_prediction_error": 0.0008044346359356754,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.02583492226503961,
+                  "mean_prediction_error": 0.0026530735163645507,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.029442025245217773,
+                  "mean_prediction_error": 0.0022325490792741197,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.011040275887473028,
+                  "mean_prediction_error": 0.0006369187449387706,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.09324840470665602,
+                  "mean_prediction_error": 0.01553347576411342,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0047619640144940245,
+                  "mean_prediction_error": -0.000903890571088091,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.1464970645220362,
+                  "mean_prediction_error": -0.02069236635250668,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.003357807433772231,
+                  "mean_prediction_error": 0.0021393328961873646,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.021238923235862198,
+                  "mean_prediction_error": 0.0020151744160431667,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41008
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.033979644926018376,
+                  "mean_prediction_error": 0.007390415899086327,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41008
+              }
+            ],
+            "passed": false,
+            "reasons": [
+              "stationary:regression:mean_prediction_error",
+              "drift:regression:mean_prediction_error",
+              "drift:regression:mean_goal_error",
+              "no_strict_goal_gain"
+            ],
+            "sum_regime_goal_gain": -0.014852645580797741,
+            "summaries": {
+              "drift": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.2027143558096069,
+                  "mean_prediction_error": 0.037276654998214954,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16136026358974484,
+                  "mean_prediction_error": 0.027228799141597634,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              },
+              "stationary": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.13392978404904707,
+                  "mean_prediction_error": 0.010691611056865417,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.16043123068811138,
+                  "mean_prediction_error": 0.009832771750889832,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              }
+            }
+          },
+          "frozen_h3": {
+            "paired_deltas": [
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.03991199751675045,
+                  "mean_prediction_error": -0.0012066294768940874,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41001
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.003982954213160916,
+                  "mean_prediction_error": -0.0025345732410503585,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41002
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.012691355199233756,
+                  "mean_prediction_error": -0.007422460821173815,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41003
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.027937254661126038,
+                  "mean_prediction_error": -0.010010065062125525,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41004
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0004226430330944164,
+                  "mean_prediction_error": -0.001624999999999998,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41005
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0019087027278028856,
+                  "mean_prediction_error": -0.002271052621462273,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41006
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.0011621597074756296,
+                  "mean_prediction_error": 0.0027146993290953535,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0011145819073186958,
+                  "mean_prediction_error": -0.0034236366604762855,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41007
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": 0.0,
+                  "mean_prediction_error": 0.0,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "stationary",
+                "seed": 41008
+              },
+              {
+                "adaptive_minus_baseline": {
+                  "active_steps": 0,
+                  "mean_goal_error": -0.007473121349679146,
+                  "mean_prediction_error": -0.0034728224904052377,
+                  "successful_recoveries": 0,
+                  "supervisor_steps": 0,
+                  "violations": 0
+                },
+                "scenario": "drift",
+                "seed": 41008
+              }
+            ],
+            "passed": false,
+            "reasons": [
+              "stationary:regression:mean_prediction_error",
+              "drift:regression:mean_goal_error",
+              "no_strict_goal_gain"
+            ],
+            "sum_regime_goal_gain": -0.006743937225358071,
+            "summaries": {
+              "drift": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.2027143558096069,
+                  "mean_prediction_error": 0.037276654998214954,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.19582514862081435,
+                  "mean_prediction_error": 0.041272435044913416,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              },
+              "stationary": {
+                "adaptive": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.13392978404904707,
+                  "mean_prediction_error": 0.010691611056865417,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                },
+                "baseline": {
+                  "active_steps": 65.875,
+                  "mean_goal_error": 0.13407505401248154,
+                  "mean_prediction_error": 0.010352273640728498,
+                  "successful_recoveries": 1.0,
+                  "supervisor_steps": 14.125,
+                  "violations": 0.0
+                }
+              }
+            }
+          }
+        },
+        "passed": false
+      }
+    },
+    "selection_frozen": true
+  },
+  "stages": {},
+  "status": "complete"
+}
