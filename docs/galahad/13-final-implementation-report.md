@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest audited learning comparison:** [56-standard-learning-comparison.md](56-standard-learning-comparison.md) records six matched development episodes with independently reconstructed EMA applications. The corrected learner outperformed legacy learning but regressed stationary prediction against frozen control, so progression was rejected. Full regression passed 1,674 tests; no new registered streams, model training or promotion.
+
 **Latest learning correctness checkpoint:** [55-single-use-standard-learning.md](55-single-use-standard-learning.md) records an opt-in standard estimator correction, actual duplicate/recovery fixtures and independent review. Full regression passed 1,657 tests in 162.613 seconds. Duplicate evidence no longer retrains consumed transitions; general control improvement and completion of the master plan remain unestablished.
 
 **Latest control-learning investigation:** [54-recovery-epoch-learning.md](54-recovery-epoch-learning.md) records a source-verified training diagnosis, an opt-in recovery-epoch candidate and a matched development screen. Wrong-prior cases regressed against existing adaptive control, so the automatic screen rejected progression. Final verification passed 1,640 tests; no new registered streams or promotion were consumed.

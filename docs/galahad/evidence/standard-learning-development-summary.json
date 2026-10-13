@@ -1,0 +1,320 @@
+{
+  "candidate_promoted": false,
+  "development_screen_passed": false,
+  "episodes": 6,
+  "heldout_outcomes_analyzed": false,
+  "model_weights_trained": false,
+  "performance_improvement_claimed": false,
+  "plant_steps": 480,
+  "protocol": "standard-learning-development-comparison-v1",
+  "recommendation": "retain_baseline_and_diagnose",
+  "registered_streams_used": false,
+  "scope": "Six seed-9 development episodes; duplicate-consumption correctness is separate from goal or prediction performance.",
+  "screen": {
+    "comparisons": [
+      {
+        "control": "frozen",
+        "passed": false,
+        "strata": [
+          {
+            "metrics": {
+              "mean_goal_error": {
+                "candidate": 0.14133558548285635,
+                "control": 0.14376122623082427,
+                "delta": -0.0024256407479679165
+              },
+              "mean_prediction_error": {
+                "candidate": 0.006863715867748127,
+                "control": 0.006637115493040656,
+                "delta": 0.0002266003747074712
+              },
+              "supervisor_steps": {
+                "candidate": 15,
+                "control": 15,
+                "delta": 0
+              },
+              "violations": {
+                "candidate": 0,
+                "control": 0,
+                "delta": 0
+              }
+            },
+            "nonregression": false,
+            "scenario": "stationary"
+          },
+          {
+            "metrics": {
+              "mean_goal_error": {
+                "candidate": 0.16013830873228857,
+                "control": 0.16013830873228857,
+                "delta": 0.0
+              },
+              "mean_prediction_error": {
+                "candidate": 0.022385495382731203,
+                "control": 0.02344131702549184,
+                "delta": -0.0010558216427606383
+              },
+              "supervisor_steps": {
+                "candidate": 15,
+                "control": 15,
+                "delta": 0
+              },
+              "violations": {
+                "candidate": 0,
+                "control": 0,
+                "delta": 0
+              }
+            },
+            "nonregression": true,
+            "scenario": "drift"
+          }
+        ],
+        "sum_goal_gain": 0.0024256407479679165
+      },
+      {
+        "control": "legacy",
+        "passed": true,
+        "strata": [
+          {
+            "metrics": {
+              "mean_goal_error": {
+                "candidate": 0.14133558548285635,
+                "control": 0.1437099475708574,
+                "delta": -0.002374362088001042
+              },
+              "mean_prediction_error": {
+                "candidate": 0.006863715867748127,
+                "control": 0.007563497584209991,
+                "delta": -0.0006997817164618638
+              },
+              "supervisor_steps": {
+                "candidate": 15,
+                "control": 15,
+                "delta": 0
+              },
+              "violations": {
+                "candidate": 0,
+                "control": 0,
+                "delta": 0
+              }
+            },
+            "nonregression": true,
+            "scenario": "stationary"
+          },
+          {
+            "metrics": {
+              "mean_goal_error": {
+                "candidate": 0.16013830873228857,
+                "control": 0.17580346431628494,
+                "delta": -0.015665155583996365
+              },
+              "mean_prediction_error": {
+                "candidate": 0.022385495382731203,
+                "control": 0.031539104619050046,
+                "delta": -0.009153609236318843
+              },
+              "supervisor_steps": {
+                "candidate": 15,
+                "control": 15,
+                "delta": 0
+              },
+              "violations": {
+                "candidate": 0,
+                "control": 0,
+                "delta": 0
+              }
+            },
+            "nonregression": true,
+            "scenario": "drift"
+          }
+        ],
+        "sum_goal_gain": 0.018039517671997407
+      }
+    ],
+    "passed": false,
+    "scope": "Fixed development fixture screen only; no held-out or population improvement claim."
+  },
+  "source_sha256": {
+    "scripts/demo_standard_learning.py": "ed28e392e2d98ac21da4804f2eaa747070cfe3ff309b66e3c238d87091163615",
+    "src/nerve_awim/adaptive_calibration_v19.py": "299922a93b915996c7b809836a4eaf6b31e35f96d2807adca7281dda719a0786",
+    "src/nerve_awim/calibrated_v16.py": "5311374673061a50bac8f28c20cd560678c9b35c123aaac7473aede84f8319b8",
+    "src/nerve_awim/calibration_v15.py": "f1b49e8adac7c6951f3522663a61c7694d874d8832f53f1cb10aea628e95dd68",
+    "src/nerve_awim/coverage_v18.py": "27a45ac324d82b357487605b6ebb1b8dbc8f0e630c0d93c1a199b1633674e9a3",
+    "src/nerve_awim/drift_v14.py": "af8259a4dfec16b1bfc0d5993f60ea99285025803162584fb8d11aae87a9e62a",
+    "src/nerve_awim/fusion_v12.py": "d5481b7ebef1e7630a65491572f8f99edfc529d97617ebdd2d00fd3bb9758de8",
+    "src/nerve_awim/identity_v26.py": "245b67c92ec8987b02704550dd494269db3d60c51270ab87b04a91487f0dc060",
+    "src/nerve_awim/integrated_v13.py": "bf28343e2ed0bf8f0089c7712fcbefb8ae7c2938505fcae67254b572af2e3e07",
+    "src/nerve_awim/memory_gateway/recovery_adaptation.py": "ddb3db10fdc417bace28898ba9f1652346884d723dc64b968c1f53f19688e99b",
+    "src/nerve_awim/memory_gateway/standard_learning_audit.py": "f542e479051288284c07c67dabf6294a9ff26ade1031a623bfef1616a2ac62ed",
+    "src/nerve_awim/memory_gateway/standard_learning_demo.py": "bfd51f5953f770d08cdae89e08dcc3d52a59536de195c92379f55ea30fedb1f5",
+    "src/nerve_awim/recovery_policy_v23.py": "0caf4ccbf801596213fad17738e144c7c5417cb09ff52823365cee34633683f6",
+    "src/nerve_awim/recovery_v21.py": "bbf384ded4fe9f2ec783a8012e8f8d389f9790efe17c090aeabd52d2b1d52487",
+    "src/nerve_awim/recovery_v22.py": "c8c0ac7b0ef0bd72c956b5a99e22098bf104aca4edf83e7cfb9b4f0c565e934a",
+    "src/nerve_awim/recovery_v24.py": "8f7fc31ef4e01c4f59dbc194134fc9c4fc4c2446e93cfe30ac532f3d7da41eb5",
+    "src/nerve_awim/recovery_v25.py": "ee5de8bf2dbdb6b67d71bb64bd60ac2d8707cd771511e2ed379e2d53e8f550e5",
+    "src/nerve_awim/risk_v17.py": "6b7f88441d21cbce5339042d3a7c9cdc66cda41842e3ab9a9daef09974a179aa",
+    "src/nerve_awim/runtime_v28.py": "c155f4d64de07b102607899228d8187658d46662f531a886c9329f135a116c44",
+    "src/nerve_awim/single_use_standard.py": "4e63c414725fc9360e2e97a0de92c067232cedce968e0c3a1b3128a04f220c68",
+    "src/nerve_awim/worldcore_v20.py": "673e5cf431f5d1900242cf261621d888dabe499d5a1891d3aca023fbecdbdd8d"
+  },
+  "status": "complete",
+  "artifact_sha256": "b355daa55c950df760ef5bc920fd0a0c3e6bc520c4c2269902a366309cfd6739",
+  "rows": [
+    {
+      "arm": "frozen",
+      "scenario": "stationary",
+      "metrics": {
+        "active_steps": 65,
+        "mean_goal_error": 0.14376122623082427,
+        "mean_prediction_error": 0.006637115493040656,
+        "successful_recoveries": 1,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "audit": {
+        "arm": "frozen",
+        "ema_applications": 0,
+        "epochs": 2,
+        "final_gain": 0.27,
+        "learning_rate": 0.0,
+        "repeated_applications": 0,
+        "unique_transitions": 0
+      },
+      "elapsed_seconds": 0.06060599198099226
+    },
+    {
+      "arm": "legacy",
+      "scenario": "stationary",
+      "metrics": {
+        "active_steps": 65,
+        "mean_goal_error": 0.1437099475708574,
+        "mean_prediction_error": 0.007563497584209991,
+        "successful_recoveries": 1,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "audit": {
+        "arm": "legacy",
+        "ema_applications": 198,
+        "epochs": 2,
+        "final_gain": 0.2904159770187534,
+        "learning_rate": 0.08,
+        "repeated_applications": 186,
+        "unique_transitions": 12
+      },
+      "elapsed_seconds": 0.050957291008671746
+    },
+    {
+      "arm": "single_use",
+      "scenario": "stationary",
+      "metrics": {
+        "active_steps": 65,
+        "mean_goal_error": 0.14133558548285635,
+        "mean_prediction_error": 0.006863715867748127,
+        "successful_recoveries": 1,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "audit": {
+        "arm": "single_use",
+        "ema_applications": 13,
+        "epochs": 2,
+        "final_gain": 0.27256783717601857,
+        "learning_rate": 0.08,
+        "repeated_applications": 0,
+        "unique_transitions": 13
+      },
+      "elapsed_seconds": 0.05383477100986056
+    },
+    {
+      "arm": "frozen",
+      "scenario": "drift",
+      "metrics": {
+        "active_steps": 65,
+        "mean_goal_error": 0.16013830873228857,
+        "mean_prediction_error": 0.02344131702549184,
+        "successful_recoveries": 1,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "audit": {
+        "arm": "frozen",
+        "ema_applications": 0,
+        "epochs": 2,
+        "final_gain": 0.27,
+        "learning_rate": 0.0,
+        "repeated_applications": 0,
+        "unique_transitions": 0
+      },
+      "elapsed_seconds": 0.05096713901730254
+    },
+    {
+      "arm": "legacy",
+      "scenario": "drift",
+      "metrics": {
+        "active_steps": 65,
+        "mean_goal_error": 0.17580346431628494,
+        "mean_prediction_error": 0.031539104619050046,
+        "successful_recoveries": 1,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "audit": {
+        "arm": "legacy",
+        "ema_applications": 168,
+        "epochs": 2,
+        "final_gain": 0.24017770293102275,
+        "learning_rate": 0.08,
+        "repeated_applications": 159,
+        "unique_transitions": 9
+      },
+      "elapsed_seconds": 0.05075960501562804
+    },
+    {
+      "arm": "single_use",
+      "scenario": "drift",
+      "metrics": {
+        "active_steps": 65,
+        "mean_goal_error": 0.16013830873228857,
+        "mean_prediction_error": 0.022385495382731203,
+        "successful_recoveries": 1,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "audit": {
+        "arm": "single_use",
+        "ema_applications": 10,
+        "epochs": 2,
+        "final_gain": 0.30656525603174434,
+        "learning_rate": 0.08,
+        "repeated_applications": 0,
+        "unique_transitions": 10
+      },
+      "elapsed_seconds": 0.0625995040172711
+    }
+  ],
+  "stationary_diagnostic": {
+    "scope": "Descriptive decomposition of paired development outcomes; different action trajectories prevent causal attribution.",
+    "phases": {
+      "controller": {
+        "steps": 65,
+        "sum_prediction_error_delta": 0.018128029976597865
+      },
+      "external_supervisor": {
+        "steps": 15,
+        "sum_prediction_error_delta": 0.0
+      }
+    },
+    "action_difference_steps": [
+      63,
+      64,
+      65,
+      66,
+      71,
+      72,
+      73,
+      78,
+      79
+    ]
+  }
+}
