@@ -750,3 +750,5 @@ The [automatic outage diagnosis](docs/galahad/35-outage-search-diagnosis.md) rou
 The [prospective recovery/adaptation study](docs/galahad/37-recovery-adaptation-study.md) measured 173 online gain updates across 32 validation episodes. It rejected the adaptive candidate for goal/prediction regressions and preserved the unused final-evaluation streams. This demonstrates measured outcome gating, not a general self-improvement claim.
 
 The [adaptation followup diagnostic](docs/galahad/38-adaptation-followup.md) consumes verified rejected studies and automatically reconciles paired objective-error contributions without rerunning plant or final-evaluation episodes.
+
+[Opt-in consistent-dynamics and bounded-planning candidates](docs/galahad/39-consistent-dynamics-candidates.md) preserve historical filter gains during delayed replay and exercise deeper planning through the existing signed recovery boundary. They are development-tested candidates, not promoted improvements.
