@@ -1,4 +1,7 @@
 """Real outcome intake is a research lead, never self-approved benchmark gold."""
+from contextlib import redirect_stdout
+import io
+import sys
 import importlib.util
 import json
 from pathlib import Path
@@ -64,6 +67,76 @@ class ResearchFindingTests(unittest.TestCase):
                 with self.assertRaises(sqlite3.IntegrityError):
                     db.execute(command)
         self.assertEqual(loop.finding_status(self.host)['count'],1)
+
+    def review(self):
+        self.observe('timeout')
+        loop.collect_findings(self.host)
+        with sqlite3.connect(loop.database(self.host)) as db:
+            fingerprint, metadata = db.execute('SELECT fingerprint,metadata FROM research_findings').fetchone()
+        return dict(fingerprint=fingerprint,source_record_digest=json.loads(metadata)['source_record_digest'],
+                    previous_review=None,disposition='investigate',reviewer='test operator',reason='Investigate observed timeout.')
+
+    def test_triage_chain_survives_restart_without_rewriting_outcome(self):
+        review=self.review()
+        result=loop.review_finding(self.host,review)
+        self.assertEqual(result['provider_calls'],0)
+        self.assertFalse(result['benchmark_gold'])
+        self.assertFalse(result['activation_authorized'])
+        with self.assertRaises(ValueError):
+            loop.review_finding(self.host,review)
+        for disposition in ('monitor','closed_no_action','investigate'):
+            review={**review,'previous_review':result['review_digest'],'disposition':disposition}
+            result=loop.review_finding(self.host,review)
+        resumed=AgentOSLearning(self.host.directory)
+        state=loop.finding_status(resumed)
+        self.assertEqual(state['pending_review'],0)
+        self.assertEqual(state['dispositions'],{'investigate':1})
+        self.assertEqual(state['latest'][0]['review_digest'],result['review_digest'])
+        self.assertNotIn('test operator',json.dumps(state))
+        self.assertEqual(loop.collect_findings(resumed)['added'],0)
+        with sqlite3.connect(loop.database(self.host)) as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM finding_reviews').fetchone()[0],4)
+            for sql in ('DELETE FROM finding_reviews','UPDATE finding_reviews SET review="{}"'):
+                with self.assertRaises(sqlite3.IntegrityError):
+                    db.execute(sql)
+
+    def test_invalid_triage_is_atomic(self):
+        review=self.review()
+        for change in ({'fingerprint':'a'*64},{'source_record_digest':'b'*64},
+                       {'previous_review':'c'*64},{'disposition':'approved'},
+                       {'reviewer':''},{'reason':'x'*2001},{'reason':'bad\ntext'},
+                       {'activation_authorized':True},{'source_record_digest':False}):
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                loop.review_finding(self.host,{**review,**change})
+        with sqlite3.connect(loop.database(self.host)) as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM finding_reviews').fetchone()[0],0)
+
+    def test_global_triage_counts_are_not_limited_to_latest_page(self):
+        review=self.review()
+        loop.review_finding(self.host,review)
+        for index in range(25):
+            self.observe('new-'+str(index))
+        loop.collect_findings(self.host)
+        state=loop.finding_status(self.host)
+        self.assertEqual(len(state['latest']),20)
+        self.assertEqual(state['count'],26)
+        self.assertEqual(state['pending_review'],25)
+        self.assertEqual(state['dispositions'],{'investigate':1})
+
+    def test_paused_cli_triage_never_dispatches_or_changes_budget(self):
+        import agentos_bridge as bridge
+        review=self.review()
+        before=loop.status(self.host)
+        path=self.host.directory/'review.json'
+        path.write_text(json.dumps(review))
+        with patch.object(sys,'argv',['agentos_bridge.py','autoresearch-review-finding','--state',str(self.host.directory),'--review',str(path)]), \
+             patch.object(bridge,'publish'),patch.object(bridge,'native') as native,redirect_stdout(io.StringIO()) as output:
+            bridge.main()
+        self.assertEqual(json.loads(output.getvalue())['status'],'finding_reviewed')
+        after=loop.status(self.host)
+        for key in ('enabled','configured','remaining_sessions','inbox','registered_cohorts','registered_study','cce_jobs'):
+            self.assertEqual(before[key],after[key])
+        native.assert_not_called()
 
     def test_paused_loop_does_not_collect_or_dispatch_and_enabled_tick_collects(self):
         self.observe('failed')

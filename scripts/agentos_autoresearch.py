@@ -54,6 +54,13 @@ def database(host):
           BEGIN SELECT RAISE(ABORT,'immutable research finding'); END;
         CREATE TRIGGER IF NOT EXISTS research_findings_no_delete BEFORE DELETE ON research_findings
           BEGIN SELECT RAISE(ABORT,'immutable research finding'); END;
+        CREATE TABLE IF NOT EXISTS finding_reviews(
+          id INTEGER PRIMARY KEY,fingerprint TEXT NOT NULL,review TEXT NOT NULL,
+          digest TEXT UNIQUE NOT NULL,created INTEGER NOT NULL);
+        CREATE TRIGGER IF NOT EXISTS finding_reviews_no_update BEFORE UPDATE ON finding_reviews
+          BEGIN SELECT RAISE(ABORT,'immutable finding review'); END;
+        CREATE TRIGGER IF NOT EXISTS finding_reviews_no_delete BEFORE DELETE ON finding_reviews
+          BEGIN SELECT RAISE(ABORT,'immutable finding review'); END;
         ''')
         columns = {row[1] for row in db.execute('PRAGMA table_info(config)')}
         if 'configured' not in columns:
@@ -92,9 +99,57 @@ def finding_status(host):
         count = db.execute('SELECT COUNT(*) FROM research_findings').fetchone()[0]
         rows = db.execute('SELECT fingerprint,origin,profile,category FROM research_findings '
                           'ORDER BY created DESC,rowid DESC LIMIT 20').fetchall()
-    return dict(count=count, latest=[dict(fingerprint=r[0],origin=r[1],profile=r[2],category=r[3])
-                                    for r in rows], status='awaiting_host_review' if count else 'empty',
+        pending = db.execute('SELECT COUNT(*) FROM research_findings f WHERE NOT EXISTS '
+            '(SELECT 1 FROM finding_reviews r WHERE r.fingerprint=f.fingerprint)').fetchone()[0]
+        dispositions = dict(db.execute("SELECT json_extract(review,'$.disposition'),COUNT(*) FROM finding_reviews "
+            'WHERE id IN (SELECT MAX(id) FROM finding_reviews GROUP BY fingerprint) GROUP BY 1'))
+        latest = []
+        for r in rows:
+            review = db.execute('SELECT review,digest FROM finding_reviews WHERE fingerprint=? '
+                                'ORDER BY id DESC LIMIT 1',(r[0],)).fetchone()
+            latest.append(dict(fingerprint=r[0],origin=r[1],profile=r[2],category=r[3],
+                disposition=json.loads(review[0])['disposition'] if review else 'unreviewed',
+                review_digest=review[1] if review else None))
+    return dict(count=count, pending_review=pending, dispositions=dispositions, latest=latest,
+                status='awaiting_host_review' if pending else ('reviewed' if count else 'empty'),
                 benchmark_gold=False, activation_authorized=False)
+
+
+def review_finding(host, review):
+    """Trusted local triage only. Caller holds host lock; no release authority.
+
+    Reviews are append-only and compare the previous digest to prevent stale
+    operators overwriting newer conclusions. Reasons are never model context.
+    """
+    keys = {'fingerprint','source_record_digest','previous_review','disposition','reviewer','reason'}
+    if type(review) is not dict or set(review) != keys:
+        raise ValueError('exact finding review fields required')
+    for key in ('fingerprint','source_record_digest'):
+        if type(review[key]) is not str or re.fullmatch(r'[a-f0-9]{64}',review[key]) is None:
+            raise ValueError('invalid '+key)
+    previous = review['previous_review']
+    if previous is not None and (type(previous) is not str or re.fullmatch(r'[a-f0-9]{64}',previous) is None):
+        raise ValueError('invalid previous review')
+    if review['disposition'] not in ('investigate','monitor','closed_no_action'):
+        raise ValueError('invalid disposition')
+    for key,limit in (('reviewer',160),('reason',2000)):
+        value = review[key]
+        if type(value) is not str or not value.strip() or len(value.encode()) > limit or any(ord(c)<32 for c in value):
+            raise ValueError('invalid '+key)
+    digest = studies.digest(review)
+    with sqlite3.connect(database(host)) as db:
+        db.execute('BEGIN IMMEDIATE')
+        source = db.execute('SELECT metadata FROM research_findings WHERE fingerprint=?',(review['fingerprint'],)).fetchone()
+        if source is None or json.loads(source[0])['source_record_digest'] != review['source_record_digest']:
+            raise ValueError('unknown or mismatched finding')
+        latest = db.execute('SELECT digest FROM finding_reviews WHERE fingerprint=? ORDER BY id DESC LIMIT 1',
+                            (review['fingerprint'],)).fetchone()
+        if previous != (latest[0] if latest else None):
+            raise ValueError('stale finding review')
+        db.execute('INSERT INTO finding_reviews(fingerprint,review,digest,created) VALUES(?,?,?,?)',
+                   (review['fingerprint'],studies.encode(review),digest,int(time.time())))
+    return dict(status='finding_reviewed',review_digest=digest,provider_calls=0,
+                benchmark_gold=False,activation_authorized=False)
 
 
 def collect_findings(host):

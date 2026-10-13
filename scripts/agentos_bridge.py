@@ -424,7 +424,7 @@ def main():
     parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review',
         'repository-study','repository-run','repository-tasks','repository-diagnose','audit-study','audit-status',
         'audit-shadow','audit-shadow-status','autoresearch-enable','autoresearch-pause',
-        'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort','autoresearch-review-queue',
+        'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort','autoresearch-review-queue','autoresearch-review-finding',
         'arc-run','arc-inspect','arc-replay','arc-evaluate','arc-improve','arc-candidate-status',
         'arc-release-status','arc-stage','arc-promote','arc-rollback','arc-reconcile',
         'adaptation-inspect','adaptation-validate-config','adaptation-replay','adaptation-evaluate',
@@ -579,6 +579,11 @@ def main():
                         raise ValueError('cohort registration requires --task and --review')
                     from agentos_audit_bench import read_json
                     result=autoresearch.registry.admit(host,read_json(args.task),read_json(args.review),profile=args.profile)
+                elif args.command=='autoresearch-review-finding':
+                    if args.review is None:
+                        raise ValueError('finding triage requires --review')
+                    from agentos_audit_bench import read_json
+                    result=autoresearch.review_finding(host,read_json(args.review))
                 elif args.command=='autoresearch-review-queue':
                     if args.review is None:
                         raise ValueError('queue revision review requires --review')
