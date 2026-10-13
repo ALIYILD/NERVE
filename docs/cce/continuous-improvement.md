@@ -106,3 +106,23 @@ reservation refunded. The next UTC daily reset is 2026-10-14 00:00 UTC; dispatch
 remains subject to the normal scheduler, model and evidence checks.
 The [live receipt](../evidence/agentos-continuity-live-20261013.json) preserves
 the failed studies, diagnostic and current queue status.
+
+
+### Host investigation and durable triage
+
+The two supervisor timeout findings were traced to maintenance runs 3 and 16.
+Later attempts (5 and 17) reported completion in 180 and 100 seconds under the
+same 240-second limit. Both enclosing mission verification records still say
+`accepted=false`. This supports neither raising the timeout nor crediting a
+verified recovery. The findings are marked `monitor`, preserving the original
+failures and keeping future verification necessary.
+
+Local host reviews now append to `finding_reviews`; source fingerprints and
+full original observation digests must match, and each revision must reference
+the previous review digest. `autoresearch-review-finding --review FILE` works
+while research is paused and makes no provider calls. Status reports global
+pending/disposition counts and bounded latest review digests. Free-text reasons
+are not model context or default dashboard content. `closed_no_action` means a
+lead was closed, never that a problem was fixed or a cue improved performance.
+These reviews cannot create benchmark gold, approve candidates, change budgets,
+or bypass the original deployment gates.

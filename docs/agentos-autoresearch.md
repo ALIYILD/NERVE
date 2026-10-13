@@ -119,3 +119,14 @@ Runtime state lives under `~/.agentic-os/nerve`. `autoresearch.sqlite3` stores e
 The installed `com.aliyildirim.nerve.learning` launch agent invokes the bridge cycle every 900 seconds while the Mac is awake and the user session is available. A durable scheduled cycle is the continuous loop; no terminal needs to busy-wait. See [learning operations](agentos-learning-operations.md) for the scheduler and underlying study commands. The earlier [v01 autoresearch prototype](autoresearch-integration.md) is a separate synthetic learning-rate experiment.
 
 The Hermes entrypoint for this workflow is [nerve-autoresearch](../integrations/hermes/nerve-autoresearch/SKILL.md). Its procedural instructions do not confer approval on their own candidate outputs.
+
+
+Host finding triage uses `python3 scripts/agentos_bridge.py autoresearch-review-finding
+--review FILE` (on one command line). The exact JSON fields are `fingerprint`,
+`source_record_digest` (from the original finding metadata), `previous_review`
+(null for the first review; otherwise the latest review digest), `disposition`
+(`investigate`, `monitor`, or `closed_no_action`), `reviewer`, and `reason`.
+Reviews are immutable, reject stale predecessors, and have no evaluation or
+activation authority. Use local evidence rather than treating a task's `done`
+flag as independently verified success. Example reviews are in
+`docs/evidence/agentos-finding-triage-20261013-{1,2}.json`.
