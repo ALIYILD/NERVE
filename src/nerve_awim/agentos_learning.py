@@ -96,6 +96,42 @@ class AgentOSLearning:
         pool = self.ledger.retrieve(actor, context=CONTEXT, query='', limit=20)
         return ranker.rank(actor, pool)
 
+    def generation_memory(self, profile, operation, request):
+        """Local host entrypoint for bounded advisory notes; never approves them.
+
+        No legacy memories are imported. Scope revisions are supplied by the
+        trusted host, not accepted as remote runtime attestation. Dispatch and
+        workspace copying remain outside this provider-free interface.
+        """
+        from .generation_memory import GenerationMemory, GenerationScope
+        fields = {
+            'propose': {'scope','text','category','data_class','source_id','valid_until'},
+            'freeze': {'scope','memory_ids','parent_id','valid_until'},
+            'inspect': {'scope','snapshot_id'},
+            'handoff': {'scope','snapshot_id'},
+        }
+        if (operation not in fields or type(request) is not dict
+                or set(request) != fields[operation] or type(request['scope']) is not dict):
+            raise ValueError('exact generation request fields required')
+        scope = GenerationScope(**request['scope'])
+        if scope.profile != profile:
+            raise PermissionError('host profile differs from generation scope')
+        actor = self.authority.issue('agentos-local',profile,permissions=('read','propose'))
+        try:
+            memory = GenerationMemory(self.ledger)
+            payload = {key:value for key,value in request.items() if key != 'scope'}
+            if operation == 'propose':
+                result = dict(status='pending',memory_id=memory.propose_note(actor,scope,**payload))
+            elif operation == 'freeze':
+                result = dict(status='frozen',snapshot_id=memory.freeze(actor,scope,**payload))
+            elif operation == 'inspect':
+                result = memory.metadata(actor,payload['snapshot_id'],scope)
+            else:
+                result = memory.handoff(actor,payload['snapshot_id'],scope)
+            return dict(result,provider_calls=0,activation_authorized=False)
+        finally:
+            self.authority.revoke(actor)
+
     def observe(self, profile, task, output, *, lesson=None, mode='live'):
         """One outcome per profile/task/mode; failed predictions also count."""
         _id(mode, 'mode')

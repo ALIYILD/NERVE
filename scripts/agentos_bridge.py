@@ -430,6 +430,7 @@ def main():
         'adaptation-inspect','adaptation-validate-config','adaptation-replay','adaptation-evaluate',
         'adaptation-run','adaptation-demo','adaptation-status','adaptation-reset','adaptation-kill',
         'research-fast-memory-train','research-fast-memory-evaluate',
+        'generation-propose','generation-freeze','generation-inspect','generation-handoff',
         'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile',
         'cce-local-inspect','cce-local-smoke','cce-dataset-status','cce-job-submit','cce-job-status','cce-job-cancel'))
     parser.add_argument('--repository',type=Path,help='Authorized local repository for read-only adaptation')
@@ -562,7 +563,12 @@ def main():
     with host_lock(args.state):
         host=AgentOSLearning(args.state)
         recover_interrupted_repository(host)
-        if args.command.startswith('autoresearch-'):
+        if args.command.startswith('generation-'):
+            if args.task is None or requested_profile is None:
+                raise ValueError('generation command requires explicit --profile and --task JSON')
+            from agentos_audit_bench import read_json
+            result=host.generation_memory(args.profile,args.command.removeprefix('generation-'),read_json(args.task))
+        elif args.command.startswith('autoresearch-'):
             import agentos_autoresearch as autoresearch
             try:
                 if args.command in ('autoresearch-enable','autoresearch-pause'):
