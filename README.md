@@ -732,3 +732,7 @@ Eight actual local CPU-model requests completed through the scoped memory gatewa
 ### Autonomous research campaigns and grounding checks
 
 A bounded host supervisor now runs campaign cycles, matched trials and outcome-feedback episodes with durable claims, source pins, child timeouts and an explicit stop deadline. It advances automatically without replaying consumed experiments. See [operation and limits](docs/galahad/28-autonomous-research-campaign.md). The optional [synthetic registry guard](docs/galahad/29-registry-grounding.md) checks entity/code/source associations; it is deterministic validation, not model training.
+
+### Overnight outcome — 13 October 2026
+
+The supervisor completed 32 cycles and 65,536 synthetic pipeline episodes. The candidate improved aggregate score but regressed on mixed tasks, so the baseline was retained. Actual process restarts preserved learned preferences in all 16 comparisons. The optional V2 registry guard passed eight fresh real-model cases; full regression passed 1,261 tests. See the [morning report, limits and reproduction](docs/galahad/32-morning-report.md).

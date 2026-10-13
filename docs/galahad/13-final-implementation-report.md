@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Morning outcome:** [32-morning-report.md](32-morning-report.md) records all 32 overnight cycles, 65,536 synthetic episodes, a rejected candidate despite aggregate gain, 16/16 cross-process persistence checks, 8/8 fresh guarded model cases and 1,261 passing tests. The bounded run completed; general self-training, real KV restoration and clinical deployment remain incomplete.
+
 **Latest orchestration:** [28-autonomous-research-campaign.md](28-autonomous-research-campaign.md) records the bounded campaign→trial→episode coordinator and overnight execution status. [29-registry-grounding.md](29-registry-grounding.md) records the scoped synthetic answer guard and fresh real-model validation. Neither is a claim of general autonomous discovery or weight training.
 
 **Latest real-model study:** [27-real-model-evidence-study.md](27-real-model-evidence-study.md) records eight actual CPU-model completions, 3/4 relevant code-plus-citation matches and wrong-entity attribution in all four irrelevant controls. The full suite passed 1,182 tests; reliable grounding is not established. No training, policy promotion, deployment or real KV restoration.
