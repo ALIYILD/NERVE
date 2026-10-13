@@ -431,6 +431,7 @@ def main():
         'adaptation-run','adaptation-demo','adaptation-status','adaptation-reset','adaptation-kill',
         'research-fast-memory-train','research-fast-memory-evaluate',
         'generation-propose','generation-freeze','generation-inspect','generation-handoff',
+        'generation-local-scope','generation-local-run','generation-workspace-restore','runtime-inventory',
         'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile',
         'cce-local-inspect','cce-local-smoke','cce-dataset-status','cce-job-submit','cce-job-status','cce-job-cancel'))
     parser.add_argument('--repository',type=Path,help='Authorized local repository for read-only adaptation')
@@ -563,7 +564,24 @@ def main():
     with host_lock(args.state):
         host=AgentOSLearning(args.state)
         recover_interrupted_repository(host)
-        if args.command.startswith('generation-'):
+        if args.command=='runtime-inventory':
+            from agentos_runtime_inventory import inspect_runtime
+            result=inspect_runtime(host)
+        elif args.command.startswith('generation-local-'):
+            if requested_profile is None:
+                raise ValueError('local generation requires explicit --profile')
+            import agentos_generation_local as generation_local
+            if args.command=='generation-local-scope':
+                result=generation_local.inspect_scope(host,args.profile)
+            else:
+                if args.task is None:
+                    raise ValueError('local generation requires --task JSON')
+                from agentos_audit_bench import read_json
+                request=read_json(args.task)
+                if type(request) is not dict or set(request)!={'snapshot_id','task'}:
+                    raise ValueError('exact snapshot_id and task required')
+                result=generation_local.run(host,args.profile,**request,allow_local_inference=args.allow_local_inference)
+        elif args.command.startswith('generation-'):
             if args.task is None or requested_profile is None:
                 raise ValueError('generation command requires explicit --profile and --task JSON')
             from agentos_audit_bench import read_json

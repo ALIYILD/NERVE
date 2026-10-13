@@ -3,6 +3,7 @@ from contextlib import redirect_stdout
 from dataclasses import asdict
 import io
 import json
+from hashlib import sha256
 from pathlib import Path
 import sqlite3
 import sys
@@ -79,6 +80,29 @@ class GenerationBridgeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.host.generation_memory('qa-release','freeze',dict(scope=self.scope,memory_ids=[],parent_id=None,valid_until=self.request['valid_until']))
         self.assertEqual(len(self.host.authority._issued),before)
+
+    def test_workspace_restore_cli_uses_reviewed_snapshot_without_overwrite(self):
+        from nerve_awim.generation_memory import GenerationMemory
+        from nerve_awim.generation_workspace import GenerationWorkspace
+        actor=self.host.actor('qa-release')
+        memory=GenerationMemory(self.host.ledger)
+        scope=GenerationScope(**self.scope)
+        mid=self.host.generation_memory('qa-release','propose',self.request)['memory_id']
+        self.host.ledger.decide(actor,mid,approve=True,evaluator_id=scope.evaluator_revision)
+        snapshot=memory.freeze(actor,scope,memory_ids=[mid],valid_until=self.request['valid_until'])
+        root=Path(self.tmp.name).resolve()
+        content=b'Public synthetic setup notes.\n'
+        (root/'notes.md').write_bytes(content)
+        artifacts=GenerationWorkspace(memory)
+        ident=artifacts.capture(actor,scope,snapshot_id=snapshot,source_root=root,
+            reviewed_manifest={'review_id':'host-test','files':[{'path':'notes.md',
+                'sha256':sha256(content).hexdigest(),'data_class':'synthetic'}]})
+        request=dict(scope=self.scope,artifact_id=ident,destination_parent=str(root),directory_name='next')
+        result=self.cli('workspace-restore',request)
+        self.assertFalse(result['activation_authorized'])
+        self.assertEqual((root/'next/notes.md').read_bytes(),content)
+        with self.assertRaises(OSError):
+            self.cli('workspace-restore',request)
 
 
 if __name__=='__main__':
