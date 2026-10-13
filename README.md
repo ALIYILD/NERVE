@@ -770,3 +770,5 @@ The [memory-guided research coordinator](docs/galahad/46-memory-guided-research-
 The [evidence-gated adaptation candidate](docs/galahad/47-evidence-gated-adaptation.md) retains its learned gain until a bounded sensor window supports a material change. An exact prediction-error audit separates state and gain terms; the candidate remains opt-in pending prospective comparison.
 
 The [registered evidence-gated study](docs/galahad/48-evidence-gated-study.md) executed 128 fresh training episodes. Horizon-1 candidates improved on the existing adaptive control but regressed drift goal error against frozen gain; the loop retained the baseline and preserved validation/holdout streams.
+
+The [authenticated actual-action observer](docs/galahad/49-actual-action-observer.md) advances a separate state estimate from confirmed external actions while control remains suspended. Missing action reports invalidate estimates; observation never authorizes recovery.
