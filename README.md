@@ -760,3 +760,5 @@ The [restartable research supervisor](docs/galahad/41-restartable-research-super
 The [observation-evidence gain candidate](docs/galahad/42-evidence-window-candidate.md) adds timestamp-ordered, prior-regularized sensor learning with optional authorized-recovery evidence forgetting. It remains opt-in pending a prospective matched comparison.
 
 The [registered evidence-window study](docs/galahad/43-evidence-window-study.md) consumes the verified identification diagnostic, audits learning directly from sensor/action evidence, and applies matched frozen/adaptive controls before conditional validation and final evaluation.
+
+The [research outcome memory bridge](docs/galahad/44-research-outcome-memory.md) proposes verified experiment results to existing scoped memory, requires separate host review, and preserves negative findings across process restarts without promoting rejected candidates.
