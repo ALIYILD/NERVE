@@ -1,0 +1,330 @@
+{
+  "groups": [
+    {
+      "action_source": "controller",
+      "arm": "adaptive_consistent_h1",
+      "mean_absolute_error": 0.02500230219909867,
+      "mean_absolute_gain": 0.021939484928902218,
+      "mean_absolute_state": 0.01516808199957611,
+      "mean_cancellation": 0.01210526472937966,
+      "scenario": "drift",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "adaptive_consistent_h1",
+      "mean_absolute_error": 0.01446967117945077,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.01446967117945077,
+      "mean_cancellation": 0.0,
+      "scenario": "drift",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "adaptive_consistent_h1",
+      "mean_absolute_error": 0.00547065347428877,
+      "mean_absolute_gain": 0.00126630105910445,
+      "mean_absolute_state": 0.005254025214937505,
+      "mean_cancellation": 0.001049672799753185,
+      "scenario": "stationary",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "adaptive_consistent_h1",
+      "mean_absolute_error": 0.031330095977591337,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.031330095977591337,
+      "mean_cancellation": 0.0,
+      "scenario": "stationary",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "adaptive_consistent_h3",
+      "mean_absolute_error": 0.033434440547668844,
+      "mean_absolute_gain": 0.029137543496107504,
+      "mean_absolute_state": 0.01954727572092753,
+      "mean_cancellation": 0.015250378669366162,
+      "scenario": "drift",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "adaptive_consistent_h3",
+      "mean_absolute_error": 0.038305407093720115,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.038305407093720115,
+      "mean_cancellation": 0.0,
+      "scenario": "drift",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "adaptive_consistent_h3",
+      "mean_absolute_error": 0.005410870981155699,
+      "mean_absolute_gain": 0.0014652658913545929,
+      "mean_absolute_state": 0.005267662619054629,
+      "mean_cancellation": 0.0013220575292535177,
+      "scenario": "stationary",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "adaptive_consistent_h3",
+      "mean_absolute_error": 0.0416471803025066,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.04164718030250661,
+      "mean_cancellation": 0.0,
+      "scenario": "stationary",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "evidence_forget_h1",
+      "mean_absolute_error": 0.030749070196181345,
+      "mean_absolute_gain": 0.026637025525915587,
+      "mean_absolute_state": 0.01850089575194098,
+      "mean_cancellation": 0.014388851081675228,
+      "scenario": "drift",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "evidence_forget_h1",
+      "mean_absolute_error": 0.010782630236174357,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.010782630236174357,
+      "mean_cancellation": 0.0,
+      "scenario": "drift",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "evidence_forget_h1",
+      "mean_absolute_error": 0.00577190595689423,
+      "mean_absolute_gain": 0.002007756175344624,
+      "mean_absolute_state": 0.005441640152582744,
+      "mean_cancellation": 0.0016774903710331378,
+      "scenario": "stationary",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "evidence_forget_h1",
+      "mean_absolute_error": 0.03183137213534357,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.03183137213534357,
+      "mean_cancellation": 0.0,
+      "scenario": "stationary",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "evidence_forget_h3",
+      "mean_absolute_error": 0.0398920663752383,
+      "mean_absolute_gain": 0.035869661719429076,
+      "mean_absolute_state": 0.02381458530536123,
+      "mean_cancellation": 0.019792180649552033,
+      "scenario": "drift",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "evidence_forget_h3",
+      "mean_absolute_error": 0.029972933237123845,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.029972933237123845,
+      "mean_cancellation": 0.0,
+      "scenario": "drift",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "evidence_forget_h3",
+      "mean_absolute_error": 0.005715864956440432,
+      "mean_absolute_gain": 0.0020238188327945782,
+      "mean_absolute_state": 0.005354963249313296,
+      "mean_cancellation": 0.001662917125667445,
+      "scenario": "stationary",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "evidence_forget_h3",
+      "mean_absolute_error": 0.04145496367633761,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.04145496367633759,
+      "mean_cancellation": 0.0,
+      "scenario": "stationary",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "evidence_retain_h1",
+      "mean_absolute_error": 0.028357881840012252,
+      "mean_absolute_gain": 0.0248427058656811,
+      "mean_absolute_state": 0.017365246419412107,
+      "mean_cancellation": 0.013850070445080964,
+      "scenario": "drift",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "evidence_retain_h1",
+      "mean_absolute_error": 0.010782630236174357,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.010782630236174357,
+      "mean_cancellation": 0.0,
+      "scenario": "drift",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "evidence_retain_h1",
+      "mean_absolute_error": 0.0056932382946135425,
+      "mean_absolute_gain": 0.0019084152889662258,
+      "mean_absolute_state": 0.00526932215302362,
+      "mean_cancellation": 0.0014844991473763058,
+      "scenario": "stationary",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "evidence_retain_h1",
+      "mean_absolute_error": 0.03183137213534357,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.03183137213534357,
+      "mean_cancellation": 0.0,
+      "scenario": "stationary",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "evidence_retain_h3",
+      "mean_absolute_error": 0.04023382152545667,
+      "mean_absolute_gain": 0.0354271663883799,
+      "mean_absolute_state": 0.023641448703797124,
+      "mean_cancellation": 0.01883479356672037,
+      "scenario": "drift",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "evidence_retain_h3",
+      "mean_absolute_error": 0.029972933237123845,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.029972933237123845,
+      "mean_cancellation": 0.0,
+      "scenario": "drift",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "evidence_retain_h3",
+      "mean_absolute_error": 0.005737312811903829,
+      "mean_absolute_gain": 0.0021202614776963,
+      "mean_absolute_state": 0.005411057013131527,
+      "mean_cancellation": 0.001794005678923996,
+      "scenario": "stationary",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "evidence_retain_h3",
+      "mean_absolute_error": 0.04145496367633761,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.04145496367633759,
+      "mean_cancellation": 0.0,
+      "scenario": "stationary",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "frozen_h1",
+      "mean_absolute_error": 0.033718326982455846,
+      "mean_absolute_gain": 0.028248587570621504,
+      "mean_absolute_state": 0.020659936647030103,
+      "mean_cancellation": 0.015190197235195758,
+      "scenario": "drift",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "frozen_h1",
+      "mean_absolute_error": 0.008396906199280903,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.008396906199280903,
+      "mean_cancellation": 0.0,
+      "scenario": "drift",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "frozen_h1",
+      "mean_absolute_error": 0.00511062212302517,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.00511062212302517,
+      "mean_cancellation": 0.0,
+      "scenario": "stationary",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "frozen_h1",
+      "mean_absolute_error": 0.032248827171950864,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.032248827171950864,
+      "mean_cancellation": 0.0,
+      "scenario": "stationary",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "frozen_h3",
+      "mean_absolute_error": 0.04621607622462063,
+      "mean_absolute_gain": 0.04086629001883242,
+      "mean_absolute_state": 0.027990876727293376,
+      "mean_cancellation": 0.022641090521505133,
+      "scenario": "drift",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "frozen_h3",
+      "mean_absolute_error": 0.024518115193513705,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.02451811519351371,
+      "mean_cancellation": 0.0,
+      "scenario": "drift",
+      "steps": 109
+    },
+    {
+      "action_source": "controller",
+      "arm": "frozen_h3",
+      "mean_absolute_error": 0.005110622123025174,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.0051106221230251695,
+      "mean_cancellation": 0.0,
+      "scenario": "stationary",
+      "steps": 531
+    },
+    {
+      "action_source": "external_supervisor",
+      "arm": "frozen_h3",
+      "mean_absolute_error": 0.027833605520291255,
+      "mean_absolute_gain": 0.0,
+      "mean_absolute_state": 0.027833605520291255,
+      "mean_cancellation": 0.0,
+      "scenario": "stationary",
+      "steps": 109
+    }
+  ],
+  "heldout_outcomes_analyzed": false,
+  "identity": "error = retention*(estimated_velocity - previous_true_velocity) + (estimated_gain - true_gain)*actual_action",
+  "interpretation": "Exact algebra, not independent additive causal contributions; ground truth for retrospective scoring only.",
+  "maximum_identity_residual": 1.1102230246251565e-16,
+  "new_episodes": 0,
+  "protocol": "prediction-error-identity-audit-v1"
+}

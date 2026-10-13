@@ -766,3 +766,5 @@ The [research outcome memory bridge](docs/galahad/44-research-outcome-memory.md)
 The [research memory planner](docs/galahad/45-research-memory-planning.md) consults independently validated, approved outcome memory to propose the next research step. It recognizes known rejections while preserving study consumption, revocation and independent promotion gates.
 
 The [memory-guided research coordinator](docs/galahad/46-memory-guided-research-coordinator.md) dispatches a fixed diagnostic from a verified negative outcome, journals consumption, and reconciles completed results on restart. It stops for a new registered hypothesis without replaying experiments or promoting rejected candidates.
+
+The [evidence-gated adaptation candidate](docs/galahad/47-evidence-gated-adaptation.md) retains its learned gain until a bounded sensor window supports a material change. An exact prediction-error audit separates state and gain terms; the candidate remains opt-in pending prospective comparison.
