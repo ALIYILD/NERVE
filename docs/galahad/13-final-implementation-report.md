@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest learning correctness checkpoint:** [55-single-use-standard-learning.md](55-single-use-standard-learning.md) records an opt-in standard estimator correction, actual duplicate/recovery fixtures and independent review. Full regression passed 1,657 tests in 162.613 seconds. Duplicate evidence no longer retrains consumed transitions; general control improvement and completion of the master plan remain unestablished.
+
 **Latest control-learning investigation:** [54-recovery-epoch-learning.md](54-recovery-epoch-learning.md) records a source-verified training diagnosis, an opt-in recovery-epoch candidate and a matched development screen. Wrong-prior cases regressed against existing adaptive control, so the automatic screen rejected progression. Final verification passed 1,640 tests; no new registered streams or promotion were consumed.
 
 **Latest memory-loop integration:** [53-forecast-outcome-coordinator.md](53-forecast-outcome-coordinator.md) records the versioned positive-forecast evidence bridge and coordinator. Full regression passed 1,619 tests; the actual historical finding passed separate fact review and became scoped approved memory. Its review packet authorizes no control change, deployment or model training. The full master plan remains incomplete.
