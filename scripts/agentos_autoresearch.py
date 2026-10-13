@@ -46,6 +46,14 @@ def database(host):
         CREATE TRIGGER IF NOT EXISTS events_no_delete BEFORE DELETE ON events BEGIN SELECT RAISE(ABORT,'immutable event'); END;
         CREATE TRIGGER IF NOT EXISTS inbox_no_rewrite BEFORE UPDATE OF id,identity,family,task ON inbox BEGIN SELECT RAISE(ABORT,'immutable evidence'); END;
         CREATE TRIGGER IF NOT EXISTS inbox_no_delete BEFORE DELETE ON inbox BEGIN SELECT RAISE(ABORT,'immutable evidence'); END;
+        CREATE TABLE IF NOT EXISTS research_findings(
+          fingerprint TEXT PRIMARY KEY,origin TEXT NOT NULL,source_digest TEXT NOT NULL,
+          profile TEXT NOT NULL,category TEXT NOT NULL,metadata TEXT NOT NULL,created INTEGER NOT NULL);
+        CREATE UNIQUE INDEX IF NOT EXISTS research_findings_source ON research_findings(origin,source_digest);
+        CREATE TRIGGER IF NOT EXISTS research_findings_no_update BEFORE UPDATE ON research_findings
+          BEGIN SELECT RAISE(ABORT,'immutable research finding'); END;
+        CREATE TRIGGER IF NOT EXISTS research_findings_no_delete BEFORE DELETE ON research_findings
+          BEGIN SELECT RAISE(ABORT,'immutable research finding'); END;
         ''')
         columns = {row[1] for row in db.execute('PRAGMA table_info(config)')}
         if 'configured' not in columns:
@@ -74,7 +82,62 @@ def status(host):
                 inbox=counts, outcomes=outcomes, remaining_sessions=studies.remaining(host),
                 registered_cohorts=registry.status(host),
                 registered_study=cohort_runner.status(host), cce_jobs=cue_jobs.status(host),
+                research_findings=finding_status(host),
                 activation_authorized=False, limitation=LIMITATION)
+
+
+def finding_status(host):
+    """Local metadata only; findings are research leads, never evaluation gold."""
+    with sqlite3.connect(database(host)) as db:
+        count = db.execute('SELECT COUNT(*) FROM research_findings').fetchone()[0]
+        rows = db.execute('SELECT fingerprint,origin,profile,category FROM research_findings '
+                          'ORDER BY created DESC,rowid DESC LIMIT 20').fetchall()
+    return dict(count=count, latest=[dict(fingerprint=r[0],origin=r[1],profile=r[2],category=r[3])
+                                    for r in rows], status='awaiting_host_review' if count else 'empty',
+                benchmark_gold=False, activation_authorized=False)
+
+
+def collect_findings(host):
+    """Bounded incremental intake from existing trusted host outcome ledgers.
+
+    Never opens mission source paths or copies task/output/lesson text. Each
+    finding identifies a failed observation, not its cause or a model defect.
+    Independent task design and registry review remain required before testing.
+    The existing scheduler supplies the lock and repetition; no provider call.
+    """
+    path = database(host)
+    added = 0
+    with sqlite3.connect(path,uri=True) as db:
+        # Attach read-only host outcomes; this also lets SQL exclude previously
+        # seen source identities before applying the per-tick bound.
+        db.execute('ATTACH DATABASE ? AS learning', (f'file:{host.path}?mode=ro',))
+        db.create_function('mission_digest',1,lambda ident: studies.digest(dict(origin='mission',id=ident)),deterministic=True)
+        db.create_function('research_profile',1,lambda profile: int(type(profile) is str and
+            re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}',profile) is not None),deterministic=True)
+        sources = db.execute('SELECT id,profile,duration,source FROM learning.nerve_missions m '
+            'WHERE success=0 AND research_profile(profile)=1 AND NOT EXISTS '
+            "(SELECT 1 FROM research_findings f WHERE f.origin='mission' AND f.source_digest=mission_digest(m.id)) "
+            'ORDER BY m.rowid LIMIT 32').fetchall()
+        candidates = []
+        for ident,profile,duration,source in sources:
+            source_digest = studies.digest(dict(origin='mission',id=ident))
+            if type(profile) is not str or re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}',profile) is None:
+                continue
+            # Store only a source fingerprint, not a filesystem location or raw
+            # supervisor text. Unknown imported outcomes get no causal label.
+            category = 'supervisor_timeout' if source=='agentos-maintenance:supervisor-timeout' else 'verified_mission_failure'
+            metadata = dict(outcome='failed',source_record_digest=studies.digest(
+                dict(id=ident,profile=profile,duration=duration,source=source)),
+                hypothesis='Investigate this observed failure using independently reviewed new tasks.',
+                benchmark_gold=False,requested_provider_calls=0,activation_authorized=False)
+            candidates.append((source_digest,'mission',profile,category,metadata))
+            if len(candidates)>=32:
+                break
+        for source_digest,origin,profile,category,metadata in candidates:
+            fingerprint = studies.digest(dict(origin=origin,source_digest=source_digest))
+            added += db.execute('INSERT OR IGNORE INTO research_findings VALUES(?,?,?,?,?,?,?)',
+                (fingerprint,origin,source_digest,profile,category,studies.encode(metadata),int(time.time()))).rowcount
+    return dict(added=added,provider_calls=0,benchmark_gold=False,activation_authorized=False)
 
 
 def submit(host, task):
@@ -203,6 +266,7 @@ def tick(host, native, *, cue_adapters=None):
     current = status(host)
     if not current['enabled']:
         return dict(status='paused', activation_authorized=False)
+    collect_findings(host)
     recovered_cues = cue_jobs.recover(host)
     if recovered_cues.get('abandoned'):
         return _event(host, 'cce_recovery', 'crash',
