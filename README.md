@@ -762,3 +762,5 @@ The [observation-evidence gain candidate](docs/galahad/42-evidence-window-candid
 The [registered evidence-window study](docs/galahad/43-evidence-window-study.md) consumes the verified identification diagnostic, audits learning directly from sensor/action evidence, and applies matched frozen/adaptive controls before conditional validation and final evaluation.
 
 The [research outcome memory bridge](docs/galahad/44-research-outcome-memory.md) proposes verified experiment results to existing scoped memory, requires separate host review, and preserves negative findings across process restarts without promoting rejected candidates.
+
+The [research memory planner](docs/galahad/45-research-memory-planning.md) consults independently validated, approved outcome memory to propose the next research step. It recognizes known rejections while preserving study consumption, revocation and independent promotion gates.
