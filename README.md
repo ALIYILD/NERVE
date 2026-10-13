@@ -772,3 +772,5 @@ The [evidence-gated adaptation candidate](docs/galahad/47-evidence-gated-adaptat
 The [registered evidence-gated study](docs/galahad/48-evidence-gated-study.md) executed 128 fresh training episodes. Horizon-1 candidates improved on the existing adaptive control but regressed drift goal error against frozen gain; the loop retained the baseline and preserved validation/holdout streams.
 
 The [authenticated actual-action observer](docs/galahad/49-actual-action-observer.md) advances a separate state estimate from confirmed external actions while control remains suspended. Missing action reports invalidate estimates; observation never authorizes recovery.
+
+The [observer training replay](docs/galahad/50-observer-training-reanalysis.md) tests identical observation rules across 128 recorded trajectories. External-supervision predictions improve in every arm/regime, but drift controller-period errors worsen; unconditional substitution remains rejected.
