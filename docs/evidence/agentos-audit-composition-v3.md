@@ -1,7 +1,9 @@
 # Proposed public audit cohort v3
 
-This is a preregistered proposal for independent review, not a review attestation
-or an admitted study. No model inference or registration was performed.
+This artifact was authored as a preregistered proposal before independent review
+or inference. The subsequent independent review and live admission are recorded
+in [the continuity receipt](agentos-continuity-live-20261013.json). It is admitted
+but remains unconsumed at that receipt's timestamp.
 The 2 train / 4 selection / 4 retention / 6 final partition was authored before
 model outcomes. Training is the only partition available to lesson proposals.
 All gold decisions and applicable source IDs were chosen explicitly before
