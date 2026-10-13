@@ -4,7 +4,7 @@ Mutates only trusted typed simulation parameters. WorldCore's evaluator,
 plant, fixed validation/holdout seeds and absolute eligibility gates are
 not influenced by any candidate. No auto code changes or controller deploy.
 """
-from dataclasses import asdict
+from copy import deepcopy
 from math import isfinite
 from random import Random
 
@@ -15,7 +15,8 @@ from .parallel_agents_v11 import AgentJob, BoundedParallelAgents
 
 class WorldCoreResearchEvolution:
     def __init__(self, *, generations=3, offspring=3, seed=25,
-                 evaluator=evaluate):
+                 evaluator=evaluate, validation_seeds=VALIDATION,
+                 holdout_seeds=REPORT_ONLY, on_selection=None):
         if type(generations) is not int or not 1 <= generations <= 5:
             raise ValueError("bounded number of generations required")
         if type(offspring) is not int or not 1 <= offspring <= 5:
@@ -24,6 +25,18 @@ class WorldCoreResearchEvolution:
             raise ValueError("reproducible integer seed required")
         if not callable(evaluator):
             raise ValueError("trusted simulation evaluator required")
+        for seeds in (validation_seeds, holdout_seeds):
+            if (type(seeds) is not tuple or not 1 <= len(seeds) <= 64
+                    or any(type(s) is not int or not 0 <= s < 2**32 for s in seeds)
+                    or len(set(seeds)) != len(seeds)):
+                raise ValueError("bounded unique integer seed tuples required")
+        if set(validation_seeds) & set(holdout_seeds):
+            raise ValueError("validation and holdout must be disjoint")
+        if on_selection is not None and not callable(on_selection):
+            raise ValueError("trusted selection hook required")
+        self.validation_seeds = validation_seeds
+        self.holdout_seeds = holdout_seeds
+        self.on_selection = on_selection
         self.generations = generations
         self.offspring = offspring
         self.seed = seed
@@ -35,7 +48,7 @@ class WorldCoreResearchEvolution:
     def _score(self, proposal):
         if type(proposal) is not Proposal:
             raise TypeError("only typed simulation candidates are allowed")
-        return self.evaluator(proposal, VALIDATION)
+        return self.evaluator(proposal, self.validation_seeds)
 
     @staticmethod
     def mutation(parent, randomizer, name):
@@ -143,15 +156,23 @@ class WorldCoreResearchEvolution:
 
         # Independent report-only holdout, never sampled by the mutation
         # operator or used to pick candidate generations.
+        if self.on_selection is not None:
+            self.on_selection(deepcopy({
+                "selected_recipe": {"max_missing": best.max_missing,
+                                    "risk_aversion": best.risk_aversion},
+                "selected_validation": best_metrics, "lineage": generations,
+            }))
         base_holdout = self.evaluator(
-            Proposal("baseline-report-only", 5, .25), REPORT_ONLY)
+            Proposal("baseline-report-only", 5, .25), self.holdout_seeds)
         chosen_holdout = self.evaluator(
             Proposal("candidate-report-only", best.max_missing,
-                     best.risk_aversion), REPORT_ONLY)
+                     best.risk_aversion), self.holdout_seeds)
         if not self._metrics_ok(base_holdout) or not self._metrics_ok(chosen_holdout):
             raise ValueError("invalid holdout metrics")
         absolute_holdout = eligibility(chosen_holdout)
-        holdout_pass = (absolute_holdout.eligible
+        holdout_gain = (chosen_holdout["goal_penalized"]
+                        < base_holdout["goal_penalized"] - 1e-5)
+        holdout_pass = (holdout_gain and absolute_holdout.eligible
                         and self._nonregression(chosen_holdout, base_holdout))
         improved = (best.max_missing, best.risk_aversion) != (5, .25)
         return {
@@ -167,6 +188,7 @@ class WorldCoreResearchEvolution:
             },
             "baseline_holdout": base_holdout,
             "report_only_holdout": chosen_holdout,
+            "holdout_strict_goal_improvement": holdout_gain,
             "holdout_absolute_eligible": absolute_holdout.eligible,
             "holdout_rejection_reasons": list(absolute_holdout.reasons),
             "generations_run": len(generations),

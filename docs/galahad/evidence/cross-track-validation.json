@@ -1,0 +1,18 @@
+{
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests": 1301,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 94.606,
+  "python": "3.10.0",
+  "log_sha256": "ae16b48b3cbebfa3ecd169a470434d152843e57d96959d34a3f0f69b95206bc8",
+  "environment": "macOS x86_64; full suite outside sandbox for localhost and protected subprocess fixtures",
+  "sandbox_attempt": {
+    "tests": 1301,
+    "failures": 36,
+    "errors": 8,
+    "seconds": 80.689,
+    "note": "Sandbox prevented network binding and isolated execution; rerun passed with required permissions."
+  },
+  "independent_review": "No substantive blockers found for bounded handoff; receipt and source validation passed."
+}
