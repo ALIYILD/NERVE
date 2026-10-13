@@ -109,6 +109,7 @@ class AgentOSLearning:
             'freeze': {'scope','memory_ids','parent_id','valid_until'},
             'inspect': {'scope','snapshot_id'},
             'handoff': {'scope','snapshot_id'},
+            'workspace-restore': {'scope','artifact_id','destination_parent','directory_name'},
         }
         if (operation not in fields or type(request) is not dict
                 or set(request) != fields[operation] or type(request['scope']) is not dict):
@@ -126,6 +127,9 @@ class AgentOSLearning:
                 result = dict(status='frozen',snapshot_id=memory.freeze(actor,scope,**payload))
             elif operation == 'inspect':
                 result = memory.metadata(actor,payload['snapshot_id'],scope)
+            elif operation == 'workspace-restore':
+                from .generation_workspace import GenerationWorkspace
+                result = GenerationWorkspace(memory).restore(actor,scope,**payload)
             else:
                 result = memory.handoff(actor,payload['snapshot_id'],scope)
             return dict(result,provider_calls=0,activation_authorized=False)

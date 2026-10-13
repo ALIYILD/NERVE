@@ -1,5 +1,27 @@
 # Implementation checkpoint — 13 October 2026
 
+## Follow-on: workspace inheritance and real local dispatch
+
+The [local generation increment](local-generation.md) adds reviewed immutable
+workspace text snapshots, a no-overwrite restore command, configured local runtime
+inventory and real approved-note dispatch using the existing Ollama adapter and
+shared budget. A live development probe returned an independently correct answer;
+its receipt explicitly says no improvement has been demonstrated.
+
+The follow-on full suite ran **1,419 tests: 1,418 passed and one skipped**, in
+113.545 seconds. The focused integration suite passed 73 tests. A subsequently
+added workspace-restore CLI test initially had a test-local variable placement
+error; it was repaired and all four generation-bridge tests passed. The full run
+preceded that final test addition; implementation source did not change afterward.
+
+Phases 1 and 2 now include workspace restoration and one real fresh local session,
+but automatic generational orchestration and held-out gains remain outstanding.
+Phase 4 has actual metadata inspection, not comparative hardware optimisation.
+The phase table below records the earlier checkpoint and must be read with this
+update. No supervision changes were made in this increment.
+
+## Earlier checkpoint
+
 The ten-phase programme remains incomplete. This checkpoint implements bounded
 generation notes through the existing host and a partial macOS service-controller
 protocol. It does not claim measured improvement or independent live containment.
