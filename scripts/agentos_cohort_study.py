@@ -45,6 +45,9 @@ def database(host):
         CREATE TABLE IF NOT EXISTS queued(cohort TEXT PRIMARY KEY,revision TEXT NOT NULL,manifest TEXT NOT NULL);
         CREATE TRIGGER IF NOT EXISTS queued_no_update BEFORE UPDATE ON queued BEGIN SELECT RAISE(ABORT,'immutable queue revision'); END;
         CREATE TRIGGER IF NOT EXISTS queued_no_delete BEFORE DELETE ON queued BEGIN SELECT RAISE(ABORT,'immutable queue revision'); END;
+        CREATE TABLE IF NOT EXISTS queue_reviews(id INTEGER PRIMARY KEY,cohort TEXT NOT NULL,review TEXT NOT NULL,created INTEGER NOT NULL);
+        CREATE TRIGGER IF NOT EXISTS queue_reviews_no_update BEFORE UPDATE ON queue_reviews BEGIN SELECT RAISE(ABORT,'immutable queue review'); END;
+        CREATE TRIGGER IF NOT EXISTS queue_reviews_no_delete BEFORE DELETE ON queue_reviews BEGIN SELECT RAISE(ABORT,'immutable queue review'); END;
         CREATE TABLE IF NOT EXISTS learning_snapshots(study TEXT PRIMARY KEY,snapshot TEXT NOT NULL,digest TEXT NOT NULL);
         CREATE TRIGGER IF NOT EXISTS learning_no_update BEFORE UPDATE ON learning_snapshots BEGIN SELECT RAISE(ABORT,'immutable learning snapshot'); END;
         CREATE TRIGGER IF NOT EXISTS learning_no_delete BEFORE DELETE ON learning_snapshots BEGIN SELECT RAISE(ABORT,'immutable learning snapshot'); END;
@@ -72,6 +75,65 @@ def remaining(host):
     with sqlite3.connect(host.path) as db:
         used=db.execute("SELECT COUNT(*) FROM nerve_calls WHERE day=? AND provider='hermes-free'",(time.strftime('%Y-%m-%d',time.gmtime()),)).fetchone()[0]
     return max(0,20-used)
+
+
+def reviewed_queue(db,ident):
+    """Follow explicit host reviews; the original queue pin is never rewritten."""
+    original=db.execute('SELECT revision,manifest FROM queued WHERE cohort=?',(ident,)).fetchone()
+    if original is None:
+        return None
+    revision,manifest=original
+    rows=db.execute('SELECT review FROM queue_reviews WHERE cohort=? ORDER BY id',(ident,)).fetchall()
+    if len(rows)>32:
+        raise ValueError('queue review limit exceeded')
+    for raw, in rows:
+        review=json.loads(raw)
+        validate_queue_review(review)
+        if (encode(review)!=raw or review['cohort']!=ident or review['previous_revision']!=revision
+                or review['manifest_sha256']!=manifest):
+            raise ValueError('queue review chain mismatch')
+        revision=review['revision']
+    return revision,manifest
+
+
+def validate_queue_review(review):
+    fields={'cohort','previous_revision','revision','manifest_sha256','reviewer','reason'}
+    if type(review) is not dict or set(review)!=fields:
+        raise ValueError('exact queue review fields required')
+    for key in ('previous_revision','revision','manifest_sha256'):
+        if type(review[key]) is not str or re.fullmatch('[a-f0-9]{64}',review[key]) is None:
+            raise ValueError('queue review requires exact digests')
+    if (type(review['cohort']) is not str or re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,127}',review['cohort']) is None
+            or any(type(review[k]) is not str or not 1<=len(review[k])<=2048 for k in ('reviewer','reason'))
+            or review['revision']==review['previous_revision']):
+        raise ValueError('bounded explicit queue review required')
+
+
+def review_queue(host,review):
+    """Trusted local operator review of an UNSTARTED study after a source fix.
+
+    This cannot replay evidence, change a cohort/evaluator, refund calls or
+    approve a candidate. Caller holds the existing host lock. Reviewer names
+    are local attestations, not authenticated remote identities.
+    """
+    validate_queue_review(review)
+    entry=registry.get(host,review['cohort'])
+    if (review['revision']!=current_revision() or review['manifest_sha256']!=entry['manifest_sha256']
+            or entry['evaluator_revision']!=oracle.evaluator_revision()):
+        raise ValueError('review must bind current runner and unchanged reviewed evidence')
+    with sqlite3.connect(database(host)) as db:
+        db.execute('BEGIN IMMEDIATE')
+        if db.execute('SELECT 1 FROM bindings WHERE cohort=?',(review['cohort'],)).fetchone():
+            raise ValueError('consumed study cannot be reauthorized')
+        current=reviewed_queue(db,review['cohort'])
+        if current!=(review['previous_revision'],review['manifest_sha256']):
+            raise ValueError('review does not match pending queue pin')
+        if db.execute('SELECT COUNT(*) FROM queue_reviews WHERE cohort=?',(review['cohort'],)).fetchone()[0]>=32:
+            raise ValueError('queue review limit exceeded')
+        db.execute('INSERT INTO queue_reviews(cohort,review,created) VALUES(?,?,?)',
+                   (review['cohort'],encode(review),int(time.time())))
+    return dict(status='queue_revision_reviewed',cohort=review['cohort'],revision=review['revision'],
+                review_digest=digest(review),provider_calls=0,activation_authorized=False)
 
 
 def status(host):
@@ -191,12 +253,10 @@ def training_lesson(host,row,scope):
         value=receipt.get('value')
         if n==0:
             if ((phase,arm)!=('train','baseline') or prompt!=prediction_prompt(groups,'train')
-                    or type(value) is not dict or set(value)!={r['id'] for r in groups['train']}):
+                    or type(value) is not dict or len(encode(value).encode())>65536 or set(value)!={r['id'] for r in groups['train']}):
                 raise ValueError('training request drift')
             for task in groups['train']:
                 answer=value[task['id']]; feedback=oracle.judge_decision(task['bundle'],answer)
-                if feedback['category']=='invalid_output':
-                    raise ValueError('invalid historical decision')
                 hits+=int(feedback['passed'])
                 training.append(dict(task=dict(id=task['id'],bundle=task['bundle']),answer=answer,feedback=feedback))
         elif (phase,arm)!=('proposal','lesson') or value!={'lesson':lesson} or prompt!=proposal_prompt(training,history):
@@ -240,7 +300,7 @@ def run(host,native,entry):
     path=database(host)
     with sqlite3.connect(path) as db:
         db.execute('INSERT OR IGNORE INTO queued VALUES(?,?,?)',(entry['id'],revision,manifest))
-        queued=db.execute('SELECT revision,manifest FROM queued WHERE cohort=?',(entry['id'],)).fetchone()
+        queued=reviewed_queue(db,entry['id'])
     if queued!=(revision,manifest):
         return dict(status='queued_revision_mismatch',cohort=entry['id'],activation_authorized=False)
     identities=[(cohort.canonical_identity(row),row['family']) for rows in groups.values() for row in rows]
@@ -297,10 +357,10 @@ def run(host,native,entry):
     def predict(phase,arm,advice=None):
         prompt=prediction_prompt(groups,phase,advice)
         value=invoke(phase,arm,prompt)
-        if type(value) is not dict or set(value)!={r['id'] for r in groups[phase]}:
+        if type(value) is not dict or len(encode(value).encode())>65536 or set(value)!={r['id'] for r in groups[phase]}:
             raise ValueError('malformed audit batch')
         judged={r['id']:oracle.judge_decision(r['bundle'],value[r['id']]) for r in groups[phase]}
-        if any(j['category']=='invalid_output' for j in judged.values()):
+        if phase!='train' and any(j['category']=='invalid_output' for j in judged.values()):
             raise ValueError('malformed audit decision')
         return value,judged
     try:
@@ -361,9 +421,17 @@ def run(host,native,entry):
 
 def prediction_prompt(groups,phase,advice=None):
     tasks=[dict(id=r['id'],bundle=r['bundle']) for r in groups[phase]]
-    return ('Audit the simulated evidence only. Return JSON keyed by every task ID; each value has exactly decision and citations. '
-        'decision is supported,contradicted,unknown. Cite ALL matching fresh independent root sources, including both sides of conflicts; '
-        'fields must list model,provider,observed_at and all fields.KEY names for that source. No applicable evidence means unknown with empty citations. '
+    return ('Audit the simulated evidence only. Return one JSON object keyed by every task ID from tasks. '
+        'Each task value must have exactly two keys: "decision" and "citations". '
+        '"decision" must be one of the strings "supported", "contradicted", "unknown". '
+        '"citations" must be an array of objects, each with exactly "source_id" and "fields". '
+        '"source_id" is the cited source id string from that task bundle. '
+        '"fields" is an array of unique field-name strings, not an object or field values. '
+        'Citation structure example only: {"source_id":"<source id>","fields":["model","provider","observed_at","fields.<key>"]}. '
+        'Replace placeholders with actual source id and field names; do not copy source records into citations. '
+        'Cite ALL matching fresh independent root sources exactly once, including both sides of conflicts; '
+        'for each cited source, fields must include "model", "provider", "observed_at" and "fields.KEY" for every key in its fields object. '
+        'No applicable evidence means "unknown" with an empty citations array. '
         'Assertions/derived records do not prove observations. Match model/provider, request for execution, inclusive at-max_age..at freshness. '
         'This is a recorded-request claim, not general availability. No prose or extra keys.\n'
         +encode(dict(tasks=tasks,advice=advice)))
@@ -447,11 +515,11 @@ def candidate(host,study_id):
             raise ValueError('invalid paired layout')
         if prompt!=prediction_prompt(groups,phase,lesson if arm=='lesson' else None):
             raise ValueError('prediction prompt mismatch')
-        if type(value) is not dict or set(value)!={r['id'] for r in groups[phase]}:
+        if type(value) is not dict or len(encode(value).encode())>65536 or set(value)!={r['id'] for r in groups[phase]}:
             raise ValueError('invalid prediction batch')
         answers[phase,arm]=value
         judgments[phase,arm]={r['id']:oracle.judge_decision(r['bundle'],value[r['id']]) for r in groups[phase]}
-        if any(j['category']=='invalid_output' for j in judgments[phase,arm].values()):
+        if phase!='train' and any(j['category']=='invalid_output' for j in judgments[phase,arm].values()):
             raise ValueError('invalid decision')
     phases={}
     for phase in ('selection','retention','final'):

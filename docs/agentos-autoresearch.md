@@ -76,6 +76,29 @@ full context and digest to the study. Export verification checks that frozen
 context rather than reconstructing a newer history. This adds learning between
 attempts; whether it helps must still be measured on untouched tasks.
 
+Malformed individual training decisions now count as failed training feedback
+and can teach the proposer about its output contract. Batch task IDs and the
+64 KiB output bound remain mandatory. Selection, retention and final phases still
+fail on malformed decisions. Prediction prompts state the exact citation shape:
+`{"source_id":"id-from-task","fields":["model","provider","observed_at","fields.KEY"]}`.
+They never ask the model to copy an entire evidence source into a citation.
+
+If a source repair invalidates a queued revision before the study starts, an
+explicit trusted local operator review can authorize that new revision:
+
+```sh
+python3 scripts/agentos_bridge.py autoresearch-review-queue --review /absolute/path/review.json
+```
+
+The review requires exactly `cohort`, `previous_revision`, `revision`,
+`manifest_sha256`, `reviewer`, and `reason`. Both source revisions and the manifest
+are exact SHA256 values. The target must be the currently installed runner, and
+the admitted cohort and evaluator must be unchanged. Reviews append to an
+immutable chain; they never overwrite the original queue pin. Consumed studies
+cannot be reauthorized, including failures with unused prepaid sessions. No
+budget is refunded and no model call or candidate approval occurs. The reviewer
+name is a local attestation, not authenticated remote identity.
+
 Enabled ticks also collect bounded failed-mission metadata into the existing
 autoresearch ledger's `research_findings` table. These are pending research
 leads, not benchmark answers or permission to generate/approve a study. See the

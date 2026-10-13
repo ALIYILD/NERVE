@@ -65,3 +65,30 @@ Neither a passing transport diagnostic, new queue entry, generated lesson,
 successful task-local recovery nor a green software test suite alone completes
 this goal. Do not promote a candidate until its own evidence satisfies the
 existing release authority. Clinical and provider constraints remain in force.
+
+## Live continuation on 13 October 2026
+
+The installed scheduler consumed the frozen v1 audit cohort and registered v2
+cohort after the UTC budget reset. Both stopped after the training-baseline
+response had malformed citation objects. Each reserved eight native sessions;
+each returned one model response before failure. All reservations and evidence
+remain consumed. This is failed research, not an accepted improvement.
+
+The returned citations copied entire source records instead of the required
+`source_id` and string-array `fields` schema. The registered runner's prediction
+prompt now states that schema explicitly. Malformed individual training answers
+can also become independently graded failed feedback for the proposer; malformed
+evaluation answers remain failures. The old fixed study is preserved unchanged.
+
+The independently reviewed v3 cohort is registered as
+`audit-composition-20261013-v3`, manifest
+`ef671cbfdda13620f3ea31de9165224e0c28f39e13fa6a018be7243e264cea37`.
+It has not been dispatched. Four native sessions remained immediately after the
+two prior studies, fewer than the eight required for a new study. A source repair
+requires explicit append-only review of its pending revision before it can run;
+the cohort, gold, evaluator and original queue record cannot be rewritten.
+
+The new intake also recorded two real supervisor-observed mission timeouts as
+pending research leads. Their existence does not supply benchmark gold or prove
+that a model or cue caused either timeout. The overall improvement goal remains
+unproven and active.
