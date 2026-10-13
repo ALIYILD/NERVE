@@ -22,3 +22,11 @@ class ObservedNerveRuntime:
         self.trace.record("identity","ok" if approved else "denied",
                           self.runtime.controller.incident)
         return approved
+    def advance_time(self,now):
+        return self.runtime.advance_time(now)
+    def observe_recovery(self,timestamp,*,observed_now,position,velocity):
+        result=self.runtime.observe_recovery(timestamp,observed_now=observed_now,
+                                             position=position,velocity=velocity)
+        self.trace.record("sensor","denied" if result is False else "ok",
+                          self.runtime.controller.incident)
+        return result

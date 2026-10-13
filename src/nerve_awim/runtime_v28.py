@@ -25,5 +25,10 @@ class NerveResearchRuntime:
         self.controller.miss()
     def observe(self,timestamp,*,position=None,velocity=None):
         return self.controller.ingest(timestamp,position=position,velocity=velocity)
+    def advance_time(self,now):
+        return self.controller.advance_time(now)
+    def observe_recovery(self,timestamp,*,observed_now,position,velocity):
+        return self.controller.observe_recovery(timestamp,observed_now=observed_now,
+                                                position=position,velocity=velocity)
     def authorise_recovery(self,token,approval,now):
         return self.controller.authorize_identity(token,approval,now)

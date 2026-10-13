@@ -744,3 +744,5 @@ The bounded coordinator now selects typed memory policies using prospective trai
 The [registered research handoff](docs/galahad/34-registered-research-handoff.md) verifies the completed online-policy receipt before automatically running a bounded WorldCore study. Its first real CPU run completed 88 synthetic simulation episodes and found no deployable improvement; no policy or model was promoted.
 
 The [automatic outage diagnosis](docs/galahad/35-outage-search-diagnosis.md) routes a verified WorldCore rejection to a bounded mechanism check. It identifies when the permitted parameter search cannot satisfy the fixed outage/completion contract and stops unmodified retries without relaxing safety gates.
+
+[Sensor freshness enforcement](docs/galahad/36-sensor-freshness.md) prevents duplicate and historical packets from erasing elapsed outage time. The changed controller invalidates earlier current-source study receipts; historical evidence remains preserved, and no outage-recovery improvement is claimed.

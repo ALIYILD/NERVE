@@ -21,14 +21,9 @@ class AuditedRecovery(SupervisedWorldCore):
         self.used_nonces=set()
         self.audit=[]
         self.last_packet=-1
-    def miss(self):
-        previous=self.phase
-        super().miss()
-        if previous=="active" and self.phase!="active":
-            self.incident+=1
-            self.last_recovery_timestamp=-1
-            self.fresh_count=0
-            self.audit.append(("outage",self.incident))
+    def _on_incident(self):
+        self.incident+=1
+        self.audit.append(("outage",self.incident))
     def ingest(self,timestamp,*,position=None,velocity=None):
         if self.phase!="active" and timestamp<=self.last_packet:
             self.audit.append(("stale_rejected",self.incident))
@@ -39,7 +34,7 @@ class AuditedRecovery(SupervisedWorldCore):
     def authorize(self,approval:Approval):
         if not isinstance(approval,Approval):
             raise TypeError("approval required")
-        valid=(self.phase=="awaiting_approval"
+        valid=(self.recovery_ready()
                and approval.incident==self.incident
                and approval.principal.strip()!=""
                and approval.role=="supervisor"
@@ -50,7 +45,7 @@ class AuditedRecovery(SupervisedWorldCore):
             return False
         self.used_nonces.add(approval.nonce)
         result=super().approve_recovery(True)
-        self.audit.append(("approval_accepted",self.incident))
+        self.audit.append(("approval_accepted" if result else "approval_rejected",self.incident))
         return result
     def approve_recovery(self,approved):
         """Block legacy boolean approval; use authorize(Approval) instead."""

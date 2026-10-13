@@ -35,7 +35,7 @@ def _hashes():
 
 
 def manifest():
-    return {'protocol': 'worldcore-outage-diagnostic-v1',
+    return {'protocol': 'worldcore-outage-diagnostic-v3',
             'max_missing_values': LIMITS, 'risk_aversion_values': RISKS,
             'max_cases': MAX_CASES, 'max_miss_and_choose_pairs': 231,
             'source_sha256': _hashes(), 'simulation_episodes': 0,
@@ -58,7 +58,7 @@ def _source_contract():
     controllers = [node for node in controller_tree.body
                    if isinstance(node, ast.ClassDef) and node.name == 'WorldCoreV2']
     if (len(controllers) != 1 or sha256(ast.dump(controllers[0], include_attributes=False).encode()).hexdigest()
-            != '0c8639d679d3b6c01b9f3d595c42d32fbc920de1777f6a511e605fc0321fa56e'):
+            != 'd1277c35b5fe7e4b84bea4c9c724225c2f280f8bcb57d6f5f4bbbb16105406c8'):
         raise RuntimeError('unknown_controller_structure')
     assignments = {node.targets[0].id: node.value for node in tree.body
                    if isinstance(node, ast.Assign) and len(node.targets) == 1
