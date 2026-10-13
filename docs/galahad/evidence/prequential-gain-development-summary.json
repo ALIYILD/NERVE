@@ -1,0 +1,388 @@
+{
+  "candidate_promoted": false,
+  "episodes": 12,
+  "heldout_outcomes_analyzed": false,
+  "model_weights_trained": false,
+  "performance_improvement_claimed": false,
+  "plant_steps": 960,
+  "protocol": "prequential-gain-development-v1",
+  "recommendation": "retain_baselines_and_diagnose",
+  "registered_streams_used": false,
+  "screen": {
+    "comparisons": [
+      {
+        "baseline": "frozen",
+        "passed": true,
+        "strata": [
+          {
+            "deltas": {
+              "mean_goal_error": 0.0,
+              "mean_prediction_error": 0.0,
+              "supervisor_steps": 0,
+              "violations": 0
+            },
+            "nonregression": true,
+            "plant": "nominal"
+          },
+          {
+            "deltas": {
+              "mean_goal_error": 0.0,
+              "mean_prediction_error": 0.0,
+              "supervisor_steps": 0,
+              "violations": 0
+            },
+            "nonregression": true,
+            "plant": "lower"
+          },
+          {
+            "deltas": {
+              "mean_goal_error": -0.003413268103567846,
+              "mean_prediction_error": -0.02155524544410571,
+              "supervisor_steps": 0,
+              "violations": 0
+            },
+            "nonregression": true,
+            "plant": "higher"
+          },
+          {
+            "deltas": {
+              "mean_goal_error": 0.0,
+              "mean_prediction_error": 0.0,
+              "supervisor_steps": 0,
+              "violations": 0
+            },
+            "nonregression": true,
+            "plant": "drift"
+          }
+        ],
+        "sum_goal_gain": 0.003413268103567846
+      },
+      {
+        "baseline": "single_use",
+        "passed": false,
+        "strata": [
+          {
+            "deltas": {
+              "mean_goal_error": 0.0024256407479679165,
+              "mean_prediction_error": -0.0002266003747074712,
+              "supervisor_steps": 0,
+              "violations": 0
+            },
+            "nonregression": false,
+            "plant": "nominal"
+          },
+          {
+            "deltas": {
+              "mean_goal_error": 0.003573581776187218,
+              "mean_prediction_error": 0.003208553240873475,
+              "supervisor_steps": 0,
+              "violations": 0
+            },
+            "nonregression": false,
+            "plant": "lower"
+          },
+          {
+            "deltas": {
+              "mean_goal_error": -0.003413268103567846,
+              "mean_prediction_error": 0.005478323785840344,
+              "supervisor_steps": 0,
+              "violations": 0
+            },
+            "nonregression": false,
+            "plant": "higher"
+          },
+          {
+            "deltas": {
+              "mean_goal_error": 0.0,
+              "mean_prediction_error": 0.0010558216427606383,
+              "supervisor_steps": 0,
+              "violations": 0
+            },
+            "nonregression": false,
+            "plant": "drift"
+          }
+        ],
+        "sum_goal_gain": -0.0025859544205872886
+      }
+    ],
+    "passed": false
+  },
+  "source_sha256": {
+    "scripts/demo_prequential_gain.py": "63baad9a94e7946d269b3a79aef425856f682938104ffc0ed8cafa2ea86c5a06",
+    "scripts/demo_standard_learning.py": "ed28e392e2d98ac21da4804f2eaa747070cfe3ff309b66e3c238d87091163615",
+    "src/nerve_awim/adaptive_calibration_v19.py": "299922a93b915996c7b809836a4eaf6b31e35f96d2807adca7281dda719a0786",
+    "src/nerve_awim/calibrated_v16.py": "5311374673061a50bac8f28c20cd560678c9b35c123aaac7473aede84f8319b8",
+    "src/nerve_awim/calibration_v15.py": "f1b49e8adac7c6951f3522663a61c7694d874d8832f53f1cb10aea628e95dd68",
+    "src/nerve_awim/coverage_v18.py": "27a45ac324d82b357487605b6ebb1b8dbc8f0e630c0d93c1a199b1633674e9a3",
+    "src/nerve_awim/drift_v14.py": "af8259a4dfec16b1bfc0d5993f60ea99285025803162584fb8d11aae87a9e62a",
+    "src/nerve_awim/fusion_v12.py": "d5481b7ebef1e7630a65491572f8f99edfc529d97617ebdd2d00fd3bb9758de8",
+    "src/nerve_awim/identity_v26.py": "245b67c92ec8987b02704550dd494269db3d60c51270ab87b04a91487f0dc060",
+    "src/nerve_awim/integrated_v13.py": "bf28343e2ed0bf8f0089c7712fcbefb8ae7c2938505fcae67254b572af2e3e07",
+    "src/nerve_awim/memory_gateway/prequential_gain_demo.py": "07bb88cc4b8682af9b447690060c3f1aa2550e497c76a47a0f68772157193390",
+    "src/nerve_awim/memory_gateway/recovery_adaptation.py": "ddb3db10fdc417bace28898ba9f1652346884d723dc64b968c1f53f19688e99b",
+    "src/nerve_awim/memory_gateway/standard_learning_audit.py": "f542e479051288284c07c67dabf6294a9ff26ade1031a623bfef1616a2ac62ed",
+    "src/nerve_awim/memory_gateway/standard_learning_demo.py": "bfd51f5953f770d08cdae89e08dcc3d52a59536de195c92379f55ea30fedb1f5",
+    "src/nerve_awim/prequential_gain.py": "253bfd9c414733a95c679e50512b4d13d298888794a39c15f79f68b48417b21b",
+    "src/nerve_awim/recovery_policy_v23.py": "0caf4ccbf801596213fad17738e144c7c5417cb09ff52823365cee34633683f6",
+    "src/nerve_awim/recovery_v21.py": "bbf384ded4fe9f2ec783a8012e8f8d389f9790efe17c090aeabd52d2b1d52487",
+    "src/nerve_awim/recovery_v22.py": "c8c0ac7b0ef0bd72c956b5a99e22098bf104aca4edf83e7cfb9b4f0c565e934a",
+    "src/nerve_awim/recovery_v24.py": "8f7fc31ef4e01c4f59dbc194134fc9c4fc4c2446e93cfe30ac532f3d7da41eb5",
+    "src/nerve_awim/recovery_v25.py": "ee5de8bf2dbdb6b67d71bb64bd60ac2d8707cd771511e2ed379e2d53e8f550e5",
+    "src/nerve_awim/risk_v17.py": "6b7f88441d21cbce5339042d3a7c9cdc66cda41842e3ab9a9daef09974a179aa",
+    "src/nerve_awim/runtime_v28.py": "c155f4d64de07b102607899228d8187658d46662f531a886c9329f135a116c44",
+    "src/nerve_awim/single_use_standard.py": "4e63c414725fc9360e2e97a0de92c067232cedce968e0c3a1b3128a04f220c68",
+    "src/nerve_awim/worldcore_v20.py": "673e5cf431f5d1900242cf261621d888dabe499d5a1891d3aca023fbecdbdd8d"
+  },
+  "status": "complete",
+  "artifact_sha256": "b629857c762c141b9ed53751db0bccadb068297530b8fc2a09cda515d356fbb3",
+  "rows": [
+    {
+      "arm": "frozen",
+      "plant": "nominal",
+      "metrics": {
+        "mean_goal_error": 0.14376122623082427,
+        "mean_prediction_error": 0.006637115493040656,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "frozen",
+        "ema_applications": 0,
+        "epochs": 2,
+        "final_gain": 0.27,
+        "learning_rate": 0.0,
+        "repeated_applications": 0,
+        "unique_transitions": 0
+      },
+      "elapsed_seconds": 0.018420890992274508
+    },
+    {
+      "arm": "single_use",
+      "plant": "nominal",
+      "metrics": {
+        "mean_goal_error": 0.14133558548285635,
+        "mean_prediction_error": 0.006863715867748127,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "single_use",
+        "ema_applications": 13,
+        "epochs": 2,
+        "final_gain": 0.27256783717601857,
+        "learning_rate": 0.08,
+        "repeated_applications": 0,
+        "unique_transitions": 13
+      },
+      "elapsed_seconds": 0.015910973015706986
+    },
+    {
+      "arm": "selector",
+      "plant": "nominal",
+      "metrics": {
+        "mean_goal_error": 0.14376122623082427,
+        "mean_prediction_error": 0.006637115493040656,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "single_use",
+        "ema_applications": 11,
+        "epochs": 2,
+        "final_gain": 0.27119538538516774,
+        "learning_rate": 0.08,
+        "repeated_applications": 0,
+        "unique_transitions": 11
+      },
+      "elapsed_seconds": 0.018581101001473144,
+      "learned_mode_controller_commands": 0,
+      "learned_mode_nonzero_controller_commands": 0
+    },
+    {
+      "arm": "frozen",
+      "plant": "lower",
+      "metrics": {
+        "mean_goal_error": 0.166322817245042,
+        "mean_prediction_error": 0.017500830649358968,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "frozen",
+        "ema_applications": 0,
+        "epochs": 2,
+        "final_gain": 0.27,
+        "learning_rate": 0.0,
+        "repeated_applications": 0,
+        "unique_transitions": 0
+      },
+      "elapsed_seconds": 0.017417757015209645
+    },
+    {
+      "arm": "single_use",
+      "plant": "lower",
+      "metrics": {
+        "mean_goal_error": 0.16274923546885478,
+        "mean_prediction_error": 0.014292277408485493,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "single_use",
+        "ema_applications": 6,
+        "epochs": 2,
+        "final_gain": 0.23554719830413462,
+        "learning_rate": 0.08,
+        "repeated_applications": 0,
+        "unique_transitions": 6
+      },
+      "elapsed_seconds": 0.014922733971616253
+    },
+    {
+      "arm": "selector",
+      "plant": "lower",
+      "metrics": {
+        "mean_goal_error": 0.166322817245042,
+        "mean_prediction_error": 0.017500830649358968,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "single_use",
+        "ema_applications": 8,
+        "epochs": 2,
+        "final_gain": 0.22421242286748008,
+        "learning_rate": 0.08,
+        "repeated_applications": 0,
+        "unique_transitions": 8
+      },
+      "elapsed_seconds": 0.018160558014642447,
+      "learned_mode_controller_commands": 12,
+      "learned_mode_nonzero_controller_commands": 0
+    },
+    {
+      "arm": "frozen",
+      "plant": "higher",
+      "metrics": {
+        "mean_goal_error": 0.2917460539948001,
+        "mean_prediction_error": 0.08605013775186957,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "frozen",
+        "ema_applications": 0,
+        "epochs": 2,
+        "final_gain": 0.27,
+        "learning_rate": 0.0,
+        "repeated_applications": 0,
+        "unique_transitions": 0
+      },
+      "elapsed_seconds": 0.016037828027037904
+    },
+    {
+      "arm": "single_use",
+      "plant": "higher",
+      "metrics": {
+        "mean_goal_error": 0.2917460539948001,
+        "mean_prediction_error": 0.05901656852192351,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "single_use",
+        "ema_applications": 22,
+        "epochs": 2,
+        "final_gain": 0.3853533858030687,
+        "learning_rate": 0.08,
+        "repeated_applications": 0,
+        "unique_transitions": 22
+      },
+      "elapsed_seconds": 0.014606498996727169
+    },
+    {
+      "arm": "selector",
+      "plant": "higher",
+      "metrics": {
+        "mean_goal_error": 0.28833278589123224,
+        "mean_prediction_error": 0.06449489230776385,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "single_use",
+        "ema_applications": 22,
+        "epochs": 2,
+        "final_gain": 0.37793922957379783,
+        "learning_rate": 0.08,
+        "repeated_applications": 0,
+        "unique_transitions": 22
+      },
+      "elapsed_seconds": 0.01770398300141096,
+      "learned_mode_controller_commands": 50,
+      "learned_mode_nonzero_controller_commands": 22
+    },
+    {
+      "arm": "frozen",
+      "plant": "drift",
+      "metrics": {
+        "mean_goal_error": 0.16013830873228857,
+        "mean_prediction_error": 0.02344131702549184,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "frozen",
+        "ema_applications": 0,
+        "epochs": 2,
+        "final_gain": 0.27,
+        "learning_rate": 0.0,
+        "repeated_applications": 0,
+        "unique_transitions": 0
+      },
+      "elapsed_seconds": 0.01538248299038969
+    },
+    {
+      "arm": "single_use",
+      "plant": "drift",
+      "metrics": {
+        "mean_goal_error": 0.16013830873228857,
+        "mean_prediction_error": 0.022385495382731203,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "single_use",
+        "ema_applications": 10,
+        "epochs": 2,
+        "final_gain": 0.30656525603174434,
+        "learning_rate": 0.08,
+        "repeated_applications": 0,
+        "unique_transitions": 10
+      },
+      "elapsed_seconds": 0.015033875999506563
+    },
+    {
+      "arm": "selector",
+      "plant": "drift",
+      "metrics": {
+        "mean_goal_error": 0.16013830873228857,
+        "mean_prediction_error": 0.02344131702549184,
+        "supervisor_steps": 15,
+        "violations": 0
+      },
+      "learning_audit": {
+        "arm": "single_use",
+        "ema_applications": 10,
+        "epochs": 2,
+        "final_gain": 0.30656525603174434,
+        "learning_rate": 0.08,
+        "repeated_applications": 0,
+        "unique_transitions": 10
+      },
+      "elapsed_seconds": 0.01915665899286978,
+      "learned_mode_controller_commands": 0,
+      "learned_mode_nonzero_controller_commands": 0
+    }
+  ]
+}

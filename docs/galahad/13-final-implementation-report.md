@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest adaptive candidate:** [58-prequential-gain-selection.md](58-prequential-gain-selection.md) records an opt-in forecast-based gain selector and twelve matched development cases. It passed against frozen control but regressed against ungated single-use learning; the screen retained baselines. Full regression passed 1,703 tests. No fresh registered streams, default promotion, neural training or deployment.
+
 **Latest prediction diagnosis:** [57-standard-learning-diagnostic.md](57-standard-learning-diagnostic.md) validates and decomposes all 480 recorded prediction errors without new episodes. Learned gain worsens stationary conditional forecasts but improves drift forecasts; no control-policy change is authorized. Full regression passed 1,684 tests. Forecast-based gain selection remains a proposed next experiment.
 
 **Latest audited learning comparison:** [56-standard-learning-comparison.md](56-standard-learning-comparison.md) records six matched development episodes with independently reconstructed EMA applications. The corrected learner outperformed legacy learning but regressed stationary prediction against frozen control, so progression was rejected. Full regression passed 1,674 tests; no new registered streams, model training or promotion.
