@@ -58,7 +58,29 @@ Each JSON cohort contains `id`, `scope`, `limitation`, and `splits` with exactly
 
 Admission reserves all case identities and families atomically, checks typed gold against the fixed evaluator, and rejects overlap with earlier cohorts, controls, shadow episodes, or the monitoring inbox. A canonical hash detects cosmetic reuse; independent review must still assess substantive novelty. Registered content and reviews are immutable. Changing an admitted file does not change the stored cohort. Registry/evaluator/runner revisions are bound when an experiment first attempts to run; drift stops a deferred experiment.
 
-The v2 cohort adds 16 public simulated compositions independently checked against the previous 30 cases. It shares the same reasoning primitives and is not a sample of independent production incidents. It supplies one additional learning experiment; more experiments require further independently reviewed cohorts. Advice is proposed afresh against each cohort's baseline, not cumulatively merged into an incumbent skill. No test generator or unlimited source of independent tasks is claimed.
+The v2 cohort adds 16 public simulated compositions independently checked against the previous 30 cases. It shares the same reasoning primitives and is not a sample of independent production incidents. It supplies one additional learning experiment; more experiments require further independently reviewed cohorts. Advice is evaluated against each cohort's unchanged capable baseline, not cumulatively merged into an operational incumbent skill. No test generator or unlimited source of independent tasks is claimed.
+
+Registered studies now freeze up to four distinct historical lessons and their
+independently regraded training-baseline counts, capped at 8 KiB, before proposing
+the next lesson. Exact profile, requested model, runner revision and task scope
+must match. Training/proposal receipts, source snapshots and requests are
+revalidated; rejected or failed studies may contribute valid training evidence
+without revealing their later results. Selection, retention and final outcomes
+are never supplied to this proposal context. The model's `:free` name is not an
+attestation of immutable provider weights. Historical lessons remain untrusted
+hypotheses, with no effectiveness or deployment authority. Empty history retains
+the previous exact proposal prompt and eight-call budget.
+
+The immutable `learning_snapshots` row and mirrored `learning.json` file bind the
+full context and digest to the study. Export verification checks that frozen
+context rather than reconstructing a newer history. This adds learning between
+attempts; whether it helps must still be measured on untouched tasks.
+
+Enabled ticks also collect bounded failed-mission metadata into the existing
+autoresearch ledger's `research_findings` table. These are pending research
+leads, not benchmark answers or permission to generate/approve a study. See the
+[continuous improvement programme](cce/continuous-improvement.md) for the nested
+loops and completion requirements.
 
 `cohort-registry.sqlite3` preserves admission and evidence reservations. `cohort-study.sqlite3` records consumption, prepaid calls, exact requests, responses, and outcomes. Every accepted result is regraded against its frozen input and receipts before export to `autoresearch-cohort-skills/<study-id>/`. Its eligibility is explicitly `experimental_unmonitored`; later controller visits revalidate it and mark mismatches ineligible. Interrupted studies remain consumed and are never replayed. The existing original study remains first in the queue.
 
