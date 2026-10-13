@@ -748,3 +748,5 @@ The [automatic outage diagnosis](docs/galahad/35-outage-search-diagnosis.md) rou
 [Sensor freshness enforcement](docs/galahad/36-sensor-freshness.md) prevents duplicate and historical packets from erasing elapsed outage time. The changed controller invalidates earlier current-source study receipts; historical evidence remains preserved, and no outage-recovery improvement is claimed.
 
 The [prospective recovery/adaptation study](docs/galahad/37-recovery-adaptation-study.md) measured 173 online gain updates across 32 validation episodes. It rejected the adaptive candidate for goal/prediction regressions and preserved the unused final-evaluation streams. This demonstrates measured outcome gating, not a general self-improvement claim.
+
+The [adaptation followup diagnostic](docs/galahad/38-adaptation-followup.md) consumes verified rejected studies and automatically reconciles paired objective-error contributions without rerunning plant or final-evaluation episodes.
