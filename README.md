@@ -774,3 +774,5 @@ The [registered evidence-gated study](docs/galahad/48-evidence-gated-study.md) e
 The [authenticated actual-action observer](docs/galahad/49-actual-action-observer.md) advances a separate state estimate from confirmed external actions while control remains suspended. Missing action reports invalidate estimates; observation never authorizes recovery.
 
 The [observer training replay](docs/galahad/50-observer-training-reanalysis.md) tests identical observation rules across 128 recorded trajectories. External-supervision predictions improve in every arm/regime, but drift controller-period errors worsen; unconditional substitution remains rejected.
+
+The [phase-aware forecast study](docs/galahad/51-phase-aware-forecast-study.md) preserves controller predictions and selects the actual-action observer during external supervision. Its fixed rule passed all three stages across 512 fresh synthetic episodes, reducing final-holdout mean prediction error by 18.98%. This is a shadow-forecast result; actions were unchanged and no controller or model was promoted.

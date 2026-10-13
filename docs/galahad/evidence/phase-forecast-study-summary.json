@@ -1,0 +1,671 @@
+{
+  "aggregate_mae": {
+    "holdout": {
+      "legacy": 0.02156622757674906,
+      "relative_reduction_percent": 18.983392780756077,
+      "routed": 0.01747222588786305,
+      "weighting": "equal arm/regime averages; equal episode lengths and counts within split"
+    },
+    "train": {
+      "legacy": 0.02325011786181396,
+      "relative_reduction_percent": 21.372900867657613,
+      "routed": 0.018280893219594908,
+      "weighting": "equal arm/regime averages; equal episode lengths and counts within split"
+    },
+    "validation": {
+      "legacy": 0.022907360769775863,
+      "relative_reduction_percent": 18.860393943526137,
+      "routed": 0.018586942286531374,
+      "weighting": "equal arm/regime averages; equal episode lengths and counts within split"
+    }
+  },
+  "candidate_promoted": false,
+  "control_objective_improvement_claimed": false,
+  "dataset_sha256": "eeca45ef878d69282cea23c7ea1d97102006faa781aa6382238bcd84bf2a7510",
+  "deployed": false,
+  "environment": {
+    "hardware": "CPU only",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "episodes": 512,
+  "goal_achieved": false,
+  "holdout_consumed": true,
+  "measured_work": {
+    "holdout": {
+      "episode_elapsed_seconds": 40.144043750013225,
+      "episodes": 256
+    },
+    "train": {
+      "episode_elapsed_seconds": 23.35361211115378,
+      "episodes": 128
+    },
+    "validation": {
+      "episode_elapsed_seconds": 18.158864162047394,
+      "episodes": 128
+    }
+  },
+  "model_weights_trained": false,
+  "plant_steps": 40960,
+  "predecessor_path": "/private/tmp/nerve-observer-reanalysis-v1.json",
+  "predecessor_sha256": "bac26304ff79bc300286126875333ed3e61138a16894b58adde5ef669da8bf72",
+  "protocol": {
+    "acceptance": "Every arm/regime routed MAE <= legacy MAE + 1e-12; summed mean MAE gain > 1e-5; no missing forecasts or action changes; controller predictions exact",
+    "arms": [
+      "frozen_h1",
+      "frozen_h3",
+      "adaptive_consistent_h1",
+      "adaptive_consistent_h3",
+      "gated_retain_h1",
+      "gated_retain_h3",
+      "gated_forget_h1",
+      "gated_forget_h3"
+    ],
+    "child_timeout_seconds": 30,
+    "control_objective_improvement_claimed": false,
+    "elapsed_budget_seconds": 1800,
+    "max_episodes": 512,
+    "max_plant_steps": 40960,
+    "plant": {
+      "drift_gains": [
+        0.27,
+        0.48,
+        0.15,
+        0.4
+      ],
+      "forced_dropout_origin_steps": [
+        35,
+        49
+      ],
+      "gain_regime_steps": 20,
+      "position_noise_std": 0.03,
+      "random_dropout_probability": 0.12,
+      "retention": 0.82,
+      "sensor_delay_steps": 1,
+      "stationary_gain": 0.27,
+      "target": 1.2,
+      "velocity_noise_std": 0.025
+    },
+    "promotion_authorized": false,
+    "protocol": "phase-forecast-study-v1",
+    "routing": "Preserve controller forecasts exactly; use actual-action observer only for external-supervisor forecasts",
+    "scenarios": [
+      "stationary",
+      "drift"
+    ],
+    "selection": "One fixed router, all eight arms in each stage, no tuning or candidate selection",
+    "source_sha256": {
+      "scripts/analyze_actual_action_observer.py": "65e5255cacb5f432fcbbda1b9248f39a595fd9df3bd635be632d16adcdd56e06",
+      "scripts/diagnose_recovery_adaptation.py": "d10fd6304a907bac290b3a45cbccd35ece5fc360db77edd7b43a5e271550f93c",
+      "scripts/run_dynamics_factorial.py": "25e8ab5fbeeea27e5ef0d7916c2c8c3c39181526a84637ca24e3cd1f3588a5bc",
+      "scripts/run_evidence_gated_study.py": "f848a67bd2fd3acb171759d44a7fbb023987331a17cdd0d7c09549c83fec8f04",
+      "scripts/run_evidence_window_study.py": "36b995a7b9783c92ca8578651d32adca24ffbc80a9cf34947cb8e18490b8730f",
+      "scripts/run_memory_research_coordinator.py": "ba489ed7a811290cfc4fb3f39e1d13427c2fb88b8791481edf585bbb9aa1f437",
+      "scripts/run_phase_forecast_study.py": "5c61335cd068e2a979e03006201036068b306322a0591e93d05b09ecf07c880d",
+      "scripts/run_recovery_adaptation.py": "91c321e252faaf1e4397a3086cdcaf124516045f336979ad5b7d594f764a37da",
+      "scripts/run_research_supervisor.py": "96b5bb03c9a88fc3f48b634981faa515878c2fea24c85be17a33d2fe57f0d286",
+      "scripts/run_worldcore_study.py": "e10693cb0f4122c6a5294efc02c02705b6ac082e2d4200084ef6501c4da3e085",
+      "scripts/verify_supervised_recovery.py": "b573d51427cf007bbc408e8ed393656c62158c01b16e1cc90b0678a1a0b32cd3",
+      "src/nerve_awim/actual_action_observer.py": "bf7b64acec7eff51b489a49418f04a689a2d6107e122ede4e62bc64ec84255d4",
+      "src/nerve_awim/adaptive_calibration_v19.py": "299922a93b915996c7b809836a4eaf6b31e35f96d2807adca7281dda719a0786",
+      "src/nerve_awim/autoresearch_v04.py": "ab0477dc779eebdb9def07e4411a5e8a3bff406a4c18d8f80cba42de574c150e",
+      "src/nerve_awim/autoresearch_v05.py": "cfe99c6b8a99b74a1b0a678b6c63515e2fed70c05854e1cd61510c2a0cc46c86",
+      "src/nerve_awim/calibrated_v16.py": "5311374673061a50bac8f28c20cd560678c9b35c123aaac7473aede84f8319b8",
+      "src/nerve_awim/calibration_v15.py": "f1b49e8adac7c6951f3522663a61c7694d874d8832f53f1cb10aea628e95dd68",
+      "src/nerve_awim/consistent_dynamics.py": "d5dac9916667e1f170a1fa09be8229bd8151e0ef18351cee198eba1a788733f8",
+      "src/nerve_awim/coverage_v18.py": "27a45ac324d82b357487605b6ebb1b8dbc8f0e630c0d93c1a199b1633674e9a3",
+      "src/nerve_awim/drift_v14.py": "af8259a4dfec16b1bfc0d5993f60ea99285025803162584fb8d11aae87a9e62a",
+      "src/nerve_awim/evidence_gated_dynamics.py": "825cb68fb32216ba934b4ece8e84997ac90a3a109912c965a67f7b739e75736d",
+      "src/nerve_awim/evidence_window_dynamics.py": "0082d114689307f39c7163a73179bcfb15ed6dc28752abff7f3fe9e2f9bb32b5",
+      "src/nerve_awim/fusion_v12.py": "d5481b7ebef1e7630a65491572f8f99edfc529d97617ebdd2d00fd3bb9758de8",
+      "src/nerve_awim/identity_v26.py": "245b67c92ec8987b02704550dd494269db3d60c51270ab87b04a91487f0dc060",
+      "src/nerve_awim/integrated_v13.py": "bf28343e2ed0bf8f0089c7712fcbefb8ae7c2938505fcae67254b572af2e3e07",
+      "src/nerve_awim/memory_gateway/adaptation_followup.py": "56e4727c7b2545e2b9a940c1b18f4400a4167868e6515568a04a0d886093708a",
+      "src/nerve_awim/memory_gateway/contracts.py": "9d0b22f5b21dc53e0ccf0150f9fd21543103d4336d496d5b776ada9a6ceb450e",
+      "src/nerve_awim/memory_gateway/dynamics_factorial_episode.py": "8101b6ea4639345ecbe84a22012a037fa937a253f697673f7cb0e2675f4cb0c8",
+      "src/nerve_awim/memory_gateway/dynamics_factorial_study.py": "09a1283815b8988210eb5fa3911a6012d9e22bc8a0862e4410c5c3616e1ca450",
+      "src/nerve_awim/memory_gateway/evidence_gated_episode.py": "6e42255ab8d33762c53ba24caaff417263e52d6efbd3c999f3acc890cfa35583",
+      "src/nerve_awim/memory_gateway/evidence_gated_study.py": "8520892ee0c4c99bb731cda07b34f03163b118110e9a68c2d6a2379658314946",
+      "src/nerve_awim/memory_gateway/evidence_rejection_diagnostic.py": "66f45778a4528dfa461842a667d80c212ed282f60b96211f5bac4c279fe7134c",
+      "src/nerve_awim/memory_gateway/evidence_window_episode.py": "bddae5346475875f86f5df87356148976b2f660b170b6329a3054db1c9529216",
+      "src/nerve_awim/memory_gateway/evidence_window_study.py": "e451c0d5fd1cf52745ba757ffadc8638fbb96c7729a78a992ef67141954471cc",
+      "src/nerve_awim/memory_gateway/gateway.py": "cd41f9f0a44af8331e1db04e43493b8c83cec5512edb3269a1e6a8dc9726f876",
+      "src/nerve_awim/memory_gateway/identification_diagnostic.py": "d460bd10054f1f33c42d87d23aafe34d1059edc08997818f16e59c7ebd297574",
+      "src/nerve_awim/memory_gateway/lifecycle.py": "6096f1284fd64ed351d45eccdaf8afe8d4892a218bae5f691d77bd78ef7277d4",
+      "src/nerve_awim/memory_gateway/memory_research_coordinator.py": "40adf3deaa192676d75d59299bffc1e2175db1b0ed69e0fb18a6c12c47737cee",
+      "src/nerve_awim/memory_gateway/observer_reanalysis.py": "b6a23c2d76afdd8b6e4d7e2c83d704af495631b75ca585210fc6bc7c6f7ff6f7",
+      "src/nerve_awim/memory_gateway/phase_forecast_episode.py": "40cb2685f97242c51ecdb17569ecf30b0d406d03c35dbd904510dd7cae675ace",
+      "src/nerve_awim/memory_gateway/phase_forecast_study.py": "c6995ce9a2645a1636ac07361fc1c5a3b28710629e4f4b4b815dd89b306cb7e2",
+      "src/nerve_awim/memory_gateway/policy.py": "77803fb57fc502da3ac7d6a1423cd96a07645dab539d89ca6b2904b0565637d2",
+      "src/nerve_awim/memory_gateway/recovery_adaptation.py": "ddb3db10fdc417bace28898ba9f1652346884d723dc64b968c1f53f19688e99b",
+      "src/nerve_awim/memory_gateway/recovery_adaptation_study.py": "b965b4ace242160fcd889024753f5efd8ed1624c71efc90c914cb59e9a0a6847",
+      "src/nerve_awim/memory_gateway/research_memory_planner.py": "b17b4e207e59aa4adad2485e8e9a64a785fbb9419b4199e4642936be9d7ffa88",
+      "src/nerve_awim/memory_gateway/research_outcome_memory.py": "27ad9069f159bf607c0e9abd9c5a2e71d75dca7d44aac23af037f060a66eb64c",
+      "src/nerve_awim/memory_gateway/research_supervisor.py": "f8f80b51a350d1a6104c3fd24e65e3b052a0abe875f848da8e5095beb9f2e477",
+      "src/nerve_awim/memory_gateway/worldcore_study.py": "5af51977997c689840c36879727273dd02c77d8714196bf53c2dc127ec456bf1",
+      "src/nerve_awim/memory_retrieval_v18.py": "719f5f236df9f1b5caae2120f8d197fc852d2ba24ca05e6e7738e1887873be20",
+      "src/nerve_awim/memory_v18.py": "882506c5d7c2f8a0b5f46f4d62a600d79a78d23863080af010a6362b59e855c6",
+      "src/nerve_awim/parallel_agents_v11.py": "fa926aba789a243e5b738f0749f0dec90ff61582bb6408ca95193d84f3bb2a33",
+      "src/nerve_awim/phase_forecast.py": "88a1a1d558084b553ee33e0162b550b010802684b6abc579473a8f9c000e9405",
+      "src/nerve_awim/recovery_policy_v23.py": "0caf4ccbf801596213fad17738e144c7c5417cb09ff52823365cee34633683f6",
+      "src/nerve_awim/recovery_v21.py": "bbf384ded4fe9f2ec783a8012e8f8d389f9790efe17c090aeabd52d2b1d52487",
+      "src/nerve_awim/recovery_v22.py": "c8c0ac7b0ef0bd72c956b5a99e22098bf104aca4edf83e7cfb9b4f0c565e934a",
+      "src/nerve_awim/recovery_v24.py": "8f7fc31ef4e01c4f59dbc194134fc9c4fc4c2446e93cfe30ac532f3d7da41eb5",
+      "src/nerve_awim/recovery_v25.py": "ee5de8bf2dbdb6b67d71bb64bd60ac2d8707cd771511e2ed379e2d53e8f550e5",
+      "src/nerve_awim/risk_v17.py": "6b7f88441d21cbce5339042d3a7c9cdc66cda41842e3ab9a9daef09974a179aa",
+      "src/nerve_awim/runtime_v28.py": "c155f4d64de07b102607899228d8187658d46662f531a886c9329f135a116c44",
+      "src/nerve_awim/worldcore_recursion_v19.py": "679d1796be8c93fb0cd514f9e139a5b757d94337ebc310f90ecec4151bcb7e19",
+      "src/nerve_awim/worldcore_v20.py": "673e5cf431f5d1900242cf261621d888dabe499d5a1891d3aca023fbecdbdd8d"
+    },
+    "splits": {
+      "holdout": [
+        46001,
+        46002,
+        46003,
+        46004,
+        46005,
+        46006,
+        46007,
+        46008,
+        46009,
+        46010,
+        46011,
+        46012,
+        46013,
+        46014,
+        46015,
+        46016
+      ],
+      "train": [
+        44001,
+        44002,
+        44003,
+        44004,
+        44005,
+        44006,
+        44007,
+        44008
+      ],
+      "validation": [
+        45001,
+        45002,
+        45003,
+        45004,
+        45005,
+        45006,
+        45007,
+        45008
+      ]
+    }
+  },
+  "recommendation": "forecast_candidate_for_review",
+  "report_sha256": "b3a6f4148aef9d74e4b6d21f4e7822fe5d1467f5911568484ed0b53c6242d280",
+  "source_paths": {
+    "claims": "/private/tmp/nerve-evidence-gated-study-claims.sqlite",
+    "coordinator_directory": "/private/tmp/nerve-memory-research-v1",
+    "coordinator_journal": "/private/tmp/nerve-memory-research-claims.sqlite",
+    "study": "/private/tmp/nerve-evidence-gated-study-v1"
+  },
+  "stages": {
+    "holdout": {
+      "actions_changed": false,
+      "controller_predictions_preserved": true,
+      "missing_forecasts": 0,
+      "passed": true,
+      "strata": [
+        {
+          "arm": "frozen_h1",
+          "episodes": 16,
+          "gain": 0.006147785867658263,
+          "legacy_mae": 0.0107434223654595,
+          "nonregression": true,
+          "routed_mae": 0.004595636497801237,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "frozen_h3",
+          "episodes": 16,
+          "gain": 0.0072918324183450164,
+          "legacy_mae": 0.011887468916146253,
+          "nonregression": true,
+          "routed_mae": 0.004595636497801236,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "adaptive_consistent_h1",
+          "episodes": 16,
+          "gain": 0.005112347325445096,
+          "legacy_mae": 0.009983947150126592,
+          "nonregression": true,
+          "routed_mae": 0.004871599824681496,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "adaptive_consistent_h3",
+          "episodes": 16,
+          "gain": 0.007926740244818353,
+          "legacy_mae": 0.012940356350123753,
+          "nonregression": true,
+          "routed_mae": 0.0050136161053054,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_retain_h1",
+          "episodes": 16,
+          "gain": 0.006147785867658263,
+          "legacy_mae": 0.0107434223654595,
+          "nonregression": true,
+          "routed_mae": 0.004595636497801237,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_retain_h3",
+          "episodes": 16,
+          "gain": 0.007358087838683614,
+          "legacy_mae": 0.012516232213742899,
+          "nonregression": true,
+          "routed_mae": 0.005158144375059285,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_forget_h1",
+          "episodes": 16,
+          "gain": 0.006147785867658263,
+          "legacy_mae": 0.0107434223654595,
+          "nonregression": true,
+          "routed_mae": 0.004595636497801237,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_forget_h3",
+          "episodes": 16,
+          "gain": 0.007358087838683614,
+          "legacy_mae": 0.012516232213742899,
+          "nonregression": true,
+          "routed_mae": 0.005158144375059285,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "frozen_h1",
+          "episodes": 16,
+          "gain": 6.176092788109586e-05,
+          "legacy_mae": 0.026898113057538833,
+          "nonregression": true,
+          "routed_mae": 0.026836352129657737,
+          "scenario": "drift"
+        },
+        {
+          "arm": "frozen_h3",
+          "episodes": 16,
+          "gain": 0.0006955954316587715,
+          "legacy_mae": 0.03793344798448281,
+          "nonregression": true,
+          "routed_mae": 0.03723785255282404,
+          "scenario": "drift"
+        },
+        {
+          "arm": "adaptive_consistent_h1",
+          "episodes": 16,
+          "gain": 0.0011579854083852703,
+          "legacy_mae": 0.024011959496458898,
+          "nonregression": true,
+          "routed_mae": 0.022853974088073627,
+          "scenario": "drift"
+        },
+        {
+          "arm": "adaptive_consistent_h3",
+          "episodes": 16,
+          "gain": 0.0032031858560918267,
+          "legacy_mae": 0.029873719569796967,
+          "nonregression": true,
+          "routed_mae": 0.02667053371370514,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_retain_h1",
+          "episodes": 16,
+          "gain": 6.176092788109586e-05,
+          "legacy_mae": 0.02730613936892744,
+          "nonregression": true,
+          "routed_mae": 0.027244378441046345,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_retain_h3",
+          "episodes": 16,
+          "gain": 0.0033857621367232374,
+          "legacy_mae": 0.039827809220795825,
+          "nonregression": true,
+          "routed_mae": 0.03644204708407259,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_forget_h1",
+          "episodes": 16,
+          "gain": 6.176092788109586e-05,
+          "legacy_mae": 0.02730613936892744,
+          "nonregression": true,
+          "routed_mae": 0.027244378441046345,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_forget_h3",
+          "episodes": 16,
+          "gain": 0.0033857621367232374,
+          "legacy_mae": 0.039827809220795825,
+          "nonregression": true,
+          "routed_mae": 0.03644204708407259,
+          "scenario": "drift"
+        }
+      ],
+      "sum_stratum_mae_gain": 0.06550402702217611
+    },
+    "train": {
+      "actions_changed": false,
+      "controller_predictions_preserved": true,
+      "missing_forecasts": 0,
+      "passed": true,
+      "strata": [
+        {
+          "arm": "frozen_h1",
+          "episodes": 8,
+          "gain": 0.006020645876328269,
+          "legacy_mae": 0.010622378929220399,
+          "nonregression": true,
+          "routed_mae": 0.004601733052892129,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "frozen_h3",
+          "episodes": 8,
+          "gain": 0.010209279696984128,
+          "legacy_mae": 0.014811012749876257,
+          "nonregression": true,
+          "routed_mae": 0.004601733052892128,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "adaptive_consistent_h1",
+          "episodes": 8,
+          "gain": 0.006107869230113026,
+          "legacy_mae": 0.010738861570128173,
+          "nonregression": true,
+          "routed_mae": 0.004630992340015147,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "adaptive_consistent_h3",
+          "episodes": 8,
+          "gain": 0.00981356044570391,
+          "legacy_mae": 0.014671071772000253,
+          "nonregression": true,
+          "routed_mae": 0.004857511326296343,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_retain_h1",
+          "episodes": 8,
+          "gain": 0.006020645876328269,
+          "legacy_mae": 0.010622378929220399,
+          "nonregression": true,
+          "routed_mae": 0.004601733052892129,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_retain_h3",
+          "episodes": 8,
+          "gain": 0.010209279696984128,
+          "legacy_mae": 0.014811012749876257,
+          "nonregression": true,
+          "routed_mae": 0.004601733052892128,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_forget_h1",
+          "episodes": 8,
+          "gain": 0.006020645876328269,
+          "legacy_mae": 0.010622378929220399,
+          "nonregression": true,
+          "routed_mae": 0.004601733052892129,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_forget_h3",
+          "episodes": 8,
+          "gain": 0.010209279696984128,
+          "legacy_mae": 0.014811012749876257,
+          "nonregression": true,
+          "routed_mae": 0.004601733052892128,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "frozen_h1",
+          "episodes": 8,
+          "gain": 0.0008533622916910497,
+          "legacy_mae": 0.03376905874221526,
+          "nonregression": true,
+          "routed_mae": 0.03291569645052421,
+          "scenario": "drift"
+        },
+        {
+          "arm": "frozen_h3",
+          "episodes": 8,
+          "gain": 0.0012553169610911505,
+          "legacy_mae": 0.0368994273801668,
+          "nonregression": true,
+          "routed_mae": 0.03564411041907565,
+          "scenario": "drift"
+        },
+        {
+          "arm": "adaptive_consistent_h1",
+          "episodes": 8,
+          "gain": 0.002820454794445558,
+          "legacy_mae": 0.028446593059625266,
+          "nonregression": true,
+          "routed_mae": 0.025626138265179708,
+          "scenario": "drift"
+        },
+        {
+          "arm": "adaptive_consistent_h3",
+          "episodes": 8,
+          "gain": 0.0015143293247588223,
+          "legacy_mae": 0.028831031575160784,
+          "nonregression": true,
+          "routed_mae": 0.02731670225040196,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_retain_h1",
+          "episodes": 8,
+          "gain": 0.0026402587015975296,
+          "legacy_mae": 0.033788784433399124,
+          "nonregression": true,
+          "routed_mae": 0.031148525731801595,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_retain_h3",
+          "episodes": 8,
+          "gain": 0.0015862035522845389,
+          "legacy_mae": 0.037384048892819315,
+          "nonregression": true,
+          "routed_mae": 0.035797845340534776,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_forget_h1",
+          "episodes": 8,
+          "gain": 0.0026402587015975296,
+          "legacy_mae": 0.033788784433399124,
+          "nonregression": true,
+          "routed_mae": 0.031148525731801595,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_forget_h3",
+          "episodes": 8,
+          "gain": 0.0015862035522845389,
+          "legacy_mae": 0.037384048892819315,
+          "nonregression": true,
+          "routed_mae": 0.035797845340534776,
+          "scenario": "drift"
+        }
+      ],
+      "sum_stratum_mae_gain": 0.07950759427550486
+    },
+    "validation": {
+      "actions_changed": false,
+      "controller_predictions_preserved": true,
+      "missing_forecasts": 0,
+      "passed": true,
+      "strata": [
+        {
+          "arm": "frozen_h1",
+          "episodes": 8,
+          "gain": 0.004945758512542974,
+          "legacy_mae": 0.009260788541564181,
+          "nonregression": true,
+          "routed_mae": 0.004315030029021207,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "frozen_h3",
+          "episodes": 8,
+          "gain": 0.006317456469818709,
+          "legacy_mae": 0.010632486498839916,
+          "nonregression": true,
+          "routed_mae": 0.0043150300290212065,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "adaptive_consistent_h1",
+          "episodes": 8,
+          "gain": 0.0071366338094796845,
+          "legacy_mae": 0.011609580121076006,
+          "nonregression": true,
+          "routed_mae": 0.004472946311596322,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "adaptive_consistent_h3",
+          "episodes": 8,
+          "gain": 0.006454701623919071,
+          "legacy_mae": 0.011217819924884504,
+          "nonregression": true,
+          "routed_mae": 0.004763118300965433,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_retain_h1",
+          "episodes": 8,
+          "gain": 0.004945758512542974,
+          "legacy_mae": 0.009260788541564181,
+          "nonregression": true,
+          "routed_mae": 0.004315030029021207,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_retain_h3",
+          "episodes": 8,
+          "gain": 0.006317456469818709,
+          "legacy_mae": 0.010632486498839916,
+          "nonregression": true,
+          "routed_mae": 0.0043150300290212065,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_forget_h1",
+          "episodes": 8,
+          "gain": 0.004945758512542974,
+          "legacy_mae": 0.009260788541564181,
+          "nonregression": true,
+          "routed_mae": 0.004315030029021207,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "gated_forget_h3",
+          "episodes": 8,
+          "gain": 0.006317456469818709,
+          "legacy_mae": 0.010632486498839916,
+          "nonregression": true,
+          "routed_mae": 0.0043150300290212065,
+          "scenario": "stationary"
+        },
+        {
+          "arm": "frozen_h1",
+          "episodes": 8,
+          "gain": 0.0012339029128156861,
+          "legacy_mae": 0.0380250619521008,
+          "nonregression": true,
+          "routed_mae": 0.036791159039285114,
+          "scenario": "drift"
+        },
+        {
+          "arm": "frozen_h3",
+          "episodes": 8,
+          "gain": 0.002411949206032153,
+          "legacy_mae": 0.04268727695954443,
+          "nonregression": true,
+          "routed_mae": 0.04027532775351228,
+          "scenario": "drift"
+        },
+        {
+          "arm": "adaptive_consistent_h1",
+          "episodes": 8,
+          "gain": 0.0028856119936463732,
+          "legacy_mae": 0.026089467648446447,
+          "nonregression": true,
+          "routed_mae": 0.023203855654800074,
+          "scenario": "drift"
+        },
+        {
+          "arm": "adaptive_consistent_h3",
+          "episodes": 8,
+          "gain": 0.003947099419098456,
+          "legacy_mae": 0.03297133840074202,
+          "nonregression": true,
+          "routed_mae": 0.029024238981643562,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_retain_h1",
+          "episodes": 8,
+          "gain": 0.0029892490074824724,
+          "legacy_mae": 0.03501610669573292,
+          "nonregression": true,
+          "routed_mae": 0.03202685768825045,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_retain_h3",
+          "episodes": 8,
+          "gain": 0.0026443269024352123,
+          "legacy_mae": 0.03703579368135544,
+          "nonregression": true,
+          "routed_mae": 0.03439146677892023,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_forget_h1",
+          "episodes": 8,
+          "gain": 0.0029892490074824724,
+          "legacy_mae": 0.03501610669573292,
+          "nonregression": true,
+          "routed_mae": 0.03202685768825045,
+          "scenario": "drift"
+        },
+        {
+          "arm": "gated_forget_h3",
+          "episodes": 8,
+          "gain": 0.0026443269024352123,
+          "legacy_mae": 0.037169395115586014,
+          "nonregression": true,
+          "routed_mae": 0.0345250682131508,
+          "scenario": "drift"
+        }
+      ],
+      "sum_stratum_mae_gain": 0.06912669573191185
+    }
+  },
+  "status": "complete"
+}
