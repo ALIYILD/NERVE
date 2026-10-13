@@ -12,6 +12,7 @@ import sqlite3
 from . import online_optimisation as online
 from . import policy_research_loop as loop
 from . import worldcore_study as worldcore
+from .research_followup import run_followup
 
 
 def _json(value):
@@ -115,7 +116,7 @@ def verify_online(database, output, run_id):
 
 def _sources():
     sources = worldcore._hashes()
-    for relative in ('src/nerve_awim/memory_gateway/research_orchestrator.py', 'scripts/run_research_orchestrator.py'):
+    for relative in ('src/nerve_awim/memory_gateway/research_orchestrator.py', 'scripts/run_research_orchestrator.py', 'src/nerve_awim/memory_gateway/research_followup.py', 'src/nerve_awim/memory_gateway/worldcore_diagnostics.py', 'scripts/diagnose_worldcore_research.py'):
         sources[relative] = sha256((worldcore.ROOT / relative).read_bytes()).hexdigest()
     return sources
 
@@ -173,9 +174,16 @@ def _run(directory, online_database, online_output, online_run_id, execute):
         if result['result']['status'] not in ('candidate_for_human_review', 'no_deployable_improvement'):
             raise ValueError('unknown_child_result')
         worldcore.validate_receipt(root / 'worldcore', result, protocol)
-        report = {'status': 'registered_graph_complete', 'online': receipt, 'worldcore': result, 'source_sha256': sources, 'deployed': False, 'model_weights_trained': False, 'goal_achieved': False, 'scope': 'Two registered synthetic research tracks; no general self-improvement claim. Existing roots cannot resume or replay.'}
+        report = {'status': 'registered_graph_complete', 'online': receipt, 'worldcore': result, 'source_sha256': sources, 'deployed': False, 'model_weights_trained': False, 'goal_achieved': False, 'scope': 'Two registered synthetic research tracks and conditional diagnosis; no general self-improvement claim. Existing roots cannot resume or replay.'}
         with sqlite3.connect(database) as db:
             db.execute('UPDATE nodes SET status=?,evidence=? WHERE name=?', ('complete', _json(result), node))
+        node = 'failure_diagnosis'
+        with sqlite3.connect(database) as db:
+            db.execute('INSERT INTO nodes VALUES (?, ?, NULL)', (node, 'claimed'))
+        report['followup'] = run_followup(root / 'followup', root / 'worldcore')
+        _same(_sources(), sources)
+        with sqlite3.connect(database) as db:
+            db.execute('UPDATE nodes SET status=?,evidence=? WHERE name=?', ('complete', _json(report['followup']), node))
         (root / 'report.json').write_text(_json(report) + '\n')
         return report
     except BaseException as exc:

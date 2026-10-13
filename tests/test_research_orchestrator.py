@@ -97,8 +97,10 @@ class ResearchOrchestratorTests(unittest.TestCase):
                 db.execute('CREATE TABLE study(id INTEGER, status TEXT, result TEXT)')
                 db.execute('INSERT INTO study VALUES (1, ?, ?)', ('complete', json.dumps(report)))
             return report
-        with patch.object(graph, 'verify_online', return_value=receipt), patch.object(graph.worldcore, 'validate_receipt', create=True):
+        with patch.object(graph, 'verify_online', return_value=receipt), patch.object(graph.worldcore, 'validate_receipt', create=True), patch.object(graph, 'run_followup', return_value={'status': 'diagnosed'}) as followup:
             result = self.run_graph(child)
+        followup.assert_called_once_with(self.root / 'graph/followup', self.root / 'graph/worldcore')
+        self.assertEqual(result['followup']['status'], 'diagnosed')
         self.assertEqual(result['online']['status'], 'completed_rejected')
         self.assertFalse(result['goal_achieved'])
         self.assertFalse(result['deployed'])

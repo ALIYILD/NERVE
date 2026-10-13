@@ -1,0 +1,100 @@
+{
+  "artifact_sha256": {
+    "diagnostic/ledger.sqlite": "b2ae40fe7585f45033360a09bc26d9ef0910e28a1c40a2d9a53c50867ac446ee",
+    "followup.sqlite": "e06bab73a6649a17fe8b7c0ca56b7bcacb32dcbb4a25a3ea1c2199529c729ea0",
+    "report.json": "8fe0014d704740807375122c172589b0a5a90f2cbbddb81d9c8057413413a0ce"
+  },
+  "automatic_retry": false,
+  "deployed": false,
+  "diagnosis": {
+    "holdout_calls": 0,
+    "limitations": "33 guard mechanism measurements, not full plant executions. Completion bound inferred from fixed packet schedule and verified guard. Risk continuum follows the guard preceding risk scoring. No safe physical fallback demonstrated.",
+    "measured_choose_calls": 231,
+    "measured_miss_calls": 231,
+    "mechanism_cases": 33,
+    "model_weights_trained": false,
+    "policy_promoted": false,
+    "protocol": {
+      "holdout_calls": 0,
+      "max_cases": 33,
+      "max_miss_and_choose_pairs": 231,
+      "max_missing_values": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "promotion_authorized": false,
+      "protocol": "worldcore-outage-diagnostic-v1",
+      "risk_aversion_values": [
+        0.0,
+        0.25,
+        2.0
+      ],
+      "simulation_episodes": 0,
+      "source_sha256": {
+        "scripts/run_worldcore_study.py": "e10693cb0f4122c6a5294efc02c02705b6ac082e2d4200084ef6501c4da3e085",
+        "src/nerve_awim/adaptive_calibration_v19.py": "299922a93b915996c7b809836a4eaf6b31e35f96d2807adca7281dda719a0786",
+        "src/nerve_awim/autoresearch_v04.py": "ab0477dc779eebdb9def07e4411a5e8a3bff406a4c18d8f80cba42de574c150e",
+        "src/nerve_awim/autoresearch_v05.py": "cfe99c6b8a99b74a1b0a678b6c63515e2fed70c05854e1cd61510c2a0cc46c86",
+        "src/nerve_awim/calibrated_v16.py": "5311374673061a50bac8f28c20cd560678c9b35c123aaac7473aede84f8319b8",
+        "src/nerve_awim/calibration_v15.py": "f1b49e8adac7c6951f3522663a61c7694d874d8832f53f1cb10aea628e95dd68",
+        "src/nerve_awim/coverage_v18.py": "27a45ac324d82b357487605b6ebb1b8dbc8f0e630c0d93c1a199b1633674e9a3",
+        "src/nerve_awim/drift_v14.py": "af8259a4dfec16b1bfc0d5993f60ea99285025803162584fb8d11aae87a9e62a",
+        "src/nerve_awim/fusion_v12.py": "1084f3231b2e57e7beb66f6b7bd8c7a7825720efa132d1404dcf812ca1863f5d",
+        "src/nerve_awim/integrated_v13.py": "bf28343e2ed0bf8f0089c7712fcbefb8ae7c2938505fcae67254b572af2e3e07",
+        "src/nerve_awim/memory_gateway/worldcore_diagnostics.py": "db0c80111446857b0e0261aa2d3437fbf994f4b893e33a4d4518e165e333bcdc",
+        "src/nerve_awim/memory_gateway/worldcore_study.py": "5af51977997c689840c36879727273dd02c77d8714196bf53c2dc127ec456bf1",
+        "src/nerve_awim/parallel_agents_v11.py": "fa926aba789a243e5b738f0749f0dec90ff61582bb6408ca95193d84f3bb2a33",
+        "src/nerve_awim/risk_v17.py": "6b7f88441d21cbce5339042d3a7c9cdc66cda41842e3ab9a9daef09974a179aa",
+        "src/nerve_awim/worldcore_recursion_v19.py": "679d1796be8c93fb0cd514f9e139a5b757d94337ebc310f90ecec4151bcb7e19",
+        "src/nerve_awim/worldcore_v20.py": "66cf9e4fc7238ce6dc95d22ccf87117431aff572379448f02b3d66aa1ea35cef"
+      }
+    },
+    "recommendation": "stop_unmodified_parameter_search",
+    "simulation_episodes": 0,
+    "source_contract": {
+      "absolute_max_abort_fraction": 0.0,
+      "absolute_min_completion": 0.95,
+      "delivery_delay_steps": 2,
+      "earliest_post_outage_delivery_step": 52,
+      "episode_step_budget": 80,
+      "forced_dropout_origin_steps": [
+        35,
+        49
+      ],
+      "guaranteed_consecutive_missing_steps": 15,
+      "latest_pre_outage_delivery_step": 36,
+      "max_allowed_missing_tolerance": 12
+    },
+    "status": "complete",
+    "structural_inference": {
+      "absolute_abort_gate_satisfiable": false,
+      "absolute_completion_gate_satisfiable": false,
+      "latest_abort_step": 48,
+      "maximum_completed_steps": 48,
+      "maximum_completion": 0.6,
+      "scope": "All registered max_missing 2..12 and risk_aversion 0..2 under the inspected evaluator; random dropouts or infeasibility may abort earlier."
+    }
+  },
+  "environment": {
+    "device": "CPU",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "goal_achieved": false,
+  "next_action": "Design a prospective observation-recovery experiment; preserve outage safety gates.",
+  "predecessor_sha256": "097429381f87d6c85c7e286e695e8219af59ab3cb7ac055d6ed1289a6bdc771d",
+  "source_sha256": {
+    "scripts/diagnose_worldcore_research.py": "d692473537aa67d3225275b1d57651039b7b1342987703c5994a67b29227c2ec",
+    "src/nerve_awim/memory_gateway/research_followup.py": "27c7a0c24d8e5007ebf59ea6af9abad4bb9638e0b49b453c6afd63d91d175575"
+  },
+  "status": "diagnosed"
+}

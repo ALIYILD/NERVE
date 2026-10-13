@@ -742,3 +742,5 @@ The supervisor completed 32 cycles and 65,536 synthetic pipeline episodes. The c
 The bounded coordinator now selects typed memory policies using prospective training/validation streams and a one-use final comparison, with durable evidence for every trial. A real 11,264-episode run selected a candidate scoring 830/1,024 versus baseline 815/1,024, but rejected it for a mixed-regime regression. Full regression passed 1,280 tests. [Protocol, results and reproduction](docs/galahad/33-online-policy-selection.md).
 
 The [registered research handoff](docs/galahad/34-registered-research-handoff.md) verifies the completed online-policy receipt before automatically running a bounded WorldCore study. Its first real CPU run completed 88 synthetic simulation episodes and found no deployable improvement; no policy or model was promoted.
+
+The [automatic outage diagnosis](docs/galahad/35-outage-search-diagnosis.md) routes a verified WorldCore rejection to a bounded mechanism check. It identifies when the permitted parameter search cannot satisfy the fixed outage/completion contract and stops unmodified retries without relaxing safety gates.
