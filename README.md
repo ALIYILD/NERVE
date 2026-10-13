@@ -756,3 +756,5 @@ The [adaptation followup diagnostic](docs/galahad/38-adaptation-followup.md) con
 The [diagnosis-driven dynamics study](docs/galahad/40-dynamics-factorial-study.md) automatically tests registered candidates with matched planning controls, freezes selection, and preserves unused evaluation streams when training gates fail.
 
 The [restartable research supervisor](docs/galahad/41-restartable-research-supervisor.md) connects receipt-verified research stages, resumes completed work without re-execution, and diagnoses identification coverage before requesting another registered experiment.
+
+The [observation-evidence gain candidate](docs/galahad/42-evidence-window-candidate.md) adds timestamp-ordered, prior-regularized sensor learning with optional authorized-recovery evidence forgetting. It remains opt-in pending a prospective matched comparison.
