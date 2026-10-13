@@ -752,3 +752,5 @@ The [prospective recovery/adaptation study](docs/galahad/37-recovery-adaptation-
 The [adaptation followup diagnostic](docs/galahad/38-adaptation-followup.md) consumes verified rejected studies and automatically reconciles paired objective-error contributions without rerunning plant or final-evaluation episodes.
 
 [Opt-in consistent-dynamics and bounded-planning candidates](docs/galahad/39-consistent-dynamics-candidates.md) preserve historical filter gains during delayed replay and exercise deeper planning through the existing signed recovery boundary. They are development-tested candidates, not promoted improvements.
+
+The [diagnosis-driven dynamics study](docs/galahad/40-dynamics-factorial-study.md) automatically tests registered candidates with matched planning controls, freezes selection, and preserves unused evaluation streams when training gates fail.
