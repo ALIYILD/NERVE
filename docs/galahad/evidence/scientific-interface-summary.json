@@ -1,0 +1,52 @@
+{
+  "development_only": true,
+  "feedback_learning": false,
+  "inference_seconds": {
+    "max": 63.080832256993745,
+    "median": 53.77232663400355,
+    "min": 32.443125326011796,
+    "total": 412.77454593399307
+  },
+  "model": {
+    "digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "model": "qwen2.5-coder:1.5b"
+  },
+  "platform": "macOS-26.5.2-x86_64-i386-64bit",
+  "preload": {
+    "wall_seconds": 0.451963710016571
+  },
+  "promotion_authorized": false,
+  "report_sha256": "e261fd2f78e07f2afa69e6bfaa798036a92bb4014c21547faa0874316c3fc3f8",
+  "source_count": 23,
+  "status": "complete",
+  "summary": {
+    "always_abstain_correct_per_four_tasks": 2,
+    "always_abstain_model_calls": 0,
+    "arms": [
+      {
+        "abstention_correct": 2,
+        "arm": "baseline_json",
+        "calls": 4,
+        "format_failures": 0,
+        "non_abstaining_contract_failures": 0,
+        "strict_correct": 2,
+        "supported_correct": 0
+      },
+      {
+        "abstention_correct": 2,
+        "arm": "trusted_task",
+        "calls": 4,
+        "format_failures": 1,
+        "non_abstaining_contract_failures": 1,
+        "strict_correct": 3,
+        "supported_correct": 1
+      }
+    ],
+    "interpretation": "Four matched development tasks only; no independent validation, learning or promotion."
+  },
+  "usage": {
+    "completion_tokens": 53,
+    "prompt_tokens": 3837,
+    "total_tokens": 3890
+  }
+}

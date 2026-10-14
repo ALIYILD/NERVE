@@ -1,0 +1,10 @@
+{
+  "fresh_process_exit_code": 0,
+  "report_equal": true,
+  "claim_and_report_rows_unchanged": true,
+  "network_calls": 0,
+  "inference_calls": 0,
+  "attempt_claims": 8,
+  "shared_claims": 1,
+  "historical_receipt_only": true
+}

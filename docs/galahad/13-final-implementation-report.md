@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest scientific interface experiment:** [61-scientific-task-interface.md](61-scientific-task-interface.md) records eight actual calls, 1,775 passing tests and network-free fresh-process resume. Candidate exact accuracy was 3/4 versus baseline 2/4, with one unresolved formatting failure. This is a small development comparison; no feedback update, weight training, default promotion or completion of the master plan is claimed.
+
 **Latest real-model learning loop:** [60-real-model-strategy-learning.md](60-real-model-strategy-learning.md) records eight actual completions, independently judged persistent strategy feedback and fresh-process resume without inference. Both strategies abstained universally (2/4 correct each), so no extraction improvement or promotion is established. Full regression passed 1,747 tests. This adds real model-output learning integration, not neural weight training or completion of the master plan.
 
 **Latest automatic research wiring:** [59-prequential-research-loop.md](59-prequential-research-loop.md) connects receipt adoption to timing diagnosis with durable claims and fresh-process resume. The actual two-node run retained baselines; restart preserved report/source bytes and modification times with one completed journal entry. Full regression passed 1,725 tests. No new episodes, policy promotion or completion of the broader goal.
