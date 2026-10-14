@@ -1,0 +1,81 @@
+{
+  "coordinator_artifact_sha256": "09d9144cb2ae393b20d46603ae746814dad74badaa0b6afd4cf6eda553b5cfda",
+  "coordinator_source_count": 29,
+  "inference_seconds": {
+    "max": 70.08004879497457,
+    "median": 57.653516283491626,
+    "min": 35.755907125014346,
+    "total": 881.722506021848
+  },
+  "model": {
+    "digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "model": "qwen2.5-coder:1.5b"
+  },
+  "platform": "macOS-26.5.2-x86_64-i386-64bit",
+  "preload": {
+    "wall_seconds": 3.286974273971282
+  },
+  "python": "3.10.0",
+  "screen": {
+    "all_abstentions_correct": false,
+    "all_supported_correct": false,
+    "next_action": "retain_baseline",
+    "no_abstention_regression": false,
+    "no_stratum_regression": false,
+    "no_supported_regression": true,
+    "passed": false,
+    "promotion_authorized": false,
+    "strata_correct": {
+      "conflict": {
+        "baseline_json": 2,
+        "trusted_task": 0
+      },
+      "entity_decoy": {
+        "baseline_json": 0,
+        "trusted_task": 0
+      },
+      "measurement_decoy": {
+        "baseline_json": 0,
+        "trusted_task": 0
+      },
+      "unit_mismatch": {
+        "baseline_json": 2,
+        "trusted_task": 2
+      }
+    },
+    "strictly_better_overall": false
+  },
+  "status": "retain_baseline",
+  "summary": {
+    "always_abstain_correct_per_eight_tasks": 4,
+    "always_abstain_model_calls": 0,
+    "arms": [
+      {
+        "abstention_correct": 4,
+        "arm": "baseline_json",
+        "calls": 8,
+        "format_failures": 1,
+        "non_abstaining_contract_failures": 1,
+        "strict_correct": 4,
+        "supported_correct": 0
+      },
+      {
+        "abstention_correct": 2,
+        "arm": "trusted_task",
+        "calls": 8,
+        "format_failures": 2,
+        "non_abstaining_contract_failures": 4,
+        "strict_correct": 2,
+        "supported_correct": 0
+      }
+    ],
+    "interpretation": "Eight fresh matched synthetic validation tasks; no broad generalization or promotion."
+  },
+  "usage": {
+    "completion_tokens": 122,
+    "prompt_tokens": 7805,
+    "total_tokens": 7927
+  },
+  "validation_artifact_sha256": "140e627c72b89265fb200e0fa9fc59f2070a80d7c826b1187f9e45f898799925",
+  "validation_source_count": 26
+}

@@ -1,0 +1,9 @@
+{
+  "fresh_process_exit_code": 0,
+  "coordinator_report_bytes_and_mtime_unchanged": true,
+  "all_experiment_reports_and_claims_unchanged": true,
+  "network_calls": 0,
+  "inference_calls": 0,
+  "validation_attempt_claims": 16,
+  "historical_receipt_only": true
+}
