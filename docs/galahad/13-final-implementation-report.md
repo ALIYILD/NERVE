@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest Tier-6 foundation:** [64-tier-six-evaluator-foundation.md](64-tier-six-evaluator-foundation.md) records adoption of the supplied Loops 36–45 plan, a protected 1,000-item bank and 1,850 passing tests. The CPU structured-output preflight timed out on its first unconstrained request; no constrained runtime success is claimed. GPU inference, powered selection, real-world reward wiring and broader self-learning remain incomplete.
+
 **Latest scientific validation loop:** [62-scientific-validation-coordinator.md](62-scientific-validation-coordinator.md) records 1,809 passing tests, sixteen actual validation calls and network-free graph resume. The candidate regressed to 2/8 exact answers versus 4/8 baseline and failed both conflict cases. The coordinator automatically retained the baseline. No promotion, weight training or completion of the master plan is claimed.
 
 **Latest scientific interface experiment:** [61-scientific-task-interface.md](61-scientific-task-interface.md) records eight actual calls, 1,775 passing tests and network-free fresh-process resume. Candidate exact accuracy was 3/4 versus baseline 2/4, with one unresolved formatting failure. This is a small development comparison; no feedback update, weight training, default promotion or completion of the master plan is claimed.

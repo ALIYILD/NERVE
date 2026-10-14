@@ -1,0 +1,15 @@
+{
+  "boundary": "Private host files; API guard is not a filesystem sandbox.",
+  "counts": {
+    "dev": 700,
+    "holdout": 300
+  },
+  "manifest_sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6",
+  "paths": {
+    "dev": "/Users/aliyildirim/nerve-research-runs/task-bank-v1/dev.json",
+    "holdout": "/Users/aliyildirim/nerve-research-runs/task-bank-v1/holdout.json",
+    "manifest": "/Users/aliyildirim/nerve-research-runs/task-bank-v1/manifest.json"
+  },
+  "status": "live",
+  "version": "task-bank-v1"
+}

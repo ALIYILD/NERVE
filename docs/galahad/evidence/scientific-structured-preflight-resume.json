@@ -1,0 +1,9 @@
+{
+  "fresh_process_exit_code": 0,
+  "failed_resume_rejected": true,
+  "reason": "invalid_complete_receipt",
+  "claims_and_report_unchanged": true,
+  "inference_calls": 0,
+  "network_calls": 0,
+  "utility_rows": 0
+}

@@ -1,0 +1,11 @@
+{
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline --timeout-seconds 600",
+  "independent_review": "12 bank tests and independently derived fixture truth passed; actual manifest, four source pins, streamed split-file hashes and private modes independently verified without inspecting holdout answers or seed",
+  "log": "/private/tmp/nerve-task-bank-tests.log",
+  "log_sha256": "56356bd5aee410f913b7ba4bff82bf365d62d513b350122479bebe34910d62fe",
+  "new_tests_this_cycle": 41,
+  "seconds": 173.568,
+  "task_bank_tests": 12,
+  "tests_failed": 0,
+  "tests_passed": 1850
+}
