@@ -1,0 +1,26 @@
+{
+  "generator_writable_paths": [],
+  "live_holdout_enabled": false,
+  "promotion_enabled": false,
+  "protected_runtime_objects": [
+    "gate.sqlite",
+    "alpha wallet and ledger",
+    "integrity key",
+    "response caches for sealed data",
+    "signed gate versions"
+  ],
+  "source_sha256": {
+    "scripts/run_external_methods.py": "f064073d66c91bed6d32d7ca76da050c5681e6e51cc5e505c2b9beb3d92620e7",
+    "src/nerve_awim/external_methods/__init__.py": "546794b3dffe5daea2f07c49df497f4c09a07f3ccb6d5e1c803c01568434a62a",
+    "src/nerve_awim/external_methods/contracts.py": "3050816dd49cdc84bf1f917b13cb968d0c173dec804f5e1ec29d8e24cbd21237",
+    "src/nerve_awim/external_methods/evaluator.py": "047f60fbdc985d670d8d94e35fa8ed29987bed9303002437aceaf0b3a130a7e4",
+    "src/nerve_awim/external_methods/evidence.py": "4fa80b88dcb1e7e077f785e86b2d5f04b205b7372f1b6261f1a23bd0ae669eaa",
+    "src/nerve_awim/external_methods/gate.py": "6d9f510d68d05ea651068624d72aad931483911969e4b0c8783d79b8a9f61224",
+    "src/nerve_awim/external_methods/protection.py": "1b2d4c19bb03c0c2bf396aca320054dae732f7e279d61ff364660ff7dbfc0317",
+    "src/nerve_awim/external_methods/runner.py": "e09b91d6e2e0e5fb87dd174b43a60c4dc1c3d498ac86d57ea0db88213b6f1f19",
+    "src/nerve_awim/external_methods/workflow.py": "330e69472b7815b653ea00c15caa9c79b541acd4b315cc3ec806dada970470a5",
+    "tests/test_external_methods.py": "792a0d3565bc1d8814fcb99e04518f834e9b80f2d9bd2c9ea2e75c0b6be4a6d7"
+  },
+  "status": "unsigned_staged_review",
+  "version": 1
+}

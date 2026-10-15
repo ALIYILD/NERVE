@@ -1,0 +1,598 @@
+{
+  "arms": {
+    "always_abstain": {
+      "conflict": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "entity-decoy": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "measurement-decoy": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "supported-measurement": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "unit-mismatch": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      }
+    },
+    "baseline": {
+      "conflict": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "entity-decoy": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "measurement-decoy": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "supported-measurement": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "unit-mismatch": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      }
+    },
+    "candidate": {
+      "conflict": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "entity-decoy": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "measurement-decoy": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "supported-measurement": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "unit-mismatch": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      }
+    },
+    "random": {
+      "conflict": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "entity-decoy": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "measurement-decoy": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "supported-measurement": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      },
+      "unit-mismatch": {
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "schema_valid": {
+            "correct": 0,
+            "n": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "n": 0
+          },
+          "value_correct": {
+            "correct": 0,
+            "n": 0
+          }
+        },
+        "model_calls": 0,
+        "n": 0,
+        "strict_ci95": null,
+        "strict_correct": 0
+      }
+    }
+  },
+  "attempts": 0,
+  "competing_workload_observed": true,
+  "infrastructure_failure_type": "RuntimeError",
+  "interpretation": "Fixed synthetic instance holdout; reused generation templates. Human decides promotion; no claim on unused strata.",
+  "item_level_evidence_exported": false,
+  "kind": "dry",
+  "logical_model_calls": 0,
+  "model_calls": 0,
+  "promotion_authorized": false,
+  "runtime_version": "0.20.2",
+  "slice2_admission_passed": false,
+  "status": "failed_consumed",
+  "strict_totals": {
+    "always_abstain": 0,
+    "baseline": 0,
+    "candidate": 0,
+    "random": 0
+  },
+  "timeouts": 0,
+  "unused_strata": [
+    "multi-source-agreement",
+    "stale-vs-current"
+  ],
+  "verdict": "incomplete_infrastructure",
+  "version": "scientific-v3-holdout-v2",
+  "wall_seconds": 6.022203457017895
+}

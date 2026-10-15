@@ -1,0 +1,14 @@
+{
+  "existing_goal_orchestrator_tests": 13,
+  "existing_tier6_reconciliation_tests": 4,
+  "frozen_v3_source_hashes_matching": 75,
+  "full_simulation_rerun_byte_identical": true,
+  "holdout_accessed": false,
+  "new_external_methods_tests": 25,
+  "new_model_calls": 0,
+  "orchestrator_byte_identical_replay": true,
+  "orchestrator_report_sha256": "d2d9368cfc899568fe32404a0c7d1e75bbb5358f11419614469a8e7fa8b2f5b7",
+  "promotion_authorized": false,
+  "protected_manifest_sha256": "9e95f846ba4a7e6a10d7539821642ef380536a1b734ec931114b5281c0eff732",
+  "status": "complete"
+}

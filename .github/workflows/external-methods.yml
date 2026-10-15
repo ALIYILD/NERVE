@@ -1,0 +1,31 @@
+name: staged-external-methods
+on:
+  push:
+    paths:
+      - 'src/nerve_awim/external_methods/**'
+      - 'scripts/run_external_methods.py'
+      - 'tests/test_external_methods.py'
+      - 'configs/external-methods-protected.json'
+      - '.github/workflows/external-methods.yml'
+  pull_request:
+    paths:
+      - 'src/nerve_awim/external_methods/**'
+      - 'scripts/run_external_methods.py'
+      - 'tests/test_external_methods.py'
+      - 'configs/external-methods-protected.json'
+      - '.github/workflows/external-methods.yml'
+permissions:
+  contents: read
+jobs:
+  staged-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify protected-source manifest
+        run: PYTHONPATH=src python -c "from nerve_awim.external_methods.protection import verify_manifest; verify_manifest('.')"
+      - name: Test synthetic gate, replay and closed holdout boundary
+        run: PYTHONPATH=src python -m unittest discover -s tests -p test_external_methods.py
