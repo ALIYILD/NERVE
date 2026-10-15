@@ -430,6 +430,7 @@ def main():
         'adaptation-inspect','adaptation-validate-config','adaptation-replay','adaptation-evaluate',
         'adaptation-run','adaptation-demo','adaptation-status','adaptation-reset','adaptation-kill',
         'research-fast-memory-train','research-fast-memory-evaluate',
+        'goal-run','goal-tick','goal-status','goal-cancel',
         'generation-propose','generation-freeze','generation-inspect','generation-handoff',
         'generation-local-scope','generation-local-run','generation-workspace-restore','runtime-inventory',
         'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile',
@@ -478,6 +479,9 @@ def main():
     if args.learn and args.command!='adaptation-run':
         parser.error('--learn is supported only by adaptation-run')
     requested_profile=args.profile
+    if args.command.startswith('goal-'):
+        from nerve_awim.goal_learning import main as goal_main
+        return goal_main([args.command.removeprefix('goal-'), '--state', str(args.state/'improvement-goal')])
     if args.command.startswith(('arc-','adaptation-','research-fast-memory-')):
         if args.command.startswith('arc-'):
             from nerve_awim.arc_cli import dispatch
