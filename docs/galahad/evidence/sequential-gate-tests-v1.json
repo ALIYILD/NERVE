@@ -1,0 +1,20 @@
+{
+  "elapsed_test_seconds": 9.62,
+  "log_sha256": "21258a833f60b700baba80103c2ae0fa356dd206a9d6b24c238ac4d15d2dfd5f",
+  "model_calls": 0,
+  "null_test": {
+    "alpha": 0.05,
+    "conditional_null": "P(win | discordant,past)<=.5",
+    "crossings": 436,
+    "empirical_not_proof": true,
+    "horizon": 200,
+    "observed_rate": 0.0436,
+    "proof": "registered nonnegative betting supermartingale; Ville threshold bound",
+    "seed": 2026101601,
+    "streams": 10000
+  },
+  "passed": 18,
+  "source_sha256": "8c0f6a68df39d2a0cb8dfade51d0456070026992c1dc8fc4c863f83b1dea4b49",
+  "tests": 18,
+  "version": "sequential-tests-v1"
+}
