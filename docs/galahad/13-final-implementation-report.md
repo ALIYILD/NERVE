@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest registered development verdict:** [73-compact-development-study.md](73-compact-development-study.md) records 60 tasks, seed 20261015, four arms and 100 actual calls with 67–83-token prompts. Candidate and baseline tied always-abstain at 40/60, with 0/20 supported answers; random scored 23/60. Retain baseline. No holdout access or promotion followed. Current fast/slow coverage totals 2,064 passing tests.
+
 **Measured tier acceptance:** [72-measured-test-tiers.md](72-measured-test-tiers.md) records the verifier change, twenty slowest tests, a fast tier under three minutes and one clean serial slow-tier run. Their disjoint union covers 2,046 passing tests; the initial fast timeout is documented.
 
 **Latest outcome feedback:** [71-format-outcome-feedback.md](71-format-outcome-feedback.md) records four actual outcomes ingested with distinct schema/abstention failure classes, then two evidence-linked hypotheses generated without inference. Ten restart artifacts were unchanged. Both proposals remain unevaluated; no improved model, promotion or completed conductor is claimed.

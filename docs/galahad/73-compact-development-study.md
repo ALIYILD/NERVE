@@ -73,3 +73,61 @@ PYTHONPATH=src .venv/bin/python scripts/run_scientific_compact_dev_study.py \
  --registration-directory /Users/aliyildirim/nerve-research-runs/scientific-candidates-v1 \
  --history-directory /Users/aliyildirim/nerve-research-runs/scientific-negative-history-v1
 ```
+
+## Actual development verdict — stop here
+
+**Retain the baseline. No improvement demonstrated.** All 100 real model outputs
+were exactly `ABSTAIN`. Both model arms failed every supported-evidence task,
+and their overall score matched the always-abstain control.
+
+| Arm | Conflict /20 | Supported /20 | Unit mismatch /20 | Total /60 | Task model calls |
+|---|---:|---:|---:|---:|---:|
+| Baseline | 20 | 0 | 20 | 40 (66.67%) | 60 |
+| Conflict-check candidate | 20 | 0 | 20 | 40 (66.67%) | 40 |
+| Always-abstain | 20 | 0 | 20 | 40 (66.67%) | 0 |
+| Random | 4 | 8 | 11 | 23 (38.33%) | 0 |
+
+All 240 rows passed the compact format grammar. Candidate versus baseline had
+zero paired gains, zero losses and 60 ties. The candidate did not exceed baseline
+or always-abstain, so the preregistered gate failed. Deterministically handling
+20 conflicts avoided 20 model calls, but that is rule-based computation avoidance,
+not demonstrated answer-quality improvement or learned model weights.
+
+Every measured prompt was **67–83 total runtime tokens**, below the declared 150
+ceiling. Exactly 100 task calls consumed 7,160 prompt tokens and 400 completion
+tokens (7,560 total). The summed measured model-call intervals were 192.795 seconds;
+this is one study observation, not a representative latency or speedup benchmark.
+No energy, hardware utilization or monetary cost was measured. The runtime was
+Ollama 0.20.2 before/after, with `qwen2.5-coder:1.5b` immutable digest
+`d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668`.
+
+A fresh-process terminal validation disabled inference, metadata, preload,
+runtime-version calls and both-split bank status. The exact-path file guard was
+active. Nine checked artifacts retained identical bytes and modification times.
+Independent review recomputed the rows, controls and verdict, checked all 50 source
+pins and confirmed 60 baseline plus 40 candidate durable completed call claims.
+Preregistration and runtime protocol match. No retries, holdout reads, policy
+promotion, negative-efficacy journal insertion or new experiment followed the
+verdict. The generalization verdict remains `insufficient_power`.
+
+[Actual receipt](evidence/scientific-compact-dev-study-v1.json),
+[fresh-process verification](evidence/scientific-compact-dev-study-v1-verification.json),
+[combined test coverage](evidence/compact-dev-test-coverage-v1.json).
+
+## Checkpoint and remaining boundaries
+
+The study was committed before inference at `cda6ffbb5bfccb003995a0083eea12b9b06ecc76` on
+`feature/galahad-persistent-memory`. The preceding feedback/tier checkpoint was
+`e09e0d2`. Current fast coverage is 1,565 tests in 64.888 seconds including discovery;
+the single clean slow run covered 499 tests in 169.922 seconds. Slow test sources
+are unchanged, and the disjoint union covers all 2,064 current test IDs with no
+failures, errors or skips. The twenty slowest measured tests and the original
+verifier change are in [the tier report](72-measured-test-tiers.md).
+
+Added the compact development study module, CLI, 18 tests and preregistration;
+updated CPU/security groups to include compact transport/study tests. Runtime
+results are real local inference; unit model responses are mocked. Nothing was
+pushed, merged, deployed or connected to real clinical data. No PR was created.
+GPU/Galahad licensing and durable KV restoration remain unverified. Tier 6 and
+broader self-learning are incomplete. Per the user stop instruction, work ends
+at this development verdict and the holdout remains unopened.
