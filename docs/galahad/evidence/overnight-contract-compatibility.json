@@ -1,0 +1,37 @@
+{
+  "scope": "CPU-only synthetic protocol compatibility fixtures; not bank-v3 items or efficacy study",
+  "model_calls": 0,
+  "results": [
+    {
+      "case": "familyB",
+      "arm": "candidate",
+      "result": {
+        "route": "deterministic_abstention",
+        "gate_reason": "unsupported_evidence"
+      }
+    },
+    {
+      "case": "familyB",
+      "arm": "baseline",
+      "result": {
+        "error": "supported_baseline_input_required"
+      }
+    },
+    {
+      "case": "qualified_measurement",
+      "arm": "candidate",
+      "result": {
+        "route": "deterministic_abstention",
+        "gate_reason": "unsupported_evidence"
+      }
+    },
+    {
+      "case": "qualified_measurement",
+      "arm": "baseline",
+      "result": {
+        "error": "supported_baseline_input_required"
+      }
+    }
+  ],
+  "finding": "Family B and qualified measurements are outside frozen compact grammar; bootstrap baseline raises before model call. Numeric conflict comparison already Decimal."
+}

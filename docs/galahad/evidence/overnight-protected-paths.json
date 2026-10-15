@@ -1,0 +1,23 @@
+{
+  "created_at": "2026-10-15T22:47:15.367973+00:00",
+  "base_commit": "fc1fd4f6e3a1de7f9b5f2013365bc9408288e5be",
+  "paths": {
+    "src/nerve_awim/memory_gateway/scientific_policy_gate_v2.py": "792f99e0522b12a9cb1bef9697f0f7619c8b93ad2c64ee8af25bfb78b6311df6",
+    "src/nerve_awim/memory_gateway/scientific_substrate_gate.py": "50e787f3c079b9007c91a7b31d46add5e6c1168020bb7f0d560db48b3242129d",
+    "src/nerve_awim/memory_gateway/holdout.py": "d6f2b021b3a16d819bbc1155771ce1ffaa13a82e2e6d0a16457d55fb4bb12196",
+    "src/nerve_awim/memory_gateway/scientific_task_bank.py": "1815d1f41d197d3edbb0dca16011c8ca14b595a94a22a80d7f2de8c26a65fab6",
+    "src/nerve_awim/memory_gateway/scientific_structured_tasks.py": "42878aa45666602351d48dd25929ca3b4ab49b1aa984cda6fff29fe37227410b",
+    "scripts/seal_scientific_holdout_v2.py": "eba2ccc1be996548b1e8f709c5fda45fdb2276a181bf561816eb550cf78ce609",
+    "scripts/verify_galahad.py": "163630ead69209171f2ac4ebf73383afc348e527fad3cefb88640d811c1a4bb0",
+    "tests/suite_tiers.json": "d4e0c4322de6837216bdc48defc92337529967540a8994c7009ba04f20764992",
+    "registry/scientific-v3-7b/registry.json": "ef3c8a6383cd9c750edb44e2fcc90d00154b24e0388b4e293f9c0dd8081f2afd",
+    "registry/scientific-v3-7b/dev_study.json": "5f2ce6d42f8819a6159506458e6d780e5ee27035b5d6cb2f74a7a27e76dc3ead",
+    "registry/scientific-v3-7b/task_bank_manifest.json": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6",
+    "registry/scientific-v3-7b/bootstrap-incumbent.json": "6dfe61807f51b90e7e6aaa49d3a48e82bb17c246b916a02718aa9ef8827fca58",
+    "registry/scientific-v3-7b/skill-v1.json": "97f78b0c4c80e175ebc61e51bd4084ab4708ea81d4f7f249292b5cab4d6d5647",
+    "registry/scientific-v3-7b/holdout_study.json": "35c314b5732f3aed25357688405e9b7b1dc9c2b6d1c2d867ec5c7bd55b1c5035",
+    "registry/scientific-v3-7b/candidate-config.json": "bf408544a01bf929304e67152064a6e931d0434128e6eb4f6d2a57b93f8aed83",
+    "registry/scientific-v3-7b/baseline-config.json": "efb299d0aad1e116f493f27f4d86e9ae697e75c033406a0395b62547edb7c369",
+    "trust/scientific-v3-7b-operator.json": "6d902228024e9909b901a203cea5917c1e7655131c6c444ae7fe9d94de3ed8d4"
+  }
+}
