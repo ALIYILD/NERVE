@@ -1,0 +1,17 @@
+{
+  "all_registered_sources_match": true,
+  "completed_studies": 200,
+  "immutable_wallet_sha256": "b23bf1fe63be574d9d1e679442a076fa7b923548b3b5cdd5bc6c605b58762f57",
+  "model_calls": 0,
+  "nominal_observed_target_met": true,
+  "preregistered_parameters_unchanged": true,
+  "registration_sha256": "57d910986dfb528f4486cc19557dbb3381f4d3994c5d9a74a49a1358aa112dfb",
+  "replay_identical": true,
+  "result_sha256": "220f5463d404c6539b3954b3ac7df3b996df6bca6d7cc79c6a00c1c97f45b70e",
+  "simulation_runs": 1,
+  "simulation_wall_seconds": 229.39347517403075,
+  "useful_good_acceptance_demonstrated": false,
+  "version": "sequential-simulation-verification-v1",
+  "wallet_mode": "0o400",
+  "wallet_source_sha256": "c67734503f38f1931d1acfcf79774c706444024c77249c196d4041fa4c684cd6"
+}
