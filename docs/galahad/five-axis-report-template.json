@@ -1,0 +1,12 @@
+{
+  "study_id": null,
+  "registration_sha256": null,
+  "mode": "exploratory",
+  "accuracy": {"strata": {}, "interval_method": "Wilson 95%, descriptive marginal"},
+  "efficiency": {"model_calls": null, "tokens": null, "median_latency": null, "max_latency": null, "capacity_delta": null},
+  "robustness": {"seed_variance": null, "order_variance": null, "worst_stratum": null, "all_registered_variants": []},
+  "safety": {"domain_violations": null, "unsafe_answers": null, "abstention_precision": null},
+  "ux": {"status": "deferred", "clinician_edit_distance": null, "acceptance": null},
+  "limitations": [],
+  "promotion_authorized": false
+}

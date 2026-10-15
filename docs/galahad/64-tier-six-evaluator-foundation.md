@@ -188,3 +188,8 @@ remain. Loops 37–45 require the additional journal, signed reward integration,
 generation/selection/retention chain, governed shadow/canary, adaptation, and
 externally gated weight training. Clinical traffic and unsigned deployments are
 not enabled by this work.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Vaccaro](https://arxiv.org/abs/2606.11217). This follow-on does not change this document's historical registration or evidence claims.

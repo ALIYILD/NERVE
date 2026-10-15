@@ -119,3 +119,8 @@ new-bank exception, skill retention and complete unattended conductor remain
 unfinished. GPU endpoint/budget and Galahad compatibility/licensing/restoration
 remain unverified. No clinical workflow, model weights, active policy, deployment,
 push or pull request changed. No new accuracy or performance claim is made.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.

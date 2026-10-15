@@ -114,3 +114,8 @@ PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_scientifi
 
 CPU regression testing and real inference should run separately to avoid creating
 an unnecessary competing workload on this laptop.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.
