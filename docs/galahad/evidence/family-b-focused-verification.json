@@ -1,10 +1,10 @@
 {
   "version": "family-b-focused-verification-v1",
-  "created_at_utc": "2026-10-15T23:49:51.785411+00:00",
+  "created_at_utc": "2026-10-15T23:53:43.823480+00:00",
   "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_scientific_family_b*.py' -v",
-  "tests": 17,
-  "passed": 17,
-  "wall_seconds": 29.089,
+  "tests": 18,
+  "passed": 18,
+  "wall_seconds": 19.442,
   "exit_code": 0,
   "model_calls": 0,
   "real_bank_generated": false,
@@ -14,11 +14,12 @@
     "src/nerve_awim/memory_gateway/scientific_task_bank_v3.py": "ff90984ac0797bbe352a4b59f3a929adb0685d76b392830ef7063d11221251c3",
     "src/nerve_awim/memory_gateway/scientific_bank_v3_truth.py": "9f1c832d136a2aee9968293cd45e4fa77c75ed958b8004404e10dc6205bface9",
     "scripts/build_scientific_task_bank_v3.py": "8862219fc90bdb3d12ad3a211632230a5be21ea94f0f034f67ab1b546d2fc052",
-    "scripts/run_scientific_family_b_study.py": "c57c7ee17b07c709c1ec42757ac0a5285fda125ee9bb49a6f296a9163de91c12",
+    "scripts/run_scientific_family_b_study.py": "e3fe9bc951f18abba53ab956c2fd5d2bcc0d39aa5f22fde465641ba7bd3894aa",
     "tests/test_scientific_family_b.py": "51e51c98ec2664497165ee796f67c9df2cde3e95ec48f96c21705d31963b646f",
-    "tests/test_scientific_family_b_study.py": "1919d50fc0cf4e16557c00d00f5cffa267ec51712eee3409a030a87cffd120aa",
-    "docs/galahad/evidence/family-b-resumption-protocol-v1.json": "d91e757ca7bec80de7a9cf08f37f9573b101ec08be916592f1af411f90bc3494"
+    "tests/test_scientific_family_b_study.py": "f990c842c13ff23e798e6ffdf17d129a24018476ea6b3a5867b6b3c58ad1457b",
+    "docs/galahad/evidence/family-b-resumption-protocol-v1.json": "c0eaf332d239794befe932ea51f82d5dab49198ce6c7eb84c723b10c1240dd38"
   },
-  "log_sha256": "e78a992966bf7719020d661bd350b83662a2f22b50f267720eab5a27b4459381",
-  "review": "Independent read-only review; reported blockers fixed before this run."
+  "log_sha256": "b74275377a1700885b4caf8727a97116941c7cb122fc7d71d90bd3ed613ec83f",
+  "review": "Independent read-only review; reported blockers fixed before this run.",
+  "changes_since_initial": "Prospective L4 1800s and cumulative L6 2400s budgets; regression test checks remaining holdout allowance before consumption."
 }

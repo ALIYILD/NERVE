@@ -252,3 +252,7 @@ After the initial protocol-blocked run was published at `48286fcc`, the user sup
 - Original model digest, registry, trust, canonical gates and task contract remain unchanged. No new signing, retention or activation.
 - Pod `lg0svvuenxvbno` was already RUNNING when checked, started at 2026-10-15T23:08:59.019Z according to Runpod. Count running startup/preparation/idle time from that point toward the cumulative six-GPU-hour limit; stop earlier when work ends. In the absence of pauses, the GPU deadline is 2026-10-16T05:08:59.019Z. The original 6,000-model-call limit and 07:00 wrap-up / 07:30 London deadlines also apply. Only one running pod, one same-class replacement if necessary, exact model digest only.
 - Commit and push the revised registrations, evidence and final handoff to the same feature branch. Fresh EXITED readback is required before closing the run.
+
+### CPU preflight continuation — 16 October 2026
+
+The separately registered 1,200-second preflight timed out at 1,201.563 seconds without completing all 2,228 selected tests; its source hashes were unchanged. This remains a timeout, not a pass. Under the user's instruction to continue all work, the next prospective CPU-only protocol uses a fresh full run of the identical selection with a 3,600-second budget. No partial verbose-log results are spliced into a claimed pass. The original 180-second verifier and tier manifest stay unchanged. One laptop suite at a time; the pod remains stopped during preparation.

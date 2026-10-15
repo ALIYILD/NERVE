@@ -67,6 +67,12 @@ class FamilyStudyTests(unittest.TestCase):
         with self.assertRaises(ValueError):study.require_exact_development_candidate(reg,str(other),'protocol')
         candidate.write_text('# tampered')
         with self.assertRaises(ValueError):study.require_exact_development_candidate(reg,str(candidate),'protocol')
+    def test_loop_wall_budgets(self):
+        self.assertEqual(study.study_wall_budget('dev',None),1800)
+        self.assertEqual(study.study_wall_budget('dev','candidate.py'),2400)
+        self.assertEqual(study.study_wall_budget('holdout','candidate.py',{'wall_seconds':900}),1500)
+        with self.assertRaises(ValueError):study.study_wall_budget('holdout','candidate.py',{'wall_seconds':2400})
+
     def test_new_budget_directory_rejected(self):
         reg={'budget_directory':str(self.budget.resolve()),'protocol_sha256':'protocol'}
         study.require_shared_budget(self.budget,reg,'protocol')

@@ -1,6 +1,6 @@
 {
   "version": "resumption-conductor-status-v1",
-  "updated_at_utc": "2026-10-15T23:49:51.785411+00:00",
+  "updated_at_utc": "2026-10-15T23:53:43.823480+00:00",
   "status": "active_CPU_preparation_pod_stopped",
   "authorization": "User explicit do-it-all authorizes versioned input/preparation adapter and newCPUpreflight deadline; original protected paths remain unchanged.",
   "cpu_preflight": {
@@ -14,7 +14,7 @@
     "registration_sha256": "ef00311ba16c44605630b6ab5bf5dc3942d59a324abb38c2c0d2e1c7923f5281",
     "inventory_tests": 2228
   },
-  "bank_focused_tests": "17/17 passed, 29.089 seconds; mutex released",
+  "bank_focused_tests": "18/18 passed, 19.442 seconds; prior 17-test evidence preserved; mutex released",
   "bank_generation": "not_started",
   "bank_sealed": false,
   "adapter_review": "reviewed; focused tests passed",

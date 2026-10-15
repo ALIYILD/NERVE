@@ -1,0 +1,22 @@
+test_bank_sealed_and_partition_balanced (test_scientific_family_b.FamilyBTests) ... ok
+test_candidate_raw_abstain_is_format_error_on_model_route (test_scientific_family_b.FamilyBTests) ... ok
+test_decode_does_not_repair_wrong_value_or_source (test_scientific_family_b.FamilyBTests) ... ok
+test_full_twelfth_source_supported (test_scientific_family_b.FamilyBTests) ... ok
+test_independent_validator_rejects_wrong_truth (test_scientific_family_b.FamilyBTests) ... ok
+test_old_domain_eligibility_equivalence (test_scientific_family_b.FamilyBTests) ... ok
+test_reproducible_truth_and_hardness_all_strata (test_scientific_family_b.FamilyBTests) ... ok
+test_shared_raw_facts_and_stale_preserved (test_scientific_family_b.FamilyBTests) ... ok
+test_domain_violation_does_not_repair_output (test_scientific_family_b_study.FamilyStudyTests) ... ok
+test_exact_development_candidate_binding (test_scientific_family_b_study.FamilyStudyTests) ... ok
+test_new_budget_directory_rejected (test_scientific_family_b_study.FamilyStudyTests) ... ok
+test_non_timeout_stops_without_retry (test_scientific_family_b_study.FamilyStudyTests) ... ok
+test_random_abstention_is_valid_control (test_scientific_family_b_study.FamilyStudyTests) ... ok
+test_register_then_run_and_network_free_replay (test_scientific_family_b_study.FamilyStudyTests) ... ok
+test_source_change_rejects_before_inference (test_scientific_family_b_study.FamilyStudyTests) ... ok
+test_tampered_aggregate_rejected (test_scientific_family_b_study.FamilyStudyTests) ... ok
+test_timeout_only_identical_retry_claims (test_scientific_family_b_study.FamilyStudyTests) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 29.089s
+
+OK

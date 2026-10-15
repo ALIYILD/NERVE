@@ -8,6 +8,7 @@ test_reproducible_truth_and_hardness_all_strata (test_scientific_family_b.Family
 test_shared_raw_facts_and_stale_preserved (test_scientific_family_b.FamilyBTests) ... ok
 test_domain_violation_does_not_repair_output (test_scientific_family_b_study.FamilyStudyTests) ... ok
 test_exact_development_candidate_binding (test_scientific_family_b_study.FamilyStudyTests) ... ok
+test_loop_wall_budgets (test_scientific_family_b_study.FamilyStudyTests) ... ok
 test_new_budget_directory_rejected (test_scientific_family_b_study.FamilyStudyTests) ... ok
 test_non_timeout_stops_without_retry (test_scientific_family_b_study.FamilyStudyTests) ... ok
 test_random_abstention_is_valid_control (test_scientific_family_b_study.FamilyStudyTests) ... ok
@@ -17,6 +18,6 @@ test_tampered_aggregate_rejected (test_scientific_family_b_study.FamilyStudyTest
 test_timeout_only_identical_retry_claims (test_scientific_family_b_study.FamilyStudyTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 17 tests in 29.089s
+Ran 18 tests in 19.442s
 
 OK

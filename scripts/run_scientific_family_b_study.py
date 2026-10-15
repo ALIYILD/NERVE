@@ -115,6 +115,14 @@ def require_exact_development_candidate(priorreg,extra,protocolsha):
     if not extra or priorreg['kind']!='dev' or priorreg['candidate_module']!=extra or priorreg['sources'].get(extra)!=hashbytes((ROOT/extra).read_bytes()) or priorreg['protocol_sha256']!=protocolsha:raise ValueError('exact_dev_candidate_required')
 
 
+def study_wall_budget(kind,extra,parent=None):
+    if kind=='holdout':
+        used=parent['wall_seconds']
+        if not isinstance(used,(int,float)) or not 0<=used<2400:raise ValueError('L6_wall_budget_exhausted')
+        return 2400-used
+    return 2400 if extra else 1800
+
+
 def register(root,kind,bankroot,protocol,calibration,budget,extra=None,prior=None,running_start=None,prior_running_seconds=None):
     if root.exists():raise ValueError('study_directory_exists')
     if extra and (Path(extra).is_absolute() or '..' in Path(extra).parts or not extra.startswith('src/nerve_awim/memory_gateway/')):raise ValueError('registered_candidate_module_path_required')
@@ -123,7 +131,7 @@ def register(root,kind,bankroot,protocol,calibration,budget,extra=None,prior=Non
     if started.tzinfo is None or started>now+timedelta(seconds=5):raise ValueError('provider_start_required')
     deadline=min(started+timedelta(seconds=21600-prior_running_seconds),WRAPUP)
     if now>=deadline:raise ValueError('running_budget_exhausted')
-    identity=transport.identity();protocolsha=hashbytes(protocol.read_bytes());manifest=None
+    identity=transport.identity();protocolsha=hashbytes(protocol.read_bytes());manifest=None;parent=None
     if kind=='calibration':
         if extra:raise ValueError('calibration_no_candidate')
         pool=[bank.item(bytes(32),'dev','multi-source-agreement',1000+i) for i in range(100)]
@@ -146,6 +154,7 @@ def register(root,kind,bankroot,protocol,calibration,budget,extra=None,prior=Non
             priorreg=read(prior/'registration.json')
             require_exact_development_candidate(priorreg,extra,protocolsha)
             if not extra or parent['verdict']!='holdout_eligible':raise ValueError('eligible_development_required')
+            if study_wall_budget(kind,extra,parent)<=3*timeout:raise ValueError('L6_wall_budget_exhausted')
             write(bankroot/'slice1-consumed.json',{'consumed_at_utc':datetime.now(timezone.utc).isoformat(),'candidate_sha256':hashbytes((ROOT/extra).read_bytes()),'dev_aggregate_sha256':hashbytes((prior/'aggregate.json').read_bytes())})
             path=bankroot/'slice1.json';path.chmod(0o400)
             try:raw=path.read_bytes()
@@ -162,7 +171,7 @@ def register(root,kind,bankroot,protocol,calibration,budget,extra=None,prior=Non
     reg={'version':VERSION,'kind':kind,'created_at_utc':datetime.now(timezone.utc).isoformat(),'identity':identity,'protocol_sha256':protocolsha,
          'sources':pins(extra),'candidate_module':extra,'input_sha256':inputsha,'arms':arms,'task_count':len(tasks),'rows':len(entries),
          'schedule_sha256':hashbytes(canonical(entries).encode()),'seed':SEED,'timeout_seconds':timeout,'retry_limit':2,'retry_on':'timeout_only_identical_request',
-         'budget_directory':str(budget.resolve()),'physical_attempt_cap':6000,'absolute_deadline_utc':deadline.isoformat(),'provider_running_start_utc':running_start,'prior_running_seconds':prior_running_seconds,'max_study_wall_seconds':7200,
+         'budget_directory':str(budget.resolve()),'physical_attempt_cap':6000,'absolute_deadline_utc':deadline.isoformat(),'provider_running_start_utc':running_start,'prior_running_seconds':prior_running_seconds,'max_study_wall_seconds':study_wall_budget(kind,extra,parent),'L6_prior_study_wall_seconds':parent['wall_seconds'] if kind=='holdout' else 0,
          'bank_manifest_sha256':hashbytes((bankroot/'manifest.json').read_bytes()) if manifest else None,'calibration_registration_sha256':hashbytes((calibration/'registration.json').read_bytes()) if kind!='calibration' else None,
          'prior_aggregate_sha256':hashbytes((prior/'aggregate.json').read_bytes()) if prior else None,'hourly_usd':0.59,'promotion_authorized':False,'holdout_item_exports':False,
          'max_logical_calls':sum(e['payload'] is not None for e in entries),'prompt_token_cap':4096,'max_output_tokens':128,

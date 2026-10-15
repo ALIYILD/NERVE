@@ -16,7 +16,10 @@
     "initial_running_at_utc": "2026-10-15T23:08:59.019Z",
     "maximum_concurrent_pods": 1,
     "replacement_maximum": 1,
-    "deadline_rule": "At each actual restart: provider running start plus21600seconds minus all prior running intervals, bounded by06:00UTC(07:00London) wrapup. Registration stores actual start, prior running seconds and resulting deadline. Paused time is not GPU time."
+    "deadline_rule": "At each actual restart: provider running start plus21600seconds minus all prior running intervals, bounded by06:00UTC(07:00London) wrapup. Registration stores actual start, prior running seconds and resulting deadline. Paused time is not GPU time.",
+    "L4_study_wall_seconds": 1800,
+    "L6_cumulative_dev_plus_holdout_study_wall_seconds": 2400,
+    "calibration_wall_seconds": 1800
   },
   "bank": {
     "version": "task-bank-v3-family-b",
