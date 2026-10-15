@@ -1,0 +1,204 @@
+{
+  "scope": "offline deterministic fixture; no model learning or generalization claim",
+  "api_calls": 0,
+  "cost_usd": 0,
+  "families": 5,
+  "capable_final_by_family": {
+    "sort": {
+      "hits": 1,
+      "tasks": 1
+    },
+    "unique": {
+      "hits": 1,
+      "tasks": 1
+    },
+    "json": {
+      "hits": 1,
+      "tasks": 1
+    },
+    "python": {
+      "hits": 1,
+      "tasks": 1
+    },
+    "csv": {
+      "hits": 2,
+      "tasks": 2
+    }
+  },
+  "scenarios": {
+    "capable_control": {
+      "history": [
+        {
+          "iteration": 1,
+          "status": "reverted",
+          "selection": {
+            "tasks": 8,
+            "prediction_calls": 16,
+            "baseline_hits": 8,
+            "lesson_hits": 8,
+            "wins": 0,
+            "losses": 0,
+            "promotion_authorized": false,
+            "cost_usd": null,
+            "scope": "single held-out comparison, not proof of generalization"
+          },
+          "regression": null,
+          "incumbent_regression": null
+        },
+        {
+          "iteration": 2,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 3,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 4,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 5,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 6,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 7,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 8,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 9,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 10,
+          "status": "duplicate_skipped"
+        }
+      ],
+      "selected_lesson": null,
+      "selection_winner": null,
+      "final": null,
+      "prediction_calls": 16,
+      "proposal_calls": 10,
+      "status": "no_verified_improvement",
+      "promotion_authorized": false,
+      "scope": "bounded offline experiment; not statistical or general improvement proof"
+    },
+    "controlled_repair": {
+      "history": [
+        {
+          "iteration": 1,
+          "status": "reverted",
+          "selection": {
+            "tasks": 8,
+            "prediction_calls": 16,
+            "baseline_hits": 6,
+            "lesson_hits": 8,
+            "wins": 2,
+            "losses": 0,
+            "promotion_authorized": false,
+            "cost_usd": null,
+            "scope": "single held-out comparison, not proof of generalization"
+          },
+          "regression": {
+            "tasks": 5,
+            "prediction_calls": 10,
+            "baseline_hits": 4,
+            "lesson_hits": 4,
+            "wins": 1,
+            "losses": 1,
+            "promotion_authorized": false,
+            "cost_usd": null,
+            "scope": "single held-out comparison, not proof of generalization"
+          },
+          "incumbent_regression": null
+        },
+        {
+          "iteration": 2,
+          "status": "kept",
+          "selection": {
+            "tasks": 8,
+            "prediction_calls": 16,
+            "baseline_hits": 6,
+            "lesson_hits": 8,
+            "wins": 2,
+            "losses": 0,
+            "promotion_authorized": false,
+            "cost_usd": null,
+            "scope": "single held-out comparison, not proof of generalization"
+          },
+          "regression": {
+            "tasks": 5,
+            "prediction_calls": 10,
+            "baseline_hits": 4,
+            "lesson_hits": 5,
+            "wins": 1,
+            "losses": 0,
+            "promotion_authorized": false,
+            "cost_usd": null,
+            "scope": "single held-out comparison, not proof of generalization"
+          },
+          "incumbent_regression": null
+        },
+        {
+          "iteration": 3,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 4,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 5,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 6,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 7,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 8,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 9,
+          "status": "duplicate_skipped"
+        },
+        {
+          "iteration": 10,
+          "status": "duplicate_skipped"
+        }
+      ],
+      "selected_lesson": "repair-without-forgetting",
+      "selection_winner": "repair-without-forgetting",
+      "final": {
+        "tasks": 6,
+        "prediction_calls": 12,
+        "baseline_hits": 5,
+        "lesson_hits": 6,
+        "wins": 1,
+        "losses": 0,
+        "promotion_authorized": false,
+        "cost_usd": null,
+        "scope": "single held-out comparison, not proof of generalization"
+      },
+      "prediction_calls": 64,
+      "proposal_calls": 10,
+      "status": "observed_final_gain",
+      "promotion_authorized": false,
+      "scope": "bounded offline experiment; not statistical or general improvement proof"
+    }
+  },
+  "promotion_authorized": false
+}

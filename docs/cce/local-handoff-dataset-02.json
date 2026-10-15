@@ -1,0 +1,252 @@
+{
+  "schema_version": 2,
+  "dataset_id": "local-handoff-facts-v1-study-02",
+  "source": {
+    "uri": "fixture:nerve-handoff-facts-v1-study-02",
+    "revision": "sha256:5429da0920dbde4353c750dce97711aea1a48145e4021845eaa807f818337f85"
+  },
+  "splits": {
+    "discovery": [
+      {
+        "task_id": "local-handoff-v1-discovery-00",
+        "family_id": "facts-sha256-7f133ff82336fea936a98c233614ef7bc1e031d28b1db0b2a3c50cfc0e3ef7e2",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-discovery-00\",\"memory_written\":null,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":true,\"status\":\"done\"}"
+      }
+    ],
+    "selection": [
+      {
+        "task_id": "local-handoff-v1-selection-00",
+        "family_id": "facts-sha256-b042ea103db3fd56ccca5bdef4a5e26a1042139fad3ad3311c542715b8e8e044",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":null,\"id\":\"local-handoff-v1-selection-00\",\"memory_written\":null,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-selection-01",
+        "family_id": "facts-sha256-e94fd17f80c646c22c64af2ca0d41a9a6b0901718326c1f69156e0c857ffc8e5",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":0,\"id\":\"local-handoff-v1-selection-01\",\"memory_written\":false,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-selection-02",
+        "family_id": "facts-sha256-e41a1fdf7038285d23ba8fff13b7af70b5457bb725d3265dc3940b224115ddac",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":null,\"id\":\"local-handoff-v1-selection-02\",\"memory_written\":true,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-selection-03",
+        "family_id": "facts-sha256-cbefd072396ad42e96859fe3f2819bc03abe1ef6a3e4bce08358d39b518ba675",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":1,\"id\":\"local-handoff-v1-selection-03\",\"memory_written\":null,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      }
+    ],
+    "regression": [
+      {
+        "task_id": "local-handoff-v1-regression-00",
+        "family_id": "facts-sha256-85f59a34e79d17bc696b1f0a002ee97c6f097d1948d2c703b216f21945746ec8",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-regression-00\",\"memory_written\":true,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":true,\"passed\":true,\"status\":\"done\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-regression-01",
+        "family_id": "facts-sha256-49520edeb5bbf17e0b1d1ac25ec8fc3fdaed459d2bed260c671ee37f7bdc468f",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":1,\"id\":\"local-handoff-v1-regression-01\",\"memory_written\":false,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-regression-02",
+        "family_id": "facts-sha256-9f0a9500a7df52d62677213efc737d00a3a12ce76ca15bea1b4c8d3f84e44ac9",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":0,\"id\":\"local-handoff-v1-regression-02\",\"memory_written\":true,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-regression-03",
+        "family_id": "facts-sha256-cf814039639674b433630f885f3b7a89c6c888ae5fc1369b9586326ee22ba20b",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-regression-03\",\"memory_written\":false,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      }
+    ],
+    "holdout": [
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-00",
+        "family_id": "facts-sha256-617d964646c74fb635d6802afd86282a5fcc30ea8fca3f0988d7bd5876da7bc4",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-study-02-holdout-00\",\"memory_written\":false,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":true,\"status\":\"done\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-01",
+        "family_id": "facts-sha256-6cf038ef4db07146a347c1fc83e8010529e346a8e193816b6e0df288157cf543",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-01\",\"memory_written\":false,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-02",
+        "family_id": "facts-sha256-6f99f79d2cf5cf60e80e6f16663b68b707a58e888de7fb8e72f5c3c8c38b362a",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":0,\"id\":\"local-handoff-v1-study-02-holdout-02\",\"memory_written\":true,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-03",
+        "family_id": "facts-sha256-6ffcdd735f6462859f7cae2b49769b4a44b5869e1e49dbaf4995dbe43a7d0483",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":0,\"id\":\"local-handoff-v1-study-02-holdout-03\",\"memory_written\":true,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-04",
+        "family_id": "facts-sha256-733f97190b7eb35b8d2eb5d6f234499da22e896c4ec310e3ee0cd45c85f205e5",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-04\",\"memory_written\":null,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-05",
+        "family_id": "facts-sha256-744d537bb65be7713acaf58324b0bfa57860d1699526fb1c301b062979b22f63",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-05\",\"memory_written\":null,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-06",
+        "family_id": "facts-sha256-7bd5fa78a217aa6a5632cd1d1b1161296161a42133cfad4a165783a54b6b8f5f",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-06\",\"memory_written\":true,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-07",
+        "family_id": "facts-sha256-7e503ab73fed146c97ad6617421411be429c7a7674a280e4d2ce332ad5e25da5",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-07\",\"memory_written\":null,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-08",
+        "family_id": "facts-sha256-80e53f6373a8f8305c8087c0b6c45a02fe440a21a6ea9cdfe9c6aff8a5c5cf91",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-08\",\"memory_written\":false,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-09",
+        "family_id": "facts-sha256-841a91fb5fedd468d126c0e64246880f911d017f4fa45f6249b1559fb881ca4a",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-09\",\"memory_written\":null,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-10",
+        "family_id": "facts-sha256-85e989aa4c5e2da80db0edb9e26ebe2c90aa0a1e13495289a9a2456510542360",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-10\",\"memory_written\":null,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-11",
+        "family_id": "facts-sha256-860cfb45a1b211ec7a529b0a0a753399a23741367709eb1535001974af2ae484",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-11\",\"memory_written\":false,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-12",
+        "family_id": "facts-sha256-906281427bcb576e7b549c86c12269448492c90fff35d8f95786ebd5910d0292",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-study-02-holdout-12\",\"memory_written\":true,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-13",
+        "family_id": "facts-sha256-906c9d0be22cee3a62637e039d31c03e2f0a6bce3e09b51249d19b0bbd4a5c8f",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-13\",\"memory_written\":false,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-14",
+        "family_id": "facts-sha256-955365c5a64590e7275243afae178ef3abeba2ac1a18f24dbfd972b237550864",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-study-02-holdout-14\",\"memory_written\":false,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-15",
+        "family_id": "facts-sha256-a0836e3b359ce4c759de6ffea5d04ca911a0a4d1db4211f48d913d1f142a38b5",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-15\",\"memory_written\":false,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-16",
+        "family_id": "facts-sha256-a2e9965d3deb288f406c182d1069f992ca4b3cdf49fb2060374eb931d3820eb5",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-16\",\"memory_written\":true,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-17",
+        "family_id": "facts-sha256-a57ebdeef643a24e28fab391a03ad4780a36297fa7181358ea05ebc26db71c89",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-17\",\"memory_written\":null,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-18",
+        "family_id": "facts-sha256-a6a793619ec24d445c67a8d19d8fb8b614a8b28b76969a9f6625fa5f26c4f9c3",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-18\",\"memory_written\":null,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-19",
+        "family_id": "facts-sha256-a838fd8dd238698742947f632e256332667b029d274bf1e97fe98394af5f625d",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":0,\"id\":\"local-handoff-v1-study-02-holdout-19\",\"memory_written\":null,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-20",
+        "family_id": "facts-sha256-ac9fe847dc7626c8612d42bf28e7a83b965db64013c2bc474dfc5c36277e7bbc",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-20\",\"memory_written\":null,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-21",
+        "family_id": "facts-sha256-ace9fe8e424d6f12e64d001546b9a78742e1337f2db304e1ed329aa2206c1d20",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-21\",\"memory_written\":false,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-22",
+        "family_id": "facts-sha256-ad2dd5a41370a209637470511f873927ae674305c3fdab5a3c8f3575f05d5f48",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-22\",\"memory_written\":null,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-23",
+        "family_id": "facts-sha256-b019fa34f4a27367055afa6fad681d5002649bf765520a3a8863e5dd711f2be2",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":0,\"id\":\"local-handoff-v1-study-02-holdout-23\",\"memory_written\":false,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-24",
+        "family_id": "facts-sha256-b111ffa361fa390fa6336a166aab4c4f8bfe75a3cc2be92e5f666a95735c166b",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-24\",\"memory_written\":false,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-25",
+        "family_id": "facts-sha256-b3c93a910198a9594c53ab9ed913a567e0aeb7334d6364d8ed5c4aeed401e477",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-25\",\"memory_written\":true,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-26",
+        "family_id": "facts-sha256-bbbaf9367eb2e5a1a933cbdbad1d2d46702899b2646cd3f9a31b731ec100c46d",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-26\",\"memory_written\":false,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-27",
+        "family_id": "facts-sha256-c73cbd7a01f4442f23a599e4c02fdeb01e79c6ddba18f91bc90013fb6e27b70f",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-27\",\"memory_written\":false,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-28",
+        "family_id": "facts-sha256-cb946498da3c29f5df04e92be3f181f748228125e8509d750fa6a8145d8c421f",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":null,\"id\":\"local-handoff-v1-study-02-holdout-28\",\"memory_written\":true,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-study-02-holdout-29",
+        "family_id": "facts-sha256-cbd4b261abaf279407a794aa599f7ba5f8c32da1745e4707bb7a88a18ef290d1",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":1,\"id\":\"local-handoff-v1-study-02-holdout-29\",\"memory_written\":false,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "schema_version": 2,
+  "dataset_id": "local-handoff-facts-v1",
+  "source": {
+    "uri": "fixture:nerve-handoff-facts-v1",
+    "revision": "sha256:f6dc5d80d9d3784b0bd091e32fbf59914dac10358b17fd06bb4484e35b630d0b"
+  },
+  "splits": {
+    "discovery": [
+      {
+        "task_id": "local-handoff-v1-discovery-00",
+        "family_id": "facts-sha256-7f133ff82336fea936a98c233614ef7bc1e031d28b1db0b2a3c50cfc0e3ef7e2",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-discovery-00\",\"memory_written\":null,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":true,\"status\":\"done\"}"
+      }
+    ],
+    "selection": [
+      {
+        "task_id": "local-handoff-v1-selection-00",
+        "family_id": "facts-sha256-b042ea103db3fd56ccca5bdef4a5e26a1042139fad3ad3311c542715b8e8e044",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":null,\"id\":\"local-handoff-v1-selection-00\",\"memory_written\":null,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-selection-01",
+        "family_id": "facts-sha256-e94fd17f80c646c22c64af2ca0d41a9a6b0901718326c1f69156e0c857ffc8e5",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":0,\"id\":\"local-handoff-v1-selection-01\",\"memory_written\":false,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-selection-02",
+        "family_id": "facts-sha256-e41a1fdf7038285d23ba8fff13b7af70b5457bb725d3265dc3940b224115ddac",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":null,\"id\":\"local-handoff-v1-selection-02\",\"memory_written\":true,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-selection-03",
+        "family_id": "facts-sha256-cbefd072396ad42e96859fe3f2819bc03abe1ef6a3e4bce08358d39b518ba675",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":1,\"id\":\"local-handoff-v1-selection-03\",\"memory_written\":null,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      }
+    ],
+    "regression": [
+      {
+        "task_id": "local-handoff-v1-regression-00",
+        "family_id": "facts-sha256-85f59a34e79d17bc696b1f0a002ee97c6f097d1948d2c703b216f21945746ec8",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-regression-00\",\"memory_written\":true,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":true,\"passed\":true,\"status\":\"done\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-regression-01",
+        "family_id": "facts-sha256-49520edeb5bbf17e0b1d1ac25ec8fc3fdaed459d2bed260c671ee37f7bdc468f",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":1,\"id\":\"local-handoff-v1-regression-01\",\"memory_written\":false,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-regression-02",
+        "family_id": "facts-sha256-9f0a9500a7df52d62677213efc737d00a3a12ce76ca15bea1b4c8d3f84e44ac9",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":0,\"id\":\"local-handoff-v1-regression-02\",\"memory_written\":true,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-regression-03",
+        "family_id": "facts-sha256-cf814039639674b433630f885f3b7a89c6c888ae5fc1369b9586326ee22ba20b",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-regression-03\",\"memory_written\":false,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      }
+    ],
+    "holdout": [
+      {
+        "task_id": "local-handoff-v1-holdout-00",
+        "family_id": "facts-sha256-017d1adcc8512b17a35bcc9b9b4990faa15cae6b4b5585a13fa1f093fe77800c",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":null,\"id\":\"local-handoff-v1-holdout-00\",\"memory_written\":true,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-01",
+        "family_id": "facts-sha256-048f85758c6d007a8f6507869622847b7f3b286d419b95fa04f6b97868d12cc2",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-01\",\"memory_written\":null,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-02",
+        "family_id": "facts-sha256-0b9c31dc6ffc03b62bc8accbd365f0e3ebfc6ddfbda86b13fdfe30ea07d9c03a",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":1,\"id\":\"local-handoff-v1-holdout-02\",\"memory_written\":true,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-03",
+        "family_id": "facts-sha256-0cc9132c7a1f2b66ed3a0923d8118b18ebef0ff196e051fbdf5f38cc26de04a6",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-03\",\"memory_written\":false,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-04",
+        "family_id": "facts-sha256-112141c3da5206a9c52917ede503bcd25b90839a9a4fca843eea015b23a6e358",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":null,\"id\":\"local-handoff-v1-holdout-04\",\"memory_written\":null,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-05",
+        "family_id": "facts-sha256-180ace4affd2a3bbe569e76ce9a898118ceed04a1db6160cff35ad29d16c9ae3",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":null,\"id\":\"local-handoff-v1-holdout-05\",\"memory_written\":true,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-06",
+        "family_id": "facts-sha256-1afe788adbe9b946383f2a84ccd0245ab28f3d186d0004113110cd803d6c8757",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":1,\"id\":\"local-handoff-v1-holdout-06\",\"memory_written\":true,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-07",
+        "family_id": "facts-sha256-27885cfd446547341f06e77d62fa250a4959451ec3cd216cbfc46ee11c5bc2f2",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":1,\"id\":\"local-handoff-v1-holdout-07\",\"memory_written\":null,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-08",
+        "family_id": "facts-sha256-2b1df3b32451946095c84669db02f0ab82a68716cd23cb45522af8a7fc361fbd",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-08\",\"memory_written\":null,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-09",
+        "family_id": "facts-sha256-2b33f8e38f626054bb8204e5cfc16e25b74095a627559780a92acaae060e6390",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-09\",\"memory_written\":true,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-10",
+        "family_id": "facts-sha256-2b5688d1802372f9a96769fe8d75cdd43f5c09db7b0cc44a24adf7e672f5551b",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":1,\"id\":\"local-handoff-v1-holdout-10\",\"memory_written\":true,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-11",
+        "family_id": "facts-sha256-32492235ca6f5875efd7681583cc678b25047135fbe5e6a58d38b06790e3ac49",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":1,\"id\":\"local-handoff-v1-holdout-11\",\"memory_written\":false,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-12",
+        "family_id": "facts-sha256-3531adef16e58cc80ab8b8379ca16a30243587d5ba431f641cc30d6d9fc671b2",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":null,\"id\":\"local-handoff-v1-holdout-12\",\"memory_written\":false,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-13",
+        "family_id": "facts-sha256-37ad90d2fa4796f0f453296a718de21bb5602661f0785e3cec168aea7a4e4a12",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":1,\"id\":\"local-handoff-v1-holdout-13\",\"memory_written\":null,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-14",
+        "family_id": "facts-sha256-390820976552bf1a1cfc43a099d68722a20541910ec505986ff891fafda87e34",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":null,\"id\":\"local-handoff-v1-holdout-14\",\"memory_written\":null,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-15",
+        "family_id": "facts-sha256-399bce58371d30064bf3e1cfcdbe09e2f79d4e71a843504d4779ac1ff0cce01d",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":null,\"id\":\"local-handoff-v1-holdout-15\",\"memory_written\":true,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-16",
+        "family_id": "facts-sha256-3bcdac24d9de021cf1d612d964c2f75920940b79e6bdaa3986e2f7e4b4c2941c",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-16\",\"memory_written\":true,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-17",
+        "family_id": "facts-sha256-3fc2e0fe3604d15401c6e5f9c75d2c17564dbeca77a7f426502affd510e6032f",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":null,\"id\":\"local-handoff-v1-holdout-17\",\"memory_written\":false,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-18",
+        "family_id": "facts-sha256-451ef32cc82e5da431a67aad6f135c7f07484e2d7eed7983802c23c3f48fe8d1",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-18\",\"memory_written\":null,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-19",
+        "family_id": "facts-sha256-4ad36a60810ac85e415047dfd1132008eeee0f57bc3111de850d291d61a36f50",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-19\",\"memory_written\":null,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-20",
+        "family_id": "facts-sha256-4d1ab099b94ddccfff0b1b5a917d9fc1dd33ab4fba44d8101c5ec5f7c568e6fb",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":null,\"id\":\"local-handoff-v1-holdout-20\",\"memory_written\":null,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-21",
+        "family_id": "facts-sha256-4d5b5eb4f6fecec1ebcfd72c75627ec0089d9e56b2f81bd3d8ba24777dd9cca5",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-21\",\"memory_written\":null,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-22",
+        "family_id": "facts-sha256-4fc706cdb3581d3b045c3d7a3b3428050b1051ebcadf3cd69ed721bdb843a8de",
+        "instruction": "{\"artifact_exists\":true,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-22\",\"memory_written\":null,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-23",
+        "family_id": "facts-sha256-54312783383ded222f624a94dc1de2c2f9c40849cc16d924ca2f7ae4e77770e8",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-23\",\"memory_written\":false,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-24",
+        "family_id": "facts-sha256-5572598629ee0b5c9a14c57f1b3e8d0ecce41bd9383e252aaab68c1be34369f6",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-24\",\"memory_written\":false,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"unknown\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-25",
+        "family_id": "facts-sha256-564468ffdec6dfcf8397f49bb64ceb213f4c1fb780170a33cb95fe9ff31679cd",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":0,\"id\":\"local-handoff-v1-holdout-25\",\"memory_written\":null,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-26",
+        "family_id": "facts-sha256-566ddb62c361ac9cef44c51a364751ecf810b3f6a0a3747aaf1765e3fca23c31",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":1,\"id\":\"local-handoff-v1-holdout-26\",\"memory_written\":true,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":true,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-27",
+        "family_id": "facts-sha256-57de3dcea25cd8f031343056cfc86d41225ef8325faa723ee01796d3b51264a2",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":null,\"id\":\"local-handoff-v1-holdout-27\",\"memory_written\":false,\"qa_passed\":true}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-28",
+        "family_id": "facts-sha256-5996a9254084d927fe1c6e8d50bc82f4b390771cc564281b7dba091e3b76355a",
+        "instruction": "{\"artifact_exists\":false,\"exit_code\":null,\"id\":\"local-handoff-v1-holdout-28\",\"memory_written\":null,\"qa_passed\":null}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      },
+      {
+        "task_id": "local-handoff-v1-holdout-29",
+        "family_id": "facts-sha256-5d8b401b99a44a7a0a6bd490ff8b48487d98f7a600945faad173c37ded0d51f3",
+        "instruction": "{\"artifact_exists\":null,\"exit_code\":1,\"id\":\"local-handoff-v1-holdout-29\",\"memory_written\":false,\"qa_passed\":false}",
+        "expected": "{\"memory_saved\":false,\"passed\":false,\"status\":\"failed\"}"
+      }
+    ]
+  }
+}

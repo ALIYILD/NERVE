@@ -71,6 +71,7 @@ class PromotionMonitor:
             self._finish(con, scope, row, state, reason)
 
     def execute(self, actor, canary, task, *, guard=None):
+        self.engine.reject_arc_bypass(actor, task)
         scope = self.engine._scope(actor, 'runtime')
         task, digest = self.engine._task(task)
         attempt = False

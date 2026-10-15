@@ -1,0 +1,887 @@
+{
+  "protocol": {
+    "version": "nerve-outcome-forecast-v1",
+    "data_class": "synthetic independent Bernoulli outcomes; no clinical or GPU measurements",
+    "window": 20,
+    "warmup": 20,
+    "development_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "evaluation_seeds": [
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119
+    ],
+    "regimes": {
+      "stationary": [
+        0.8,
+        0.8,
+        0.8
+      ],
+      "shift": [
+        0.9,
+        0.2,
+        0.8
+      ]
+    },
+    "observations_per_regime": 100,
+    "metric": "Brier loss, score before update; lower is better",
+    "controls": [
+      "neutral 0.5",
+      "frozen Beta mean after warmup",
+      "expanding Beta mean"
+    ],
+    "acceptance": "report every regime and control; no production promotion from synthetic results",
+    "restrictions": "No tuning on evaluation seeds, no clinical efficacy or real GPU savings claim"
+  },
+  "results": {
+    "stationary": {
+      "mean_brier": {
+        "adaptive": 0.17004206021251456,
+        "frozen": 0.16578659976387222,
+        "expanding": 0.16373853640779368,
+        "neutral": 0.25
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "b6e1c990d70b02463761ae113ad67be1d47be2d10806640712391d86258a5374",
+          "brier": {
+            "adaptive": 0.1639241440377801,
+            "frozen": 0.1557851239669419,
+            "expanding": 0.1572698815579024,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 101,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "b0ea6aa56a810b3db6e817a4dca4bf84d34f1c9f24940acda01bbc35b9662169",
+          "brier": {
+            "adaptive": 0.16134149940968107,
+            "frozen": 0.15578512396694175,
+            "expanding": 0.15702578319001895,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 102,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7272727272727273,
+          "state_digest": "354217aec763b7fb2f003a930aa5e4ca8d66e0d2c172ed6bcb2397c4527e9aeb",
+          "brier": {
+            "adaptive": 0.18785419126328198,
+            "frozen": 0.19262101534828785,
+            "expanding": 0.1842825477816534,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 103,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "ce6201ca093e7f36420830785e0713c4b5d13f0951620bb43982ab6c176d13e6",
+          "brier": {
+            "adaptive": 0.15833825265643425,
+            "frozen": 0.15100354191263235,
+            "expanding": 0.15054950647000667,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 104,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "c72a53b3eda29f73733d51b5b2203c70536e50a64be44dda97dd9e8ed3be441e",
+          "brier": {
+            "adaptive": 0.17300767414403748,
+            "frozen": 0.16853600944509983,
+            "expanding": 0.16611572680814324,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 105,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7272727272727273,
+          "state_digest": "d58a232b96c1bdffec972bf079a3f2bd52203c592a16b4629af693e8b8e7f4f0",
+          "brier": {
+            "adaptive": 0.18311688311688265,
+            "frozen": 0.17438016528925565,
+            "expanding": 0.17626567949890262,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 106,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.6818181818181818,
+          "state_digest": "09fa11e13f28ad7e777724ddeda566da59bc412b9518d617512ffae081ebe974",
+          "brier": {
+            "adaptive": 0.16230814639905544,
+            "frozen": 0.1687721369539553,
+            "expanding": 0.15382454105923388,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 107,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "5601c2877d0a6c451879debef60e1fa1c8217c564fa747e687583bc63fbe95d1",
+          "brier": {
+            "adaptive": 0.17865997638724904,
+            "frozen": 0.17048406139315178,
+            "expanding": 0.17197246097544308,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 108,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "5954f04dc88dab6cc8bb8b514876adb7f68d5f489d5277fa336b7b755ba3ef4f",
+          "brier": {
+            "adaptive": 0.16974616292798103,
+            "frozen": 0.17656434474616317,
+            "expanding": 0.16675133378663534,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 109,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "8f1a34704b377b856b5b350a91ab4f26a7f35df5f128242574f0921ffca3127a",
+          "brier": {
+            "adaptive": 0.18353010625737867,
+            "frozen": 0.17048406139315184,
+            "expanding": 0.17196492166383212,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 110,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "864ae74da6133e6fe3493074007d64a366831da88f826eef091453521c9984b9",
+          "brier": {
+            "adaptive": 0.19129279811097963,
+            "frozen": 0.18022432113341155,
+            "expanding": 0.18197885783508555,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 111,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "4abbc821588a22cceed5f1f1f25ea916950ecaf1ac64702ac6511b36284e2d0b",
+          "brier": {
+            "adaptive": 0.16487603305785103,
+            "frozen": 0.1568476977567882,
+            "expanding": 0.15727694630573064,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 112,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.6818181818181818,
+          "state_digest": "345c048903618d1cd28f156ebc306083b31401b0139a0c1f2efbfc0363790383",
+          "brier": {
+            "adaptive": 0.1730002951593858,
+            "frozen": 0.16714876033057818,
+            "expanding": 0.1678411352212818,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 113,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "9c2cbf62903293fddd26a1adb17041c8f04710fd5a13fcc2e0351c3516c54283",
+          "brier": {
+            "adaptive": 0.16138577331759127,
+            "frozen": 0.16041912632821675,
+            "expanding": 0.15540068349741457,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 114,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7272727272727273,
+          "state_digest": "76fe53cf853c1c306410bb41ff7451a68f610815319a44411b75457e082bf5c0",
+          "brier": {
+            "adaptive": 0.1890200708382525,
+            "frozen": 0.1856552538370723,
+            "expanding": 0.18054496431496664,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 115,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "1c4bdcb530eb32c4d7d7565f5188b07b8659a0407231ead8023f8bd052468090",
+          "brier": {
+            "adaptive": 0.18075560802833507,
+            "frozen": 0.18305785123966975,
+            "expanding": 0.17680278029943838,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 116,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "545dfa0dfb70ac4029e0f60e714a4e7f58b6a7ffb8e01cf3b96e7e2fb94a9ba6",
+          "brier": {
+            "adaptive": 0.10697314049586774,
+            "frozen": 0.10171192443919702,
+            "expanding": 0.10217621160556614,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 117,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7272727272727273,
+          "state_digest": "3a2c730e33728b7eece6a05e846da869da813d2ce179dce05018ceaf357969f0",
+          "brier": {
+            "adaptive": 0.15678866587957488,
+            "frozen": 0.15365997638724893,
+            "expanding": 0.15306292736740532,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 118,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "32dade31bf79dd9914035bf90668da1095f8864ca706aac6dad51a632e5936a6",
+          "brier": {
+            "adaptive": 0.16633707201889011,
+            "frozen": 0.1626918536009441,
+            "expanding": 0.16370390808523946,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 119,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "5f268759b777d29d62f23d499fafcd5a8d86fec51e695fec965b08e09ba90bf6",
+          "brier": {
+            "adaptive": 0.1885847107438015,
+            "frozen": 0.17989964580873619,
+            "expanding": 0.1799599308319736,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        }
+      ],
+      "adaptive_beats_expanding_seeds": 0,
+      "adaptive_beats_frozen_seeds": 4
+    },
+    "shift": {
+      "mean_brier": {
+        "adaptive": 0.16967421782762676,
+        "frozen": 0.3009725501770959,
+        "expanding": 0.24300427022674115,
+        "neutral": 0.25
+      },
+      "runs": [
+        {
+          "seed": 100,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "659bfd0edb4741e859db5c0eae0834fef086ce7a904eec9e20794bdf436c9769",
+          "brier": {
+            "adaptive": 0.17511806375442715,
+            "frozen": 0.2835301062573791,
+            "expanding": 0.23730209761331242,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 101,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "00217a74aaf75c1159ff978a55b3eda9f13001c0e5c349ab6cf75c1c3174ff95",
+          "brier": {
+            "adaptive": 0.15979191263282155,
+            "frozen": 0.2830578512396709,
+            "expanding": 0.2433999891438263,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 102,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7272727272727273,
+          "state_digest": "b6d78d63718782b2526c27607727f4ac1bfef34baa8acc94ba0c29ee5fcd20ae",
+          "brier": {
+            "adaptive": 0.17953807556080273,
+            "frozen": 0.3657024793388414,
+            "expanding": 0.2509524187857347,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 103,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "4be99df164f474a6c4e5a84228a596a482b4fa5d9387a8caa3c7372af1b2a5d3",
+          "brier": {
+            "adaptive": 0.15653778040141658,
+            "frozen": 0.32969303423848834,
+            "expanding": 0.2469784173225096,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 104,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "ef627628f6fbb9b4bd1677b0865ddbc1665b0334b738c0f97ef9b0b2a1093507",
+          "brier": {
+            "adaptive": 0.17666765053128672,
+            "frozen": 0.3180047225501767,
+            "expanding": 0.2430645839089461,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 105,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7272727272727273,
+          "state_digest": "4d8d863f8101daab16cc7a95250fa5d4cf3618d1c98be0f8fea0306d4b8554e0",
+          "brier": {
+            "adaptive": 0.18051210153482858,
+            "frozen": 0.31989374262101583,
+            "expanding": 0.2504542835780711,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 106,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.6818181818181818,
+          "state_digest": "d10c0a9edba3a1b22efd3c359da1468f9b1c5562de1a5873b2cc6f9900cb6f2e",
+          "brier": {
+            "adaptive": 0.1550177095631639,
+            "frozen": 0.26487603305785223,
+            "expanding": 0.23561668652438672,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 107,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "e3cbb48d8f0f51ba9bd9022cc8518fd98bd3a3b75ad8487ae503380f1e222d04",
+          "brier": {
+            "adaptive": 0.17162042502951577,
+            "frozen": 0.2600944510035426,
+            "expanding": 0.23962195352583876,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 108,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "07a3e79f24c2c88a6b6132c30c31a31a288da0930132b1487b731d422cf23ea0",
+          "brier": {
+            "adaptive": 0.17818034238488764,
+            "frozen": 0.273966942148762,
+            "expanding": 0.24002547618179107,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 109,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "be2a65bc99370c42e3902323eeb3055e3216c591ab731cb262336f4164d3d8fe",
+          "brier": {
+            "adaptive": 0.17310360094450974,
+            "frozen": 0.3209268004722546,
+            "expanding": 0.24417570711070521,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 110,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "6065d9279e38703109a2d9dcf4b5a323e0dd7d9383bfb09baa1ecbf0aaa12396",
+          "brier": {
+            "adaptive": 0.17835743801652865,
+            "frozen": 0.30690672963400273,
+            "expanding": 0.24626188548813285,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 111,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "dc4ae5df6c1113926eaae89a0e8b61bce097b147764dbce0659aa94788077fc3",
+          "brier": {
+            "adaptive": 0.1725796930342384,
+            "frozen": 0.3146989374262106,
+            "expanding": 0.2486742503969436,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 112,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.6818181818181818,
+          "state_digest": "9035316722112120bb4616b26e8ab5cbcdde3d0a194c73a6312f779efb697845",
+          "brier": {
+            "adaptive": 0.1737234356552537,
+            "frozen": 0.2694214876033069,
+            "expanding": 0.2378806722194084,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 113,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "9e5ca7b90d89ace506912a924a28bf61c75edfefd0274b530c77856273c04e5e",
+          "brier": {
+            "adaptive": 0.17560507674144019,
+            "frozen": 0.3017119244391975,
+            "expanding": 0.24415480177655025,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 114,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7272727272727273,
+          "state_digest": "db7ccbb005f139accebca9a17d6dcf7b8dfd7a4b53a946c6f38dc4ac61506f2e",
+          "brier": {
+            "adaptive": 0.1799365407319951,
+            "frozen": 0.2853305785123984,
+            "expanding": 0.24461139638959792,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 115,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "18b4ac2e8e2322c1140e594441e681ca7c45e58a293455632b4d1bf37afc6c10",
+          "brier": {
+            "adaptive": 0.15168240850059025,
+            "frozen": 0.2991145218417949,
+            "expanding": 0.243298113762741,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 116,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "da68395f942146a9d644db574c213fcd679740beea38abf8b75b6e270319901a",
+          "brier": {
+            "adaptive": 0.13941853600944498,
+            "frozen": 0.30401416765052997,
+            "expanding": 0.2293689359713794,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 117,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7272727272727273,
+          "state_digest": "7989a85008b17d1502d601d313354594a91d2d950532257258edf734b5db7e25",
+          "brier": {
+            "adaptive": 0.1709563164108618,
+            "frozen": 0.3150826446280988,
+            "expanding": 0.24231380468864916,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 118,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.8181818181818182,
+          "state_digest": "60d36c73e9c2b3efdded08d0dad78fe6857d7ca4c3bf85bb03db592591f0958a",
+          "brier": {
+            "adaptive": 0.1744318181818181,
+            "frozen": 0.3355371900826442,
+            "expanding": 0.24867404638020396,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        },
+        {
+          "seed": 119,
+          "revision": "nerve-outcome-forecast-v1",
+          "observations": 300,
+          "missing": 0,
+          "duplicates_ignored": 0,
+          "scored": 280,
+          "window": 20,
+          "warmup": 20,
+          "next_success_estimate": 0.7727272727272727,
+          "state_digest": "7dfc2d3f963fc4a3be66531ec05bdba2fa9eff5597e231aa06cd71e761e558a9",
+          "brier": {
+            "adaptive": 0.17070543093270352,
+            "frozen": 0.2678866587957501,
+            "expanding": 0.24325588376609417,
+            "neutral": 0.25
+          },
+          "automatic_action_authorized": false,
+          "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence."
+        }
+      ],
+      "adaptive_beats_expanding_seeds": 20,
+      "adaptive_beats_frozen_seeds": 20
+    }
+  },
+  "production_promotion": false,
+  "claim_scope": "Synthetic sequential prediction; host integration and live efficacy are separate evidence.",
+  "selection_or_retuning_performed": false
+}

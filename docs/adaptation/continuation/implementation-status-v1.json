@@ -1,0 +1,457 @@
+{
+  "plan_version": "2026-10-12",
+  "repository_commit_at_start": "c3121d77e1a91535c33047be940d4bacfe06b441",
+  "current_loop": "15",
+  "loops": {
+    "00": {
+      "status": "passed",
+      "changed_files": [
+        "docs/adaptation/repository-map.md",
+        "docs/adaptation/integration-map.md",
+        "docs/adaptation/baseline-results.json"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src /private/tmp/nerve-adaptation-ci-venv/bin/python -m unittest discover -s tests -q",
+          "exit_code": 0,
+          "tests": 998,
+          "evidence": "full-tests-python312.log"
+        }
+      ],
+      "evidence": [
+        "repository-map.md",
+        "integration-map.md",
+        "baseline-results.json"
+      ],
+      "risks": [
+        "Baseline includes existing uncommitted ARC work; restricted sandbox tests fail"
+      ],
+      "remaining_risks": [
+        "Starting checkout had uncommitted ARC prerequisites; a concurrent ARC commit advanced HEAD during work. Working source manifest identifies final code."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "01": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/adaptation.py",
+        "configs/adaptation/default.json",
+        "docs/adaptation/architecture.md"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "adaptation-tests.log"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Only synthetic active-development is supported; normal startup defaults off."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "02": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/adaptation.py",
+        "src/nerve_awim/arc_execution.py"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "adaptation-tests.log"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "SQLite/protected-store access is a trusted host boundary, not remote authentication or tamper-resistant storage."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "03": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/adaptation.py",
+        "tests/test_adaptation.py"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "adaptation-tests.log"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "UTF-8 byte accounting conservatively overestimates tokens; overflow pauses rather than dropping constraints."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "04": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/adaptation.py",
+        "tests/test_adaptation.py"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "adaptation-tests.log"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Clinical/factual corrections refused without domain-specific reviewer authority."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "05": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/arc_execution.py",
+        "src/nerve_awim/adaptation_replay.py"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "adaptation-tests.log"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Original ARC five-decision bound takes precedence over provisional twenty-step ceiling."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "06": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/adaptation.py",
+        "tests/test_adaptation.py"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "adaptation-tests.log"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Delayed or disputed evidence pauses for review; no guessed reward enters training."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "07": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/adaptation.py",
+        "src/nerve_awim/arc_execution.py",
+        "tests/test_adaptation.py"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "adaptation-tests.log"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Synchronous external handler preemption is unavailable; live adapters must supply cancellable timeouts and authoritative receipts."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "08": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/adaptation_replay.py",
+        "configs/adaptation/suite-v1.json"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "track-a-report.md",
+        "track-a-development.json",
+        "track-a-heldout.json",
+        "track-a-final-development.json"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Public related synthetic templates are not clinical validation. Overhead gate failed."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "09": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/adaptation_cli.py",
+        "scripts/agentos_bridge.py",
+        "docs/adaptation/demos/resume.json"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "demos/resume.json",
+        "demos/injection.json",
+        "demos/budget.json",
+        "demos/status.json",
+        "demos/reset.json"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Synthetic host capability issuer is not live identity-provider verification."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "10": {
+      "status": "passed",
+      "changed_files": [
+        "research/fast_weight_memory/module.py",
+        "tests/test_adaptation_fast_memory.py"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "adaptation-tests.log"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Toy associative recall is not the agent-level benefit gate."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "11": {
+      "status": "passed",
+      "changed_files": [
+        "research/fast_weight_memory/sequence_model.py",
+        "research/fast_weight_memory/experiment.py"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 scripts/agentos_bridge.py research-fast-memory-train --synthetic --config configs/adaptation/research-config.json --budget configs/adaptation/research-budget.json --report docs/adaptation/research-training.json --state /private/tmp/nerve-adaptation-cli",
+          "exit_code": 0
+        }
+      ],
+      "evidence": [
+        "research-training.json",
+        "research-manifest.json"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "NumPy analytic BPTT, CPU only. One-hot encoder fixed; projections, W0 and rate trained. No robotics action forcing."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "12": {
+      "status": "passed",
+      "changed_files": [
+        "docs/adaptation/track-b-scaling.json",
+        "docs/adaptation/track-b-report.md"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 scripts/agentos_bridge.py research-fast-memory-evaluate --synthetic --checkpoint docs/adaptation/research-training.json --suite configs/adaptation/research-suite.json --budget configs/adaptation/research-budget.json --report docs/adaptation/track-b-scaling.json --state /private/tmp/nerve-adaptation-cli",
+          "exit_code": 0
+        }
+      ],
+      "evidence": [
+        "track-b-scaling.json",
+        "track-b-report.md"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Negative benefit: trained online memory underperforms exact structured memory."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "13": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/adaptation_evaluation.py",
+        "tests/test_adaptation_evaluation.py",
+        "docs/adaptation/candidate-manifest.json"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "candidate-manifest.json",
+        "track-a-heldout.json",
+        "adaptation-tests.log",
+        "arc-tests.log"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Rejected candidate never approved. Final hardening changed code after consumed holdout; fresh independent batch required before revised candidate evaluation."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "14": {
+      "status": "passed",
+      "changed_files": [
+        "src/nerve_awim/adaptation.py",
+        "docs/adaptation/runbook.md",
+        "docs/adaptation/demos/kill-switch.json"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        }
+      ],
+      "evidence": [
+        "demos/kill-switch.json",
+        "arc-tests.log",
+        "runbook.md"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "No production activation or deployment; reset and kill preserve receipts/constraints."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    },
+    "15": {
+      "status": "passed",
+      "changed_files": [
+        ".github/workflows/tests.yml",
+        "README.md",
+        "docs/adaptation/final-readiness.md",
+        "docs/adaptation/verification-results.json"
+      ],
+      "commands": [
+        {
+          "command": "PYTHONPATH=src /private/tmp/nerve-adaptation-ci-venv/bin/python -m unittest discover -s tests -q",
+          "exit_code": 0,
+          "tests": 998,
+          "evidence": "full-tests-python312.log"
+        },
+        {
+          "command": "node --test tests/test_checkpoint_discovery.cjs",
+          "exit_code": 0,
+          "tests": 7,
+          "evidence": "node-tests.log"
+        },
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+          "exit_code": 0,
+          "tests": 37,
+          "evidence": "adaptation-tests.log"
+        },
+        {
+          "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc*.py' -q",
+          "exit_code": 0,
+          "tests": 86,
+          "evidence": "arc-tests.log"
+        },
+        {
+          "command": "PYTHONPATH=src python3 -S -c 'import nerve_awim.adaptation; import nerve_awim.arc_execution'",
+          "exit_code": 0,
+          "evidence": "runtime imported without optional site dependencies"
+        },
+        {
+          "command": "git diff --check",
+          "exit_code": 0
+        }
+      ],
+      "evidence": [
+        "verification-results.json",
+        "ci/results.json",
+        "source-manifest.json",
+        "final-readiness.md"
+      ],
+      "risks": [],
+      "remaining_risks": [
+        "Live providers, external subject authority and production deployment are not verified or approved."
+      ],
+      "next_action": "No further local implementation scheduled; respect failed promotion gates"
+    }
+  },
+  "blocked_gates": [
+    {
+      "gate": "track_a_overhead",
+      "reason": "Frozen held-out p95 overhead approximately 79%, above 20% ceiling; final development rerun also failed.",
+      "next_action": "Profile task-state SQL/context overhead on development scenarios before freezing a new candidate."
+    },
+    {
+      "gate": "current_code_heldout",
+      "reason": "Final replan/termination hardening changed source after held-out batch consumption. Prior rejected result retained with exact digest.",
+      "next_action": "Prepare a fresh independent batch and versioned manifest; do not rerun the consumed holdout."
+    },
+    {
+      "gate": "fast_memory_benefit",
+      "reason": "Five-seed paired accuracy -12.744 pp versus exact structured memory; 95% interval excludes zero in the negative direction.",
+      "next_action": "Keep learned memory experimental; no promotion."
+    },
+    {
+      "gate": "live_host_integration",
+      "reason": "Provider calls denied by zero budget. Live subject grants, clinical reviewer authority, cancellable external tool handlers and production retention/deletion are not supplied.",
+      "next_action": "Supply reviewed host contracts and separately authorized service/data/compute budgets."
+    },
+    {
+      "gate": "production_approval_and_deployment",
+      "reason": "Not authorized by this plan; all production defaults remain off.",
+      "next_action": "Do not deploy or enable automatic promotion."
+    }
+  ],
+  "next_action": "Review the local diff and failed performance gates. No live activation is enabled.",
+  "repository_commit_at_finish": "a4942ea01fe89e0b1051370f655bea4f338eedea",
+  "completion_scope": "Local synthetic engineering loops completed; performance and external gates remain blocked. See final-readiness.md for exact scope."
+}

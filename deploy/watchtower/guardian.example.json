@@ -1,0 +1,19 @@
+{
+  "armed": false,
+  "state_directory": "/var/lib/nerve-guardian/state",
+  "anchor_directory": "/var/lib/nerve-guardian/anchor",
+  "enforcement_directory": "/var/lib/nerve-guardian/enforcement",
+  "interval_seconds": 5,
+  "dashboard_url": "https://guardian.example.invalid/",
+  "portal_port": 8787,
+  "owners": {},
+  "notifications": {},
+  "tenants": {
+    "pilot": {
+      "units": [{"name": "nerve-repository-pilot.service", "clinical": false, "shared": false}],
+      "watchtower_report": "/var/lib/nerve-watchtower/telemetry.json",
+      "telemetry_sources": ["repository-pilot"],
+      "protected_files": {}
+    }
+  }
+}

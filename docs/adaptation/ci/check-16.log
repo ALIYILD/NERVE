@@ -1,0 +1,52 @@
+{
+  "baseline_validation_mae": 0.22294596820111534,
+  "evaluation_id": "d1d316bd877b714ed30e4ea7ce119643b10e1bf5dfcc20b8ca074021a38ce6b9",
+  "experiment": "worldcore_drift_v02",
+  "holdout_baseline_mae": 0.22321765163116122,
+  "holdout_selected_mae": 0.04071628176126709,
+  "selected": {
+    "gain_lr": 0.4,
+    "proposal_id": "aggressive",
+    "reason": "test large updates"
+  },
+  "selected_validation_mae": 0.04085642190705703,
+  "trials": [
+    {
+      "candidate": {
+        "gain_lr": 0.01,
+        "proposal_id": "conservative",
+        "reason": "slower gain update"
+      },
+      "decision": "reject",
+      "validation_mae": 0.2766123151894411
+    },
+    {
+      "candidate": {
+        "gain_lr": 0.06,
+        "proposal_id": "balanced",
+        "reason": "moderate update"
+      },
+      "decision": "keep",
+      "validation_mae": 0.11422905035560528
+    },
+    {
+      "candidate": {
+        "gain_lr": 0.2,
+        "proposal_id": "rapid",
+        "reason": "rapid update"
+      },
+      "decision": "keep",
+      "validation_mae": 0.05282841860338249
+    },
+    {
+      "candidate": {
+        "gain_lr": 0.4,
+        "proposal_id": "aggressive",
+        "reason": "test large updates"
+      },
+      "decision": "keep",
+      "validation_mae": 0.04085642190705703
+    }
+  ],
+  "warning": "Synthetic benchmark only; holdout cannot be used for further candidate selection"
+}

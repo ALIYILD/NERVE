@@ -1,0 +1,5 @@
+{
+  "status": "blocked",
+  "reason_category": "PermissionError",
+  "guidance": "Inspect the scoped episode or command arguments; no fallback execution was attempted."
+}

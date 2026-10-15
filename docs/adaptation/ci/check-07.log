@@ -1,0 +1,19 @@
+{
+  "disclaimer": "synthetic dependent streams; no distribution-free guarantee",
+  "results": {
+    "adaptive": {
+      "alerts": 1,
+      "empirical_coverage": 0.8429538925690241,
+      "mean_width": 0.379003436351449,
+      "outages": 26.25
+    },
+    "fixed": {
+      "alerts": 0,
+      "empirical_coverage": 0.7699948420631436,
+      "mean_width": 0.28992631846292233,
+      "outages": 26.25
+    }
+  },
+  "seeds": 20,
+  "target_coverage": 0.9
+}
