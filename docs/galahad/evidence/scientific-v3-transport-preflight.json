@@ -1,0 +1,67 @@
+{
+  "dry_preregistration_sha256": "b38c61d87d6733357ea7d5b3b0a9720cee035d221b04e5c741db0a0797620701",
+  "observations": [
+    {
+      "competing_processes": [
+        {
+          "cpu_percent": 48.4,
+          "name": "com.apple.Virtualization.VirtualMachine",
+          "pid": 1497
+        },
+        {
+          "cpu_percent": 45.0,
+          "name": "python3",
+          "pid": 4246
+        }
+      ],
+      "qualifies": false
+    },
+    {
+      "competing_processes": [
+        {
+          "cpu_percent": 38.3,
+          "name": "com.apple.Virtualization.VirtualMachine",
+          "pid": 1497
+        },
+        {
+          "cpu_percent": 73.2,
+          "name": "git",
+          "pid": 7901
+        },
+        {
+          "cpu_percent": 96.0,
+          "name": "python",
+          "pid": 8193
+        }
+      ],
+      "qualifies": false
+    }
+  ],
+  "promotion_authorized": false,
+  "real_dry_model_calls": 0,
+  "reason": "competing_workloads",
+  "sealed": {
+    "reserve": {
+      "mode": "0o0",
+      "readable": false
+    },
+    "slice1": {
+      "mode": "0o0",
+      "readable": false
+    },
+    "slice2": {
+      "mode": "0o0",
+      "readable": false
+    }
+  },
+  "slice2_registered": false,
+  "source_pins_match": true,
+  "status": "blocked_before_consumption",
+  "tests": {
+    "final_process_gate_checks": 3,
+    "final_process_gate_seconds": 0.052,
+    "full_mocked_harness_tests": 8,
+    "seconds": 195.097
+  },
+  "transport_registration_sha256": "4cb865908f0ea0edb5a63b93af16155898cdab1479ce013ce18649b2696de52e"
+}

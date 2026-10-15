@@ -1,0 +1,17 @@
+{
+  "artifacts_unchanged": 91,
+  "attempted_calls": 35,
+  "completed_calls": 34,
+  "execution_status": "failed_consumed",
+  "failure_type": "TimeoutError",
+  "network_and_inference_disabled": true,
+  "private_report_sha256": "35d8650e7f4304f73f01620e3f69b88299eb49c38d113086e70b8d5473346f28",
+  "promotion_authorized": false,
+  "public_preregistration_matches": true,
+  "scored_rows": 81,
+  "status": "verified",
+  "unused_slice_stats_unchanged": true,
+  "unused_slices_readable": false,
+  "verdict": "retain_incumbent",
+  "wall_seconds": 488.77872682298766
+}
