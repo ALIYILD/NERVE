@@ -447,6 +447,7 @@ def main():
     parser.add_argument('--reason')
     parser.add_argument('--split',choices=('development','heldout'),default='development')
     parser.add_argument('--adaptation-mode',choices=('off','shadow','active-development'),default='active-development')
+    parser.add_argument('--learn',action='store_true',help='Reuse and record independently verified repository recovery episodes (adaptation-run only)')
     parser.add_argument('--cue-candidate',help='Scoped CCE candidate identifier')
     parser.add_argument('--cue-review',help='Operator review reference for cue approval or revocation')
     parser.add_argument('--cue-generation',type=int,help='Expected CCE route generation from cce-route')
@@ -474,6 +475,8 @@ def main():
     parser.add_argument('--cohort',choices=('v1','v2','v3'),help='Repository task cohort; default selects fresh evidence automatically')
     parser.add_argument('--review-target',choices=('handoff','repository-experiments','repository-taskbench','repository-runner'),default='handoff')
     args=parser.parse_args()
+    if args.learn and args.command!='adaptation-run':
+        parser.error('--learn is supported only by adaptation-run')
     requested_profile=args.profile
     if args.command.startswith(('arc-','adaptation-','research-fast-memory-')):
         if args.command.startswith('arc-'):

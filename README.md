@@ -18,6 +18,39 @@ and [recovery runbook](docs/watchtower/RUNBOOK.md).
 PYTHONPATH=safety python -m nerve_guardian demo --report /tmp/guardian-demo.json
 ```
 
+## ARC cross-task recovery learning
+
+Outcome forecasting is now shared with the Clinical OS feedback service and the
+PerfFlux periodic fleet learner. `outcome_forecast.py` learns from chronological
+externally recorded outcomes, scores before updating, and reconstructs state
+from each application's existing durable store. It has no action or promotion
+authority. The [frozen synthetic evaluation](docs/outcome-learning/synthetic-evaluation.json)
+includes both shifting and stationary environments: adaptive forecasts improve
+under drift, while the expanding-history control wins under stable conditions.
+The [Clinical OS](docs/outcome-learning/clinical-integration.json) and
+[PerfFlux](docs/outcome-learning/perfflux-integration.json) receipts exercise real
+application services with synthetic events and verify restart persistence.
+They do not establish live clinical efficacy or real GPU savings.
+
+Mean Brier loss (lower is better) over the 20 frozen synthetic evaluation
+seeds: under drift, adaptive **0.1697**, frozen **0.3010**, expanding **0.2430**;
+under stationary conditions, adaptive **0.1700**, frozen **0.1658**, expanding
+**0.1637**. All 20 drift runs beat the two history-based controls; none of the
+20 stationary runs beat expanding history. No settings were retuned after this
+evaluation. These results support a bounded drift-adaptation claim and explicitly
+do not support universal superiority or automatic production promotion.
+
+The existing `adaptation-run --learn` command connects ARC verification, task
+adaptation and durable reviewed memory for read-only repository inventories.
+Verified recovery can guide a fresh task after restart, with repository isolation,
+expiry, retraction and independent verification of every new result. Run
+`python3 scripts/verify_arc_learning.py` to reproduce the cross-process comparison.
+Remembered recovery saves repeat failed attempts versus no-memory recovery; it
+ties the capable fixed AST baseline. This is bounded tool-selection learning,
+not model training or demonstrated general self-improvement. See the
+[runbook](docs/adaptation/runbook.md) and
+[measured report](docs/adaptation/cross-task-learning-report.json).
+
 ## Opt-in Cognitive Cue Engine
 
 The [Cognitive Cue Engine](docs/cce/runbook.md) adds model/tokenizer-bound cue

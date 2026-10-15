@@ -1,0 +1,14 @@
+{
+  "version": "nerve-outcome-forecast-v1",
+  "data_class": "synthetic independent Bernoulli outcomes; no clinical or GPU measurements",
+  "window": 20,
+  "warmup": 20,
+  "development_seeds": [0, 1, 2, 3, 4],
+  "evaluation_seeds": [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119],
+  "regimes": {"stationary": [0.8, 0.8, 0.8], "shift": [0.9, 0.2, 0.8]},
+  "observations_per_regime": 100,
+  "metric": "Brier loss, score before update; lower is better",
+  "controls": ["neutral 0.5", "frozen Beta mean after warmup", "expanding Beta mean"],
+  "acceptance": "report every regime and control; no production promotion from synthetic results",
+  "restrictions": "No tuning on evaluation seeds, no clinical efficacy or real GPU savings claim"
+}

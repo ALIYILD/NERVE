@@ -38,7 +38,7 @@ def dispatch(args):
         database.parent.mkdir(parents=True,exist_ok=True)
         paths=[str(args.source)] if args.source else None
         if args.scenario not in (None,'recover-regex'): raise ValueError('repository scenario must be recover-regex or omitted')
-        result=run_repository(str(database),root,paths=paths,mode=args.adaptation_mode,restart=args.restart,task_id=args.task_id,initial_tool='regex-inventory' if args.scenario=='recover-regex' else 'ast-inventory')
+        result=run_repository(str(database),root,paths=paths,mode=args.adaptation_mode,restart=args.restart,task_id=args.task_id,initial_tool='regex-inventory' if args.scenario=='recover-regex' else 'ast-inventory',learn=getattr(args,'learn',False))
     elif command=='adaptation-demo':
         if not args.synthetic: raise PermissionError('explicit --synthetic required')
         scenario=args.scenario or 'resume'
