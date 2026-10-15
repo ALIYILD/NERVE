@@ -1,0 +1,86 @@
+{
+  "artifacts": {
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-v3-claims.sqlite": {
+      "mtime_ns": 1792068769856086280,
+      "sha256": "8130c8113731498ed010ae21d744289f67b5c31393a309a5393c9fc083993803"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-v3-study/authority.sqlite": {
+      "mtime_ns": 1792071806589040924,
+      "sha256": "1deb96a5fed13682105a7f565c7de1a31d096a4c79a70fbeaea3890d8a5b259f"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-v3-study/claim.sqlite": {
+      "mtime_ns": 1792073824895571837,
+      "sha256": "f29d8c90c93b1185dc0fd22395c2395fc5ecae45be23143743c6bd9d011bd71a"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-v3-study/preregistration.json": {
+      "mtime_ns": 1792068769865147977,
+      "sha256": "c218859ea03248d34a3e3fcad9957e67165fa947e2d7125d3f36d42d16236cd2"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-v3-study/report.json": {
+      "mtime_ns": 1792073835781482359,
+      "sha256": "ae24bfac8beb3fe37e3eb61efda5c8e2e5e9ac761e5a2b4c785e3acc7d9feea7"
+    },
+    "/Users/aliyildirim/nerve-research-runs/task-bank-v1/dev.json": {
+      "mtime_ns": 1792014691726715759,
+      "sha256": "9b495d387555cf1666e93d2ffe8669b6da34d14f1a609265eef6abd74063fa92"
+    },
+    "/Users/aliyildirim/nerve-research-runs/task-bank-v1/manifest.json": {
+      "mtime_ns": 1792014691755472006,
+      "sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6"
+    }
+  },
+  "artifacts_unchanged": true,
+  "model_attempts": 160,
+  "network_functions_disabled": true,
+  "new_inference_calls": 0,
+  "predecessor_artifacts": {
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-v3-registration/report.json": {
+      "mtime_ns": 1792068630959779593,
+      "sha256": "8c2bb4c700bb6d207c2b7e6a597c16add9ff5d7a0eda89d7928a6a78c7fdb123"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-policy-gate-v2/report.json": {
+      "mtime_ns": 1792068629563923755,
+      "sha256": "0b53dae770b12d07b59378ae476d91c5f52e7e62d08cab5351eaa2d0ba92d965"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v1/authority.sqlite": {
+      "mtime_ns": 1792064886004310176,
+      "sha256": "62117ee88ad98ae8b83871f50632eaaa11b9cd3a4c4faffba94d157ca00467a2"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v1/claim.sqlite": {
+      "mtime_ns": 1792064991557547581,
+      "sha256": "d2108b28a6758b7b0e847617c39c2d1e4dada0d4020a07556d53f63d0ac3bf78"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v1/preregistration.json": {
+      "mtime_ns": 1792064744948475665,
+      "sha256": "86633119e22d5cd589a0bd409e5cd8845b48413f54fe52163d357bdf61b8730f"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v1/report.json": {
+      "mtime_ns": 1792064991616810058,
+      "sha256": "d6114647bc211ded24584244c3020b1909b6e7bce33acda2caee85fb21955ae1"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v2/authority.sqlite": {
+      "mtime_ns": 1792066660686172812,
+      "sha256": "877e94eef18230278a1bef0e5e2de8a051939fcf1f9db63343ef0b387995b244"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v2/claim.sqlite": {
+      "mtime_ns": 1792067532836314043,
+      "sha256": "5702c87daeef9878117b343aed3372c5ffada71a26a490b57e3e267b4b348810"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v2/preregistration.json": {
+      "mtime_ns": 1792066305213352455,
+      "sha256": "d8720210f38c965cdb263019d3f9d26f2f279c434b9d482490ae5095771d7a91"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v2/report.json": {
+      "mtime_ns": 1792067533095966853,
+      "sha256": "311df667e7d6c2107fc5cf4f5aa0857d090e84ac42b8ea6eb912d39531a0103a"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-gate-v1/report.json": {
+      "mtime_ns": 1792064302953407824,
+      "sha256": "2deb340a498115eaeee265c83ef70d4994ccd021f16814c398ced21f04aad125"
+    }
+  },
+  "predecessors_unchanged": true,
+  "rows": 400,
+  "status": "verified_complete",
+  "verdict": "candidate_requires_review"
+}

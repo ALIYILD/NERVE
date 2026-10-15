@@ -1,0 +1,14 @@
+{
+  "calibration_receipt_sha256": "311df667e7d6c2107fc5cf4f5aa0857d090e84ac42b8ea6eb912d39531a0103a",
+  "justification": "Approximately three times the observed 10.52s maximum and four times mean7.34s; constrained JSON may differ. No timeout retry. Two-hour overall budget.",
+  "measured_forced_seconds": {
+    "max": 10.519995894050226,
+    "mean": 7.33517805620213,
+    "min": 5.919624601956457,
+    "n": 10
+  },
+  "prediction": "Measurement-decoy and entity-decoy strata are the regression risk: the extractor may select a decoy value, unit or source despite schema-valid output.",
+  "preregistration_sha256": "c218859ea03248d34a3e3fcad9957e67165fa947e2d7125d3f36d42d16236cd2",
+  "registered_timeout_seconds": 30,
+  "version": "scientific-candidate-v3-preregistration-notes"
+}
