@@ -1,0 +1,22 @@
+{
+  "allocated_cost_estimate_usd": 0.02271989151617098,
+  "focused_tests_passed": 9,
+  "identity": {
+    "gpu": "NVIDIA A40",
+    "model": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "pod_id": "lg0svvuenxvbno",
+    "runtime": {
+      "version": "0.40.5"
+    }
+  },
+  "new_model_calls": 0,
+  "pod_left_running": true,
+  "private_archive_sha256": "1c59d9a9fc39bfb800a520d216434e1f658fcb77aaf611ba5cbeb5aca90f9735",
+  "promotion_authorized": false,
+  "sealed_permissions_verified": true,
+  "slice2_aggregate_sha256": "df0b513b05cb7aa1b4ede9aef7565e45c62f6a5557db4bb5ebaa9b0e44e2325c",
+  "storage_correction": "Runpod workspace ignored chmod; completed run moved to /root/nerve-slice2-20261015 with actual0700 directories/0600 files, original workspace directory absent; local private permissions enforced",
+  "verified": true,
+  "wall_seconds": 138.62984653934836
+}
