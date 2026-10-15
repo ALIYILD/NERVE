@@ -27,6 +27,10 @@ jobs:
         env:
           PYTHONPATH: src
         run: python -m nerve_awim goal run --state /tmp/nerve-goal-ci
+      - name: Verify automatic adaptation after changing sandbox conditions
+        env:
+          PYTHONPATH: src
+        run: python -m nerve_awim auto-adapt run --state /tmp/nerve-auto-adapt-ci
       - name: Verify offline cognitive cue commissioning and fail-closed activation
         env:
           PYTHONPATH: src
