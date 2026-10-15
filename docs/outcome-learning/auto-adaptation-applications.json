@@ -1,0 +1,58 @@
+[
+  {
+    "adaptive_hits": 28,
+    "additional_evaluation_calls": 32,
+    "all_monitoring_targets_met": true,
+    "beats_all_fixed_controls": true,
+    "cost_limitation": "Fixed controls share operational tasks; adaptive selection incurs extra calls. No equal-total-compute advantage claimed.",
+    "domain": "clinical_os",
+    "final_strategy": "title",
+    "fixed_controls": {
+      "abstract": 12,
+      "title": 24
+    },
+    "policy_version": 2,
+    "production_authorized": false,
+    "rollback_probe": {
+      "rollback_verified": true,
+      "scope": "isolated sandbox reversal during candidate trial",
+      "trial_hits": 6,
+      "trial_tasks": 8,
+      "version": 2
+    },
+    "switches": 2,
+    "tasks": 36,
+    "subprocess_restart_verified": true,
+    "source_verified": true,
+    "source_commit": "ee01f9cfd7cc21edf63abe14444fbe94f797e0ce",
+    "protocol": "auto-adapt-aba-v1"
+  },
+  {
+    "adaptive_hits": 28,
+    "additional_evaluation_calls": 32,
+    "all_monitoring_targets_met": true,
+    "beats_all_fixed_controls": true,
+    "cost_limitation": "Fixed controls share operational tasks; adaptive selection incurs extra calls. No equal-total-compute advantage claimed.",
+    "domain": "perfflux",
+    "final_strategy": "direct",
+    "fixed_controls": {
+      "direct": 24,
+      "memoized": 12
+    },
+    "policy_version": 2,
+    "production_authorized": false,
+    "rollback_probe": {
+      "rollback_verified": true,
+      "scope": "isolated sandbox reversal during candidate trial",
+      "trial_hits": 6,
+      "trial_tasks": 8,
+      "version": 2
+    },
+    "switches": 2,
+    "tasks": 36,
+    "subprocess_restart_verified": true,
+    "source_verified": true,
+    "source_commit": "ee01f9cfd7cc21edf63abe14444fbe94f797e0ce",
+    "protocol": "auto-adapt-aba-v1"
+  }
+]
