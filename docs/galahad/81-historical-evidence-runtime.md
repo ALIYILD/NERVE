@@ -13,3 +13,5 @@ A corrupt nested JSON list may be rejected during parsing or during exact object
 Future portable research protocols should register canonical exogenous inputs and explicit numerical reduction semantics before execution. This change does not redefine any historical scientific protocol.
 
 The complete memory readiness workflow also runs in the archived-receipt environment: its existing rule rejects any skipped required test. This rule is unchanged. Linux research smoke, coverage and the diagnostic matrix remain separate checks. The Intel runner label follows [GitHub's supported runner catalog](https://docs.github.com/en/actions/reference/runners/github-hosted-runners).
+
+The aggregate verification wrapper permits 1,800 seconds for the full multi-process test suite; its former 300-second limit was shorter than the observed CI CPU suite. Individual module limits remain unchanged. CI runs that CPU suite once and reuses its verification receipt for readiness, instead of executing the same suite twice. No test selection or acceptance rule changes.
