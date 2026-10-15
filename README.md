@@ -6,6 +6,18 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 ## ARC cross-task recovery learning
 
+Outcome forecasting is now shared with the Clinical OS feedback service and the
+PerfFlux periodic fleet learner. `outcome_forecast.py` learns from chronological
+externally recorded outcomes, scores before updating, and reconstructs state
+from each application's existing durable store. It has no action or promotion
+authority. The [frozen synthetic evaluation](docs/outcome-learning/synthetic-evaluation.json)
+includes both shifting and stationary environments: adaptive forecasts improve
+under drift, while the expanding-history control wins under stable conditions.
+The [Clinical OS](docs/outcome-learning/clinical-integration.json) and
+[PerfFlux](docs/outcome-learning/perfflux-integration.json) receipts exercise real
+application services with synthetic events and verify restart persistence.
+They do not establish live clinical efficacy or real GPU savings.
+
 The existing `adaptation-run --learn` command connects ARC verification, task
 adaptation and durable reviewed memory for read-only repository inventories.
 Verified recovery can guide a fresh task after restart, with repository isolation,
