@@ -6,6 +6,7 @@ jobs:
   synthetic-memory:
     # Readiness rejects every skipped test, including archived receipts.
     runs-on: macos-15-intel
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -13,7 +14,7 @@ jobs:
           python-version: '3.10'
       - run: python -m pip install 'PyJWT[crypto]>=2.10,<3' 'jsonschema>=4.23,<5'
       - run: python -m compileall -q src/nerve_awim/memory_gateway scripts/verify_galahad.py
-      - run: python scripts/verify_galahad.py cpu
+      - run: PYTHONPATH=src python scripts/memory_operations.py verify --gate cpu --output /tmp/nerve-cpu.json
       - run: PYTHONPATH=src python scripts/galahad_benchmark.py --samples 30
       - run: PYTHONPATH=src python scripts/memory_gateway_demo.py
       - run: PYTHONPATH=src python scripts/memory_learning_demo.py
@@ -21,7 +22,6 @@ jobs:
       - run: PYTHONPATH=src python scripts/memory_gateway_demo.py --provider galahad
       - run: python -m pip install 'mcp==2.3.0'
       - run: PYTHONPATH=src python scripts/memory_gateway_mcp_wire.py
-      - run: PYTHONPATH=src python scripts/memory_operations.py verify --gate cpu --output /tmp/nerve-cpu.json
       - run: PYTHONPATH=src python scripts/memory_operations.py verify --gate security --output /tmp/nerve-security.json
       - run: PYTHONPATH=src python scripts/memory_operations.py verify --gate api --output /tmp/nerve-api.json
       - run: PYTHONPATH=src python scripts/memory_operations.py faults --output /tmp/nerve-faults.json
