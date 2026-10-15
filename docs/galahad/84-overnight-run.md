@@ -24,3 +24,10 @@ Evidence: `evidence/overnight-contract-compatibility.json`. These are public syn
 Runpod `get_pod` read on 2026-10-15 at approximately 22:48 UTC: `lg0svvuenxvbno` **EXITED**, rate $0.59/hour, NVIDIA A40. No pod has been started by this overnight run. Retained storage continues billing separately.
 
 Authorized plan preserved as `overnight-orchestration-plan-20261016.md`, SHA-256 `81b1ff05a261a43c1634d1f439514838312d6061cb6f8bdee72d74e2336f8149`.
+
+| L1.2 | 2026-10-15 22:46 / 22:53:48 | **blocked: fast tier exceeded protected 180s deadline**; sandbox attempt also failed localhost tests; unrestricted retry showed zero reported assertion failures before timeout, not a full pass | 0 | $0 | fixed fast deadline; no override above 180 permitted |
+| L1.3 | 2026-10-15 22:53:48 / 22:54:32 | actual retained skill consumer passed; registry unchanged | 0 | $0 | none |
+| L1.4–1.5 | skipped | no pod start or transport smoke after CPU blockers | 0 | $0 | L0 stop rule |
+| L3–L6 | skipped | no bank v3 generation/sealing, no candidate, no holdout consumption | 0 | $0 | exact frozen baseline cannot execute family B |
+
+Full fast logs preserved under `/Users/aliyildirim/nerve-research-runs/overnight-20261016/`; hashes and attempts in `evidence/overnight-suite-attempts.json`. The wrapper explicitly refuses fast deadlines above 180 seconds; neither wrapper nor tier manifest was changed. L7 will reuse this final fast outcome and execute slow once, after L2 releases the single-suite lock.

@@ -1,0 +1,22 @@
+{
+  "scope": "test infrastructure only; not model-study retries",
+  "sandbox_attempt": {
+    "command": "python3 scripts/verify_galahad.py fast --timings docs/galahad/evidence/overnight-l1-fast.json",
+    "exit_code": 124,
+    "wall_deadline_seconds": 180,
+    "log_sha256": "8250b35eb3d69d922c72bf8fa8160b50f3c7548d67131e84b947e82a4d20c7e8",
+    "log_path": "/Users/aliyildirim/nerve-research-runs/overnight-20261016/l1-fast-sandbox.log",
+    "finding": "Sandbox localhost HTTP tests errored; process exceeded fixed180-second fast deadline. No completion receipt produced."
+  },
+  "unrestricted_retry_reason": "Required sandbox permission escalation for localhost socket tests; not retrying study outcomes.",
+  "unrestricted_attempt": {
+    "exit_code": 124,
+    "wall_deadline_seconds": 180,
+    "log_sha256": "9773452b7313573f0703342e8e097b9ce3559933937bf9001160b5b80542fdcd",
+    "log_path": "/Users/aliyildirim/nerve-research-runs/overnight-20261016/l1-fast-unrestricted.log",
+    "reported_assertion_errors": 0,
+    "reported_assertion_failures": 0,
+    "complete": false,
+    "finding": "Intrinsic protectedfast180-second limit reached. No claimalltests passed; no timingreceipt produced. No morefastattempts tonight."
+  }
+}

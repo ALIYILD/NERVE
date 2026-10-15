@@ -1,0 +1,14 @@
+{
+  "source": "Runpod get_pod live read at approx22:48UTC",
+  "pod_id": "lg0svvuenxvbno",
+  "status": "EXITED",
+  "gpu": "NVIDIA A40",
+  "hourly_usd": 0.59,
+  "started_by_this_run": false,
+  "running_gpu_hours_this_run": 0,
+  "compute_cost_usd_this_run": 0,
+  "storage_cost_excluded": true,
+  "replacement_created": false,
+  "recorded_at_utc": "2026-10-15T22:51:16.465761+00:00",
+  "observed_at_utc_approx": "2026-10-15T22:48:00Z"
+}
