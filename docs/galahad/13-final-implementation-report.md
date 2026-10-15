@@ -1,5 +1,9 @@
 # Final implementation report — 12 October 2026
 
+**Measured tier acceptance:** [72-measured-test-tiers.md](72-measured-test-tiers.md) records the verifier change, twenty slowest tests, a fast tier under three minutes and one clean serial slow-tier run. Their disjoint union covers 2,046 passing tests; the initial fast timeout is documented.
+
+**Latest outcome feedback:** [71-format-outcome-feedback.md](71-format-outcome-feedback.md) records four actual outcomes ingested with distinct schema/abstention failure classes, then two evidence-linked hypotheses generated without inference. Ten restart artifacts were unchanged. Both proposals remain unevaluated; no improved model, promotion or completed conductor is claimed.
+
 **Latest failure-driven experiment:** [70-format-failure-research-loop.md](70-format-failure-research-loop.md) records 1,997 passing tests, four actual model calls and twelve-artifact network-free restart. Generic schema shape improved, but full format and exact answers remained 0/2 in each arm. The coordinator retained the baseline; no efficacy, weight learning or full Tier-6 completion is claimed.
 
 **Latest actual candidate transport:** [69-candidate-inference-transport.md](69-candidate-inference-transport.md) records 1,970 passing tests and one real local completion with durable one-attempt claims. Transport accounting passed; the schema-shaped fenced response failed format and exact-answer checks. Fresh-process resume made zero network calls. This is a concrete formatting failure, not an efficacy rejection or learning-completion claim.
