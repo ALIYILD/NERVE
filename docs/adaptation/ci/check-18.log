@@ -1,0 +1,100 @@
+{
+  "baseline": {
+    "abort": 1,
+    "completion": 0.50625,
+    "goal_penalized": 1.0701005075014796,
+    "prediction_penalized": 0.9993839746240317,
+    "violations": 0
+  },
+  "limitations": "Fixed synthetic WorldCore plant. Stopping is counted as lost completion, not success.",
+  "report_only_holdout": {
+    "baseline": {
+      "abort": 1,
+      "completion": 0.51,
+      "goal_penalized": 1.074299097321519,
+      "prediction_penalized": 0.9963561604286215,
+      "violations": 0
+    },
+    "selected": {
+      "abort": 1,
+      "completion": 0.5475,
+      "goal_penalized": 1.010998964243504,
+      "prediction_penalized": 0.9222787341838591,
+      "violations": 0
+    }
+  },
+  "selected": {
+    "max_missing": 8,
+    "name": "long-outage",
+    "risk_aversion": 0.25
+  },
+  "selected_validation": {
+    "abort": 1,
+    "completion": 0.5437500000000001,
+    "goal_penalized": 1.0081809471321554,
+    "prediction_penalized": 0.9265497228644636,
+    "violations": 0
+  },
+  "trials": [
+    {
+      "candidate": {
+        "max_missing": 3,
+        "name": "short-outage",
+        "risk_aversion": 0.25
+      },
+      "decision": "reject",
+      "metrics": {
+        "abort": 1,
+        "completion": 0.3825,
+        "goal_penalized": 1.298437825921961,
+        "prediction_penalized": 1.2428983423500197,
+        "violations": 0
+      }
+    },
+    {
+      "candidate": {
+        "max_missing": 8,
+        "name": "long-outage",
+        "risk_aversion": 0.25
+      },
+      "decision": "keep",
+      "metrics": {
+        "abort": 1,
+        "completion": 0.5437500000000001,
+        "goal_penalized": 1.0081809471321554,
+        "prediction_penalized": 0.9265497228644636,
+        "violations": 0
+      }
+    },
+    {
+      "candidate": {
+        "max_missing": 5,
+        "name": "low-risk",
+        "risk_aversion": 0.1
+      },
+      "decision": "reject",
+      "metrics": {
+        "abort": 1,
+        "completion": 0.50625,
+        "goal_penalized": 1.0729418177537675,
+        "prediction_penalized": 1.0041511815584874,
+        "violations": 0
+      }
+    },
+    {
+      "candidate": {
+        "max_missing": 5,
+        "name": "high-risk",
+        "risk_aversion": 0.6
+      },
+      "decision": "reject",
+      "metrics": {
+        "abort": 1,
+        "completion": 0.50625,
+        "goal_penalized": 1.1075186221212203,
+        "prediction_penalized": 1.010787385695832,
+        "violations": 0
+      }
+    }
+  ]
+}

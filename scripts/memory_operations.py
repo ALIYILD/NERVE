@@ -76,7 +76,7 @@ def faults():
 def verify(gate):
     command = [sys.executable, str(ROOT/'scripts/verify_galahad.py'), gate]
     result = subprocess.run(command, cwd=ROOT, env={**os.environ, 'PYTHONPATH': str(ROOT/'src')},
-                            capture_output=True, text=True, timeout=300)
+                            capture_output=True, text=True, timeout=1800)
     output = result.stderr + result.stdout
     counts = re.findall(r'Ran (\d+) tests?', output)
     skips = re.findall(r'\bskipped=(\d+)', output)

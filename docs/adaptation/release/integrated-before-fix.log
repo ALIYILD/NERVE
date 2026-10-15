@@ -1,0 +1,13 @@
+======================================================================
+FAIL: test_provider_zero_budget_and_missing_backend (test_adaptation.AdaptationTests.test_provider_zero_budget_and_missing_backend)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_adaptation.py", line 162, in test_provider_zero_budget_and_missing_backend
+    with self.assertRaises(PermissionError): step(self.c,'task','verified-heading')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PermissionError not raised
+
+----------------------------------------------------------------------
+Ran 1095 tests in 80.157s
+
+FAILED (failures=1)

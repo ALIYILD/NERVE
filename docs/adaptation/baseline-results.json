@@ -1,0 +1,17 @@
+{
+  "restricted": {
+    "command": "PYTHONPATH=src python3 -m unittest discover -s tests -q",
+    "exit_code": 1,
+    "tests": 947,
+    "failures": 36,
+    "errors": 3,
+    "evidence": "baseline-restricted.log"
+  },
+  "unrestricted": {
+    "command": "PYTHONPATH=src python3 -m unittest discover -s tests -q",
+    "exit_code": 0,
+    "tests": 960,
+    "evidence": "baseline-unrestricted.log"
+  },
+  "note": "Unrestricted run started after the initial ARC integration edits. Test inventory also changed in the existing uncommitted ARC work; this is a checkpoint regression run, not a pristine HEAD baseline."
+}

@@ -1,0 +1,1612 @@
+{
+  "id": "audit-composition-20261013-v3",
+  "limitation": "Public simulated provenance/identity/freshness interaction compositions, frozen before model inference. Distinct semantic graphs share existing oracle primitives; not independent real incidents, broad transfer, operational health or automatic approval. Gold authored separately then checked with deterministic oracle.",
+  "scope": "agentos-audit-composition-v1",
+  "splits": {
+    "final": [
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "credential_present",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "present": true
+              },
+              "id": "yes",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": false
+              },
+              "id": "no",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": false
+              },
+              "id": "elsewhere",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "other-provider"
+            },
+            {
+              "derived_from": [
+                "yes",
+                "elsewhere"
+              ],
+              "fields": {
+                "text": "Positive reconciled with other provider"
+              },
+              "id": "left",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "no"
+              ],
+              "fields": {
+                "present": true
+              },
+              "id": "right",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "left",
+                "right"
+              ],
+              "fields": {
+                "present": true
+              },
+              "id": "merged",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "no"
+            },
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "yes"
+            }
+          ],
+          "decision": "unknown"
+        },
+        "family": "composition-v3-credential-disjoint-branches-cross-identity-conflict",
+        "id": "audit-v3-credential-disjoint-branches-cross-identity-conflict"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "catalog_listed",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "yes-a",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "yes-b",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": false
+              },
+              "id": "other-no",
+              "kind": "catalog",
+              "model": "simulated/other:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "other-no"
+              ],
+              "fields": {
+                "listed": false
+              },
+              "id": "bridge",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": false
+              },
+              "id": "future-no",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1001,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "bridge",
+                "future-no"
+              ],
+              "fields": {
+                "listed": false
+              },
+              "id": "merged-no",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.listed",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "yes-a"
+            },
+            {
+              "fields": [
+                "fields.listed",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "yes-b"
+            }
+          ],
+          "decision": "supported"
+        },
+        "family": "composition-v3-catalog-consensus-identity-bridge-future-dissent",
+        "id": "audit-v3-catalog-consensus-identity-bridge-future-dissent"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "execution_success",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider",
+            "request_id": "target-request"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "other-request",
+                "success": true
+              },
+              "id": "wrong-request",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "wrong-model",
+              "kind": "execution_receipt",
+              "model": "simulated/other:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "wrong-provider",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "other-provider"
+            },
+            {
+              "derived_from": [
+                "wrong-request",
+                "wrong-model",
+                "wrong-provider"
+              ],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "joined",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "yes",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "no",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "no"
+            },
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "yes"
+            }
+          ],
+          "decision": "unknown"
+        },
+        "family": "composition-v3-execution-identity-cartesian-join-plus-root-conflict",
+        "id": "audit-v3-execution-identity-cartesian-join-plus-root-conflict"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "zero_price",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 1,
+                "output_usd": 0
+              },
+              "id": "paid-a",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 1
+              },
+              "id": "paid-b",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 1,
+                "output_usd": 1
+              },
+              "id": "paid-c",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 950,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "paid-a",
+                "paid-c"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "zero-left",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "paid-b",
+                "paid-c"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "zero-right",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "zero-left",
+                "zero-right"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "zero-merge",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "paid-a"
+            },
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "paid-b"
+            },
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "paid-c"
+            }
+          ],
+          "decision": "contradicted"
+        },
+        "family": "composition-v3-price-unanimous-paid-opposite-component-echoes",
+        "id": "audit-v3-price-unanimous-paid-opposite-component-echoes"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "catalog_listed",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "stale-target",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 899,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": false
+              },
+              "id": "foreign-fresh",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "other-provider"
+            },
+            {
+              "derived_from": [
+                "stale-target"
+              ],
+              "fields": {
+                "listed": true
+              },
+              "id": "partial",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "partial",
+                "foreign-fresh"
+              ],
+              "fields": {
+                "listed": true
+              },
+              "id": "combined",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "combined"
+              ],
+              "fields": {
+                "text": "Fresh target derived from both records"
+              },
+              "id": "echo",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [],
+          "decision": "unknown"
+        },
+        "family": "composition-v3-catalog-stale-and-foreign-parent-laundering",
+        "id": "audit-v3-catalog-stale-and-foreign-parent-laundering"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "zero_price",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "free",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 1
+              },
+              "id": "paid",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "stale-free",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 899,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 1,
+                "output_usd": 0
+              },
+              "id": "future-paid",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1001,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "free",
+                "paid",
+                "stale-free",
+                "future-paid"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "resolution",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "free"
+            },
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "paid"
+            }
+          ],
+          "decision": "unknown"
+        },
+        "family": "composition-v3-pricing-conflict-with-stale-future-tiebreakers",
+        "id": "audit-v3-pricing-conflict-with-stale-future-tiebreakers"
+      }
+    ],
+    "retention": [
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "credential_present",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "present": false
+              },
+              "id": "stale",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 899,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "stale"
+              ],
+              "fields": {
+                "present": false
+              },
+              "id": "echo",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": true
+              },
+              "id": "current",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "echo",
+                "current"
+              ],
+              "fields": {
+                "text": "Conflicting current observations"
+              },
+              "id": "merge",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "merge"
+              ],
+              "fields": {
+                "present": false
+              },
+              "id": "derived",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "current"
+            }
+          ],
+          "decision": "supported"
+        },
+        "family": "composition-v3-old-parent-does-not-disqualify-new-independent-root",
+        "id": "audit-v3-old-parent-does-not-disqualify-new-independent-root"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "catalog_listed",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "wrong-model",
+              "kind": "catalog",
+              "model": "simulated/other:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "wrong-provider",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "other-provider"
+            },
+            {
+              "derived_from": [
+                "wrong-model",
+                "wrong-provider"
+              ],
+              "fields": {
+                "listed": true
+              },
+              "id": "cross-join",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": false
+              },
+              "id": "negative",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "stale-positive",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 899,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.listed",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "negative"
+            }
+          ],
+          "decision": "contradicted"
+        },
+        "family": "composition-v3-catalog-provider-model-composite-key",
+        "id": "audit-v3-catalog-provider-model-composite-key"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "execution_success",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider",
+            "request_id": "target-request"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "yes-a",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "yes-b",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "no",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 950,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "future-no",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1001,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "yes-a",
+                "yes-b"
+              ],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "yes-echo",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "no"
+            },
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "yes-a"
+            },
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "yes-b"
+            }
+          ],
+          "decision": "unknown"
+        },
+        "family": "composition-v3-execution-complete-conflict-citations",
+        "id": "audit-v3-execution-complete-conflict-citations"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "zero_price",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "future",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1001,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "future"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "past-child",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 1,
+                "output_usd": 1
+              },
+              "id": "old-paid",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 899,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "past-child",
+                "old-paid"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "merge",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [],
+          "decision": "unknown"
+        },
+        "family": "composition-v3-pricing-future-root-with-past-descendants",
+        "id": "audit-v3-pricing-future-root-with-past-descendants"
+      }
+    ],
+    "selection": [
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "credential_present",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "present": true
+              },
+              "id": "yes-a",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": true
+              },
+              "id": "yes-b",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "present": false
+              },
+              "id": "no",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 980,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "yes-a",
+                "yes-b"
+              ],
+              "fields": {
+                "present": true
+              },
+              "id": "majority",
+              "kind": "credential_probe",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "majority",
+                "no"
+              ],
+              "fields": {
+                "text": "Majority resolves conflict"
+              },
+              "id": "reconcile",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "no"
+            },
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "yes-a"
+            },
+            {
+              "fields": [
+                "fields.present",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "yes-b"
+            }
+          ],
+          "decision": "unknown"
+        },
+        "family": "composition-v3-credential-majority-not-resolution",
+        "id": "audit-v3-credential-majority-not-resolution"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "catalog_listed",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": true
+              },
+              "id": "fresh",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "fresh"
+              ],
+              "fields": {
+                "text": "Old summary of a current listing"
+              },
+              "id": "stale-wrapper",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 899,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "stale-wrapper"
+              ],
+              "fields": {
+                "listed": false
+              },
+              "id": "projection",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "listed": false
+              },
+              "id": "future-root",
+              "kind": "catalog",
+              "model": "simulated/target:free",
+              "observed_at": 1001,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.listed",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "fresh"
+            }
+          ],
+          "decision": "supported"
+        },
+        "family": "composition-v3-fresh-root-stale-derived-wrapper",
+        "id": "audit-v3-fresh-root-stale-derived-wrapper"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "execution_success",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider",
+            "request_id": "target-request"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "stale-target",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 899,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "other-request",
+                "success": true
+              },
+              "id": "fresh-other",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "stale-target",
+                "fresh-other"
+              ],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "joined",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": false
+              },
+              "id": "observed",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 900,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "joined",
+                "observed"
+              ],
+              "fields": {
+                "text": "Joined request supersedes boundary observation"
+              },
+              "id": "report",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.request_id",
+                "fields.success",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "observed"
+            }
+          ],
+          "decision": "contradicted"
+        },
+        "family": "composition-v3-request-join-time-laundering",
+        "id": "audit-v3-request-join-time-laundering"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "zero_price",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 2
+              },
+              "id": "input-free",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 3,
+                "output_usd": 0
+              },
+              "id": "output-free",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "input-free",
+                "output-free"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "splice",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "splice"
+              ],
+              "fields": {
+                "text": "Both components independently free"
+              },
+              "id": "echo",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "echo"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "repeat",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "input-free"
+            },
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "output-free"
+            }
+          ],
+          "decision": "contradicted"
+        },
+        "family": "composition-v3-pricing-component-splice",
+        "id": "audit-v3-pricing-component-splice"
+      }
+    ],
+    "train": [
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "execution_success",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider",
+            "request_id": "target-request"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "old",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 899,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "old"
+              ],
+              "fields": {
+                "text": "Repeated observation"
+              },
+              "id": "branch-a",
+              "kind": "summary",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "old"
+              ],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "branch-b",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "branch-a",
+                "branch-b"
+              ],
+              "fields": {
+                "request_id": "target-request",
+                "success": true
+              },
+              "id": "merge",
+              "kind": "execution_receipt",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [],
+          "decision": "unknown"
+        },
+        "family": "composition-v3-expired-root-diamond-refresh",
+        "id": "audit-v3-expired-root-diamond-refresh"
+      },
+      {
+        "bundle": {
+          "claim": {
+            "at": 1000,
+            "kind": "zero_price",
+            "max_age": 100,
+            "model": "simulated/target:free",
+            "provider": "simulated-provider"
+          },
+          "schema": "agentos-audit-evidence-v1",
+          "simulated": true,
+          "sources": [
+            {
+              "derived_from": [],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 0
+              },
+              "id": "free",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "free"
+              ],
+              "fields": {
+                "input_usd": 1,
+                "output_usd": 0
+              },
+              "id": "left",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "free"
+              ],
+              "fields": {
+                "input_usd": 0,
+                "output_usd": 1
+              },
+              "id": "right",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            },
+            {
+              "derived_from": [
+                "left",
+                "right"
+              ],
+              "fields": {
+                "input_usd": 1,
+                "output_usd": 1
+              },
+              "id": "merge",
+              "kind": "pricing",
+              "model": "simulated/target:free",
+              "observed_at": 1000,
+              "provider": "simulated-provider"
+            }
+          ]
+        },
+        "expected": {
+          "citations": [
+            {
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ],
+              "source_id": "free"
+            }
+          ],
+          "decision": "supported"
+        },
+        "family": "composition-v3-independent-root-survives-derived-diamond",
+        "id": "audit-v3-independent-root-survives-derived-diamond"
+      }
+    ]
+  }
+}

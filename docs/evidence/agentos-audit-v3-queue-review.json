@@ -1,0 +1,8 @@
+{
+  "cohort": "audit-composition-20261013-v3",
+  "previous_revision": "43cca1f6d9a59545675a4e1ef50e24d592a3bca5bb464e35258b6731c59407a8",
+  "revision": "1dfada0526435c6a38ed8af0db66c96fb6a2a8a4730098a4e32e5117a9904f17",
+  "manifest_sha256": "ef671cbfdda13620f3ea31de9165224e0c28f39e13fa6a018be7243e264cea37",
+  "reviewer": "Codex local operator; independent code review by /root/evaluation",
+  "reason": "Reviewed citation JSON contract and train-only malformed-output feedback repair. Independent code review found no holdout leakage, call-budget bypass or self-approval; 1375 integrated tests passed with one skip, and 56 installed cohort tests passed. One exposed-training diagnostic verified valid citation format but only one of two correct answers, so no efficacy claim. The v3 cohort has no study binding or dispatched requests; its manifest and evaluator remain unchanged. Original queue pin, consumed studies, prepaid reservations and release controls remain intact."
+}

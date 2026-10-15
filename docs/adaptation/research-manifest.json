@@ -1,0 +1,18 @@
+{
+  "framework": "NumPy 2.2.6",
+  "license": "BSD-3-Clause",
+  "device": "CPU",
+  "sources": {
+    "research/fast_weight_memory/sequence_model.py": "fb05f50dbbd3d6fc2c68511162ad83e28c5dfa411489ba0dee83a75df0bc72b6",
+    "research/fast_weight_memory/__init__.py": "cd558aaa827c7f4ebf11a876ba84e2d8b8cde02ede5e08f562347edea623b263",
+    "research/fast_weight_memory/experiment.py": "9a122397ec6af36d66cfd74c68053ac0d81d51ba99c231dc0194bad281ee1060",
+    "research/fast_weight_memory/module.py": "9bb966ed43e255d807b65259bd97f3e86a8f11ccb2fdbe2d194a6079a15ff9e2"
+  },
+  "config_sha256": "27da8919c8494a9fdbcb01c307dbca31c9dc408cd070fde9b9b7df714304fdb8",
+  "budget_sha256": "b701bd3234d4b65e7e8a987ab8c801b7af820a817d67f7b7f01b6b5ca32cd7c7",
+  "evaluation_suite_sha256": "ba716beb8536783509a881dae247733493103e40a92ad5120ad923c2715c8f48",
+  "synthetic_only": true,
+  "upstream_weights_used": false,
+  "upstream_code_used": false,
+  "sequence_action_forcing": "not applicable; no flow matching action head"
+}

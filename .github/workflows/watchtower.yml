@@ -1,0 +1,34 @@
+name: Independent Watchtower safety checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  isolated-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'PyJWT[crypto]>=2.10,<3'
+      - name: Validate inert deployment examples
+        env:
+          PYTHONPATH: safety
+        run: |
+          python -m nerve_guardian validate --config deploy/watchtower/guardian.example.json
+          python -m nerve_guardian validate --config deploy/watchtower/watchtower.example.json
+      - name: Isolated security, outage and process tests
+        env:
+          PYTHONPATH: safety
+        run: python -m unittest discover -s tests/watchtower -v
+      - name: Disposable process demonstration only
+        env:
+          PYTHONPATH: safety
+        run: python -m nerve_guardian demo --report /tmp/watchtower-demo.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: watchtower-isolated-demo
+          path: /tmp/watchtower-demo.json

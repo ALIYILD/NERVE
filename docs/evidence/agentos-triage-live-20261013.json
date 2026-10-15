@@ -1,0 +1,62 @@
+{
+  "source_commit": "d3c3d8f",
+  "installed_commit": "86ef15b",
+  "checked_at": "2026-10-13T06:54:06.524063+00:00",
+  "tests": {
+    "source_passed": 47,
+    "installed_passed": 47
+  },
+  "scheduler": {
+    "label": "com.aliyildirim.nerve.learning",
+    "interval_seconds": 900,
+    "last_exit_status": 0
+  },
+  "enabled": true,
+  "latest": {
+    "kind": "reviewed_cohort",
+    "outcome": "wait",
+    "result": {
+      "cohort": "audit-composition-20261013-v3",
+      "manifest_sha256": "ef671cbfdda13620f3ea31de9165224e0c28f39e13fa6a018be7243e264cea37",
+      "profile": "qa-release",
+      "remaining_sessions": 3,
+      "requested_day": "2026-10-13",
+      "required_sessions": 8,
+      "revision": "1dfada0526435c6a38ed8af0db66c96fb6a2a8a4730098a4e32e5117a9904f17",
+      "status": "queued_budget"
+    },
+    "created": 1791874420
+  },
+  "remaining_sessions": 3,
+  "research_findings": {
+    "count": 2,
+    "pending_review": 0,
+    "dispositions": {
+      "monitor": 2
+    },
+    "latest": [
+      {
+        "fingerprint": "035c43f3e010b83868c4f14d35ec4d3ce303f162f3598141f7c8a45a6f8f68fd",
+        "origin": "mission",
+        "profile": "workflow-integrity-auditor",
+        "category": "supervisor_timeout",
+        "disposition": "monitor",
+        "review_digest": "3f15dd16a60cc7e8ad634ea97ae8d44b7aa768069813052696ee234737a8e733"
+      },
+      {
+        "fingerprint": "a42a6fd494520e1f78e05613970cfef9a2e5cc4e1c0235418c0680fb9febe4f8",
+        "origin": "mission",
+        "profile": "qa-release",
+        "category": "supervisor_timeout",
+        "disposition": "monitor",
+        "review_digest": "bc7a7f06351761b81263bf8faefd0c3bfb11de06c572572fc38c66d51764da4d"
+      }
+    ],
+    "status": "reviewed",
+    "benchmark_gold": false,
+    "activation_authorized": false
+  },
+  "next_budget_reset": "2026-10-14T00:00:00Z",
+  "improvement_demonstrated": false,
+  "activation_authorized": false
+}
