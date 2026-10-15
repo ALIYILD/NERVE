@@ -4,10 +4,10 @@ The host owns authorization, labels, scope and persistence. Replaying its unique
 chronological events reconstructs the learned state without counting observations
 twice. Forecasts are scored BEFORE seeing each outcome. No action or release API.
 """
-from collections import deque
-from hashlib import sha256
 import json
 import math
+from collections import deque
+from hashlib import sha256
 
 REVISION = 'nerve-outcome-forecast-v1'
 
