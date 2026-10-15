@@ -1,0 +1,32 @@
+{
+  "commit": "36339ac06e97ab3f0f4f264098d2985418b21de0",
+  "environment_recheck": {
+    "module": "test_adaptation_evaluation.py",
+    "passed": 3,
+    "reason": "Restored real Git metadata missing from archive",
+    "run": 3,
+    "source_changes": false
+  },
+  "full_suite": {
+    "errors": 2,
+    "passed": 1465,
+    "run": 1479,
+    "runs": 1,
+    "skipped": 12
+  },
+  "interpretation": "Initial full run had two environment errors; affected module passed after environment repair. No second full-suite run; no claim skipped tests ran.",
+  "logs_sha256": {
+    "adaptation-recheck.log": "3bd2d2078e70bab42ab2c1741a28d415afcfe18aabeefac6b9166ef6c176bf7b",
+    "full-suite.log": "bf383b09152c63f33751a17984007a65dee5ad4b55048a99c0304bc53023baef",
+    "retention-tests.log": "6349ce94b8086cbf334565769d89e17ddfb8b1b3d313ade8deb77a43b6be67bc"
+  },
+  "retention_tests": {
+    "passed": 6,
+    "run": 6
+  },
+  "skips": {
+    "macos_only": 6,
+    "optional_mcp_sdk_missing": 1,
+    "optional_numpy_missing": 5
+  }
+}
