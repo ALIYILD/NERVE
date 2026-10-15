@@ -1,0 +1,20 @@
+{
+  "candidate_promoted": false,
+  "cross_tenant_denied": true,
+  "fresh_process_readback": {
+    "candidate_promoted": false,
+    "memory_ids": [
+      "59dc328c34e3416eba2ff7ef961269f5"
+    ],
+    "recommendations": [
+      "retain_baseline"
+    ],
+    "records": 1
+  },
+  "host_authentication": "local research capabilities; not network authentication",
+  "memory_id": "59dc328c34e3416eba2ff7ef961269f5",
+  "model_weights_trained": false,
+  "new_plant_episodes": 0,
+  "pending_records_returned": 0,
+  "status": "passed"
+}

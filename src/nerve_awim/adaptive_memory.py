@@ -13,12 +13,24 @@ from .memory_v18 import _id
 
 
 class OutcomeMemoryRanker:
-    def __init__(self, ledger, *, evaluator, evaluator_revision, window=20):
+    def __init__(self, ledger, *, evaluator, evaluator_revision, window=20, tie_break="relevance",
+                 decay_half_life=None, discount_half_life=None):
         if not callable(evaluator):
             raise TypeError('trusted host evaluator required')
         _id(evaluator_revision, 'evaluator revision')
         if type(window) is not int or not 3 <= window <= 100:
             raise ValueError('window must be between 3 and 100')
+        if type(tie_break) is not str or tie_break not in ('relevance', 'least_recent'):
+            raise ValueError('registered tie-breaking policy required')
+        if decay_half_life is not None and (type(decay_half_life) is not int or not 1 <= decay_half_life <= 100):
+            raise ValueError('decay half-life must be None or 1..100 judged episodes')
+        if discount_half_life is not None and (type(discount_half_life) is not int or not 1 <= discount_half_life <= 100):
+            raise ValueError('discount half-life must be None or 1..100 judged episodes')
+        if decay_half_life is not None and discount_half_life is not None:
+            raise ValueError('choose either last-use decay or observation discounting')
+        self.discount_half_life = discount_half_life
+        self.decay_half_life = decay_half_life
+        self.tie_break = tie_break
         self.ledger, self.evaluator = ledger, evaluator
         self.revision, self.window = evaluator_revision, window
         with sqlite3.connect(ledger.path) as con:
@@ -27,6 +39,12 @@ class OutcomeMemoryRanker:
                 episode TEXT, payload_hash TEXT, memory TEXT, revision TEXT,
                 status TEXT, success INTEGER,
                 UNIQUE(tenant,agent,episode), UNIQUE(tenant,agent,payload_hash))''')
+            # Gateway-owned ledgers preserve utility cleanup even when this
+            # optional ranker is created after the gateway. Legacy-only stores
+            # retain their existing schema/behaviour.
+            if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='memory_scope_revocations_v1'").fetchone():
+                from .memory_gateway.policy import install_utility_cleanup
+                install_utility_cleanup(con)
 
     @staticmethod
     def _active(record, now):
@@ -79,6 +97,9 @@ class OutcomeMemoryRanker:
 
         Recent-window Beta(1,1) means are heuristic preferences, not calibrated
         confidence or evidence that this memory causally improved performance.
+        Default ties preserve relevance; least_recent is opt-in exact-tie exploration.
+        Optional discounting weights each observation by same-context episode age;
+        this is a discounted Beta heuristic, not a calibrated posterior.
         Unseen memories have neutral score 0.5; relevance order breaks ties.
         """
         self.ledger.authority.require(actor, 'read')
@@ -99,10 +120,46 @@ class OutcomeMemoryRanker:
                     continue
                 if not self._active(current, now):
                     continue
-                rows = con.execute('''SELECT success FROM memory_utility
+                rows = con.execute('''SELECT success,sequence FROM memory_utility
                     WHERE tenant=? AND agent=? AND memory=? AND revision=? AND status='judged'
                     ORDER BY sequence DESC LIMIT ?''',
                     (actor.tenant_id, actor.agent_id, current.memory_id, self.revision, self.window)).fetchall()
                 utility = (1 + sum(row[0] for row in rows)) / (2 + len(rows))
-                ranked.append((-utility, index, current))
-        return [row[2] for row in sorted(ranked, key=lambda row: row[:2])]
+                def observation_age(sequence):
+                    # No global sequence gaps: foreign tenants, agents, contexts,
+                    # revisions and unjudged episodes cannot age this history.
+                    return con.execute("""SELECT COUNT(*) FROM memory_utility u
+                        JOIN trusted_memory_v18 m ON m.memory_id=u.memory
+                        AND m.tenant_id=u.tenant AND m.agent_id=u.agent
+                        WHERE u.tenant=? AND u.agent=? AND m.context=? AND u.revision=?
+                        AND u.status='judged' AND u.sequence>?""",
+                        (actor.tenant_id, actor.agent_id, current.context, self.revision, sequence)).fetchone()[0]
+                if self.discount_half_life is not None and rows:
+                    # One scoped window query per candidate, not one full count
+                    # per sample. Filtering memory must happen AFTER assigning
+                    # ages, so observations of other same-context memories count.
+                    # Only the bounded latest window is returned to Python.
+                    discounted_rows = con.execute("""SELECT success, age FROM (
+                        SELECT u.memory, u.success, u.sequence,
+                            ROW_NUMBER() OVER (ORDER BY u.sequence DESC) - 1 AS age
+                        FROM memory_utility u
+                        JOIN trusted_memory_v18 m ON m.memory_id=u.memory
+                        AND m.tenant_id=u.tenant AND m.agent_id=u.agent
+                        WHERE u.tenant=? AND u.agent=? AND m.context=? AND u.revision=?
+                        AND u.status='judged'
+                    ) WHERE memory=? ORDER BY sequence DESC LIMIT ?""",
+                        (actor.tenant_id, actor.agent_id, current.context, self.revision,
+                         current.memory_id, self.window)).fetchall()
+                    weighted = [(success, 2 ** (-age / self.discount_half_life))
+                                for success, age in discounted_rows]
+                    utility = (1 + sum(success * weight for success, weight in weighted)) / (2 + sum(weight for _, weight in weighted))
+                if self.decay_half_life is not None and rows:
+                    age = observation_age(rows[0][1])
+                    utility = 0.5 + (utility - 0.5) * 2 ** (-age / self.decay_half_life)
+                # Equal recent utility can otherwise trap the policy on the
+                # same repeatedly failing memory. Opt-in bounded exploration
+                # tries the least recently judged candidate only on exact ties.
+                recent = rows[0][1] if rows else -1
+                tie = recent if self.tie_break == 'least_recent' else index
+                ranked.append((-utility, tie, index, current))
+        return [row[3] for row in sorted(ranked, key=lambda row: row[:3])]

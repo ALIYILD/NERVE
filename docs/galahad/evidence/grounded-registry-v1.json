@@ -1,0 +1,319 @@
+{
+  "protocol": {
+    "version": "grounded-registry-v1",
+    "dataset_sha256": "f78d2d83ae7020c45145a03123942fb0b22b19280fa9c6dc9b08821db023d3c4",
+    "cases": [
+      [
+        "SD26",
+        "FQNZ-4827",
+        "TE81",
+        "GHVK-9361"
+      ],
+      [
+        "UF43",
+        "LMPR-7519",
+        "VG68",
+        "WXCB-2046"
+      ],
+      [
+        "WH92",
+        "JSTY-3608",
+        "XI14",
+        "DKAE-8153"
+      ],
+      [
+        "YJ57",
+        "BVOU-6294",
+        "ZK39",
+        "RCIH-1705"
+      ]
+    ],
+    "source_sha256": {
+      "scripts/benchmark_grounded_registry.py": "51019ae3ee9dcee77c921d60e6d447c8b5d51c9eda0f6dfffa08f10e74e8c881",
+      "scripts/benchmark_local_memory.py": "2440760626c0d18da5f491c2fc856fec778a0b9f55d99252144eda13e0019fa8",
+      "scripts/probe_local_memory_readiness.py": "c08bb5b7d5d9e5d0d150f5a99ca6f608dd179f62b20e3e4aefc7125268756815",
+      "src/nerve_awim/memory_gateway/grounding.py": "0aebbe9133cd43ecf756dd2d7a4aa6ee075a1861c48ca180e626adc988ac75b0",
+      "src/nerve_awim/memory_gateway/inference.py": "e9404ba3168b6b6242c62356f6b3ec5d8dd519c1ab823716685014cc48335782",
+      "src/nerve_awim/memory_gateway/gateway.py": "cd41f9f0a44af8331e1db04e43493b8c83cec5512edb3269a1e6a8dc9726f876",
+      "src/nerve_awim/memory_gateway/policy.py": "77803fb57fc502da3ac7d6a1423cd96a07645dab539d89ca6b2904b0565637d2",
+      "src/nerve_awim/memory_gateway/contracts.py": "9d0b22f5b21dc53e0ccf0150f9fd21543103d4336d496d5b776ada9a6ceb450e",
+      "src/nerve_awim/memory_v18.py": "882506c5d7c2f8a0b5f46f4d62a600d79a78d23863080af010a6362b59e855c6",
+      "src/nerve_awim/memory_retrieval_v18.py": "719f5f236df9f1b5caae2120f8d197fc852d2ba24ca05e6e7738e1887873be20"
+    },
+    "model": "qwen2.5-coder:1.5b",
+    "origin": "http://127.0.0.1:11434",
+    "expected_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "runtime_profile": "cpu_research",
+    "max_inference_calls": 8,
+    "max_preload_calls": 1,
+    "max_metadata_calls": 2,
+    "max_output_tokens": 128,
+    "inference_socket_timeout_seconds": 90,
+    "preload_socket_timeout_seconds": 45,
+    "temperature": 0,
+    "timeout_limit": "socket timeout, not a hard total wall-clock deadline"
+  },
+  "run_id": "grounded-registry-v1",
+  "status": "complete",
+  "rows": [
+    {
+      "case": 0,
+      "arm": "relevant",
+      "source_id": "grounded-source-0",
+      "expected_code": "FQNZ-4827",
+      "decoy_code": "GHVK-9361",
+      "status": "complete",
+      "fact_characters": 68,
+      "raw_output": "The access code for object SD26 is FQNZ-4827. Source_id: grounded-source-0",
+      "guarded_output": "FQNZ-4827 Source_id: grounded-source-0",
+      "usage": {
+        "prompt_tokens": 286,
+        "completion_tokens": 26,
+        "total_tokens": 312
+      },
+      "grounding": {
+        "version": "synthetic-registry-v1",
+        "accepted": true,
+        "reason": "supported",
+        "citation_added": false,
+        "output_canonicalized": true,
+        "scope": "selected_approved_evidence_only"
+      },
+      "raw_correct": true,
+      "guarded_correct": true,
+      "end_to_end_seconds": 36.883876152991434
+    },
+    {
+      "case": 0,
+      "arm": "control",
+      "source_id": "grounded-source-0",
+      "expected_code": "FQNZ-4827",
+      "decoy_code": "GHVK-9361",
+      "status": "complete",
+      "fact_characters": 68,
+      "raw_output": "GHVK-9361, source_id: grounded-source-0",
+      "guarded_output": "Unsupported registry answer; abstaining.",
+      "usage": {
+        "prompt_tokens": 288,
+        "completion_tokens": 16,
+        "total_tokens": 304
+      },
+      "grounding": {
+        "version": "synthetic-registry-v1",
+        "accepted": false,
+        "reason": "unsupported_entity",
+        "citation_added": false,
+        "output_canonicalized": false,
+        "scope": "selected_approved_evidence_only"
+      },
+      "raw_correct": false,
+      "guarded_correct": true,
+      "end_to_end_seconds": 18.92095025999879
+    },
+    {
+      "case": 1,
+      "arm": "control",
+      "source_id": "grounded-source-1",
+      "expected_code": "LMPR-7519",
+      "decoy_code": "WXCB-2046",
+      "status": "complete",
+      "fact_characters": 68,
+      "raw_output": "WXCB-2046, source_id: grounded-source-1",
+      "guarded_output": "Unsupported registry answer; abstaining.",
+      "usage": {
+        "prompt_tokens": 289,
+        "completion_tokens": 16,
+        "total_tokens": 305
+      },
+      "grounding": {
+        "version": "synthetic-registry-v1",
+        "accepted": false,
+        "reason": "unsupported_entity",
+        "citation_added": false,
+        "output_canonicalized": false,
+        "scope": "selected_approved_evidence_only"
+      },
+      "raw_correct": false,
+      "guarded_correct": true,
+      "end_to_end_seconds": 26.00421257200651
+    },
+    {
+      "case": 1,
+      "arm": "relevant",
+      "source_id": "grounded-source-1",
+      "expected_code": "LMPR-7519",
+      "decoy_code": "WXCB-2046",
+      "status": "complete",
+      "fact_characters": 68,
+      "raw_output": "LMPR-7519, source_id: grounded-source-1",
+      "guarded_output": "Unsupported registry answer; abstaining.",
+      "usage": {
+        "prompt_tokens": 286,
+        "completion_tokens": 17,
+        "total_tokens": 303
+      },
+      "grounding": {
+        "version": "synthetic-registry-v1",
+        "accepted": false,
+        "reason": "invalid_answer_format",
+        "citation_added": false,
+        "output_canonicalized": false,
+        "scope": "selected_approved_evidence_only"
+      },
+      "raw_correct": false,
+      "guarded_correct": false,
+      "end_to_end_seconds": 22.046523286000593
+    },
+    {
+      "case": 2,
+      "arm": "relevant",
+      "source_id": "grounded-source-2",
+      "expected_code": "JSTY-3608",
+      "decoy_code": "DKAE-8153",
+      "status": "complete",
+      "fact_characters": 68,
+      "raw_output": "JSTY-3608, source_id: grounded-source-2",
+      "guarded_output": "Unsupported registry answer; abstaining.",
+      "usage": {
+        "prompt_tokens": 290,
+        "completion_tokens": 17,
+        "total_tokens": 307
+      },
+      "grounding": {
+        "version": "synthetic-registry-v1",
+        "accepted": false,
+        "reason": "invalid_answer_format",
+        "citation_added": false,
+        "output_canonicalized": false,
+        "scope": "selected_approved_evidence_only"
+      },
+      "raw_correct": false,
+      "guarded_correct": false,
+      "end_to_end_seconds": 29.16093370800081
+    },
+    {
+      "case": 2,
+      "arm": "control",
+      "source_id": "grounded-source-2",
+      "expected_code": "JSTY-3608",
+      "decoy_code": "DKAE-8153",
+      "status": "complete",
+      "fact_characters": 68,
+      "raw_output": "The access code for object WH92 is DKAE-8153. Source_id: grounded-source-2",
+      "guarded_output": "Unsupported registry answer; abstaining.",
+      "usage": {
+        "prompt_tokens": 287,
+        "completion_tokens": 25,
+        "total_tokens": 312
+      },
+      "grounding": {
+        "version": "synthetic-registry-v1",
+        "accepted": false,
+        "reason": "unsupported_entity",
+        "citation_added": false,
+        "output_canonicalized": false,
+        "scope": "selected_approved_evidence_only"
+      },
+      "raw_correct": false,
+      "guarded_correct": true,
+      "end_to_end_seconds": 25.06082957900071
+    },
+    {
+      "case": 3,
+      "arm": "control",
+      "source_id": "grounded-source-3",
+      "expected_code": "BVOU-6294",
+      "decoy_code": "RCIH-1705",
+      "status": "complete",
+      "fact_characters": 68,
+      "raw_output": "The access code for object YJ57 is RCIH-1705. Source_id: grounded-source-3",
+      "guarded_output": "Unsupported registry answer; abstaining.",
+      "usage": {
+        "prompt_tokens": 288,
+        "completion_tokens": 27,
+        "total_tokens": 315
+      },
+      "grounding": {
+        "version": "synthetic-registry-v1",
+        "accepted": false,
+        "reason": "unsupported_entity",
+        "citation_added": false,
+        "output_canonicalized": false,
+        "scope": "selected_approved_evidence_only"
+      },
+      "raw_correct": false,
+      "guarded_correct": true,
+      "end_to_end_seconds": 34.77460100900498
+    },
+    {
+      "case": 3,
+      "arm": "relevant",
+      "source_id": "grounded-source-3",
+      "expected_code": "BVOU-6294",
+      "decoy_code": "RCIH-1705",
+      "status": "complete",
+      "fact_characters": 68,
+      "raw_output": "The access code for object YJ57 is BVOU-6294. Source_id: grounded-source-3",
+      "guarded_output": "BVOU-6294 Source_id: grounded-source-3",
+      "usage": {
+        "prompt_tokens": 290,
+        "completion_tokens": 27,
+        "total_tokens": 317
+      },
+      "grounding": {
+        "version": "synthetic-registry-v1",
+        "accepted": true,
+        "reason": "supported",
+        "citation_added": false,
+        "output_canonicalized": true,
+        "scope": "selected_approved_evidence_only"
+      },
+      "raw_correct": true,
+      "guarded_correct": true,
+      "end_to_end_seconds": 27.586609218007652
+    }
+  ],
+  "environment": {
+    "python": "3.10.0",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit"
+  },
+  "synthetic_only": true,
+  "weight_training": false,
+  "automatic_learning": false,
+  "persistent_kv_restored": false,
+  "inference_attempts": 8,
+  "preload_attempts": 1,
+  "score_definition": "Frozen independent full-match contract: correct target entity (explicit or query-implied), exact code and source citation; control approved abstention forms only. Strict synthetic contract accuracy, not general semantic correctness.",
+  "control_definition": "Approved equal-character-length irrelevant object fact. Raw and guarded outputs are evaluated on the SAME completion; no extra inference.",
+  "limitation": "Four public synthetic cases; no general intelligence, training, or performance improvement claim.",
+  "metadata_before": {
+    "model": "qwen2.5-coder:1.5b",
+    "digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668"
+  },
+  "preload": {
+    "wall_seconds": 4.501099383007386
+  },
+  "metadata_after": {
+    "model": "qwen2.5-coder:1.5b",
+    "digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668"
+  },
+  "source_sha256_after": {
+    "scripts/benchmark_grounded_registry.py": "51019ae3ee9dcee77c921d60e6d447c8b5d51c9eda0f6dfffa08f10e74e8c881",
+    "scripts/benchmark_local_memory.py": "2440760626c0d18da5f491c2fc856fec778a0b9f55d99252144eda13e0019fa8",
+    "scripts/probe_local_memory_readiness.py": "c08bb5b7d5d9e5d0d150f5a99ca6f608dd179f62b20e3e4aefc7125268756815",
+    "src/nerve_awim/memory_gateway/grounding.py": "0aebbe9133cd43ecf756dd2d7a4aa6ee075a1861c48ca180e626adc988ac75b0",
+    "src/nerve_awim/memory_gateway/inference.py": "e9404ba3168b6b6242c62356f6b3ec5d8dd519c1ab823716685014cc48335782",
+    "src/nerve_awim/memory_gateway/gateway.py": "cd41f9f0a44af8331e1db04e43493b8c83cec5512edb3269a1e6a8dc9726f876",
+    "src/nerve_awim/memory_gateway/policy.py": "77803fb57fc502da3ac7d6a1423cd96a07645dab539d89ca6b2904b0565637d2",
+    "src/nerve_awim/memory_gateway/contracts.py": "9d0b22f5b21dc53e0ccf0150f9fd21543103d4336d496d5b776ada9a6ceb450e",
+    "src/nerve_awim/memory_v18.py": "882506c5d7c2f8a0b5f46f4d62a600d79a78d23863080af010a6362b59e855c6",
+    "src/nerve_awim/memory_retrieval_v18.py": "719f5f236df9f1b5caae2120f8d197fc852d2ba24ca05e6e7738e1887873be20"
+  },
+  "counts": {
+    "relevant_raw_correct": 2,
+    "relevant_guarded_correct": 2,
+    "control_raw_correct": 0,
+    "control_guarded_correct": 4,
+    "citations_added": 0
+  }
+}

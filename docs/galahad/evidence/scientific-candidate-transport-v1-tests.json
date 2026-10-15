@@ -1,0 +1,26 @@
+{
+  "actual_model_calls": 1,
+  "actual_probe_format_valid": false,
+  "actual_probe_strict_correct": false,
+  "base_commit": "e9460a894613cc54dbfb304cc3fed48e711f9a80",
+  "branch": "feature/galahad-persistent-memory",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline --timeout-seconds 600",
+  "efficacy_established": false,
+  "elapsed_seconds": 167.376,
+  "environment": {
+    "mode": "CPU, local socket fixtures permitted; real inference ran after tests",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "errors": 0,
+  "failures": 0,
+  "focused_tests": {
+    "smoke": 18,
+    "transport": 8
+  },
+  "independent_code_review": "26 focused tests and code cleared",
+  "log_sha256": "c536b9aa89a86343be31b6122914e43de24b597899db484b4fa8466966b84635",
+  "new_tests": 26,
+  "status": "passed",
+  "tests": 1970
+}

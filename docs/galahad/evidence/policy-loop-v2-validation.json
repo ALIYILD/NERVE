@@ -1,0 +1,14 @@
+{
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests": 1114,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 60.703,
+  "environment": {
+    "python": "3.10.0",
+    "platform": "macOS 26.5.2 x86_64"
+  },
+  "study_command": "PYTHONPATH=src .venv/bin/python scripts/run_memory_research_loop.py --database /private/tmp/nerve-policy-loop-v2.sqlite --run-id policy-loop-v2 --output /private/tmp/nerve-policy-loop-v2.json",
+  "gpu_tested": false,
+  "deployed": false
+}

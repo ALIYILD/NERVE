@@ -1,0 +1,33 @@
+{
+  "architecture": "x86_64",
+  "available": false,
+  "blockers": [
+    "unsupported_platform",
+    "galahad_not_installed",
+    "vllm_not_installed",
+    "gpu_tool_unavailable",
+    "gpu_execution_unverified",
+    "licence_rights_unverified",
+    "runtime_version_matrix_unverified",
+    "runtime_identity_binding_unverified",
+    "trust_domain_isolation_unverified",
+    "encryption_and_deletion_unverified",
+    "runtime_connector_integration_not_implemented"
+  ],
+  "gpu_verified": false,
+  "licence_verified": false,
+  "packages": {
+    "galahad-kv": null,
+    "sglang": null,
+    "vllm": null
+  },
+  "platform": "Darwin",
+  "provider": "galahad",
+  "python": "3.10.0",
+  "research_pins": {
+    "galahad-kv": "1.31.4",
+    "vllm": "0.31.0"
+  },
+  "research_pins_approved": false,
+  "status": "blocked"
+}

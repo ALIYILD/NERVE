@@ -1,0 +1,92 @@
+{
+  "scope": "15 distributions installed locally in the optional MCP test venv; inherited system-site packages not covered by this scan",
+  "initial_findings": {
+    "pip": "21.2.3",
+    "setuptools": "57.4.0",
+    "vulnerability_records": 11
+  },
+  "repairs": {
+    "pip": "26.2.1",
+    "setuptools": "84.0.0"
+  },
+  "final_audit": {
+    "dependencies": [
+      {
+        "name": "attrs",
+        "version": "26.1.0",
+        "vulns": []
+      },
+      {
+        "name": "httpcore2",
+        "version": "2.13.1",
+        "vulns": []
+      },
+      {
+        "name": "httpx2",
+        "version": "2.13.1",
+        "vulns": []
+      },
+      {
+        "name": "idna",
+        "version": "3.20",
+        "vulns": []
+      },
+      {
+        "name": "jsonschema",
+        "version": "4.26.0",
+        "vulns": []
+      },
+      {
+        "name": "jsonschema-specifications",
+        "version": "2025.9.1",
+        "vulns": []
+      },
+      {
+        "name": "mcp",
+        "version": "2.3.0",
+        "vulns": []
+      },
+      {
+        "name": "mcp-types",
+        "version": "2.3.0",
+        "vulns": []
+      },
+      {
+        "name": "opentelemetry-api",
+        "version": "1.45.1",
+        "vulns": []
+      },
+      {
+        "name": "pip",
+        "version": "26.2.1",
+        "vulns": []
+      },
+      {
+        "name": "referencing",
+        "version": "0.37.0",
+        "vulns": []
+      },
+      {
+        "name": "rpds-py",
+        "version": "0.30.0",
+        "vulns": []
+      },
+      {
+        "name": "setuptools",
+        "version": "84.0.0",
+        "vulns": []
+      },
+      {
+        "name": "sse-starlette",
+        "version": "3.5.0",
+        "vulns": []
+      },
+      {
+        "name": "truststore",
+        "version": "0.10.4",
+        "vulns": []
+      }
+    ],
+    "fixes": []
+  }
+}

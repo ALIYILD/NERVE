@@ -16,16 +16,20 @@ class RuntimeTests(unittest.TestCase):
             r=NerveResearchRuntime(verifier=FakeVerifier(),issuer="https://idp.test",
                 audience="nerve",secret=SECRET,ledger_path=str(Path(d)/"db"),
                 max_missing=1,recovery_samples=2)
-            for _ in range(4):r.controller.act()
             r.sensor_missing()
             self.assertIsNone(r.tick().action)
-            r.observe(0,position=.1,velocity=.1)
-            r.observe(1,position=.2,velocity=.2)
+            r.observe_recovery(1,observed_now=1,position=.1,velocity=.1)
+            r.observe_recovery(2,observed_now=2,position=.2,velocity=.2)
+            r.advance_time(2)
             a=sign_approval(SECRET,"operator","supervisor",
                 r.controller.incident,"nonce",200)
             self.assertFalse(r.authorise_recovery("bad",a,100))
             self.assertTrue(r.authorise_recovery("valid",a,100))
-            self.assertEqual(r.tick().phase,"active")
+            result=r.tick()
+            self.assertEqual(result.phase,"active")
+            self.assertIsNotNone(result.action)
+            r.advance_time(3)
+            self.assertIsNone(r.tick().action)
     def test_no_automatic_recovery(self):
         with tempfile.TemporaryDirectory() as d:
             r=NerveResearchRuntime(verifier=FakeVerifier(),issuer="https://idp.test",

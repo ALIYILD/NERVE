@@ -1,0 +1,23 @@
+{
+  "baseline_commit": "d996a1e03f6d20bdf2f4bb4e477425d0cafdb916",
+  "branch": "feature/galahad-persistent-memory",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests_passed": 1540,
+  "failures": 0,
+  "errors": 0,
+  "elapsed_seconds": 135.548,
+  "new_targeted_tests_passed": 15,
+  "independent_code_and_recorded_evidence_review": true,
+  "training_trajectories_replayed": 128,
+  "steps_replayed": 10240,
+  "summary_strata": 48,
+  "external_supervisor_strata_improved": 16,
+  "stationary_whole_trajectory_strata_improved": 8,
+  "drift_whole_trajectory_strata_regressed": 3,
+  "drift_controller_only_strata_regressed": 8,
+  "new_plant_episodes": 0,
+  "heldout_outcomes_analyzed": false,
+  "actions_changed": false,
+  "candidate_promoted": false,
+  "model_weights_trained": false
+}

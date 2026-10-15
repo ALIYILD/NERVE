@@ -1,0 +1,43 @@
+{
+  "artifact_hashes_and_mtimes_unchanged": true,
+  "counts": {
+    "dev": 700,
+    "holdout": 300
+  },
+  "development_never_opened_holdout": true,
+  "fresh_process_verification": {
+    "data_available": true,
+    "manifest_sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6",
+    "reason": "verified",
+    "status": "live"
+  },
+  "generator_holdout_denied": true,
+  "independent_external_custody": false,
+  "inference_calls": 0,
+  "manifest_sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6",
+  "private_directory_mode": "0700",
+  "private_file_modes": "0600",
+  "public_holdout_answer_export": false,
+  "status": "live",
+  "strata": {
+    "dev": {
+      "conflict": 100,
+      "entity-decoy": 100,
+      "measurement-decoy": 100,
+      "multi-source-agreement": 100,
+      "stale-vs-current": 100,
+      "supported-measurement": 100,
+      "unit-mismatch": 100
+    },
+    "holdout": {
+      "conflict": 43,
+      "entity-decoy": 43,
+      "measurement-decoy": 43,
+      "multi-source-agreement": 43,
+      "stale-vs-current": 42,
+      "supported-measurement": 43,
+      "unit-mismatch": 43
+    }
+  },
+  "version": "task-bank-v1"
+}

@@ -1,0 +1,58 @@
+{
+  "status": "registered",
+  "episode_count": 4,
+  "failure_counts": {
+    "schema_shape_failure": 2,
+    "abstention_contract_failure": 2
+  },
+  "proposal_count": 2,
+  "mutations": [
+    "abstention_check",
+    "format_contract"
+  ],
+  "new_model_calls": 0,
+  "unchanged_files": 10,
+  "bytes_and_mtime_unchanged": true,
+  "artifacts": {
+    "/Users/aliyildirim/nerve-research-runs/scientific-format-feedback-v1/report.json": {
+      "sha256": "d3b4cb4e3525276d1f5db83477e43e7dead81dfb7f4ce0a81cb377f6e1ce9112",
+      "mtime_ns": 1792052118864434708
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-format-episodes-v1/report.json": {
+      "sha256": "f224cf52a558aba0e3bb16ae852f024f84da44db7a01116f61842f112c6bc0af",
+      "mtime_ns": 1792052118482145064
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-format-episodes-v1/authority.sqlite": {
+      "sha256": "fe7b38d10065634d9f54c6bed1e473b392f0b3c0b6ae4b950e57f46adb7ec9b2",
+      "mtime_ns": 1792052118352028130
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-format-episodes-v1/episodes.jsonl.manifest.json": {
+      "sha256": "a695121645301f1edd78d4354c3b01211508e48e2d8ab30ec5f02254b10b0286",
+      "mtime_ns": 1792052118427900995
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-format-episodes-v1/experiences.sqlite": {
+      "sha256": "fbe4fee5005b63368651612e39dbb2204142d3da4b19f44663d62d489130a332",
+      "mtime_ns": 1792052118378576249
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-format-episodes-v1/episodes.jsonl": {
+      "sha256": "9d9c6145dffeefec3464a3e1a939828cd09f7c26c558f13fa462d9e52d08915a",
+      "mtime_ns": 1792052118427309243
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-format-study-v1/claim.sqlite": {
+      "sha256": "04a55c40bed940cf7a56945b88788cad5388106d411b7fde080b1881f1e6cc97",
+      "mtime_ns": 1792051521270974477
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-format-study-v1/report.json": {
+      "sha256": "c7915eb55395dff93bc00d7c72e25ae1353a0bff1377d2223034350f070a41ed",
+      "mtime_ns": 1792051521272412352
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-format-study-v1/authority.sqlite": {
+      "sha256": "64e23d64b4b34bc3812a5b33b87761db4f27664a45f2b65ba4a551d54d357daa",
+      "mtime_ns": 1792051365473540950
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-format-study-claims.sqlite": {
+      "sha256": "6c0553f200a4def9023431346365584789d1fc18e2ec6c10d404c1f9960eb1a8",
+      "mtime_ns": 1792051365447570245
+    }
+  }
+}

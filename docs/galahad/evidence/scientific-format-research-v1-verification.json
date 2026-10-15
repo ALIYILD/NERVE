@@ -1,0 +1,21 @@
+{
+  "status": "retain_baseline",
+  "network_calls": 0,
+  "child_dispatches": 0,
+  "unchanged_files": 12,
+  "artifact_sha256": {
+    "/Users/aliyildirim/nerve-research-runs/scientific-format-research-v1/report.json": "c8e7a9f22f27558f0ff8ab97529ca590b126773b02ee21934f34233711ec2173",
+    "/Users/aliyildirim/nerve-research-runs/scientific-format-research-v1/identity.json": "af20ce10bd3f7c2926abfa0d8dd66fc2dcd1f4c751f7e3a50578f0001e5de3a5",
+    "/Users/aliyildirim/nerve-research-runs/scientific-format-research-claims.sqlite": "529f2d8ac82776ec5ffe951c964ad7175d4597970079f779bf7de037df836576",
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-transport-smoke-v1/claim.sqlite": "e643402a1bd0bc6cc0621e33ebc921ca039741e18419c40d943450057df35455",
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-transport-smoke-v1/report.json": "9391f562c82e79f0e63772beb68eba1d4bce5129daac5c65aca02a9eeb05493e",
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-transport-smoke-v1/authority.sqlite": "eba0cdfce91b6ac0773c26ae133502d3538f12422f6a9c5da9c1e2378050ea1b",
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-transport-smoke-v1/identity.json": "32903fa6414792e538755c3ed34d14ca14ba7a0b042d9dbe061a69e1357e117f",
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-transport-smoke-claims.sqlite": "cb49e165067bebc9d44ece83bab92df6f742c3ac89694dd2efd09becb9ed4e7e",
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-format-study-v1/claim.sqlite": "04a55c40bed940cf7a56945b88788cad5388106d411b7fde080b1881f1e6cc97",
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-format-study-v1/report.json": "c7915eb55395dff93bc00d7c72e25ae1353a0bff1377d2223034350f070a41ed",
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-format-study-v1/authority.sqlite": "64e23d64b4b34bc3812a5b33b87761db4f27664a45f2b65ba4a551d54d357daa",
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-format-study-claims.sqlite": "6c0553f200a4def9023431346365584789d1fc18e2ec6c10d404c1f9960eb1a8"
+  },
+  "bytes_and_mtime_unchanged": true
+}

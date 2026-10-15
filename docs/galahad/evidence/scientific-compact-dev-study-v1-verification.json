@@ -1,0 +1,59 @@
+{
+  "actual_model_output_counts": {
+    "ABSTAIN": 100
+  },
+  "artifacts": {
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-screen-v1/report.json": {
+      "mtime_ns": 1792045953566720790,
+      "sha256": "3a2b22616cdb90bbf98bc595df3b1662fbd44e78f85d4f0d18d0fff88d1af9b7"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidates-v1/report.json": {
+      "mtime_ns": 1792045390088770648,
+      "sha256": "f90d2c9e72ee862a1ada9ff7f4bfba7ebcdd212a9e45bb980438277b1fab3e3a"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-compact-dev-study-claims.sqlite": {
+      "mtime_ns": 1792063351769019057,
+      "sha256": "6ab05473ad86eb11b08a9010187f60e05526c5265863073692b921f5d733f003"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-compact-dev-study-v1/authority.sqlite": {
+      "mtime_ns": 1792063352252702451,
+      "sha256": "cd12039e4d5a9e47d6e857a020c5514bcb098d1bf40f57768c1542ebf961b0ea"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-compact-dev-study-v1/claim.sqlite": {
+      "mtime_ns": 1792063557947718926,
+      "sha256": "9d3fe97b727f0496e0c4e391e4dd9bdd32bca4779511c4b5305c924ee54e2d26"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-compact-dev-study-v1/report.json": {
+      "mtime_ns": 1792063558048235989,
+      "sha256": "87ce74964012556f41852639aeab61d393e1b38ce2393d9bff086f5a0fbd52db"
+    },
+    "/Users/aliyildirim/nerve-research-runs/task-bank-v1/dev.json": {
+      "mtime_ns": 1792014691726715759,
+      "sha256": "9b495d387555cf1666e93d2ffe8669b6da34d14f1a609265eef6abd74063fa92"
+    },
+    "/Users/aliyildirim/nerve-research-runs/task-bank-v1/manifest.json": {
+      "mtime_ns": 1792014691755472006,
+      "sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6"
+    },
+    "docs/galahad/evidence/scientific-compact-dev-prereg-v1.json": {
+      "mtime_ns": 1792058145559444513,
+      "sha256": "20cb873d5ba6790e3bba2bc014d36c32fd3651d969329d5fe77d407eb46e90db"
+    }
+  },
+  "bytes_and_mtime_unchanged": true,
+  "canonical_receipt_sha256": "67f7c4271328b958ab04995cadfdf2bcc0c78d948831ab19368c2c3c8b019c07",
+  "file_guard": {
+    "boundary": "Python open events for supplied bank holdout and sibling seed paths only; not an OS sandbox",
+    "enabled": true
+  },
+  "holdout_accessed": false,
+  "model_calls": 100,
+  "new_model_calls": 0,
+  "preregistration_matches": true,
+  "preregistration_sha256": "20cb873d5ba6790e3bba2bc014d36c32fd3651d969329d5fe77d407eb46e90db",
+  "prompt_tokens_max": 83,
+  "prompt_tokens_min": 67,
+  "status": "verified",
+  "unchanged_files": 9,
+  "verdict": "retain_baseline"
+}

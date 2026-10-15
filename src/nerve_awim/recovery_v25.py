@@ -67,7 +67,7 @@ class SignedRecovery(EvidenceGatedRecovery):
             and approval.expires_at>=now
             and approval.role=="supervisor" and approval.incident==self.incident
             and bool(approval.principal) and bool(approval.nonce)
-            and self.phase=="awaiting_approval"
+            and self.recovery_ready()
             and self.verdict is not None and self.verdict.accepted)
         if not valid:
             self.ledger.event(self.incident,"approval_denied",now)

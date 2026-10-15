@@ -1,0 +1,13 @@
+{
+  "approved_query": "pass",
+  "existing_demo_approved_hint": "pass",
+  "kv_restoration": "disabled",
+  "mcp_version": "2.3.0",
+  "memory_tools_discovered": 3,
+  "outcome_pending": "pass",
+  "pending_not_retrievable": "pass",
+  "pending_proposal": "pass",
+  "status": "pass",
+  "synthetic_only": true,
+  "transport": "official MCP SDK stdio"
+}

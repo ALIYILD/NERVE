@@ -1,0 +1,11 @@
+{
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline --timeout-seconds 600",
+  "independent_review": "34 focused tests passed; actual 16 raw scores, 26 validation and 29 coordinator source pins, model identity, claims, scopes and rejection independently verified",
+  "log": "/private/tmp/nerve-scientific-validation-tests.log",
+  "log_sha256": "c0c1de5bb8aa3e72c582a244a83f78623425840d3bef4252e7312966ade060ce",
+  "new_tests": 34,
+  "python": "3.10.0",
+  "seconds": 161.359,
+  "tests_failed": 0,
+  "tests_passed": 1809
+}

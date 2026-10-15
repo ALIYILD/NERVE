@@ -1,0 +1,423 @@
+{
+  "environment": {
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "limitations": "No model inference. No-memory arm measures dispatch only and has no retrieval capability. No speedup, energy or cost claim.",
+  "methodology": "Sequential local wall-clock calls; 8 synthetic records; same scope/query/limit. First call is not an OS cold-cache guarantee.",
+  "research": {
+    "baseline": {
+      "token_weight": 3,
+      "trigram_weight": 0
+    },
+    "baseline_holdout": {
+      "accuracy": 0.6666666666666666,
+      "cross_tenant_leaks": 0,
+      "hits": 4,
+      "queries": 6
+    },
+    "baseline_validation": {
+      "accuracy": 0.6666666666666666,
+      "cross_tenant_leaks": 0,
+      "hits": 4,
+      "queries": 6
+    },
+    "candidates_evaluated": 12,
+    "deployed": false,
+    "evaluation_calls": 28,
+    "fixture": "public synthetic v1.9 retrieval cases",
+    "gateway_verified": true,
+    "generations_run": 3,
+    "holdout_sealed": false,
+    "known_population_size": 13,
+    "limitations": "Constructed retrieval dataset and data-only mutations. Not autonomous AlphaEvolve, not general intelligence or proven speedup.",
+    "lineage": [
+      {
+        "evaluated": [
+          {
+            "accepted": false,
+            "candidate_for_selection": true,
+            "genome": {
+              "token_weight": 3,
+              "trigram_weight": 1
+            },
+            "training": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            }
+          },
+          {
+            "accepted": false,
+            "candidate_for_selection": false,
+            "genome": {
+              "token_weight": 4,
+              "trigram_weight": 0
+            },
+            "training": {
+              "accuracy": 0.8333333333333334,
+              "cross_tenant_leaks": 0,
+              "hits": 5,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 0.6666666666666666,
+              "cross_tenant_leaks": 0,
+              "hits": 4,
+              "queries": 6
+            }
+          },
+          {
+            "accepted": true,
+            "candidate_for_selection": true,
+            "genome": {
+              "token_weight": 2,
+              "trigram_weight": 1
+            },
+            "training": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            }
+          },
+          {
+            "accepted": false,
+            "candidate_for_selection": false,
+            "genome": {
+              "token_weight": 5,
+              "trigram_weight": 0
+            },
+            "training": {
+              "accuracy": 0.8333333333333334,
+              "cross_tenant_leaks": 0,
+              "hits": 5,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 0.6666666666666666,
+              "cross_tenant_leaks": 0,
+              "hits": 4,
+              "queries": 6
+            }
+          }
+        ],
+        "generation": 1,
+        "parent": {
+          "token_weight": 3,
+          "trigram_weight": 0
+        },
+        "selection": "improved"
+      },
+      {
+        "evaluated": [
+          {
+            "accepted": false,
+            "candidate_for_selection": false,
+            "genome": {
+              "token_weight": 2,
+              "trigram_weight": 0
+            },
+            "training": {
+              "accuracy": 0.8333333333333334,
+              "cross_tenant_leaks": 0,
+              "hits": 5,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 0.6666666666666666,
+              "cross_tenant_leaks": 0,
+              "hits": 4,
+              "queries": 6
+            }
+          },
+          {
+            "accepted": false,
+            "candidate_for_selection": false,
+            "genome": {
+              "token_weight": 2,
+              "trigram_weight": 2
+            },
+            "training": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            }
+          },
+          {
+            "accepted": false,
+            "candidate_for_selection": false,
+            "genome": {
+              "token_weight": 1,
+              "trigram_weight": 2
+            },
+            "training": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            }
+          },
+          {
+            "accepted": false,
+            "candidate_for_selection": false,
+            "genome": {
+              "token_weight": 1,
+              "trigram_weight": 1
+            },
+            "training": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            }
+          }
+        ],
+        "generation": 2,
+        "parent": {
+          "token_weight": 2,
+          "trigram_weight": 1
+        },
+        "selection": "no_eligible_improvement"
+      },
+      {
+        "evaluated": [
+          {
+            "accepted": false,
+            "candidate_for_selection": false,
+            "genome": {
+              "token_weight": 4,
+              "trigram_weight": 4
+            },
+            "training": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            }
+          },
+          {
+            "accepted": false,
+            "candidate_for_selection": false,
+            "genome": {
+              "token_weight": 4,
+              "trigram_weight": 1
+            },
+            "training": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            }
+          },
+          {
+            "accepted": false,
+            "candidate_for_selection": false,
+            "genome": {
+              "token_weight": 3,
+              "trigram_weight": 3
+            },
+            "training": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            }
+          },
+          {
+            "accepted": false,
+            "candidate_for_selection": false,
+            "genome": {
+              "token_weight": 3,
+              "trigram_weight": 4
+            },
+            "training": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            },
+            "validation": {
+              "accuracy": 1.0,
+              "cross_tenant_leaks": 0,
+              "hits": 6,
+              "queries": 6
+            }
+          }
+        ],
+        "generation": 3,
+        "parent": {
+          "token_weight": 2,
+          "trigram_weight": 1
+        },
+        "selection": "no_eligible_improvement"
+      }
+    ],
+    "population_archive": [
+      {
+        "token_weight": 1,
+        "trigram_weight": 1
+      },
+      {
+        "token_weight": 1,
+        "trigram_weight": 2
+      },
+      {
+        "token_weight": 2,
+        "trigram_weight": 0
+      },
+      {
+        "token_weight": 2,
+        "trigram_weight": 1
+      },
+      {
+        "token_weight": 2,
+        "trigram_weight": 2
+      },
+      {
+        "token_weight": 3,
+        "trigram_weight": 0
+      },
+      {
+        "token_weight": 3,
+        "trigram_weight": 1
+      },
+      {
+        "token_weight": 3,
+        "trigram_weight": 3
+      },
+      {
+        "token_weight": 3,
+        "trigram_weight": 4
+      },
+      {
+        "token_weight": 4,
+        "trigram_weight": 0
+      },
+      {
+        "token_weight": 4,
+        "trigram_weight": 1
+      },
+      {
+        "token_weight": 4,
+        "trigram_weight": 4
+      },
+      {
+        "token_weight": 5,
+        "trigram_weight": 0
+      }
+    ],
+    "remaining_candidates": 22,
+    "report_only_holdout": {
+      "accuracy": 0.8333333333333334,
+      "cross_tenant_leaks": 0,
+      "hits": 5,
+      "queries": 6
+    },
+    "reset_on_validation_drift": false,
+    "retained_learning": "best evaluated data-only recipe across generations",
+    "runtime_kv_tested": false,
+    "safety": "No source edits, secret keys, network calls or deployment; all promotions require independent external human approval.",
+    "search_space_size": 35,
+    "selected": {
+      "token_weight": 2,
+      "trigram_weight": 1
+    },
+    "selected_validation": {
+      "accuracy": 1.0,
+      "cross_tenant_leaks": 0,
+      "hits": 6,
+      "queries": 6
+    },
+    "status": "candidate_for_human_review",
+    "stop_reason": "generation_budget",
+    "study_protocol": "nerve-recursive-data-only-v19"
+  },
+  "results": {
+    "existing_verified_text": {
+      "first_call_ms": 0.589784,
+      "p50_ms": 0.5370555,
+      "p95_ms": 0.592301,
+      "records_per_call": 8,
+      "samples": 100,
+      "subsequent_median_ms": 0.537034
+    },
+    "gateway_null_kv_prefill": {
+      "first_call_ms": 2.994994,
+      "p50_ms": 2.83388,
+      "p95_ms": 3.008439,
+      "records_per_call": 8,
+      "samples": 100,
+      "subsequent_median_ms": 2.833642
+    },
+    "no_memory_dispatch_only": {
+      "first_call_ms": 0.001021,
+      "p50_ms": 0.000215,
+      "p95_ms": 0.000223,
+      "records_per_call": 0,
+      "samples": 100,
+      "subsequent_median_ms": 0.000215
+    }
+  },
+  "unsupported": {
+    "galahad_restore": null,
+    "gpu_energy_joules": null,
+    "gpu_memory_bytes": null,
+    "measured_cost_usd": null,
+    "ordinary_runtime_prefix_cache": null,
+    "prefill_ms": null,
+    "restore_after_restart": null,
+    "token_counts": null,
+    "ttft_ms": null
+  }
+}

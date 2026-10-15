@@ -1,0 +1,27 @@
+{
+  "previous_commit": "6090ac06b8595099c21b1bc8ba35c81a86f2318a",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests": 1146,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 62.273,
+  "authorized_local_process_and_server_permissions": true,
+  "source_hashes_verified": true,
+  "pipeline_episodes": 8192,
+  "primitive_tool_invocations": 16384,
+  "recommendation": "candidate_for_review",
+  "local_model_attempts": 1,
+  "local_model_accepted_completions": 0,
+  "local_model_status": "failed_consumed",
+  "later_runtime_observation": {
+    "command": "ollama ps",
+    "model": "qwen2.5-coder:1.5b",
+    "processor": "100% CPU",
+    "resident_size": "1.1 GB",
+    "context": 4096
+  },
+  "deployed": false,
+  "default_changed": false,
+  "model_weights_trained": false,
+  "gpu_tested": false
+}

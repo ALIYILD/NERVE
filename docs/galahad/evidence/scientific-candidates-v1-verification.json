@@ -1,0 +1,43 @@
+{
+  "artifacts": {
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidates-v1/report.json": {
+      "mtime_ns": 1792045390088770648,
+      "sha256": "f90d2c9e72ee862a1ada9ff7f4bfba7ebcdd212a9e45bb980438277b1fab3e3a"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-episodes-v2/episodes.jsonl": {
+      "mtime_ns": 1792044289079316716,
+      "sha256": "5eba7a82da976d5776acf035b3866657c1bc1a9c9abfe1111b35be2f3856f1d7"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-episodes-v2/episodes.jsonl.manifest.json": {
+      "mtime_ns": 1792044289079757311,
+      "sha256": "d4fccdd088a01dd1bebbef97abc117b4dca9f265d68dbf832a17eb4738d70e4e"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-episodes-v2/experiences.sqlite": {
+      "mtime_ns": 1792044289012485603,
+      "sha256": "7a463644e474e72f9571fccd4f98a33949b1ad72c3afb38cf8ddbecd6c74bbc8"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-episodes-v2/report.json": {
+      "mtime_ns": 1792044289137090078,
+      "sha256": "060988b44761ee9fa38651a2978e7e309dca3f94b9d5b80762cd98da866fe5d6"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-interface-validation-claims.sqlite": {
+      "mtime_ns": 1792012252669824156,
+      "sha256": "f13c7d55f25b9714b9e7d5f377c8f0a82912855f78301eb17ae99cd84a2265f5"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-interface-validation-v1/memory.sqlite": {
+      "mtime_ns": 1792013138506979927,
+      "sha256": "5dcb12972212450b09639a963840462b5a14566dfa5683ff173355fb5084385b"
+    }
+  },
+  "conflict_candidate_sha256": "3a541718149f7c5c0b203f6d7488897f93b04975e4e52b2aa89761b42f79a0d8",
+  "conflict_cluster_size": 2,
+  "conflict_hypothesis_sha256": "2e540fe6530242612e17c0f1c7e537cad1b68fbaf873840038931411cf08f9d3",
+  "evaluated": false,
+  "fresh_process_bytes_and_mtimes_unchanged": true,
+  "negative_evidence_enforced": false,
+  "new_model_calls": 0,
+  "promotion_authorized": false,
+  "registered_proposals": 3,
+  "status": "passed",
+  "task_bank_access_forbidden": true
+}

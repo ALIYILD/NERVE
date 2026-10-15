@@ -1,0 +1,42 @@
+{
+  "artifacts": {
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-claims.sqlite": {
+      "mtime_ns": 1792064885898809519,
+      "sha256": "99284a86dfd804e34808be26ce6f737242359bb86b1df7431f8ac1c367d3ccbb"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v1/authority.sqlite": {
+      "mtime_ns": 1792064886004310176,
+      "sha256": "62117ee88ad98ae8b83871f50632eaaa11b9cd3a4c4faffba94d157ca00467a2"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v1/claim.sqlite": {
+      "mtime_ns": 1792064991557547581,
+      "sha256": "d2108b28a6758b7b0e847617c39c2d1e4dada0d4020a07556d53f63d0ac3bf78"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v1/preregistration.json": {
+      "mtime_ns": 1792064744948475665,
+      "sha256": "86633119e22d5cd589a0bd409e5cd8845b48413f54fe52163d357bdf61b8730f"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v1/report.json": {
+      "mtime_ns": 1792064991616810058,
+      "sha256": "d6114647bc211ded24584244c3020b1909b6e7bce33acda2caee85fb21955ae1"
+    },
+    "/Users/aliyildirim/nerve-research-runs/task-bank-v1/dev.json": {
+      "mtime_ns": 1792014691726715759,
+      "sha256": "9b495d387555cf1666e93d2ffe8669b6da34d14f1a609265eef6abd74063fa92"
+    },
+    "/Users/aliyildirim/nerve-research-runs/task-bank-v1/manifest.json": {
+      "mtime_ns": 1792014691755472006,
+      "sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6"
+    }
+  },
+  "failure": "TimeoutError",
+  "files_unchanged": true,
+  "model_attempts": 2,
+  "network_functions_disabled": true,
+  "new_inference_calls": 0,
+  "returned_responses": 1,
+  "status": "verified_failed_receipt",
+  "study_status": "failed_consumed",
+  "summary_present": false,
+  "unattempted_calls": 28
+}

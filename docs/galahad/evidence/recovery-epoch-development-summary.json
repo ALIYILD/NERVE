@@ -1,0 +1,331 @@
+{
+  "candidate_promoted": false,
+  "cases": [
+    {
+      "arm": "frozen",
+      "mean_goal_error": 0.166322817245042,
+      "mean_prediction_error": 0.017500830649358968,
+      "nominal_gain": 0.27,
+      "plant": "lower",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.27,
+          "gain_before": 0.27,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "gated",
+      "mean_goal_error": 0.14841976620607783,
+      "mean_prediction_error": 0.01160839893553009,
+      "nominal_gain": 0.27,
+      "plant": "lower",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.18295730707920327,
+          "gain_before": 0.18295730707920327,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "epoch",
+      "mean_goal_error": 0.1593953484300284,
+      "mean_prediction_error": 0.01628341976969217,
+      "nominal_gain": 0.27,
+      "plant": "lower",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.27,
+          "gain_before": 0.18295730707920327,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "frozen",
+      "mean_goal_error": 0.14376122623082427,
+      "mean_prediction_error": 0.006637115493040656,
+      "nominal_gain": 0.27,
+      "plant": "nominal",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.27,
+          "gain_before": 0.27,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "gated",
+      "mean_goal_error": 0.14376122623082427,
+      "mean_prediction_error": 0.006637115493040656,
+      "nominal_gain": 0.27,
+      "plant": "nominal",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.27,
+          "gain_before": 0.27,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "epoch",
+      "mean_goal_error": 0.14376122623082427,
+      "mean_prediction_error": 0.006637115493040656,
+      "nominal_gain": 0.27,
+      "plant": "nominal",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.27,
+          "gain_before": 0.27,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "frozen",
+      "mean_goal_error": 0.2917460539948001,
+      "mean_prediction_error": 0.08605013775186957,
+      "nominal_gain": 0.27,
+      "plant": "higher",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.27,
+          "gain_before": 0.27,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "gated",
+      "mean_goal_error": 0.26070780756481715,
+      "mean_prediction_error": 0.03357157613890195,
+      "nominal_gain": 0.27,
+      "plant": "higher",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.39687476996314996,
+          "gain_before": 0.39687476996314996,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "epoch",
+      "mean_goal_error": 0.2619505728118273,
+      "mean_prediction_error": 0.04414901605804657,
+      "nominal_gain": 0.27,
+      "plant": "higher",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.27,
+          "gain_before": 0.39687476996314996,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "frozen",
+      "mean_goal_error": 0.16013830873228857,
+      "mean_prediction_error": 0.02344131702549184,
+      "nominal_gain": 0.27,
+      "plant": "drift",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.27,
+          "gain_before": 0.27,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "gated",
+      "mean_goal_error": 0.16013830873228857,
+      "mean_prediction_error": 0.02344131702549184,
+      "nominal_gain": 0.27,
+      "plant": "drift",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.27,
+          "gain_before": 0.27,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    },
+    {
+      "arm": "epoch",
+      "mean_goal_error": 0.16013830873228857,
+      "mean_prediction_error": 0.02344131702549184,
+      "nominal_gain": 0.27,
+      "plant": "drift",
+      "recoveries": [
+        {
+          "authorised": true,
+          "gain_after": 0.27,
+          "gain_before": 0.27,
+          "step": 55
+        }
+      ],
+      "seed": 9,
+      "supervisor_steps": 15,
+      "violations": 0
+    }
+  ],
+  "comparisons": [
+    {
+      "baseline": "frozen",
+      "deltas": {
+        "mean_goal_error": -0.006927468815013604,
+        "mean_prediction_error": -0.0012174108796667964,
+        "supervisor_steps": 0,
+        "violations": 0
+      },
+      "nonregression": true,
+      "plant": "lower"
+    },
+    {
+      "baseline": "gated",
+      "deltas": {
+        "mean_goal_error": 0.010975582223950564,
+        "mean_prediction_error": 0.004675020834162082,
+        "supervisor_steps": 0,
+        "violations": 0
+      },
+      "nonregression": false,
+      "plant": "lower"
+    },
+    {
+      "baseline": "frozen",
+      "deltas": {
+        "mean_goal_error": 0.0,
+        "mean_prediction_error": 0.0,
+        "supervisor_steps": 0,
+        "violations": 0
+      },
+      "nonregression": true,
+      "plant": "nominal"
+    },
+    {
+      "baseline": "gated",
+      "deltas": {
+        "mean_goal_error": 0.0,
+        "mean_prediction_error": 0.0,
+        "supervisor_steps": 0,
+        "violations": 0
+      },
+      "nonregression": true,
+      "plant": "nominal"
+    },
+    {
+      "baseline": "frozen",
+      "deltas": {
+        "mean_goal_error": -0.02979548118297276,
+        "mean_prediction_error": -0.041901121693823,
+        "supervisor_steps": 0,
+        "violations": 0
+      },
+      "nonregression": true,
+      "plant": "higher"
+    },
+    {
+      "baseline": "gated",
+      "deltas": {
+        "mean_goal_error": 0.001242765247010169,
+        "mean_prediction_error": 0.010577439919144616,
+        "supervisor_steps": 0,
+        "violations": 0
+      },
+      "nonregression": false,
+      "plant": "higher"
+    },
+    {
+      "baseline": "frozen",
+      "deltas": {
+        "mean_goal_error": 0.0,
+        "mean_prediction_error": 0.0,
+        "supervisor_steps": 0,
+        "violations": 0
+      },
+      "nonregression": true,
+      "plant": "drift"
+    },
+    {
+      "baseline": "gated",
+      "deltas": {
+        "mean_goal_error": 0.0,
+        "mean_prediction_error": 0.0,
+        "supervisor_steps": 0,
+        "violations": 0
+      },
+      "nonregression": true,
+      "plant": "drift"
+    }
+  ],
+  "deployed": false,
+  "development_seed": 9,
+  "eligible_for_registered_study": false,
+  "environment": {
+    "hardware": "CPU only",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "episodes": 12,
+  "model_weights_trained": false,
+  "next_action": "retain_baselines_and_revise_hypothesis",
+  "performance_improvement_established": false,
+  "plant_steps": 960,
+  "protocol": "recovery-epoch-development-v1",
+  "report_sha256": "718db008e92cf1ba82808b46dc7c43b32b2af4bb943df5bc651ef4e87dad5c37",
+  "source_sha256": {
+    "scripts/demo_recovery_epoch.py": "ecf5d424022cc40fb707548704c4964167bbeb486c4d9bcc382b46a60666027a",
+    "src/nerve_awim/memory_gateway/recovery_epoch_demo.py": "fae2ecb7f26d9c5fd692271eae4f9754515c756d1d32ebb6ca52b57d1e65e52d",
+    "src/nerve_awim/recovery_epoch_dynamics.py": "ec8d5ef7535bcc76416564c6688f4092ad0200156f1c6854f900bdff7c2c7654"
+  }
+}

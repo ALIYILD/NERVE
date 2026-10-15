@@ -4,14 +4,12 @@ from nerve_awim.recovery_v21 import SupervisedWorldCore
 
 def trial(approved):
     model = SupervisedWorldCore(max_missing=2, recovery_samples=2)
-    model.act()
-    model.act()
     model.miss()
     model.miss()
     suspended = model.decide().action is None
-    model.ingest(0, position=0.1, velocity=0.1)
-    model.ingest(1, position=0.2, velocity=0.2)
-    awaiting = model.decide().action is None
+    model.observe_recovery(2, observed_now=2, position=0.1, velocity=0.1)
+    model.observe_recovery(3, observed_now=3, position=0.2, velocity=0.2)
+    awaiting = model.phase == "awaiting_approval" and model.decide().action is None
     accepted = model.approve_recovery(approved)
     resumed = model.decide().action is not None
     return {'suspended': suspended, 'awaiting': awaiting, 'accepted': accepted, 'resumed': resumed}

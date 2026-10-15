@@ -1,0 +1,35 @@
+{
+  "checks": [
+    {
+      "count": 1,
+      "name": "restart",
+      "passed": true
+    },
+    {
+      "count": 1,
+      "name": "quota",
+      "passed": true
+    },
+    {
+      "count": 1,
+      "name": "failed_invalidation",
+      "passed": true
+    },
+    {
+      "count": 1,
+      "name": "unavailable_database",
+      "passed": true
+    },
+    {
+      "count": 1,
+      "name": "corrupt_database",
+      "passed": true
+    }
+  ],
+  "created_at": 1791842872,
+  "elapsed_seconds": 0.334928,
+  "gate": "faults",
+  "revision": "501b1e416db43123b0ad13d0d5b6c3123517a47d",
+  "schema": 1,
+  "source_sha256": "a1c90b5568605d825d5df69a41eeb249d122c0ff7a81a7b2d59b80c1e0d21360"
+}

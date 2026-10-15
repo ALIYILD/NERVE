@@ -1,0 +1,48 @@
+{
+  "approved_knowledge_written": false,
+  "artifacts": {
+    "/Users/aliyildirim/nerve-research-runs/scientific-episodes-v2/episodes.jsonl": {
+      "mtime_ns": 1792044289079316716,
+      "sha256": "5eba7a82da976d5776acf035b3866657c1bc1a9c9abfe1111b35be2f3856f1d7"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-episodes-v2/episodes.jsonl.manifest.json": {
+      "mtime_ns": 1792044289079757311,
+      "sha256": "d4fccdd088a01dd1bebbef97abc117b4dca9f265d68dbf832a17eb4738d70e4e"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-episodes-v2/experiences.sqlite": {
+      "mtime_ns": 1792044289012485603,
+      "sha256": "7a463644e474e72f9571fccd4f98a33949b1ad72c3afb38cf8ddbecd6c74bbc8"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-episodes-v2/report.json": {
+      "mtime_ns": 1792044289137090078,
+      "sha256": "060988b44761ee9fa38651a2978e7e309dca3f94b9d5b80762cd98da866fe5d6"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-interface-validation-claims.sqlite": {
+      "mtime_ns": 1792012252669824156,
+      "sha256": "f13c7d55f25b9714b9e7d5f377c8f0a82912855f78301eb17ae99cd84a2265f5"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-interface-validation-v1/memory.sqlite": {
+      "mtime_ns": 1792013138506979927,
+      "sha256": "5dcb12972212450b09639a963840462b5a14566dfa5683ff173355fb5084385b"
+    }
+  },
+  "conflict_candidate_failure_count": 2,
+  "conflict_outputs": [
+    "Poplar|mass|20.1|mg|validation-m",
+    "Alder|volume|23.8|mL|validation-p"
+  ],
+  "episode_count": 16,
+  "fresh_process_resume_bytes_and_mtimes_unchanged": true,
+  "historical_timestamps_known": false,
+  "metadata_calls": 0,
+  "new_model_calls": 0,
+  "preload_calls": 0,
+  "rewards_written": false,
+  "source_receipt_sha256": "5a3ab616bbb5bfc0b0c3fda9d7c56e0274673d352420a1dec8d6a0e2f3a68dd5",
+  "status": "passed",
+  "store_status": {
+    "count": 16,
+    "head": "ccd842f6c1948048ff570378907bac1309a49502603f2cbc09d9e7b136e6e536",
+    "status": "live"
+  }
+}

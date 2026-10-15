@@ -26,7 +26,7 @@ class FakeWorldCore:
         if seeds == REPORT_ONLY:
             if self.holdout_regression and proposal.max_missing > 5:
                 return stats(abort=1., completion=.4, goal=.2)
-            return stats()
+            return stats(goal=.7 if proposal.max_missing > 5 else 1.)
         if proposal.max_missing > 5:
             return stats(goal=.7)
         return stats()

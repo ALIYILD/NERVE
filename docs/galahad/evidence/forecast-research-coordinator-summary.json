@@ -1,0 +1,39 @@
+{
+  "control_policy_change_authorized": false,
+  "environment": {
+    "hardware": "CPU only",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "fact": {
+    "candidate_promoted": false,
+    "comparison_states_independently_reconstructed": false,
+    "control_objective_improvement_established": false,
+    "episodes": 512,
+    "holdout_consumed": true,
+    "interpretation": "Synthetic prediction-only finding. Online trace and forecast replay validated; absent comparison states not reconstructed. No control, clinical, or deployment authority.",
+    "kind": "verified_synthetic_forecast_outcome",
+    "model_weights_trained": false,
+    "online_recorded_cases": 4,
+    "online_sha256": "d1d4c7477ae92393ced7d1c39db093927632e195c9c3e616757fec31237518e5",
+    "protocol": "forecast-outcome-memory-v1",
+    "receipt_sha256": "44848a5c38164bfb27d7ef7d896c7a4fb3eec7ccf2554cb2b9f2b56cfba1ef79",
+    "recommendation": "forecast_candidate_requires_independent_review",
+    "recorded_forecasts_replay_equivalent": true,
+    "stage_mae_gain": {
+      "holdout": 0.06550402702217611,
+      "train": 0.07950759427550486,
+      "validation": 0.06912669573191185
+    },
+    "study_sha256": "e741e4c3550208e8035a7371e30bb31cc4b97d2e9bbfc2257a0b76d74ae79f1e"
+  },
+  "goal_achieved": false,
+  "memory_id": "47d28437514a4d1d98d33dbb1a852ddf",
+  "model_weights_trained": false,
+  "new_episodes": 0,
+  "next_action": "independent_review_of_opt_in_forecast_only_integration",
+  "promotion_authorized": false,
+  "report_sha256": "0649c7c1e2f82c1373bab6f420852d15a2d637290f5351d35effef508c1d3a66",
+  "source_id": "forecast-receipt:44848a5c38164bfb27d7ef7d896c7a4fb3eec7ccf2554cb2b9f2b56cfba1ef79",
+  "status": "forecast_only_review_required"
+}

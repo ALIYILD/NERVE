@@ -1,0 +1,76 @@
+{
+  "protocol": {
+    "version": "local-model-evidence-v1",
+    "dataset_sha256": "7c7233b98f35d13b3bcbb0872a0a6b4a9ab65b5c277cc58211f5cf8a5fdb0730",
+    "source_sha256": "2440760626c0d18da5f491c2fc856fec778a0b9f55d99252144eda13e0019fa8",
+    "dependency_sha256": {
+      "memory_gateway/inference.py": "fdfca3f6946990243d06122f8112a9492a9de9e861295885d0043ee73cf0b733",
+      "memory_gateway/gateway.py": "cd41f9f0a44af8331e1db04e43493b8c83cec5512edb3269a1e6a8dc9726f876",
+      "memory_gateway/policy.py": "77803fb57fc502da3ac7d6a1423cd96a07645dab539d89ca6b2904b0565637d2",
+      "memory_v18.py": "882506c5d7c2f8a0b5f46f4d62a600d79a78d23863080af010a6362b59e855c6",
+      "memory_retrieval_v18.py": "719f5f236df9f1b5caae2120f8d197fc852d2ba24ca05e6e7738e1887873be20"
+    },
+    "model": "qwen2.5-coder:1.5b",
+    "expected_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "max_calls": 8,
+    "max_output_tokens": 128,
+    "temperature": 0,
+    "timeout_seconds": 30,
+    "cases": [
+      [
+        "AX17",
+        "VEXQ-7319",
+        "BZ82",
+        "KULM-4826"
+      ],
+      [
+        "CP34",
+        "JARN-9264",
+        "DQ59",
+        "WOSP-1538"
+      ],
+      [
+        "ER62",
+        "PYFT-5083",
+        "FS71",
+        "NUDC-6742"
+      ],
+      [
+        "GT95",
+        "HBIK-2467",
+        "HU08",
+        "ZREL-8195"
+      ]
+    ]
+  },
+  "run_id": "local-model-v1",
+  "rows": [
+    {
+      "case": 0,
+      "arm": "relevant",
+      "source_id": "fixture-source-0",
+      "expected_code": "VEXQ-7319",
+      "status": "failed",
+      "error_type": "RuntimeError",
+      "score": 0,
+      "end_to_end_seconds": 30.004682518992922
+    }
+  ],
+  "environment": {
+    "python": "3.10.0",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit"
+  },
+  "persistent_kv_restored": false,
+  "weight_training": false,
+  "automatic_learning": false,
+  "synthetic_only": true,
+  "score_definition": "exact expected code token AND exact supplied source_id token inclusion; not semantic answer correctness",
+  "control": "approved equal-length irrelevant fact, same model and token cap",
+  "limitation": "four public synthetic cases; no statistical or general intelligence improvement claim",
+  "metadata_before": {
+    "model": "qwen2.5-coder:1.5b",
+    "digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668"
+  },
+  "status": "failed_consumed",
+  "error_type": "RuntimeError"
+}

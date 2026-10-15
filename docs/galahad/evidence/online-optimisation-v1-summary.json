@@ -1,0 +1,325 @@
+{
+  "selected": [
+    3,
+    "relevance",
+    3
+  ],
+  "recommendation": "retain_baseline",
+  "stop_reason": "generation_budget",
+  "trial_calls": 352,
+  "pipeline_episodes": 11264,
+  "primitive_tool_invocations": 22528,
+  "holdout_scenario_deltas": {
+    "abrupt": 1,
+    "mixed": -3,
+    "recurrent": 17,
+    "stationary": 0
+  },
+  "selection_frozen_before_holdout": true,
+  "selection_sha256": "2939b0edec3f1e978db253d1f826da8e30b9c154e5744fb2051b83d498aeefbd",
+  "cycles": [
+    {
+      "decisions": [
+        {
+          "accepted_provisionally": false,
+          "candidate": [
+            3,
+            "relevance",
+            null
+          ],
+          "reasons": [
+            "no_strict_validation_gain"
+          ],
+          "training_hits": 400,
+          "validation_hits": {
+            "abrupt": 118,
+            "mixed": 87,
+            "recurrent": 69,
+            "stationary": 127
+          }
+        },
+        {
+          "accepted_provisionally": true,
+          "candidate": [
+            3,
+            "relevance",
+            3
+          ],
+          "reasons": [],
+          "training_hits": 412,
+          "validation_hits": {
+            "abrupt": 119,
+            "mixed": 90,
+            "recurrent": 71,
+            "stationary": 127
+          }
+        },
+        {
+          "accepted_provisionally": false,
+          "candidate": [
+            3,
+            "relevance",
+            10
+          ],
+          "reasons": [
+            "no_strict_validation_gain",
+            "incumbent_validation_regression:recurrent",
+            "baseline_validation_regression:recurrent"
+          ],
+          "training_hits": 414,
+          "validation_hits": {
+            "abrupt": 119,
+            "mixed": 92,
+            "recurrent": 64,
+            "stationary": 127
+          }
+        },
+        {
+          "accepted_provisionally": false,
+          "candidate": [
+            5,
+            "relevance",
+            3
+          ],
+          "reasons": [
+            "incumbent_training_regression",
+            "incumbent_validation_regression:recurrent",
+            "baseline_validation_regression:recurrent"
+          ],
+          "training_hits": 408,
+          "validation_hits": {
+            "abrupt": 119,
+            "mixed": 94,
+            "recurrent": 68,
+            "stationary": 127
+          }
+        }
+      ],
+      "generation": 1,
+      "selected": [
+        3,
+        "relevance",
+        3
+      ],
+      "stalled_generations": 0,
+      "trial_calls": 128
+    },
+    {
+      "decisions": [
+        {
+          "accepted_provisionally": false,
+          "candidate": [
+            5,
+            "relevance",
+            10
+          ],
+          "reasons": [
+            "no_strict_validation_gain",
+            "incumbent_training_regression",
+            "incumbent_validation_regression:abrupt",
+            "incumbent_validation_regression:recurrent",
+            "baseline_training_regression",
+            "baseline_validation_regression:abrupt",
+            "baseline_validation_regression:recurrent"
+          ],
+          "training_hits": 392,
+          "validation_hits": {
+            "abrupt": 115,
+            "mixed": 96,
+            "recurrent": 61,
+            "stationary": 127
+          }
+        },
+        {
+          "accepted_provisionally": false,
+          "candidate": [
+            10,
+            "relevance",
+            3
+          ],
+          "reasons": [
+            "no_strict_validation_gain",
+            "incumbent_training_regression",
+            "incumbent_validation_regression:abrupt",
+            "incumbent_validation_regression:recurrent",
+            "baseline_validation_regression:abrupt",
+            "baseline_validation_regression:recurrent"
+          ],
+          "training_hits": 401,
+          "validation_hits": {
+            "abrupt": 115,
+            "mixed": 95,
+            "recurrent": 67,
+            "stationary": 127
+          }
+        },
+        {
+          "accepted_provisionally": false,
+          "candidate": [
+            10,
+            "relevance",
+            10
+          ],
+          "reasons": [
+            "no_strict_validation_gain",
+            "incumbent_training_regression",
+            "incumbent_validation_regression:abrupt",
+            "incumbent_validation_regression:recurrent",
+            "baseline_training_regression",
+            "baseline_validation_regression:abrupt",
+            "baseline_validation_regression:recurrent"
+          ],
+          "training_hits": 384,
+          "validation_hits": {
+            "abrupt": 106,
+            "mixed": 97,
+            "recurrent": 59,
+            "stationary": 127
+          }
+        }
+      ],
+      "generation": 2,
+      "selected": [
+        3,
+        "relevance",
+        3
+      ],
+      "stalled_generations": 1,
+      "trial_calls": 224
+    }
+  ],
+  "protocol": {
+    "baseline": [
+      3,
+      "relevance",
+      null
+    ],
+    "candidate_fields": [
+      "window",
+      "tie_break",
+      "discount_half_life"
+    ],
+    "candidate_rationale": "Slower evidence discount than the overnight candidate; assess retention alongside adaptation without changing the acceptance gate.",
+    "candidates": [
+      [
+        3,
+        "relevance",
+        null
+      ],
+      [
+        3,
+        "relevance",
+        3
+      ],
+      [
+        3,
+        "relevance",
+        10
+      ],
+      [
+        5,
+        "relevance",
+        3
+      ],
+      [
+        5,
+        "relevance",
+        10
+      ],
+      [
+        10,
+        "relevance",
+        3
+      ],
+      [
+        10,
+        "relevance",
+        10
+      ]
+    ],
+    "candidates_per_generation": 4,
+    "child_timeout_seconds": 60,
+    "dataset_sha256": "f374cc5759c7657246c0d376018116581d411edb7df3d01989d325bd754859cf",
+    "evaluation": "32 test-then-feedback episodes per adaptive trial; fixed controls write no feedback",
+    "executions_per_trial": 32,
+    "holdout": "selected configuration frozen before final streams; online updates within each stream only; no subsequent tuning",
+    "max_generations": 2,
+    "max_pipeline_episodes": 11264,
+    "max_primitive_tool_invocations": 22528,
+    "max_trial_calls": 352,
+    "patience": 2,
+    "promotion_authorized": false,
+    "protocol_sha256": "29653106e419492a88cc19debc8750611697850d905eea1a598ea1fd57d90fa4",
+    "public_synthetic_nonsealed": true,
+    "scenarios": [
+      "stationary",
+      "abrupt",
+      "recurrent",
+      "mixed"
+    ],
+    "score_field": "hits",
+    "selection": "strict validation gain; training total and every validation regime nonregression against baseline and incumbent",
+    "source_sha256": {
+      "../../../scripts/optimise_online_memory.py": "0b20354a87e864eedfa52bd449a3fc82f44aa1c3869859da9e97f55c7bf124f7",
+      "../adaptive_memory.py": "29feb2e361680b1d389fbb14858fc4b5f76bafce6ed61b99caf264fb0af3bf88",
+      "../agent_bridge_v13.py": "c2d01b6f9eecc2c1fae73d034c02e887790e64620eb01adb502d8e003f1202dc",
+      "../memory_retrieval_v18.py": "719f5f236df9f1b5caae2120f8d197fc852d2ba24ca05e6e7738e1887873be20",
+      "../memory_v18.py": "882506c5d7c2f8a0b5f46f4d62a600d79a78d23863080af010a6362b59e855c6",
+      "../study_statistics_v16.py": "90e83f55c5d29060ad97b705a9e85074a51968fa648cf04888e9ee07ed3a6ac3",
+      "automation.py": "539d12c10a7731bda726b3564f1d4780348af33f653d00e11cccd539328e03b6",
+      "contracts.py": "9d0b22f5b21dc53e0ccf0150f9fd21543103d4336d496d5b776ada9a6ceb450e",
+      "gateway.py": "cd41f9f0a44af8331e1db04e43493b8c83cec5512edb3269a1e6a8dc9726f876",
+      "learning.py": "b64a62a0c9f59fd35954802dc593381b8f323a397f14ab125d83d0c5b65f9c8b",
+      "lifecycle.py": "6096f1284fd64ed351d45eccdaf8afe8d4892a218bae5f691d77bd78ef7277d4",
+      "online_adaptation_study.py": "2f4e2b7b2cb278925851f8947b01668b052b8474d7e4ad896103696984e63dbe",
+      "online_optimisation.py": "a058e0a9e78650e35eb7441d5e8b0e73e61e092af69f6415bec16552f1022124",
+      "policy.py": "77803fb57fc502da3ac7d6a1423cd96a07645dab539d89ca6b2904b0565637d2",
+      "policy_research_loop.py": "0b5ad4a5ba0ba8f9efc5061005a6ed904c06f60cd212042618c338a49f98c8d5",
+      "self_study.py": "aa4c47c8c2cffe899a39d281841e34a916de32667dfa807636380764642c07d2",
+      "session.py": "ba1846b3b6a07bc83f7b824c1013860b0f1e701def74d588b38c06de22080918"
+    },
+    "splits": {
+      "holdout": [
+        24001,
+        24002,
+        24003,
+        24004,
+        24005,
+        24006,
+        24007,
+        24008
+      ],
+      "train": [
+        22001,
+        22002,
+        22003,
+        22004
+      ],
+      "validation": [
+        23001,
+        23002,
+        23003,
+        23004
+      ]
+    },
+    "version": "online-policy-optimisation-v1"
+  },
+  "holdout_hits": {
+    "baseline": 815,
+    "fixed_lower": 651,
+    "fixed_trim": 373,
+    "selected": 830
+  },
+  "holdout_tasks_per_arm": 1024,
+  "completed_journal_trials": 352,
+  "feedback_observations": 9216,
+  "summed_episode_wall_ms": 256991.0695592407,
+  "source_hash_check": true,
+  "sqlite_export_match": true,
+  "full_report_sha256": "f7c5e7d1059b56833e21f497a27327da85d7173842f7f40b65b106b3c964d702",
+  "archive_sha256": "b0fd936cf77f750c7e0e455e9cf5e9df3857eac77c54cf1f5e31b84b6797ab60",
+  "archive": "online-optimisation-v1.json.gz",
+  "model_weights_trained": false,
+  "deployed": false,
+  "policy_promoted": false
+}

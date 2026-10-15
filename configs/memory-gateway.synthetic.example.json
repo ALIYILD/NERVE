@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "synthetic_only": true,
+  "ledger_path": "memory-gateway.synthetic.db",
+  "provider": "null",
+  "max_records_per_scope": 1000,
+  "oidc": {
+    "issuer": "https://identity.example.invalid",
+    "audience": "nerve-memory-synthetic",
+    "jwks_path": "operator-provisioned-public-jwks.json"
+  },
+  "grants": [
+    {
+      "subject": "synthetic-clinician",
+      "tenant_id": "synthetic-tenant",
+      "agent_id": "synthetic-agent",
+      "application": "nerve-research",
+      "user": "synthetic-clinician",
+      "clinic_id": "synthetic-clinic",
+      "patient_id": "synthetic-patient",
+      "session_id": "synthetic-session",
+      "roles": ["reader", "writer"]
+    }
+  ]
+}

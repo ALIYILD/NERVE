@@ -12,24 +12,17 @@ class EvidenceGatedRecovery(AuditedRecovery):
         self.evaluator=RecoveryEvidenceEvaluator(minimum=evidence_minimum)
         self.evidence=[]
         self.verdict=None
-    def miss(self):
-        previous=self.incident
-        super().miss()
-        if self.incident!=previous:
-            self.evidence=[]
-            self.verdict=None
-    def ingest(self,timestamp,*,position=None,velocity=None):
-        accepted=super().ingest(timestamp,position=position,velocity=velocity)
-        if not accepted:return False
-        if self.phase!="active":
-            if position is None or velocity is None:
-                self.audit.append(("incomplete_evidence",self.incident))
-                return True
-            self.evidence.append({"timestamp":timestamp,"position":position,"velocity":velocity})
-            self.verdict=self.evaluator.evaluate(self.evidence)
-            if not self.verdict.accepted:
-                self.audit.append(("evidence_rejected",self.incident,self.verdict.reason))
-        return True
+    def _on_recovery_reset(self):
+        self.evidence=[]
+        self.verdict=None
+    def _on_recovery_observation(self,observation):
+        self.evidence.append(dict(observation))
+        self.verdict=self.evaluator.evaluate(self.evidence)
+        if not self.verdict.accepted:
+            self.audit.append(("evidence_rejected",self.incident,self.verdict.reason))
+    def recovery_ready(self):
+        return (super().recovery_ready() and self.verdict is not None
+                and self.verdict.accepted)
     def authorize(self,approval:Approval):
         if self.verdict is None or not self.verdict.accepted:
             self.audit.append(("evidence_gate_denied",self.incident))

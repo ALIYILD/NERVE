@@ -1,0 +1,646 @@
+{
+  "automatic_retry": false,
+  "baseline_retained": true,
+  "goal_achieved": false,
+  "model_weights_trained": false,
+  "new_episodes": 0,
+  "next_action": "review_evidence_timing_and_register_new_hypothesis",
+  "promotion_authorized": false,
+  "protocol": {
+    "artifact": "/Users/aliyildirim/nerve-galahad/docs/galahad/evidence/prequential-gain-development-v1.json.gz",
+    "directory": "/private/tmp/nerve-prequential-research-v1",
+    "journal": "/private/tmp/nerve-prequential-research-claims-v1.sqlite",
+    "max_new_episodes": 0,
+    "max_nodes": 2,
+    "nodes": [
+      "adopt_completed_development_experiment",
+      "diagnose_rejected_selector_timing"
+    ],
+    "protocol": "prequential-research-coordinator-v1",
+    "raw_artifact_sha256": "e1bf6676ca3551a48d8ee5d55b885ab6dc0aa5f124f8eea4eca03e4778461dcb",
+    "source_identity": "1ee413b3a3a6368fd3a77bdb1fb7294663720ae577f58ae5648beb16c0283e22",
+    "source_sha256": {
+      "scripts/demo_prequential_gain.py": "63baad9a94e7946d269b3a79aef425856f682938104ffc0ed8cafa2ea86c5a06",
+      "scripts/demo_standard_learning.py": "ed28e392e2d98ac21da4804f2eaa747070cfe3ff309b66e3c238d87091163615",
+      "scripts/run_prequential_research.py": "895763dd90ce62f3476da3aab86a307ab54d7af02712a6ec0e4f07e1f9d3c297",
+      "src/nerve_awim/adaptive_calibration_v19.py": "299922a93b915996c7b809836a4eaf6b31e35f96d2807adca7281dda719a0786",
+      "src/nerve_awim/calibrated_v16.py": "5311374673061a50bac8f28c20cd560678c9b35c123aaac7473aede84f8319b8",
+      "src/nerve_awim/calibration_v15.py": "f1b49e8adac7c6951f3522663a61c7694d874d8832f53f1cb10aea628e95dd68",
+      "src/nerve_awim/coverage_v18.py": "27a45ac324d82b357487605b6ebb1b8dbc8f0e630c0d93c1a199b1633674e9a3",
+      "src/nerve_awim/drift_v14.py": "af8259a4dfec16b1bfc0d5993f60ea99285025803162584fb8d11aae87a9e62a",
+      "src/nerve_awim/fusion_v12.py": "d5481b7ebef1e7630a65491572f8f99edfc529d97617ebdd2d00fd3bb9758de8",
+      "src/nerve_awim/identity_v26.py": "245b67c92ec8987b02704550dd494269db3d60c51270ab87b04a91487f0dc060",
+      "src/nerve_awim/integrated_v13.py": "bf28343e2ed0bf8f0089c7712fcbefb8ae7c2938505fcae67254b572af2e3e07",
+      "src/nerve_awim/memory_gateway/prequential_gain_demo.py": "07bb88cc4b8682af9b447690060c3f1aa2550e497c76a47a0f68772157193390",
+      "src/nerve_awim/memory_gateway/prequential_research_coordinator.py": "93d1a66aafc3d1580dcd06e559a38ecac6b8b0fe131a4d86d3db7344976fc560",
+      "src/nerve_awim/memory_gateway/prequential_timing_diagnostic.py": "d810a67ec4933f816d66046253657115c4e849d0c493a7ee7f28d7688c06361f",
+      "src/nerve_awim/memory_gateway/recovery_adaptation.py": "ddb3db10fdc417bace28898ba9f1652346884d723dc64b968c1f53f19688e99b",
+      "src/nerve_awim/memory_gateway/research_supervisor.py": "f8f80b51a350d1a6104c3fd24e65e3b052a0abe875f848da8e5095beb9f2e477",
+      "src/nerve_awim/memory_gateway/standard_learning_audit.py": "f542e479051288284c07c67dabf6294a9ff26ade1031a623bfef1616a2ac62ed",
+      "src/nerve_awim/memory_gateway/standard_learning_demo.py": "bfd51f5953f770d08cdae89e08dcc3d52a59536de195c92379f55ea30fedb1f5",
+      "src/nerve_awim/prequential_gain.py": "253bfd9c414733a95c679e50512b4d13d298888794a39c15f79f68b48417b21b",
+      "src/nerve_awim/recovery_policy_v23.py": "0caf4ccbf801596213fad17738e144c7c5417cb09ff52823365cee34633683f6",
+      "src/nerve_awim/recovery_v21.py": "bbf384ded4fe9f2ec783a8012e8f8d389f9790efe17c090aeabd52d2b1d52487",
+      "src/nerve_awim/recovery_v22.py": "c8c0ac7b0ef0bd72c956b5a99e22098bf104aca4edf83e7cfb9b4f0c565e934a",
+      "src/nerve_awim/recovery_v24.py": "8f7fc31ef4e01c4f59dbc194134fc9c4fc4c2446e93cfe30ac532f3d7da41eb5",
+      "src/nerve_awim/recovery_v25.py": "ee5de8bf2dbdb6b67d71bb64bd60ac2d8707cd771511e2ed379e2d53e8f550e5",
+      "src/nerve_awim/risk_v17.py": "6b7f88441d21cbce5339042d3a7c9cdc66cda41842e3ab9a9daef09974a179aa",
+      "src/nerve_awim/runtime_v28.py": "c155f4d64de07b102607899228d8187658d46662f531a886c9329f135a116c44",
+      "src/nerve_awim/single_use_standard.py": "4e63c414725fc9360e2e97a0de92c067232cedce968e0c3a1b3128a04f220c68",
+      "src/nerve_awim/worldcore_v20.py": "673e5cf431f5d1900242cf261621d888dabe499d5a1891d3aca023fbecdbdd8d"
+    }
+  },
+  "status": "new_registered_hypothesis_required",
+  "completed_nodes": [
+    {
+      "node": "adopt_completed_development_experiment",
+      "origin": "adopted",
+      "source_identity": "1ee413b3a3a6368fd3a77bdb1fb7294663720ae577f58ae5648beb16c0283e22"
+    },
+    {
+      "node": "diagnose_rejected_selector_timing",
+      "origin": "diagnosed",
+      "diagnostic_protocol": "prequential-timing-diagnostic-v1",
+      "cases": [
+        {
+          "arm": "selector",
+          "authorized_recovery_steps": [
+            55
+          ],
+          "eligibility_intervals": [],
+          "first_full_window_step": 8,
+          "phases": [
+            {
+              "controller_zero_action": 13,
+              "eligible": 0,
+              "eligible_controller_command": 0,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 20,
+              "external_zero_action": 0,
+              "missing_velocity": 2,
+              "phase": 0,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 4,
+                "tie": 2,
+                "win": 0
+              },
+              "start": 0,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 0,
+                "insufficient_four": 8,
+                "mixed_or_tied_window": 12
+              }
+            },
+            {
+              "controller_zero_action": 14,
+              "eligible": 0,
+              "eligible_controller_command": 0,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 40,
+              "external_zero_action": 0,
+              "missing_velocity": 6,
+              "phase": 1,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 3,
+                "tie": 0,
+                "win": 1
+              },
+              "start": 20,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 0,
+                "insufficient_four": 0,
+                "mixed_or_tied_window": 20
+              }
+            },
+            {
+              "controller_zero_action": 3,
+              "eligible": 0,
+              "eligible_controller_command": 0,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 60,
+              "external_zero_action": 15,
+              "missing_velocity": 13,
+              "phase": 2,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 1,
+                "tie": 0,
+                "win": 1
+              },
+              "start": 40,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 0,
+                "insufficient_four": 5,
+                "mixed_or_tied_window": 15
+              }
+            },
+            {
+              "controller_zero_action": 15,
+              "eligible": 0,
+              "eligible_controller_command": 0,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 80,
+              "external_zero_action": 0,
+              "missing_velocity": 4,
+              "phase": 3,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 1,
+                "tie": 0,
+                "win": 1
+              },
+              "start": 60,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 0,
+                "insufficient_four": 14,
+                "mixed_or_tied_window": 6
+              }
+            }
+          ],
+          "plant": "nominal",
+          "summary": {
+            "controller_zero_action": 45,
+            "eligible": 0,
+            "eligible_controller_command": 0,
+            "eligible_external_step": 0,
+            "eligible_nonzero_command": 0,
+            "external_zero_action": 15,
+            "missing_velocity": 25,
+            "rejected_sensor": 0,
+            "resolved_outcomes": {
+              "loss": 9,
+              "tie": 2,
+              "win": 3
+            },
+            "steps": 80,
+            "window_reasons": {
+              "eligible": 0,
+              "insufficient_four": 27,
+              "mixed_or_tied_window": 53
+            }
+          },
+          "switches": []
+        },
+        {
+          "arm": "selector",
+          "authorized_recovery_steps": [
+            55
+          ],
+          "eligibility_intervals": [
+            {
+              "end_exclusive": 55,
+              "start": 29
+            },
+            {
+              "end_exclusive": 80,
+              "start": 79
+            }
+          ],
+          "first_full_window_step": 4,
+          "phases": [
+            {
+              "controller_zero_action": 15,
+              "eligible": 0,
+              "eligible_controller_command": 0,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 20,
+              "external_zero_action": 0,
+              "missing_velocity": 2,
+              "phase": 0,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 0,
+                "tie": 2,
+                "win": 3
+              },
+              "start": 0,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 0,
+                "insufficient_four": 4,
+                "mixed_or_tied_window": 16
+              }
+            },
+            {
+              "controller_zero_action": 18,
+              "eligible": 11,
+              "eligible_controller_command": 11,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 40,
+              "external_zero_action": 0,
+              "missing_velocity": 6,
+              "phase": 1,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 0,
+                "tie": 0,
+                "win": 1
+              },
+              "start": 20,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 11,
+                "insufficient_four": 0,
+                "mixed_or_tied_window": 9
+              }
+            },
+            {
+              "controller_zero_action": 3,
+              "eligible": 15,
+              "eligible_controller_command": 0,
+              "eligible_external_step": 15,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 60,
+              "external_zero_action": 15,
+              "missing_velocity": 13,
+              "phase": 2,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 0,
+                "tie": 0,
+                "win": 2
+              },
+              "start": 40,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 15,
+                "insufficient_four": 5,
+                "mixed_or_tied_window": 0
+              }
+            },
+            {
+              "controller_zero_action": 18,
+              "eligible": 1,
+              "eligible_controller_command": 1,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 80,
+              "external_zero_action": 0,
+              "missing_velocity": 4,
+              "phase": 3,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 0,
+                "tie": 0,
+                "win": 2
+              },
+              "start": 60,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 1,
+                "insufficient_four": 19,
+                "mixed_or_tied_window": 0
+              }
+            }
+          ],
+          "plant": "lower",
+          "summary": {
+            "controller_zero_action": 54,
+            "eligible": 27,
+            "eligible_controller_command": 12,
+            "eligible_external_step": 15,
+            "eligible_nonzero_command": 0,
+            "external_zero_action": 15,
+            "missing_velocity": 25,
+            "rejected_sensor": 0,
+            "resolved_outcomes": {
+              "loss": 0,
+              "tie": 2,
+              "win": 8
+            },
+            "steps": 80,
+            "window_reasons": {
+              "eligible": 27,
+              "insufficient_four": 28,
+              "mixed_or_tied_window": 25
+            }
+          },
+          "switches": [
+            {
+              "from": "nominal",
+              "step": 29,
+              "steps_since_authorized_recovery": null,
+              "steps_until_next_authorized_recovery": 26,
+              "to": "learned"
+            },
+            {
+              "from": "learned",
+              "step": 55,
+              "steps_since_authorized_recovery": 0,
+              "steps_until_next_authorized_recovery": null,
+              "to": "nominal"
+            },
+            {
+              "from": "nominal",
+              "step": 79,
+              "steps_since_authorized_recovery": 24,
+              "steps_until_next_authorized_recovery": null,
+              "to": "learned"
+            }
+          ]
+        },
+        {
+          "arm": "selector",
+          "authorized_recovery_steps": [
+            55
+          ],
+          "eligibility_intervals": [
+            {
+              "end_exclusive": 55,
+              "start": 11
+            },
+            {
+              "end_exclusive": 80,
+              "start": 59
+            }
+          ],
+          "first_full_window_step": 4,
+          "phases": [
+            {
+              "controller_zero_action": 9,
+              "eligible": 9,
+              "eligible_controller_command": 9,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 4,
+              "end_exclusive": 20,
+              "external_zero_action": 0,
+              "missing_velocity": 2,
+              "phase": 0,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 0,
+                "tie": 2,
+                "win": 7
+              },
+              "start": 0,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 9,
+                "insufficient_four": 4,
+                "mixed_or_tied_window": 7
+              }
+            },
+            {
+              "controller_zero_action": 11,
+              "eligible": 20,
+              "eligible_controller_command": 20,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 9,
+              "end_exclusive": 40,
+              "external_zero_action": 0,
+              "missing_velocity": 6,
+              "phase": 1,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 0,
+                "tie": 0,
+                "win": 6
+              },
+              "start": 20,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 20,
+                "insufficient_four": 0,
+                "mixed_or_tied_window": 0
+              }
+            },
+            {
+              "controller_zero_action": 1,
+              "eligible": 16,
+              "eligible_controller_command": 1,
+              "eligible_external_step": 15,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 60,
+              "external_zero_action": 15,
+              "missing_velocity": 13,
+              "phase": 2,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 0,
+                "tie": 0,
+                "win": 4
+              },
+              "start": 40,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 16,
+                "insufficient_four": 4,
+                "mixed_or_tied_window": 0
+              }
+            },
+            {
+              "controller_zero_action": 11,
+              "eligible": 20,
+              "eligible_controller_command": 20,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 9,
+              "end_exclusive": 80,
+              "external_zero_action": 0,
+              "missing_velocity": 4,
+              "phase": 3,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 0,
+                "tie": 0,
+                "win": 5
+              },
+              "start": 60,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 20,
+                "insufficient_four": 0,
+                "mixed_or_tied_window": 0
+              }
+            }
+          ],
+          "plant": "higher",
+          "summary": {
+            "controller_zero_action": 32,
+            "eligible": 65,
+            "eligible_controller_command": 50,
+            "eligible_external_step": 15,
+            "eligible_nonzero_command": 22,
+            "external_zero_action": 15,
+            "missing_velocity": 25,
+            "rejected_sensor": 0,
+            "resolved_outcomes": {
+              "loss": 0,
+              "tie": 2,
+              "win": 22
+            },
+            "steps": 80,
+            "window_reasons": {
+              "eligible": 65,
+              "insufficient_four": 8,
+              "mixed_or_tied_window": 7
+            }
+          },
+          "switches": [
+            {
+              "from": "nominal",
+              "step": 11,
+              "steps_since_authorized_recovery": null,
+              "steps_until_next_authorized_recovery": 44,
+              "to": "learned"
+            },
+            {
+              "from": "learned",
+              "step": 55,
+              "steps_since_authorized_recovery": 0,
+              "steps_until_next_authorized_recovery": null,
+              "to": "nominal"
+            },
+            {
+              "from": "nominal",
+              "step": 59,
+              "steps_since_authorized_recovery": 4,
+              "steps_until_next_authorized_recovery": null,
+              "to": "learned"
+            }
+          ]
+        },
+        {
+          "arm": "selector",
+          "authorized_recovery_steps": [
+            55
+          ],
+          "eligibility_intervals": [],
+          "first_full_window_step": 8,
+          "phases": [
+            {
+              "controller_zero_action": 13,
+              "eligible": 0,
+              "eligible_controller_command": 0,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 20,
+              "external_zero_action": 0,
+              "missing_velocity": 2,
+              "phase": 0,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 4,
+                "tie": 2,
+                "win": 0
+              },
+              "start": 0,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 0,
+                "insufficient_four": 8,
+                "mixed_or_tied_window": 12
+              }
+            },
+            {
+              "controller_zero_action": 16,
+              "eligible": 0,
+              "eligible_controller_command": 0,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 40,
+              "external_zero_action": 0,
+              "missing_velocity": 6,
+              "phase": 1,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 1,
+                "tie": 0,
+                "win": 2
+              },
+              "start": 20,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 0,
+                "insufficient_four": 0,
+                "mixed_or_tied_window": 20
+              }
+            },
+            {
+              "controller_zero_action": 3,
+              "eligible": 0,
+              "eligible_controller_command": 0,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 60,
+              "external_zero_action": 15,
+              "missing_velocity": 13,
+              "phase": 2,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 1,
+                "tie": 0,
+                "win": 0
+              },
+              "start": 40,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 0,
+                "insufficient_four": 5,
+                "mixed_or_tied_window": 15
+              }
+            },
+            {
+              "controller_zero_action": 17,
+              "eligible": 0,
+              "eligible_controller_command": 0,
+              "eligible_external_step": 0,
+              "eligible_nonzero_command": 0,
+              "end_exclusive": 80,
+              "external_zero_action": 0,
+              "missing_velocity": 4,
+              "phase": 3,
+              "rejected_sensor": 0,
+              "resolved_outcomes": {
+                "loss": 1,
+                "tie": 0,
+                "win": 2
+              },
+              "start": 60,
+              "steps": 20,
+              "window_reasons": {
+                "eligible": 0,
+                "insufficient_four": 10,
+                "mixed_or_tied_window": 10
+              }
+            }
+          ],
+          "plant": "drift",
+          "summary": {
+            "controller_zero_action": 49,
+            "eligible": 0,
+            "eligible_controller_command": 0,
+            "eligible_external_step": 0,
+            "eligible_nonzero_command": 0,
+            "external_zero_action": 15,
+            "missing_velocity": 25,
+            "rejected_sensor": 0,
+            "resolved_outcomes": {
+              "loss": 7,
+              "tie": 2,
+              "win": 4
+            },
+            "steps": 80,
+            "window_reasons": {
+              "eligible": 0,
+              "insufficient_four": 23,
+              "mixed_or_tied_window": 57
+            }
+          },
+          "switches": []
+        }
+      ]
+    }
+  ]
+}

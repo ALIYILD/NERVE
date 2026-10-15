@@ -15,15 +15,18 @@ class FusedState:
 
 class LaggedPositionVelocityFilter:
     def __init__(self, *, a=0.82, b=0.27, position_var=0.0025,
-                 velocity_var=0.0025, process_var=0.0004, initial_var=0.1):
-        if not all(isfinite(x) for x in (a,b,position_var,velocity_var,process_var,initial_var)):
+                 velocity_var=0.0025, process_var=0.0004, initial_var=0.1,
+                 initial_position=0., initial_velocity=0.):
+        if not all(isfinite(x) for x in (a,b,position_var,velocity_var,process_var,initial_var,initial_position,initial_velocity)):
             raise ValueError('nonfinite parameters')
         if min(position_var,velocity_var,process_var,initial_var)<=0:
             raise ValueError('variances must be positive')
         self.a,self.b,self.rp,self.rv,self.q,self.p0=a,b,position_var,velocity_var,process_var,initial_var
+        self.initial_position=initial_position
+        self.initial_velocity=initial_velocity
         self.actions=[]
         self.readings={}
-        self.states=[FusedState(0.,0.,initial_var,initial_var)]
+        self.states=[FusedState(initial_position,initial_velocity,initial_var,initial_var)]
         self.innovations=[]
     def step(self, action):
         if action not in (-1,0,1): raise ValueError('invalid action')
@@ -40,7 +43,7 @@ class LaggedPositionVelocityFilter:
                                   velocity if velocity is not None else old[1])
         self._replay()
     def _replay(self):
-        x=v=0.
+        x,v=self.initial_position,self.initial_velocity
         pp=pv=self.p0; cross=0.
         states=[FusedState(x,v,pp,pv)]
         innovations=[]

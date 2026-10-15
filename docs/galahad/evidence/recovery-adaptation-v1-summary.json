@@ -1,0 +1,421 @@
+{
+  "actual_online_gain_updates": 173,
+  "artifacts": {
+    "/private/tmp/nerve-recovery-adaptation-claims.sqlite": "eb84f9d6955e426121c06354a512de27745897cdfabd455eb8954a1f5d60c628",
+    "/private/tmp/nerve-recovery-adaptation-v1/ledger.sqlite": "683edc7278897f40b3acee6c8fce3e4ed411f3e8262692ff6509dfb97b27c7fa",
+    "/private/tmp/nerve-recovery-adaptation-v1/report.json": "618bd1da5056ee12043e1d935a1f0114287ede5a3a51e814e7ea434203806612"
+  },
+  "dataset_sha256": "66eb92b9d0f2a3d21586b2e635a9881474139dea0f6ec30d1192e1e6a7b69d40",
+  "deployed": false,
+  "environment": {
+    "device": "CPU",
+    "llm_calls": 0,
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "episodes": 32,
+  "evaluations": {
+    "validation": {
+      "paired_deltas": [
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": -0.001732475043055598,
+            "mean_prediction_error": 0.0014622881742993492,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "stationary",
+          "seed": 33001
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.015519398246072846,
+            "mean_prediction_error": -0.0004533626821753012,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "drift",
+          "seed": 33001
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.0,
+            "mean_prediction_error": -2.0356353152305162e-05,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "stationary",
+          "seed": 33002
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.016956278794893115,
+            "mean_prediction_error": -0.004379875986063181,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "drift",
+          "seed": 33002
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.0,
+            "mean_prediction_error": 0.0002714967043282888,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "stationary",
+          "seed": 33003
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.005696538527076578,
+            "mean_prediction_error": 0.0017125531497197734,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "drift",
+          "seed": 33003
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.0,
+            "mean_prediction_error": 9.434688532540623e-05,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "stationary",
+          "seed": 33004
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.01554265974664032,
+            "mean_prediction_error": -0.0035247382518930233,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "drift",
+          "seed": 33004
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.0,
+            "mean_prediction_error": 0.0006374467088545756,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "stationary",
+          "seed": 33005
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.010669769883222852,
+            "mean_prediction_error": -0.002001231002248676,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "drift",
+          "seed": 33005
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.0,
+            "mean_prediction_error": 0.0001273765914436894,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "stationary",
+          "seed": 33006
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.0,
+            "mean_prediction_error": -0.0004963853867523127,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "drift",
+          "seed": 33006
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.0,
+            "mean_prediction_error": 0.000169153442478278,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "stationary",
+          "seed": 33007
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.0025331237454374322,
+            "mean_prediction_error": -0.006185679287414481,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "drift",
+          "seed": 33007
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.0008144890186897735,
+            "mean_prediction_error": 9.417528957687653e-05,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "stationary",
+          "seed": 33008
+        },
+        {
+          "adaptive_minus_baseline": {
+            "active_steps": 0,
+            "mean_goal_error": 0.0008559267145558935,
+            "mean_prediction_error": -0.0027388032650815936,
+            "successful_recoveries": 0,
+            "supervisor_steps": 0,
+            "violations": 0
+          },
+          "scenario": "drift",
+          "seed": 33008
+        }
+      ],
+      "passed": false,
+      "reasons": [
+        "stationary:regression:mean_prediction_error",
+        "drift:regression:mean_goal_error",
+        "no_strict_goal_gain"
+      ],
+      "sum_regime_goal_gain": -0.008356963704191644,
+      "summaries": {
+        "drift": {
+          "adaptive": {
+            "active_steps": 66.75,
+            "mean_goal_error": 0.16672324517153939,
+            "mean_prediction_error": 0.026355168854160053,
+            "successful_recoveries": 1.0,
+            "supervisor_steps": 13.25,
+            "violations": 0.0
+          },
+          "baseline": {
+            "active_steps": 66.75,
+            "mean_goal_error": 0.158251533214302,
+            "mean_prediction_error": 0.02861360919314865,
+            "successful_recoveries": 1.0,
+            "supervisor_steps": 13.25,
+            "violations": 0.0
+          }
+        },
+        "stationary": {
+          "adaptive": {
+            "active_steps": 66.75,
+            "mean_goal_error": 0.14462115787154678,
+            "mean_prediction_error": 0.0071513748578967105,
+            "successful_recoveries": 1.0,
+            "supervisor_steps": 13.25,
+            "violations": 0.0
+          },
+          "baseline": {
+            "active_steps": 66.75,
+            "mean_goal_error": 0.14473590612459253,
+            "mean_prediction_error": 0.006796883927502441,
+            "successful_recoveries": 1.0,
+            "supervisor_steps": 13.25,
+            "violations": 0.0
+          }
+        }
+      }
+    }
+  },
+  "goal_achieved": false,
+  "holdout_consumed": false,
+  "model_weights_trained": false,
+  "plant_steps": 2560,
+  "preflight": {
+    "checks": {
+      "actual_action_resumed": true,
+      "approval_replay_denied": true,
+      "approved": true,
+      "fresh_samples": true,
+      "invalid_identity_denied": true,
+      "later_expiry": true,
+      "locked_before_approval": true,
+      "no_fabricated_actions": true,
+      "old_epoch_rejected": true,
+      "stopped": true
+    },
+    "deployed": false,
+    "identity_provider": "synthetic_fixture",
+    "model_weights_trained": false,
+    "scope": "Actual local simulated controller and signed-approval ledger; mock identity provider, no physical device or production authentication.",
+    "source_sha256": {
+      "scripts/verify_supervised_recovery.py": "b573d51427cf007bbc408e8ed393656c62158c01b16e1cc90b0678a1a0b32cd3",
+      "src/nerve_awim/adaptive_calibration_v19.py": "299922a93b915996c7b809836a4eaf6b31e35f96d2807adca7281dda719a0786",
+      "src/nerve_awim/calibrated_v16.py": "5311374673061a50bac8f28c20cd560678c9b35c123aaac7473aede84f8319b8",
+      "src/nerve_awim/calibration_v15.py": "f1b49e8adac7c6951f3522663a61c7694d874d8832f53f1cb10aea628e95dd68",
+      "src/nerve_awim/coverage_v18.py": "27a45ac324d82b357487605b6ebb1b8dbc8f0e630c0d93c1a199b1633674e9a3",
+      "src/nerve_awim/drift_v14.py": "af8259a4dfec16b1bfc0d5993f60ea99285025803162584fb8d11aae87a9e62a",
+      "src/nerve_awim/fusion_v12.py": "d5481b7ebef1e7630a65491572f8f99edfc529d97617ebdd2d00fd3bb9758de8",
+      "src/nerve_awim/identity_v26.py": "245b67c92ec8987b02704550dd494269db3d60c51270ab87b04a91487f0dc060",
+      "src/nerve_awim/integrated_v13.py": "bf28343e2ed0bf8f0089c7712fcbefb8ae7c2938505fcae67254b572af2e3e07",
+      "src/nerve_awim/recovery_policy_v23.py": "0caf4ccbf801596213fad17738e144c7c5417cb09ff52823365cee34633683f6",
+      "src/nerve_awim/recovery_v21.py": "bbf384ded4fe9f2ec783a8012e8f8d389f9790efe17c090aeabd52d2b1d52487",
+      "src/nerve_awim/recovery_v22.py": "c8c0ac7b0ef0bd72c956b5a99e22098bf104aca4edf83e7cfb9b4f0c565e934a",
+      "src/nerve_awim/recovery_v24.py": "8f7fc31ef4e01c4f59dbc194134fc9c4fc4c2446e93cfe30ac532f3d7da41eb5",
+      "src/nerve_awim/recovery_v25.py": "ee5de8bf2dbdb6b67d71bb64bd60ac2d8707cd771511e2ed379e2d53e8f550e5",
+      "src/nerve_awim/risk_v17.py": "6b7f88441d21cbce5339042d3a7c9cdc66cda41842e3ab9a9daef09974a179aa",
+      "src/nerve_awim/runtime_v28.py": "c155f4d64de07b102607899228d8187658d46662f531a886c9329f135a116c44",
+      "src/nerve_awim/worldcore_v20.py": "673e5cf431f5d1900242cf261621d888dabe499d5a1891d3aca023fbecdbdd8d"
+    },
+    "status": "passed"
+  },
+  "protocol": {
+    "acceptance": {
+      "every_regime": "zero candidate envelope violations; active steps nondecreasing; external commands, prediction error and goal error nonincreasing",
+      "numerical_tolerance": 1e-12,
+      "online_updates_required": true,
+      "strict_sum_regime_goal_gain": 1e-05
+    },
+    "arms": {
+      "adaptive": 0.08,
+      "baseline": 0.0
+    },
+    "comparison": "Frozen gain vs online gain; both arms retain adaptive filtering/calibration. Within-episode learning, not persistent cross-task training.",
+    "controller": {
+      "bound": 6.0,
+      "estimator": "drift",
+      "evidence_minimum": 2,
+      "horizon": 3,
+      "max_missing": 5,
+      "min_calibration_samples": 6,
+      "recovery_samples": 3,
+      "risk_aversion": 0.25,
+      "safe_position": 6.0,
+      "safe_velocity": 2.0
+    },
+    "episode_timeout_seconds": 30,
+    "fixed_hypothesis": true,
+    "holdout": "Only after validation gates; no parameter tuning; shared operator-owned dataset claim prevents repetition using that ledger",
+    "max_episodes": 96,
+    "max_plant_steps": 7680,
+    "plant": {
+      "drift_gains": [
+        0.27,
+        0.48,
+        0.15,
+        0.4
+      ],
+      "forced_dropout_origin_steps": [
+        35,
+        49
+      ],
+      "gain_regime_steps": 20,
+      "position_noise_std": 0.03,
+      "random_dropout_probability": 0.12,
+      "retention": 0.82,
+      "sensor_delay_steps": 1,
+      "stationary_gain": 0.27,
+      "target": 1.2,
+      "velocity_noise_std": 0.025
+    },
+    "promotion_authorized": false,
+    "protocol": "recovery-adaptation-v1",
+    "scenarios": [
+      "stationary",
+      "drift"
+    ],
+    "scope": "Synthetic plant and host supervision; mock identity provider; external zero-input commands explicitly counted, not certified safe.",
+    "source_sha256": {
+      "scripts/run_recovery_adaptation.py": "91c321e252faaf1e4397a3086cdcaf124516045f336979ad5b7d594f764a37da",
+      "scripts/run_worldcore_study.py": "e10693cb0f4122c6a5294efc02c02705b6ac082e2d4200084ef6501c4da3e085",
+      "scripts/verify_supervised_recovery.py": "b573d51427cf007bbc408e8ed393656c62158c01b16e1cc90b0678a1a0b32cd3",
+      "src/nerve_awim/adaptive_calibration_v19.py": "299922a93b915996c7b809836a4eaf6b31e35f96d2807adca7281dda719a0786",
+      "src/nerve_awim/autoresearch_v04.py": "ab0477dc779eebdb9def07e4411a5e8a3bff406a4c18d8f80cba42de574c150e",
+      "src/nerve_awim/autoresearch_v05.py": "cfe99c6b8a99b74a1b0a678b6c63515e2fed70c05854e1cd61510c2a0cc46c86",
+      "src/nerve_awim/calibrated_v16.py": "5311374673061a50bac8f28c20cd560678c9b35c123aaac7473aede84f8319b8",
+      "src/nerve_awim/calibration_v15.py": "f1b49e8adac7c6951f3522663a61c7694d874d8832f53f1cb10aea628e95dd68",
+      "src/nerve_awim/coverage_v18.py": "27a45ac324d82b357487605b6ebb1b8dbc8f0e630c0d93c1a199b1633674e9a3",
+      "src/nerve_awim/drift_v14.py": "af8259a4dfec16b1bfc0d5993f60ea99285025803162584fb8d11aae87a9e62a",
+      "src/nerve_awim/fusion_v12.py": "d5481b7ebef1e7630a65491572f8f99edfc529d97617ebdd2d00fd3bb9758de8",
+      "src/nerve_awim/identity_v26.py": "245b67c92ec8987b02704550dd494269db3d60c51270ab87b04a91487f0dc060",
+      "src/nerve_awim/integrated_v13.py": "bf28343e2ed0bf8f0089c7712fcbefb8ae7c2938505fcae67254b572af2e3e07",
+      "src/nerve_awim/memory_gateway/recovery_adaptation.py": "ddb3db10fdc417bace28898ba9f1652346884d723dc64b968c1f53f19688e99b",
+      "src/nerve_awim/memory_gateway/recovery_adaptation_study.py": "b965b4ace242160fcd889024753f5efd8ed1624c71efc90c914cb59e9a0a6847",
+      "src/nerve_awim/memory_gateway/worldcore_study.py": "5af51977997c689840c36879727273dd02c77d8714196bf53c2dc127ec456bf1",
+      "src/nerve_awim/parallel_agents_v11.py": "fa926aba789a243e5b738f0749f0dec90ff61582bb6408ca95193d84f3bb2a33",
+      "src/nerve_awim/recovery_policy_v23.py": "0caf4ccbf801596213fad17738e144c7c5417cb09ff52823365cee34633683f6",
+      "src/nerve_awim/recovery_v21.py": "bbf384ded4fe9f2ec783a8012e8f8d389f9790efe17c090aeabd52d2b1d52487",
+      "src/nerve_awim/recovery_v22.py": "c8c0ac7b0ef0bd72c956b5a99e22098bf104aca4edf83e7cfb9b4f0c565e934a",
+      "src/nerve_awim/recovery_v24.py": "8f7fc31ef4e01c4f59dbc194134fc9c4fc4c2446e93cfe30ac532f3d7da41eb5",
+      "src/nerve_awim/recovery_v25.py": "ee5de8bf2dbdb6b67d71bb64bd60ac2d8707cd771511e2ed379e2d53e8f550e5",
+      "src/nerve_awim/risk_v17.py": "6b7f88441d21cbce5339042d3a7c9cdc66cda41842e3ab9a9daef09974a179aa",
+      "src/nerve_awim/runtime_v28.py": "c155f4d64de07b102607899228d8187658d46662f531a886c9329f135a116c44",
+      "src/nerve_awim/worldcore_recursion_v19.py": "679d1796be8c93fb0cd514f9e139a5b757d94337ebc310f90ecec4151bcb7e19",
+      "src/nerve_awim/worldcore_v20.py": "673e5cf431f5d1900242cf261621d888dabe499d5a1891d3aca023fbecdbdd8d"
+    },
+    "splits": {
+      "holdout": [
+        34001,
+        34002,
+        34003,
+        34004,
+        34005,
+        34006,
+        34007,
+        34008,
+        34009,
+        34010,
+        34011,
+        34012,
+        34013,
+        34014,
+        34015,
+        34016
+      ],
+      "validation": [
+        33001,
+        33002,
+        33003,
+        33004,
+        33005,
+        33006,
+        33007,
+        33008
+      ]
+    },
+    "steps_per_episode": 80
+  },
+  "recommendation": "retain_baseline",
+  "replay_protection": "Shared operator-owned claim ledger; deleting/replacing the ledger is not prevented",
+  "status": "complete"
+}

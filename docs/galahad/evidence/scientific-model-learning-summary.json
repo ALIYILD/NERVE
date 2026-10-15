@@ -1,0 +1,150 @@
+{
+  "baseline_strategy": "direct",
+  "holdout_consumed": false,
+  "inference_attempts": 8,
+  "metadata_after": {
+    "digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "model": "qwen2.5-coder:1.5b"
+  },
+  "metadata_attempts": 2,
+  "metadata_before": {
+    "digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "model": "qwen2.5-coder:1.5b"
+  },
+  "model_weights_trained": false,
+  "persistent_kv_restored": false,
+  "preload": {
+    "wall_seconds": 5.395467664988246
+  },
+  "preload_attempts": 1,
+  "promotion_authorized": false,
+  "protocol": {
+    "dataset_sha256": "15342d4e72509b2cd6c244443af29e790f4d5475ffc0abf002d1d7de92943d71",
+    "expected_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "max_inference_calls": 8,
+    "max_metadata_calls": 2,
+    "max_output_tokens": 128,
+    "max_preload_calls": 1,
+    "model": "qwen2.5-coder:1.5b",
+    "origin": "http://127.0.0.1:11434",
+    "pairs": [
+      [
+        "measurement_decoy",
+        "direct"
+      ],
+      [
+        "measurement_decoy",
+        "checklist"
+      ],
+      [
+        "entity_decoy",
+        "checklist"
+      ],
+      [
+        "entity_decoy",
+        "direct"
+      ],
+      [
+        "unit_mismatch",
+        "direct"
+      ],
+      [
+        "unit_mismatch",
+        "checklist"
+      ],
+      [
+        "conflict",
+        "checklist"
+      ],
+      [
+        "conflict",
+        "direct"
+      ]
+    ],
+    "socket_timeout_seconds": 90,
+    "source_sha256": {
+      "scripts/benchmark_local_memory.py": "2440760626c0d18da5f491c2fc856fec778a0b9f55d99252144eda13e0019fa8",
+      "scripts/probe_local_memory_readiness.py": "c08bb5b7d5d9e5d0d150f5a99ca6f608dd179f62b20e3e4aefc7125268756815",
+      "scripts/run_scientific_model_learning.py": "56235cf78a50e427e479afe873d5695751e3be56ec2296f9e704805d63a9a18e",
+      "src/nerve_awim/adaptive_memory.py": "29feb2e361680b1d389fbb14858fc4b5f76bafce6ed61b99caf264fb0af3bf88",
+      "src/nerve_awim/memory_gateway/automation.py": "539d12c10a7731bda726b3564f1d4780348af33f653d00e11cccd539328e03b6",
+      "src/nerve_awim/memory_gateway/contracts.py": "9d0b22f5b21dc53e0ccf0150f9fd21543103d4336d496d5b776ada9a6ceb450e",
+      "src/nerve_awim/memory_gateway/gateway.py": "cd41f9f0a44af8331e1db04e43493b8c83cec5512edb3269a1e6a8dc9726f876",
+      "src/nerve_awim/memory_gateway/inference.py": "e9404ba3168b6b6242c62356f6b3ec5d8dd519c1ab823716685014cc48335782",
+      "src/nerve_awim/memory_gateway/learning.py": "b64a62a0c9f59fd35954802dc593381b8f323a397f14ab125d83d0c5b65f9c8b",
+      "src/nerve_awim/memory_gateway/lifecycle.py": "6096f1284fd64ed351d45eccdaf8afe8d4892a218bae5f691d77bd78ef7277d4",
+      "src/nerve_awim/memory_gateway/null_kv_adapter.py": "0fedb239b3d0019d1e41c16eae8e0b804a5e48530df6a9c7afeecbafe16da11b",
+      "src/nerve_awim/memory_gateway/observability.py": "90aa34d41e25c828bfa85fe0a052c3646dd8e6097c1ea639caf607e329b67e5b",
+      "src/nerve_awim/memory_gateway/policy.py": "77803fb57fc502da3ac7d6a1423cd96a07645dab539d89ca6b2904b0565637d2",
+      "src/nerve_awim/memory_gateway/research_supervisor.py": "f8f80b51a350d1a6104c3fd24e65e3b052a0abe875f848da8e5095beb9f2e477",
+      "src/nerve_awim/memory_gateway/scientific_measurement_tasks.py": "2f61bacdcd70764c47ceda7a66f457d697ecdae904e56ff92e57be51d52d14a9",
+      "src/nerve_awim/memory_gateway/scientific_model_learning.py": "1b47b268900c87a9e36e6f63b9a17ca8402c143f2d467bdc9767c377d3338286",
+      "src/nerve_awim/memory_gateway/session.py": "ba1846b3b6a07bc83f7b824c1013860b0f1e701def74d588b38c06de22080918",
+      "src/nerve_awim/memory_retrieval_v18.py": "719f5f236df9f1b5caae2120f8d197fc852d2ba24ca05e6e7738e1887873be20",
+      "src/nerve_awim/memory_v18.py": "882506c5d7c2f8a0b5f46f4d62a600d79a78d23863080af010a6362b59e855c6"
+    },
+    "strategies": {
+      "checklist": "Use only supplied evidence. Match the requested entity, measurement and exact unit. Do not convert units. If no matching evidence exists or matching values conflict, output ABSTAIN. Otherwise output exactly entity|measurement|value|unit|source_id using the supporting source. Output one line only, without explanations or code fences. Before answering, check the entity, measurement, unit, conflicting values and supporting source_id. Do not print the checklist.",
+      "direct": "Use only supplied evidence. Match the requested entity, measurement and exact unit. Do not convert units. If no matching evidence exists or matching values conflict, output ABSTAIN. Otherwise output exactly entity|measurement|value|unit|source_id using the supporting source. Output one line only, without explanations or code fences. Answer the question directly."
+    },
+    "training_only": true,
+    "version": "scientific-measurement-training-v1",
+    "window": 4
+  },
+  "ranking": [
+    {
+      "observations": 4,
+      "strategy": "direct",
+      "successes": 2,
+      "training_utility": 0.5
+    },
+    {
+      "observations": 4,
+      "strategy": "checklist",
+      "successes": 2,
+      "training_utility": 0.5
+    }
+  ],
+  "status": "complete",
+  "summary": {
+    "always_abstain_control_correct_per_four_tasks": 2,
+    "always_abstain_control_model_calls": 0,
+    "scope": "Training preference only; four unique tasks, eight matched calls. No causal superiority or validation claim.",
+    "strategies": [
+      {
+        "abstention_correct": 2,
+        "calls": 4,
+        "format_failures": 0,
+        "non_abstaining_contract_failures": 0,
+        "strategy": "direct",
+        "strict_correct": 2,
+        "supported_correct": 0
+      },
+      {
+        "abstention_correct": 2,
+        "calls": 4,
+        "format_failures": 0,
+        "non_abstaining_contract_failures": 0,
+        "strategy": "checklist",
+        "strict_correct": 2,
+        "supported_correct": 0
+      }
+    ]
+  },
+  "training_only": true,
+  "validation_consumed": false,
+  "artifact_sha256": "fb4310758a7e72ae435d6f0d96d46dd457a811707199c6fc48776e1a12692510",
+  "inference_and_feedback_seconds": 317.87873470096383,
+  "median_inference_and_feedback_seconds": 37.4965049669845,
+  "minimum_seconds": 35.40252543997485,
+  "maximum_seconds": 54.909182383009465,
+  "tokens": {
+    "prompt_tokens": 3686,
+    "completion_tokens": 32,
+    "total_tokens": 3718
+  },
+  "environment": {
+    "python": "3.10.0",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit"
+  }
+}

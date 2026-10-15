@@ -1,0 +1,22 @@
+{
+  "artifact_sha256": "873dac218d134f278a0a4d8660aba18b3e6ad356c5b847c1ef829c23eeadba83",
+  "source_sha256": {
+    "src/nerve_awim/single_use_standard.py": "4e63c414725fc9360e2e97a0de92c067232cedce968e0c3a1b3128a04f220c68",
+    "src/nerve_awim/memory_gateway/single_use_learning_demo.py": "d3d5ed59262accc8272ba9c06fc3f189ac036fb9fa095101bcbce3085b050016",
+    "scripts/demo_single_use_learning.py": "3a1760827f0818f521f917ab4cab057aaad61cff7263fdcc895e4ecb1f70d31c",
+    "src/nerve_awim/integrated_v13.py": "bf28343e2ed0bf8f0089c7712fcbefb8ae7c2938505fcae67254b572af2e3e07",
+    "src/nerve_awim/identity_v26.py": "245b67c92ec8987b02704550dd494269db3d60c51270ab87b04a91487f0dc060",
+    "src/nerve_awim/runtime_v28.py": "c155f4d64de07b102607899228d8187658d46662f531a886c9329f135a116c44",
+    "src/nerve_awim/worldcore_v20.py": "673e5cf431f5d1900242cf261621d888dabe499d5a1891d3aca023fbecdbdd8d",
+    "src/nerve_awim/recovery_v25.py": "ee5de8bf2dbdb6b67d71bb64bd60ac2d8707cd771511e2ed379e2d53e8f550e5"
+  },
+  "mechanism_only": true,
+  "duplicate_replays": 3,
+  "corrected_gain": 0.244,
+  "legacy_final_gain": 0.22124999999999997,
+  "authorized_recovery_epochs": 2,
+  "accepted_updates": 2,
+  "registered_streams_used": false,
+  "control_improvement_established": false,
+  "candidate_promoted": false
+}

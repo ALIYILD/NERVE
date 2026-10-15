@@ -4,6 +4,29 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## Verified memory gateway: executable synthetic integration
+
+The optional memory gateway now connects to the existing NERVE demo agent,
+bounded parallel pipelines and NERVE Learn MCP. A host-owned configuration
+builds the scoped ledger, pinned-OIDC HTTP service and restricted agent sessions.
+Approved structured hints select existing allowlisted tools; outcomes remain
+pending until separate host review. Legacy behavior is unchanged when disabled.
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install --upgrade pip setuptools
+.venv/bin/python -m pip install -r deploy/requirements-memory-synthetic.txt
+PYTHONPATH=src .venv/bin/python scripts/memory_gateway_demo.py
+PYTHONPATH=src .venv/bin/python scripts/memory_gateway_demo.py --provider galahad
+PYTHONPATH=src .venv/bin/python scripts/memory_gateway_mcp_wire.py
+```
+
+These commands use temporary synthetic stores and keys. They exercise signed
+HTTP, approved/pending evidence, actual agent execution, parallel jobs, ledger
+reopen, revocation and official MCP stdio. The Galahad option exercises ordinary
+text fallback: **real persistent KV restoration is not enabled or verified**.
+Nothing is deployed. See the [runtime and wiring guide](docs/galahad/15-runtime-wiring.md)
+for configuration, local launch commands and remaining integration boundaries.
 ## Independent Watchtower / Guardian (observe-only development)
 
 The separate [safety control plane](docs/watchtower/ARCHITECTURE.md) provides
@@ -762,3 +785,153 @@ simulated; remote authentication and live integration with a downstream clinical
 application are not supplied.
 
 See [host integration, evidence gates and boundaries](docs/governed-outcome-learning-v20.md).
+
+
+## Bounded automatic memory adaptation (synthetic research)
+
+The optional gateway runner now executes approved registered strategies, obtains
+a trusted independent outcome evaluation and records utility feedback automatically.
+Future episodes adapt to recent verified outcomes. Budgets, pending crash claims
+and replay protection persist across restart; strict execution refuses absent or
+invalid evidence. It does not train model weights or automatically approve new memories.
+
+```sh
+PYTHONPATH=src python scripts/memory_autoadapt_demo.py
+```
+
+The16-episode synthetic drift fixture changes its strategy without host-selected
+routes or separate feedback calls. This is narrow registered-tool adaptation,
+not general autonomous intelligence. See [execution, limits and evidence](docs/galahad/20-automatic-adaptation.md).
+
+## Measuring improvements to NERVE itself
+
+The self-study compares the current adaptive-memory policy with six registered
+window/tie-breaking configurations, using validation-only selection and frozen
+held-out probes. An opt-in least-recent tie policy addresses repeated-failure
+lock-in; it does not grant access or automatically replace the current default.
+
+```sh
+PYTHONPATH=src python benchmarks/memory_self_improvement.py --output /tmp/nerve-self-study.json
+```
+
+The experiment uses actual registered synthetic tools, matched initial state,
+fixed controls and explicit no-improvement outcomes. It is not model-weight
+training or proof of real scientific discovery. See [protocol and measured results](docs/galahad/21-nerve-self-improvement.md).
+
+### Bounded memory-policy research generations
+
+The durable research loop evaluates a finite candidate grid, records rejected candidates, stops after two stalled generations, and freezes selection before one holdout evaluation. Its first run completed 4,700 synthetic tool executions and retained the current policy because no candidate passed every improvement gate. All 1,114 regression tests pass. This is local policy research; model weights and deployment remain unchanged. See [execution evidence and reproduction](docs/galahad/22-bounded-research-loop.md).
+
+### Discounted feedback research
+
+Optional per-observation discounting now weights old verified outcomes less heavily. The fresh v3 study executed 5,800 synthetic tool calls; recurrent validation improved for fast discounting, but training regressed, so the current policy was retained. See [primary-source rationale, evidence and reproduction](docs/galahad/23-discounted-feedback-research.md).
+
+### Prospective online adaptation
+
+A fixed discounted-feedback policy scored **84.33% versus 75.44%** for the existing learner across 2,048 fresh synthetic online episodes per arm, with no scenario regression. It is a candidate for review; defaults remain unchanged. The separate real local-model smoke attempt failed at the 30-second deadline. See [protocol, complete results and reproduction](docs/galahad/24-online-adaptation-and-local-model.md).
+
+### Local model readiness diagnostics
+
+The local inference adapter now provides sanitized host-side failure categories while retaining generic public errors. A separate preload/probe CLI identified an output-limit failure on the CPU model; no incomplete completion was accepted. [Evidence and reproduction](docs/galahad/25-local-runtime-readiness.md).
+
+### Opt-in CPU inference research
+
+A separate CPU research profile permits one request at a time, up to 128 output tokens and a 90-second socket timeout. One real pinned local-model request through the scoped gateway completed with the correct synthetic marker and source citation in 72.7 seconds. Standard defaults remain unchanged. See [measured evidence and reproduction](docs/galahad/26-cpu-research-inference.md).
+
+### Matched real-model evidence study
+
+Eight actual local CPU-model requests completed through the scoped memory gateway. Relevant evidence yielded all four expected codes, with citations in three responses; all four irrelevant controls incorrectly attributed a decoy code to the requested object. This exposes a grounding failure, not a successful learning result. The full suite passed 1,182 tests. See [protocol, responses and reproduction](docs/galahad/27-real-model-evidence-study.md).
+
+### Autonomous research campaigns and grounding checks
+
+A bounded host supervisor now runs campaign cycles, matched trials and outcome-feedback episodes with durable claims, source pins, child timeouts and an explicit stop deadline. It advances automatically without replaying consumed experiments. See [operation and limits](docs/galahad/28-autonomous-research-campaign.md). The optional [synthetic registry guard](docs/galahad/29-registry-grounding.md) checks entity/code/source associations; it is deterministic validation, not model training.
+
+### Overnight outcome — 13 October 2026
+
+The supervisor completed 32 cycles and 65,536 synthetic pipeline episodes. The candidate improved aggregate score but regressed on mixed tasks, so the baseline was retained. Actual process restarts preserved learned preferences in all 16 comparisons. The optional V2 registry guard passed eight fresh real-model cases; full regression passed 1,261 tests. See the [morning report, limits and reproduction](docs/galahad/32-morning-report.md).
+
+### Online configuration selection
+
+The bounded coordinator now selects typed memory policies using prospective training/validation streams and a one-use final comparison, with durable evidence for every trial. A real 11,264-episode run selected a candidate scoring 830/1,024 versus baseline 815/1,024, but rejected it for a mixed-regime regression. Full regression passed 1,280 tests. [Protocol, results and reproduction](docs/galahad/33-online-policy-selection.md).
+
+The [registered research handoff](docs/galahad/34-registered-research-handoff.md) verifies the completed online-policy receipt before automatically running a bounded WorldCore study. Its first real CPU run completed 88 synthetic simulation episodes and found no deployable improvement; no policy or model was promoted.
+
+The [automatic outage diagnosis](docs/galahad/35-outage-search-diagnosis.md) routes a verified WorldCore rejection to a bounded mechanism check. It identifies when the permitted parameter search cannot satisfy the fixed outage/completion contract and stops unmodified retries without relaxing safety gates.
+
+[Sensor freshness enforcement](docs/galahad/36-sensor-freshness.md) prevents duplicate and historical packets from erasing elapsed outage time. The changed controller invalidates earlier current-source study receipts; historical evidence remains preserved, and no outage-recovery improvement is claimed.
+
+The [prospective recovery/adaptation study](docs/galahad/37-recovery-adaptation-study.md) measured 173 online gain updates across 32 validation episodes. It rejected the adaptive candidate for goal/prediction regressions and preserved the unused final-evaluation streams. This demonstrates measured outcome gating, not a general self-improvement claim.
+
+The [adaptation followup diagnostic](docs/galahad/38-adaptation-followup.md) consumes verified rejected studies and automatically reconciles paired objective-error contributions without rerunning plant or final-evaluation episodes.
+
+[Opt-in consistent-dynamics and bounded-planning candidates](docs/galahad/39-consistent-dynamics-candidates.md) preserve historical filter gains during delayed replay and exercise deeper planning through the existing signed recovery boundary. They are development-tested candidates, not promoted improvements.
+
+The [diagnosis-driven dynamics study](docs/galahad/40-dynamics-factorial-study.md) automatically tests registered candidates with matched planning controls, freezes selection, and preserves unused evaluation streams when training gates fail.
+
+The [restartable research supervisor](docs/galahad/41-restartable-research-supervisor.md) connects receipt-verified research stages, resumes completed work without re-execution, and diagnoses identification coverage before requesting another registered experiment.
+
+The [observation-evidence gain candidate](docs/galahad/42-evidence-window-candidate.md) adds timestamp-ordered, prior-regularized sensor learning with optional authorized-recovery evidence forgetting. It remains opt-in pending a prospective matched comparison.
+
+The [registered evidence-window study](docs/galahad/43-evidence-window-study.md) consumes the verified identification diagnostic, audits learning directly from sensor/action evidence, and applies matched frozen/adaptive controls before conditional validation and final evaluation.
+
+The [research outcome memory bridge](docs/galahad/44-research-outcome-memory.md) proposes verified experiment results to existing scoped memory, requires separate host review, and preserves negative findings across process restarts without promoting rejected candidates.
+
+The [research memory planner](docs/galahad/45-research-memory-planning.md) consults independently validated, approved outcome memory to propose the next research step. It recognizes known rejections while preserving study consumption, revocation and independent promotion gates.
+
+The [memory-guided research coordinator](docs/galahad/46-memory-guided-research-coordinator.md) dispatches a fixed diagnostic from a verified negative outcome, journals consumption, and reconciles completed results on restart. It stops for a new registered hypothesis without replaying experiments or promoting rejected candidates.
+
+The [evidence-gated adaptation candidate](docs/galahad/47-evidence-gated-adaptation.md) retains its learned gain until a bounded sensor window supports a material change. An exact prediction-error audit separates state and gain terms; the candidate remains opt-in pending prospective comparison.
+
+The [registered evidence-gated study](docs/galahad/48-evidence-gated-study.md) executed 128 fresh training episodes. Horizon-1 candidates improved on the existing adaptive control but regressed drift goal error against frozen gain; the loop retained the baseline and preserved validation/holdout streams.
+
+The [authenticated actual-action observer](docs/galahad/49-actual-action-observer.md) advances a separate state estimate from confirmed external actions while control remains suspended. Missing action reports invalidate estimates; observation never authorizes recovery.
+
+The [observer training replay](docs/galahad/50-observer-training-reanalysis.md) tests identical observation rules across 128 recorded trajectories. External-supervision predictions improve in every arm/regime, but drift controller-period errors worsen; unconditional substitution remains rejected.
+
+The [phase-aware forecast study](docs/galahad/51-phase-aware-forecast-study.md) preserves controller predictions and selects the actual-action observer during external supervision. Its fixed rule passed all three stages across 512 fresh synthetic episodes, reducing final-holdout mean prediction error by 18.98%. This is a shadow-forecast result; actions were unchanged and no controller or model was promoted.
+
+The [online forecast runtime](docs/galahad/52-online-forecast-runtime.md) connects that rule to an opt-in research wrapper with separately authenticated execution reports. Four development cases preserve original control trajectories and recovery events while matching replay forecasts. Missing execution evidence becomes unknown history; it cannot authorize recovery.
+
+The [forecast outcome coordinator](docs/galahad/53-forecast-outcome-coordinator.md) validates completed forecast evidence, proposes scoped research memory, waits for separate trusted fact review and emits a forecast-only review packet. The actual synthetic finding is stored as approved memory without a reward score or control-promotion authority. Durable claims prevent duplicate proposals and resurrection after deletion.
+
+The [recovery-epoch learning investigation](docs/galahad/54-recovery-epoch-learning.md) traces stale adaptation through 128 recorded training episodes and tests an opt-in reset candidate. Development cases with wrong nominal priors expose regressions, so the automatic screen retains the existing baselines and blocks progression of the unchanged rule. No independent study or promotion is claimed.
+
+The [single-use standard learning correction](docs/galahad/55-single-use-standard-learning.md) prevents repeated sensor evidence from repeatedly training the standard EMA. The opt-in runtime preserves authorized recovery and learns once per usable transition in each recovery epoch. This establishes learning-accounting correctness, not improved control performance or neural weight training.
+
+The [audited standard-learning comparison](docs/galahad/56-standard-learning-comparison.md) reconstructs actual EMA applications from sensor/action traces. In six development cases the single-use learner outperformed legacy learning, but slightly regressed stationary prediction against frozen learning. The automatic screen retained baselines; this is development evidence, not a promoted control improvement.
+
+The [standard-learning prediction diagnostic](docs/galahad/57-standard-learning-diagnostic.md) validates the rejected development receipt and decomposes all 480 prediction errors without rerunning episodes. Fixed-state/action forecasts expose a stationary-noise versus drift-adaptation trade-off; a prospective forecast selector remains a hypothesis, not a deployed policy.
+
+The [prequential gain selector](docs/galahad/58-prequential-gain-selection.md) separates shadow learning from future control gain using immutable, subsequently scored forecasts. Twelve development cases pass the frozen comparison but fail against ungated single-use learning. The strict screen retains baselines; the opt-in implementation is not a promoted policy.
+
+The [restartable prequential research loop](docs/galahad/59-prequential-research-loop.md) automatically adopts the rejected selector experiment and diagnoses timing. Actual fresh-process resume preserves the report and one completed journal claim without new episodes. The loop retains baselines and requires a new registered hypothesis instead of blindly repeating rejected work.
+
+The [real-model strategy learning pilot](docs/galahad/60-real-model-strategy-learning.md) connects eight actual local-model completions to independent scientific-evidence scoring and persistent strategy feedback. Fresh-process resume preserves all eight outcomes without inference. Both strategies universally abstained and matched the abstention control; the loop is executable, but no extraction improvement or policy promotion was established.
+
+The [trusted scientific task interface](docs/galahad/61-scientific-task-interface.md) separates fixed host instructions from untrusted evidence. Eight actual development calls scored 3/4 exact answers versus 2/4 for the original interface; one candidate extraction still failed formatting. All 1,775 tests passed and fresh-process resume made no new inference calls. This opt-in candidate is not promoted or evidence of general model learning.
+
+The [scientific validation coordinator](docs/galahad/62-scientific-validation-coordinator.md) adopted the development evidence and ran sixteen fresh model calls. The frozen candidate regressed to 2/8 exact answers versus baseline 4/8, including two conflicting-evidence failures, so the graph retained the baseline. All 1,809 tests passed; fresh-process graph resume issued no model calls. This validates rejection and restart behavior, not a general learning improvement.
+
+The [Tier-6 evaluator foundation](docs/galahad/64-tier-six-evaluator-foundation.md) adopts the supplied self-learning plan and creates a private 1,000-item bank (700 development, 300 guarded holdout) across seven strata. All 1,850 tests passed; actual generator access checks and fresh-process integrity verification succeeded. The [structured-output preflight](docs/galahad/63-structured-scientific-preflight.md) timed out before any constrained call, so local runtime support and the required GPU-backed ≥7B study remain unverified.
+
+The [experience-store milestone](docs/galahad/65-experience-store-awim.md) imports sixteen historical synthetic outputs with scoped access, append-only integrity and restart-safe exports. The exact two candidate conflict failures remain queryable; fresh-process import uses zero model calls and preserves original evidence. This supports failure-driven research but establishes no new performance gain or clinical capability.
+
+[Failure-driven candidate registration](docs/galahad/66-failure-driven-candidate-registration.md) now converts the actual episode journal into three bounded hypotheses, starting with conflict detection linked to the two known failures. Restart is byte-stable with zero inference or task-bank access. These are unevaluated configurations; negative-evidence rejection and the new scientific selection gate remain unfinished.
+
+[Negative-evidence screening](docs/galahad/67-negative-evidence-screening.md) adds a scoped, durable rejection journal and candidate retry guard. Exact repeats cannot bypass a rejection by renaming evidence or changing hashes; a genuinely new failure category is required. The actual empty-history screen keeps three candidates eligible but unevaluated. Rejection suppression is verified with synthetic fixtures, not claimed as measured candidate evaluation.
+
+[Executable candidate routing](docs/galahad/68-executable-candidate-routing.md) applies registered prompt/retrieval/conflict policies through a bounded host callback interface. The actual 700-item development audit checked 2,100 preparations with the holdout closed: 100 conflict abstention routes agreed with development answers. No model routes were executed, so this is routing evidence rather than an accuracy or speedup claim.
+
+[Candidate inference transport](docs/galahad/69-candidate-inference-transport.md) now connects the bounded executor to the existing loopback client. One real CPU probe completed in 78.9 seconds (526 input/127 output tokens), but returned a schema-shaped fenced object and failed the response contract. Restart issued zero new calls. All 1,970 regression tests passed; no efficacy gain, promotion or complete autonomous learning loop is claimed.
+
+[Failure-driven format research](docs/galahad/70-format-failure-research-loop.md) connects a validated prior failure to a four-call paired experiment and a durable decision. All 1,997 tests passed. Actual schema constraints improved JSON shape (2/2 versus 0/2), but both arms failed full format and exact correctness (0/2); the coordinator retained the baseline. No model improvement or Tier-6 completion is claimed.
+
+[Format outcome feedback](docs/galahad/71-format-outcome-feedback.md) now imports the four actual probe outcomes into a scoped versioned journal and generates two traceable, unevaluated hypotheses. The real run and restart used zero new inference calls; ten artifacts remained unchanged. This closes the receipt-to-proposal path for these outcomes, without claiming a successful skill, weight training or Tier-6 completion.
+
+[Measured test tiers](docs/galahad/72-measured-test-tiers.md) provide per-test timings and the slowest 20 tests. The rebalanced fast tier passed 1,547 tests in 89.32 seconds including discovery; the slow tier passed 499 tests in one clean serial run. Together they cover all 2,046 tests.
+
+[Registered compact development study](docs/galahad/73-compact-development-study.md) completed 100 real local calls across 60 tasks and four arms. Baseline, conflict-check and always-abstain each scored 40/60; random scored 23/60. All model outputs were ABSTAIN, including every supported task. Adjudicated verdict: **model_at_floor**. All 100 model calls abstained, so no policy candidate was distinguishable and the conflict rule’s answer-quality effect remains untested. The historical preregistered receipt retains its original verdict; the substrate gate records the distinct blocker. Prompts were 67–83 tokens; holdout stayed unopened.
+
+The historical [substrate gate](docs/galahad/74-substrate-floor-calibration.md) recorded `model_at_floor`; the current policy-scoped gate below supersedes its model-wide block. Separately registered [calibration v2](docs/galahad/75-substrate-calibration-v2.md) completed all 30 calls in 14.54 minutes: compact abstained 10/10; forced-answer and original produced malformed outputs 10/10. Strict correctness was 0/10 in each condition, although every forced response included the expected number and unit information. No timeout or abstention-based model-ceiling finding; no prompt tuning, holdout or promotion. V1 remains unchanged.
+
+[Candidate v3 and current policy gate](docs/galahad/76-policy-scoped-abstention-v3.md) reclassify the blocker as **prompt_induced_abstention**, scoped to compact-with-abstain, unblock new proposals, and retire the original full prompt. The registered 100-item, five-stratum development study completed 160 model calls: v3 **99/100**, baseline **40/100**, always-abstain **40/100**, random **29/100**. Verdict: **candidate_requires_review**. The single error selected an entity decoy's value/source despite valid JSON. Forty deterministic abstentions required no model calls. Fast tier: 1,615 passes in 120.906 seconds. Stopped at the verdict; no holdout, promotion or weight update.

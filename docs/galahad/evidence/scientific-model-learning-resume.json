@@ -1,0 +1,25 @@
+{
+  "fresh_process_resume": true,
+  "status": "complete",
+  "report_utility_and_claims_unchanged": true,
+  "metadata_calls": 0,
+  "preload_calls": 0,
+  "inference_calls": 0,
+  "utility_rows": 8,
+  "execution_claims": 8,
+  "ranking": [
+    {
+      "observations": 4,
+      "strategy": "direct",
+      "successes": 2,
+      "training_utility": 0.5
+    },
+    {
+      "observations": 4,
+      "strategy": "checklist",
+      "successes": 2,
+      "training_utility": 0.5
+    }
+  ],
+  "sqlite_report_sha256": "c1b84f24fd6d13368290bc1c3b270e942a36e5f3e4b3c2999221c03466dcca3e"
+}

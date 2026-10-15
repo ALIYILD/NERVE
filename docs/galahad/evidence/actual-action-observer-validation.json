@@ -1,0 +1,22 @@
+{
+  "baseline_commit": "e691f53a698f6fd0e1dedeae523828717b6eb722",
+  "branch": "feature/galahad-persistent-memory",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests_passed": 1525,
+  "failures": 0,
+  "errors": 0,
+  "elapsed_seconds": 121.126,
+  "new_targeted_tests_passed": 16,
+  "independent_review": true,
+  "synthetic_demo_steps": 16,
+  "external_supervision_steps": 11,
+  "external_observer_velocity_mae": 0.0,
+  "external_legacy_velocity_mae": 0.022419614329121425,
+  "measurement_scope": "Single deterministic noiseless known-model mechanism demo, not a learning benchmark",
+  "controller_mutated_by_observer": false,
+  "automatic_recovery": false,
+  "prospective_evaluation_episodes": 0,
+  "holdout_episodes": 0,
+  "candidate_promoted": false,
+  "model_weights_trained": false
+}

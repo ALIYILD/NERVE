@@ -1,0 +1,35 @@
+{
+  "after": {
+    "memory_record_count": 1,
+    "report_mtime_ns": 1791919095255872434,
+    "report_sha256": "0649c7c1e2f82c1373bab6f420852d15a2d637290f5351d35effef508c1d3a66"
+  },
+  "before": {
+    "memory_record_count": 1,
+    "report_mtime_ns": 1791919095255872434,
+    "report_sha256": "0649c7c1e2f82c1373bab6f420852d15a2d637290f5351d35effef508c1d3a66"
+  },
+  "exit_code": 0,
+  "experiment_artifacts_unchanged": {
+    "/private/tmp/nerve-online-forecast-demo-v1.json": {
+      "mtime_ns": 1791917725282931895,
+      "sha256": "6d23f50564ff3fdf32204d76c1d5e621a072d70829e3f5b18574ab68cd12053e"
+    },
+    "/private/tmp/nerve-phase-forecast-study-claims.sqlite": {
+      "mtime_ns": 1791917119343707397,
+      "sha256": "752791713655eb4f9b67b0ebcff2c2edda45f739d40c698d77a7b949fad2bff3"
+    },
+    "/private/tmp/nerve-phase-forecast-study-v1/ledger.sqlite": {
+      "mtime_ns": 1791917119294937770,
+      "sha256": "0b5665d177c98825e9faa1eb62ed9b2be87b956dbfc235cdcfe7ad8bd4da5e07"
+    },
+    "/private/tmp/nerve-phase-forecast-study-v1/report.json": {
+      "mtime_ns": 1791917119201567607,
+      "sha256": "b3a6f4148aef9d74e4b6d21f4e7822fe5d1467f5911568484ed0b53c6242d280"
+    }
+  },
+  "memory_record_count_unchanged": true,
+  "new_research_episodes": 0,
+  "packet_bytes_unchanged": true,
+  "packet_mtime_unchanged": true
+}

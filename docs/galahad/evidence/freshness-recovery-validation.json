@@ -1,0 +1,20 @@
+{
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests": 1339,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 224.94,
+  "python": "3.10.0",
+  "environment": "macOS CPU; full suite outside sandbox for localhost/protected subprocess fixtures",
+  "log_sha256": "fdba0bb12f81b600dc66d99b054b4351adc479c9a62b28c2ce54199812b355ee",
+  "repairs_before_final_run": [
+    "Diagnostic AST pins updated after reviewed controller change",
+    "29 recovery errors exposed invalid historical-packet fixtures and required explicit observation/reseed integration",
+    "Three remaining failures traced to one legacy benchmark; benchmark migrated to the explicit recovery channel"
+  ],
+  "independent_review": "Freshness bypasses and delayed-reseed epoch mismatch repaired; executable evidence hashes verified; no remaining reviewed blockers",
+  "real_synthetic_recovery_checks": 10,
+  "mocked_component": "identity provider",
+  "current_diagnostic_cases": 33,
+  "new_holdout_calls": 0
+}

@@ -1,0 +1,31 @@
+{
+  "baseline_commit": "13cfda5fb47e30ff688128d95e9d0112225b83c5",
+  "branch": "feature/galahad-persistent-memory",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline --timeout-seconds 600",
+  "tests_passed": 1640,
+  "failures": 0,
+  "errors": 0,
+  "elapsed_seconds": 275.108,
+  "new_targeted_tests_passed": 21,
+  "independent_code_and_development_evidence_review": true,
+  "previous_full_suite_attempt": {
+    "status": "incomplete_timeout",
+    "timeout_seconds": 300,
+    "counted_as_pass": false
+  },
+  "training_episodes_diagnosed": 128,
+  "heldout_outcomes_analyzed": false,
+  "registered_research_episodes_executed": 0,
+  "recorded_development_cases": 12,
+  "recorded_development_steps": 960,
+  "development_seed": 9,
+  "development_fixture_repeated": true,
+  "development_baseline_comparisons": 8,
+  "failed_development_comparisons": 2,
+  "eligible_for_registered_study": false,
+  "next_action": "retain_baselines_and_revise_hypothesis",
+  "candidate_promoted": false,
+  "model_weights_trained": false,
+  "deployed": false,
+  "control_improvement_established": false
+}

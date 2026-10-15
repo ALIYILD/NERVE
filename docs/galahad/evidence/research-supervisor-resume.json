@@ -1,0 +1,27 @@
+{
+  "after": {
+    "/private/tmp/nerve-adaptation-followup-reviewed-claims.sqlite": "06d0174aa499de3ea370cc202525eaa0ec85e8d13c903e9e7f1de35b388afd65",
+    "/private/tmp/nerve-adaptation-followup-reviewed/report.json": "2026bac90b19e53a394d9eaffbe8cc4e7cb8960c9bc5773559dbbf99f5982e74",
+    "/private/tmp/nerve-dynamics-factorial-claims.sqlite": "2b9190cdf5e6c2b4e2b9219bb0a0c88028513190c5252c2345e488b4498cc1e6",
+    "/private/tmp/nerve-dynamics-factorial-v1/ledger.sqlite": "c7aa23bc7dd24280ecfd20b8e24bbb50008b5389a73c286dfa1b6ad92cdc5cf7",
+    "/private/tmp/nerve-dynamics-factorial-v1/report.json": "9db48675d45a8b74ea30aa5c9e760db06d20220d45c9b1e7c7c89baf71ca5349",
+    "/private/tmp/nerve-recovery-adaptation-claims.sqlite": "eb84f9d6955e426121c06354a512de27745897cdfabd455eb8954a1f5d60c628",
+    "/private/tmp/nerve-recovery-adaptation-v1/ledger.sqlite": "683edc7278897f40b3acee6c8fce3e4ed411f3e8262692ff6509dfb97b27c7fa",
+    "/private/tmp/nerve-recovery-adaptation-v1/report.json": "618bd1da5056ee12043e1d935a1f0114287ede5a3a51e814e7ea434203806612",
+    "/private/tmp/nerve-research-supervisor-v1/identification/report.json": "11c844a7da1126c749799e9c8c8111dbcf12f1bd9d58aa271ba8655289bf667d"
+  },
+  "before": {
+    "/private/tmp/nerve-adaptation-followup-reviewed-claims.sqlite": "06d0174aa499de3ea370cc202525eaa0ec85e8d13c903e9e7f1de35b388afd65",
+    "/private/tmp/nerve-adaptation-followup-reviewed/report.json": "2026bac90b19e53a394d9eaffbe8cc4e7cb8960c9bc5773559dbbf99f5982e74",
+    "/private/tmp/nerve-dynamics-factorial-claims.sqlite": "2b9190cdf5e6c2b4e2b9219bb0a0c88028513190c5252c2345e488b4498cc1e6",
+    "/private/tmp/nerve-dynamics-factorial-v1/ledger.sqlite": "c7aa23bc7dd24280ecfd20b8e24bbb50008b5389a73c286dfa1b6ad92cdc5cf7",
+    "/private/tmp/nerve-dynamics-factorial-v1/report.json": "9db48675d45a8b74ea30aa5c9e760db06d20220d45c9b1e7c7c89baf71ca5349",
+    "/private/tmp/nerve-recovery-adaptation-claims.sqlite": "eb84f9d6955e426121c06354a512de27745897cdfabd455eb8954a1f5d60c628",
+    "/private/tmp/nerve-recovery-adaptation-v1/ledger.sqlite": "683edc7278897f40b3acee6c8fce3e4ed411f3e8262692ff6509dfb97b27c7fa",
+    "/private/tmp/nerve-recovery-adaptation-v1/report.json": "618bd1da5056ee12043e1d935a1f0114287ede5a3a51e814e7ea434203806612",
+    "/private/tmp/nerve-research-supervisor-v1/identification/report.json": "11c844a7da1126c749799e9c8c8111dbcf12f1bd9d58aa271ba8655289bf667d"
+  },
+  "fresh_process_resume": true,
+  "new_plant_episodes": 0,
+  "research_artifacts_unchanged": true
+}

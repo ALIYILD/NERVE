@@ -1,0 +1,11 @@
+{
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests": 1319,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 89.946,
+  "python": "3.10.0",
+  "environment": "Full suite outside sandbox for localhost and protected subprocess fixtures",
+  "log_sha256": "35e217ccd645540136969151c31f5d2a6ec9459f6c6cf0d9fc508f65dcb1c6ec",
+  "independent_review": "No substantive blockers; actual receipt and source hashes validated."
+}

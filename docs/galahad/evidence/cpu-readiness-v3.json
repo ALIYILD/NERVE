@@ -1,0 +1,54 @@
+{
+  "version": "local-memory-readiness-v3",
+  "model": "qwen2.5-coder:1.5b",
+  "expected_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+  "synthetic_only": true,
+  "diagnostic_only": true,
+  "persistent_kv_restored": false,
+  "environment": {
+    "python": "3.10.0",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit"
+  },
+  "source_sha256": {
+    "scripts/probe_local_memory_readiness.py": "c08bb5b7d5d9e5d0d150f5a99ca6f608dd179f62b20e3e4aefc7125268756815",
+    "scripts/benchmark_local_memory.py": "2440760626c0d18da5f491c2fc856fec778a0b9f55d99252144eda13e0019fa8",
+    "src/nerve_awim/memory_gateway/inference.py": "e9404ba3168b6b6242c62356f6b3ec5d8dd519c1ab823716685014cc48335782",
+    "src/nerve_awim/memory_gateway/gateway.py": "cd41f9f0a44af8331e1db04e43493b8c83cec5512edb3269a1e6a8dc9726f876"
+  },
+  "preload_attempted": true,
+  "inference_attempted": true,
+  "accepted_completions": 1,
+  "weight_training": false,
+  "max_preload_calls": 1,
+  "max_inference_calls": 1,
+  "preload_timeout_seconds": 45,
+  "inference_timeout_seconds": 90,
+  "runtime_profile": "cpu_research",
+  "max_output_tokens": 128,
+  "limitation": "single readiness probe; not accuracy or improvement evidence",
+  "metadata_before": {
+    "model": "qwen2.5-coder:1.5b",
+    "digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668"
+  },
+  "preload": {
+    "wall_seconds": 3.3174098989984486
+  },
+  "metadata_after": {
+    "model": "qwen2.5-coder:1.5b",
+    "digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668"
+  },
+  "status": "ready",
+  "probe": {
+    "output": "Synthetic readiness marker is READY42. Source_id: readiness-source",
+    "usage": {
+      "prompt_tokens": 262,
+      "completion_tokens": 15,
+      "total_tokens": 277
+    },
+    "wall_seconds": 72.68422907999775,
+    "marker_hit": true,
+    "source_hit": true,
+    "diagnostic_score": 1,
+    "review_required": true
+  }
+}

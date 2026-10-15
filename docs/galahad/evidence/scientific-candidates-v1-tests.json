@@ -1,0 +1,24 @@
+{
+  "base_commit": "0ba21f59240d1c98ea6536d10da60c27ba39ccb6",
+  "branch": "feature/galahad-persistent-memory",
+  "candidate_evaluation": false,
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline --timeout-seconds 600",
+  "elapsed_seconds": 163.982,
+  "environment": {
+    "mode": "CPU with local socket fixtures permitted",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "errors": 0,
+  "failures": 0,
+  "focused_tests": {
+    "generator": 9,
+    "registration": 10
+  },
+  "independent_review": "code, all19tests and actual main/fallback artifacts cleared",
+  "log_sha256": "70423b5e485e5afec413f89055d5ada5a75b66462c96aae0ff7fbf675e8d7e9d",
+  "new_model_calls": 0,
+  "new_tests": 19,
+  "status": "passed",
+  "tests": 1902
+}

@@ -13,8 +13,7 @@ class IdentityTests(unittest.TestCase):
         c=IdentityBoundRecovery(secret=SECRET,ledger_path=str(Path(self.temp.name)/"ledger.db"),
             identity_verifier=FakeVerifier(identity),expected_issuer="test-idp",
             expected_audience="nerve",max_missing=1,recovery_samples=2)
-        for _ in range(4):c.act()
-        c.miss();c.ingest(0,position=.1,velocity=.1);c.ingest(1,position=.2,velocity=.2)
+        c.miss();c.observe_recovery(1,observed_now=1,position=.1,velocity=.1);c.observe_recovery(2,observed_now=2,position=.2,velocity=.2)
         return c
     def test_valid_verified_identity(self):
         identity=VerifiedIdentity("alice","test-idp","nerve",frozenset({"recovery-supervisor"}),200)

@@ -1,0 +1,100 @@
+{
+  "kind": "post_run_descriptive_raw_text_inspection_not_registered_rescoring",
+  "limitation": "Presence of the correct value and unit is not a valid provenance-linked answer, policy gain, or promotion evidence.",
+  "receipt_sha256": "311df667e7d6c2107fc5cf4f5aa0857d090e84ac42b8ea6eb912d39531a0103a",
+  "required_source_alias_present": 0,
+  "rows": [
+    {
+      "exact_value_present": true,
+      "expected_unit": "mg",
+      "expected_value": "240.0",
+      "mg_present": true,
+      "raw_output": "Value|unit|source\n240.0 mg|milligram|facts",
+      "required_source_alias_present": false,
+      "task_id": "dev-e823944e140264ed4c469a60e3aea02c141c2a7247a7f9b2b2e262be337167e2"
+    },
+    {
+      "exact_value_present": true,
+      "expected_unit": "mg",
+      "expected_value": "3161.5",
+      "mg_present": true,
+      "raw_output": "Value|unit|source\n3161.5 mg|mg|facts",
+      "required_source_alias_present": false,
+      "task_id": "dev-b19157a4dc48b82564bff5a2744c0e8b5f1ecbbe893fee2c0cba5cbb86ca5a09"
+    },
+    {
+      "exact_value_present": true,
+      "expected_unit": "mg",
+      "expected_value": "5221.3",
+      "mg_present": true,
+      "raw_output": "Value|unit|source\n5221.3 mg|mg|facts",
+      "required_source_alias_present": false,
+      "task_id": "dev-9deb76b67c6bc8c585956205e73de0b1832b7e5f6ecf7a2a6c7e9c744095d917"
+    },
+    {
+      "exact_value_present": true,
+      "expected_unit": "mg",
+      "expected_value": "8446.4",
+      "mg_present": true,
+      "raw_output": "Value|unit|source\n8446.4 mg|mg|facts",
+      "required_source_alias_present": false,
+      "task_id": "dev-454253885080cac3da6509ec9b50cf0ccda91db8a60260bdc5035a5b1f3e447a"
+    },
+    {
+      "exact_value_present": true,
+      "expected_unit": "mg",
+      "expected_value": "7754.1",
+      "mg_present": true,
+      "raw_output": "Value|unit|source\n7754.1 mg|mg|facts",
+      "required_source_alias_present": false,
+      "task_id": "dev-bae74739b0f57383a8d3fd67f0e0b1e17b06f2699c521f9fd81eacd3d16415c1"
+    },
+    {
+      "exact_value_present": true,
+      "expected_unit": "mg",
+      "expected_value": "6086.9",
+      "mg_present": true,
+      "raw_output": "Value|unit|source\n6086.9 mg|mg|facts",
+      "required_source_alias_present": false,
+      "task_id": "dev-d31cd8a788349375acefefc180403211c6002930c3f02b74b419b3f5914f3c9d"
+    },
+    {
+      "exact_value_present": true,
+      "expected_unit": "mg",
+      "expected_value": "7922.3",
+      "mg_present": true,
+      "raw_output": "Value|unit|source\n7922.3 mg|mg|facts",
+      "required_source_alias_present": false,
+      "task_id": "dev-b17c84cebc0b4024a382b962d0bd5583aa1b72ff557eee086efd9c81feb314f1"
+    },
+    {
+      "exact_value_present": true,
+      "expected_unit": "mg",
+      "expected_value": "5794.6",
+      "mg_present": true,
+      "raw_output": "Value|unit|source\n5794.6|mg|facts",
+      "required_source_alias_present": false,
+      "task_id": "dev-bae37fe1367714cb047d84c237916e56045664a3fd49d3bb27a8d2b4648497b2"
+    },
+    {
+      "exact_value_present": true,
+      "expected_unit": "mg",
+      "expected_value": "1363.7",
+      "mg_present": true,
+      "raw_output": "Value|unit|source\n1363.7 mg|mg|facts",
+      "required_source_alias_present": false,
+      "task_id": "dev-d6e5c90819a2785cbc1dbb022452c2910d92cc2b066cfd4b972c06b8cb3a1bd7"
+    },
+    {
+      "exact_value_present": true,
+      "expected_unit": "mg",
+      "expected_value": "881.5",
+      "mg_present": true,
+      "raw_output": "Value|unit|source\n881.5 mg|milligram|facts",
+      "required_source_alias_present": false,
+      "task_id": "dev-ca27b75e55388dceed8f14e21e3c004bac1136567a866ca7b752b4670c2be46e"
+    }
+  ],
+  "strict_scores_unchanged": true,
+  "value_and_mg_present": 10
+}

@@ -1,0 +1,270 @@
+{
+  "automatic_recovery": false,
+  "candidate_promoted": false,
+  "external_legacy_mae": 0.022419614329121425,
+  "external_observer_mae": 0.0,
+  "external_steps": 11,
+  "model_weights_trained": false,
+  "protocol": "actual-action-observer-demo-v1",
+  "rows": [
+    {
+      "action": 1,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.0,
+      "observer": {
+        "position": 0.27,
+        "status": "observed_action_forecast",
+        "step": 0,
+        "velocity": 0.27
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "active",
+      "source": "controller",
+      "step": 0,
+      "true_velocity": 0.27
+    },
+    {
+      "action": 1,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.0,
+      "observer": {
+        "position": 0.7614000000000001,
+        "status": "observed_action_forecast",
+        "step": 1,
+        "velocity": 0.49140000000000006
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "active",
+      "source": "controller",
+      "step": 1,
+      "true_velocity": 0.49140000000000006
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.0,
+      "observer": {
+        "position": 1.1643480000000002,
+        "status": "observed_action_forecast",
+        "step": 2,
+        "velocity": 0.40294800000000003
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "active",
+      "source": "controller",
+      "step": 2,
+      "true_velocity": 0.40294800000000003
+    },
+    {
+      "action": -1,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.0,
+      "observer": {
+        "position": 1.2247653600000001,
+        "status": "observed_action_forecast",
+        "step": 3,
+        "velocity": 0.060417359999999976
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "active",
+      "source": "controller",
+      "step": 3,
+      "true_velocity": 0.060417359999999976
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.0,
+      "observer": {
+        "position": 1.2743075952,
+        "status": "observed_action_forecast",
+        "step": 4,
+        "velocity": 0.04954223519999998
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "active",
+      "source": "controller",
+      "step": 4,
+      "true_velocity": 0.04954223519999998
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.0,
+      "observer": {
+        "position": 1.3149322280640001,
+        "status": "observed_action_forecast",
+        "step": 5,
+        "velocity": 0.04062463286399998
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 5,
+      "true_velocity": 0.04062463286399998
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.00731243391552,
+      "observer": {
+        "position": 1.34824442701248,
+        "status": "observed_action_forecast",
+        "step": 6,
+        "velocity": 0.03331219894847998
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 6,
+      "true_velocity": 0.03331219894847998
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.013308629726246399,
+      "observer": {
+        "position": 1.3755604301502335,
+        "status": "observed_action_forecast",
+        "step": 7,
+        "velocity": 0.027316003137753585
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 7,
+      "true_velocity": 0.027316003137753585
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.018225510291042045,
+      "observer": {
+        "position": 1.3979595527231914,
+        "status": "observed_action_forecast",
+        "step": 8,
+        "velocity": 0.02239912257295794
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 8,
+      "true_velocity": 0.02239912257295794
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.022257352354174476,
+      "observer": {
+        "position": 1.416326833233017,
+        "status": "observed_action_forecast",
+        "step": 9,
+        "velocity": 0.018367280509825508
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 9,
+      "true_velocity": 0.018367280509825508
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.025563462845943068,
+      "observer": {
+        "position": 1.431388003251074,
+        "status": "observed_action_forecast",
+        "step": 10,
+        "velocity": 0.015061170018056916
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 10,
+      "true_velocity": 0.015061170018056916
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.028274473449193316,
+      "observer": {
+        "position": 1.4437381626658807,
+        "status": "observed_action_forecast",
+        "step": 11,
+        "velocity": 0.01235015941480667
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 11,
+      "true_velocity": 0.01235015941480667
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.030497502143858515,
+      "observer": {
+        "position": 1.453865293386022,
+        "status": "observed_action_forecast",
+        "step": 12,
+        "velocity": 0.010127130720141469
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 12,
+      "true_velocity": 0.010127130720141469
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.03232038567348398,
+      "observer": {
+        "position": 1.462169540576538,
+        "status": "observed_action_forecast",
+        "step": 13,
+        "velocity": 0.008304247190516005
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 13,
+      "true_velocity": 0.008304247190516005
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.03381515016777686,
+      "observer": {
+        "position": 1.468979023272761,
+        "status": "observed_action_forecast",
+        "step": 14,
+        "velocity": 0.006809482696223124
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 14,
+      "true_velocity": 0.006809482696223124
+    },
+    {
+      "action": 0,
+      "controller_unchanged_by_observer": true,
+      "legacy_absolute_error": 0.03504085705309702,
+      "observer": {
+        "position": 1.474562799083664,
+        "status": "observed_action_forecast",
+        "step": 15,
+        "velocity": 0.005583775810902961
+      },
+      "observer_absolute_error": 0.0,
+      "phase": "supervision_required",
+      "source": "external_supervisor",
+      "step": 15,
+      "true_velocity": 0.005583775810902961
+    }
+  ],
+  "scope": "Single deterministic noiseless known-model mechanism demo; no comparative learning claim.",
+  "status": "passed",
+  "steps": 16
+}

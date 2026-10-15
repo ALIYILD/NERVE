@@ -1,0 +1,16 @@
+{
+  "tests_passed": 1838,
+  "tests_failed": 0,
+  "new_tests": 29,
+  "seconds": 166.77,
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline --timeout-seconds 600",
+  "log_sha256": "b3cbf52e402e90f09ad9f24fa835a23d4d41206f2acf646a886c1a0d0aae83fd",
+  "artifact_sha256": "6dd4898e04d8b8435d817ee890c248c7941e3046873611b14580d89f0de8db3a",
+  "python": "3.10.0",
+  "platform": "macOS-26.5.2-x86_64-i386-64bit",
+  "inference_attempts": 1,
+  "completed_outputs": 0,
+  "schema_constrained_attempts": 0,
+  "runtime": "0.20.2",
+  "result": "failed_consumed_timeout"
+}

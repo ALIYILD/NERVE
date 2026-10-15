@@ -1,0 +1,12 @@
+{
+  "actual_calls": 8,
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline --timeout-seconds 600",
+  "elapsed_seconds": 146.97,
+  "independent_review": "28 focused tests passed; actual raw outputs, all 23 source pins, model identity, eight local claims, one shared claim and zero utility feedback independently verified",
+  "log": "/private/tmp/nerve-scientific-interface-tests.log",
+  "log_sha256": "d6678a6935d4e2b58d404848e4eb1846550e88f464be9b80f90aa302a3e72dfe",
+  "new_tests": 28,
+  "python": "3.10.0",
+  "tests_failed": 0,
+  "tests_passed": 1775
+}

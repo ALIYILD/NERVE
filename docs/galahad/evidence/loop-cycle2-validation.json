@@ -1,0 +1,21 @@
+{
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline",
+  "tests": 1261,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 65.388,
+  "grounding_v2_model_attempts": 8,
+  "grounding_v2_model_completions": 8,
+  "raw_contract_passes": 3,
+  "guarded_contract_passes": 8,
+  "restart_child_calls": 80,
+  "restart_pipeline_episodes": 1024,
+  "restart_equivalent_pairs": 16,
+  "overnight_cycles": 32,
+  "overnight_pipeline_episodes": 65536,
+  "overnight_recommendation": "retain_baseline",
+  "source_hash_and_sqlite_checks": true,
+  "model_weights_trained": false,
+  "deployed": false,
+  "policy_promoted": false
+}
