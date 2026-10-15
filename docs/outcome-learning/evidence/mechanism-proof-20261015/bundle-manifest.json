@@ -1,0 +1,30 @@
+{
+  "pod_id": "lg0svvuenxvbno",
+  "gpu": "NVIDIA A40",
+  "pod_status_at_check": "RUNNING",
+  "ssh_host": "194.68.245.44",
+  "ssh_port": 22008,
+  "pod_identity_source": "Runpod get_pod live read plus verified SSH mapping supplied by orchestrator",
+  "available_model_name": "qwen2.5-coder:7b",
+  "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+  "model_digest_source": "Read-only GET http://127.0.0.1:11434/api/tags on pod after proof",
+  "model_used": false,
+  "model_calls": 0,
+  "pod_cost_usd_hour": 0.59,
+  "cost_source": "Runpod get_pod cost field",
+  "private_archive": "/Users/aliyildirim/nerve-research-runs/outcome-mechanism-proof-20261015",
+  "private_remote": "/root/nerve-outcome-mechanism-proof-evidence-v2",
+  "remote_mode": "0700",
+  "test_wall_seconds": 1.863,
+  "initial_proof_seconds": 2.1532510071992874,
+  "reviewed_proof_seconds": 2.5868465304374695,
+  "compute_interval_allocation_usd": 0.001082174318668246,
+  "cost_note": "Pro-rated shared-pod wall allocation, not extra instance cost or full invoice; transfer/orchestration time excluded.",
+  "base_commit": "c165779",
+  "artifacts": {
+    "aggregate-report.json": "d5d722d30d34c40927af4b250970df752230d1fc8556e78cb61e1e8bb7e8394f",
+    "registration.json": "bf3e10aeddfb8bfb7312221b111632f0624b6b473e595f41b71156c69b7c4ef2",
+    "initial-attempt.json": "22931f2874b2a201a10822365a831d201099cd3847262c336febfd9949e00ae3",
+    "tests.log": "3a458f6d87ba274c360f5cc44fa3960ad64434c5fe1333069fecc08672b2cb12"
+  }
+}

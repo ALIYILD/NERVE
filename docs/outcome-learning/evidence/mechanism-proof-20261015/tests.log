@@ -1,0 +1,54 @@
+test_agent_and_context_isolation (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_bad_policy_and_registry (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_batch_failure_never_returns_partial_results (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_duplicate_task_ids_rejected (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_exact_history_ignores_adjacent_context (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_holdout_run_does_not_record_feedback (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_invalid_rewards_rejected (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_learns_from_persisted_feedback (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_parallel_task_results_are_ordered (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_recency_and_utility_differ_on_same_evidence (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_unregistered_context_rejected (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_untrusted_memory_cannot_trigger_unknown_handler (test_agent_learning_v12.FeedbackAgentTests) ... ok
+test_canary_reversal_rolls_back_and_enforces_cooldown (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_drift_connects_evaluation_to_versioned_switch (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_duplicate_feedback_is_idempotent_and_conflicts_rejected (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_evaluation_bound_to_exact_observed_state (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_foreign_stale_and_out_of_order_feedback_rejected (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_forged_eligibility_cannot_bypass_regression_gate (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_future_outcomes_do_not_affect_prefix_decisions (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_insufficient_or_missing_feedback_does_not_trigger (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_restart_in_middle_of_canary_and_goal_completion (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_selection_retained_overlap_rejected (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_stable_data_never_triggers_or_calls_evaluator (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_stop_prevents_observation_and_switch (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_weak_or_bad_judge_does_not_qualify (test_auto_adaptation.AutoAdaptationTests) ... ok
+test_both_domain_loops_with_restart_before_monitor (test_goal_orchestrator.GoalTests) ... ok
+test_bounded_failed_target_retry_and_blocked_parent (test_goal_orchestrator.GoalTests) ... ok
+test_cancel_and_tick_budget (test_goal_orchestrator.GoalTests) ... ok
+test_deadline_before_and_during_handler (test_goal_orchestrator.GoalTests) ... ok
+test_dependency_and_group_completion_survive_restart (test_goal_orchestrator.GoalTests) ... ok
+test_exception_blocks_without_leaking_message (test_goal_orchestrator.GoalTests) ... ok
+test_existing_goal_cannot_be_overwritten (test_goal_orchestrator.GoalTests) ... ok
+test_expired_goal_never_calls_handler (test_goal_orchestrator.GoalTests) ... ok
+test_interrupted_execution_is_not_replayed (test_goal_orchestrator.GoalTests) ... ok
+test_invalid_graph_and_handler (test_goal_orchestrator.GoalTests) ... ok
+test_perf_improves_actual_operations_preserving_digest (test_goal_orchestrator.GoalTests) ... ok
+test_rollback_does_not_mutate_prior_policy (test_goal_orchestrator.GoalTests) ... ok
+test_validator_cannot_return_truthy_text (test_goal_orchestrator.GoalTests) ... ok
+test_changed_version_invalidates_signature (test_retained_skill_contract.RetainedSkillContractTests) ... ok
+test_dev_review_only_is_not_promotion (test_retained_skill_contract.RetainedSkillContractTests) ... ok
+test_each_tampered_artifact_retains_incumbent (test_retained_skill_contract.RetainedSkillContractTests) ... ok
+test_orchestrator_selects_verified_signed_fixture (test_retained_skill_contract.RetainedSkillContractTests) ... ok
+test_signed_bindings_must_match_host (test_retained_skill_contract.RetainedSkillContractTests) ... ok
+test_unsigned_invalid_and_unauthorized_promotions_block (test_retained_skill_contract.RetainedSkillContractTests) ... ok
+test_bad_values_and_metadata_view (test_outcome_forecast.OutcomeForecastTests) ... ok
+test_duplicates_do_not_manufacture_learning (test_outcome_forecast.OutcomeForecastTests) ... ok
+test_learning_drift_and_controls (test_outcome_forecast.OutcomeForecastTests) ... ok
+test_no_future_outcome_leakage (test_outcome_forecast.OutcomeForecastTests) ... ok
+test_same_time_and_missing (test_outcome_forecast.OutcomeForecastTests) ... ok
+
+----------------------------------------------------------------------
+Ran 49 tests in 1.863s
+
+OK
