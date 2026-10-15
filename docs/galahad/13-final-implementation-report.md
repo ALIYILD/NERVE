@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest failure-driven experiment:** [70-format-failure-research-loop.md](70-format-failure-research-loop.md) records 1,997 passing tests, four actual model calls and twelve-artifact network-free restart. Generic schema shape improved, but full format and exact answers remained 0/2 in each arm. The coordinator retained the baseline; no efficacy, weight learning or full Tier-6 completion is claimed.
+
 **Latest actual candidate transport:** [69-candidate-inference-transport.md](69-candidate-inference-transport.md) records 1,970 passing tests and one real local completion with durable one-attempt claims. Transport accounting passed; the schema-shaped fenced response failed format and exact-answer checks. Fresh-process resume made zero network calls. This is a concrete formatting failure, not an efficacy rejection or learning-completion claim.
 
 **Latest executable candidate adapter:** [68-executable-candidate-routing.md](68-executable-candidate-routing.md) records bounded preparation/execution callbacks and a 2,100-preparation development-only route audit. Input mutation/revocation guards and closed-holdout replay passed. The 100 conflict abstentions matched development answers; model routes were not executed. Real-model transport, efficacy comparison and the full conductor remain incomplete.

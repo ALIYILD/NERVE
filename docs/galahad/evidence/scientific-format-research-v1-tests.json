@@ -1,0 +1,11 @@
+{
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline --timeout-seconds 600",
+  "tests": 1997,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 178.68,
+  "focused_new_tests": 27,
+  "environment": "macOS-26.5.2-x86_64-i386-64bit",
+  "log": "/private/tmp/nerve-format-research-baseline.log",
+  "base_commit": "75a15e888ebbeae9f295b4e134f53e397e043327"
+}
