@@ -1,0 +1,54 @@
+{
+  "artifacts": {
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-route-audit-v1/report.json": {
+      "mtime_ns": 1792046751082277060,
+      "sha256": "dfe074fe06fb2d0cde1b3935e04a95c0f54e8612c97931c72fc17b20691c8520"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-screen-v1/report.json": {
+      "mtime_ns": 1792045953566720790,
+      "sha256": "3a2b22616cdb90bbf98bc595df3b1662fbd44e78f85d4f0d18d0fff88d1af9b7"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidates-v1/report.json": {
+      "mtime_ns": 1792045390088770648,
+      "sha256": "f90d2c9e72ee862a1ada9ff7f4bfba7ebcdd212a9e45bb980438277b1fab3e3a"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-episodes-v2/experiences.sqlite": {
+      "mtime_ns": 1792044289012485603,
+      "sha256": "7a463644e474e72f9571fccd4f98a33949b1ad72c3afb38cf8ddbecd6c74bbc8"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-negative-history-v1/rejections.sqlite": {
+      "mtime_ns": 1792045953505950835,
+      "sha256": "d54cb5c56b98192fe7bbef34d04a30bfb3164005ee11a973ff36776de3724845"
+    },
+    "/Users/aliyildirim/nerve-research-runs/task-bank-v1/dev.json": {
+      "mtime_ns": 1792014691726715759,
+      "sha256": "9b495d387555cf1666e93d2ffe8669b6da34d14f1a609265eef6abd74063fa92"
+    },
+    "/Users/aliyildirim/nerve-research-runs/task-bank-v1/manifest.json": {
+      "mtime_ns": 1792014691755472006,
+      "sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6"
+    }
+  },
+  "candidate_routes": [
+    {
+      "deterministic_conflict_abstention": 100,
+      "model": 600
+    },
+    {
+      "model": 700
+    },
+    {
+      "model": 700
+    }
+  ],
+  "development_items": 700,
+  "efficacy_established": false,
+  "fresh_process_bytes_and_mtimes_unchanged": true,
+  "holdout_access_forbidden": true,
+  "model_calls": 0,
+  "model_predictions": 0,
+  "preparations": 2100,
+  "prestep_abstentions_matching_development_answer": 100,
+  "prestep_false_abstentions": 0,
+  "status": "passed"
+}

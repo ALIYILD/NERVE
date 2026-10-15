@@ -1,5 +1,7 @@
 # Final implementation report — 12 October 2026
 
+**Latest executable candidate adapter:** [68-executable-candidate-routing.md](68-executable-candidate-routing.md) records bounded preparation/execution callbacks and a 2,100-preparation development-only route audit. Input mutation/revocation guards and closed-holdout replay passed. The 100 conflict abstentions matched development answers; model routes were not executed. Real-model transport, efficacy comparison and the full conductor remain incomplete.
+
 **Latest rejection-memory integration:** [67-negative-evidence-screening.md](67-negative-evidence-screening.md) records scoped host-adjudicated negative memory, durable screening and strict new-cluster retry exceptions. Actual screening found three eligible, unevaluated candidates and no rejection records; restart preserved ten artifacts. No efficacy gain, automatic study adjudication or completed conductor is claimed.
 
 **Latest candidate registration:** [66-failure-driven-candidate-registration.md](66-failure-driven-candidate-registration.md) records three rule-based, hash-bound hypotheses from actual episode evidence and a four-candidate enumeration fallback. Independent review verified source/evidence binding and zero-inference restart. No candidate execution, new performance gain, negative-evidence suppression or Tier-6 completion is claimed.
