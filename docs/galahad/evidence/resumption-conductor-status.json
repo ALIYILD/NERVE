@@ -1,21 +1,24 @@
 {
   "version": "resumption-conductor-status-v1",
-  "updated_at_utc": "2026-10-15T23:37:45.367261+00:00",
+  "updated_at_utc": "2026-10-15T23:49:51.785411+00:00",
   "status": "active_CPU_preparation_pod_stopped",
   "authorization": "User explicit do-it-all authorizes versioned input/preparation adapter and newCPUpreflight deadline; original protected paths remain unchanged.",
   "cpu_preflight": {
     "owner": "root/outcome_overnight",
     "session_id": 66898,
-    "status": "running",
+    "status": "v2 timeout at 1200 seconds, not pass; outcome preparing separately registered full-coverage v3",
     "registered_timeout_seconds": 1200,
     "checkout": "/Users/aliyildirim/nerve-outcome-revised",
-    "evidence": "pending owner publication; output path to be supplied by root"
+    "evidence": "registration.json,run.log,result.json; source unchanged; no completed timing inventory",
+    "output_directory": "/Users/aliyildirim/nerve-research-runs/cpu-preflight-v2-20261016",
+    "registration_sha256": "ef00311ba16c44605630b6ab5bf5dc3942d59a324abb38c2c0d2e1c7923f5281",
+    "inventory_tests": 2228
   },
-  "bank_focused_tests": "waiting single-suite lock",
+  "bank_focused_tests": "17/17 passed, 29.089 seconds; mutex released",
   "bank_generation": "not_started",
   "bank_sealed": false,
-  "adapter_review": "independent review; fixes applied, tests pending",
-  "study_harness_review": "independent review active",
+  "adapter_review": "reviewed; focused tests passed",
+  "study_harness_review": "reviewed; focused tests passed",
   "candidate_designed": false,
   "holdout_consumed": false,
   "pod": {
@@ -43,9 +46,9 @@
   "limits": {
     "cumulative_running_seconds": 21600,
     "physical_model_attempts": 6000,
-    "absolute_conservative_stop_utc": "2026-10-16T05:08:59+00:00",
     "concurrent_pods": 1,
-    "replacement_maximum": 1
+    "replacement_maximum": 1,
+    "deadline_rule": "Each real restart provider_start+(21600-prior_running_seconds), bounded by06:00UTC wrapup; all idle/startup included"
   },
   "done_when": [
     "registered independent-validated sealed900dev300holdout nine-stratum bank",
@@ -55,5 +58,5 @@
     "stop pod with freshEXITED; backup private evidence; push featurebranch; update morninghandoff"
   ],
   "inference_calls": 0,
-  "next_action": "finish rootCPUpreflight, runfocusedadapter/bank/harness tests, freeze sources andregisterbank beforegeneration; restartpodonlywhenready"
+  "next_action": "Freeze new protocol and sources; await complete CPU preflight admission before pod restart and actual bank generation."
 }
