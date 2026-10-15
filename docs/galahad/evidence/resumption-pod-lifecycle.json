@@ -1,0 +1,22 @@
+{
+  "version": "resumption-pod-lifecycle-v1",
+  "pod_id": "lg0svvuenxvbno",
+  "gpu": "NVIDIA A40",
+  "hourly_usd": 0.59,
+  "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+  "runtime": "0.40.5",
+  "intervals": [
+    {
+      "started_at_utc": "2026-10-15T23:08:59.019Z",
+      "EXITED_readback_at_utc": "2026-10-15T23:28:19.802Z",
+      "running_upper_bound_seconds": 1160.783,
+      "reason": "user restart, exact runtime recovery, read-only model verification; stop during CPU preparation"
+    }
+  ],
+  "running_seconds_upper_bound": 1160.783,
+  "compute_cost_upper_bound_usd": 0.1902394361111111,
+  "model_calls": 0,
+  "replacement_created": false,
+  "status": "EXITED",
+  "cost_note": "Provider start to stop readback includes startup/idle/stop latency; upper bound estimate, not invoice; storage separate."
+}

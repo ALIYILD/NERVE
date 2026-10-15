@@ -1,0 +1,59 @@
+{
+  "version": "resumption-conductor-status-v1",
+  "updated_at_utc": "2026-10-15T23:37:45.367261+00:00",
+  "status": "active_CPU_preparation_pod_stopped",
+  "authorization": "User explicit do-it-all authorizes versioned input/preparation adapter and newCPUpreflight deadline; original protected paths remain unchanged.",
+  "cpu_preflight": {
+    "owner": "root/outcome_overnight",
+    "session_id": 66898,
+    "status": "running",
+    "registered_timeout_seconds": 1200,
+    "checkout": "/Users/aliyildirim/nerve-outcome-revised",
+    "evidence": "pending owner publication; output path to be supplied by root"
+  },
+  "bank_focused_tests": "waiting single-suite lock",
+  "bank_generation": "not_started",
+  "bank_sealed": false,
+  "adapter_review": "independent review; fixes applied, tests pending",
+  "study_harness_review": "independent review active",
+  "candidate_designed": false,
+  "holdout_consumed": false,
+  "pod": {
+    "version": "resumption-pod-lifecycle-v1",
+    "pod_id": "lg0svvuenxvbno",
+    "gpu": "NVIDIA A40",
+    "hourly_usd": 0.59,
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "runtime": "0.40.5",
+    "intervals": [
+      {
+        "started_at_utc": "2026-10-15T23:08:59.019Z",
+        "EXITED_readback_at_utc": "2026-10-15T23:28:19.802Z",
+        "running_upper_bound_seconds": 1160.783,
+        "reason": "user restart, exact runtime recovery, read-only model verification; stop during CPU preparation"
+      }
+    ],
+    "running_seconds_upper_bound": 1160.783,
+    "compute_cost_upper_bound_usd": 0.1902394361111111,
+    "model_calls": 0,
+    "replacement_created": false,
+    "status": "EXITED",
+    "cost_note": "Provider start to stop readback includes startup/idle/stop latency; upper bound estimate, not invoice; storage separate."
+  },
+  "limits": {
+    "cumulative_running_seconds": 21600,
+    "physical_model_attempts": 6000,
+    "absolute_conservative_stop_utc": "2026-10-16T05:08:59+00:00",
+    "concurrent_pods": 1,
+    "replacement_maximum": 1
+  },
+  "done_when": [
+    "registered independent-validated sealed900dev300holdout nine-stratum bank",
+    "adapted-v3 dev measurement withcontrols",
+    "failure-supported candidate only if failures; devthenconditional slice1",
+    "no signing/activation",
+    "stop pod with freshEXITED; backup private evidence; push featurebranch; update morninghandoff"
+  ],
+  "inference_calls": 0,
+  "next_action": "finish rootCPUpreflight, runfocusedadapter/bank/harness tests, freeze sources andregisterbank beforegeneration; restartpodonlywhenready"
+}
