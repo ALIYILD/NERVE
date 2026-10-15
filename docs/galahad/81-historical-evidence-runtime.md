@@ -11,3 +11,5 @@ The WorldCore diagnostic separately normalizes AST serialization to its register
 A corrupt nested JSON list may be rejected during parsing or during exact object-schema validation, depending on interpreter recursion behavior. The test accepts either explicit rejection, and still checks degraded status, refused reads/writes and unchanged database bytes.
 
 Future portable research protocols should register canonical exogenous inputs and explicit numerical reduction semantics before execution. This change does not redefine any historical scientific protocol.
+
+The complete memory readiness workflow also runs in the archived-receipt environment: its existing rule rejects any skipped required test. This rule is unchanged. Linux research smoke, coverage and the diagnostic matrix remain separate checks. The Intel runner label follows [GitHub's supported runner catalog](https://docs.github.com/en/actions/reference/runners/github-hosted-runners).
