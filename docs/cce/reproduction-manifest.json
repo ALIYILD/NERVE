@@ -1,0 +1,20 @@
+{
+  "schema": "nerve-cce-reproduction-plan-v1",
+  "status": "blocked_external_resources",
+  "paper": "https://arxiv.org/abs/2610.06851v1",
+  "author_repository": "https://github.com/sophicle/cues",
+  "author_commit": "cd9caabe748307df0565502f630e3a834a9f998d",
+  "verified_date": "2026-10-12",
+  "runtime_requirement": "Author-documented Linux NVIDIA CUDA 13 environment",
+  "proposal_variants": ["paper-30", "author-code-100"],
+  "evaluation": {"rollouts_per_problem": 32, "temperature": 0.6, "top_p": 0.95, "max_tokens": 31744},
+  "weight_revision": null,
+  "tokenizer_revision": null,
+  "dataset_revision": null,
+  "grader_revision": null,
+  "container_digest": null,
+  "gpu_host": null,
+  "approved_budget_usd": null,
+  "measured_results": null,
+  "note": "Null means unavailable, never passed or zero. No benchmark or deployment has run."
+}

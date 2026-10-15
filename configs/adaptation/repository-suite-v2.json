@@ -1,0 +1,1454 @@
+{
+  "schema": "adaptation-repository-suite-v2",
+  "episodes_digest": "36aff257487596d37006ca7bc479326164afca52738376a7d84d5cae11cd38a5",
+  "frozen_before_evaluation": true,
+  "gates": {
+    "benefit_control": "strong-baseline",
+    "success_gain": 0.05,
+    "paired_interval_lower": 0,
+    "p95_overhead_ceiling": 0.2,
+    "max_actions_including_review_probes": 5
+  },
+  "episodes": [
+    {
+      "id": "repo-v2-development-methods-0",
+      "split": "development",
+      "family": "methods",
+      "restart": true,
+      "files": [
+        [
+          "methods_0.py",
+          "class C_methods_0:\n def hidden(self): return 1\ndef visible_methods_0(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_methods_0():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-methods-1",
+      "split": "development",
+      "family": "methods",
+      "restart": false,
+      "files": [
+        [
+          "methods_1.py",
+          "class C_methods_1:\n def hidden(self): return 1\ndef visible_methods_1(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_methods_1():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-methods-2",
+      "split": "development",
+      "family": "methods",
+      "restart": true,
+      "files": [
+        [
+          "methods_2.py",
+          "class C_methods_2:\n def hidden(self): return 1\ndef visible_methods_2(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_methods_2():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-methods-3",
+      "split": "development",
+      "family": "methods",
+      "restart": false,
+      "files": [
+        [
+          "methods_3.py",
+          "class C_methods_3:\n def hidden(self): return 1\ndef visible_methods_3(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_methods_3():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-methods-4",
+      "split": "development",
+      "family": "methods",
+      "restart": true,
+      "files": [
+        [
+          "methods_4.py",
+          "class C_methods_4:\n def hidden(self): return 1\ndef visible_methods_4(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_methods_4():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-methods-5",
+      "split": "development",
+      "family": "methods",
+      "restart": false,
+      "files": [
+        [
+          "methods_5.py",
+          "class C_methods_5:\n def hidden(self): return 1\ndef visible_methods_5(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_methods_5():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-methods-6",
+      "split": "development",
+      "family": "methods",
+      "restart": true,
+      "files": [
+        [
+          "methods_6.py",
+          "class C_methods_6:\n def hidden(self): return 1\ndef visible_methods_6(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_methods_6():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-methods-7",
+      "split": "development",
+      "family": "methods",
+      "restart": false,
+      "files": [
+        [
+          "methods_7.py",
+          "class C_methods_7:\n def hidden(self): return 1\ndef visible_methods_7(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_methods_7():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-methods-8",
+      "split": "development",
+      "family": "methods",
+      "restart": true,
+      "files": [
+        [
+          "methods_8.py",
+          "class C_methods_8:\n def hidden(self): return 1\ndef visible_methods_8(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_methods_8():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-methods-9",
+      "split": "development",
+      "family": "methods",
+      "restart": false,
+      "files": [
+        [
+          "methods_9.py",
+          "class C_methods_9:\n def hidden(self): return 1\ndef visible_methods_9(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_methods_9():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-nested-0",
+      "split": "development",
+      "family": "nested",
+      "restart": true,
+      "files": [
+        [
+          "nested_0.py",
+          "def outer_nested_0():\n def inner(): return 1\n return inner()\n"
+        ],
+        [
+          "followup.py",
+          "def later_nested_0():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-nested-1",
+      "split": "development",
+      "family": "nested",
+      "restart": false,
+      "files": [
+        [
+          "nested_1.py",
+          "def outer_nested_1():\n def inner(): return 1\n return inner()\n"
+        ],
+        [
+          "followup.py",
+          "def later_nested_1():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-nested-2",
+      "split": "development",
+      "family": "nested",
+      "restart": true,
+      "files": [
+        [
+          "nested_2.py",
+          "def outer_nested_2():\n def inner(): return 1\n return inner()\n"
+        ],
+        [
+          "followup.py",
+          "def later_nested_2():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-nested-3",
+      "split": "development",
+      "family": "nested",
+      "restart": false,
+      "files": [
+        [
+          "nested_3.py",
+          "def outer_nested_3():\n def inner(): return 1\n return inner()\n"
+        ],
+        [
+          "followup.py",
+          "def later_nested_3():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-nested-4",
+      "split": "development",
+      "family": "nested",
+      "restart": true,
+      "files": [
+        [
+          "nested_4.py",
+          "def outer_nested_4():\n def inner(): return 1\n return inner()\n"
+        ],
+        [
+          "followup.py",
+          "def later_nested_4():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-nested-5",
+      "split": "development",
+      "family": "nested",
+      "restart": false,
+      "files": [
+        [
+          "nested_5.py",
+          "def outer_nested_5():\n def inner(): return 1\n return inner()\n"
+        ],
+        [
+          "followup.py",
+          "def later_nested_5():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-nested-6",
+      "split": "development",
+      "family": "nested",
+      "restart": true,
+      "files": [
+        [
+          "nested_6.py",
+          "def outer_nested_6():\n def inner(): return 1\n return inner()\n"
+        ],
+        [
+          "followup.py",
+          "def later_nested_6():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-nested-7",
+      "split": "development",
+      "family": "nested",
+      "restart": false,
+      "files": [
+        [
+          "nested_7.py",
+          "def outer_nested_7():\n def inner(): return 1\n return inner()\n"
+        ],
+        [
+          "followup.py",
+          "def later_nested_7():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-nested-8",
+      "split": "development",
+      "family": "nested",
+      "restart": true,
+      "files": [
+        [
+          "nested_8.py",
+          "def outer_nested_8():\n def inner(): return 1\n return inner()\n"
+        ],
+        [
+          "followup.py",
+          "def later_nested_8():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-nested-9",
+      "split": "development",
+      "family": "nested",
+      "restart": false,
+      "files": [
+        [
+          "nested_9.py",
+          "def outer_nested_9():\n def inner(): return 1\n return inner()\n"
+        ],
+        [
+          "followup.py",
+          "def later_nested_9():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-quoted-code-0",
+      "split": "development",
+      "family": "quoted-code",
+      "restart": true,
+      "files": [
+        [
+          "quoted_code_0.py",
+          "text = \"def false_quoted_code_0(): pass\"\ndef real_quoted_code_0(): return text\n"
+        ],
+        [
+          "followup.py",
+          "def later_quoted_code_0():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-quoted-code-1",
+      "split": "development",
+      "family": "quoted-code",
+      "restart": false,
+      "files": [
+        [
+          "quoted_code_1.py",
+          "text = \"def false_quoted_code_1(): pass\"\ndef real_quoted_code_1(): return text\n"
+        ],
+        [
+          "followup.py",
+          "def later_quoted_code_1():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-quoted-code-2",
+      "split": "development",
+      "family": "quoted-code",
+      "restart": true,
+      "files": [
+        [
+          "quoted_code_2.py",
+          "text = \"def false_quoted_code_2(): pass\"\ndef real_quoted_code_2(): return text\n"
+        ],
+        [
+          "followup.py",
+          "def later_quoted_code_2():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-quoted-code-3",
+      "split": "development",
+      "family": "quoted-code",
+      "restart": false,
+      "files": [
+        [
+          "quoted_code_3.py",
+          "text = \"def false_quoted_code_3(): pass\"\ndef real_quoted_code_3(): return text\n"
+        ],
+        [
+          "followup.py",
+          "def later_quoted_code_3():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-quoted-code-4",
+      "split": "development",
+      "family": "quoted-code",
+      "restart": true,
+      "files": [
+        [
+          "quoted_code_4.py",
+          "text = \"def false_quoted_code_4(): pass\"\ndef real_quoted_code_4(): return text\n"
+        ],
+        [
+          "followup.py",
+          "def later_quoted_code_4():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-quoted-code-5",
+      "split": "development",
+      "family": "quoted-code",
+      "restart": false,
+      "files": [
+        [
+          "quoted_code_5.py",
+          "text = \"def false_quoted_code_5(): pass\"\ndef real_quoted_code_5(): return text\n"
+        ],
+        [
+          "followup.py",
+          "def later_quoted_code_5():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-quoted-code-6",
+      "split": "development",
+      "family": "quoted-code",
+      "restart": true,
+      "files": [
+        [
+          "quoted_code_6.py",
+          "text = \"def false_quoted_code_6(): pass\"\ndef real_quoted_code_6(): return text\n"
+        ],
+        [
+          "followup.py",
+          "def later_quoted_code_6():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-quoted-code-7",
+      "split": "development",
+      "family": "quoted-code",
+      "restart": false,
+      "files": [
+        [
+          "quoted_code_7.py",
+          "text = \"def false_quoted_code_7(): pass\"\ndef real_quoted_code_7(): return text\n"
+        ],
+        [
+          "followup.py",
+          "def later_quoted_code_7():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-quoted-code-8",
+      "split": "development",
+      "family": "quoted-code",
+      "restart": true,
+      "files": [
+        [
+          "quoted_code_8.py",
+          "text = \"def false_quoted_code_8(): pass\"\ndef real_quoted_code_8(): return text\n"
+        ],
+        [
+          "followup.py",
+          "def later_quoted_code_8():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-quoted-code-9",
+      "split": "development",
+      "family": "quoted-code",
+      "restart": false,
+      "files": [
+        [
+          "quoted_code_9.py",
+          "text = \"def false_quoted_code_9(): pass\"\ndef real_quoted_code_9(): return text\n"
+        ],
+        [
+          "followup.py",
+          "def later_quoted_code_9():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-commented-code-0",
+      "split": "development",
+      "family": "commented-code",
+      "restart": true,
+      "files": [
+        [
+          "commented_code_0.py",
+          "# def obsolete_commented_code_0(): pass\ndef public_commented_code_0(): return 1\n"
+        ],
+        [
+          "followup.py",
+          "def later_commented_code_0():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-commented-code-1",
+      "split": "development",
+      "family": "commented-code",
+      "restart": false,
+      "files": [
+        [
+          "commented_code_1.py",
+          "# def obsolete_commented_code_1(): pass\ndef public_commented_code_1(): return 1\n"
+        ],
+        [
+          "followup.py",
+          "def later_commented_code_1():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-commented-code-2",
+      "split": "development",
+      "family": "commented-code",
+      "restart": true,
+      "files": [
+        [
+          "commented_code_2.py",
+          "# def obsolete_commented_code_2(): pass\ndef public_commented_code_2(): return 1\n"
+        ],
+        [
+          "followup.py",
+          "def later_commented_code_2():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-commented-code-3",
+      "split": "development",
+      "family": "commented-code",
+      "restart": false,
+      "files": [
+        [
+          "commented_code_3.py",
+          "# def obsolete_commented_code_3(): pass\ndef public_commented_code_3(): return 1\n"
+        ],
+        [
+          "followup.py",
+          "def later_commented_code_3():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-commented-code-4",
+      "split": "development",
+      "family": "commented-code",
+      "restart": true,
+      "files": [
+        [
+          "commented_code_4.py",
+          "# def obsolete_commented_code_4(): pass\ndef public_commented_code_4(): return 1\n"
+        ],
+        [
+          "followup.py",
+          "def later_commented_code_4():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-commented-code-5",
+      "split": "development",
+      "family": "commented-code",
+      "restart": false,
+      "files": [
+        [
+          "commented_code_5.py",
+          "# def obsolete_commented_code_5(): pass\ndef public_commented_code_5(): return 1\n"
+        ],
+        [
+          "followup.py",
+          "def later_commented_code_5():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-commented-code-6",
+      "split": "development",
+      "family": "commented-code",
+      "restart": true,
+      "files": [
+        [
+          "commented_code_6.py",
+          "# def obsolete_commented_code_6(): pass\ndef public_commented_code_6(): return 1\n"
+        ],
+        [
+          "followup.py",
+          "def later_commented_code_6():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-commented-code-7",
+      "split": "development",
+      "family": "commented-code",
+      "restart": false,
+      "files": [
+        [
+          "commented_code_7.py",
+          "# def obsolete_commented_code_7(): pass\ndef public_commented_code_7(): return 1\n"
+        ],
+        [
+          "followup.py",
+          "def later_commented_code_7():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-commented-code-8",
+      "split": "development",
+      "family": "commented-code",
+      "restart": true,
+      "files": [
+        [
+          "commented_code_8.py",
+          "# def obsolete_commented_code_8(): pass\ndef public_commented_code_8(): return 1\n"
+        ],
+        [
+          "followup.py",
+          "def later_commented_code_8():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-commented-code-9",
+      "split": "development",
+      "family": "commented-code",
+      "restart": false,
+      "files": [
+        [
+          "commented_code_9.py",
+          "# def obsolete_commented_code_9(): pass\ndef public_commented_code_9(): return 1\n"
+        ],
+        [
+          "followup.py",
+          "def later_commented_code_9():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-async-methods-0",
+      "split": "development",
+      "family": "async-methods",
+      "restart": true,
+      "files": [
+        [
+          "async_methods_0.py",
+          "class Service_async_methods_0:\n async def handle(self): return 1\nasync def public_async_methods_0(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_async_methods_0():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-async-methods-1",
+      "split": "development",
+      "family": "async-methods",
+      "restart": false,
+      "files": [
+        [
+          "async_methods_1.py",
+          "class Service_async_methods_1:\n async def handle(self): return 1\nasync def public_async_methods_1(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_async_methods_1():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-async-methods-2",
+      "split": "development",
+      "family": "async-methods",
+      "restart": true,
+      "files": [
+        [
+          "async_methods_2.py",
+          "class Service_async_methods_2:\n async def handle(self): return 1\nasync def public_async_methods_2(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_async_methods_2():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-async-methods-3",
+      "split": "development",
+      "family": "async-methods",
+      "restart": false,
+      "files": [
+        [
+          "async_methods_3.py",
+          "class Service_async_methods_3:\n async def handle(self): return 1\nasync def public_async_methods_3(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_async_methods_3():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-async-methods-4",
+      "split": "development",
+      "family": "async-methods",
+      "restart": true,
+      "files": [
+        [
+          "async_methods_4.py",
+          "class Service_async_methods_4:\n async def handle(self): return 1\nasync def public_async_methods_4(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_async_methods_4():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-async-methods-5",
+      "split": "development",
+      "family": "async-methods",
+      "restart": false,
+      "files": [
+        [
+          "async_methods_5.py",
+          "class Service_async_methods_5:\n async def handle(self): return 1\nasync def public_async_methods_5(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_async_methods_5():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-async-methods-6",
+      "split": "development",
+      "family": "async-methods",
+      "restart": true,
+      "files": [
+        [
+          "async_methods_6.py",
+          "class Service_async_methods_6:\n async def handle(self): return 1\nasync def public_async_methods_6(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_async_methods_6():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-async-methods-7",
+      "split": "development",
+      "family": "async-methods",
+      "restart": false,
+      "files": [
+        [
+          "async_methods_7.py",
+          "class Service_async_methods_7:\n async def handle(self): return 1\nasync def public_async_methods_7(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_async_methods_7():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-async-methods-8",
+      "split": "development",
+      "family": "async-methods",
+      "restart": true,
+      "files": [
+        [
+          "async_methods_8.py",
+          "class Service_async_methods_8:\n async def handle(self): return 1\nasync def public_async_methods_8(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_async_methods_8():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-async-methods-9",
+      "split": "development",
+      "family": "async-methods",
+      "restart": false,
+      "files": [
+        [
+          "async_methods_9.py",
+          "class Service_async_methods_9:\n async def handle(self): return 1\nasync def public_async_methods_9(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_async_methods_9():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-decorated-methods-0",
+      "split": "development",
+      "family": "decorated-methods",
+      "restart": true,
+      "files": [
+        [
+          "decorated_methods_0.py",
+          "class Decorated_decorated_methods_0:\n @staticmethod\n def factory(): return 1\ndef top_decorated_methods_0(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_decorated_methods_0():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-decorated-methods-1",
+      "split": "development",
+      "family": "decorated-methods",
+      "restart": false,
+      "files": [
+        [
+          "decorated_methods_1.py",
+          "class Decorated_decorated_methods_1:\n @staticmethod\n def factory(): return 1\ndef top_decorated_methods_1(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_decorated_methods_1():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-decorated-methods-2",
+      "split": "development",
+      "family": "decorated-methods",
+      "restart": true,
+      "files": [
+        [
+          "decorated_methods_2.py",
+          "class Decorated_decorated_methods_2:\n @staticmethod\n def factory(): return 1\ndef top_decorated_methods_2(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_decorated_methods_2():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-decorated-methods-3",
+      "split": "development",
+      "family": "decorated-methods",
+      "restart": false,
+      "files": [
+        [
+          "decorated_methods_3.py",
+          "class Decorated_decorated_methods_3:\n @staticmethod\n def factory(): return 1\ndef top_decorated_methods_3(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_decorated_methods_3():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-decorated-methods-4",
+      "split": "development",
+      "family": "decorated-methods",
+      "restart": true,
+      "files": [
+        [
+          "decorated_methods_4.py",
+          "class Decorated_decorated_methods_4:\n @staticmethod\n def factory(): return 1\ndef top_decorated_methods_4(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_decorated_methods_4():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-decorated-methods-5",
+      "split": "development",
+      "family": "decorated-methods",
+      "restart": false,
+      "files": [
+        [
+          "decorated_methods_5.py",
+          "class Decorated_decorated_methods_5:\n @staticmethod\n def factory(): return 1\ndef top_decorated_methods_5(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_decorated_methods_5():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-decorated-methods-6",
+      "split": "development",
+      "family": "decorated-methods",
+      "restart": true,
+      "files": [
+        [
+          "decorated_methods_6.py",
+          "class Decorated_decorated_methods_6:\n @staticmethod\n def factory(): return 1\ndef top_decorated_methods_6(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_decorated_methods_6():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-decorated-methods-7",
+      "split": "development",
+      "family": "decorated-methods",
+      "restart": false,
+      "files": [
+        [
+          "decorated_methods_7.py",
+          "class Decorated_decorated_methods_7:\n @staticmethod\n def factory(): return 1\ndef top_decorated_methods_7(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_decorated_methods_7():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-decorated-methods-8",
+      "split": "development",
+      "family": "decorated-methods",
+      "restart": true,
+      "files": [
+        [
+          "decorated_methods_8.py",
+          "class Decorated_decorated_methods_8:\n @staticmethod\n def factory(): return 1\ndef top_decorated_methods_8(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_decorated_methods_8():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-development-decorated-methods-9",
+      "split": "development",
+      "family": "decorated-methods",
+      "restart": false,
+      "files": [
+        [
+          "decorated_methods_9.py",
+          "class Decorated_decorated_methods_9:\n @staticmethod\n def factory(): return 1\ndef top_decorated_methods_9(): return 2\n"
+        ],
+        [
+          "followup.py",
+          "def later_decorated_methods_9():\n def local(): return 4\n return local()\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-methods-0",
+      "split": "heldout",
+      "family": "methods",
+      "restart": true,
+      "files": [
+        [
+          "methods_0.py",
+          "class Outer_methods_0:\n class Inner:\n  @property\n  def value(self): return 1\n def __iter__(self): yield 2\nasync def export_methods_0(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_methods_0:\n @staticmethod\n def helper(): return 2\ndef continuation_methods_0():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-methods-1",
+      "split": "heldout",
+      "family": "methods",
+      "restart": false,
+      "files": [
+        [
+          "methods_1.py",
+          "class Outer_methods_1:\n class Inner:\n  @property\n  def value(self): return 1\n def __iter__(self): yield 2\nasync def export_methods_1(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_methods_1:\n @staticmethod\n def helper(): return 2\ndef continuation_methods_1():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-methods-2",
+      "split": "heldout",
+      "family": "methods",
+      "restart": true,
+      "files": [
+        [
+          "methods_2.py",
+          "class Outer_methods_2:\n class Inner:\n  @property\n  def value(self): return 1\n def __iter__(self): yield 2\nasync def export_methods_2(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_methods_2:\n @staticmethod\n def helper(): return 2\ndef continuation_methods_2():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-methods-3",
+      "split": "heldout",
+      "family": "methods",
+      "restart": false,
+      "files": [
+        [
+          "methods_3.py",
+          "class Outer_methods_3:\n class Inner:\n  @property\n  def value(self): return 1\n def __iter__(self): yield 2\nasync def export_methods_3(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_methods_3:\n @staticmethod\n def helper(): return 2\ndef continuation_methods_3():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-methods-4",
+      "split": "heldout",
+      "family": "methods",
+      "restart": true,
+      "files": [
+        [
+          "methods_4.py",
+          "class Outer_methods_4:\n class Inner:\n  @property\n  def value(self): return 1\n def __iter__(self): yield 2\nasync def export_methods_4(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_methods_4:\n @staticmethod\n def helper(): return 2\ndef continuation_methods_4():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-nested-0",
+      "split": "heldout",
+      "family": "nested",
+      "restart": true,
+      "files": [
+        [
+          "nested_0.py",
+          "async def task_nested_0():\n async def worker(): return 3\n return await worker()\ndef export_nested_0(x=(1,2)):\n return x\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_nested_0:\n @staticmethod\n def helper(): return 2\ndef continuation_nested_0():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-nested-1",
+      "split": "heldout",
+      "family": "nested",
+      "restart": false,
+      "files": [
+        [
+          "nested_1.py",
+          "async def task_nested_1():\n async def worker(): return 3\n return await worker()\ndef export_nested_1(x=(1,2)):\n return x\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_nested_1:\n @staticmethod\n def helper(): return 2\ndef continuation_nested_1():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-nested-2",
+      "split": "heldout",
+      "family": "nested",
+      "restart": true,
+      "files": [
+        [
+          "nested_2.py",
+          "async def task_nested_2():\n async def worker(): return 3\n return await worker()\ndef export_nested_2(x=(1,2)):\n return x\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_nested_2:\n @staticmethod\n def helper(): return 2\ndef continuation_nested_2():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-nested-3",
+      "split": "heldout",
+      "family": "nested",
+      "restart": false,
+      "files": [
+        [
+          "nested_3.py",
+          "async def task_nested_3():\n async def worker(): return 3\n return await worker()\ndef export_nested_3(x=(1,2)):\n return x\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_nested_3:\n @staticmethod\n def helper(): return 2\ndef continuation_nested_3():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-nested-4",
+      "split": "heldout",
+      "family": "nested",
+      "restart": true,
+      "files": [
+        [
+          "nested_4.py",
+          "async def task_nested_4():\n async def worker(): return 3\n return await worker()\ndef export_nested_4(x=(1,2)):\n return x\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_nested_4:\n @staticmethod\n def helper(): return 2\ndef continuation_nested_4():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-quoted-code-0",
+      "split": "heldout",
+      "family": "quoted-code",
+      "restart": true,
+      "files": [
+        [
+          "quoted_code_0.py",
+          "blob = \"\"\"\ndef ghost_quoted_code_0():\n return 4\n\"\"\"\nclass Holder:\n value=blob\nasync def export_quoted_code_0(): return blob\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_quoted_code_0:\n @staticmethod\n def helper(): return 2\ndef continuation_quoted_code_0():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-quoted-code-1",
+      "split": "heldout",
+      "family": "quoted-code",
+      "restart": false,
+      "files": [
+        [
+          "quoted_code_1.py",
+          "blob = \"\"\"\ndef ghost_quoted_code_1():\n return 4\n\"\"\"\nclass Holder:\n value=blob\nasync def export_quoted_code_1(): return blob\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_quoted_code_1:\n @staticmethod\n def helper(): return 2\ndef continuation_quoted_code_1():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-quoted-code-2",
+      "split": "heldout",
+      "family": "quoted-code",
+      "restart": true,
+      "files": [
+        [
+          "quoted_code_2.py",
+          "blob = \"\"\"\ndef ghost_quoted_code_2():\n return 4\n\"\"\"\nclass Holder:\n value=blob\nasync def export_quoted_code_2(): return blob\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_quoted_code_2:\n @staticmethod\n def helper(): return 2\ndef continuation_quoted_code_2():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-quoted-code-3",
+      "split": "heldout",
+      "family": "quoted-code",
+      "restart": false,
+      "files": [
+        [
+          "quoted_code_3.py",
+          "blob = \"\"\"\ndef ghost_quoted_code_3():\n return 4\n\"\"\"\nclass Holder:\n value=blob\nasync def export_quoted_code_3(): return blob\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_quoted_code_3:\n @staticmethod\n def helper(): return 2\ndef continuation_quoted_code_3():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-quoted-code-4",
+      "split": "heldout",
+      "family": "quoted-code",
+      "restart": true,
+      "files": [
+        [
+          "quoted_code_4.py",
+          "blob = \"\"\"\ndef ghost_quoted_code_4():\n return 4\n\"\"\"\nclass Holder:\n value=blob\nasync def export_quoted_code_4(): return blob\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_quoted_code_4:\n @staticmethod\n def helper(): return 2\ndef continuation_quoted_code_4():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-commented-code-0",
+      "split": "heldout",
+      "family": "commented-code",
+      "restart": true,
+      "files": [
+        [
+          "commented_code_0.py",
+          "# disabled historical snippet:\n# async def stale_commented_code_0(\n#   option=1): pass\nclass C:\n def method(self): return 2\ndef export_commented_code_0(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_commented_code_0:\n @staticmethod\n def helper(): return 2\ndef continuation_commented_code_0():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-commented-code-1",
+      "split": "heldout",
+      "family": "commented-code",
+      "restart": false,
+      "files": [
+        [
+          "commented_code_1.py",
+          "# disabled historical snippet:\n# async def stale_commented_code_1(\n#   option=1): pass\nclass C:\n def method(self): return 2\ndef export_commented_code_1(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_commented_code_1:\n @staticmethod\n def helper(): return 2\ndef continuation_commented_code_1():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-commented-code-2",
+      "split": "heldout",
+      "family": "commented-code",
+      "restart": true,
+      "files": [
+        [
+          "commented_code_2.py",
+          "# disabled historical snippet:\n# async def stale_commented_code_2(\n#   option=1): pass\nclass C:\n def method(self): return 2\ndef export_commented_code_2(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_commented_code_2:\n @staticmethod\n def helper(): return 2\ndef continuation_commented_code_2():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-commented-code-3",
+      "split": "heldout",
+      "family": "commented-code",
+      "restart": false,
+      "files": [
+        [
+          "commented_code_3.py",
+          "# disabled historical snippet:\n# async def stale_commented_code_3(\n#   option=1): pass\nclass C:\n def method(self): return 2\ndef export_commented_code_3(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_commented_code_3:\n @staticmethod\n def helper(): return 2\ndef continuation_commented_code_3():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-commented-code-4",
+      "split": "heldout",
+      "family": "commented-code",
+      "restart": true,
+      "files": [
+        [
+          "commented_code_4.py",
+          "# disabled historical snippet:\n# async def stale_commented_code_4(\n#   option=1): pass\nclass C:\n def method(self): return 2\ndef export_commented_code_4(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_commented_code_4:\n @staticmethod\n def helper(): return 2\ndef continuation_commented_code_4():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-async-methods-0",
+      "split": "heldout",
+      "family": "async-methods",
+      "restart": true,
+      "files": [
+        [
+          "async_methods_0.py",
+          "class Context_async_methods_0:\n async def __aenter__(self): return self\n async def __aexit__(self,*args): pass\ndef export_async_methods_0():\n return Context_async_methods_0\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_async_methods_0:\n @staticmethod\n def helper(): return 2\ndef continuation_async_methods_0():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-async-methods-1",
+      "split": "heldout",
+      "family": "async-methods",
+      "restart": false,
+      "files": [
+        [
+          "async_methods_1.py",
+          "class Context_async_methods_1:\n async def __aenter__(self): return self\n async def __aexit__(self,*args): pass\ndef export_async_methods_1():\n return Context_async_methods_1\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_async_methods_1:\n @staticmethod\n def helper(): return 2\ndef continuation_async_methods_1():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-async-methods-2",
+      "split": "heldout",
+      "family": "async-methods",
+      "restart": true,
+      "files": [
+        [
+          "async_methods_2.py",
+          "class Context_async_methods_2:\n async def __aenter__(self): return self\n async def __aexit__(self,*args): pass\ndef export_async_methods_2():\n return Context_async_methods_2\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_async_methods_2:\n @staticmethod\n def helper(): return 2\ndef continuation_async_methods_2():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-async-methods-3",
+      "split": "heldout",
+      "family": "async-methods",
+      "restart": false,
+      "files": [
+        [
+          "async_methods_3.py",
+          "class Context_async_methods_3:\n async def __aenter__(self): return self\n async def __aexit__(self,*args): pass\ndef export_async_methods_3():\n return Context_async_methods_3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_async_methods_3:\n @staticmethod\n def helper(): return 2\ndef continuation_async_methods_3():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-async-methods-4",
+      "split": "heldout",
+      "family": "async-methods",
+      "restart": true,
+      "files": [
+        [
+          "async_methods_4.py",
+          "class Context_async_methods_4:\n async def __aenter__(self): return self\n async def __aexit__(self,*args): pass\ndef export_async_methods_4():\n return Context_async_methods_4\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_async_methods_4:\n @staticmethod\n def helper(): return 2\ndef continuation_async_methods_4():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-decorated-methods-0",
+      "split": "heldout",
+      "family": "decorated-methods",
+      "restart": true,
+      "files": [
+        [
+          "decorated_methods_0.py",
+          "class Builder_decorated_methods_0:\n @classmethod\n def build(cls,\n  value=2): return cls()\n@decorator\nasync def export_decorated_methods_0(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_decorated_methods_0:\n @staticmethod\n def helper(): return 2\ndef continuation_decorated_methods_0():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-decorated-methods-1",
+      "split": "heldout",
+      "family": "decorated-methods",
+      "restart": false,
+      "files": [
+        [
+          "decorated_methods_1.py",
+          "class Builder_decorated_methods_1:\n @classmethod\n def build(cls,\n  value=2): return cls()\n@decorator\nasync def export_decorated_methods_1(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_decorated_methods_1:\n @staticmethod\n def helper(): return 2\ndef continuation_decorated_methods_1():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-decorated-methods-2",
+      "split": "heldout",
+      "family": "decorated-methods",
+      "restart": true,
+      "files": [
+        [
+          "decorated_methods_2.py",
+          "class Builder_decorated_methods_2:\n @classmethod\n def build(cls,\n  value=2): return cls()\n@decorator\nasync def export_decorated_methods_2(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_decorated_methods_2:\n @staticmethod\n def helper(): return 2\ndef continuation_decorated_methods_2():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-decorated-methods-3",
+      "split": "heldout",
+      "family": "decorated-methods",
+      "restart": false,
+      "files": [
+        [
+          "decorated_methods_3.py",
+          "class Builder_decorated_methods_3:\n @classmethod\n def build(cls,\n  value=2): return cls()\n@decorator\nasync def export_decorated_methods_3(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_decorated_methods_3:\n @staticmethod\n def helper(): return 2\ndef continuation_decorated_methods_3():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    },
+    {
+      "id": "repo-v2-heldout-decorated-methods-4",
+      "split": "heldout",
+      "family": "decorated-methods",
+      "restart": true,
+      "files": [
+        [
+          "decorated_methods_4.py",
+          "class Builder_decorated_methods_4:\n @classmethod\n def build(cls,\n  value=2): return cls()\n@decorator\nasync def export_decorated_methods_4(): return 3\n"
+        ],
+        [
+          "followup.py",
+          "class Followup_decorated_methods_4:\n @staticmethod\n def helper(): return 2\ndef continuation_decorated_methods_4():\n async def inner(): return 3\n return inner\n"
+        ]
+      ]
+    }
+  ]
+}

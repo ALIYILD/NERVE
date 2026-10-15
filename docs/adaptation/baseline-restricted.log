@@ -1,0 +1,332 @@
+======================================================================
+ERROR: test_standalone_http_promotion_rollback_restart (test_bound_repository_host_v26.BoundHostTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_bound_repository_host_v26.py", line 249, in test_standalone_http_promotion_rollback_restart
+    sock.bind(('127.0.0.1', 0))
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_real_http_signed_request_and_denial (test_repository_host_v25.HostTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_repository_host_v25.py", line 193, in test_real_http_signed_request_and_denial
+    server = make_server('127.0.0.1', 0, self.host, server_class=PilotServer, handler_class=QuietHandler)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/wsgiref/simple_server.py", line 154, in make_server
+    server = server_class((host, port), handler_class)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/socketserver.py", line 452, in __init__
+    self.server_bind()
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/wsgiref/simple_server.py", line 50, in server_bind
+    HTTPServer.server_bind(self)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/http/server.py", line 138, in server_bind
+    socketserver.TCPServer.server_bind(self)
+  File "/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/socketserver.py", line 466, in server_bind
+    self.socket.bind(self.server_address)
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_standalone_server_restart_preserves_http_evidence (test_repository_host_v25.HostTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_repository_host_v25.py", line 237, in test_standalone_server_restart_preserves_http_evidence
+    sock.bind(('127.0.0.1', 0))
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='train', function='_normalise_trim')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 9, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='train', function='_counter')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 5, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='selection', function='canonical')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 4, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='selection', function='_path')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 7, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='selection', function='mcnemar_exact_p')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 6, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='retention', function='numeric_summary')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 5, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='retention', function='_unique')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 4, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='retention', function='regex_inventory')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 4, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='final', function='_quote')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 5, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='final', function='expected_handoff')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 4, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests) (split='final', function='compare')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 81, in test_all_originals_pass_and_all_curated_mutations_fail
+    self.assertTrue(reference['passed'],reference)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 6, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_kernel_denies_home_reads_and_network_even_for_trusted_probe (test_agentos_taskbench.RepairBenchmarkTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 112, in test_kernel_denies_home_reads_and_network_even_for_trusted_probe
+    self.assertTrue(result['passed'],result)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 9, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_nonterminating_patch_killed_by_timeout (test_agentos_taskbench.RepairBenchmarkTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 92, in test_nonterminating_patch_killed_by_timeout
+    self.assertEqual(result['category'],'timeout',result)
+AssertionError: 'sandbox_unavailable' != 'timeout'
+- sandbox_unavailable
++ timeout
+ : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 5, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_raw_validation_precedes_trimming (test_agentos_taskbench.RepairBenchmarkTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench.py", line 65, in test_raw_validation_precedes_trimming
+    self.assertEqual(result['category'],'behavior_failed',result)
+AssertionError: 'sandbox_unavailable' != 'behavior_failed'
+- sandbox_unavailable
++ behavior_failed
+ : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 9, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='train', function='grams')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 7, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='train', function='_format')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 7, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='selection', function='_plan_from_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 9, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='selection', function='parse_plan')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 9, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='selection', function='_advice')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 7, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='retention', function='_extract_json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 8, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='retention', function='_genome')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 8, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='retention', function='select_recipe')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 9, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='final', function='eligibility')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 6, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='final', function='_simple')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 5, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests) (phase='final', function='checked_budget')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v2.py", line 40, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 13, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='train', function='latest_run_by_task')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 6, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='train', function='schedule_inventory')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 6, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='selection', function='timeout_diagnosis')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 8, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='selection', function='dependency_readiness')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 7, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='selection', function='retry_disposition')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 9, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='retention', function='artifact_receipt_status')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 5, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='retention', function='mission_admission')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 5, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='retention', function='stale_claims')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 5, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='final', function='retry_chain_summary')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 6, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='final', function='mission_terminal_state')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 5, 'scope': 'agentos-repository-repair-v1'}
+
+======================================================================
+FAIL: test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests) (phase='final', function='successor_release')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/aliyildirim/nerve-review/tests/test_agentos_taskbench_v3.py", line 79, in test_all_references_pass_and_mutants_fail
+    self.assertTrue(original['passed'],original)
+AssertionError: False is not true : {'passed': False, 'category': 'sandbox_unavailable', 'tests_passed': 0, 'tests_total': 5, 'scope': 'agentos-repository-repair-v1'}
+
+----------------------------------------------------------------------
+Ran 947 tests in 59.517s
+
+FAILED (failures=36, errors=3)

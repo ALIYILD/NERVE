@@ -1,0 +1,22 @@
+{
+  "active_release_unchanged": true,
+  "evaluation": {
+    "contexts": {
+      "python_top_level_functions": {
+        "baseline_errors": 0,
+        "baseline_hits": 5,
+        "candidate_errors": 0,
+        "candidate_hits": 5,
+        "tasks": 5
+      }
+    },
+    "gate": "paired-v20-min5-accuracy0.8-no-context-regression-strict-total-gain",
+    "status": "rejected"
+  },
+  "fresh_process_restore": true,
+  "heldout_files": 5,
+  "holdout_replay_rejected": true,
+  "scope": "same-repository integration fixtures, not fresh external validation",
+  "status": "shadow_verified",
+  "training_files": 3
+}

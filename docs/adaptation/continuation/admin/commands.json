@@ -1,0 +1,87 @@
+[
+  {
+    "command": [
+      "/private/tmp/nerve-adaptation-ci-venv/bin/python",
+      "scripts/agentos_bridge.py",
+      "adaptation-run",
+      "--repository",
+      "/Users/aliyildirim/nerve-review",
+      "--state",
+      "/private/tmp/nerve-admin-observed-20261012",
+      "--report",
+      "/Users/aliyildirim/nerve-review/docs/adaptation/continuation/admin/adaptation-run.json",
+      "--task-id",
+      "observed-admin",
+      "--scenario",
+      "recover-regex",
+      "--restart"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "/private/tmp/nerve-adaptation-ci-venv/bin/python",
+      "scripts/agentos_bridge.py",
+      "adaptation-status",
+      "--repository",
+      "/Users/aliyildirim/nerve-review",
+      "--state",
+      "/private/tmp/nerve-admin-observed-20261012",
+      "--report",
+      "/Users/aliyildirim/nerve-review/docs/adaptation/continuation/admin/adaptation-status.json",
+      "--task-id",
+      "observed-admin"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "/private/tmp/nerve-adaptation-ci-venv/bin/python",
+      "scripts/agentos_bridge.py",
+      "adaptation-reset",
+      "--repository",
+      "/Users/aliyildirim/nerve-review",
+      "--state",
+      "/private/tmp/nerve-admin-observed-20261012",
+      "--report",
+      "/Users/aliyildirim/nerve-review/docs/adaptation/continuation/admin/adaptation-reset.json",
+      "--task-id",
+      "observed-admin",
+      "--reason",
+      "operator-clear-memory"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "/private/tmp/nerve-adaptation-ci-venv/bin/python",
+      "scripts/agentos_bridge.py",
+      "adaptation-kill",
+      "--repository",
+      "/Users/aliyildirim/nerve-review",
+      "--state",
+      "/private/tmp/nerve-admin-observed-20261012",
+      "--report",
+      "/Users/aliyildirim/nerve-review/docs/adaptation/continuation/admin/adaptation-kill.json",
+      "--reason",
+      "operator-stop"
+    ],
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "/private/tmp/nerve-adaptation-ci-venv/bin/python",
+      "scripts/agentos_bridge.py",
+      "adaptation-run",
+      "--repository",
+      "/Users/aliyildirim/nerve-review",
+      "--state",
+      "/private/tmp/nerve-admin-observed-20261012",
+      "--report",
+      "/Users/aliyildirim/nerve-review/docs/adaptation/continuation/admin/run-after-kill.json",
+      "--task-id",
+      "stopped-after-kill"
+    ],
+    "exit_code": 2
+  }
+]

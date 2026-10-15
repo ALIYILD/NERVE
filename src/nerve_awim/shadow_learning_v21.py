@@ -50,6 +50,7 @@ class ShadowLearning:
 
     def execute(self, task, *, expected_release=None, expected_generation=None, guard=None):
         # Invalid inputs/credentials fail before dispatch and are not outcomes.
+        self.engine.reject_arc_bypass(self.runtime, task)
         scope = self.engine._scope(self.runtime, 'runtime')
         clean, _ = self.engine._task(task)
         with self.engine._db() as con:
@@ -104,6 +105,7 @@ class ShadowLearning:
         for _ in range(min(limit, len(self._pending))):
             item = self._pending.popleft()
             try:
+                self.engine.reject_arc_bypass(self.trainer, item.task)
                 task, digest = self.engine._task(item.task)
                 # Reserve before any judge sees the task: holdout/train races and
                 # failed-judge retries cannot leak examples or bias selection.

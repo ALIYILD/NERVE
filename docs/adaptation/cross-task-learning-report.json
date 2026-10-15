@@ -1,0 +1,229 @@
+{
+  "schema": "arc-cross-task-learning-v1",
+  "scope": "local-read-only-repository",
+  "training": {
+    "source": "src/nerve_awim/arc_contracts.py",
+    "source_sha256": "8e2009ff8bc449b9d896df7c89fa8691f83f05eb5e6cf547b8b480f629464a66",
+    "actions": 2,
+    "review_probes": 1
+  },
+  "evaluation": [
+    {
+      "source": "src/nerve_awim/arc_provider.py",
+      "source_sha256": "88970e2d5dd6e6495d74ef4c76555149663ba92aa78cdcf1e0d255b4740bcb73",
+      "arms": {
+        "learned": {
+          "success": true,
+          "attempts": [
+            {
+              "file": "src/nerve_awim/arc_provider.py",
+              "tool": "ast-inventory",
+              "decision_id": "d735a46d164640fe96c20771f5b454f5",
+              "status": "verified",
+              "names": [],
+              "seconds": 0.04266339400783181,
+              "evidence_digest": "af0192867ae67689bae78eabe74063861a8a04d78603ab7185f8563aa069af84"
+            }
+          ],
+          "review_probes": 0,
+          "memory_decision_id": "ed2adaee1db04d0892c7fa7aa9ec535e",
+          "outputs": [
+            {
+              "file": "src/nerve_awim/arc_provider.py",
+              "functions": [],
+              "evidence_digest": "af0192867ae67689bae78eabe74063861a8a04d78603ab7185f8563aa069af84"
+            }
+          ]
+        },
+        "no_memory_recovery": {
+          "success": true,
+          "attempts": [
+            {
+              "file": "src/nerve_awim/arc_provider.py",
+              "tool": "regex-inventory",
+              "decision_id": "febcfb53dc7442f2a3a035adb3c2d235",
+              "status": "failed",
+              "names": [
+                "__call__",
+                "__init__"
+              ],
+              "seconds": 0.08335634897230193,
+              "evidence_digest": "af0192867ae67689bae78eabe74063861a8a04d78603ab7185f8563aa069af84"
+            },
+            {
+              "file": "src/nerve_awim/arc_provider.py",
+              "tool": "ast-inventory",
+              "decision_id": "7ce1f2a99d7e4c0d915df677d9a80a57",
+              "status": "verified",
+              "names": [],
+              "seconds": 0.02650963800260797,
+              "evidence_digest": "af0192867ae67689bae78eabe74063861a8a04d78603ab7185f8563aa069af84"
+            }
+          ],
+          "review_probes": 1,
+          "memory_decision_id": null,
+          "outputs": [
+            {
+              "file": "src/nerve_awim/arc_provider.py",
+              "functions": [],
+              "evidence_digest": "af0192867ae67689bae78eabe74063861a8a04d78603ab7185f8563aa069af84"
+            }
+          ]
+        },
+        "strong_ast": {
+          "success": true,
+          "attempts": [
+            {
+              "file": "src/nerve_awim/arc_provider.py",
+              "tool": "ast-inventory",
+              "decision_id": "b6ce5c4377944133bcc8fe2d1eeca963",
+              "status": "verified",
+              "names": [],
+              "seconds": 0.03986538597382605,
+              "evidence_digest": "af0192867ae67689bae78eabe74063861a8a04d78603ab7185f8563aa069af84"
+            }
+          ],
+          "review_probes": 0,
+          "memory_decision_id": null,
+          "outputs": [
+            {
+              "file": "src/nerve_awim/arc_provider.py",
+              "functions": [],
+              "evidence_digest": "af0192867ae67689bae78eabe74063861a8a04d78603ab7185f8563aa069af84"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "source": "src/nerve_awim/arc_operations.py",
+      "source_sha256": "7ed06486d28ce1ce0dcace4979e83e92b133c21188b75806e3f4c07f8826143c",
+      "arms": {
+        "learned": {
+          "success": true,
+          "attempts": [
+            {
+              "file": "src/nerve_awim/arc_operations.py",
+              "tool": "ast-inventory",
+              "decision_id": "7c37d5db098c44adbdef0f1dcdaeef74",
+              "status": "verified",
+              "names": [
+                "release_dispatch_guard"
+              ],
+              "seconds": 0.05364055500831455,
+              "evidence_digest": "cddff84239d79cc80b0c4d707b2ec5d2a1951a99ed336c332809812271895e95"
+            }
+          ],
+          "review_probes": 0,
+          "memory_decision_id": "ed2adaee1db04d0892c7fa7aa9ec535e",
+          "outputs": [
+            {
+              "file": "src/nerve_awim/arc_operations.py",
+              "functions": [
+                "release_dispatch_guard"
+              ],
+              "evidence_digest": "cddff84239d79cc80b0c4d707b2ec5d2a1951a99ed336c332809812271895e95"
+            }
+          ]
+        },
+        "no_memory_recovery": {
+          "success": true,
+          "attempts": [
+            {
+              "file": "src/nerve_awim/arc_operations.py",
+              "tool": "regex-inventory",
+              "decision_id": "aa0c05cebb8c4b29b3e510fb24ad771f",
+              "status": "failed",
+              "names": [
+                "__init__",
+                "_row",
+                "inspect",
+                "metrics",
+                "promote",
+                "release_dispatch_guard",
+                "replay",
+                "rollback",
+                "stage",
+                "status"
+              ],
+              "seconds": 0.05543851701077074,
+              "evidence_digest": "cddff84239d79cc80b0c4d707b2ec5d2a1951a99ed336c332809812271895e95"
+            },
+            {
+              "file": "src/nerve_awim/arc_operations.py",
+              "tool": "ast-inventory",
+              "decision_id": "67e91d407a3f49678f212022628a87de",
+              "status": "verified",
+              "names": [
+                "release_dispatch_guard"
+              ],
+              "seconds": 0.04905704804696143,
+              "evidence_digest": "cddff84239d79cc80b0c4d707b2ec5d2a1951a99ed336c332809812271895e95"
+            }
+          ],
+          "review_probes": 1,
+          "memory_decision_id": null,
+          "outputs": [
+            {
+              "file": "src/nerve_awim/arc_operations.py",
+              "functions": [
+                "release_dispatch_guard"
+              ],
+              "evidence_digest": "cddff84239d79cc80b0c4d707b2ec5d2a1951a99ed336c332809812271895e95"
+            }
+          ]
+        },
+        "strong_ast": {
+          "success": true,
+          "attempts": [
+            {
+              "file": "src/nerve_awim/arc_operations.py",
+              "tool": "ast-inventory",
+              "decision_id": "8221f396fd2843eca902034b2f5a4b13",
+              "status": "verified",
+              "names": [
+                "release_dispatch_guard"
+              ],
+              "seconds": 0.08638504898408428,
+              "evidence_digest": "cddff84239d79cc80b0c4d707b2ec5d2a1951a99ed336c332809812271895e95"
+            }
+          ],
+          "review_probes": 0,
+          "memory_decision_id": null,
+          "outputs": [
+            {
+              "file": "src/nerve_awim/arc_operations.py",
+              "functions": [
+                "release_dispatch_guard"
+              ],
+              "evidence_digest": "cddff84239d79cc80b0c4d707b2ec5d2a1951a99ed336c332809812271895e95"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "totals": {
+    "learned": {
+      "successes": 2,
+      "tasks": 2,
+      "actions": 2,
+      "review_probes": 0
+    },
+    "no_memory_recovery": {
+      "successes": 2,
+      "tasks": 2,
+      "actions": 4,
+      "review_probes": 2
+    },
+    "strong_ast": {
+      "successes": 2,
+      "tasks": 2,
+      "actions": 2,
+      "review_probes": 0
+    }
+  },
+  "provider_calls": 0,
+  "production_activation": false,
+  "limitation": "Known-source regression. Reuses verified tool recovery; no gain over capable AST, model training, or general self-improvement claim."
+}

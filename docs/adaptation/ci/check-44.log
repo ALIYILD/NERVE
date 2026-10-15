@@ -1,0 +1,27 @@
+{
+  "report": {
+    "active_generation": 0,
+    "active_release": "da3dd3b6552c4b0b885f671ac24259d3",
+    "automatic_promotion": false,
+    "base_generation": 0,
+    "base_release": "da3dd3b6552c4b0b885f671ac24259d3",
+    "canary": "00000000000000000000000000000017",
+    "candidate": "05a757bd38f9428f98a4f8f77e16529d",
+    "cost_usd": null,
+    "latency": {
+      "max_ms": 2.4187280068872496,
+      "mean_ms": 2.0561319979606196
+    },
+    "latency_budget_ms": 1000.0,
+    "outcomes": {
+      "passed": 1,
+      "quality_failure": 1
+    },
+    "percent": 25,
+    "phase": "stopped",
+    "reason": "quality_failure",
+    "required_successes": 20
+  },
+  "scope": "local real-file drill with weak baseline, fixed IDs and injected judge failure; not independent performance evidence or a production deployment",
+  "status": "canary_fallback_verified"
+}

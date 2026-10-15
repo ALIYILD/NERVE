@@ -1,0 +1,275 @@
+{
+  "activation_authorized": false,
+  "adapter": {
+    "attempted_calls": 4,
+    "confidence_available": false,
+    "deployment_authorized": false,
+    "errors": 0,
+    "external_provider_fee_usd": 0.0,
+    "input_tokens": 184,
+    "last_error": null,
+    "last_error_stage": null,
+    "local_compute_cost_usd": null,
+    "manifest_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "measured_receipts": 4,
+    "model": "qwen2.5-coder:1.5b",
+    "output_tokens": 12,
+    "renderer": "qwen2-chatml-instruction-v1",
+    "schema": "nerve-cce-ollama-usage-v1",
+    "scope": "local instruction smoke; not paper reproduction or deployed cue",
+    "server_duration_ns": 21288020464,
+    "truncations": 0,
+    "unmeasured_calls": 0
+  },
+  "decision": {
+    "eligible": false,
+    "reasons": [
+      "insufficient_pairs",
+      "accuracy_gain_required",
+      "weak_paired_evidence",
+      "missing_calibration",
+      "independent_receipt_required"
+    ],
+    "report_digest": "30b33585b0dda245ddbf3819fa8c47293488fc8cb4bdd62a622b03ec7d665826"
+  },
+  "identity": {
+    "attestation": "observational local research only",
+    "deployment_authorized": false,
+    "installed_template_digest": "1e65450c30670713aa47fe23e8b9662bdf4065e81cc8e3cbfaa98924fcc0d320",
+    "manifest_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+    "model_blob_digest": "29d8c98fa6b098e200069bfb88b9508dc3e85586d20cba59f8dda9a808165104",
+    "model_calls": 0,
+    "model_config": {
+      "context_digest": "693abc7ad2a279f491e78f57ef3e716b168efd1594a6076cb100c3f6873a2e51",
+      "max_tokens": 32,
+      "model": "qwen2.5-coder:1.5b",
+      "profile_key": "1b1a6f6c4a36efb8c0ec4d471b0615efa9e98ab43bc80fc442eb0a49f0f33692",
+      "provider": "ollama-local-research",
+      "revision": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+      "sampling_digest": "088ca38429f34ed4d29d69c141014bbec6eff3b1762bedb91fbb6f8a8c246a8f",
+      "temperature": 0.0,
+      "template_digest": "7916d56e1bde39a8961b0e4b4f8d589f91b379257d7e63f781c6694c1a4b552c",
+      "tokenizer": "gguf-embedded-artifact",
+      "tokenizer_revision": "918523ef037b839c9120ef715c0a8636e79702af13755968c6b92191b523474a"
+    },
+    "profile": {
+      "model": "qwen2.5-coder:1.5b",
+      "provider": "ollama-local-research",
+      "revision": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+      "supported_modes": [
+        "instruction"
+      ],
+      "template_revision": "7916d56e1bde39a8961b0e4b4f8d589f91b379257d7e63f781c6694c1a4b552c",
+      "tokenizer": "gguf-embedded-artifact",
+      "tokenizer_revision": "918523ef037b839c9120ef715c0a8636e79702af13755968c6b92191b523474a"
+    },
+    "renderer": "qwen2-chatml-instruction-v1",
+    "schema": "nerve-cce-ollama-profile-v1",
+    "server_version": "0.20.2",
+    "show_digest": "74995d4649d0d5f21678e6812ea313220734af3beb4452b43405084bd4463ee0",
+    "tokenizer_identity": "verified GGUF artifact plus executor; token IDs unverified"
+  },
+  "limitations": [
+    "two pairs cannot establish effectiveness",
+    "answer calibration unavailable",
+    "no independent approval receipt",
+    "observational local serving identity; not worker deployment attestation",
+    "external provider fee only; local compute cost unmeasured"
+  ],
+  "metrics": {
+    "baseline": {
+      "accuracy": 1.0,
+      "brier_score": null,
+      "calibration_coverage": {
+        "measured_observations": 0,
+        "observations": 2
+      },
+      "cost_usd": 0.0,
+      "latency_ms": 7358.609697992506,
+      "latency_p95_ms": 9965.479000995401,
+      "safety": 1.0,
+      "token_usage": {
+        "input_tokens": {
+          "measured_observations": 2,
+          "total": 86
+        },
+        "observations": 2,
+        "output_tokens": {
+          "measured_observations": 2,
+          "total": 6
+        }
+      }
+    },
+    "candidate": {
+      "accuracy": 1.0,
+      "brier_score": null,
+      "calibration_coverage": {
+        "measured_observations": 0,
+        "observations": 2
+      },
+      "cost_usd": 0.0,
+      "latency_ms": 4494.39690199506,
+      "latency_p95_ms": 5250.264622998657,
+      "safety": 1.0,
+      "token_usage": {
+        "input_tokens": {
+          "measured_observations": 2,
+          "total": 98
+        },
+        "observations": 2,
+        "output_tokens": {
+          "measured_observations": 2,
+          "total": 6
+        }
+      }
+    },
+    "descriptive_mcnemar_p": 1.0,
+    "paired_accuracy_delta": 0.0,
+    "paired_accuracy_interval": {
+      "confidence": 0.95,
+      "lower": -1.0,
+      "method": "hoeffding_independent_pairs",
+      "upper": 1.0
+    },
+    "pairs": 2,
+    "synthetic": false
+  },
+  "paper_reproduced": false,
+  "report": {
+    "candidate_id": "local-arithmetic-smoke",
+    "cue_digest": "aaf54545722fcfb62110b22d0080ba7f22816afb107fd937d28750c0481fa139",
+    "manifest": {
+      "discovery": [
+        "local-discovery-unused"
+      ],
+      "holdout": [
+        "local-addition",
+        "local-subtraction"
+      ],
+      "selection": [
+        "local-selection-unused"
+      ]
+    },
+    "pairs": [
+      {
+        "baseline": {
+          "arm": "baseline",
+          "confidence": null,
+          "correct": true,
+          "cost_usd": 0.0,
+          "cue_digest": "",
+          "evidence_id": "9285d86bbb314a4c90dfaa016a6ddb0b",
+          "input_tokens": 43,
+          "latency_ms": 9965.479000995401,
+          "model": {
+            "context_digest": "693abc7ad2a279f491e78f57ef3e716b168efd1594a6076cb100c3f6873a2e51",
+            "max_tokens": 32,
+            "model": "qwen2.5-coder:1.5b",
+            "profile_key": "1b1a6f6c4a36efb8c0ec4d471b0615efa9e98ab43bc80fc442eb0a49f0f33692",
+            "provider": "ollama-local-research",
+            "revision": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+            "sampling_digest": "088ca38429f34ed4d29d69c141014bbec6eff3b1762bedb91fbb6f8a8c246a8f",
+            "temperature": 0.0,
+            "template_digest": "7916d56e1bde39a8961b0e4b4f8d589f91b379257d7e63f781c6694c1a4b552c",
+            "tokenizer": "gguf-embedded-artifact",
+            "tokenizer_revision": "918523ef037b839c9120ef715c0a8636e79702af13755968c6b92191b523474a"
+          },
+          "output_tokens": 3,
+          "safe": true,
+          "synthetic": false,
+          "task_id": "local-addition"
+        },
+        "candidate": {
+          "arm": "candidate",
+          "confidence": null,
+          "correct": true,
+          "cost_usd": 0.0,
+          "cue_digest": "aaf54545722fcfb62110b22d0080ba7f22816afb107fd937d28750c0481fa139",
+          "evidence_id": "136de59222f14b0ab0af287f611452cf",
+          "input_tokens": 49,
+          "latency_ms": 5250.264622998657,
+          "model": {
+            "context_digest": "693abc7ad2a279f491e78f57ef3e716b168efd1594a6076cb100c3f6873a2e51",
+            "max_tokens": 32,
+            "model": "qwen2.5-coder:1.5b",
+            "profile_key": "1b1a6f6c4a36efb8c0ec4d471b0615efa9e98ab43bc80fc442eb0a49f0f33692",
+            "provider": "ollama-local-research",
+            "revision": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+            "sampling_digest": "088ca38429f34ed4d29d69c141014bbec6eff3b1762bedb91fbb6f8a8c246a8f",
+            "temperature": 0.0,
+            "template_digest": "7916d56e1bde39a8961b0e4b4f8d589f91b379257d7e63f781c6694c1a4b552c",
+            "tokenizer": "gguf-embedded-artifact",
+            "tokenizer_revision": "918523ef037b839c9120ef715c0a8636e79702af13755968c6b92191b523474a"
+          },
+          "output_tokens": 3,
+          "safe": true,
+          "synthetic": false,
+          "task_id": "local-addition"
+        }
+      },
+      {
+        "baseline": {
+          "arm": "baseline",
+          "confidence": null,
+          "correct": true,
+          "cost_usd": 0.0,
+          "cue_digest": "",
+          "evidence_id": "7f3e54d95bae41c2bc7981a8da618d0d",
+          "input_tokens": 43,
+          "latency_ms": 4751.740394989611,
+          "model": {
+            "context_digest": "693abc7ad2a279f491e78f57ef3e716b168efd1594a6076cb100c3f6873a2e51",
+            "max_tokens": 32,
+            "model": "qwen2.5-coder:1.5b",
+            "profile_key": "1b1a6f6c4a36efb8c0ec4d471b0615efa9e98ab43bc80fc442eb0a49f0f33692",
+            "provider": "ollama-local-research",
+            "revision": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+            "sampling_digest": "088ca38429f34ed4d29d69c141014bbec6eff3b1762bedb91fbb6f8a8c246a8f",
+            "temperature": 0.0,
+            "template_digest": "7916d56e1bde39a8961b0e4b4f8d589f91b379257d7e63f781c6694c1a4b552c",
+            "tokenizer": "gguf-embedded-artifact",
+            "tokenizer_revision": "918523ef037b839c9120ef715c0a8636e79702af13755968c6b92191b523474a"
+          },
+          "output_tokens": 3,
+          "safe": true,
+          "synthetic": false,
+          "task_id": "local-subtraction"
+        },
+        "candidate": {
+          "arm": "candidate",
+          "confidence": null,
+          "correct": true,
+          "cost_usd": 0.0,
+          "cue_digest": "aaf54545722fcfb62110b22d0080ba7f22816afb107fd937d28750c0481fa139",
+          "evidence_id": "71b232af12f84ea4abed240f3fa41237",
+          "input_tokens": 49,
+          "latency_ms": 3738.5291809914634,
+          "model": {
+            "context_digest": "693abc7ad2a279f491e78f57ef3e716b168efd1594a6076cb100c3f6873a2e51",
+            "max_tokens": 32,
+            "model": "qwen2.5-coder:1.5b",
+            "profile_key": "1b1a6f6c4a36efb8c0ec4d471b0615efa9e98ab43bc80fc442eb0a49f0f33692",
+            "provider": "ollama-local-research",
+            "revision": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+            "sampling_digest": "088ca38429f34ed4d29d69c141014bbec6eff3b1762bedb91fbb6f8a8c246a8f",
+            "temperature": 0.0,
+            "template_digest": "7916d56e1bde39a8961b0e4b4f8d589f91b379257d7e63f781c6694c1a4b552c",
+            "tokenizer": "gguf-embedded-artifact",
+            "tokenizer_revision": "918523ef037b839c9120ef715c0a8636e79702af13755968c6b92191b523474a"
+          },
+          "output_tokens": 3,
+          "safe": true,
+          "synthetic": false,
+          "task_id": "local-subtraction"
+        }
+      }
+    ],
+    "profile_key": "1b1a6f6c4a36efb8c0ec4d471b0615efa9e98ab43bc80fc442eb0a49f0f33692",
+    "split": "holdout",
+    "task_type": "research"
+  },
+  "safety_scope": "strict integer output format on fixed arithmetic tasks only",
+  "schema": "nerve-cce-local-smoke-v1",
+  "scope": "two public arithmetic tasks; local instruction transport only",
+  "state": "completed"
+}

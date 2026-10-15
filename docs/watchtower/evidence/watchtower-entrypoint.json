@@ -1,0 +1,13 @@
+{
+  "synthetic_source": true,
+  "live_enforcement": false,
+  "result": {
+    "sources": 1,
+    "health": {
+      "status": "OK",
+      "dropped": 0,
+      "pending": 0,
+      "retained": 0
+    }
+  }
+}

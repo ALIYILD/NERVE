@@ -27,6 +27,108 @@ reopen, revocation and official MCP stdio. The Galahad option exercises ordinary
 text fallback: **real persistent KV restoration is not enabled or verified**.
 Nothing is deployed. See the [runtime and wiring guide](docs/galahad/15-runtime-wiring.md)
 for configuration, local launch commands and remaining integration boundaries.
+## Independent Watchtower / Guardian (observe-only development)
+
+The separate [safety control plane](docs/watchtower/ARCHITECTURE.md) provides
+bounded read-only telemetry, independent infrastructure probes, incident evidence,
+an MFA owner portal, notification adapters and explicitly scoped containment.
+NERVE's existing execution and learning paths do not import or depend on it.
+Live enforcement is disabled; production IAM, coverage, identity and provider
+verification remain deployment gates. See the [evidence report](docs/watchtower/ACCEPTANCE.md)
+and [recovery runbook](docs/watchtower/RUNBOOK.md).
+
+```bash
+PYTHONPATH=safety python -m nerve_guardian demo --report /tmp/guardian-demo.json
+```
+
+## ARC cross-task recovery learning
+
+Outcome forecasting is now shared with the Clinical OS feedback service and the
+PerfFlux periodic fleet learner. `outcome_forecast.py` learns from chronological
+externally recorded outcomes, scores before updating, and reconstructs state
+from each application's existing durable store. It has no action or promotion
+authority. The [frozen synthetic evaluation](docs/outcome-learning/synthetic-evaluation.json)
+includes both shifting and stationary environments: adaptive forecasts improve
+under drift, while the expanding-history control wins under stable conditions.
+The [Clinical OS](docs/outcome-learning/clinical-integration.json) and
+[PerfFlux](docs/outcome-learning/perfflux-integration.json) receipts exercise real
+application services with synthetic events and verify restart persistence.
+They do not establish live clinical efficacy or real GPU savings.
+
+Mean Brier loss (lower is better) over the 20 frozen synthetic evaluation
+seeds: under drift, adaptive **0.1697**, frozen **0.3010**, expanding **0.2430**;
+under stationary conditions, adaptive **0.1700**, frozen **0.1658**, expanding
+**0.1637**. All 20 drift runs beat the two history-based controls; none of the
+20 stationary runs beat expanding history. No settings were retuned after this
+evaluation. These results support a bounded drift-adaptation claim and explicitly
+do not support universal superiority or automatic production promotion.
+
+The existing `adaptation-run --learn` command connects ARC verification, task
+adaptation and durable reviewed memory for read-only repository inventories.
+Verified recovery can guide a fresh task after restart, with repository isolation,
+expiry, retraction and independent verification of every new result. Run
+`python3 scripts/verify_arc_learning.py` to reproduce the cross-process comparison.
+Remembered recovery saves repeat failed attempts versus no-memory recovery; it
+ties the capable fixed AST baseline. This is bounded tool-selection learning,
+not model training or demonstrated general self-improvement. See the
+[runbook](docs/adaptation/runbook.md) and
+[measured report](docs/adaptation/cross-task-learning-report.json).
+
+## Opt-in Cognitive Cue Engine
+
+The [Cognitive Cue Engine](docs/cce/runbook.md) adds model/tokenizer-bound cue
+selection, bounded paired experiments, optional Hermes instruction cues and
+advisory JEV review using NERVE's existing authority, audit and memory interfaces.
+It defaults off. Synthetic results cannot activate cues; clinical cues remain
+disabled. Paper reproduction and live deployment are separate, outstanding gates.
+See the [15-loop plan](docs/cce/implementation-plan.md),
+[Claude Code master prompt](docs/cce/claude-cli-prompt.md) and
+[verification status](docs/cce/verification.md).
+The [installed-host wiring](docs/cce/host-integration.md) connects the Agent OS
+bridge and native Hermes worker, with `cce-status`, inspection and revocation.
+An optional [local research adapter](docs/cce/local-research.md) supports verified
+installed Qwen models, frozen datasets and measured token receipts. Its bounded
+arithmetic smoke has run locally; no cue effectiveness or deployment is claimed.
+
+```bash
+PYTHONPATH=src python -m nerve_awim.cue_cli demo
+```
+
+## Opt-in Memento 3 world-model research
+
+NERVE can learn bounded operational rules from observed transitions, compare
+candidates, plan through existing read-only repository tools, and recover
+completed final reports across coordinator restarts. Agent OS evidence, offline
+Hermes proposals and host-bound MCP inspection use the existing NERVE interfaces.
+
+```bash
+python scripts/nerve_world_model.py doctor
+python scripts/nerve_world_model.py --db /tmp/nerve-memento-demo.sqlite3 demo
+# Equivalent package entry point:
+PYTHONPATH=src python -m nerve_awim world-model doctor
+```
+
+Use a fresh demo database. See the [commands and host integration guide](docs/world-model/README.md),
+[measured capabilities](docs/world-model/capability-report.md), and
+[remaining plan work](docs/world-model/backlog.json). This feature is disabled by
+default, uses no live provider, and does not authorize deployment. The complete
+Memento 3 plan is still in progress.
+
+## Opt-in task adaptation and external-memory research
+
+Task-scoped verified corrections now extend the ARC dispatcher with persistent
+receipts, bounded replanning, checkpoint recovery and an operator kill switch.
+Production defaults remain off. The `adaptation-run` CLI now verifies real local
+repository inventories, with an explicit correction/recovery scenario. See
+[observed NERVE behavior](docs/adaptation/continuation/observed-behavior.md).
+Synthetic CLI demonstrations, frozen evaluations
+and a separate budgeted NumPy fast-memory experiment are documented in the
+[adaptation runbook](docs/adaptation/runbook.md).
+
+The synthetic adaptation candidate failed its overhead gate, and trained external
+memory underperformed exact structured memory. Neither is production-approved.
+See the [readiness report](docs/adaptation/final-readiness.md) for measured results,
+code versions and remaining integration boundaries.
 
 ## v2.1 opt-in repository task shadow learning
 
@@ -97,12 +199,23 @@ The public repository currently includes a minimal core, the v1.2 delayed-observ
 
 `Sensors → Perception → WorldCore → NERVE Decision Layer → Safe Action → Feedback → Evaluated Memory/Model Updates`
 
-## Run the test suite
+## Install
 
-With Python 3.10+ and the source tree available:
+From a clone of this repository:
 
 ```bash
-PYTHONPATH=src python -m unittest discover -s tests -q
+pip install -e .
+pip install -e ".[auth,mcp]"
+```
+
+The base install is stdlib-only. The `auth` and `mcp` extras match the optional dependency pins already used in this repository. Configure any required LLM/API key environment variables in your local environment; do not commit secrets.
+
+## Run the test suite
+
+With Python 3.12+ and an editable install (or `PYTHONPATH=src` for a source checkout):
+
+```bash
+python -m unittest discover -s tests -q
 ```
 
 The standalone v1.2 archive was checked locally with **92 tests passed**. The public repository has a smaller test suite; see GitHub Actions for its actual status. These results are not external validation.

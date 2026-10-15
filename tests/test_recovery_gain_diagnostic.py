@@ -5,12 +5,14 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from historical_evidence_runtime import archived_receipt
 from unittest.mock import patch
 from nerve_awim.memory_gateway import recovery_gain_diagnostic as diagnostic
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@archived_receipt
 class RecoveryGainDiagnosticTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

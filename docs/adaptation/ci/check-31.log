@@ -1,0 +1,33 @@
+{
+  "arms": {
+    "no_memory": {
+      "accuracy": 0.0,
+      "mean_wall_seconds": 0.001875,
+      "model_decisions": 4,
+      "registered_tool_stages": 8,
+      "tasks": 4,
+      "tokens": {
+        "input": 300,
+        "output": 56
+      }
+    },
+    "with_memory": {
+      "accuracy": 1.0,
+      "mean_wall_seconds": 0.001839,
+      "model_decisions": 4,
+      "registered_tool_stages": 8,
+      "tasks": 4,
+      "tokens": {
+        "input": 300,
+        "output": 56
+      }
+    }
+  },
+  "limitations": "Synthetic fixed tools and task family. Offline fixture is not a real model; live comparison needs separate private API configuration and cannot by itself prove general agent learning.",
+  "model_backend": "mock HTTP response; no external LLM",
+  "no_automatic_feedback": true,
+  "planner": "ChatCompletionsPlanner",
+  "tasks_per_arm": 4,
+  "training_observations": 8,
+  "transport": "official MCP Python SDK 2 stdio"
+}

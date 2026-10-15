@@ -1,0 +1,14 @@
+{
+  "heldout_trials_per_seed": 180,
+  "limitations": "Synthetic known-context Bernoulli rewards; not demonstrated improvement in real agent tasks.",
+  "mean_paired_margin": 0.20722222222222222,
+  "memory_ties_seeds": 1,
+  "memory_wins_seeds": 19,
+  "seeds": 20,
+  "success_rate": {
+    "oracle": 0.7327777777777778,
+    "outcome_memory": 0.7222222222222222,
+    "recency_memory": 0.515
+  },
+  "training_observations_per_context": 36
+}
