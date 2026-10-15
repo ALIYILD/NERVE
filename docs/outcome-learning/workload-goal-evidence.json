@@ -1,0 +1,105 @@
+{
+  "status": "complete",
+  "goal_id": "synthetic-external-replay:184c04c1d9a9212ea3cec7c3d6405fedb56d3877ee4110c38fee87d55403d6bb",
+  "target": "External workload target: {\"max_evaluation_calls\": 32, \"min_gain\": 0.1, \"min_monitor_accuracy\": 1.0, \"min_switches\": 2}",
+  "final_verifier": {
+    "domains": {
+      "clinical_os:verify-recovery": {
+        "adaptive_hits": 28,
+        "additional_evaluation_calls": 32,
+        "all_monitoring_targets_met": true,
+        "beats_all_fixed_controls": true,
+        "cost_limitation": "Fixed controls share operational tasks; adaptive selection incurs extra calls. No equal-total-compute advantage claimed.",
+        "declared_provenance": {
+          "data_kind": "synthetic",
+          "labeler_ref": "deterministic fixture oracle",
+          "source_ref": "NERVE synthetic A-B-A fixture"
+        },
+        "domain": "clinical_os",
+        "final_strategy": "title",
+        "fixed_controls": {
+          "abstract": 12,
+          "title": 24
+        },
+        "gain_over_best_fixed": 0.1111111111111111,
+        "policy_version": 2,
+        "production_authorized": false,
+        "provenance_independently_attested": false,
+        "rollback_probe": {
+          "rollback_verified": true,
+          "scope": "isolated sandbox reversal during candidate trial",
+          "trial_hits": 6,
+          "trial_tasks": 8,
+          "version": 2
+        },
+        "switches": 2,
+        "target_met": true,
+        "tasks": 36,
+        "workload_digest": "184c04c1d9a9212ea3cec7c3d6405fedb56d3877ee4110c38fee87d55403d6bb"
+      }
+    },
+    "limitation": "Bounded offline replay; declared labels/provenance require independent review. No clinical efficacy, GPU savings, or broad generalization claim.",
+    "protocol": "auto-adapt-aba-v1",
+    "target_met": true,
+    "workload_digest": "184c04c1d9a9212ea3cec7c3d6405fedb56d3877ee4110c38fee87d55403d6bb"
+  },
+  "manifest_input": "exported synthetic example, not real-world evidence",
+  "app_source_verification": [
+    {
+      "adaptive_hits": 28,
+      "additional_evaluation_calls": 32,
+      "all_monitoring_targets_met": true,
+      "beats_all_fixed_controls": true,
+      "cost_limitation": "Fixed controls share operational tasks; adaptive selection incurs extra calls. No equal-total-compute advantage claimed.",
+      "domain": "clinical_os",
+      "final_strategy": "title",
+      "fixed_controls": {
+        "abstract": 12,
+        "title": 24
+      },
+      "policy_version": 2,
+      "production_authorized": false,
+      "rollback_probe": {
+        "rollback_verified": true,
+        "scope": "isolated sandbox reversal during candidate trial",
+        "trial_hits": 6,
+        "trial_tasks": 8,
+        "version": 2
+      },
+      "switches": 2,
+      "tasks": 36,
+      "subprocess_restart_verified": true,
+      "source_verified": true,
+      "source_commit": "58370150249163a32e02417eb3d28220b24d13be",
+      "protocol": "auto-adapt-aba-v1"
+    },
+    {
+      "adaptive_hits": 28,
+      "additional_evaluation_calls": 32,
+      "all_monitoring_targets_met": true,
+      "beats_all_fixed_controls": true,
+      "cost_limitation": "Fixed controls share operational tasks; adaptive selection incurs extra calls. No equal-total-compute advantage claimed.",
+      "domain": "perfflux",
+      "final_strategy": "direct",
+      "fixed_controls": {
+        "direct": 24,
+        "memoized": 12
+      },
+      "policy_version": 2,
+      "production_authorized": false,
+      "rollback_probe": {
+        "rollback_verified": true,
+        "scope": "isolated sandbox reversal during candidate trial",
+        "trial_hits": 6,
+        "trial_tasks": 8,
+        "version": 2
+      },
+      "switches": 2,
+      "tasks": 36,
+      "subprocess_restart_verified": true,
+      "source_verified": true,
+      "source_commit": "58370150249163a32e02417eb3d28220b24d13be",
+      "protocol": "auto-adapt-aba-v1"
+    }
+  ]
+}
