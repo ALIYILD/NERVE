@@ -1,0 +1,20 @@
+{
+  "note": "aborted episodes are not successful or safe completion",
+  "results": {
+    "v17": {
+      "aborted": 0,
+      "completed_steps": 80,
+      "empirical_coverage": null,
+      "final_goal_error": 0.2269827560475942,
+      "violations": 0
+    },
+    "v20": {
+      "aborted": 1,
+      "completed_steps": 40.7,
+      "empirical_coverage": 0.8106049751375838,
+      "final_goal_error": 0.3419593323334174,
+      "violations": 0
+    }
+  },
+  "seeds": 20
+}

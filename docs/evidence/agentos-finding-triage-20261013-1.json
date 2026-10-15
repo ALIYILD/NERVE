@@ -1,0 +1,8 @@
+{
+  "fingerprint": "035c43f3e010b83868c4f14d35ec4d3ce303f162f3598141f7c8a45a6f8f68fd",
+  "source_record_digest": "1b89aca1ded218ae807290c4639c64e1d0c689100edf81723eb98fa8f110b165",
+  "previous_review": null,
+  "disposition": "monitor",
+  "reviewer": "Codex host investigation",
+  "reason": "Run 16 timed out after 243s; later run 17 reported completed in 100s under the unchanged 240s cap. The 2026-10-05 mission verification remains accepted=false (SHA256 6d664e2aa14baf32b32eb18cec446683a1b2ec721cb164084eb01dc13e9c45c5). Monitor future independently verified outcomes. No causal evidence for increasing timeout, no verified recovery or learned gain."
+}

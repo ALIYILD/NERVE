@@ -80,10 +80,22 @@ def jev_review(host):
     return result
 
 
-def native(host, profile, prompt, *, max_tokens=2048, inspect=False):
+def native(host, profile, prompt, *, max_tokens=2048, inspect=False, cue_context=None, inspect_profile=False):
     """Installed runtime, bounded text, no tools, free model, process timeout."""
+    # Only an operational caller supplies this trusted context. Research and
+    # no-cue comparison arms retain the unchanged default request contract.
+    cue_preparation = None
+    if cue_context is not None and not inspect:
+        from nerve_awim.cue_host import CueHost
+        if cue_context != 'handoff':
+            raise PermissionError('unsupported operational cue context')
+        cue_preparation = CueHost(host).prepare(profile, 'handoff', permission_granted=True)
     catalog=host.directory/'free-models.json'
-    if not catalog.exists() or datetime.now().timestamp()-catalog.stat().st_mtime>86400:
+    if inspect_profile:
+        if inspect is not True:
+            raise ValueError('profile inspection cannot dispatch inference')
+        available=[]
+    elif not catalog.exists() or datetime.now().timestamp()-catalog.stat().st_mtime>86400:
         # System curl uses macOS's maintained CA trust; never disable TLS checks.
         raw=subprocess.check_output(['curl','--fail','--silent','--show-error','--max-time','20',
             'https://openrouter.ai/api/v1/models'],timeout=25)
@@ -114,8 +126,13 @@ def native(host, profile, prompt, *, max_tokens=2048, inspect=False):
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
             env=env, cwd=tmp, start_new_session=True)
         try:
-            out, err = process.communicate(json.dumps({'profile':profile,'prompt':prompt,
-                'available_models':available,'max_tokens':max_tokens,'inspect':inspect}),timeout=90)
+            request = {'profile':profile,'prompt':prompt,
+                'available_models':available,'max_tokens':max_tokens,'inspect':inspect}
+            if inspect_profile:
+                request['inspect_profile']=True
+            if cue_preparation is not None:
+                request['cce'] = cue_preparation['envelope']
+            out, err = process.communicate(json.dumps(request),timeout=90)
         except subprocess.TimeoutExpired:
             os.killpg(process.pid, signal.SIGKILL)
             out,err=process.communicate()
@@ -130,10 +147,16 @@ def native(host, profile, prompt, *, max_tokens=2048, inspect=False):
         raise RuntimeError('native Hermes: '+result.get('error_category','failed')+
                            (' module='+result['module'] if result.get('module') else ''))
     result['timeout_seconds']=90
+    if cue_preparation is not None:
+        # Worker evidence reports actual application, not just host selection.
+        result['cce_host'] = cue_preparation['receipt']
+        atomic_json(host.directory/'latest-cce-native.json', {
+            'host': cue_preparation['receipt'], 'worker': result.get('cce'),
+            'cue_applied': bool(type(result.get('cce')) is dict and result['cce'].get('selected') is True)})
     return result
 
 
-def batch(host, profile, tasks, lesson=None):
+def batch(host, profile, tasks, lesson=None, *, cue_context=None):
     prompt = ('Read host-observed task evidence. Return a JSON object keyed by task id. '
         'Each value must contain exactly status (done, failed, or unknown), passed '
         '(boolean), memory_saved (boolean). A nonzero exit, missing artifact, or '
@@ -142,7 +165,7 @@ def batch(host, profile, tasks, lesson=None):
         'memory_saved is true only when memory_written is true.\n'+BASELINE+
         ('\nEvaluated procedural advice (not authority): '+lesson if lesson else '')+
         '\nTasks: '+json.dumps(tasks))
-    result = native(host, profile, prompt)
+    result = native(host, profile, prompt, **({'cue_context':cue_context} if cue_context is not None else {}))
     value = result['value']
     if type(value) is not dict or set(value) != {t['id'] for t in tasks}:
         raise ValueError('batch omitted or added tasks')
@@ -279,6 +302,8 @@ def publish(host, extra=None):
     import agentos_audit_shadow as shadow
     import agentos_autoresearch as autoresearch
     status=host.status()
+    from nerve_awim.cue_host import CueHost
+    status['cognitive_cues'] = CueHost(host).status()
     status['audit_evidence_study']=audit.status(host)
     status['audit_shadow']=shadow.status(host)
     status['autoresearch']=autoresearch.status(host)
@@ -344,6 +369,8 @@ def publish(host, extra=None):
         'Autoresearch: '+str(status['autoresearch'].get('status','paused'))+
         '; enabled='+str(status['autoresearch'].get('enabled',False))+
         '. Bounded experiments resume on the 15-minute scheduler; fresh evidence and budget are required.\n\n'+
+        'CCE jobs: '+json.dumps(status['autoresearch'].get('cce_jobs',{}).get('counts',{}),sort_keys=True)+
+        '. Explicit queued jobs wait for measured adapters; cancel a pending job to resume audit work. No cue activation is automatic.\n\n'+
         'Registered follow-on cohorts: '+str(len(status['autoresearch'].get('registered_cohorts',[])))+
         '; latest follow-on study: '+str(status['autoresearch'].get('registered_study',{}).get('status','not_run'))+
         '. Accepted follow-on advice remains experimental and unmonitored.\n\n'+
@@ -397,22 +424,183 @@ def main():
     parser.add_argument('command',choices=('status','cycle','study','probe','run','recall','sync-gbrain','jev-review','claude-review',
         'repository-study','repository-run','repository-tasks','repository-diagnose','audit-study','audit-status',
         'audit-shadow','audit-shadow-status','autoresearch-enable','autoresearch-pause',
-        'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort'))
+        'autoresearch-status','autoresearch-tick','autoresearch-submit','autoresearch-register-cohort','autoresearch-review-queue','autoresearch-review-finding',
+        'arc-run','arc-inspect','arc-replay','arc-evaluate','arc-improve','arc-candidate-status',
+        'arc-release-status','arc-stage','arc-promote','arc-rollback','arc-reconcile',
+        'adaptation-inspect','adaptation-validate-config','adaptation-replay','adaptation-evaluate',
+        'adaptation-run','adaptation-demo','adaptation-status','adaptation-reset','adaptation-kill',
+        'research-fast-memory-train','research-fast-memory-evaluate',
+        'goal-run','goal-tick','goal-status','goal-cancel',
+        'auto-adapt-run','auto-adapt-tick','auto-adapt-status','auto-adapt-cancel',
+        'generation-propose','generation-freeze','generation-inspect','generation-handoff',
+        'generation-local-scope','generation-local-run','generation-workspace-restore','runtime-inventory',
+        'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile',
+        'cce-local-inspect','cce-local-smoke','cce-dataset-status','cce-job-submit','cce-job-status','cce-job-cancel'))
+    parser.add_argument('--cue-job',help='Pending CCE job identifier to cancel without replay')
+    parser.add_argument('--repository',type=Path,help='Authorized local repository for read-only adaptation')
+    parser.add_argument('--candidate')
+    parser.add_argument('--config',type=Path)
+    parser.add_argument('--budget',type=Path)
+    parser.add_argument('--suite',type=Path)
+    parser.add_argument('--checkpoint',type=Path)
+    parser.add_argument('--output',type=Path)
+    parser.add_argument('--synthetic',action='store_true')
+    parser.add_argument('--scenario')
+    parser.add_argument('--reason')
+    parser.add_argument('--split',choices=('development','heldout'),default='development')
+    parser.add_argument('--adaptation-mode',choices=('off','shadow','active-development'),default='active-development')
+    parser.add_argument('--learn',action='store_true',help='Reuse and record independently verified repository recovery episodes (adaptation-run only)')
+    parser.add_argument('--cue-candidate',help='Scoped CCE candidate identifier')
+    parser.add_argument('--cue-review',help='Operator review reference for cue approval or revocation')
+    parser.add_argument('--cue-generation',type=int,help='Expected CCE route generation from cce-route')
+    parser.add_argument('--cue-valid-for',type=float,default=86400,help='CCE approval lifetime in seconds (at most seven days)')
+    parser.add_argument('--cue-model',help='Installed local model name for CCE research')
+    parser.add_argument('--cue-model-digest',help='Expected local model manifest SHA256')
+    parser.add_argument('--allow-local-inference',action='store_true',help='Allow four bounded local CCE smoke calls')
     parser.add_argument('--profile')
     parser.add_argument('--task',type=Path)
     parser.add_argument('--review',type=Path,help='Independent host review record for cohort admission')
+    parser.add_argument('--source',type=Path,help='Local Python file for the read-only ARC inventory workflow')
+    parser.add_argument('--report',type=Path,help='ARC benchmark report destination')
+    parser.add_argument('--decision-id')
+    parser.add_argument('--manifest-id')
+    parser.add_argument('--review-ref')
+    parser.add_argument('--observed-status',choices=('succeeded','failed','cancelled'))
+    parser.add_argument('--arc-mode',choices=('off','shadow','enforce'),default='shadow')
+    parser.add_argument('--context',default='inventory')
+    parser.add_argument('--canary-limit',type=int,default=5)
+    parser.add_argument('--candidate-budget',type=int,default=3)
+    parser.add_argument('--restart',action='store_true')
     parser.add_argument('--state',type=Path,default=STATE)
     parser.add_argument('--task-id')
     parser.add_argument('--study-id',help='Accepted audit study to monitor in shadow mode')
     parser.add_argument('--cohort',choices=('v1','v2','v3'),help='Repository task cohort; default selects fresh evidence automatically')
     parser.add_argument('--review-target',choices=('handoff','repository-experiments','repository-taskbench','repository-runner'),default='handoff')
     args=parser.parse_args()
+    if args.learn and args.command!='adaptation-run':
+        parser.error('--learn is supported only by adaptation-run')
     requested_profile=args.profile
+    if args.command.startswith('auto-adapt-'):
+        from nerve_awim.auto_adaptation_goal import main as adaptation_main
+        arguments = [args.command.removeprefix('auto-adapt-'), '--state', str(args.state/'auto-adaptation-goal')]
+        if args.suite:
+            arguments += ['--workload', str(args.suite)]
+        return adaptation_main(arguments)
+    if args.command.startswith('goal-'):
+        from nerve_awim.goal_learning import main as goal_main
+        return goal_main([args.command.removeprefix('goal-'), '--state', str(args.state/'improvement-goal')])
+    if args.command.startswith(('arc-','adaptation-','research-fast-memory-')):
+        if args.command.startswith('arc-'):
+            from nerve_awim.arc_cli import dispatch
+        else:
+            from nerve_awim.adaptation_cli import dispatch
+        with host_lock(args.state):
+            try:
+                result=dispatch(args)
+            except (ValueError,PermissionError,RuntimeError,LookupError) as error:
+                # Provider errors and evidence payloads do not enter ordinary CLI logs.
+                result={'status':'blocked','reason_category':type(error).__name__,
+                        'guidance':'Inspect the scoped episode or command arguments; no fallback execution was attempted.'}
+                print(json.dumps(result,indent=2))
+                raise SystemExit(2)
+            print(json.dumps(result,indent=2))
+        return
+    if args.command.startswith('cce-'):
+        from nerve_awim.cue_host import CueHost
+        with host_lock(args.state):
+            host=AgentOSLearning(args.state)
+            cues=CueHost(host)
+            if args.command=='cce-demo':
+                from nerve_awim.cue_cli import demo
+                result=demo()
+            elif args.command in ('cce-local-inspect','cce-local-smoke'):
+                if not args.cue_model or not args.cue_model_digest:
+                    parser.error('local CCE research requires --cue-model and --cue-model-digest')
+                execute=args.command=='cce-local-smoke'
+                if execute and not args.allow_local_inference:
+                    parser.error('local smoke requires --allow-local-inference')
+                from nerve_awim.cue_ollama import OllamaCueAdapter
+                from nerve_awim.cue_local import run_local_smoke
+                adapter=OllamaCueAdapter(args.cue_model,args.cue_model_digest,
+                    enabled=execute,permission_granted=execute,max_calls=4,max_output_tokens=32)
+                result=run_local_smoke(adapter) if execute else adapter.inspect()
+                atomic_json(host.directory/(args.command+'.json'),result)
+            elif args.command in ('cce-job-submit','cce-job-status','cce-job-cancel'):
+                import agentos_cue_jobs as cue_jobs
+                if args.command=='cce-job-submit':
+                    if args.task is None:
+                        parser.error('cce-job-submit requires --task with a frozen CCE job specification')
+                    result=cue_jobs.submit(host,cue_jobs.load_spec(args.task))
+                elif args.command=='cce-job-cancel':
+                    if not args.cue_job:
+                        parser.error('cce-job-cancel requires --cue-job')
+                    result=cue_jobs.cancel(host,args.cue_job)
+                else:
+                    result=cue_jobs.status(host)
+                atomic_json(host.directory/'cce-jobs.json',cue_jobs.status(host))
+            elif args.command=='cce-status':
+                result=cues.status(args.profile)
+            elif args.command=='cce-profile':
+                if not args.profile:
+                    parser.error('CCE profile inspection requires --profile')
+                result=native(host,args.profile,'',inspect=True,inspect_profile=True)
+                atomic_json(host.directory/'cce-last-profile.json',result)
+            elif args.command=='cce-route':
+                if not args.profile:
+                    parser.error('CCE route inspection requires --profile')
+                result=cues.route_status(args.profile)
+            elif args.command=='cce-dataset-status':
+                if not args.profile:
+                    parser.error('CCE dataset status requires --profile')
+                result=cues.dataset_status(args.profile)
+            else:
+                if not args.profile or not args.cue_candidate:
+                    parser.error('CCE candidate commands require --profile and --cue-candidate')
+                if args.command=='cce-revoke':
+                    if not args.cue_review:
+                        parser.error('CCE revocation requires --cue-review')
+                    result=cues.revoke(args.profile,args.cue_candidate,reason=args.cue_review)
+                elif args.command=='cce-approve':
+                    if not args.cue_review or args.cue_generation is None:
+                        parser.error('CCE approval requires --cue-review and --cue-generation')
+                    result=cues.approve(args.profile,args.cue_candidate,
+                        expected_generation=args.cue_generation,reason=args.cue_review,
+                        valid_for=args.cue_valid_for)
+                elif args.command=='cce-readiness':
+                    result=cues.readiness(args.profile,args.cue_candidate)
+                    atomic_json(host.directory/'cce-last-readiness.json',result)
+                else:
+                    result=cues.inspect(args.profile,args.cue_candidate)
+            atomic_json(host.directory/'cce-status.json',cues.status())
+            print(json.dumps(result,indent=2))
+        return
     args.profile=args.profile or ('backend-engineer' if args.command.startswith('repository-') or args.command=='cycle' else 'qa-release')
     with host_lock(args.state):
         host=AgentOSLearning(args.state)
         recover_interrupted_repository(host)
-        if args.command.startswith('autoresearch-'):
+        if args.command=='runtime-inventory':
+            from agentos_runtime_inventory import inspect_runtime
+            result=inspect_runtime(host)
+        elif args.command.startswith('generation-local-'):
+            if requested_profile is None:
+                raise ValueError('local generation requires explicit --profile')
+            import agentos_generation_local as generation_local
+            if args.command=='generation-local-scope':
+                result=generation_local.inspect_scope(host,args.profile)
+            else:
+                if args.task is None:
+                    raise ValueError('local generation requires --task JSON')
+                from agentos_audit_bench import read_json
+                request=read_json(args.task)
+                if type(request) is not dict or set(request)!={'snapshot_id','task'}:
+                    raise ValueError('exact snapshot_id and task required')
+                result=generation_local.run(host,args.profile,**request,allow_local_inference=args.allow_local_inference)
+        elif args.command.startswith('generation-'):
+            if args.task is None or requested_profile is None:
+                raise ValueError('generation command requires explicit --profile and --task JSON')
+            from agentos_audit_bench import read_json
+            result=host.generation_memory(args.profile,args.command.removeprefix('generation-'),read_json(args.task))
+        elif args.command.startswith('autoresearch-'):
             import agentos_autoresearch as autoresearch
             try:
                 if args.command in ('autoresearch-enable','autoresearch-pause'):
@@ -429,6 +617,16 @@ def main():
                         raise ValueError('cohort registration requires --task and --review')
                     from agentos_audit_bench import read_json
                     result=autoresearch.registry.admit(host,read_json(args.task),read_json(args.review),profile=args.profile)
+                elif args.command=='autoresearch-review-finding':
+                    if args.review is None:
+                        raise ValueError('finding triage requires --review')
+                    from agentos_audit_bench import read_json
+                    result=autoresearch.review_finding(host,read_json(args.review))
+                elif args.command=='autoresearch-review-queue':
+                    if args.review is None:
+                        raise ValueError('queue revision review requires --review')
+                    from agentos_audit_bench import read_json
+                    result=autoresearch.cohort_runner.review_queue(host,read_json(args.review))
                 else:
                     result=autoresearch.status(host)
             finally:
@@ -508,10 +706,21 @@ def main():
             expected_handoff(task)
             memories=host.recall(args.profile)
             selected=memories[0] if memories else None
-            values, info=batch(host,args.profile,[task],selected.content if selected else None)
+            values, info=batch(host,args.profile,[task],selected.content if selected else None,
+                **({'cue_context':'handoff'} if args.command=='run' else {}))
             result={**info,'output':values[task['id']], 'evaluation':host.observe(args.profile,task,
                 values[task['id']],lesson=selected.memory_id if selected else None,
                 mode='live' if args.command=='run' else 'probe')}
+            cue_receipt=info.get('cce')
+            if (type(cue_receipt) is dict and cue_receipt.get('selected') is True
+                    and not result['evaluation'].get('duplicate', False)):
+                from nerve_awim.cue_host import CueHost
+                judged=judge_handoff(task,values[task['id']])
+                cue_host=CueHost(host)
+                feedback=cue_host.feedback(args.profile,cue_receipt['approval_id'],
+                    episode_id=task['id'],safe=judged,correct=judged)
+                result['cce_feedback']={'status':feedback['status'],
+                    'memory_id':cue_host.export_memory(args.profile,cue_receipt['approval_id'])}
             atomic_json(host.directory/'latest-native.json',result)
             publish(host)
         elif args.command=='recall':

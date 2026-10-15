@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "gold": true,
+    "novelty": true,
+    "split_separation": true
+  },
+  "manifest_sha256": "ef671cbfdda13620f3ea31de9165224e0c28f39e13fa6a018be7243e264cea37",
+  "method": "Manually inspected all 16 source bundles and derived decisions, applicable root IDs and predicate citation fields before invoking the executable oracle. The independent gold map is tests/test_agentos_cohort_v3_review.py. Verified agreement with author gold and oracle only after derivation. Reviewed development controls, v1 and v2: reconvergent diamonds, overlapping parent graphs, component-splicing and combined identity/freshness exclusions add distinct simulated compositions; majority and conflict examples also enforce complete citation sets. Canonical identities, task IDs and families are disjoint within the 2/4/4/6 splits and from these prior cohorts. This does not imply independent reasoning primitives, statistically independent incidents or broad transfer: all cohorts reuse four predicates and root-filtering rules. Explicitly reviewed nonchronological DAGs: a stale child does not invalidate an independently fresh root; an in-window child of a future root remains derived and cannot establish observation. These cases are valid only under the documented DAG schema, which does not require causal timestamp ordering; they are synthetic adversarial declarations, not realistic authenticated timelines. Train alone may reach the lesson proposer; public developer visibility is not secret holdout protection. Six final examples do not meet the CCE 30-pair gate. This is a local review attestation, not authenticated reviewer identity, registration, model efficacy evidence or activation authorization. Review used no model inference and registered no cohort.",
+  "reviewer": "Codex independent reviewer /root/evaluation"
+}

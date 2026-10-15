@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "plan_complete": false,
+  "verification": {
+    "python_tests": 926,
+    "python_seconds": 71.953,
+    "python_exit_code": 0,
+    "node_tests": 7,
+    "node_exit_code": 0,
+    "repository_smoke_success": 6,
+    "repository_smoke_total": 6,
+    "frame_smoke_success": 6,
+    "frame_smoke_total": 6,
+    "smoke_checks_are_independent_gain_evidence": false
+  },
+  "artifacts": {
+    "wiring-full-suite.log": {
+      "path": "/Users/aliyildirim/nerve-memento3-evidence/wiring-full-suite.log",
+      "sha256": "a3885f1639278b2462cf5e313a8b9e8e2401240d88e911f9cb770c4698a620a8"
+    },
+    "wiring-node.log": {
+      "path": "/Users/aliyildirim/nerve-memento3-evidence/wiring-node.log",
+      "sha256": "1bb6f4111f70e529b9d1859c2db5f96fc177efd134f66a06030859a390114231"
+    },
+    "wiring-repository-smoke.json": {
+      "path": "/Users/aliyildirim/nerve-memento3-evidence/wiring-repository-smoke.json",
+      "sha256": "78b58b5d17abc893e2c50df579b330b3b8275b944bc1c26816464505e441b929"
+    },
+    "wiring-frame-smoke.json": {
+      "path": "/Users/aliyildirim/nerve-memento3-evidence/wiring-frame-smoke.json",
+      "sha256": "db88d44e44aaddc6b5eb96dd9c692b5be0225ad11c4b9d09ad69dc4d104f6050"
+    }
+  },
+  "scope": "NERVE command entry points, durable report recovery command, existing host adapters and CI; no production activation"
+}

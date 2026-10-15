@@ -1,0 +1,43 @@
+{
+  "baseline": {
+    "learning_rate": 0.02,
+    "name": "baseline"
+  },
+  "baseline_validation_mae": 0.15350270082173578,
+  "experiments": [
+    {
+      "decision": "reject",
+      "learning_rate": 0.01,
+      "name": "slow",
+      "validation_mae": 0.18300366071387503
+    },
+    {
+      "decision": "keep",
+      "learning_rate": 0.06,
+      "name": "moderate",
+      "validation_mae": 0.08679929390963699
+    },
+    {
+      "decision": "keep",
+      "learning_rate": 0.15,
+      "name": "fast",
+      "validation_mae": 0.050062319841453
+    },
+    {
+      "decision": "keep",
+      "learning_rate": 0.3,
+      "name": "very-fast",
+      "validation_mae": 0.03838495359594828
+    }
+  ],
+  "holdout": {
+    "baseline_mae": 0.15306350358610585,
+    "selected_mae": 0.03838975803133926
+  },
+  "selected": {
+    "learning_rate": 0.3,
+    "name": "very-fast"
+  },
+  "selected_validation_mae": 0.03838495359594828,
+  "warning": "Selection on fixed validation seeds can overfit. Holdout is reporting-only, never used for selection."
+}

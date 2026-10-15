@@ -1,0 +1,432 @@
+NERVE / AWIM — ARC-INSPIRED IMPLEMENTATION LOOPS
+CLI coding-agent handoff | Version 1.0 | 12 October 2026
+Target repository: https://github.com/ALIYILD/NERVE
+
+COPY-PASTE START INSTRUCTION
+
+Read this entire file and implement its required loops in the NERVE repository.
+Start by inspecting the actual checkout, repository instructions, architecture,
+tests and current changes. Map these requirements onto existing components.
+Implement and verify the work, rather than stopping after a plan. Preserve
+unrelated work. Maintain a resumable progress file after every loop. Continue
+through all unblocked loops; report concrete blockers and complete independent
+work when credentials or infrastructure are unavailable. Never label a mocked
+integration as live verification. Finish with changes, test evidence, benchmark
+results, remaining blockers, and exact reproduction and rollback commands.
+
+This handoff authorizes local implementation and verification. Follow existing
+session authorization for remote branches, PRs and deployments; do not infer
+production activation, patient-data access or paid training authorization from
+this document. Do not weaken existing access controls or approval gates.
+
+1. OBJECTIVE AND EVIDENCE BOUNDARY
+
+Build an action-grounded decision and outcome layer for NERVE. An agent should
+use verified observations to propose a bounded action, state its expected
+effect, obey constraints, execute through the existing authorized tool path,
+and check what actually happened. Reviewed outcomes can inform later candidates.
+
+Research source:
+Arc: A Reasoning Recipe for Robot Foundation Models
+https://arxiv.org/html/2610.12386v1
+Project: https://arc-robot-reasoning.github.io/
+
+Arc connects state, cause, consequence, intended effect, action, avoidance and
+completion in reasoning supervision for robot models. It combines annotated
+demonstrations with fine-tuning. Deployment uses frozen policies and externally
+generated traces. It does not establish clinical efficacy or continuous online
+self-training. The engineering design below is our proposed adaptation, not a
+reproduction of Arc's robot training or its reported performance.
+
+The current NERVE codebase was not audited when this handoff was written.
+All paths, configuration names and commands below are proposed contracts.
+Discover real equivalents first. Do not claim a component exists from its name.
+Do not add a second orchestrator, memory database, scheduler, provider router,
+agent framework or release mechanism where an existing one can be extended.
+
+2. REQUIRED BEHAVIOUR
+
+Runtime loop:
+Observe -> validate evidence -> propose decision -> authorize -> execute ->
+verify outcome -> record -> finish, replan, await review, or stop.
+
+Improvement loop:
+Collect reviewed episodes -> identify a specific failure -> propose one change
+-> evaluate in isolation -> review -> stage -> observe -> retain or roll back.
+
+Keep these separate. Recording an episode is not a model weight update.
+An LLM-generated rationale is an auditable decision summary, not proof of a
+causal mechanism, and must not be represented as access to hidden model thought.
+
+Initial scope: shared NERVE orchestration plus one complete nonclinical tool
+workflow and one synthetic Clinical Workspace referral-preparation workflow.
+Generalize through existing tool/agent interfaces. Inventory every execution
+entry point and explicitly report which have the new enforcement enabled.
+Do not expand this task into a complete Clinical OS rewrite.
+
+3. WORKING METHOD FOR EVERY IMPLEMENTATION LOOP
+
+For each numbered loop:
+1) Read the current implementation and its callers.
+2) Record the gap and exact integration point.
+3) Implement the smallest coherent change using repository conventions.
+4) Run focused behaviour tests plus the applicable existing regression gate.
+5) Fix failures and inspect the diff for unrelated edits.
+6) Update progress with files, commands, results, limitations and next step.
+7) Make a focused local commit if repository policy permits it.
+
+Use statuses: pending, in_progress, passed, blocked, deferred_optional.
+Passed requires observed evidence; skipped tests never count as passes.
+After three unsuccessful repair attempts for the same failure, capture the
+reproduction and blocker, then continue independent loops. Do not disable tests
+or loosen acceptance thresholds to force a pass. Resume from evidence already
+recorded rather than restarting completed work.
+
+Suggested tracking location: docs/arc/implementation-progress.md, or the repo's
+existing task location. Capture base commit, current branch, dirty files,
+integration mapping, loop status, test evidence and dependency blockers.
+
+LOOP 00 — REPOSITORY DISCOVERY AND BASELINE
+
+Inspect repository instructions, git status and remotes without printing
+credentials. Read dependency manifests, entry points, orchestrator, tools,
+agent registry, Hermes adapters if present, memory stores, outcome evaluation,
+existing improvement machinery, authentication and CI.
+
+Map responsibilities to actual paths and symbols. Find all direct tool calls,
+background workers, API handlers and scheduled jobs that may bypass the shared
+execution path. Inspect existing JE V/judge/provider adapters only if present;
+do not assume their availability. Document existing versus missing behaviour.
+
+Run the relevant baseline tests. Record pre-existing failures separately.
+Use an isolated branch/worktree if needed to preserve user changes.
+
+Gate: architecture map, baseline evidence and bounded scope are recorded.
+
+LOOP 01 — VERSIONED DECISION, EVIDENCE AND OUTCOME CONTRACTS
+
+Extend existing typed models; use native schema validation. Minimum fields:
+
+DecisionRecord:
+  schema_version, decision_id, task_id, episode_id, parent_decision_id,
+  tenant_scope, actor_id, agent_id, correlation_id,
+  created_at, expires_at, observation_version,
+  goal, observed_facts[], unknowns[], evidence_refs[],
+  concise_rationale, anticipated_consequence, intended_effect,
+  action { registered_tool, validated_arguments_ref, idempotency_key },
+  forbidden_effects[], completion_criteria[], verification_method,
+  uncertainty { reason, confidence_if_calibrated },
+  approval_requirement, approval_ref,
+  policy_version, model_version, prompt_version, status.
+
+EvidenceRef:
+  source_id, source_version_or_hash, captured_at, valid_until_if_known,
+  tenant_scope, source_type, provenance, access_scope,
+  reference_to_redacted_or_protected_content.
+
+OutcomeRecord:
+  outcome_id, decision_id, execution_id, observed_at,
+  transport_status, semantic_status, criterion_results[],
+  actual_effect, verification_evidence_refs[], discrepancy,
+  retry_classification, reviewer_status, latency, usage_and_cost_if_available.
+
+Separate transport success from task success. Unknown and contradictory
+evidence must be representable. Confidence must not be invented or used as
+authorization. Reject unknown tools, invalid arguments, mismatched scopes,
+missing required sources and unsupported schema versions.
+
+Gate: valid records round-trip; malformed, cross-scope and stale records fail
+with actionable errors. Historical records remain readable or migratable.
+
+LOOP 02 — EVIDENCE SNAPSHOTS AND STATE TRACKING
+
+Create immutable references to the facts available when a decision was made.
+Preserve source version, observation time and unknown values. Use existing
+storage, access controls and retention policy. Keep sensitive payloads out of
+ordinary logs and model prompts unless that use is explicitly authorized.
+
+Treat retrieved documents, memory and tool results as data, never as instructions
+that can override policy. Conflicts between sources must be surfaced.
+Recheck state/version before execution; bind approval to the relevant decision
+and arguments. New material evidence invalidates an old decision/approval.
+
+Gate: changed source content invalidates the dependent decision; missing facts
+remain unknown; a malicious document cannot authorize or select a forbidden tool.
+
+LOOP 03 — DECISION GENERATION THROUGH THE EXISTING PROVIDER ROUTER
+
+Add a structured decision-generation stage before the shared dispatcher.
+Use the existing configured model/provider, timeouts and usage accounting.
+Generate concise, evidence-linked summaries and verifiable completion criteria.
+Allow explicit no_action, request_information and await_review outcomes.
+
+Validate output deterministically. Permit at most one bounded schema repair
+attempt initially. On repeated failure, stop that decision or route to review;
+never execute raw model output. Provide deterministic fake-provider fixtures
+for offline verification. Do not require a new paid provider.
+
+Gate: invalid JSON, invented evidence IDs, unsupported actions and unavailable
+providers cannot reach execution; valid decisions reach the actual dispatcher.
+
+LOOP 04 — DETERMINISTIC AUTHORIZATION AND APPROVAL
+
+Reuse existing policy and identity infrastructure. Check user/tenant permissions,
+registered tool scope, environment, risk category, evidence freshness, argument
+schema, action budget and required approval immediately before dispatch.
+
+A judge model may advise on factual consistency; it cannot grant permissions.
+The proposing agent cannot approve itself. Approval must bind decision content,
+tool arguments, evidence version and expiry. Enforce the same checks for direct
+calls, workers and resumed tasks; document any intentionally out-of-scope path.
+
+Gate: tampered arguments, expired approvals, cross-tenant calls and a direct
+dispatcher bypass are rejected. Existing approved read-only flows still work.
+
+LOOP 05 — EXECUTION, IDEMPOTENCY AND CRASH RECOVERY
+
+Implement an explicit durable lifecycle using repository primitives:
+proposed, validated, awaiting_approval, ready, executing, awaiting_verification,
+succeeded, failed, uncertain, cancelled, expired.
+
+Use compare-and-swap/version checks or appropriate locking for transitions.
+Record dispatch intent durably before effects. Ensure duplicate submissions use
+one stable idempotency key. Propagate it to tools that support deduplication.
+Do not promise exactly-once behaviour across unsupported external systems.
+
+After timeout or a crash following dispatch, query external status where
+possible. Otherwise mark uncertain and require reconciliation before retrying
+an action that could duplicate an external effect. Cancellation and approval
+revocation must be rechecked at the dispatch boundary.
+
+Gate: concurrent duplicate requests cause one supported side effect; restart
+does not replay uncertain writes; cancellation prevents subsequent dispatch.
+
+LOOP 06 — OUTCOME VERIFICATION AND BOUNDED REPLANNING
+
+Evaluate completion criteria using tool results plus independent readback when
+available. Prefer deterministic checks. Use a model evaluator only for criteria
+that require it, with versioned rubric and evidence, and expose uncertainty.
+
+An HTTP 200 or success string is insufficient. Support partial completion,
+contradiction, unverifiable results and delayed effects. Record the difference
+between intended and observed outcome. Replanning must create a new linked
+decision with refreshed evidence and fresh authorization where necessary.
+
+Initial configurable limits: 5 decisions per task, 2 transient read retries,
+and no automatic retry of uncertain writes. Inherit stricter repository budgets.
+Use deadlines, bounded backoff, cancellation and repeated-no-progress detection.
+
+Gate: empty success responses fail semantic verification; partial results stay
+partial; repeated failures terminate within budget; real verified results finish.
+
+LOOP 07 — REVIEWED EPISODES AND MEMORY
+
+Store task episodes linking evidence, decision, execution, outcome and review.
+Distinguish observed outcomes, model interpretations and human-reviewed labels.
+A successful API call does not make its narrative a verified learning example.
+
+Use existing memory infrastructure. Add tenant/domain filters, provenance,
+schema version, expiry and retraction. Low-quality or unreviewed episodes may
+support debugging but must not automatically become trusted reusable guidance.
+Generalized memories must exclude patient identifiers and retain provenance.
+Memory retrieval cannot override current evidence, policy or permission.
+
+Gate: the correct scope retrieves relevant reviewed examples; rejected,
+expired or retracted examples do not guide decisions; deletions propagate to
+derived indexes according to retention policy.
+
+LOOP 08 — COMPLETE NONCLINICAL VERTICAL SLICE
+
+Choose an existing low-risk local task, such as validating a configuration file
+and producing a proposed patch. Use actual repository components end to end:
+task entry -> evidence snapshot -> decision -> policy -> tool -> verification
+-> episode -> observable result. Do not make a standalone demo bypassing NERVE.
+
+Demonstrate a successful case, a missing-input case, tool failure and restart.
+Record exact runnable commands and expected outputs.
+
+Gate: the integration test exercises the production dispatcher and persistence,
+using sandboxed/local effects; mocks are limited to unavailable external services.
+
+LOOP 09 — SYNTHETIC CLINICAL WORKSPACE ADAPTER
+
+Implement a domain adapter for referral-draft preparation using synthetic data.
+Facts: a required assessment may exist, be missing, be stale, contradict another
+source or belong to another scope. Actions: retrieve authorized evidence,
+prepare a draft, request clarification or await clinician review.
+
+Verification: required fields match sources, unknowns remain explicit, citations
+resolve, and review state is recorded. No autonomous clinical treatment decision
+or external referral submission is part of this first implementation.
+
+Integrate through actual DeepSynaps API contracts if found in the repository.
+Otherwise provide a typed boundary, synthetic implementation and documented
+integration gap. Never invent a functioning API URL, endpoint or credential.
+
+Gate: a missing assessment triggers clarification; an available valid assessment
+can populate a draft; cross-scope data is excluded; submission remains gated.
+
+LOOP 10 — FACT-SENSITIVE BEHAVIOUR AND COUNTERFACTUAL TESTS
+
+Build an offline paired-case suite in which one relevant fact changes at a time:
+assessment present/missing; fresh/stale; approved/unapproved; source accessible/
+forbidden; tool available/unavailable; outcome verified/unverified.
+
+Define expected actions before running candidates. Also test irrelevant wording
+changes: these should not change authorization or completion behaviour.
+Contradictory generated rationale must never override trusted observations.
+
+Use task-level labels and deterministic checks wherever possible. Test whether
+actions change appropriately, not just whether explanation text changes.
+This adapts Arc's behavioural motivation; it does not implement its robot loss.
+
+Gate: every critical paired case chooses the expected permitted action; the
+system rejects factually unsupported completion claims and unsafe bypasses.
+
+LOOP 11 — HELD-OUT EVALUATION AND ABLATIONS
+
+Compare: existing NERVE baseline; structured decision only; full decision plus
+verification. Use equivalent tasks, model settings and tool access. Measure
+task completion, unsupported completion, policy violations, correct abstention,
+recovery, irrelevant-fact stability, relevant-fact sensitivity, latency and cost.
+
+Start with at least 60 synthetic scenarios split by task/template family into
+development, validation and a locked test set (example: 30/15/15). This is a
+smoke benchmark, not evidence for clinical deployment. Repeated paraphrases
+from one template cannot cross splits. Track dataset hashes and episode lineage.
+Larger later evaluations should use independently reviewed cases and task-level
+uncertainty estimates. Do not present repeated model runs as independent tasks.
+
+Freeze budgets and acceptance thresholds before candidate comparisons. Require
+zero critical policy violations in the test suite, no unsupported success in
+critical cases, and no failed required regressions. Report all denominators and
+uncertainty. A small or inconclusive gain cannot justify a performance claim.
+Use validation for iteration; protect locked test cases from candidate generation.
+After a release evaluation exposes test results, treat that suite as consumed
+for future tuning and obtain a new holdout for subsequent promotion decisions.
+
+Gate: reproducible report with baseline/candidate versions and actual results.
+If no measurable benefit appears, keep the new path experimental/off by default.
+
+LOOP 12 — BOUNDED IMPROVEMENT CANDIDATES
+
+Connect to existing evolution infrastructure where available. Otherwise create
+a small offline candidate runner with explicit inputs and budgets.
+
+Initially allow only versioned prompt, retrieval/ranking configuration and task
+strategy candidates. Each candidate includes failure evidence, hypothesis,
+changed files/config, base version, dataset version and predicted benefit.
+Use development episodes to generate at most 3 candidates per run, evaluate on
+validation data and select at most one for release evaluation. Stop when budget
+is exhausted or no candidate passes. Do not run an unbounded recursive daemon.
+
+Candidate execution has no production credentials or write privileges. It cannot
+modify evaluation cases, authorization rules, approval policy, budgets or its own
+promotion criteria. Record rejected candidates as well as accepted ones.
+
+Gate: an intentionally regressive candidate is rejected; a candidate cannot
+rewrite its evaluator; budget exhaustion and interruption resume safely.
+
+LOOP 13 — CONTROLLED RELEASE, SHADOW MODE AND ROLLBACK
+
+Suggested modes, adapted to existing config:
+off: existing behaviour and existing protections;
+shadow: generate/evaluate proposed decisions without duplicate side effects;
+enforce: new checks and verification apply to the enabled workflow.
+
+Default to off or repository-approved shadow mode. Authorization failure in an
+enforced workflow must fail closed; it cannot silently fall back to an older
+unprotected route. Rollback changes future routing, reconciles in-flight work,
+retains audit history and restores a known-good compatible version.
+
+Version prompt, model, policy, strategy and schema separately. Provide release
+manifest, review decision, canary limits, metrics and rollback command. Clinical
+activation requires the existing appropriate review process. Do not activate
+production during this implementation handoff without session authorization.
+
+Gate: shadow creates no external effects; staged promotion is auditable; rollback
+works after partial execution and across supported schema versions.
+
+LOOP 14 — OPERATIONAL VISIBILITY AND COMMANDS
+
+Extend the existing CLI/API rather than adding a competing interface. Desired
+capabilities (command names are proposals, not commands known to exist):
+  inspect task/decision with redacted evidence and status;
+  replay one synthetic episode without side effects;
+  run the frozen evaluation suite;
+  propose/evaluate a bounded improvement run;
+  inspect candidate and release status;
+  reconcile uncertain executions;
+  roll back an experimental release.
+
+Capture correlation IDs across every stage. Metrics: validation rejection,
+stale evidence, approval wait, tool error, uncertain effect, verified completion,
+budget exhaustion and rollback. Avoid patient IDs in metric labels. Include
+backpressure, retention, timeout settings and provider outages in the runbook.
+
+Gate: an operator can explain why a task stopped and trace the relevant evidence
+without secrets or sensitive payloads appearing in routine logs.
+
+LOOP 15 — FINAL INTEGRATION, REVIEW AND HANDOFF
+
+Run repository-mandated checks plus focused end-to-end tests from loops 08–13.
+Review actual dispatcher coverage and feature-flag defaults. Verify no new
+secrets, patient data, unexplained dependencies or direct execution bypasses.
+Exercise schema migration and rollback in disposable infrastructure where used.
+Do not expand testing beyond unresolved risks and required repository gates.
+
+Produce one completion report with:
+  base/final commit; implemented paths and execution entry points;
+  each loop's status and evidence; exact tests and observed results;
+  baseline/candidate metrics including adverse findings;
+  offline versus real-provider versus real-API verification;
+  startup, evaluation, recovery and rollback commands;
+  configuration defaults; remaining blockers; optional follow-up work.
+
+Gate: another developer can reproduce the local demonstration and evaluation.
+Do not report 'fully self-learning', 'clinically validated' or 'production ready'
+from unit tests, synthetic cases or an implementation-only milestone.
+
+4. ESSENTIAL FAILURE MATRIX
+
+Missing evidence -> request information, never fabricate a fact.
+Conflicting evidence -> surface conflict; block dependent action until resolved.
+Expired observation -> refresh before execution.
+Provider timeout -> bounded retry or explicit blocked/review state.
+Invalid model output -> bounded repair; no dispatch of malformed output.
+Approval for different arguments -> reject; obtain correctly bound approval.
+Tool reports success but result absent -> verification fails or stays uncertain.
+Crash after effect but before receipt -> reconcile; no blind write retry.
+Duplicate event -> deduplicate using stable operation identity.
+New evidence arrives during approval -> invalidate dependent decision.
+Memory contains adversarial instructions -> treat as data; preserve policy.
+Wrong-tenant evidence -> deny access and exclude from prompts/results.
+Repeated no-progress replanning -> stop within budget with useful explanation.
+Learning candidate alters evaluator -> reject before evaluation.
+Regression after activation -> suspend candidate and restore known-good routing.
+
+5. OPTIONAL LATER STAGE — MODEL TRAINING
+
+Not required for completing loops 00–15. Do not launch paid training by default.
+After enough authorized, reviewed episodes exist, assess supervised fine-tuning
+or distillation as a separate experiment. Require dataset rights, privacy checks,
+quality review, immutable train/validation/test splits, a cost estimate, baseline
+comparison and rollback. Never train on held-out cases or use model-generated
+causal explanations as unquestioned ground truth. Do not transplant a robotic
+action loss directly into clinical reasoning without a separately justified
+objective. Training is only worthwhile if evaluation demonstrates improvement.
+
+6. SUCCESS DEFINITION
+
+Implementation complete: required loops pass or named external blockers are
+explicitly recorded; runnable local functionality exists; tests prove dispatch
+enforcement, evidence handling, verification, recovery and rollback.
+
+Improvement demonstrated: a separately reported evaluation supports better
+behaviour under frozen criteria without unacceptable regressions.
+
+Production readiness: separate operational and domain-specific review after
+real integrations and deployment requirements are verified. These three states
+must remain distinct in documentation and final claims.
+
+END OF CLI HANDOFF

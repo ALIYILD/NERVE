@@ -1,0 +1,2 @@
+# Safety plane only; no NERVE runtime or numerical/model dependency.
+PyJWT[crypto]>=2.10,<3

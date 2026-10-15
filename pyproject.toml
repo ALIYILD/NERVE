@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nerve-awim"
+description = "NERVE-AWIM research package. Experimental simulated models."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+dynamic = ["version"]
+dependencies = []
+
+[project.optional-dependencies]
+auth = ["PyJWT[crypto]>=2.10,<3"]
+mcp = ["mcp==2.3.0"]
+
+[tool.setuptools.packages.find]
+# nerve_awim.autoresearch_v03/v08 import the top-level benchmarks package, so
+# ship it with the wheel instead of relying on the source checkout.
+where = ["src", "."]
+include = ["nerve_awim*", "benchmarks*"]
+
+[tool.setuptools.dynamic]
+version = { attr = "nerve_awim.__version__" }

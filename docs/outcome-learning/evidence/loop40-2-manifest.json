@@ -1,0 +1,12 @@
+{
+  "source_sha256": {
+    "src/nerve_awim/sequential_gate_v1.py": "fdd9981094f7dc66abc24cb24fe280f95c75f0bdc74cabff0500146cbec36930",
+    "src/nerve_awim/sequential_gate_contract.py": "595f0c973adfe963ba3ff093997cc280403b57c5df4f9c3036e34d194ab4324b",
+    "src/nerve_awim/sequential_gate_simulation.py": "f0f64c5bd57c608b54dbd546906cd3926ad3658e4c05f2563dfa85e97c22db9c",
+    "tests/test_sequential_gate_v1.py": "dbb837c8e3dc654581238e0bcb3b4613da744a34d6c6ca4e906a9aa1985ac172"
+  },
+  "simulation_elapsed_seconds_from_file_timestamps": 177.5367796421051,
+  "baseline_source_sha256": "877db709d1111bb0e01563ce9ff6bb0e5e3f1f7b7765b1a6357c384a9079e065",
+  "canonical_plan_sha256": "76a944bd3b1a03e15231adf08eb54a8e659ecdf000886472575c327938e8a617",
+  "model_calls": 0
+}

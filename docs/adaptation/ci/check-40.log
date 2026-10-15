@@ -1,0 +1,253 @@
+{
+  "baseline_holdout": {
+    "abort": 1,
+    "completion": 0.51,
+    "goal_penalized": 1.074299097321519,
+    "prediction_penalized": 0.9963561604286215,
+    "violations": 0
+  },
+  "baseline_validation": {
+    "abort": 1,
+    "completion": 0.50625,
+    "goal_penalized": 1.0701005075014796,
+    "prediction_penalized": 0.9993839746240317,
+    "violations": 0
+  },
+  "candidate_count": 9,
+  "generations_run": 3,
+  "holdout_absolute_eligible": false,
+  "holdout_rejection_reasons": [
+    "completion_below_absolute_minimum",
+    "episode_abort_detected"
+  ],
+  "lineage": [
+    {
+      "candidates": [
+        {
+          "absolute_eligible": false,
+          "candidate_for_research": false,
+          "genome": {
+            "max_missing": 5,
+            "risk_aversion": 0.05
+          },
+          "no_regression": false,
+          "rejection_reasons": [
+            "completion_below_absolute_minimum",
+            "episode_abort_detected"
+          ],
+          "strict_goal_improvement": false,
+          "validation": {
+            "abort": 1,
+            "completion": 0.50625,
+            "goal_penalized": 1.0779765260795853,
+            "prediction_penalized": 1.006483140661294,
+            "violations": 0
+          }
+        },
+        {
+          "absolute_eligible": false,
+          "candidate_for_research": false,
+          "genome": {
+            "max_missing": 6,
+            "risk_aversion": 0.25
+          },
+          "no_regression": true,
+          "rejection_reasons": [
+            "completion_below_absolute_minimum",
+            "episode_abort_detected"
+          ],
+          "strict_goal_improvement": true,
+          "validation": {
+            "abort": 1,
+            "completion": 0.51875,
+            "goal_penalized": 1.0492365594262063,
+            "prediction_penalized": 0.9752766700487483,
+            "violations": 0
+          }
+        },
+        {
+          "absolute_eligible": false,
+          "candidate_for_research": false,
+          "genome": {
+            "max_missing": 5,
+            "risk_aversion": 0.3
+          },
+          "no_regression": false,
+          "rejection_reasons": [
+            "completion_below_absolute_minimum",
+            "episode_abort_detected"
+          ],
+          "strict_goal_improvement": false,
+          "validation": {
+            "abort": 1,
+            "completion": 0.50625,
+            "goal_penalized": 1.0777814518405904,
+            "prediction_penalized": 1.0012291515145633,
+            "violations": 0
+          }
+        }
+      ],
+      "generation": 1,
+      "selected": null
+    },
+    {
+      "candidates": [
+        {
+          "absolute_eligible": false,
+          "candidate_for_research": false,
+          "genome": {
+            "max_missing": 5,
+            "risk_aversion": 0.2
+          },
+          "no_regression": false,
+          "rejection_reasons": [
+            "completion_below_absolute_minimum",
+            "episode_abort_detected"
+          ],
+          "strict_goal_improvement": true,
+          "validation": {
+            "abort": 1,
+            "completion": 0.50625,
+            "goal_penalized": 1.0694160645674284,
+            "prediction_penalized": 1.0018071989152932,
+            "violations": 0
+          }
+        },
+        {
+          "absolute_eligible": false,
+          "candidate_for_research": false,
+          "genome": {
+            "max_missing": 6,
+            "risk_aversion": 0.3
+          },
+          "no_regression": true,
+          "rejection_reasons": [
+            "completion_below_absolute_minimum",
+            "episode_abort_detected"
+          ],
+          "strict_goal_improvement": true,
+          "validation": {
+            "abort": 1,
+            "completion": 0.51875,
+            "goal_penalized": 1.0567118129832802,
+            "prediction_penalized": 0.9770163735773212,
+            "violations": 0
+          }
+        },
+        {
+          "absolute_eligible": false,
+          "candidate_for_research": false,
+          "genome": {
+            "max_missing": 7,
+            "risk_aversion": 0.25
+          },
+          "no_regression": true,
+          "rejection_reasons": [
+            "completion_below_absolute_minimum",
+            "episode_abort_detected"
+          ],
+          "strict_goal_improvement": true,
+          "validation": {
+            "abort": 1,
+            "completion": 0.53125,
+            "goal_penalized": 1.0285881220044824,
+            "prediction_penalized": 0.9509761496178227,
+            "violations": 0
+          }
+        }
+      ],
+      "generation": 2,
+      "selected": null
+    },
+    {
+      "candidates": [
+        {
+          "absolute_eligible": false,
+          "candidate_for_research": false,
+          "genome": {
+            "max_missing": 4,
+            "risk_aversion": 0.2
+          },
+          "no_regression": false,
+          "rejection_reasons": [
+            "completion_below_absolute_minimum",
+            "episode_abort_detected"
+          ],
+          "strict_goal_improvement": false,
+          "validation": {
+            "abort": 1,
+            "completion": 0.49375,
+            "goal_penalized": 1.0922773430835804,
+            "prediction_penalized": 1.026311378148962,
+            "violations": 0
+          }
+        },
+        {
+          "absolute_eligible": false,
+          "candidate_for_research": false,
+          "genome": {
+            "max_missing": 5,
+            "risk_aversion": 0.45
+          },
+          "no_regression": false,
+          "rejection_reasons": [
+            "completion_below_absolute_minimum",
+            "episode_abort_detected"
+          ],
+          "strict_goal_improvement": false,
+          "validation": {
+            "abort": 1,
+            "completion": 0.50625,
+            "goal_penalized": 1.091050061596352,
+            "prediction_penalized": 1.0038998800984895,
+            "violations": 0
+          }
+        },
+        {
+          "absolute_eligible": false,
+          "candidate_for_research": false,
+          "genome": {
+            "max_missing": 4,
+            "risk_aversion": 0.25
+          },
+          "no_regression": false,
+          "rejection_reasons": [
+            "completion_below_absolute_minimum",
+            "episode_abort_detected"
+          ],
+          "strict_goal_improvement": false,
+          "validation": {
+            "abort": 1,
+            "completion": 0.49375,
+            "goal_penalized": 1.0912272734469344,
+            "prediction_penalized": 1.0232954164263937,
+            "violations": 0
+          }
+        }
+      ],
+      "generation": 3,
+      "selected": null
+    }
+  ],
+  "report_only_holdout": {
+    "abort": 1,
+    "completion": 0.51,
+    "goal_penalized": 1.074299097321519,
+    "prediction_penalized": 0.9963561604286215,
+    "violations": 0
+  },
+  "scope": "Synthetic WorldCore parameter experiments only. No source patches, actuation, auto-merge or deployment.",
+  "selected_recipe": {
+    "max_missing": 5,
+    "risk_aversion": 0.25
+  },
+  "selected_validation": {
+    "abort": 1,
+    "completion": 0.50625,
+    "goal_penalized": 1.0701005075014796,
+    "prediction_penalized": 0.9993839746240317,
+    "violations": 0
+  },
+  "status": "no_deployable_improvement",
+  "study_protocol": "nerve-worldcore-recursive-v19"
+}

@@ -3,6 +3,7 @@ import gzip
 import json
 from pathlib import Path
 import unittest
+from historical_evidence_runtime import archived_receipt
 from unittest.mock import patch
 from nerve_awim.memory_gateway import prequential_gain_demo as demo
 
@@ -21,6 +22,7 @@ class PrequentialGainDemoTests(unittest.TestCase):
         for arm,plant in (('legacy','drift'),('selector','unknown')):
             with self.assertRaises(ValueError): demo.execute(arm,plant)
 
+    @archived_receipt
     def test_original_frozen_single_use_trajectories_preserved(self):
         path=Path(__file__).resolve().parents[1]/'docs/galahad/evidence/standard-learning-development-v1.json.gz'
         originals=json.loads(gzip.decompress(path.read_bytes()))['rows']

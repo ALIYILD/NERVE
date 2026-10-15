@@ -1,0 +1,302 @@
+{
+  "starting_commit": "2d422018fce3f703d68415aae9f84998291e77a6",
+  "plan_complete": false,
+  "commands": [
+    {
+      "command": "PYTHONPATH=src /Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/continuation-full-suite.log",
+      "sha256": "6ed000563d9d7a4e6857d4e437b7617fbb823fe36297a6d995aa0c42b296e7c0"
+    },
+    {
+      "command": "PYTHONPATH=src /Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m unittest discover -s tests/world_model -v",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/continuation-tests-final.log",
+      "sha256": "2f6dda9b6fa1bfd2d34453c8703dae95afc11ed9effcc9bbce930493e4377bab"
+    },
+    {
+      "command": "node --test tests/test_checkpoint_discovery.cjs",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/continuation-node.log",
+      "sha256": "1f5fa70d39c345bad8d6775dd9bec674cd9beeed4c8f8f1fdcb4ffd9baeb1ea2"
+    },
+    {
+      "command": "PYTHONPATH=src /Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.world_model.cli study --directory /Users/aliyildirim/nerve-memento3-evidence/study-final-9003 --final-per-family 80 --final-seed 9003",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/study-final-9003-output.json",
+      "sha256": "75bb60a3511033968a795216cf62f23d2a36f50f4133ff51adf87d686123b87c"
+    },
+    {
+      "command": "PYTHONPATH=src /Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.world_model.cli repository-study --repository /Users/aliyildirim/nerve-memento3 --directory /Users/aliyildirim/nerve-memento3-evidence/repository-study-v2",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/repository-study-v2-output.json",
+      "sha256": "1b809b9a668f6ad28af22a1bc93d214e4a04c0abe5b2b76b48b6b4f6db35fdef"
+    },
+    {
+      "command": "PYTHONPATH=src /Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.world_model.cli --db /Users/aliyildirim/nerve-memento3-evidence/continuation-fresh-demo.sqlite3 demo --json",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/continuation-fresh-demo.json",
+      "sha256": "b5bddcbaa710b1c851313a3ee98fe44559e5ba48cb2d3ae1b9bae111023ac471",
+      "cwd": "/Users/aliyildirim/nerve-memento3-evidence/continuation-fresh-checkout"
+    }
+  ],
+  "source_hashes": {
+    "src/nerve_awim/world_model/worker.py": "82cb52a4a9b92eaa65d6bf4f8a65915d740027217b46ecc275a4e6d5b0f88783",
+    "src/nerve_awim/world_model/planner.py": "510f1111d370484625781c5b8805bb37aa8e25968317d12edd66996ee03829bd",
+    "src/nerve_awim/world_model/coordinator.py": "b66d03e41b882c6824f20b7bbb550bb6472c35343fc2e89a42b0ab5b5ce0bfa4",
+    "src/nerve_awim/world_model/release.py": "90051be35bc075fdc666f41f338baacdf8b38bfa93dfac5c1c4d2c626f3100ee",
+    "src/nerve_awim/world_model/compiler.py": "31f02d278acb1e2d67b0f0e29bf4adb73f18477f4f4d03151231cbc4179d02ee",
+    "src/nerve_awim/world_model/registry.py": "9a1025d307501037ee9d9c39ee237dbaa2d4be58a6b6f49c52bb459db52e62cf",
+    "src/nerve_awim/world_model/reflection.py": "fe662b8626fa4dff328a616b75c74c0c2fae446cbd657d0b6cb7c5c0d09bef0f",
+    "src/nerve_awim/world_model/population.py": "8a2edd1206be84d4c6c1355c35d40d7561f8f62aa2d9d9950706f45c5c3b9618",
+    "src/nerve_awim/world_model/rulebook.py": "cb1858876f55125fe138a0176ad918463cfccf838a03426e928713930d9757e8",
+    "src/nerve_awim/world_model/ledger.py": "ffe2afe952708cb6c362a343787cf6481276cf8daa34e02e886d66ef97786989",
+    "src/nerve_awim/world_model/repository_study.py": "31dc3e6ba1b428d6bced8e296494639bf3f8a6bf3d18e15e012c7f059aec57bb",
+    "src/nerve_awim/world_model/__init__.py": "64a23a7e7a20e25eae40730a0436d730e442e794befc2f90f3442fe5ddfa4c12",
+    "src/nerve_awim/world_model/sandbox.py": "3e7810404c373d88f5eedd2d9823a68cab277eb34ecfacee67b159974ba6ced4",
+    "src/nerve_awim/world_model/replay.py": "fa4b027d6de07b96e0a69995ad24768210cf480efbb49fe4e2293b3c5123b1cc",
+    "src/nerve_awim/world_model/runtime_manifest.py": "9a9b8264ec371fa7400c318b9b48ae155230220c37be1f40e7fb2d85bcbb5c27",
+    "src/nerve_awim/world_model/cli.py": "26aa8d8db40e97916fe60efa638069d7041ebd3eeeca9cd87c6425adc12a1a01",
+    "src/nerve_awim/world_model/mcp.py": "c3ccf9941015b844d4a41c6f547807d805e624c300e51058690070fad5075344",
+    "src/nerve_awim/world_model/retention.py": "1e9ca2f906fca8b505e40f6072344d3061c2f4db340f45cec2d629948fbc9580",
+    "src/nerve_awim/world_model/generalization.py": "c142e3e0b3ea31de1c11ae4e32efac5a366f0f8cbddb2cbd49e847a1015c7679",
+    "src/nerve_awim/world_model/contracts.py": "887422457216eb10b2ca62b8c65832af09ae51a43a3496f79caf7da6d231f2c6",
+    "src/nerve_awim/world_model/fidelity.py": "9f1dec0d9c65fcf2c7837600324673de25f84ca7d5b4e3387c180cdc377e4515",
+    "src/nerve_awim/world_model/demo.py": "e99feb0e9955cef3e44097f48ac0560664c3a6384e4bcacc5c560d6078cae48c",
+    "src/nerve_awim/world_model/evaluator.py": "377d76d2555af47bd5467c8348938aa8c1797f85a85515e56de5bdaa2b66ec87",
+    "src/nerve_awim/world_model/study.py": "2440a0bc122b3267a6a3d4a71eb1fd4d896df123ee61278235f1550e622e649d",
+    "src/nerve_awim/world_model/adapters.py": "42cbd8b6ccbdd0df0f416b8a468d7ab67bb9ec2e9dded6026e76a2ff87ee85b2",
+    "tests/world_model/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/world_model/test_generalization.py": "63db70cfd62dd92547e8d279d04074e74fe0d4bec48de1d6c68cd98b2f958f4f",
+    "tests/world_model/test_world_model.py": "c6ef0eeedf4342c7dcef58f29892d01694671daa66f0b9d0c6c672c7c6ff8ec6",
+    "configs/world_model.offline.json": "0942a9e94c46eeb29d3dcf80da34db01db97ec76d8c104349dc9d21bdc59511a"
+  },
+  "study": {
+    "model_id": "11a9f6db27e11133d26cb94036495e1195bf030fb8f04e7a31ed0de8813da515",
+    "final_seed": 9003,
+    "final": {
+      "direct_finish": {
+        "episodes": 240,
+        "success": 0,
+        "abstentions": 0,
+        "metrics_by_family": {
+          "workflow": {
+            "episodes": 80,
+            "success": 0,
+            "abstentions": 0,
+            "simulator_actions": 80,
+            "simulated_nodes": 0,
+            "policy_violations": 0
+          },
+          "retry_api": {
+            "episodes": 80,
+            "success": 0,
+            "abstentions": 0,
+            "simulator_actions": 80,
+            "simulated_nodes": 0,
+            "policy_violations": 0
+          },
+          "data_transform": {
+            "episodes": 80,
+            "success": 0,
+            "abstentions": 0,
+            "simulator_actions": 80,
+            "simulated_nodes": 0,
+            "policy_violations": 0
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0
+      },
+      "capable_script": {
+        "episodes": 240,
+        "success": 240,
+        "abstentions": 0,
+        "metrics_by_family": {
+          "workflow": {
+            "episodes": 80,
+            "success": 80,
+            "abstentions": 0,
+            "simulator_actions": 240,
+            "simulated_nodes": 0,
+            "policy_violations": 0
+          },
+          "retry_api": {
+            "episodes": 80,
+            "success": 80,
+            "abstentions": 0,
+            "simulator_actions": 240,
+            "simulated_nodes": 0,
+            "policy_violations": 0
+          },
+          "data_transform": {
+            "episodes": 80,
+            "success": 80,
+            "abstentions": 0,
+            "simulator_actions": 240,
+            "simulated_nodes": 0,
+            "policy_violations": 0
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0
+      },
+      "exact_memory": {
+        "episodes": 240,
+        "success": 0,
+        "abstentions": 240,
+        "metrics_by_family": {
+          "workflow": {
+            "episodes": 80,
+            "success": 0,
+            "abstentions": 80,
+            "simulator_actions": 0,
+            "simulated_nodes": 240,
+            "policy_violations": 0
+          },
+          "retry_api": {
+            "episodes": 80,
+            "success": 0,
+            "abstentions": 80,
+            "simulator_actions": 0,
+            "simulated_nodes": 240,
+            "policy_violations": 0
+          },
+          "data_transform": {
+            "episodes": 80,
+            "success": 0,
+            "abstentions": 80,
+            "simulator_actions": 0,
+            "simulated_nodes": 240,
+            "policy_violations": 0
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0
+      },
+      "frame_rules": {
+        "episodes": 240,
+        "success": 240,
+        "abstentions": 0,
+        "metrics_by_family": {
+          "workflow": {
+            "episodes": 80,
+            "success": 80,
+            "abstentions": 0,
+            "simulator_actions": 240,
+            "simulated_nodes": 1440,
+            "policy_violations": 0
+          },
+          "retry_api": {
+            "episodes": 80,
+            "success": 80,
+            "abstentions": 0,
+            "simulator_actions": 240,
+            "simulated_nodes": 1440,
+            "policy_violations": 0
+          },
+          "data_transform": {
+            "episodes": 80,
+            "success": 80,
+            "abstentions": 0,
+            "simulator_actions": 240,
+            "simulated_nodes": 1440,
+            "policy_violations": 0
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0
+      },
+      "selected_population": {
+        "episodes": 240,
+        "success": 240,
+        "abstentions": 0,
+        "metrics_by_family": {
+          "workflow": {
+            "episodes": 80,
+            "success": 80,
+            "abstentions": 0,
+            "simulator_actions": 240,
+            "simulated_nodes": 1440,
+            "policy_violations": 0
+          },
+          "retry_api": {
+            "episodes": 80,
+            "success": 80,
+            "abstentions": 0,
+            "simulator_actions": 240,
+            "simulated_nodes": 1440,
+            "policy_violations": 0
+          },
+          "data_transform": {
+            "episodes": 80,
+            "success": 80,
+            "abstentions": 0,
+            "simulator_actions": 240,
+            "simulated_nodes": 1440,
+            "policy_violations": 0
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0
+      },
+      "recent_family_only": {
+        "episodes": 240,
+        "success": 80,
+        "abstentions": 160,
+        "metrics_by_family": {
+          "workflow": {
+            "episodes": 80,
+            "success": 0,
+            "abstentions": 80,
+            "simulator_actions": 0,
+            "simulated_nodes": 240,
+            "policy_violations": 0
+          },
+          "retry_api": {
+            "episodes": 80,
+            "success": 0,
+            "abstentions": 80,
+            "simulator_actions": 0,
+            "simulated_nodes": 240,
+            "policy_violations": 0
+          },
+          "data_transform": {
+            "episodes": 80,
+            "success": 80,
+            "abstentions": 0,
+            "simulator_actions": 240,
+            "simulated_nodes": 1440,
+            "policy_violations": 0
+          }
+        },
+        "provider_calls": 0,
+        "provider_cost": 0,
+        "real_actions": 0
+      }
+    },
+    "ablation_effects": {
+      "frame_over_exact_successes": 240,
+      "population_over_single_frame_successes": 0,
+      "retained_history_over_recent_only_successes": 160
+    },
+    "eligibility": false
+  },
+  "repository_study": {
+    "model_id": "51d1c55f2715253d986e898f3c8ffc27a3436f9f364bc8de112302ce2f4f254b",
+    "tasks": 6,
+    "success": 6
+  },
+  "notes": [
+    "Full suite: 921 tests; focused suite: 46 tests; Node: 7 tests.",
+    "Primary final cohort 9003 ran after all implementation changes, using a new seed following the predeclared comparison policy.",
+    "Repository measurement preceded final manifest/policy tightening; the final focused/full suites exercise the complete registered-planner path on the same six-file research task.",
+    "The earlier 48 research-script checks remain historical evidence, not claimed as rerun in this continuation.",
+    "No provider calls, deployment authorization, push or merge. Runtime evidence stays outside Git."
+  ]
+}

@@ -4,6 +4,7 @@ import gzip
 from pathlib import Path
 import tempfile
 import unittest
+from historical_evidence_runtime import archived_receipt
 from unittest.mock import patch
 
 from nerve_awim.memory_gateway import prequential_timing_diagnostic as subject
@@ -11,6 +12,7 @@ from nerve_awim.memory_gateway import prequential_timing_diagnostic as subject
 ARTIFACT = subject.demo.standard.ROOT/'docs/galahad/evidence/prequential-gain-development-v1.json.gz'
 
 
+@archived_receipt
 class PrequentialTimingTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls): cls.raw,cls.report = subject._read(ARTIFACT)

@@ -1,0 +1,11 @@
+{
+  "limitations": "Deterministic hand-authored tools and exact-output judge; does not establish improvement for LLMs, real-world agents, model-weight learning, or execution speed.",
+  "recency_mean_elapsed_seconds": 0.030967317750764778,
+  "recency_success": 0.5833333333333333,
+  "seeds": 12,
+  "task_calls_per_policy_per_seed": 72,
+  "training_feedback_per_seed": 30,
+  "utility_mean_elapsed_seconds": 0.02987262766813122,
+  "utility_success": 1.0,
+  "utility_win_seeds": 10
+}
