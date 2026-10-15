@@ -1,0 +1,287 @@
+{
+  "starting_commit": "c3121d77e1a91535c33047be940d4bacfe06b441",
+  "python": "3.12.12",
+  "unit_tests": {
+    "command": "PYTHONPATH=src /Users/aliyildirim/.local/share/uv/python/cpython-3.12-macos-x86_64-none/bin/python3.12 -m unittest discover -s tests -v",
+    "exit_code": 0,
+    "tests": 875,
+    "skipped": 61,
+    "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-python312.log"
+  },
+  "initial_research_gates": [
+    {
+      "command": "node --test tests/test_checkpoint_discovery.cjs",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-02.log",
+      "seconds": 0.44
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/adaptive_memory_study.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-03.log",
+      "seconds": 0.18
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/offline_learning_suite.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-04.log",
+      "seconds": 0.13
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v13_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-05.log",
+      "seconds": 2.48
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v16_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-06.log",
+      "seconds": 1.26
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v17_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-07.log",
+      "seconds": 1.7
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v18_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-08.log",
+      "seconds": 0.97
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v19_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-09.log",
+      "seconds": 0.13
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v20_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-10.log",
+      "seconds": 0.65
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v21_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-11.log",
+      "seconds": 0.49
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v30_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-12.log",
+      "seconds": 0.12
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v31_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-13.log",
+      "seconds": 0.12
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v31_ablation.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-14.log",
+      "seconds": 0.12
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v32_multimodal.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-15.log",
+      "seconds": 0.13
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v33_nonlinear.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-16.log",
+      "seconds": 0.12
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m nerve_awim.autoresearch_v01",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-17.log",
+      "seconds": 0.13
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m nerve_awim.autoresearch_v02",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-18.log",
+      "seconds": 0.18
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m nerve_awim.autoresearch_v03",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-19.log",
+      "seconds": 0.34
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m nerve_awim.autoresearch_v04",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-20.log",
+      "seconds": 0.54
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m nerve_awim.autoresearch_v05",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-21.log",
+      "seconds": 0.33
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v06_recovery_research.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-22.log",
+      "seconds": 0.12
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m nerve_awim.autoresearch_v08",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-23.log",
+      "seconds": 0.33
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m nerve_awim.autoresearch_v09",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-24.log",
+      "seconds": 0.43
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m unittest discover -s tests -p 'test_evolution_v01.py' -v",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-25.log",
+      "seconds": 0.18
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v11_parallel_evolution.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-26.log",
+      "seconds": 0.6
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v11_memory_effectiveness.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-27.log",
+      "seconds": 0.59
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m nerve_awim.jev_agreement_v12",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-28.log",
+      "seconds": 0.18
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v12_executable_agents.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-29.log",
+      "seconds": 1.6
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v13_external_mcp.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-30.log",
+      "seconds": 0.96
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/mcp_wire_v13.py",
+      "exit_code": 1,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-32.log",
+      "seconds": 0.18
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/llm_mcp_v14.py --cases 4",
+      "exit_code": 1,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-33.log",
+      "seconds": 0.17
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/llm_mcp_v14.py --mock-api --cases 4",
+      "exit_code": 1,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-34.log",
+      "seconds": 0.19
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/agent_study_v15.py --seeds 2 --cases 3",
+      "exit_code": 1,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-35.log",
+      "seconds": 0.23
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/agent_study_v15.py --limited-fixture --seeds 2 --cases 3",
+      "exit_code": 1,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-36.log",
+      "seconds": 0.23
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/agent_study_v15.py --mock-api --seeds 2 --cases 3",
+      "exit_code": 1,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-37.log",
+      "seconds": 0.18
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/agent_study_v15.py --seeds 5 --cases 2",
+      "exit_code": 1,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-38.log",
+      "seconds": 0.18
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/agent_study_v15.py --failure-fixture --seeds 2 --cases 2",
+      "exit_code": 1,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-39.log",
+      "seconds": 0.18
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v17_recovery_agents.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-40.log",
+      "seconds": 0.8
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v18_memory_retrieval.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-41.log",
+      "seconds": 0.13
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m nerve_awim.recursive_evolution_v19",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-42.log",
+      "seconds": 0.17
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m nerve_awim.worldcore_recursion_v19",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-43.log",
+      "seconds": 0.87
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 benchmarks/v20_governed_repository_learning.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-44.log",
+      "seconds": 0.23
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/verify_shadow_v21.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-45.log",
+      "seconds": 0.7
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/verify_repository_pilot_v22.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-46.log",
+      "seconds": 0.7
+    },
+    {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3 scripts/verify_canary_v23.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/baseline-gate-47.log",
+      "seconds": 0.28
+    }
+  ],
+  "notes": [
+    "Initial sandboxed Python 3.10 run was not a suitable CI baseline: OS sandbox restrictions and missing MCP dependencies.",
+    "Baseline 3.12 full suite passed outside sandbox with optional dependency skips. Integrated verification uses isolated CI dependency environment."
+  ]
+}

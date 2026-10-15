@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "all_recorded_commands_succeeded": true,
+  "plan_complete": false,
+  "commands": [
+    {
+      "command": "node --test tests/test_checkpoint_discovery.cjs",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-02.log",
+      "seconds": 0.43,
+      "sha256": "1a026defe7123045bfc4a5cd451f6d2e9a29dbbc96679ac54c6c9838f28ac15d"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/adaptive_memory_study.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-03.log",
+      "seconds": 0.17,
+      "sha256": "20c0fbc2e32237c275b3632e0e4623debd6b55d597f40290a6bd0eba6e822b06"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/offline_learning_suite.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-04.log",
+      "seconds": 0.12,
+      "sha256": "65f360bfd09ceebbb53122dabf66fac380eb3a063b40c5a9f66be23de5b06905"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v13_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-05.log",
+      "seconds": 2.01,
+      "sha256": "54294b939185198edb01e592bebad669ef5e9db81a26bad12fa4002a30fc10ae"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v16_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-06.log",
+      "seconds": 0.97,
+      "sha256": "40dcb61160cdab13607aeb370f2309de664f45f8a0a184ca4cc7467e1df8a25f"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v17_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-07.log",
+      "seconds": 1.35,
+      "sha256": "8065000af7a77432e66639e656d1fd0b0f57f09a77f79f413702999197f6ec80"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v18_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-08.log",
+      "seconds": 0.76,
+      "sha256": "d9600d06b0e87df8fb5da8611806e277b1dfa0e8920f0f77585868ba2d11d064"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v19_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-09.log",
+      "seconds": 0.13,
+      "sha256": "37d649d3df1ae79557d634489205581db71f521fdaddc4edee19e387e722818e"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v20_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-10.log",
+      "seconds": 0.49,
+      "sha256": "4f5ee3c53dbe80dc7c6741f3e75e1b6a52caeb2b0604952dbe5408766b7eecc6"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v21_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-11.log",
+      "seconds": 0.44,
+      "sha256": "69ea326fd375127069e1fc783426bf0044bf1f492829810565993ce2cc2ff20a"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v30_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-12.log",
+      "seconds": 0.12,
+      "sha256": "a3f75997de93a0dad012721a9e01f202b032d8fd8583036f769e9ced9423733a"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v31_benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-13.log",
+      "seconds": 0.12,
+      "sha256": "dfbd18e6a202c952220f5a1dcef7f93a85d1478627aaccf7f612e653f4f9b6fe"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v31_ablation.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-14.log",
+      "seconds": 0.07,
+      "sha256": "a54ea1c75b0d6226a7491451245f601dac1a0bd2149adea908f7f763ad729cdc"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v32_multimodal.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-15.log",
+      "seconds": 0.07,
+      "sha256": "7a6896dd7d38aad954044e0c3921396b6548703d41820cc63458f0fe0b018e38"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v33_nonlinear.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-16.log",
+      "seconds": 0.13,
+      "sha256": "f6712b5e4471de28954be79888fe2ceb2446bb4cae85ae684227723c5f747974"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.autoresearch_v01",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-17.log",
+      "seconds": 0.12,
+      "sha256": "d0701915fa4d31e8d7bb1225dc218e9b24d649fd447b59ccb4f3e5f554a69ec9"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.autoresearch_v02",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-18.log",
+      "seconds": 0.13,
+      "sha256": "6f88043e9be25a238983d0a42d05dcbc5451e938cfd911769efe47aea2fc0b83"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.autoresearch_v03",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-19.log",
+      "seconds": 0.29,
+      "sha256": "5bfa17ac4db74a4047669409b9f4e44acd69dedc858aef847d1cb6d1edc7c7a8"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.autoresearch_v04",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-20.log",
+      "seconds": 0.49,
+      "sha256": "2456dad3af148355796c989ecc733b159d4c9c9eb6372f916907fa035c74dd2e"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.autoresearch_v05",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-21.log",
+      "seconds": 0.33,
+      "sha256": "117fcd96b13bb8ba5eb56028b7f4fdc8654a4de353500d07a5fbe380ec4b8f4d"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v06_recovery_research.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-22.log",
+      "seconds": 0.12,
+      "sha256": "e6171d808b857c225a0c4aed0bbbdb86382c2699cb1eb7510543a51220152c61"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.autoresearch_v08",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-23.log",
+      "seconds": 0.29,
+      "sha256": "ed2c156c8ee6fb6acdc6435fdfa2c0372f6d99a7e05e27ff0f73a954372300ac"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.autoresearch_v09",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-24.log",
+      "seconds": 0.38,
+      "sha256": "a6ec5e4f546761ad5d1cc634a54b874d73660f10bb37d468ccb6513217b4a5ca"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m unittest discover -s tests -p 'test_evolution_v01.py' -v",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-25.log",
+      "seconds": 0.18,
+      "sha256": "96195e48fa4e59d95243a2457433fff770a5638305077883f1e8745ee04337d8"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v11_parallel_evolution.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-26.log",
+      "seconds": 0.55,
+      "sha256": "005569de0af728f9edccdfc652b63d97cf6a3f2d31ce0c80097965d50cef1e90"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v11_memory_effectiveness.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-27.log",
+      "seconds": 0.59,
+      "sha256": "65ebc7304dad24c7bba7885725ad5b904dd908bc3e93fc271c6a8ffc3c8f8745"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.jev_agreement_v12",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-28.log",
+      "seconds": 0.18,
+      "sha256": "806b6a8647f1f778175e8cc9adbeb3786e78c2fab8b407043b0a5b0c5f1fe435"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v12_executable_agents.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-29.log",
+      "seconds": 1.85,
+      "sha256": "4e902063e742516b831b00828a7977ddfc73c7a43703a915541710d5393c9f04"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v13_external_mcp.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-30.log",
+      "seconds": 0.9,
+      "sha256": "b05bc86131b1c012a4311d4d820d15da0246a7a7cb373d37a72160b14e604e41"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/mcp_wire_v13.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-32.log",
+      "seconds": 3.13,
+      "sha256": "b88f71d6af44dde799b1fb6e7d0b48d3ba1c68a8c3c3337a20fb708e5214159d"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/llm_mcp_v14.py --cases 4",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-33.log",
+      "seconds": 2.49,
+      "sha256": "7bdfc14847886e8ca59d62488c56e524e942f6c5a0d9e29472a223869b39ea89"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/llm_mcp_v14.py --mock-api --cases 4",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-34.log",
+      "seconds": 2.46,
+      "sha256": "5f699a1915a7b016a217b89b7b3cabe1095641b741bbb8bc1abe548d151c0a0d"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/agent_study_v15.py --seeds 2 --cases 3",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-35.log",
+      "seconds": 4.01,
+      "sha256": "267474ae669259c5b4faebcbebf1e928bed8baadd91640416d992dcd30f74fe3"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/agent_study_v15.py --limited-fixture --seeds 2 --cases 3",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-36.log",
+      "seconds": 4.08,
+      "sha256": "eb5038fa2c510cb65b03e2161d97bab269461e88774001999c9d7599505558ee"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/agent_study_v15.py --mock-api --seeds 2 --cases 3",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-37.log",
+      "seconds": 4.06,
+      "sha256": "3e0af403e2fd3de99b1ab34a60a88e955fa51d151e06620e2d201c4e227cbfc4"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/agent_study_v15.py --seeds 5 --cases 2",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-38.log",
+      "seconds": 7.99,
+      "sha256": "9a85fc34a910f12b568592cf0ab78cec40d3e95f542ca38f91d42abc8a47d6a2"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/agent_study_v15.py --failure-fixture --seeds 2 --cases 2",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-39.log",
+      "seconds": 3.94,
+      "sha256": "a282647d10e9e84faefccad706917ba081d67f6a2fab3aa0acb9721d2e100d03"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v17_recovery_agents.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-40.log",
+      "seconds": 0.97,
+      "sha256": "5849b5a2af304dc95e297f3f8106a8fbd939b2ed301aa21b568cb343684aee07"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v18_memory_retrieval.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-41.log",
+      "seconds": 0.18,
+      "sha256": "b27108aaf374e700ab1a9065ac4c95a6e9c545680d20eccf77b46abd822ec638"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.recursive_evolution_v19",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-42.log",
+      "seconds": 0.24,
+      "sha256": "ad5b4f5b693814d04fa747d0732c0ad1f5f91e14260bb573e8d64258fa6c8a2d"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.worldcore_recursion_v19",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-43.log",
+      "seconds": 0.81,
+      "sha256": "7c9ff616c6df0569722e8aafe8e853288bc070b7a2d6630643919af4c5ad9d8c"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/v20_governed_repository_learning.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-44.log",
+      "seconds": 0.23,
+      "sha256": "c973626a275431a8804d4c90cc73774015f5aa799dd4746f7e17c52478dfe898"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/verify_shadow_v21.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-45.log",
+      "seconds": 0.7,
+      "sha256": "585e98f94b470c1d509abed063f8d76cc4ff6438273f0ccc9e65313cb5c0454c"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/verify_repository_pilot_v22.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-46.log",
+      "seconds": 0.7,
+      "sha256": "e85623de27b96dd07bf91c6b313e8225403f00abb0c550891415c0fd7eafc2df"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python scripts/verify_canary_v23.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-47.log",
+      "seconds": 0.27,
+      "sha256": "98ef29ff59414bb21b4cee49d98a107b1de05e45ceeac147c8755c997380bb78"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m unittest discover -s tests/world_model -v",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-48.log",
+      "seconds": 7.61,
+      "sha256": "24beb86664454b8c53dde1f0788fec9d1ad25dd40ca109bf8f21b762bcfe016c"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.world_model.cli --db /tmp/nerve-world-model-ci.sqlite3 demo --json",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-49.log",
+      "seconds": 1.05,
+      "sha256": "fbbca4462611eadaa56e05a07ea21c20efd10e4b02de49d4053c3ec454806fd4"
+    },
+    {
+      "command": "/Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/world_model/benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/integrated-gate-50.log",
+      "seconds": 0.44,
+      "sha256": "031d55ab08ec52b8d82780253008ad649940d14f44004932174f77f275070305"
+    },
+    {
+      "command": "PYTHONPATH=src /Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "tests": 903,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/final-unittest.log",
+      "sha256": "fe81c71c49b1cb6a3964dbb653fde05a91de958bc5a604f3acdb75a462b55bb5"
+    },
+    {
+      "command": "PYTHONPATH=src /Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m unittest discover -s tests/world_model -v",
+      "exit_code": 0,
+      "tests": 28,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/world-model-tests.log",
+      "sha256": "492d4e37ac284cd5dd19b092a6e1c5ebf9f3a0e4c5afa9be0ca54c812c396b14"
+    },
+    {
+      "command": "PYTHONPATH=src /Users/aliyildirim/nerve-memento3-evidence/venv/bin/python -m nerve_awim.world_model.cli --db /Users/aliyildirim/nerve-memento3-evidence/fresh-demo.sqlite3 demo --json",
+      "cwd": "/Users/aliyildirim/nerve-memento3-evidence/fresh-checkout",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/fresh-demo.json",
+      "sha256": "932c84fd35629913c08bfa7777c32eed49c20c4e8300b33cd8af4ed1d21bcd3f"
+    },
+    {
+      "command": "PYTHONPATH=src /Users/aliyildirim/nerve-memento3-evidence/venv/bin/python benchmarks/world_model/benchmark.py",
+      "exit_code": 0,
+      "evidence_path": "/Users/aliyildirim/nerve-memento3-evidence/final-benchmark.json",
+      "sha256": "bebd97ae4496c72bee7374d3342c7e968a00af98ed84ed5414945f961203f952"
+    }
+  ],
+  "source_hashes": {
+    "src/nerve_awim/world_model/worker.py": "82cb52a4a9b92eaa65d6bf4f8a65915d740027217b46ecc275a4e6d5b0f88783",
+    "src/nerve_awim/world_model/planner.py": "6112f0cc2c5f4d068dd4b60fbee0353f7e9520639805dee9a5f385ea838c5f9c",
+    "src/nerve_awim/world_model/coordinator.py": "a0fd09ea76991de677f2ada723a025631184a9b036a175c650f6fe0858be5fca",
+    "src/nerve_awim/world_model/release.py": "90051be35bc075fdc666f41f338baacdf8b38bfa93dfac5c1c4d2c626f3100ee",
+    "src/nerve_awim/world_model/compiler.py": "605e12cb67dec755e69a887e75d33b01c488701be9504f561c9d29b5102cd4fc",
+    "src/nerve_awim/world_model/registry.py": "d5d38497b1082d4d5a2966ddc933bc6716a252b4fd4757709a1da80b3f3866d8",
+    "src/nerve_awim/world_model/reflection.py": "1f4c643ec6e8e2bc25fff6dbc9e86445b05d9acefb4e2adcb41b94a199fa891b",
+    "src/nerve_awim/world_model/population.py": "8a2edd1206be84d4c6c1355c35d40d7561f8f62aa2d9d9950706f45c5c3b9618",
+    "src/nerve_awim/world_model/rulebook.py": "cb1858876f55125fe138a0176ad918463cfccf838a03426e928713930d9757e8",
+    "src/nerve_awim/world_model/ledger.py": "ffe2afe952708cb6c362a343787cf6481276cf8daa34e02e886d66ef97786989",
+    "src/nerve_awim/world_model/__init__.py": "64a23a7e7a20e25eae40730a0436d730e442e794befc2f90f3442fe5ddfa4c12",
+    "src/nerve_awim/world_model/sandbox.py": "3e7810404c373d88f5eedd2d9823a68cab277eb34ecfacee67b159974ba6ced4",
+    "src/nerve_awim/world_model/replay.py": "fa4b027d6de07b96e0a69995ad24768210cf480efbb49fe4e2293b3c5123b1cc",
+    "src/nerve_awim/world_model/cli.py": "dde48972e2c5af3e0bcb80cab43cb31fb3ec60bc9938ebb0530b9475ee5244aa",
+    "src/nerve_awim/world_model/mcp.py": "c3ccf9941015b844d4a41c6f547807d805e624c300e51058690070fad5075344",
+    "src/nerve_awim/world_model/retention.py": "1e9ca2f906fca8b505e40f6072344d3061c2f4db340f45cec2d629948fbc9580",
+    "src/nerve_awim/world_model/contracts.py": "78460eeeeb18fc2652d228ace5c2cbecc4e12159f7990de1728edc71eb13a5bd",
+    "src/nerve_awim/world_model/fidelity.py": "9f1dec0d9c65fcf2c7837600324673de25f84ca7d5b4e3387c180cdc377e4515",
+    "src/nerve_awim/world_model/demo.py": "e99feb0e9955cef3e44097f48ac0560664c3a6384e4bcacc5c560d6078cae48c",
+    "src/nerve_awim/world_model/evaluator.py": "bc158e2a66b1e8eed1584d546c2a39599968c83dbfcd5153b96a46609e46c410",
+    "src/nerve_awim/world_model/adapters.py": "42cbd8b6ccbdd0df0f416b8a468d7ab67bb9ec2e9dded6026e76a2ff87ee85b2",
+    "tests/world_model/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/world_model/test_world_model.py": "c1954c6f6b05982604c74a925b997e401ef07da44725111eb17bcc896fa542ea",
+    "benchmarks/world_model/benchmark.py": "d4b33c38ff09bddb4c52d2d50c8cb8f6b7d2a8d5417c0aa2a624642e33d5d9bd",
+    "benchmarks/world_model/train-manifest.json": "d4ff1cc3c7be652673513086d503139385d947ec3eff40fc5d79ad9365e6b6ef",
+    "benchmarks/world_model/shadow-manifest.json": "61193604d6b2a4c8d3a62d82f08ebefd4b4799a64154832f9a64e968d8e13fa8",
+    "configs/world_model.offline.json": "61c040c6aa2830644e664760d2ee6cdb9884f0d2d273687bbcd715af9d6145f4"
+  },
+  "notes": [
+    "903-test full suite passed. A final strict rule-boundary validation addition was subsequently covered by the 28-test focused suite and the fresh exported-tree demo.",
+    "The 48 CI script checks preceded the final demo rollback addition; the final fresh-tree demo exercises that addition.",
+    "Runtime logs and databases are outside Git. Hashes identify content; they are not signatures."
+  ]
+}

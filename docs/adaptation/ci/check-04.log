@@ -1,0 +1,18 @@
+{
+  "notes": "synthetic heuristic; no guaranteed coverage or control safety",
+  "results": {
+    "uncertainty_gated": {
+      "blocked_actions": 28.2,
+      "final_goal_error": 0.9178679972192416,
+      "late_goal_error": 0.8777722261614769,
+      "late_prediction_error": 0.049368253781087175
+    },
+    "ungated": {
+      "blocked_actions": 0,
+      "final_goal_error": 0.15801499477967676,
+      "late_goal_error": 0.21437349635602285,
+      "late_prediction_error": 0.08625396863204643
+    }
+  },
+  "seeds": 20
+}

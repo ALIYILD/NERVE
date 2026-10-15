@@ -58,7 +58,52 @@ Each JSON cohort contains `id`, `scope`, `limitation`, and `splits` with exactly
 
 Admission reserves all case identities and families atomically, checks typed gold against the fixed evaluator, and rejects overlap with earlier cohorts, controls, shadow episodes, or the monitoring inbox. A canonical hash detects cosmetic reuse; independent review must still assess substantive novelty. Registered content and reviews are immutable. Changing an admitted file does not change the stored cohort. Registry/evaluator/runner revisions are bound when an experiment first attempts to run; drift stops a deferred experiment.
 
-The v2 cohort adds 16 public simulated compositions independently checked against the previous 30 cases. It shares the same reasoning primitives and is not a sample of independent production incidents. It supplies one additional learning experiment; more experiments require further independently reviewed cohorts. Advice is proposed afresh against each cohort's baseline, not cumulatively merged into an incumbent skill. No test generator or unlimited source of independent tasks is claimed.
+The v2 cohort adds 16 public simulated compositions independently checked against the previous 30 cases. It shares the same reasoning primitives and is not a sample of independent production incidents. It supplies one additional learning experiment; more experiments require further independently reviewed cohorts. Advice is evaluated against each cohort's unchanged capable baseline, not cumulatively merged into an operational incumbent skill. No test generator or unlimited source of independent tasks is claimed.
+
+Registered studies now freeze up to four distinct historical lessons and their
+independently regraded training-baseline counts, capped at 8 KiB, before proposing
+the next lesson. Exact profile, requested model, runner revision and task scope
+must match. Training/proposal receipts, source snapshots and requests are
+revalidated; rejected or failed studies may contribute valid training evidence
+without revealing their later results. Selection, retention and final outcomes
+are never supplied to this proposal context. The model's `:free` name is not an
+attestation of immutable provider weights. Historical lessons remain untrusted
+hypotheses, with no effectiveness or deployment authority. Empty history retains
+the previous exact proposal prompt and eight-call budget.
+
+The immutable `learning_snapshots` row and mirrored `learning.json` file bind the
+full context and digest to the study. Export verification checks that frozen
+context rather than reconstructing a newer history. This adds learning between
+attempts; whether it helps must still be measured on untouched tasks.
+
+Malformed individual training decisions now count as failed training feedback
+and can teach the proposer about its output contract. Batch task IDs and the
+64 KiB output bound remain mandatory. Selection, retention and final phases still
+fail on malformed decisions. Prediction prompts state the exact citation shape:
+`{"source_id":"id-from-task","fields":["model","provider","observed_at","fields.KEY"]}`.
+They never ask the model to copy an entire evidence source into a citation.
+
+If a source repair invalidates a queued revision before the study starts, an
+explicit trusted local operator review can authorize that new revision:
+
+```sh
+python3 scripts/agentos_bridge.py autoresearch-review-queue --review /absolute/path/review.json
+```
+
+The review requires exactly `cohort`, `previous_revision`, `revision`,
+`manifest_sha256`, `reviewer`, and `reason`. Both source revisions and the manifest
+are exact SHA256 values. The target must be the currently installed runner, and
+the admitted cohort and evaluator must be unchanged. Reviews append to an
+immutable chain; they never overwrite the original queue pin. Consumed studies
+cannot be reauthorized, including failures with unused prepaid sessions. No
+budget is refunded and no model call or candidate approval occurs. The reviewer
+name is a local attestation, not authenticated remote identity.
+
+Enabled ticks also collect bounded failed-mission metadata into the existing
+autoresearch ledger's `research_findings` table. These are pending research
+leads, not benchmark answers or permission to generate/approve a study. See the
+[continuous improvement programme](cce/continuous-improvement.md) for the nested
+loops and completion requirements.
 
 `cohort-registry.sqlite3` preserves admission and evidence reservations. `cohort-study.sqlite3` records consumption, prepaid calls, exact requests, responses, and outcomes. Every accepted result is regraded against its frozen input and receipts before export to `autoresearch-cohort-skills/<study-id>/`. Its eligibility is explicitly `experimental_unmonitored`; later controller visits revalidate it and mark mismatches ineligible. Interrupted studies remain consumed and are never replayed. The existing original study remains first in the queue.
 
@@ -74,3 +119,14 @@ Runtime state lives under `~/.agentic-os/nerve`. `autoresearch.sqlite3` stores e
 The installed `com.aliyildirim.nerve.learning` launch agent invokes the bridge cycle every 900 seconds while the Mac is awake and the user session is available. A durable scheduled cycle is the continuous loop; no terminal needs to busy-wait. See [learning operations](agentos-learning-operations.md) for the scheduler and underlying study commands. The earlier [v01 autoresearch prototype](autoresearch-integration.md) is a separate synthetic learning-rate experiment.
 
 The Hermes entrypoint for this workflow is [nerve-autoresearch](../integrations/hermes/nerve-autoresearch/SKILL.md). Its procedural instructions do not confer approval on their own candidate outputs.
+
+
+Host finding triage uses `python3 scripts/agentos_bridge.py autoresearch-review-finding
+--review FILE` (on one command line). The exact JSON fields are `fingerprint`,
+`source_record_digest` (from the original finding metadata), `previous_review`
+(null for the first review; otherwise the latest review digest), `disposition`
+(`investigate`, `monitor`, or `closed_no_action`), `reviewer`, and `reason`.
+Reviews are immutable, reject stale predecessors, and have no evaluation or
+activation authority. Use local evidence rather than treating a task's `done`
+flag as independently verified success. Example reviews are in
+`docs/evidence/agentos-finding-triage-20261013-{1,2}.json`.

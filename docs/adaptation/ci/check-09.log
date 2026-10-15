@@ -1,0 +1,11 @@
+{
+  "limitation": "External simulation supervisor applies zero control and authorises recovery; neither action is proven safe.",
+  "results": {
+    "approved_recoveries": 1,
+    "constraint_violations": 0,
+    "final_goal_error": 0.22526333304971285,
+    "late_goal_error": 0.2646126629765573,
+    "withheld": 14.05
+  },
+  "seeds": 20
+}

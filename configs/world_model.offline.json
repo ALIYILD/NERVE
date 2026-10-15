@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "enabled": false,
+  "mode": "offline",
+  "max_generations": 5,
+  "max_candidates_per_generation": 3,
+  "max_population": 3,
+  "max_revision_attempts_per_candidate": 3,
+  "max_llm_calls_per_run": 30,
+  "max_run_seconds": 1800,
+  "max_artifact_bytes": 1048576,
+  "sandbox_wall_seconds": 5,
+  "sandbox_memory_mb": 256,
+  "max_plan_depth": 5,
+  "max_simulated_nodes_per_decision": 100,
+  "max_real_actions_per_run": 20,
+  "provider_spend_limit": 0,
+  "promotion_mode": "manual",
+  "allow_clinical_actions": false,
+  "model_backend": "declarative-exact-v1",
+  "max_work_units": 1500
+}

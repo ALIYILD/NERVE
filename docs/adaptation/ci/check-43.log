@@ -1,0 +1,35 @@
+{
+  "fresh_processes": 5,
+  "review": {
+    "active_release": "ff745fc1728e41888d77a8a2dd361096",
+    "automatic_deployment": false,
+    "candidate": "bac693b291914612b5660eb97ef189da",
+    "candidate_status": "rejected",
+    "evaluation": {
+      "contexts": {
+        "python_top_level_functions": {
+          "baseline_errors": 0,
+          "baseline_hits": 5,
+          "candidate_errors": 0,
+          "candidate_hits": 5,
+          "tasks": 5
+        }
+      },
+      "gate": "paired-v20-min5-accuracy0.8-no-context-regression-strict-total-gain",
+      "status": "rejected"
+    },
+    "generation": 0,
+    "holdout_files": 5,
+    "manifest_sha256": "0ecd7f28a14d30aa20f3509b4ed6e2c102fca5005fcc5d25f8286a35cf37bad1",
+    "recommendation": "reject_rollout",
+    "remaining_review": [
+      "independent data provenance",
+      "latency and cost budgets",
+      "host authentication and rollout/rollback plan"
+    ],
+    "study": "ci-pilot",
+    "training_files": 3
+  },
+  "source": "actual NERVE files; repeated CI fixtures are not fresh external evidence",
+  "status": "sealed_pilot_verified"
+}

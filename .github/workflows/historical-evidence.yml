@@ -1,0 +1,37 @@
+name: historical-evidence
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  archived-receipts:
+    runs-on: macos-15-intel
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install 'PyJWT[crypto]>=2.10,<3'
+      - name: Require original receipt runtime (never silently skip this job)
+        env:
+          PYTHONPATH: src:tests
+        run: python -c "from historical_evidence_runtime import SUPPORTED; assert SUPPORTED, 'archived receipt runtime mismatch'"
+      - name: Verify archived evidence and tamper rejection without regenerating receipts
+        env:
+          PYTHONPATH: src:tests
+        run: python -m unittest test_forecast_outcome_memory test_prequential_timing_diagnostic test_recovery_gain_diagnostic test_standard_learning_diagnostic test_prequential_gain_demo -v
+  diagnostic-portability:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.10', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - env:
+          PYTHONPATH: src:tests
+        run: python -m unittest test_worldcore_diagnostics test_experience_store -v
