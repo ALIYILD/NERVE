@@ -1,12 +1,12 @@
 {
   "clinical_os": {
     "verified": true,
-    "upstream_commit": "e1bdd4b",
+    "upstream_commit": "1d57d79d36281f50d0bea9301ad77d8fa2a60e89",
     "source_sha256": "6c8ade0c6dc89719e613264709629a7bfe84e2138291a388ac5a97f507b9239e"
   },
   "perfflux": {
     "verified": true,
-    "upstream_commit": "e1bdd4b",
+    "upstream_commit": "1d57d79d36281f50d0bea9301ad77d8fa2a60e89",
     "source_sha256": "6c8ade0c6dc89719e613264709629a7bfe84e2138291a388ac5a97f507b9239e"
   }
 }

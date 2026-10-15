@@ -434,6 +434,7 @@ def main():
         'generation-local-scope','generation-local-run','generation-workspace-restore','runtime-inventory',
         'cce-status','cce-inspect','cce-revoke','cce-demo','cce-approve','cce-route','cce-readiness','cce-profile',
         'cce-local-inspect','cce-local-smoke','cce-dataset-status','cce-job-submit','cce-job-status','cce-job-cancel'))
+    parser.add_argument('--cue-job',help='Pending CCE job identifier to cancel without replay')
     parser.add_argument('--repository',type=Path,help='Authorized local repository for read-only adaptation')
     parser.add_argument('--candidate')
     parser.add_argument('--config',type=Path)
