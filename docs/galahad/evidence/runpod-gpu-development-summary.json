@@ -1,0 +1,364 @@
+{
+  "bank_manifest_sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6",
+  "development_reused": true,
+  "efficacy_established": false,
+  "empty_preloads": 1,
+  "evidence_sha256": {
+    "claims.sqlite": "268cc9cca68c7341070dc9142f15174d585fcd6ee014c380c5942bf9d1f90940",
+    "goal-bridge-tests.log": "3988ac94880a5e074f53f578d9833a5b07263eb96e25d7ff445e8dfc575a2699",
+    "goal-orchestrator-tests-recheck.log": "6ef6886c29acf5e71d979e1e4beffd0c03ddddd04af41867ec631eeed09e231e",
+    "goal-orchestrator-tests.log": "4e7a3c672fd8d0dbf62d1515027a7918c51127313440ac22bfa55d59c6e5a0cd",
+    "goal-output.json": "4853f3057c71e988178ab47a668586fe9f7178f5890fdb09b7b5c15073bfd073",
+    "goal-resume-output.json": "4853f3057c71e988178ab47a668586fe9f7178f5890fdb09b7b5c15073bfd073",
+    "goal/binding.json": "dec7e5449edbb6a0ba7cbbaae26495eb3e85af11a6d0b4e1d028212f2d77d5cc",
+    "gpu-integration-tests.log": "8c0b1d4df36c775dbcb9656590a604ca6aded4a4a136a5940e18f79fcc2a0f8b",
+    "model-unloaded.json": "a6fe9ec6e26a38d99fca418b69826e0238b7a2bb319ff05eb153a6fcfd1fa28d",
+    "source-cache-receipt.json": "0eed4c392b176f94147cf40d588c18719799f0b2ecb77a016cb26e52f26df6d2",
+    "source-storage-migration.json": "28bd6a7e051a336d959754d0982f6564d6b1b21450e8013dd6c9bf25e23f93b6",
+    "study/claim.sqlite": "6a532e2b57dbd3d3013277605f229a16ae173edca05dd31304b5e3caa146eaf7",
+    "study/preregistration.json": "4e5761ca312f018051966b78fd23483d6cfb36830cfd5b44e8b900289e2020a8",
+    "study/report.json": "4376090aa6b0a19bd16d661d24be8fe0914048df7582791c65335f7b4643d63c",
+    "verification-output.json": "6da705279d411cdff950d78f8bf5197d167e42e31f05ba731874a518e6648be6"
+  },
+  "focused_tests": {
+    "core_orchestrator": 10,
+    "goal_bridge": 2,
+    "initial_core_import_failure": "Copied test file referenced goal_learning, which is outside this integration. Isolated ten core tests, then passed.",
+    "study_transport": 13
+  },
+  "goal_id": "gpu-dev-dec7e5449edbb6a0ba7cbbaae26495eb3e85af11a6d0b4e1d028212f2d77d5cc",
+  "goal_receipt": {
+    "candidate_selected_for_review": true,
+    "generalization_verdict": "insufficient_power",
+    "new_model_calls": 0,
+    "promotion_authorized": false,
+    "retained_skill_selected": false,
+    "verdict": "candidate_requires_review",
+    "verified": true
+  },
+  "goal_resume_unchanged": true,
+  "goal_status": "complete",
+  "holdout_accessed": false,
+  "kind": "exploratory_gpu_development_aggregate",
+  "model": "qwen2.5-coder:7b",
+  "model_calls": 160,
+  "model_calls_by_arm": {
+    "always_abstain": 0,
+    "baseline": 100,
+    "candidate": 60,
+    "random": 0
+  },
+  "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+  "model_unloaded": true,
+  "model_weights_trained": false,
+  "private_evidence_directory": "/Users/aliyildirim/nerve-research-runs/runpod-gpu-integration/nerve-gpu-evidence",
+  "promotion_authorized": false,
+  "public_receipt_replay_verified": true,
+  "rows": 400,
+  "source_base_commit": "cb65c81730faeb1efd219d5fc7057788b97a0a8d",
+  "status": "complete",
+  "study_version": "scientific-gpu-strong-baseline-development-v1",
+  "summary": {
+    "arms": [
+      {
+        "accuracy": 0.6,
+        "arm": "baseline",
+        "components": {
+          "abstention_correct": {
+            "correct": 0,
+            "evaluated": 40
+          },
+          "provenance_correct": {
+            "correct": 60,
+            "evaluated": 60
+          },
+          "schema_valid": {
+            "correct": 100,
+            "evaluated": 100
+          },
+          "unit_correct": {
+            "correct": 60,
+            "evaluated": 60
+          },
+          "value_correct": {
+            "correct": 60,
+            "evaluated": 60
+          }
+        },
+        "correct": 60,
+        "count": 100,
+        "format_valid": 85,
+        "strata": {
+          "conflict": {
+            "abstained": 0,
+            "accuracy": 0.0,
+            "answered_incorrect": 5,
+            "correct": 0,
+            "count": 20,
+            "format_valid": 5
+          },
+          "entity-decoy": {
+            "abstained": 0,
+            "accuracy": 1.0,
+            "answered_incorrect": 0,
+            "correct": 20,
+            "count": 20,
+            "format_valid": 20
+          },
+          "measurement-decoy": {
+            "abstained": 0,
+            "accuracy": 1.0,
+            "answered_incorrect": 0,
+            "correct": 20,
+            "count": 20,
+            "format_valid": 20
+          },
+          "supported-measurement": {
+            "abstained": 0,
+            "accuracy": 1.0,
+            "answered_incorrect": 0,
+            "correct": 20,
+            "count": 20,
+            "format_valid": 20
+          },
+          "unit-mismatch": {
+            "abstained": 0,
+            "accuracy": 0.0,
+            "answered_incorrect": 20,
+            "correct": 0,
+            "count": 20,
+            "format_valid": 20
+          }
+        }
+      },
+      {
+        "accuracy": 1.0,
+        "arm": "candidate",
+        "components": {
+          "abstention_correct": {
+            "correct": 40,
+            "evaluated": 40
+          },
+          "provenance_correct": {
+            "correct": 60,
+            "evaluated": 60
+          },
+          "schema_valid": {
+            "correct": 60,
+            "evaluated": 60
+          },
+          "unit_correct": {
+            "correct": 60,
+            "evaluated": 60
+          },
+          "value_correct": {
+            "correct": 60,
+            "evaluated": 60
+          }
+        },
+        "correct": 100,
+        "count": 100,
+        "format_valid": 100,
+        "strata": {
+          "conflict": {
+            "abstained": 20,
+            "accuracy": 1.0,
+            "answered_incorrect": 0,
+            "correct": 20,
+            "count": 20,
+            "format_valid": 20
+          },
+          "entity-decoy": {
+            "abstained": 0,
+            "accuracy": 1.0,
+            "answered_incorrect": 0,
+            "correct": 20,
+            "count": 20,
+            "format_valid": 20
+          },
+          "measurement-decoy": {
+            "abstained": 0,
+            "accuracy": 1.0,
+            "answered_incorrect": 0,
+            "correct": 20,
+            "count": 20,
+            "format_valid": 20
+          },
+          "supported-measurement": {
+            "abstained": 0,
+            "accuracy": 1.0,
+            "answered_incorrect": 0,
+            "correct": 20,
+            "count": 20,
+            "format_valid": 20
+          },
+          "unit-mismatch": {
+            "abstained": 20,
+            "accuracy": 1.0,
+            "answered_incorrect": 0,
+            "correct": 20,
+            "count": 20,
+            "format_valid": 20
+          }
+        }
+      },
+      {
+        "accuracy": 0.4,
+        "arm": "always_abstain",
+        "components": {
+          "abstention_correct": {
+            "correct": 40,
+            "evaluated": 40
+          },
+          "provenance_correct": {
+            "correct": 0,
+            "evaluated": 60
+          },
+          "schema_valid": {
+            "correct": 0,
+            "evaluated": 0
+          },
+          "unit_correct": {
+            "correct": 0,
+            "evaluated": 60
+          },
+          "value_correct": {
+            "correct": 0,
+            "evaluated": 60
+          }
+        },
+        "correct": 40,
+        "count": 100,
+        "format_valid": 100,
+        "strata": {
+          "conflict": {
+            "abstained": 20,
+            "accuracy": 1.0,
+            "answered_incorrect": 0,
+            "correct": 20,
+            "count": 20,
+            "format_valid": 20
+          },
+          "entity-decoy": {
+            "abstained": 20,
+            "accuracy": 0.0,
+            "answered_incorrect": 0,
+            "correct": 0,
+            "count": 20,
+            "format_valid": 20
+          },
+          "measurement-decoy": {
+            "abstained": 20,
+            "accuracy": 0.0,
+            "answered_incorrect": 0,
+            "correct": 0,
+            "count": 20,
+            "format_valid": 20
+          },
+          "supported-measurement": {
+            "abstained": 20,
+            "accuracy": 0.0,
+            "answered_incorrect": 0,
+            "correct": 0,
+            "count": 20,
+            "format_valid": 20
+          },
+          "unit-mismatch": {
+            "abstained": 20,
+            "accuracy": 1.0,
+            "answered_incorrect": 0,
+            "correct": 20,
+            "count": 20,
+            "format_valid": 20
+          }
+        }
+      },
+      {
+        "accuracy": 0.29,
+        "arm": "random",
+        "components": {
+          "abstention_correct": {
+            "correct": 15,
+            "evaluated": 40
+          },
+          "provenance_correct": {
+            "correct": 14,
+            "evaluated": 60
+          },
+          "schema_valid": {
+            "correct": 0,
+            "evaluated": 0
+          },
+          "unit_correct": {
+            "correct": 22,
+            "evaluated": 60
+          },
+          "value_correct": {
+            "correct": 14,
+            "evaluated": 60
+          }
+        },
+        "correct": 29,
+        "count": 100,
+        "format_valid": 100,
+        "strata": {
+          "conflict": {
+            "abstained": 4,
+            "accuracy": 0.2,
+            "answered_incorrect": 16,
+            "correct": 4,
+            "count": 20,
+            "format_valid": 20
+          },
+          "entity-decoy": {
+            "abstained": 9,
+            "accuracy": 0.15,
+            "answered_incorrect": 8,
+            "correct": 3,
+            "count": 20,
+            "format_valid": 20
+          },
+          "measurement-decoy": {
+            "abstained": 8,
+            "accuracy": 0.15,
+            "answered_incorrect": 9,
+            "correct": 3,
+            "count": 20,
+            "format_valid": 20
+          },
+          "supported-measurement": {
+            "abstained": 12,
+            "accuracy": 0.4,
+            "answered_incorrect": 0,
+            "correct": 8,
+            "count": 20,
+            "format_valid": 20
+          },
+          "unit-mismatch": {
+            "abstained": 11,
+            "accuracy": 0.55,
+            "answered_incorrect": 9,
+            "correct": 11,
+            "count": 20,
+            "format_valid": 20
+          }
+        }
+      }
+    ],
+    "generalization_verdict": "insufficient_power",
+    "interpretation": "Fixed development comparison of a hybrid rule/model pipeline; no holdout or causal weight-learning claim.",
+    "measured_tokens": {
+      "completion_tokens": 9992,
+      "prompt_tokens": 46093,
+      "total_tokens": 56085
+    },
+    "measured_usd": null,
+    "model_seconds": 763.981501840055,
+    "paired_gains": 40,
+    "paired_losses": 0,
+    "paired_ties": 60,
+    "prospective_gate_passed": true,
+    "verdict": "candidate_requires_review"
+  },
+  "timing_limitation": "Source storage moved byte-identically during execution; not a clean throughput benchmark."
+}
