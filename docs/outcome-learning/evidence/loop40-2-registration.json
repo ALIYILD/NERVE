@@ -1,0 +1,1 @@
+{"always_abstain_probability":0.2,"beneficial_win_probability":0.85,"bet":0.5,"dev_seed_deltas":[0.38,0.4,0.42],"futility_e":0.05,"harmful":40,"harmful_win_probability":0.45,"items_per_proposal":100,"proposals":200,"random_probability":0.15,"seed":20261015,"strata":["s0","s1","s2","s3","s4"],"study_alpha":0.00025,"wallet_alpha":0.05}

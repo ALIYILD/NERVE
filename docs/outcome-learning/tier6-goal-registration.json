@@ -1,0 +1,31 @@
+{
+  "bank_manifest_sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6",
+  "candidate": "candidate_v3",
+  "controls": [
+    "always_abstain",
+    "random",
+    "baseline"
+  ],
+  "dev_roster_sha256": "9fcedd8027a4bbace580f5752e5aeee6f653d75e7cf5d022feac683375acc089",
+  "development_sha256": "9b495d387555cf1666e93d2ffe8669b6da34d14f1a609265eef6abd74063fa92",
+  "expected_digest": "d7372fd828518a4d38b1eb196c673c31a85f2ed302b3d1e406c4c2d1b64a0668",
+  "galahad_root": "/Users/aliyildirim/nerve-galahad",
+  "goal": "tier6-v3-dev-selection-reconciliation",
+  "holdout_access_authorized": false,
+  "incumbent": "compact_with_abstain",
+  "journal": "/Users/aliyildirim/nerve-research-runs/scientific-candidate-v3-claims.sqlite",
+  "new_model_calls_budget": 0,
+  "paths": {
+    "bank_directory": "/Users/aliyildirim/nerve-research-runs/task-bank-v1",
+    "bank_manifest_sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6",
+    "calibration_directory": "/Users/aliyildirim/nerve-research-runs/scientific-substrate-calibration-v2"
+  },
+  "plan_sha256": "01c5346e707c54689f73e64a0b25238a76864f628d5e51c2b770e16d140c8179",
+  "preregistration_sha256": "c218859ea03248d34a3e3fcad9957e67165fa947e2d7125d3f36d42d16236cd2",
+  "production_activation_authorized": false,
+  "promotion_authorized": false,
+  "report_sha256": "ae24bfac8beb3fe37e3eb61efda5c8e2e5e9ac761e5a2b4c785e3acc7d9feea7",
+  "split": "dev",
+  "study_directory": "/Users/aliyildirim/nerve-research-runs/scientific-candidate-v3-study",
+  "target_floor": "strictly beat baseline,always_abstain,random; no stratum regression against baseline; development only"
+}
