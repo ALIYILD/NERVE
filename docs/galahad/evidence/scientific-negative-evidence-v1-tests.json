@@ -1,0 +1,26 @@
+{
+  "actual_eligible_unevaluated_candidates": 3,
+  "actual_rejections_recorded": 0,
+  "base_commit": "d778ce98dccac0d281a57a7eb06e653090e95eed",
+  "branch": "feature/galahad-persistent-memory",
+  "command": ".venv/bin/python scripts/verify_galahad.py baseline --timeout-seconds 600",
+  "elapsed_seconds": 173.633,
+  "environment": {
+    "mode": "CPU, local socket fixtures permitted",
+    "platform": "macOS-26.5.2-x86_64-i386-64bit",
+    "python": "3.10.0"
+  },
+  "errors": 0,
+  "failures": 0,
+  "focused_tests": {
+    "negative_journal": 12,
+    "screening": 11
+  },
+  "independent_review": "23tests, code and actual empty-history screen cleared",
+  "log_sha256": "32560c6d711c681de89a160ac41ebcc40bb6c50e63f47859c80d652d196b63ae",
+  "negative_suppression_evidence": "isolated synthetic test fixtures only",
+  "new_model_calls": 0,
+  "new_tests": 23,
+  "status": "passed",
+  "tests": 1925
+}
