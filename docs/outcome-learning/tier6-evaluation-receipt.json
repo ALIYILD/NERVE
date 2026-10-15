@@ -1,0 +1,330 @@
+{
+  "goal_id": "tier6-v3-dev-selection-reconciliation:efb4980610863115af75868ddb4e8154a77d7cfe430896f5a5adf678c3c3d1a5",
+  "goal_status": "complete",
+  "evaluate_attempts": 2,
+  "reconciliation": {
+    "new_inference_authorized": false,
+    "prior_attempt": "first-attempt-blocked.json",
+    "reason": "Legacy validator requires idempotent SQLite initialization; use verified logically unchanged in-memory copies of read-only originals."
+  },
+  "evaluation": {
+    "boundary_violations": [],
+    "candidate_selected_for_review": true,
+    "canonical_files_checked": 36,
+    "canonical_files_unchanged": true,
+    "evaluator": "Galahad scientific_candidate_v3_study.validate_receipt",
+    "gate_summary": {
+      "arms": [
+        {
+          "accuracy": 0.4,
+          "arm": "baseline",
+          "components": {
+            "abstention_correct": {
+              "correct": 40,
+              "evaluated": 40
+            },
+            "provenance_correct": {
+              "correct": 0,
+              "evaluated": 60
+            },
+            "schema_valid": {
+              "correct": 0,
+              "evaluated": 0
+            },
+            "unit_correct": {
+              "correct": 0,
+              "evaluated": 60
+            },
+            "value_correct": {
+              "correct": 0,
+              "evaluated": 60
+            }
+          },
+          "correct": 40,
+          "count": 100,
+          "format_valid": 100,
+          "strata": {
+            "conflict": {
+              "abstained": 20,
+              "accuracy": 1.0,
+              "answered_incorrect": 0,
+              "correct": 20,
+              "count": 20,
+              "format_valid": 20
+            },
+            "entity-decoy": {
+              "abstained": 20,
+              "accuracy": 0.0,
+              "answered_incorrect": 0,
+              "correct": 0,
+              "count": 20,
+              "format_valid": 20
+            },
+            "measurement-decoy": {
+              "abstained": 20,
+              "accuracy": 0.0,
+              "answered_incorrect": 0,
+              "correct": 0,
+              "count": 20,
+              "format_valid": 20
+            },
+            "supported-measurement": {
+              "abstained": 20,
+              "accuracy": 0.0,
+              "answered_incorrect": 0,
+              "correct": 0,
+              "count": 20,
+              "format_valid": 20
+            },
+            "unit-mismatch": {
+              "abstained": 20,
+              "accuracy": 1.0,
+              "answered_incorrect": 0,
+              "correct": 20,
+              "count": 20,
+              "format_valid": 20
+            }
+          }
+        },
+        {
+          "accuracy": 0.99,
+          "arm": "candidate",
+          "components": {
+            "abstention_correct": {
+              "correct": 40,
+              "evaluated": 40
+            },
+            "provenance_correct": {
+              "correct": 59,
+              "evaluated": 60
+            },
+            "schema_valid": {
+              "correct": 60,
+              "evaluated": 60
+            },
+            "unit_correct": {
+              "correct": 60,
+              "evaluated": 60
+            },
+            "value_correct": {
+              "correct": 59,
+              "evaluated": 60
+            }
+          },
+          "correct": 99,
+          "count": 100,
+          "format_valid": 100,
+          "strata": {
+            "conflict": {
+              "abstained": 20,
+              "accuracy": 1.0,
+              "answered_incorrect": 0,
+              "correct": 20,
+              "count": 20,
+              "format_valid": 20
+            },
+            "entity-decoy": {
+              "abstained": 0,
+              "accuracy": 0.95,
+              "answered_incorrect": 1,
+              "correct": 19,
+              "count": 20,
+              "format_valid": 20
+            },
+            "measurement-decoy": {
+              "abstained": 0,
+              "accuracy": 1.0,
+              "answered_incorrect": 0,
+              "correct": 20,
+              "count": 20,
+              "format_valid": 20
+            },
+            "supported-measurement": {
+              "abstained": 0,
+              "accuracy": 1.0,
+              "answered_incorrect": 0,
+              "correct": 20,
+              "count": 20,
+              "format_valid": 20
+            },
+            "unit-mismatch": {
+              "abstained": 20,
+              "accuracy": 1.0,
+              "answered_incorrect": 0,
+              "correct": 20,
+              "count": 20,
+              "format_valid": 20
+            }
+          }
+        },
+        {
+          "accuracy": 0.4,
+          "arm": "always_abstain",
+          "components": {
+            "abstention_correct": {
+              "correct": 40,
+              "evaluated": 40
+            },
+            "provenance_correct": {
+              "correct": 0,
+              "evaluated": 60
+            },
+            "schema_valid": {
+              "correct": 0,
+              "evaluated": 0
+            },
+            "unit_correct": {
+              "correct": 0,
+              "evaluated": 60
+            },
+            "value_correct": {
+              "correct": 0,
+              "evaluated": 60
+            }
+          },
+          "correct": 40,
+          "count": 100,
+          "format_valid": 100,
+          "strata": {
+            "conflict": {
+              "abstained": 20,
+              "accuracy": 1.0,
+              "answered_incorrect": 0,
+              "correct": 20,
+              "count": 20,
+              "format_valid": 20
+            },
+            "entity-decoy": {
+              "abstained": 20,
+              "accuracy": 0.0,
+              "answered_incorrect": 0,
+              "correct": 0,
+              "count": 20,
+              "format_valid": 20
+            },
+            "measurement-decoy": {
+              "abstained": 20,
+              "accuracy": 0.0,
+              "answered_incorrect": 0,
+              "correct": 0,
+              "count": 20,
+              "format_valid": 20
+            },
+            "supported-measurement": {
+              "abstained": 20,
+              "accuracy": 0.0,
+              "answered_incorrect": 0,
+              "correct": 0,
+              "count": 20,
+              "format_valid": 20
+            },
+            "unit-mismatch": {
+              "abstained": 20,
+              "accuracy": 1.0,
+              "answered_incorrect": 0,
+              "correct": 20,
+              "count": 20,
+              "format_valid": 20
+            }
+          }
+        },
+        {
+          "accuracy": 0.29,
+          "arm": "random",
+          "components": {
+            "abstention_correct": {
+              "correct": 15,
+              "evaluated": 40
+            },
+            "provenance_correct": {
+              "correct": 14,
+              "evaluated": 60
+            },
+            "schema_valid": {
+              "correct": 0,
+              "evaluated": 0
+            },
+            "unit_correct": {
+              "correct": 22,
+              "evaluated": 60
+            },
+            "value_correct": {
+              "correct": 14,
+              "evaluated": 60
+            }
+          },
+          "correct": 29,
+          "count": 100,
+          "format_valid": 100,
+          "strata": {
+            "conflict": {
+              "abstained": 4,
+              "accuracy": 0.2,
+              "answered_incorrect": 16,
+              "correct": 4,
+              "count": 20,
+              "format_valid": 20
+            },
+            "entity-decoy": {
+              "abstained": 9,
+              "accuracy": 0.15,
+              "answered_incorrect": 8,
+              "correct": 3,
+              "count": 20,
+              "format_valid": 20
+            },
+            "measurement-decoy": {
+              "abstained": 8,
+              "accuracy": 0.15,
+              "answered_incorrect": 9,
+              "correct": 3,
+              "count": 20,
+              "format_valid": 20
+            },
+            "supported-measurement": {
+              "abstained": 12,
+              "accuracy": 0.4,
+              "answered_incorrect": 0,
+              "correct": 8,
+              "count": 20,
+              "format_valid": 20
+            },
+            "unit-mismatch": {
+              "abstained": 11,
+              "accuracy": 0.55,
+              "answered_incorrect": 9,
+              "correct": 11,
+              "count": 20,
+              "format_valid": 20
+            }
+          }
+        }
+      ],
+      "generalization_verdict": "insufficient_power",
+      "interpretation": "Fixed development comparison of a hybrid rule/model pipeline; no holdout or causal weight-learning claim.",
+      "measured_tokens": {
+        "completion_tokens": 2243,
+        "prompt_tokens": 12416,
+        "total_tokens": 14659
+      },
+      "measured_usd": null,
+      "model_seconds": 1936.3180583714275,
+      "paired_gains": 59,
+      "paired_losses": 0,
+      "paired_ties": 41,
+      "prospective_gate_passed": true,
+      "verdict": "candidate_requires_review"
+    },
+    "gate_verdict": "candidate_requires_review",
+    "generalization_verdict": "insufficient_power",
+    "holdout_accessed": false,
+    "new_model_calls": 0,
+    "production_activation_authorized": false,
+    "promotion_authorized": false,
+    "sqlite_connections_checked": 1559,
+    "sqlite_copies_logically_unchanged": true,
+    "study_report_sha256": "ae24bfac8beb3fe37e3eb61efda5c8e2e5e9ac761e5a2b4c785e3acc7d9feea7",
+    "verified": true
+  },
+  "discovery_boundary_deviation": "Initial broad rg discovery scanned documentation/evidence paths including holdout-related reports. No task-bank holdout or seed was opened. The subsequent evaluator blocked holdout/seed paths; this record does not claim discovery was perfectly holdout-artifact-isolated."
+}

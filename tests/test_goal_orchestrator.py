@@ -4,6 +4,7 @@ import tempfile
 import unittest
 
 from nerve_awim.goal_orchestrator import GoalOrchestrator
+from nerve_awim.goal_learning import build, execute, fixtures, observe_policy
 
 
 class GoalTests(unittest.TestCase):
@@ -110,3 +111,37 @@ class GoalTests(unittest.TestCase):
         self.create(supervisor)
         with self.assertRaises(FileExistsError):
             self.create(supervisor)
+
+    def test_both_domain_loops_with_restart_before_monitor(self):
+        supervisor = build(self.temp.name)
+        supervisor.run(max_ticks=2)
+        state = build(self.temp.name).run()
+        self.assertEqual(state['status'], 'complete')
+        for domain in ('clinical_os', 'perfflux'):
+            receipt = next(t['receipt'] for t in state['tasks'] if t['id'] == domain+':study')
+            self.assertEqual(receipt['final']['lesson_hits'], 12)
+            self.assertEqual(receipt['final']['losses'], 0)
+            self.assertEqual(receipt['capable_control_hits'], 12)
+            self.assertEqual(receipt['history'][0]['regression']['baseline_hits'], 8)
+            monitor = next(t['receipt'] for t in state['tasks'] if t['id'] == domain+':monitor')
+            self.assertTrue(monitor['rollback_verified'])
+            self.assertEqual(monitor['healthy_policy']['version'], 1)
+            self.assertEqual(monitor['fault_policy']['version'], 2)
+        self.assertEqual(state, build(self.temp.name).run())
+        with self.assertRaises(ValueError):
+            build(self.temp.name, ('perfflux',))
+
+    def test_perf_improves_actual_operations_preserving_digest(self):
+        task = fixtures('perfflux', 'unseen', 1)[0].task
+        direct, memo = execute('perfflux', task, 'direct'), execute('perfflux', task, 'memoized')
+        self.assertEqual(direct['digests'], memo['digests'])
+        self.assertEqual(direct['hash_calls'], 12)
+        self.assertEqual(memo['hash_calls'], 4)
+
+    def test_rollback_does_not_mutate_prior_policy(self):
+        policy = dict(active_strategy='memoized', previous_strategy='direct', version=1, scope='sandbox', status='active')
+        rolled = observe_policy(policy, verified=False)
+        self.assertEqual(rolled['active_strategy'], 'direct')
+        self.assertEqual(policy['active_strategy'], 'memoized')
+        with self.assertRaises(ValueError):
+            observe_policy(policy, verified='yes')

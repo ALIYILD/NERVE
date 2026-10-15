@@ -1,0 +1,18 @@
+test_changed_registration_order_and_old_incumbent_refused (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_controls_must_be_beaten (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_futility_and_promotion_are_terminal (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_null_one_step_supermartingale (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_plateau_uses_seed_variance (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_promotion_only_review_never_authorization (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_restart_same_evalue_no_repeat_dispatch (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_slice_predicate_full_controls_and_stratum_guard (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_tamper_history_detected_before_new_study (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_ties_no_evidence_and_win_loss_product (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_trusted_head_detects_whole_database_rollback (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_wallet_exhaustion_before_claim_and_restart_idempotency (test_sequential_gate_v1.SequentialGateTests) ... ok
+test_wrong_direction_stratum_veto_latched (test_sequential_gate_v1.SequentialGateTests) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.619s
+
+OK
