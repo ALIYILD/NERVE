@@ -1,0 +1,34 @@
+{
+  "artifacts": {
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-transport-smoke-claims.sqlite": {
+      "mtime_ns": 1792048094578270616,
+      "sha256": "cb49e165067bebc9d44ece83bab92df6f742c3ac89694dd2efd09becb9ed4e7e"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-transport-smoke-v1/authority.sqlite": {
+      "mtime_ns": 1792048094598089458,
+      "sha256": "eba0cdfce91b6ac0773c26ae133502d3538f12422f6a9c5da9c1e2378050ea1b"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-transport-smoke-v1/claim.sqlite": {
+      "mtime_ns": 1792048176976986165,
+      "sha256": "e643402a1bd0bc6cc0621e33ebc921ca039741e18419c40d943450057df35455"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-transport-smoke-v1/identity.json": {
+      "mtime_ns": 1792048094579140030,
+      "sha256": "32903fa6414792e538755c3ed34d14ca14ba7a0b042d9dbe061a69e1357e117f"
+    },
+    "/Users/aliyildirim/nerve-research-runs/scientific-candidate-transport-smoke-v1/report.json": {
+      "mtime_ns": 1792048176978808442,
+      "sha256": "9391f562c82e79f0e63772beb68eba1d4bce5129daac5c65aca02a9eeb05493e"
+    }
+  },
+  "efficacy_established": false,
+  "fresh_process_bytes_and_mtimes_unchanged": true,
+  "new_metadata_calls": 0,
+  "new_model_calls": 0,
+  "new_preload_calls": 0,
+  "new_version_calls": 0,
+  "original_model_attempts": 1,
+  "promotion_authorized": false,
+  "smoke_status": "complete",
+  "status": "passed"
+}
