@@ -9,7 +9,7 @@ never a public repository or chat transcript.
 ## Evidence boundary at handoff
 
 The read-back mechanism receipt reports feedback-based selection at 8/8 versus
-empty memory 0/8, with the best fixed prewritten handler also 8/8. Both adaptation
+empty memory 0/8, with the best fixed prewritten handler also 8/8. This is selection among prewritten handlers, NOT evidence of learning. Both adaptation
 results (28/36 versus 24/36 and 12/36, plus 32 evaluation calls per domain) are
 reruns of the existing synthetic A→B→A fixtures, not new real-world validation.
 Galahad commit `5a60102` records `no_failure_supported_hypothesis`: the development

@@ -1,4 +1,6 @@
-# Runpod outcome-learning and adaptation mechanism proof
+# Runpod persisted selection and adaptation mechanism proof
+
+**Correction: the 8/8 result is selection among prewritten handlers, NOT evidence of learning. The best fixed handler also scored 8/8.** Historical receipt keys such as `feedback_learning` are labels, not validated learning claims; original evidence is preserved unchanged.
 
 The aggregate receipt was read back and confirms the existing NERVE implementation passes a synthetic end-to-end proof of
 outcome-driven selection, persistence, bounded adaptation and rollback. All
@@ -10,7 +12,7 @@ invented a new skill or improved model weights.
 
 | Capability | Result | Evidence and boundary |
 |---|---|---|
-| Persisted outcome learning | PASS, synthetic | 16 executed strategy episodes produce independently checked rewards; SQLite utility selection changes from lowercase to trim-lowercase. |
+| Persisted selection among prewritten handlers | PASS, synthetic; NOT learning evidence | 16 executed strategy episodes produce independently checked rewards; SQLite utility selection changes from lowercase to trim-lowercase. |
 | Behavioral reuse after process restart | PASS, synthetic | 8/8 novel strings correct after reload, versus frozen empty-memory 0/8; known best registered handler also gets 8/8. Evaluation writes no feedback. |
 | Workload adaptation | PASS, synthetic | Both domain fixtures achieve 28/36 vs fixed controls 24/36 and 12/36, with two switches each. |
 | Regression protection | PASS, fixture tests | Retained-task regression and forged/stale evaluations are rejected. |
@@ -31,7 +33,7 @@ from separate expected outputs, then launches a new process over the same SQLite
 memory to evaluate eight distinct test strings. The empty-memory control defaults
 to the first handler, intentionally inferior on whitespace-bearing inputs. The
 best fixed handler solves all eight too: this demonstrates selection from known
-handlers, not a new algorithm. The 16 training executions are additional to the
+handlers, not a new algorithm. These fixtures do not establish learning or an advantage over the best fixed handler. The 16 training executions are additional to the
 eight evaluations per policy. The strings are novel identities from the same
 simple template, not an unseen real-world distribution.
 
