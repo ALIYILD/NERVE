@@ -2,6 +2,28 @@
 
 ## Required first action after slice 2
 
+**Validation update, 15 October 2026:** the user explicitly lifted the pause for
+Runpod validation and development integration while keeping holdout and promotion
+blocked. On exact commit `36339ac06e97ab3f0f4f264098d2985418b21de0`, all six retention
+tests passed. The full suite ran once: 1,479 tests, two errors and 12 skips. Both
+errors came from missing Git metadata in the source archive. After restoring the
+real commit through a Git bundle, all three tests in the affected
+`test_adaptation_evaluation.py` module passed, without source changes. The full
+suite was not rerun or retrospectively relabeled as passing. Logs are preserved in
+`/Users/aliyildirim/nerve-research-runs/runpod-validation-36339ac`.
+
+Commands (executed on Runpod with `PYTHONPATH=src`):
+
+```sh
+.venv/bin/python -m unittest discover -s tests -p test_retained_skill_contract.py -v
+timeout 1800 .venv/bin/python -m unittest discover -s tests -v
+# After restoring the real Git commit metadata:
+.venv/bin/python -m unittest discover -s tests -p test_adaptation_evaluation.py -v
+```
+
+The original instruction below is retained as history; the fixture-validation
+prerequisite was addressed through the explicit Runpod exception above.
+
 Wait for the user's explicit confirmation that slice 2 is finished. In the
 first available validation window, run `tests/test_retained_skill_contract.py`
 and the full NERVE test suite once, before any work builds on this contract.
@@ -61,5 +83,6 @@ network, inference, scorer, signing key, or registry-writing capability.
 `tests/test_retained_skill_contract.py` connects it to a GoalOrchestrator leaf
 using entirely synthetic byte fixtures and a test-only HMAC authority. Its gate
 stub is not Galahad validation; production requires the real adapter and trusted
-signature verifier. Tests are written but intentionally **not run** during the
-slice-2 machine reservation. No actual holdout hash or promotion is asserted.
+signature verifier. Tests were initially left unrun during the slice-2 machine
+reservation and subsequently executed under the explicit Runpod exception above.
+No actual holdout hash or promotion is asserted.
