@@ -1,0 +1,34 @@
+{
+  "allocated_cost_estimate_usd": 5.001064596904649e-08,
+  "bank_sealing_receipt_sha256": "68b639cccaaa4b7a532968c5468f9bac7f73f1eabf2d9e40d0dfccdb37447346",
+  "bank_v2_manifest_sha256": "786852f3b5b64da13d9ee5238adf7d96c81417095c1ffcf3d7072bf4ccf990e9",
+  "candidate_registered": false,
+  "failure_count_definition": "first3seeds; item-by-seed observations on reused dev items",
+  "failure_counts": {
+    "conflict": 0,
+    "entity-decoy": 0,
+    "measurement-decoy": 0,
+    "multi-source-agreement": 0,
+    "stale-vs-current": 0,
+    "supported-measurement": 0,
+    "unit-mismatch": 0
+  },
+  "identity": {
+    "gpu": "NVIDIA A40",
+    "model": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "pod_id": "lg0svvuenxvbno",
+    "runtime": {
+      "version": "0.40.5"
+    }
+  },
+  "incumbent_changed": false,
+  "model_calls": 0,
+  "new_holdout_evaluated": false,
+  "promotion_authorized": false,
+  "reason": "Every admitted stratum failure count is zero; no worst failing stratum exists under the counts-only candidate-design constraint.",
+  "robustness_aggregate_sha256": "eb99ce66d907de13a15ffaa6691ae2b494454adcefee2e1a9d9a842c74800c46",
+  "status": "no_failure_supported_hypothesis",
+  "v4_dev_study_run": false,
+  "wall_seconds": 0.00030514970421791077
+}

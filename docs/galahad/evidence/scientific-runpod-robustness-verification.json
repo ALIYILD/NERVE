@@ -1,0 +1,32 @@
+{
+  "allocated_cost_estimate_usd": 0.38534010305760635,
+  "backup_archive_sha256": {
+    "robustness-private-evidence.tar.gz": "a5fb8357ccb0f79c38247acbde1ee84c6dca35c6327d18f766f392917971a676",
+    "sealed-bank-v2.tar.gz": "b02b4a681c4385230bdbfdab33e86588625d94985c58ed2293f306c6fb74e261"
+  },
+  "focused_tests": {
+    "executed_on": "Runpod",
+    "protocol_seconds": 0.878,
+    "protocol_tests": 13,
+    "sealer_seconds": 0.114,
+    "sealer_tests": 2
+  },
+  "identity": {
+    "gpu": "NVIDIA A40",
+    "model": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "pod_id": "lg0svvuenxvbno",
+    "runtime": {
+      "version": "0.40.5"
+    }
+  },
+  "local_archives_mode": "0600",
+  "local_private_parent_mode": "0700",
+  "model_calls_in_replay": 0,
+  "promotion_authorized": false,
+  "sealed_bank_holdout_mode": "000",
+  "sealed_bank_seed_mode": "000",
+  "verification_location": "Runpod; complete receipt replay, no added model calls",
+  "verified": true,
+  "wall_seconds": 2351.2277474701405
+}
