@@ -1,6 +1,6 @@
 # Runpod outcome-learning and adaptation mechanism proof
 
-The existing NERVE implementation passes a synthetic end-to-end proof of
+The aggregate receipt was read back and confirms the existing NERVE implementation passes a synthetic end-to-end proof of
 outcome-driven selection, persistence, bounded adaptation and rollback. All
 execution occurred on the existing Runpod A40 pod `lg0svvuenxvbno`, with zero
 model calls. This is a measured mechanism demonstration, not evidence that NERVE
@@ -18,7 +18,7 @@ invented a new skill or improved model weights.
 | Persisted goal recovery | PASS | Stop after nine ticks, resume in a fresh process, reach completion; a further fresh process returns byte-identical completed state/receipt. |
 | Missing/invalid feedback handling | PASS, fixture tests | Missing labels do not trigger drift; invalid rewards and foreign/stale/conflicting feedback rejected. Semantically false labels from a trusted judge are not detected automatically. |
 | Unsigned retention | Correctly refused | Incumbent preserved; no production authorization. Existing contract tests use explicitly synthetic HMAC fixtures, never a real signature or registry. |
-| Deterministic candidate-rule improvement | NOT MEASURED HERE | Galahad's registered v4 development study is the separate measurement lane. |
+| Deterministic candidate-rule improvement | NOT MEASURED HERE | Galahad stopped at `no_failure_supported_hypothesis` in `5a60102`; no v4 was designed or tested. |
 | Weight training | NOT PERFORMED | No model used, loaded or invoked by this proof. |
 | Autonomous new-skill invention | NOT DEMONSTRATED | All strategy handlers and adaptation thresholds were written in advance. |
 | Signed retained skill / activation | NOT AUTHORIZED | No live registry writes, promotion, real signing, holdout opening or activation. |
