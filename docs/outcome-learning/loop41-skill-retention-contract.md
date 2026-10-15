@@ -1,5 +1,16 @@
 # Loop 41 retained-skill consumption contract
 
+## Required first action after slice 2
+
+Wait for the user's explicit confirmation that slice 2 is finished. In the
+first available validation window, run `tests/test_retained_skill_contract.py`
+and the full NERVE test suite once, before any work builds on this contract.
+Record the commands, commit tested and results in this document. If either
+fails, resolve the failure before relying on the contract. These checks are
+pending; this note does not authorize tests or inference during slice 2.
+
+## Contract
+
 Status: offline contract and fixture consumer only; no registry mutation, real
 holdout access, promotion, or runtime activation. Loop 41's versioned skill
 registry is the intended canonical store for retained skills; its live adapter
