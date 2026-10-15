@@ -12,6 +12,7 @@ dynamic = ["version"]
 dependencies = []
 
 [project.optional-dependencies]
+retention = ["cryptography>=48,<49"]
 auth = ["PyJWT[crypto]>=2.10,<3"]
 mcp = ["mcp==2.3.0"]
 

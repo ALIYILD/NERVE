@@ -1,0 +1,9 @@
+{
+  "incumbent": {
+    "config_hash": "efb299d0aad1e116f493f27f4d86e9ae697e75c033406a0395b62547edb7c369",
+    "skill_id": "scientific-measurement-qwen2.5-coder-7b",
+    "version": "compact-with-abstain@7B"
+  },
+  "provenance": "Initial registry bootstrap of actual evaluated baseline; no prior retained-skill history asserted.",
+  "runtime_activation": false
+}

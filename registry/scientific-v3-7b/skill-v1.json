@@ -1,0 +1,29 @@
+{
+  "config_hash": "bf408544a01bf929304e67152064a6e931d0434128e6eb4f6d2a57b93f8aed83",
+  "evidence_bundle": {
+    "dev_study": {
+      "sha256": "5f2ce6d42f8819a6159506458e6d780e5ee27035b5d6cb2f74a7a27e76dc3ead",
+      "uri": "dev_study.json"
+    },
+    "holdout_study": {
+      "sha256": "35c314b5732f3aed25357688405e9b7b1dc9c2b6d1c2d867ec5c7bd55b1c5035",
+      "uri": "holdout_study.json"
+    },
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "task_bank_manifest": {
+      "sha256": "e11a17a72fb6482dc5978ee5e3c8d4b488f1d71d9c8e060aa382637020718ae6",
+      "uri": "task_bank_manifest.json"
+    }
+  },
+  "signed_by": {
+    "key_id": "delegated-local-ed25519:45eae5477f2f9aaa0985ce2e847d9e5321adf10d8a79823933b69cce868b3eee",
+    "signature": "q/P+YSm2Uh4tIe+es9RC1NhNazDTY25n1wHmQ+vcj7FR6B9lxVfrD6ttJ2Zo9pZ1ZwCJ+fTb8rOXMi+s/SzaCA=="
+  },
+  "skill_id": "scientific-measurement-qwen2.5-coder-7b",
+  "supersedes": {
+    "config_hash": "efb299d0aad1e116f493f27f4d86e9ae697e75c033406a0395b62547edb7c369",
+    "skill_id": "scientific-measurement-qwen2.5-coder-7b",
+    "version": "compact-with-abstain@7B"
+  },
+  "version": "v1"
+}
