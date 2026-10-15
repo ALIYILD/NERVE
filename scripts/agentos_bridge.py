@@ -482,7 +482,10 @@ def main():
     requested_profile=args.profile
     if args.command.startswith('auto-adapt-'):
         from nerve_awim.auto_adaptation_goal import main as adaptation_main
-        return adaptation_main([args.command.removeprefix('auto-adapt-'), '--state', str(args.state/'auto-adaptation-goal')])
+        arguments = [args.command.removeprefix('auto-adapt-'), '--state', str(args.state/'auto-adaptation-goal')]
+        if args.suite:
+            arguments += ['--workload', str(args.suite)]
+        return adaptation_main(arguments)
     if args.command.startswith('goal-'):
         from nerve_awim.goal_learning import main as goal_main
         return goal_main([args.command.removeprefix('goal-'), '--state', str(args.state/'improvement-goal')])
