@@ -76,7 +76,7 @@ PYTHONPATH=src .venv/bin/python scripts/run_scientific_compact_dev_study.py \
 
 ## Actual development verdict — stop here
 
-**Retain the baseline. No improvement demonstrated.** All 100 real model outputs
+**Adjudicated verdict: `model_at_floor`.** No policy candidate was distinguishable, and the conflict rule’s answer-quality effect was untested. The original preregistered receipt says `retain_baseline`; that historical artifact is preserved. A separate substrate adjudication blocks further prompt/routing proposals on the same model digest. All 100 real model outputs
 were exactly `ABSTAIN`. Both model arms failed every supported-evidence task,
 and their overall score matched the always-abstain control.
 
