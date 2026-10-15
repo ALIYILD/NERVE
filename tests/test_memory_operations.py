@@ -99,7 +99,8 @@ class MemoryOperationsTests(unittest.TestCase):
         from unittest.mock import patch
         for summary, expected in [('OK (skipped=2)', False), ('OK (skipped=0)', True), ('OK', True)]:
             result = SimpleNamespace(returncode=0, stdout='', stderr='Ran 12 tests in 0.3s\n'+summary)
-            with patch.object(operations.subprocess, 'run', return_value=result):
+            with patch.object(operations.subprocess, 'run', return_value=result) as run:
                 checks = operations.verify('api')
+                self.assertEqual(run.call_args.kwargs['timeout'], 1800)
             self.assertEqual(checks[0]['passed'], expected)
             self.assertEqual(checks[0]['count'], 12)
