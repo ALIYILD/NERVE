@@ -1,0 +1,161 @@
+{
+  "schema": "nerve-continuity-live-v1",
+  "observed_at": "2026-10-13T06:42:42.724653+00:00",
+  "activation_authorized": false,
+  "improvement_proven": false,
+  "studies": [
+    {
+      "ledger": "audit-study.sqlite3",
+      "study_id": "audit-54fb0bded75e410bb3987e46092e6718",
+      "status": "failed",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "revision": "17a0e5577105f8fdea293b2acc9405b4e610009cbb9814dbe9ba86aab68d8198",
+      "manifest_sha256": "61884de327fdd6b9fc9d530aea06703ef9f7a5a4421ff6e1d9bfa0632048606b",
+      "result": {
+        "activation_authorized": false,
+        "limitation": "Public simulated cohort held out from the proposer; scoped shadow evidence only, not general improvement or live audit approval.",
+        "native_sessions": 1,
+        "phases": {},
+        "prepaid_sessions": 8,
+        "reason": "ValueError",
+        "status": "failed"
+      }
+    },
+    {
+      "ledger": "cohort-study.sqlite3",
+      "study_id": "cohort-2035fb109f0a4afd810880278dfb05a8",
+      "status": "failed",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "revision": "43cca1f6d9a59545675a4e1ef50e24d592a3bca5bb464e35258b6731c59407a8",
+      "manifest_sha256": "5a38ad73b614409e887d0b4724b66b4e3e2ee79751db5ef744c955a318c67acc",
+      "result": {
+        "activation_authorized": false,
+        "learning_history_count": 0,
+        "learning_history_digest": "cf556416b0d6b81428d9274db79fdcaefd75a7f0714e49d9028059045a3fe7ba",
+        "limitation": "Public simulated cohort held out from the proposer; scoped shadow evidence only, not general improvement or live audit approval.",
+        "native_sessions": 1,
+        "phases": {},
+        "prepaid_sessions": 8,
+        "reason": "ValueError",
+        "status": "failed"
+      }
+    }
+  ],
+  "diagnostic": {
+    "scope": "Output-contract diagnostic on already exposed public training tasks; not improvement evidence",
+    "activation_authorized": false,
+    "revision": "1dfada0526435c6a38ed8af0db66c96fb6a2a8a4730098a4e32e5117a9904f17",
+    "prompt_sha256": "2804acd169abfd49c73b1d95bf41698047635ea913e9c07443cec52fb438a7a3",
+    "training_digest": "0200e495948090b65420723f6627fdaac00b34631cbe3897f0dd1770a8dff269",
+    "provider_calls_limit": 1,
+    "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "receipt": {
+      "ok": true,
+      "profile": "qa-release",
+      "requested_model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "configured_model": "qwen/qwen3.8-27b:free",
+      "availability_fallback": true,
+      "native_hermes": true,
+      "tools": 0,
+      "max_tokens": 4096,
+      "max_iterations": 2,
+      "runtime_seconds": 55,
+      "value": {
+        "audit-train-capabilities": {
+          "decision": "supported",
+          "citations": [
+            {
+              "source_id": "key",
+              "fields": [
+                "model",
+                "provider",
+                "observed_at",
+                "fields.present"
+              ]
+            },
+            {
+              "source_id": "listing",
+              "fields": [
+                "model",
+                "provider",
+                "observed_at",
+                "fields.listed"
+              ]
+            }
+          ]
+        },
+        "audit-train-temporal-pricing": {
+          "decision": "supported",
+          "citations": [
+            {
+              "source_id": "current-price",
+              "fields": [
+                "model",
+                "provider",
+                "observed_at",
+                "fields.input_usd",
+                "fields.output_usd"
+              ]
+            }
+          ]
+        }
+      },
+      "timeout_seconds": 90
+    },
+    "status": "completed",
+    "format_valid": true,
+    "correct": 1,
+    "tasks": 2,
+    "checks": [
+      {
+        "passed": false,
+        "category": "decision_mismatch",
+        "expected": {
+          "decision": "unknown",
+          "citations": []
+        }
+      },
+      {
+        "passed": true,
+        "category": "passed",
+        "expected": {
+          "decision": "supported",
+          "citations": [
+            {
+              "source_id": "current-price",
+              "fields": [
+                "fields.input_usd",
+                "fields.output_usd",
+                "model",
+                "observed_at",
+                "provider"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "remaining_sessions": 3
+  },
+  "queue_review": {
+    "cohort": "audit-composition-20261013-v3",
+    "previous_revision": "43cca1f6d9a59545675a4e1ef50e24d592a3bca5bb464e35258b6731c59407a8",
+    "revision": "1dfada0526435c6a38ed8af0db66c96fb6a2a8a4730098a4e32e5117a9904f17",
+    "manifest_sha256": "ef671cbfdda13620f3ea31de9165224e0c28f39e13fa6a018be7243e264cea37",
+    "reviewer": "Codex local operator; independent code review by /root/evaluation",
+    "reason": "Reviewed citation JSON contract and train-only malformed-output feedback repair. Independent code review found no holdout leakage, call-budget bypass or self-approval; 1375 integrated tests passed with one skip, and 56 installed cohort tests passed. One exposed-training diagnostic verified valid citation format but only one of two correct answers, so no efficacy claim. The v3 cohort has no study binding or dispatched requests; its manifest and evaluator remain unchanged. Original queue pin, consumed studies, prepaid reservations and release controls remain intact."
+  },
+  "queue_review_records": 1,
+  "v3_consumed": false,
+  "research_findings_count": 2,
+  "latest_scheduler_result": {
+    "cohort": "audit-composition-20261013-v3",
+    "manifest_sha256": "ef671cbfdda13620f3ea31de9165224e0c28f39e13fa6a018be7243e264cea37",
+    "profile": "qa-release",
+    "remaining_sessions": 3,
+    "requested_day": "2026-10-13",
+    "required_sessions": 8,
+    "revision": "1dfada0526435c6a38ed8af0db66c96fb6a2a8a4730098a4e32e5117a9904f17",
+    "status": "queued_budget"
+  }
+}

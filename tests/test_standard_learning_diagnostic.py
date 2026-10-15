@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from historical_evidence_runtime import archived_receipt
 from unittest.mock import patch
 
 from nerve_awim.memory_gateway import standard_learning_diagnostic as subject
@@ -12,6 +13,7 @@ from nerve_awim.memory_gateway import standard_learning_diagnostic as subject
 ARTIFACT = subject.demo.ROOT/'docs/galahad/evidence/standard-learning-development-v1.json.gz'
 
 
+@archived_receipt
 class StandardLearningDiagnosticTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

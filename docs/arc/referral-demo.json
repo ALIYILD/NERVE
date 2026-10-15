@@ -1,0 +1,14 @@
+{
+  "workflow": "clinical",
+  "synthetic": true,
+  "task_id": "synthetic-referral-handoff",
+  "now": 1000,
+  "assessment": {
+    "assessment_id": "synthetic-1",
+    "tenant_scope": "synthetic",
+    "captured_at": 900,
+    "valid_until": 1100,
+    "findings": "Synthetic assessed needs",
+    "approved": true
+  }
+}

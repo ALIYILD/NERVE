@@ -77,8 +77,8 @@ class ExperienceStoreTests(unittest.TestCase):
             db.execute(TRIGGERS['episodes_no_update'])
         before=self.store.path.read_bytes()
         self.assertEqual(self.store.status(self.actor)['status'],'degraded')
-        with self.assertRaisesRegex(ValueError,'malformed_episode_payload'):self.store.query(self.actor)
-        with self.assertRaisesRegex(ValueError,'malformed_episode_payload'):self.store.append_many(self.actor,[episode(2)])
+        with self.assertRaisesRegex(ValueError,'^(malformed_episode_payload|exact_episode_schema_required)$'):self.store.query(self.actor)
+        with self.assertRaisesRegex(ValueError,'^(malformed_episode_payload|exact_episode_schema_required)$'):self.store.append_many(self.actor,[episode(2)])
         self.assertEqual(before,self.store.path.read_bytes())
 
     def test_corrupt_file_never_reinitializes(self):

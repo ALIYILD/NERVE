@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "command": "PYTHONPATH=src /private/tmp/nerve-adaptation-ci-venv/bin/python -m unittest discover -s tests -q",
+      "exit_code": 0,
+      "tests": 998,
+      "evidence": "full-tests-python312.log"
+    },
+    {
+      "command": "node --test tests/test_checkpoint_discovery.cjs",
+      "exit_code": 0,
+      "tests": 7,
+      "evidence": "node-tests.log"
+    },
+    {
+      "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_adaptation*.py' -q",
+      "exit_code": 0,
+      "tests": 37,
+      "evidence": "adaptation-tests.log"
+    },
+    {
+      "command": "PYTHONPATH=src python3 -m unittest discover -s tests -p 'test_arc*.py' -q",
+      "exit_code": 0,
+      "tests": 86,
+      "evidence": "arc-tests.log"
+    },
+    {
+      "command": "PYTHONPATH=src python3 -S -c 'import nerve_awim.adaptation; import nerve_awim.arc_execution'",
+      "exit_code": 0,
+      "evidence": "runtime imported without optional site dependencies"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "additional_ci_commands": 44,
+  "additional_ci_passed": 44,
+  "ci_evidence": "ci/results.json",
+  "live_provider_verified": false,
+  "provider_requests": 0,
+  "deployment_performed": false
+}

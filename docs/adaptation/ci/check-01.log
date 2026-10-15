@@ -1,0 +1,78 @@
+{
+  "arms": {
+    "adaptive": {
+      "accuracy": 1.0,
+      "cost_usd": null,
+      "hits": 10,
+      "mean_prediction_ms": 0.8870517005561851,
+      "outcomes": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "tasks": 10,
+      "training_episodes": 6
+    },
+    "lexical": {
+      "accuracy": 1.0,
+      "cost_usd": null,
+      "hits": 10,
+      "mean_prediction_ms": 0.48411379830213264,
+      "outcomes": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "tasks": 10,
+      "training_episodes": 6
+    },
+    "no_memory": {
+      "accuracy": 1.0,
+      "cost_usd": null,
+      "hits": 10,
+      "mean_prediction_ms": 0.0071807982749305665,
+      "outcomes": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "tasks": 10,
+      "training_episodes": 6
+    }
+  },
+  "evaluation_feedback_written": false,
+  "fixture": "capable deterministic sorting control; not a real-model benchmark",
+  "paired_adaptive": {
+    "lexical": {
+      "losses": 0,
+      "wins": 0
+    },
+    "no_memory": {
+      "losses": 0,
+      "wins": 0
+    }
+  },
+  "promotion_authorized": false,
+  "scope": "offline host-controlled study; no generalization claim"
+}

@@ -42,6 +42,27 @@ def manifest():
             'holdout_calls': 0, 'promotion_authorized': False}
 
 
+def _legacy_ast_dump(node):
+    """Render the registered Python 3.10 AST schema on newer interpreters.
+
+    Only an empty type_params field (added in 3.12) is omitted. Nonempty
+    generics and any other new fields remain visible and fail the fingerprint.
+    Optional None fields are omitted and empty lists retained, as in 3.10.
+    """
+    if isinstance(node, ast.AST):
+        fields = []
+        for name, value in ast.iter_fields(node):
+            if value is None and getattr(type(node), name, ...) is None:
+                continue
+            if name == 'type_params' and value == []:
+                continue
+            fields.append(name + '=' + _legacy_ast_dump(value))
+        return type(node).__name__ + '(' + ', '.join(fields) + ')'
+    if isinstance(node, list):
+        return '[' + ', '.join(_legacy_ast_dump(value) for value in node) + ']'
+    return repr(node)
+
+
 def _source_contract():
     """Recognize only the inspected evaluator, rather than guess its semantics.
 
@@ -52,12 +73,12 @@ def _source_contract():
     for name, expected in _EXPECTED_FUNCTIONS.items():
         matches = [node for node in ast.walk(tree)
                    if isinstance(node, ast.FunctionDef) and node.name == name]
-        if len(matches) != 1 or sha256(ast.dump(matches[0], include_attributes=False).encode()).hexdigest() != expected:
+        if len(matches) != 1 or sha256(_legacy_ast_dump(matches[0]).encode()).hexdigest() != expected:
             raise RuntimeError('unknown_evaluator_structure')
     controller_tree = ast.parse((ROOT / 'src/nerve_awim/worldcore_v20.py').read_text())
     controllers = [node for node in controller_tree.body
                    if isinstance(node, ast.ClassDef) and node.name == 'WorldCoreV2']
-    if (len(controllers) != 1 or sha256(ast.dump(controllers[0], include_attributes=False).encode()).hexdigest()
+    if (len(controllers) != 1 or sha256(_legacy_ast_dump(controllers[0]).encode()).hexdigest()
             != 'd1277c35b5fe7e4b84bea4c9c724225c2f280f8bcb57d6f5f4bbbb16105406c8'):
         raise RuntimeError('unknown_controller_structure')
     assignments = {node.targets[0].id: node.value for node in tree.body

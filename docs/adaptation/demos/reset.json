@@ -1,0 +1,49 @@
+{
+  "action_receipts": {
+    "66b178ff098447e3a79e849671ad0dd6": "39264898bb404a79bbf7c358c232d6bf",
+    "d0dd719ce2a2419fa3c2061cf3f29c98": "4f6f39c222cb42ba943ed612f716bda2"
+  },
+  "active_correction_ids": [],
+  "completed_steps": [
+    "d0dd719ce2a2419fa3c2061cf3f29c98"
+  ],
+  "config": {
+    "automatic_global_promotion": false,
+    "backend": "structured",
+    "cross_subject_memory": false,
+    "enabled": true,
+    "max_action_steps": 20,
+    "max_context_tokens": 4000,
+    "max_replans": 3,
+    "max_tool_retries": 2,
+    "mode": "active-development",
+    "provider_spend_limit": 0,
+    "require_verified_corrections": true,
+    "task_deadline_seconds": 120
+  },
+  "constraints": [
+    "preserve-facts"
+  ],
+  "episode": "e40ac3c866b04d9ab56454a235155399",
+  "expiry": 1791837430.650523,
+  "goal": "synthetic-goal",
+  "last_event": "701a295e366848178f8b4c885418a519",
+  "last_outcome_status": "verified",
+  "memory_backend_version": "adaptation-v1",
+  "pending_steps": [],
+  "recent_failures": [
+    "66b178ff098447e3a79e849671ad0dd6"
+  ],
+  "replans": 1,
+  "schema_version": "adaptation-v1",
+  "sequence": 12,
+  "status": "completed",
+  "steps": 2,
+  "tool_failures": {},
+  "unresolved_questions": [],
+  "unverified_observations": [],
+  "verified_facts": [],
+  "version": 14,
+  "task_id": "demo-resume",
+  "subject_scope": "subject-a"
+}

@@ -1,0 +1,10 @@
+{
+  "bounded_recovery": "passed",
+  "fixture_training": "passed",
+  "parallel_pipelines": "passed",
+  "required_tools_discovered": 7,
+  "safety_scope": "local deterministic demo only",
+  "single_pipeline": "passed",
+  "status": "pass",
+  "transport": "real SDK stdio"
+}

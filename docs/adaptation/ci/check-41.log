@@ -1,0 +1,40 @@
+{
+  "approved_route_executed": true,
+  "capable_fixed_control": {
+    "hits": 8,
+    "tasks": 8
+  },
+  "evaluation": {
+    "contexts": {
+      "python_top_level_functions": {
+        "baseline_errors": 0,
+        "baseline_hits": 2,
+        "candidate_errors": 0,
+        "candidate_hits": 8,
+        "tasks": 8
+      }
+    },
+    "gate": "paired-v20-min5-accuracy0.8-no-context-regression-strict-total-gain",
+    "status": "passed"
+  },
+  "heldout_files": 8,
+  "limitations": "Same-repository held-out files, small sample, two hand-written tools. No live LLM, no general intelligence or clinical performance claim. A capable fixed AST tool is the non-learning control.",
+  "rollback_restored_original_behaviour": true,
+  "scope": "local temporary research runtime; simulated host operator approval",
+  "source_manifest_sha256": {
+    "src/nerve_awim/agent_bridge_v13.py": "1ce9b9c020c6b54a4c022a1141ca30eb000c2967234d2d09ce665b3eb84a5356",
+    "src/nerve_awim/agent_learning_v12.py": "a359c0fc290ea9fabff72bec2810060bcf0ebc782280524b1e2c3c354b2dcd37",
+    "src/nerve_awim/autoresearch_v05.py": "cfe99c6b8a99b74a1b0a678b6c63515e2fed70c05854e1cd61510c2a0cc46c86",
+    "src/nerve_awim/calibration_v15.py": "f1b49e8adac7c6951f3522663a61c7694d874d8832f53f1cb10aea628e95dd68",
+    "src/nerve_awim/core.py": "cd530d82deef3f972f0aeaf581921c23a33a030f3bad62adc8ff45a873100520",
+    "src/nerve_awim/evolution_v01.py": "d6207745c8e12e9fa8dd994706bb268c6c6b6a3d5f5c4f2b06837aeddb6991a2",
+    "src/nerve_awim/learn_v31.py": "0a3df9fe2a8fe19eaad6a2310fd6a1c225553389df9de0f87b12a66bfe4fc809",
+    "src/nerve_awim/memory_retrieval_v18.py": "719f5f236df9f1b5caae2120f8d197fc852d2ba24ca05e6e7738e1887873be20",
+    "src/nerve_awim/oidc_v27.py": "65533c6454cb68c56d4420bcee8046875cd94b6468ebeeeb04c1879c95868c1c",
+    "src/nerve_awim/parallel_agents_v11.py": "fa926aba789a243e5b738f0749f0dec90ff61582bb6408ca95193d84f3bb2a33",
+    "src/nerve_awim/recovery_learning_v17.py": "edc248a4d9a7c8bfeedfd484818b1ee510fe9fc1a79dfc29deb95ff600651b32",
+    "src/nerve_awim/regression_v15.py": "1caf9528a9b8f52a00286b4d4d54cb7183398c06b5cc028b0949c301b009164a"
+  },
+  "task": "inventory top-level functions in actual public NERVE Python files",
+  "training_files": 4
+}

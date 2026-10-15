@@ -207,6 +207,21 @@ class GovernedLearning:
         except sqlite3.IntegrityError:
             raise ValueError('task ID or exact payload already reserved/consumed in this scope') from None
 
+    def reject_arc_bypass(self, actor, task):
+        """Legacy alternative-execution APIs cannot bypass an opted-in context."""
+        scope = self._scope(actor, *ROLES)
+        task, _ = self._task(task)
+        with self._db() as con:
+            mode = None
+            if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='arc_modes'").fetchone():
+                row = con.execute('SELECT mode FROM arc_modes WHERE tenant=? AND agent=? AND context=?', (*scope, task.context)).fetchone()
+                mode = row['mode'] if row else None
+            guard = getattr(self, '_arc_guard', None)
+            if mode is None and guard is not None and task.context in self._arc_contexts:
+                mode = guard.__self__.mode
+            if mode is not None and mode != 'off':
+                raise PermissionError('ARC-enabled context requires the governed decision dispatcher')
+
     def _attempt(self, task, strategy):
         # Isolate mutable input objects between handlers and the evaluator.
         original = deepcopy(task)
@@ -226,6 +241,7 @@ class GovernedLearning:
         training outcomes. A failed task stays consumed to prevent replay bias.
         """
         scope = self._scope(actor, 'trainer')
+        self.reject_arc_bypass(actor, task)
         task, digest = self._task(task)
         with self._db() as con:
             con.execute('BEGIN IMMEDIATE')
@@ -295,6 +311,8 @@ class GovernedLearning:
         tasks = tuple(tasks)
         if not 1 <= len(tasks) <= 128:
             raise ValueError('between one and 128 held-out tasks required')
+        for task in tasks:
+            self.reject_arc_bypass(actor, task)
         prepared = [self._task(t) for t in tasks]
         if any(sum(t.context == c for t, _ in prepared) < MIN_HOLDOUT for c in self._baseline):
             raise ValueError('five held-out cases per context required')
@@ -386,13 +404,21 @@ class GovernedLearning:
                                                   'review': reason, 'generation': expected_generation + 1})
         return self.status(actor)
 
-    def execute(self, actor, task, *, guard=None):
+    def execute(self, actor, task, *, guard=None, arc_permit=None):
         """Use one immutable approved route snapshot; never writes training rewards."""
         scope = self._scope(actor, 'runtime')
         task, _ = self._task(task)
         with self._db() as con:
             con.execute('BEGIN')
             state = self._state(con, scope)
+            if con.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='arc_modes'").fetchone():
+                arc_mode = con.execute('SELECT mode FROM arc_modes WHERE tenant=? AND agent=? AND context=?',
+                                       (*scope, task.context)).fetchone()
+                if (arc_mode and arc_mode['mode'] != 'off' and
+                        task.context not in getattr(self, '_arc_contexts', ())):
+                    raise PermissionError('persisted ARC enforcement requires an attached runtime')
+            if task.context in getattr(self, '_arc_contexts', ()):
+                self._arc_guard(con, actor, task, arc_permit)
             if guard is not None:
                 guard(con, scope, state)
             routes = self._release(con, scope, state['active'])

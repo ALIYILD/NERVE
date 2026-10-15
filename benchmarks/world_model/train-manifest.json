@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "episodes": [
+    {
+      "episode": "import_example", "source": "import_source", "family": "workflow",
+      "initial": {"stage": 0},
+      "transitions": [
+        {"id": "import_0", "action": "prepare", "outcome": {"stage": 1}, "completion": false},
+        {"id": "import_1", "action": "validate", "outcome": {"stage": 2}, "completion": false},
+        {"id": "import_2", "action": "finish", "outcome": {"stage": 3}, "completion": true}
+      ]
+    }
+  ]
+}

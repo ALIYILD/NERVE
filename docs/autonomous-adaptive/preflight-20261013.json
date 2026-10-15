@@ -1,0 +1,80 @@
+{
+  "schema": "nerve-macos-preflight-v1",
+  "ready": false,
+  "status": "NOT_READY",
+  "facts": {
+    "platform": "Darwin",
+    "current_uid": 501,
+    "learning_launch_agent": {
+      "exists": true,
+      "metadata_unavailable": false,
+      "uid": 501,
+      "mode": "0o644",
+      "symlink": false,
+      "status": "OBSERVED",
+      "expected_command": true,
+      "expected_label": true,
+      "interval_seconds": 900,
+      "run_at_load": true,
+      "root_owned": false
+    },
+    "passive_telemetry": {
+      "status": "OBSERVED_METADATA_ONLY",
+      "fresh": true,
+      "collection_health": "OK"
+    },
+    "independent_installation": {
+      "directory": {
+        "exists": false,
+        "metadata_unavailable": false,
+        "uid": null,
+        "mode": null,
+        "symlink": false
+      },
+      "configuration": {
+        "exists": false,
+        "metadata_unavailable": false,
+        "uid": null,
+        "mode": null,
+        "symlink": false
+      },
+      "launch_daemon": {
+        "exists": false,
+        "metadata_unavailable": false,
+        "uid": null,
+        "mode": null,
+        "symlink": false
+      },
+      "protected_metadata": false
+    }
+  },
+  "blocking_gates": [
+    {
+      "id": "native_macos_enforcement",
+      "status": "BLOCKED",
+      "reason": "controller_not_implemented"
+    },
+    {
+      "id": "workload_identity_isolation",
+      "status": "BLOCKED",
+      "reason": "dedicated_restricted_account_not_verified"
+    },
+    {
+      "id": "independent_administration",
+      "status": "BLOCKED",
+      "reason": "root_owned_files_do_not_verify_admin_isolation"
+    },
+    {
+      "id": "owner_recovery_and_alerts",
+      "status": "BLOCKED",
+      "reason": "mfa_and_external_delivery_not_verified"
+    },
+    {
+      "id": "shutdown_and_restart_acceptance",
+      "status": "BLOCKED",
+      "reason": "disposable_host_acceptance_not_run"
+    }
+  ],
+  "mutations_performed": false,
+  "coverage": "local_configuration_metadata_only"
+}

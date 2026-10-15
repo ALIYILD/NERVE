@@ -1,3 +1,4 @@
+import ast
 import json
 from copy import deepcopy
 from pathlib import Path
@@ -15,6 +16,19 @@ class WorldCoreDiagnosticTests(unittest.TestCase):
         self.assertEqual(contract['guaranteed_consecutive_missing_steps'], 15)
         self.assertEqual(contract['max_allowed_missing_tolerance'], 12)
         self.assertEqual(contract['absolute_min_completion'], .95)
+
+    def test_ast_schema_normalization_preserves_semantic_changes(self):
+        original = ast.parse('def f(): pass').body[0]
+        before = diagnostic._legacy_ast_dump(original)
+        # Exercise the newer field even under Python 3.10.
+        original._fields = tuple(original._fields) + (() if 'type_params' in original._fields else ('type_params',))
+        original.type_params = []
+        self.assertEqual(diagnostic._legacy_ast_dump(original), before)
+        original.type_params = [ast.Name(id='T', ctx=ast.Load())]
+        self.assertNotEqual(diagnostic._legacy_ast_dump(original), before)
+        original.type_params = []
+        original.returns = ast.Name(id='int', ctx=ast.Load())
+        self.assertNotEqual(diagnostic._legacy_ast_dump(original), before)
 
     def test_all_cases_and_durable_receipts(self):
         with tempfile.TemporaryDirectory() as temp:

@@ -1,0 +1,10 @@
+{
+  "note": "Same specialist priors; only contextual feedback differs. Synthetic scalar dynamics.",
+  "results": {
+    "adaptive_mae": 0.1921226630135111,
+    "baseline_mae": 0.2254802892365965,
+    "memory_used": 78,
+    "tasks": 80
+  },
+  "seeds": 20
+}

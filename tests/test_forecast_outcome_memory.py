@@ -6,6 +6,7 @@ from pathlib import Path
 import sqlite3
 import tempfile
 import unittest
+from historical_evidence_runtime import archived_receipt
 from unittest.mock import patch
 from nerve_awim.memory_v18 import MemoryAuthority, TrustedMemoryLedger
 from nerve_awim.memory_gateway import MemoryGateway, MemoryScope
@@ -14,6 +15,7 @@ from nerve_awim.memory_gateway import forecast_outcome_memory as module
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@archived_receipt
 class ForecastEvidenceTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
