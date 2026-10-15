@@ -1,0 +1,43 @@
+{
+  "decision": "Assign measured 63-second v2 module to slow; recheck fast without it. No model-study source changes.",
+  "focused_result": {
+    "exit_code": 0,
+    "provenance": "Transcribed implementation-agent tool output, session64047 chunk bbca48; no original saved log",
+    "seconds": 63.212,
+    "tests": 21
+  },
+  "full_fast_attempt": {
+    "completed_v2_test_lines": [
+      "test_condition_order_same_prior_inputs (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_consumed_timeout_never_retries (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_declared_abstention_is_independent_of_format (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_deleted_claim_or_shared_history_never_reset (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_different_directory_shared_claim_rejected (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_failed_summary_or_predispatch_tamper_rejected (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_final_identity_failure_removes_summary_and_consumes (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_invalid_preload_blocks_dispatch (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_original_deadline_is_not_socket_timeout_finding (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_original_exact_template_forced_only_changes_contract (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_original_socket_timeout_retains_only_completed_conditions (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_partial_requires_valid_post_identity (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_predecessor_change_during_timeout_blocks_publication (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_predecessor_paths_are_preserved (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_prepare_is_network_free_and_freezes_exact30_prompts (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_readonly_validator_never_initializes_or_dispatches (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_real30_schedule_raw_results_ceiling_and_networkfree_resume (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_tampered_completed_score_rejected_even_rehashed (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_wall_budget_includes_preload (test_scientific_substrate_calibration_v2.CalibrationTests) ... ok",
+      "test_constructor_cap_and_socket_vs_authorization_timeout (test_scientific_substrate_calibration_v2.CalibrationTransportTests) ... ok",
+      "test_length_raw_retained_with_seed_and_equal_budget (test_scientific_substrate_calibration_v2.CalibrationTransportTests) ... ok"
+    ],
+    "deadline_seconds": 180,
+    "exit_code": 124,
+    "final_lines": [
+      "test_invalid_test_budget (test_v13_external_mcp.ExternalMCPV13BenchmarkTests) ... ok",
+      "test_multiple_seeds (test_v13_external_mcp.ExternalMCPV13BenchmarkTests) ... ok",
+      "test_recency_is_deliberately_weak_control (test_v13_external_mcp.ExternalMCPV13BenchmarkTests) ... ok",
+      "test_utility_reaches_fixed_correct_pipeline (test_v13_external_mcp.ExternalMCPV13BenchmarkTests) ... ok",
+      "test_control_comparison (test_v16_benchmark.V16BenchmarkTests) ... fast gate exceeded 180s wall deadline"
+    ]
+  }
+}

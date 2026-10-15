@@ -1,5 +1,5 @@
 {
-  "adjustment_reason": "Initial 116.853s predicted fast tier reached its 180s deadline. Reduce measured fast budget to60s; allow2x slow estimate+60s for observed runtime variability. Two compact guard tests added after profile remain in fast.",
+  "adjustment_reason": "Initial 116.853s predicted fast tier reached its 180s deadline. Reduce measured fast budget to60s; allow2x slow estimate+60s for observed runtime variability. Two compact guard tests added after profile remain in fast. Calibration v2 adds 21 tests measured at 63.212s; a full fast attempt reached 180s without reported failures, so this module is assigned to slow.",
   "fast_budget_seconds": 60,
   "fast_estimated_seconds": 58.810096922679804,
   "fast_modules_measured": [
@@ -397,6 +397,7 @@
     "test_scientific_structured_inference": 0.10128351504681632,
     "test_scientific_structured_preflight": 1.9857768060755916,
     "test_scientific_structured_tasks": 0.0051739009795710444,
+    "test_scientific_substrate_calibration_v2": 63.212,
     "test_scientific_task_bank": 2.862608350929804,
     "test_scientific_task_interface": 0.10214067000197247,
     "test_shadow_learning_v21": 0.4942085150978528,
@@ -436,7 +437,7 @@
   "profile_skipped": 0,
   "profile_tests": 2044,
   "selection_rule": "Move largest measured modules to slow until measured fast plus all measured overhead <=60s; actual tiers must pass independently.",
-  "slow_estimated_seconds": 181.09704888280248,
+  "slow_estimated_seconds": 244.30904888280247,
   "slow_modules": [
     "test_agentos_cohort_review",
     "test_agentos_taskbench",
@@ -478,10 +479,11 @@
     "test_scientific_interface_validation",
     "test_scientific_model_learning",
     "test_scientific_structured_preflight",
+    "test_scientific_substrate_calibration_v2",
     "test_scientific_task_bank",
     "test_standard_learning_diagnostic",
     "test_worldcore_diagnostics"
   ],
-  "slow_timeout_seconds": 423,
+  "slow_timeout_seconds": 549,
   "version": "unittest-tiers-v1"
 }
