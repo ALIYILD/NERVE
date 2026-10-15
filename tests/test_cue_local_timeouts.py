@@ -16,7 +16,10 @@ class LocalTimeoutTests(unittest.TestCase):
     request = fixtures.LocalRegistryTests.request
 
     def setup_transport(self):
-        registry = self.ready()
+        # A fixed binary-exact origin keeps elapsed-time assertions independent
+        # of host uptime and cancellation rounding in the real monotonic clock.
+        with patch.object(local.time, 'monotonic', return_value=1024.):
+            registry = self.ready()
         job = registry['provider'].__self__
         transport = Mock(side_effect=lambda request, timeout: io.BytesIO(b'local response'))
         job.evaluation.transport = transport
