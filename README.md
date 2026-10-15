@@ -4,6 +4,19 @@ An open-source **research prototype** exploring sensor-driven world models, adap
 
 **Status:** Experimental research: simulations and bounded repository/agent-tool experiments. Not validated for real-world robotics or clinical decision-making.
 
+## ARC cross-task recovery learning
+
+The existing `adaptation-run --learn` command connects ARC verification, task
+adaptation and durable reviewed memory for read-only repository inventories.
+Verified recovery can guide a fresh task after restart, with repository isolation,
+expiry, retraction and independent verification of every new result. Run
+`python3 scripts/verify_arc_learning.py` to reproduce the cross-process comparison.
+Remembered recovery saves repeat failed attempts versus no-memory recovery; it
+ties the capable fixed AST baseline. This is bounded tool-selection learning,
+not model training or demonstrated general self-improvement. See the
+[runbook](docs/adaptation/runbook.md) and
+[measured report](docs/adaptation/cross-task-learning-report.json).
+
 ## Opt-in Cognitive Cue Engine
 
 The [Cognitive Cue Engine](docs/cce/runbook.md) adds model/tokenizer-bound cue

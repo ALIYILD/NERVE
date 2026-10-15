@@ -17,6 +17,8 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Verify research checkpoint provenance discovery
         run: node --test tests/test_checkpoint_discovery.cjs
+      - name: Verify ARC cross-task recovery learning against capable control
+        run: python scripts/verify_arc_learning.py
       - name: Verify offline cognitive cue commissioning and fail-closed activation
         env:
           PYTHONPATH: src
