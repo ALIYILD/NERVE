@@ -220,3 +220,8 @@ This branch has not been deployed or merged, and no PR or remote push was made.
 Real Galahad GPU restoration and commercial licensing remain unverified. Clinical
 integration remains synthetic-only. No clinical decision authority or general
 autonomous scientific discovery is established.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Vaccaro](https://arxiv.org/abs/2606.11217). This follow-on does not change this document's historical registration or evidence claims.

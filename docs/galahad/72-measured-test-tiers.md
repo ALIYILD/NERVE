@@ -91,3 +91,8 @@ sets are disjoint and together cover all **2,046 current tests**. The two extra
 tests relative to the profile exercise compact transport callback guards.
 
 [Fast run](evidence/suite-fast-v2.json), [single clean slow run](evidence/suite-slow-v1.json).
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.

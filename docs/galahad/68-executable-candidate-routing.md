@@ -96,3 +96,8 @@ No new model improvement, complete self-improvement conductor, skill promotion,
 weight training, clinical workflow or deployment is claimed. GPU endpoint/budget,
 Galahad compatibility/licensing and durable restoration remain unverified. No
 push, pull request or merge occurred.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.

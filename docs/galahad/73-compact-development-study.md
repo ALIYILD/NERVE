@@ -131,3 +131,8 @@ pushed, merged, deployed or connected to real clinical data. No PR was created.
 GPU/Galahad licensing and durable KV restoration remain unverified. Tier 6 and
 broader self-learning are incomplete. Per the user stop instruction, work ends
 at this development verdict and the holdout remains unopened.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.

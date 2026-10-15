@@ -120,3 +120,8 @@ stops here; completing the comparison requires a separately agreed protocol for
 handling the original-prompt timeout.
 
 [Read-only verification](evidence/scientific-substrate-calibration-verification-v1.json) disabled network/inference functions, installed the holdout/seed open guard, and confirmed all seven checked artifacts retained their bytes and modification times. Independent review confirmed the same terminal claims and absence of a summary.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.

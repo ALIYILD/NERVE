@@ -1,0 +1,30 @@
+{
+  "byte_identical_restart": true,
+  "harmful_proposals": 40,
+  "holdout_accessed": false,
+  "kind": "NERVE synthetic demonstration; not an exact Lewis replication",
+  "limitations": [
+    "No empirical result establishes a universal 1% bound.",
+    "Comparator uses repeated prefix looks; neither comparator adapts candidates to prior data.",
+    "Alpha spending controls error only when each test is conditionally valid."
+  ],
+  "model_calls": 0,
+  "naive": {
+    "harmful_accept_rate": 0.075,
+    "harmful_accepted": 3,
+    "items": 20000
+  },
+  "promotion_authorized": false,
+  "proposals": 200,
+  "seed": 20261015,
+  "sequential": {
+    "harmful_accept_rate": 0.0,
+    "harmful_accepted": 0,
+    "items": 6392,
+    "verdicts": {
+      "exploratory_only": 159,
+      "reject_futility": 41
+    }
+  },
+  "target_met": true
+}

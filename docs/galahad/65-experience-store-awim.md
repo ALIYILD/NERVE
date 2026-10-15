@@ -126,3 +126,8 @@ PY
 ```
 
 This is a trusted local host command, not a remote authentication endpoint.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.

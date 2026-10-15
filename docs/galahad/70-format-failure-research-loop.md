@@ -106,3 +106,8 @@ responses are mocked. Nothing is deployed, pushed or merged, and no PR was creat
 All changes are on `feature/galahad-persistent-memory`, based on
 `75a15e888ebbeae9f295b4e134f53e397e043327`; the checkpoint commit containing this
 file records the resulting source tree.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.

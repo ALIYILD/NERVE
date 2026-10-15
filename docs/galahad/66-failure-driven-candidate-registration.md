@@ -112,3 +112,8 @@ PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -p 'test_scientifi
 Tests use synthetic temporary fixtures and need no GPU/model service. Historical
 receipt validation is mocked in registration unit fixtures; the actual registrations
 above revalidated real completed receipts. No push, PR, merge or deployment.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.
