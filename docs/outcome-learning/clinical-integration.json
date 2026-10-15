@@ -1,0 +1,92 @@
+{
+  "application": "DeepSynaps Clinical Intelligence OS",
+  "synthetic": true,
+  "seed": 100,
+  "actual_application_service": true,
+  "durable_restart_verified": true,
+  "phases": [
+    {
+      "revision": "nerve-outcome-forecast-v1",
+      "observations": 100,
+      "missing": 0,
+      "duplicates_ignored": 0,
+      "scored": 80,
+      "window": 20,
+      "warmup": 20,
+      "next_success_estimate": 0.9090909090909091,
+      "state_digest": "8b4d94b5bca12af76b0af3f589a4743052efa44acea052c2458b2e8defe5d3b8",
+      "brier": {
+        "adaptive": 0.0926652892561983,
+        "frozen": 0.09132231404958668,
+        "expanding": 0.0926060865832489,
+        "neutral": 0.25
+      },
+      "automatic_action_authorized": false,
+      "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence.",
+      "scope": "exact-clinic-workflow-agent",
+      "source": "persisted-operator-feedback",
+      "clinical_activation": false,
+      "runtime_action": "internal_calibration_observation",
+      "sample_limit": 2000,
+      "history_may_be_truncated": false,
+      "model_revision_attested": false,
+      "patient_data_used": false
+    },
+    {
+      "revision": "nerve-outcome-forecast-v1",
+      "observations": 200,
+      "missing": 0,
+      "duplicates_ignored": 0,
+      "scored": 180,
+      "window": 20,
+      "warmup": 20,
+      "next_success_estimate": 0.45454545454545453,
+      "state_digest": "28795605c9ae98deab456fd25fed7ad4db5f5a2363ca2b8cd4d84c675f13f66e",
+      "brier": {
+        "adaptive": 0.16554178145087223,
+        "frozen": 0.3418273645546369,
+        "expanding": 0.25982022150478506,
+        "neutral": 0.25
+      },
+      "automatic_action_authorized": false,
+      "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence.",
+      "scope": "exact-clinic-workflow-agent",
+      "source": "persisted-operator-feedback",
+      "clinical_activation": false,
+      "runtime_action": "internal_calibration_observation",
+      "sample_limit": 2000,
+      "history_may_be_truncated": false,
+      "model_revision_attested": false,
+      "patient_data_used": false
+    },
+    {
+      "revision": "nerve-outcome-forecast-v1",
+      "observations": 300,
+      "missing": 0,
+      "duplicates_ignored": 0,
+      "scored": 280,
+      "window": 20,
+      "warmup": 20,
+      "next_success_estimate": 0.7727272727272727,
+      "state_digest": "4e1914e3a7690ed3f60820012e5cfcc629d90ad3f725b0dd3fde38042abf92bc",
+      "brier": {
+        "adaptive": 0.17511806375442715,
+        "frozen": 0.2835301062573791,
+        "expanding": 0.23730209761331242,
+        "neutral": 0.25
+      },
+      "automatic_action_authorized": false,
+      "limitation": "Observational prediction only. Descriptive temporal scores, not causal or clinical efficacy evidence.",
+      "scope": "exact-clinic-workflow-agent",
+      "source": "persisted-operator-feedback",
+      "clinical_activation": false,
+      "runtime_action": "internal_calibration_observation",
+      "sample_limit": 2000,
+      "history_may_be_truncated": false,
+      "model_revision_attested": false,
+      "patient_data_used": false
+    }
+  ],
+  "clinical_efficacy_demonstrated": false,
+  "production_activation": false
+}
