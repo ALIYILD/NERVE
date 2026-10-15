@@ -1,7 +1,7 @@
 {
   "version": "overnight-conductor-status-v1",
-  "updated_at_utc": "2026-10-15T22:55:14.722445+00:00",
-  "run_status": "wrapping_up_blocked_research_L2_independent",
+  "updated_at_utc": "2026-10-15T23:05:09.639922+00:00",
+  "run_status": "authorized_workflow_complete_research_blocked",
   "loops": {
     "L0": {
       "status": "blocked",
@@ -18,8 +18,22 @@
       }
     },
     "L2": {
-      "status": "running",
-      "owner": "outcome_overnight"
+      "status": "complete_noncanonical_negative_power",
+      "owner": "outcome_overnight",
+      "tests_passed": 18,
+      "simulation": {
+        "proposals": 200,
+        "harmful": 40,
+        "neutral": 60,
+        "good": 100,
+        "sequential_harmful_accepted": 0,
+        "sequential_good_accepted": 0,
+        "sequential_items": 16386,
+        "reuse_slice_items": 20000,
+        "nominal_target_met": true,
+        "useful_promotion_power_demonstrated": false
+      },
+      "integrated_commit": "7006ce4"
     },
     "L3": {
       "status": "skipped",
@@ -36,13 +50,13 @@
       "holdout_consumptions": 0
     },
     "L7": {
-      "status": "running",
+      "status": "complete",
       "subloops": {
-        "7.1": "no_pods_started_original_verified_EXITED",
-        "7.2": "waiting_for_L2_suite_lock",
-        "7.3": "17_protected_hashes_match",
-        "7.4": "initial_commit_pushed",
-        "7.5": "pending"
+        "7.1": "EXITED_fresh_readback_no_pods_started",
+        "7.2": "fast_incomplete_180s_slow_521_passed",
+        "7.3": "all_protected_and_L2_source_hashes_match",
+        "7.4": "final_feature_branch_publication",
+        "7.5": "morning_handoff_written_after_publication"
       }
     }
   },
@@ -78,7 +92,18 @@
     "overnight-contract-compatibility.json",
     "overnight-retained-sanity.json",
     "overnight-suite-attempts.json",
-    "overnight-pod-status.json"
+    "overnight-pod-status.json",
+    "overnight-alpha-wallet-protection.json",
+    "overnight-final-integrity.json",
+    "overnight-l7-slow.json",
+    "sequential-gate-sim-v1.json",
+    "sequential-gate-verification-v1.json"
   ],
-  "no_signing_or_activation": true
+  "no_signing_or_activation": true,
+  "research_objective_achieved": false,
+  "next_prerequisites": [
+    "Register a versioned input adapter or compatible harder-bank protocol without silently changing retained skill v1.",
+    "New prospective sequential-gate power registration; do not tune against the completed simulation.",
+    "Repair obsolete fast-tier timing plan in separately authorized work; protected deadline remains180seconds."
+  ]
 }

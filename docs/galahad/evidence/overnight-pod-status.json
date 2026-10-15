@@ -10,5 +10,12 @@
   "storage_cost_excluded": true,
   "replacement_created": false,
   "recorded_at_utc": "2026-10-15T22:51:16.465761+00:00",
-  "observed_at_utc_approx": "2026-10-15T22:48:00Z"
+  "observed_at_utc_approx": "2026-10-15T22:48:00Z",
+  "final_readback": {
+    "observed_at_utc": "2026-10-15T23:04:07.395Z",
+    "source": "Runpod get_pod",
+    "status": "EXITED",
+    "gpu": "NVIDIA A40",
+    "hourly_usd": 0.59
+  }
 }

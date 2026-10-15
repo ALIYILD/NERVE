@@ -1,0 +1,8 @@
+{
+  "version": "overnight-supplemental-protection-v1",
+  "recorded_at_utc": "2026-10-15T22:56:50.081972+00:00",
+  "path": "/Users/aliyildirim/nerve-research-runs/sequential-gate-overnight-20261016/alpha-wallet.json",
+  "sha256": "b23bf1fe63be574d9d1e679442a076fa7b923548b3b5cdd5bc6c605b58762f57",
+  "mode": "0o400",
+  "scope": "L2 immutable preallocated alpha wallet; protected from first conductor observation. Separate claim/outcome journals may append under policy."
+}

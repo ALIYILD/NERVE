@@ -18,5 +18,19 @@
     "reported_assertion_failures": 0,
     "complete": false,
     "finding": "Intrinsic protectedfast180-second limit reached. No claimalltests passed; no timingreceipt produced. No morefastattempts tonight."
+  },
+  "slow_attempt": {
+    "exit_code": 0,
+    "tests_run": 521,
+    "suite_seconds": 247.01188379200175,
+    "gate_seconds": 248.46202355698915,
+    "wall_deadline_seconds": 549,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "log_sha256": "f2120c067c0425364f883ce83cf6aba963f716a1d7bbeed8a7ab00151bf78133",
+    "log_path": "/Users/aliyildirim/nerve-research-runs/overnight-20261016/l7-slow.log",
+    "tested_revision": "da59938",
+    "integration_note": "L2 adds only new files and was integrated after the slow suite to avoid source drift. All259 L2 registered source hashes and all discovered preexisting test-module hashes were verified after integration; L2 has18 scoped passing tests."
   }
 }

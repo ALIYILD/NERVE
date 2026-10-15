@@ -1,0 +1,14 @@
+{
+  "protected_paths_unchanged": true,
+  "protected_count": 17,
+  "changed": [],
+  "private_wallet_unchanged": true,
+  "public_wallet_matches": true,
+  "result_hash_matches": true,
+  "registration_hash_matches": true,
+  "wallet_source_matches": true,
+  "observed_at_utc": "2026-10-15T23:04:07.526312+00:00",
+  "L2_registered_sources_match": true,
+  "L2_registered_source_count": 259,
+  "slow_discovered_module_sources_match_after_integration": true
+}
