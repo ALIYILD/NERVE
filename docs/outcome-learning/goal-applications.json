@@ -1,0 +1,98 @@
+[
+  {
+    "domain": "clinical_os",
+    "status": "complete",
+    "subprocess_restart_verified": true,
+    "source_verified": true,
+    "source_commit": "72cf6e95e12c93e28a9547bc7749eb1c5619c787",
+    "final": {
+      "baseline_hits": 0,
+      "cost_usd": null,
+      "lesson_hits": 12,
+      "losses": 0,
+      "prediction_calls": 24,
+      "promotion_authorized": false,
+      "scope": "single held-out comparison, not proof of generalization",
+      "tasks": 12,
+      "wins": 12
+    },
+    "capable_control_hits": 12,
+    "monitor": {
+      "active_strategy": "abstract",
+      "fault_injection_scope": "isolated copy; healthy sandbox candidate retained",
+      "fault_policy": {
+        "active_strategy": "title",
+        "domain": "clinical_os",
+        "evidence": "clinical_os:study",
+        "previous_strategy": "title",
+        "production_authorized": false,
+        "scope": "sandbox",
+        "status": "rolled_back",
+        "version": 2
+      },
+      "fault_rejected": true,
+      "fresh_hits": 12,
+      "healthy_policy": {
+        "active_strategy": "abstract",
+        "domain": "clinical_os",
+        "evidence": "clinical_os:study",
+        "previous_strategy": "title",
+        "production_authorized": false,
+        "scope": "sandbox",
+        "status": "active",
+        "version": 1
+      },
+      "rollback_verified": true,
+      "tasks": 12
+    },
+    "production_authorized": false
+  },
+  {
+    "domain": "perfflux",
+    "status": "complete",
+    "subprocess_restart_verified": true,
+    "source_verified": true,
+    "source_commit": "72cf6e95e12c93e28a9547bc7749eb1c5619c787",
+    "final": {
+      "baseline_hits": 0,
+      "cost_usd": null,
+      "lesson_hits": 12,
+      "losses": 0,
+      "prediction_calls": 24,
+      "promotion_authorized": false,
+      "scope": "single held-out comparison, not proof of generalization",
+      "tasks": 12,
+      "wins": 12
+    },
+    "capable_control_hits": 12,
+    "monitor": {
+      "active_strategy": "memoized",
+      "fault_injection_scope": "isolated copy; healthy sandbox candidate retained",
+      "fault_policy": {
+        "active_strategy": "direct",
+        "domain": "perfflux",
+        "evidence": "perfflux:study",
+        "previous_strategy": "direct",
+        "production_authorized": false,
+        "scope": "sandbox",
+        "status": "rolled_back",
+        "version": 2
+      },
+      "fault_rejected": true,
+      "fresh_hits": 12,
+      "healthy_policy": {
+        "active_strategy": "memoized",
+        "domain": "perfflux",
+        "evidence": "perfflux:study",
+        "previous_strategy": "direct",
+        "production_authorized": false,
+        "scope": "sandbox",
+        "status": "active",
+        "version": 1
+      },
+      "rollback_verified": true,
+      "tasks": 12
+    },
+    "production_authorized": false
+  }
+]
