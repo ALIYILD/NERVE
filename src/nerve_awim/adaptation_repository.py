@@ -16,6 +16,25 @@ from .governed_learning_v20 import GovernedLearning, LearningAuthority
 from .repository_agents_v20 import regex_inventory, ast_inventory, token_inventory
 
 TOOLS={'regex-inventory':regex_inventory,'ast-inventory':ast_inventory}
+LEARNING_DOMAIN='repository-inventory-recovery-v1'
+REVIEW_PROVENANCE='independent-token-recovery-v1'
+
+
+def learned_recovery(c):
+    """Only verified, reviewed recovery episodes can influence this pure tool route."""
+    for memory in c['arc'].memories(c['actor'],domain=LEARNING_DOMAIN):
+        if memory['provenance'] != REVIEW_PROVENANCE: continue
+        record=c['arc'].inspect(c['actor'],memory['decision'])
+        decision=record['decision']; outcome=record['outcome']
+        if (decision['action']['registered_tool']=='ast-inventory' and
+                decision['goal']=='top-level-function-inventory' and
+                decision['parent_decision_id'] and outcome and
+                outcome['semantic_status']=='verified'):
+            parent=c['arc'].inspect(c['actor'],decision['parent_decision_id'])
+            if (parent['decision']['action']['registered_tool']=='regex-inventory' and
+                    parent['outcome'] and parent['outcome']['semantic_status']=='failed'):
+                return memory['decision']
+    return None
 
 
 def repository_scope(root):
@@ -61,7 +80,7 @@ def build_repository(path, *, mode='active-development', repository_root=None):
     return dict(engine=engine,arc=arc,adaptation=adaptation,actor=actor,operator=operator,observed=observed,subject_scope=scope)
 
 
-def run_sources(database, sources, *, policy='corrections', mode='active-development', restart=False, task_id=None, initial_tool='regex-inventory', repository_root=None):
+def run_sources(database, sources, *, policy='corrections', mode='active-development', restart=False, task_id=None, initial_tool='regex-inventory', repository_root=None, learn=False):
     """Sources are host-authorized (name,text) pairs. At most three files/task."""
     if initial_tool not in TOOLS: raise ValueError('registered initial tool required')
     if policy not in ('baseline','structured','corrections','strong-baseline'): raise ValueError('unknown policy')
@@ -72,25 +91,34 @@ def run_sources(database, sources, *, policy='corrections', mode='active-develop
         ast_inventory(source)
     c=build_repository(database,mode=mode,repository_root=repository_root); a=c['adaptation']; actor=c['actor']; task=task_id or 'repo-'+uuid.uuid4().hex
     active=mode=='active-development' and policy not in ('baseline','strong-baseline')
+    if learn and (not active or policy!='corrections' or repository_root is None):
+        raise ValueError('learning requires active corrections and an explicit repository root')
     if active:
         a.begin_task(actor,task_id=task,subject_scope=c['subject_scope'],goal_reference='top-level-function-inventory',constraints=['read-only','no-source-execution','independent-verification'])
         a.grant(c['operator'],task,c['operator'],subject_scope=c['subject_scope'],review_reference='local-operator-read-only-command')
-    attempts=[]; outputs=[]; correction_ids=[]; reused=0; probes=0; resumed=False
+    memory_id=learned_recovery(c) if learn else None
+    attempts=[]; outputs=[]; correction_ids=[]; reused=0; probes=0; resumed=False; learned=[]
     for index,(name,source) in enumerate(sources):
         context=a.read_context(actor,task) if active else {'corrections':[]}
         applicable=[x for x in context['corrections'] if x['proposed_change']['field']=='recovery_tool']
         chosen='ast-inventory' if policy=='strong-baseline' else (applicable[-1]['proposed_change']['value'] if policy=='corrections' and applicable else initial_tool)
+        # Guidance changes the proposal only; fresh evidence, dispatch gates and
+        # the independent outcome verifier still run for every source.
+        if memory_id: chosen='ast-inventory'
         reused+=int(index>0 and bool(applicable) and policy=='corrections')
         arguments={'source':source,'file':name,'content_hash':digest(source)}
         ref=a.snapshot(actor,task,'file-'+str(index),source) if active else c['arc'].snapshot(actor,task+':file-'+str(index),source)
         parent=None
         for attempt in range(2):
-            decision=c['arc'].propose(actor,task,chosen,arguments,[ref],'top-level-function-inventory',['inventory'],parent_decision_id=parent)
+            decision=c['arc'].propose(actor,task,chosen,arguments,[ref],'top-level-function-inventory',['inventory'],parent_decision_id=parent,domain=LEARNING_DOMAIN if learn else 'nonclinical',concise_rationale=('Verified recovery guidance '+memory_id+'; fresh source requires independent verification' if memory_id else 'Host-authored evidence-linked decision summary'))
             before=time.perf_counter(); outcome=c['arc'].execute(actor,decision.decision_id)
             attempts.append({'file':name,'tool':chosen,'decision_id':decision.decision_id,'status':outcome.semantic_status,'names':list(c['observed'].get('value',[])),'seconds':time.perf_counter()-before,'evidence_digest':arguments['content_hash']})
             if outcome.semantic_status=='verified':
+                if learn and parent and chosen=='ast-inventory':
+                    c['arc'].review(c['operator'],decision.decision_id,label='accepted',provenance=REVIEW_PROVENANCE)
+                    learned.append(decision.decision_id)
                 outputs.append({'file':name,'functions':c['observed']['value'],'evidence_digest':arguments['content_hash']}); break
-            if not active or policy!='corrections' or attempt==1: break
+            if not active or policy!='corrections' or attempt==1 or chosen=='ast-inventory': break
             # A host deterministic review compares a pure alternative with a
             # separately implemented token-stream oracle. Count this probe.
             probes+=1
@@ -110,10 +138,10 @@ def run_sources(database, sources, *, policy='corrections', mode='active-develop
     success=len(outputs)==len(sources)
     if active:a.close_task(actor,task,status='completed' if success else 'review-required')
     state=a.inspect(actor,task) if active else {'status':'completed' if success else 'review-required','action_receipts':{}}
-    return dict(task_id=task,repository_scope=c['subject_scope'],success=success,status=state['status'],attempts=attempts,outputs=outputs,corrections=len(correction_ids),correction_reuse=reused,review_probes=probes,resumed=resumed,receipt_count=len(state['action_receipts']),provider_calls=0,provider_cost_usd=0,source_executed=False,source_modified=False,mode=mode,policy=policy,initial_tool=initial_tool,events=a.events(actor,task) if active else [])
+    return dict(task_id=task,repository_scope=c['subject_scope'],success=success,status=state['status'],attempts=attempts,outputs=outputs,corrections=len(correction_ids),correction_reuse=reused,review_probes=probes,resumed=resumed,receipt_count=len(state['action_receipts']),provider_calls=0,provider_cost_usd=0,source_executed=False,source_modified=False,mode=mode,policy=policy,initial_tool=initial_tool,learning_enabled=learn,learned_episode_ids=learned,memory_decision_id=memory_id,events=a.events(actor,task) if active else [])
 
 
-def run_repository(database,root, *, paths=None, mode='active-development', restart=False, task_id=None, initial_tool='ast-inventory'):
+def run_repository(database,root, *, paths=None, mode='active-development', restart=False, task_id=None, initial_tool='ast-inventory', learn=False):
     root=Path(root).resolve()
     if not root.is_dir(): raise ValueError('repository directory required')
     paths=paths or ['src/nerve_awim/arc_contracts.py','src/nerve_awim/repository_agents_v20.py']
@@ -123,4 +151,4 @@ def run_repository(database,root, *, paths=None, mode='active-development', rest
         if root not in path.parents or path.suffix!='.py' or not path.is_file(): raise PermissionError('source must be a Python file inside the authorized repository')
         if path.stat().st_size>12000: raise ValueError('source exceeds 12KiB task limit')
         sources.append((str(path.relative_to(root)),path.read_text()))
-    return run_sources(database,sources,mode=mode,restart=restart,task_id=task_id,initial_tool=initial_tool,repository_root=root)
+    return run_sources(database,sources,mode=mode,restart=restart,task_id=task_id,initial_tool=initial_tool,repository_root=root,learn=learn)

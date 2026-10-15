@@ -1,5 +1,43 @@
 # Local commands and operational recovery
 
+## Cross-task repository learning
+
+`adaptation-run --learn` now connects verified recovery to ARC's existing memory
+ledger. A failed regex inventory followed by independently verified AST recovery
+is reviewed by the local deterministic token verifier, expires after one day, and
+can guide a later task in the same resolved repository scope. This is an automatic
+host review of a pure read-only tool, not a human review or permission for external
+effects. Every subsequent task still snapshots current source, passes ARC dispatch
+and independently verifies its output. If AST itself fails verification, execution
+stops for review instead of retrying the same action without progress.
+
+```sh
+python3 scripts/agentos_bridge.py adaptation-run --learn --repository . \
+  --state /tmp/nerve-repository-learning --source src/nerve_awim/arc_contracts.py \
+  --scenario recover-regex
+python3 scripts/agentos_bridge.py adaptation-run --learn --repository . \
+  --state /tmp/nerve-repository-learning --source src/nerve_awim/arc_provider.py \
+  --scenario recover-regex
+python3 scripts/verify_arc_learning.py
+```
+
+The recovery scenario intentionally begins with the weaker registered tool to
+exercise learning. Ordinary runs still start with the capable AST tool. Removing
+`--learn` disables reading and recording reusable recovery guidance. `off` and
+`shadow` cannot learn. Existing `ArcRuntime.retract` / `delete_memory` revoke the
+guidance, and `adaptation-kill --repository . --state ... --reason ...` still stops
+the scoped workflow. No extra database, scheduler, inference provider, model
+training, live clinical integration or release promotion is introduced.
+
+The cross-process regression trains on `arc_contracts.py` and evaluates on two
+different real files. Recorded results: learned and fixed AST both complete 2/2
+tasks with 2 dispatches and zero review probes; no-memory recovery completes 2/2
+with 4 dispatches and 2 probes. Training costs 2 dispatches plus 1 probe. These are
+known public regression fixtures, not an independent holdout or evidence of
+general self-improvement. The test is also wired into the existing CI workflow.
+
+## Existing adaptation and research commands
+
 Run from the repository root with Python 3.10+. Runtime has no new dependencies.
 Research additionally uses NumPy 2.2.6 (BSD-3-Clause), on CPU. No upstream RoboTTT
 code or weights are vendored. The checked sources are the
