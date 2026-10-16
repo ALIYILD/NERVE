@@ -1,0 +1,23 @@
+{
+  "attempted_pod": "lvojhtouu5gede",
+  "action": "start",
+  "error": {
+    "detail": "There are not enough free GPUs on the host machine to start this pod.",
+    "status": 400,
+    "title": "Bad Request",
+    "hint": "Capacity, not input: the request is valid but no machine can take it right now. Don't change the payload shape. Retry with another GPU type, data center, cloud, CUDA version or count, or try again later. For a stopped Pod, its host's GPUs are taken; that Pod can only start once they free up."
+  },
+  "readback": {
+    "id": "lvojhtouu5gede",
+    "status": "EXITED",
+    "startedAt": "2026-10-16T15:08:25.977Z",
+    "hourly_usd": 0.59,
+    "checked_at_utc": "2026-10-16T16:44:25Z"
+  },
+  "new_model_calls": 0,
+  "holdout_registered": false,
+  "holdout_consumed": false,
+  "new_running_interval": false,
+  "source_commit": "036f5c158aaf90a85800b7858f0c0f6ae516cc4b",
+  "source_archive_sha256": "2e1e4d0a50be0c9f5a7edc87da31b545eadaa205404959546d04bdcc6cb1842a"
+}

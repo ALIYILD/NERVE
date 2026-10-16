@@ -13,3 +13,9 @@ A separately pinned watchdog enforces the 30-minute operational window. It must 
 Five focused CPU checks passed: budget/deadline boundaries, fixed candidate and claim manifest, watchdog duration mismatch rejection, parent evidence mutation rejection, and rejection of non-holdout registration before item access. No inference or holdout item access occurred in these checks. Historical full-suite and prior study evidence remain unchanged.
 
 Protocol: evidence/family-b-v4-holdout-protocol.json. Test receipt: evidence/v4-holdout-continuation-focused.json. Fixed scripts: scientific_attended_holdout_transport.py, run_scientific_family_b_v4_holdout.py and nerve_holdout_stage.sh. This document is prospective; it does not claim the pod restarted or holdout ran.
+
+## Attempted restart: capacity blocked
+
+Runpod rejected the root-owned restart request with HTTP 400: “There are not enough free GPUs on the host machine to start this pod.” A fresh provider read at 2026-10-16T16:44:25Z confirmed lvojhtouu5gede remains EXITED, with its previous provider start timestamp 2026-10-16T15:08:25.977Z unchanged. No new running interval or model calls were added. Holdout was not registered, opened or evaluated; no signature occurred.
+
+The prepared source remains frozen at `036f5c158aaf90a85800b7858f0c0f6ae516cc4b` with archive SHA `2e1e4d0a50be0c9f5a7edc87da31b545eadaa205404959546d04bdcc6cb1842a`. This failed attempt does not reset the 2,715 physical claims or conservative 19,467.934 GPU seconds. The existing-pod-only authorization does not permit creating another pod. Research is capacity blocked; the preparation is reusable subject to fresh runtime, clock and budget checks.

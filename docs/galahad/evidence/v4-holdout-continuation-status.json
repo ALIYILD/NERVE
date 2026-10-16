@@ -1,0 +1,20 @@
+{
+  "version": "v4-holdout-continuation-status-v1",
+  "status": "capacity_blocked",
+  "provider_read_at_utc": "2026-10-16T16:44:25Z",
+  "pod_id": "lvojhtouu5gede",
+  "provider_status": "EXITED",
+  "provider_started_at_utc_unchanged": "2026-10-16T15:08:25.977Z",
+  "new_running_seconds": 0,
+  "new_model_calls": 0,
+  "prior_physical_attempts": 2715,
+  "prior_running_seconds_conservative": 19467.934,
+  "remaining_gpu_seconds": 2132.066,
+  "holdout_registered": false,
+  "holdout_consumed": false,
+  "signing_authorized": false,
+  "additional_pod_authorized": false,
+  "prepared_commit": "036f5c158aaf90a85800b7858f0c0f6ae516cc4b",
+  "prepared_source_archive_sha256": "2e1e4d0a50be0c9f5a7edc87da31b545eadaa205404959546d04bdcc6cb1842a",
+  "failure": "RunpodHTTP400: There are not enough free GPUs on the host machine to start this pod."
+}
