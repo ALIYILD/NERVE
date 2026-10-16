@@ -1,0 +1,15 @@
+{
+  "tests": 6,
+  "passed": 6,
+  "failures": 0,
+  "new_model_calls": 0,
+  "command": "python3 -m unittest discover -s tests -p test_scientific_family_b_sweden.py -v",
+  "source_sha256": {
+    "scripts/scientific_attended_sweden_transport.py": "3b32b5cc30235c6d787ed4c8c2de9bc33955184d8e48786573bfcda33c24c08b",
+    "scripts/run_scientific_family_b_v4_sweden.py": "5daae4cc3e04bbf73f7a48377e7cab26b3678ad98272f7bfd95029e8e5004135",
+    "scripts/nerve_sweden_stage.sh": "f720da88ef1af4afcfe900112c7f0d5ede26fbc5e1f3d811581a971a4bc5e4e9",
+    "docs/galahad/evidence/family-b-v4-sweden-protocol.json": "f21df0f487497aa96fb96aeb97ad42a70d59a3a22fa4d3b96c72a1018d78b6e0",
+    "tests/test_scientific_family_b_sweden.py": "3eb5eecf3fdcce7411424e086f33d8dfc68ecfe3aeaedae6982bd8fd5a6aa12e"
+  },
+  "embedded_python_syntax": true
+}
