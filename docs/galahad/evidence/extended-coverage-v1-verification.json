@@ -1,0 +1,22 @@
+{
+  "registration_sha256": "3c22806a7257009cfa1ed103d9525217e1d61bbd3555d7d0bab5c7ce2c23d04c",
+  "diagnostic_sha256": "a4b16a8ad00b1506088c18f89c1578d272b5097a539848fe4bee8ae7dc9f9fa0",
+  "result_sha256": "68b49e4155987e2e9dcc34d9451580ec571920c5e3536a299605989433a43282",
+  "source_hashes_match": true,
+  "count_rate_cost_checks_passed": true,
+  "tests_passed": 8,
+  "protected_hashes_verified": 17,
+  "retained_family_b_hashes_verified": 7,
+  "chosen_m_t": null,
+  "eligible": {
+    "diagnostic_six_answer": [],
+    "literal_all_nine": []
+  },
+  "model_calls": 0,
+  "payload_absent": true,
+  "real_reserve_consumed": 0,
+  "resource_estimates_sha256": "058947a7d7c9bc573e4a005b914daa43d8b5a30ef8a64a81262f7391ef7e1e78",
+  "benchmark_receipt_sha256": "f91bfa0b9b2052fb034aba2e196b37094f0f5ad503576582d4772deb0471a6a2",
+  "v4_timing_receipt_matches_retained_bundle_bytes": true,
+  "diagnostic_primary_count_matches_grid": true
+}

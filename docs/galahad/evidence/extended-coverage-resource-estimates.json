@@ -1,0 +1,60 @@
+{
+  "basis": "Historical 900-item A40 receipts, same four-arm mix and software path; not current provider quote or invoice. Includes study overhead, excludes startup/calibration/idle/storage/retries. Sequential incremental runner overhead not measured.",
+  "studies": [
+    {
+      "receipt": "docs/galahad/evidence/attended-canada-l4-aggregate.json",
+      "sha256": "fbbb24442d6aa543eef5934fdddccbb6ec62d8e45a966f21cd12471849af76af",
+      "identity": {
+        "gpu": "NVIDIA A40",
+        "model": "qwen2.5-coder:7b",
+        "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+        "pod_id": "b7qj6qyx9ij6gg",
+        "runtime": {
+          "version": "0.40.5"
+        }
+      },
+      "items": 900,
+      "arms": 4,
+      "scored_rows": 3600,
+      "model_calls": 1500,
+      "wall_seconds": 2076.061598159373,
+      "seconds_per_item_all_arms": 2.30673510906597,
+      "seconds_per_scored_arm_row": 0.5766837772664924,
+      "study_wall_per_physical_call": 1.3840410654395818,
+      "median_request_seconds": 1.0828488301485777,
+      "historical_hourly_usd": 0.59,
+      "projected_400_all_arm_seconds": 922.694043626388,
+      "projected_400_all_arm_minutes": 15.3782340604398,
+      "projected_400_compute_usd": 0.15121930159432467
+    },
+    {
+      "receipt": "docs/galahad/evidence/sweden-v4-dev-aggregate.json",
+      "sha256": "1d780fb48827b3a295e612828ef63cbb55201ae5d2c0744f87268669752bd556",
+      "identity": {
+        "gpu": "NVIDIA A40",
+        "model": "qwen2.5-coder:7b",
+        "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+        "pod_id": "lvojhtouu5gede",
+        "runtime": {
+          "version": "0.40.5"
+        }
+      },
+      "items": 900,
+      "arms": 4,
+      "scored_rows": 3600,
+      "model_calls": 1200,
+      "wall_seconds": 3021.795081410557,
+      "seconds_per_item_all_arms": 3.3575500904561744,
+      "seconds_per_scored_arm_row": 0.8393875226140436,
+      "study_wall_per_physical_call": 2.518162567842131,
+      "median_request_seconds": 1.615432647522539,
+      "historical_hourly_usd": 0.59,
+      "projected_400_all_arm_seconds": 1343.0200361824698,
+      "projected_400_all_arm_minutes": 22.38366726970783,
+      "projected_400_compute_usd": 0.2201060614854603
+    }
+  ],
+  "recommended_reference": "V4 candidate vs adapted incumbent plus deterministic always-abstain/random controls; no fourfold multiplier on already-all-arm seconds/item.",
+  "bank_v4_benchmark_sha256": "f91bfa0b9b2052fb034aba2e196b37094f0f5ad503576582d4772deb0471a6a2",
+  "model_calls_this_task": 0
+}

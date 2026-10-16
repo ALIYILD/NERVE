@@ -1,5 +1,7 @@
 # Two-stage stratum follow-up — registered simulation
 
+Follow-on registered mechanism and 400-item coverage study: [doc 119](119-extended-stratum-coverage.md). That study preserves this historical result and records no selected (m,t); no payload or canonical activation.
+
 The single-stage per-stratum veto design in doc 117 is retired as a design candidate. The primary e-process gate is not retired. This study replaces G2 with targeted escalation and corrects G1's synthetic safety fixture using recorded rule-gated behavior. No gate is installed; no signature or payload is prepared.
 
 ## G1 receipt fixture
