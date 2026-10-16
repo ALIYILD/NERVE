@@ -1,0 +1,23 @@
+{
+  "version": "v4-sweden-status-v1",
+  "updated_at_utc": "2026-10-16T15:09:00Z",
+  "phase": "provider_running_waiting_ssh",
+  "pod_id": "lvojhtouu5gede",
+  "provider_started_at_utc": "2026-10-16T15:08:25.977Z",
+  "inference_deadline_utc": "2026-10-16T16:28:25.977Z",
+  "stop_deadline_utc": "2026-10-16T16:38:25.977Z",
+  "root_owns_lifecycle_and_remote_commands": true,
+  "watchdog_armed_verified": false,
+  "restoration_verified": false,
+  "backup_roundtrip_verified": false,
+  "runtime_verified": false,
+  "new_model_calls": 0,
+  "prior_physical_attempts": 1510,
+  "prior_running_seconds_conservative": 15597.911,
+  "max_new_interval_seconds": 5400,
+  "remaining_after_max_interval_seconds": 602.089,
+  "v4_status": "registered_unevaluated",
+  "holdout_consumed": false,
+  "signed": false,
+  "source_archive_sha256": "5bd06952eb53192086d3c428b7ddc26d500ffebdb87120398f3105f11ffa9579"
+}
