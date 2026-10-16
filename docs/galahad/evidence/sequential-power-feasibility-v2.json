@@ -1,0 +1,18 @@
+{
+  "additional_empirical_validation_run": false,
+  "comparison_items": 20000,
+  "expected_joint_targets_feasible_in_this_family": false,
+  "expected_primary_log_increment": 0.022850270762656423,
+  "interpretation": "80% expected good acceptance needs at least 26103.7 expected items for the 100 good proposals alone; current fixed family cannot also average fewer than 20000 total items. No claim that a lucky finite realisation is impossible. No claim about other gates or alpha allocations.",
+  "minimum_expected_items_for_good100_only": 26103.665600020464,
+  "minimum_expected_items_per_good": 261.03665600020463,
+  "model_calls": 0,
+  "null_proposal_item_cost_assumed_for_bound": 0,
+  "optimistic_max_expected_good_acceptance_at20000": 0.6802464875708276,
+  "promotion_log_threshold": 8.294049640102028,
+  "random_draws": 0,
+  "registration_sha256": "4e4ef2644d6f1b21378d6e37a55e2cbbf13dd530e334520c8f065236638a98ee",
+  "required_expected_good_acceptance": 0.8,
+  "terminal_nonpromotion_log_floor": -3.3524072174927233,
+  "version": "sequential-power-feasibility-v2"
+}

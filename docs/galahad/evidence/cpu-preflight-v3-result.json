@@ -1,0 +1,19 @@
+{
+  "budget_seconds": 3600,
+  "canonical_180s_fast_gate_passed": false,
+  "diagnostic_journal_sha256": "3127593df732bc8108899259e96ce89b37f8c5cc3fe88057e7394bb842645407",
+  "errors": 0,
+  "exact_inventory_match": true,
+  "exit_code": 0,
+  "failures": 0,
+  "model_calls": 0,
+  "registration_sha256": "0bbac351b59dc6ea557f10239db76804bcbd7392ffe2f9ac52b5047427cc6b85",
+  "selected_count": 2228,
+  "skipped": 2,
+  "source_hashes_unchanged": true,
+  "suite_seconds": 439.47109839500627,
+  "tests_run": 2228,
+  "verdict": "passed",
+  "version": "cpu-preflight-v3",
+  "wall_seconds": 470.02052818302764
+}

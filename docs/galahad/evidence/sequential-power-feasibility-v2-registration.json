@@ -1,0 +1,30 @@
+{
+  "design": {
+    "assumption": "IID primary paired outcomes conditional on full past; bounded stopping time; each processed item counted; no optional rejection causes primary log E to fall below its first-futility-crossing floor.",
+    "bet": 0.3,
+    "candidate_correct_probability": 0.65,
+    "candidate_incumbent_independent": true,
+    "comparison_items": 20000,
+    "equal_study_alpha": 0.00025,
+    "formula": "E[T_good] >= (q*log(1/alpha)+(1-q)*(log(futility_e)+log(1-bet)))/mu; mu=Pwin*log(1+bet)+Ploss*log(1-bet)",
+    "futility_e": 0.05,
+    "good_proposals": 100,
+    "incumbent_correct_probability": 0.5,
+    "model_calls": 0,
+    "original_evidence": "docs/galahad/evidence/sequential-gate-sim-v1.json is immutable; its outcomes are not read by this calculation",
+    "primary_loss_probability": 0.175,
+    "primary_win_probability": 0.325,
+    "prior_derivation_disclosed": true,
+    "proposals": 200,
+    "random_draws": 0,
+    "required_expected_good_acceptance": 0.8,
+    "scope": "Current fixed-bet/futility/equal-wallet family with arbitrary bounded item cap and additional vetoes; not all sequential gates.",
+    "seed": null,
+    "study_kind": "analytical_reproducibility",
+    "threshold_rationale": "Prospective usefulness criterion: retain at least four out of five genuinely beneficial proposals in expectation, unlike prior zero of 100. A design target, not a clinical or statistical standard.",
+    "tie_probability": 0.5,
+    "version": "sequential-power-feasibility-v2",
+    "wallet_alpha": 0.05
+  },
+  "source_sha256": "c2b3f4b5ad44591e10cfa585c2a8ad3896473133a7ae9cdc4d8ef57bdda76f55"
+}
