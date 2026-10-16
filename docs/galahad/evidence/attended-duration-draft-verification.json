@@ -1,0 +1,13 @@
+{
+  "version": "attended-duration-draft-verification-v1",
+  "checked_at_utc": "2026-10-16T07:15:40.048876+00:00",
+  "authorization": false,
+  "unauthorized_registration_rejected": true,
+  "L4_3600_checked": true,
+  "L6_3600_minus_dev_wall_checked": true,
+  "L6_exhaustion_rejected": true,
+  "historical_calibration_replay_exact": true,
+  "additional_model_calls": 0,
+  "runner_sha256": "dd6670b590c8249a21ac44478a553818fdbc733dc1b2dc53c6f35ff6db7ab314",
+  "amendment_sha256": "768936207777e0a12b8a3f77bd97a258cfd695eaffe389529043a810bce40df0"
+}

@@ -1,10 +1,10 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T07:04:02.724038+00:00",
-  "status": "calibration_complete_L4_feasibility_review",
-  "prior_running_seconds": 1160.783,
+  "updated_at_utc": "2026-10-16T07:15:40.048876+00:00",
+  "status": "paused_compute_stopped_pending_required_duration_decision",
+  "prior_running_seconds": 3937.034,
   "physical_attempts": 5,
-  "pod_status": "RUNNING",
+  "pod_status": "EXITED",
   "real_bank_generated": true,
   "candidate_designed": false,
   "holdout_consumed": false,
@@ -30,5 +30,12 @@
     "median_seconds": 2.0976030826568604,
     "max_seconds": 15.37275155633688,
     "next_timeout_seconds": 46.11825466901064
-  }
+  },
+  "remaining_running_seconds": 17662.966,
+  "remaining_physical_attempts": 5995,
+  "calibration_replay_verified": true,
+  "L4_registered": false,
+  "L4_started": false,
+  "required_decision": "Authorize L4<=3600s and cumulativeL6<=3600s; draftguardfalse until explicitanswer. Same globalcaps/cutoffs.",
+  "backup": "Private sealedbank and fullcalibration+sharedbudget durably copied outsideGit. Original /root workingcopies cleared by stop; restore from these verified backups before restartstudy."
 }

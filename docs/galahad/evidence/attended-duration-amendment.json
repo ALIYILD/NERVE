@@ -1,0 +1,29 @@
+{
+  "version": "attended-duration-amendment-v1",
+  "prepared_at_utc": "2026-10-16T07:09:17.014210+00:00",
+  "authorized": false,
+  "authorization_status": "Required user answer pending; no registration or dispatch allowed.",
+  "L4_max_wall_seconds": 3600,
+  "L6_cumulative_dev_holdout_wall_seconds": 3600,
+  "unchanged_global_running_seconds": 21600,
+  "prior_running_seconds": 3937.034,
+  "unchanged_physical_attempts_cap": 6000,
+  "attempts_already_consumed": 5,
+  "inference_cutoff_utc": "2026-10-16T10:15:00Z",
+  "handoff_deadline_utc": "2026-10-16T10:30:00Z",
+  "sealed_bank_manifest_sha256": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
+  "calibration_registration_sha256": "e2f3ac8b54c2bb531974da1f8f70892863c58a9201388ca6d6d82890690d62b2",
+  "reason": "Prospective stress-fixture median2.097603s\u00d71500calls\u224852.4minutes exceeds original30minute L4 cap; no efficacy outcomes used.",
+  "scope": "Execution duration only; original calibration code/protocol/receipts and sealed bank untouched; no new candidate or signing.",
+  "prior_running_intervals": [
+    {
+      "pod_id": "lg0svvuenxvbno",
+      "seconds": 1160.783
+    },
+    {
+      "pod_id": "97vr620wnmtuga",
+      "seconds": 2776.251,
+      "end_upper_bound_utc": "2026-10-16T07:13:45Z"
+    }
+  ]
+}
