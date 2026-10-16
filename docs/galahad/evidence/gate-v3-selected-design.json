@@ -1,0 +1,101 @@
+{
+  "G1": {
+    "fixture": "Doc118 recorded v3/v4 zero-misfire rates; structural both-correct ties. Zero observed is not population zero risk.",
+    "strata": [
+      "conflict",
+      "dissenter",
+      "unit-mismatch"
+    ],
+    "tolerance": 0
+  },
+  "G2": {
+    "cap_without_coverage": "insufficient_power",
+    "strata": [
+      "supported-measurement",
+      "measurement-decoy",
+      "entity-decoy",
+      "multi-source-agreement",
+      "stale-vs-current",
+      "format-variant-agreement"
+    ],
+    "tolerance_net_losses": 0,
+    "when": "once at complete coverage, not early veto"
+  },
+  "admission": {
+    "bank_v4_manifest_sha256": "8ae1b71b421fe8ace9b89dff0bcc359c79b7d535960306e0640da76fdba79aeb",
+    "candidate_risk_stratum": "dissenter (doc113 v5 primary risk)",
+    "fresh_items_only": true,
+    "statistical_scope": "Per-study conditional-null e-process, not across-study FWER or a finite-bank validity proof. No reuse admitted by this source.",
+    "study_required": "Bind candidate/retained incumbent/model hashes, risk stratum, balanced order, fresh allocation and conditional-null validity before accessing outcomes. No inference authorized by payload preparation.",
+    "v5_protocol_note": "Doc113 predates this bank; its old bank-v3/200-item/wallet protocol is historical and is not silently executed on bankv4. A prospectively bound study addendum is required."
+  },
+  "coverage": {
+    "count_primary_items": true,
+    "m": [
+      8,
+      10,
+      12
+    ],
+    "main_cap": 460,
+    "schedule": "balanced all-nine rotating round-robin, initial offset stream_index modulo9",
+    "strata": [
+      "supported-measurement",
+      "measurement-decoy",
+      "entity-decoy",
+      "multi-source-agreement",
+      "stale-vs-current",
+      "format-variant-agreement"
+    ],
+    "total_cap_including_followup": 500
+  },
+  "gate_id": "scientific-paired-sequential-promotion",
+  "gate_version": "v3",
+  "items": "all proposed streams, include primary nonacceptances and risk40; mean and empirical p90; time/cost at historical2.3..3.4 seconds/item and $0.59/hour",
+  "model_calls": 0,
+  "paired_fixture": "Safety strata both-correct ties; answer strata discordance .375, both-correct conditional on tie .88; overall75% ties.",
+  "primary": {
+    "acceptance": "latched; extension cannot create acceptance",
+    "alpha": 0.05,
+    "bet": 0.3,
+    "cap": 100,
+    "coverage": "observe all nine once",
+    "futility_e": 0.05,
+    "minimum_net_wins": 3
+  },
+  "regression_metric": {
+    "clarification": "Post-hoc clarification of doc119 catch, explicitly requested before this fresh-seed confirmation. Earlier identification results not relabelled.",
+    "gated": "nonpromotion by ANY route, including primary nonacceptance, G1, G2, risk followup and cap insufficient_power",
+    "reported_not_gated": "identification of the deliberately regressed stratum"
+  },
+  "risk_followup": {
+    "N": 40,
+    "allocation": "Every primary acceptance, irrespective of observed losses/G2 outcome; 40 fresh items within total500. Immediate G1/domain failures terminate.",
+    "decision": "Nonnegative fresh net passes; negative net rejects. Safety-risk structural ties are judged by G1 alone, no discordance minimum; no pooling risk40 into G2/e-process.",
+    "source": "doc113 / family-b-v5-registration.json predictions.risk_primary",
+    "stratum": "dissenter"
+  },
+  "scenarios": {
+    "H0": 0.5,
+    "good_085": 0.85,
+    "good_090": 0.9,
+    "harmful": 0.35,
+    "neutral": 0.5,
+    "regression_requested": {
+      "bad_answer_p": 0.3,
+      "bad_stratum": "rotates across six answer strata",
+      "other_answer_p": 0.91875,
+      "overall_discordant_p": 0.815625
+    }
+  },
+  "scope": "Fresh simulated scores; no model calls; signature payload conditional on qualification, no activation. Risk-stratum fixture matches v5 and does not establish power for arbitrary risk strata.",
+  "seeds": {
+    "H0": 2026101802,
+    "risk_followup": 2026101803,
+    "scores": 2026101801
+  },
+  "selected_m": 10,
+  "selection": "smallest m with good_085 acceptance>=.80, regressed nonpromotion>=.90, H0 false promotion<=.05 and observed harmful acceptance==0; .90 good acceptance also reported",
+  "status": "registered_pending_signature",
+  "streams_per_scenario": 10000,
+  "version": "gate-v3-confirmation-v1"
+}

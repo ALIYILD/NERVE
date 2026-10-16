@@ -1,0 +1,15 @@
+{
+  "bank_sealed_modes_verified": true,
+  "chosen_m": 10,
+  "criteria_passed": true,
+  "installed": false,
+  "model_calls": 0,
+  "protected_paths_verified": 17,
+  "registration_sha256": "e74be010f5e21b0d42583388e89587ee036008e8ef991034f675dcf4b8cbd2b3",
+  "result_sha256": "004ece330044616c2ff8e403cc911252a24105a34125a60679c137c672778f3c",
+  "retained_family_b_files_verified": 7,
+  "scalar_vector_parity": "45 streams x6 scenarios x3 m values; exact accepts, items, veto and identification",
+  "signed": false,
+  "source_hashes_unchanged": true,
+  "tests_passed": 9
+}

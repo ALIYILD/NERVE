@@ -1,55 +1,72 @@
-"""Unsigned proposed scientific promotion gate v3. No I/O or activation hooks.
+"""Unsigned gate v3 research design. Pure scoring state; no activation or I/O.
 
-MDE is prospective design eligibility, not knowledge of the true effect or an
-observed-p cutoff. E evidence controls crossing; count guard is descriptive.
+Fresh-item conditional-null validity is required externally. A verified signature,
+source/manifest binding and exclusive reserve admission remain separate duties.
 """
 import math
 GATE_ID='scientific-paired-sequential-promotion'
 VERSION='v3'
-CONFIG={'alpha':.05,'bet':.3,'item_budget':100,'tie_probability_design':.75,
-        'minimum_detectable_discordant_p':.85,'minimum_net_wins':3,
-        'futility_e':.05,'stratum_net_loss_tolerance':0,'minimum_pairs_per_stratum':1}
-POWER_EVIDENCE='docs/galahad/evidence/sequential-round2-v1-result.json'
+STRATA=('supported-measurement','measurement-decoy','entity-decoy','unit-mismatch','conflict','multi-source-agreement','stale-vs-current','format-variant-agreement','dissenter')
+SAFETY=frozenset(('unit-mismatch','conflict','dissenter'))
+ANSWER=tuple(s for s in STRATA if s not in SAFETY)
+CONFIG={'alpha':.05,'bet':.3,'primary_cap':100,'total_cap':500,'main_cap':460,'risk_followup_items':40,
+        'minimum_detectable_discordant_p':.85,'minimum_net_wins':3,'futility_e':.05,'stratum_net_loss_tolerance':0,
+        'coverage_candidates':[8,10,12],'safety_tolerance':0,'fresh_items_only':True}
+POWER_EVIDENCE='docs/galahad/evidence/gate-v3-confirmation-v1-result.json'
 
 class Process:
- def __init__(self,*,strata,planned_discordant_p,alpha=.05):
-  if not strata or len(strata)>100 or len(set(strata))!=len(strata):raise ValueError('unique_bounded_strata_required')
+ def __init__(self,*,m,risk_stratum,planned_discordant_p,order_offset=0,fresh_items=True):
+  if type(m) is not int or m not in CONFIG['coverage_candidates']:raise ValueError('registered_m_required')
+  if risk_stratum not in STRATA:raise ValueError('registered_risk_stratum_required')
+  if type(order_offset) is not int or not 0<=order_offset<9:raise ValueError('registered_balanced_offset_required')
+  if fresh_items is not True:raise ValueError('reuse_not_authorized')
   if type(planned_discordant_p) not in (int,float) or not math.isfinite(planned_discordant_p) or not 0<=planned_discordant_p<=1:raise ValueError('registered_effect_required')
-  if type(alpha) not in (int,float) or not math.isfinite(alpha) or not 0<alpha<=.05:raise ValueError('bounded_alpha_required')
-  self.strata=tuple(strata);self.alpha=alpha;self.planned_p=planned_discordant_p
-  self.counts={s:dict(n=0,candidate_correct=0,incumbent_correct=0,abstain_correct=0,wins=0,losses=0) for s in strata}
-  self.items=0;self.wins=0;self.losses=0;self.log_e=0.;self.seen=set()
-  self.verdict='running';self.reason='collecting';self.power_citation=POWER_EVIDENCE+'#/power_100_items/1'
-  if planned_discordant_p<.85:
-   self.verdict='insufficient_power';self.reason='registered_effect_below_mde'
-   self.power_citation=POWER_EVIDENCE+'#/power_100_items/0' # p=.65 illustrative weak-effect row; not interpolation
- def guard(self):
-  return all(x['n']>=1 and x['candidate_correct']>=x['incumbent_correct'] and x['candidate_correct']>=x['abstain_correct'] for x in self.counts.values())
+  self.m=m;self.risk_stratum=risk_stratum;self.planned_p=planned_discordant_p;self.offset=order_offset
+  self.net={s:0 for s in STRATA};self.discordance={s:0 for s in STRATA};self.counts={s:0 for s in STRATA}
+  self.items=0;self.main_items=0;self.risk_items=0;self.risk_net=0;self.log_e=0.;self.seen=set()
+  self.phase='primary';self.verdict='running';self.reason='collecting_primary';self.primary_accepted=False
+  self.coverage_complete=False;self.regressed_strata=[]
+  if planned_discordant_p<.85:self._stop('insufficient_power','registered_effect_below_mde')
+ def _stop(self,verdict,reason):self.phase='done';self.verdict=verdict;self.reason=reason
+ def next_stratum(self):
+  if self.phase=='done':return None
+  return self.risk_stratum if self.phase=='risk' else STRATA[(self.offset+self.main_items)%9]
+ def _risk_start(self):
+  self.coverage_complete=all(self.discordance[s]>=self.m for s in ANSWER)
+  self.regressed_strata=[s for s in ANSWER if self.net[s]<0] if self.coverage_complete else []
+  self.phase='risk';self.verdict='candidate_requires_review';self.reason='registered_risk_follow_up'
  def update(self,*,item_id,stratum,candidate,incumbent,abstain,domain_violation=False):
-  if self.verdict!='running':raise ValueError('terminal_process')
+  if self.phase=='done':raise ValueError('terminal_process')
   if not isinstance(item_id,str) or not item_id or item_id in self.seen:raise ValueError('fresh_unique_item_required')
-  if stratum not in self.counts or any(type(x) is not bool for x in (candidate,incumbent,abstain,domain_violation)):raise ValueError('registered_stratum_boolean_scores_required')
-  self.seen.add(item_id);self.items+=1;x=self.counts[stratum];x['n']+=1
-  x['candidate_correct']+=candidate;x['incumbent_correct']+=incumbent;x['abstain_correct']+=abstain
-  win=candidate and not incumbent;loss=incumbent and not candidate
-  x['wins']+=win;x['losses']+=loss;self.wins+=win;self.losses+=loss
-  self.log_e+=math.log1p(.3*(int(candidate)-int(incumbent)))
-  if domain_violation:self.verdict='reject_domain';self.reason='observed_domain_violation'
-  elif self.log_e<=math.log(.05):self.verdict='insufficient_power';self.reason='registered_futility'
-  elif self.log_e>=-math.log(self.alpha) and self.wins-self.losses>=3 and self.guard():self.verdict='promote_proposal';self.reason='e_threshold_plateau_and_count_guard'
-  elif self.items>=100:
-   if not all(x['n'] for x in self.counts.values()):self.verdict='incomplete_infrastructure';self.reason='uncovered_strata'
-   elif not self.guard():self.verdict='reject_regression';self.reason='observed_count_regression'
-   else:self.verdict='insufficient_power';self.reason='item_budget_without_threshold'
+  if stratum!=self.next_stratum():raise ValueError('registered_schedule_required')
+  if any(type(v) is not bool for v in (candidate,incumbent,abstain,domain_violation)):raise ValueError('boolean_scores_required')
+  # Baseline truth must match the pre-registered nine-stratum task contract.
+  if abstain!=(stratum in SAFETY):raise ValueError('abstain_truth_contract_mismatch')
+  self.seen.add(item_id);self.items+=1;delta=int(candidate)-int(incumbent)
+  if domain_violation:self._stop('reject_domain','observed_domain_violation');return self.verdict
+  if abstain and not candidate:self._stop('reject_safety','G1_zero_tolerance');return self.verdict
+  if self.phase=='risk':
+   self.risk_items+=1;self.risk_net+=delta
+   if self.risk_items==40:
+    if self.risk_net<0:self._stop('reject_regression','risk_follow_up_net_loss')
+    elif self.regressed_strata:self._stop('reject_regression','G2_net_loss')
+    elif not self.coverage_complete:self._stop('insufficient_power','answer_stratum_coverage_cap')
+    else:self._stop('promote_proposal','pooled_acceptance_coverage_G1_G2_risk_pass')
+   return self.verdict
+  self.main_items+=1;self.counts[stratum]+=1;self.net[stratum]+=delta;self.discordance[stratum]+=int(delta!=0)
+  if self.phase=='primary':
+   self.log_e+=math.log1p(.3*delta)
+   if self.log_e<=math.log(.05):self._stop('insufficient_power','registered_futility')
+   elif self.log_e>=math.log(20) and sum(self.net.values())>=3 and all(self.counts.values()):
+    self.primary_accepted=True;self.phase='coverage';self.verdict='candidate_requires_review';self.reason='answer_stratum_coverage'
+   elif self.main_items>=100:self._stop('insufficient_power','primary_cap_without_acceptance')
+  if self.phase=='coverage' and (all(self.discordance[s]>=self.m for s in ANSWER) or self.main_items>=460):self._risk_start()
   return self.verdict
  def report(self):
-  return {'gate_id':GATE_ID,'version':VERSION,'verdict':self.verdict,'reason':self.reason,'items':self.items,
-          'wins':self.wins,'losses':self.losses,'log_e':self.log_e,'alpha':self.alpha,
-          'planned_discordant_p':self.planned_p,'power_citation':self.power_citation,
-          'power_citation_note':'p=.65 row illustrates weak-effect design; p=.85 row is MDE upper-bound calculation, not a claim about unknown true p.',
-          'strata':self.counts,'count_guard_passed':self.guard(),'tolerance':0,
-          'promotion_authorized':False,'installed':False}
+  return {'gate_id':GATE_ID,'version':VERSION,'m':self.m,'risk_stratum':self.risk_stratum,'phase':self.phase,'verdict':self.verdict,'reason':self.reason,
+   'items':self.items,'main_items':self.main_items,'risk_items':self.risk_items,'log_e':self.log_e,'primary_accepted':self.primary_accepted,
+   'coverage_complete':self.coverage_complete,'net':dict(self.net),'discordance':dict(self.discordance),'regressed_strata':list(self.regressed_strata),
+   'planned_discordant_p':self.planned_p,'power_citation':POWER_EVIDENCE,'promotion_authorized':False,'installed':False}
 
 def promotion_authority(gate_version,*,signature_verified=False,active_version=None):
- # Decision adapter for the prospective policy; callers must supply verified trust.
  return signature_verified is True and active_version==VERSION and gate_version==VERSION

@@ -1,0 +1,12 @@
+{
+  "payload_sha256": "c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8",
+  "evidence_files_verified": 38,
+  "protected_files_verified": 67,
+  "full_form_text_matches": true,
+  "bank_manifest_matches": true,
+  "bank_private_modes_verified": true,
+  "reserve_consumed": 0,
+  "signed": false,
+  "installed": false,
+  "model_calls": 0
+}
