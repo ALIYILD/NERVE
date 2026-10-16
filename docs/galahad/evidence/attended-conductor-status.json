@@ -1,9 +1,9 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T08:49:02.908953+00:00",
-  "status": "canada_calibration_registered_launch_pending",
+  "updated_at_utc": "2026-10-16T08:51:13.566698+00:00",
+  "status": "canada_calibration_complete_L4_registration_next",
   "prior_running_seconds": 3937.034,
-  "physical_attempts": 5,
+  "physical_attempts": 10,
   "pod_status": "RUNNING",
   "real_bank_generated": true,
   "candidate_designed": false,
@@ -32,7 +32,7 @@
     "next_timeout_seconds": 46.11825466901064
   },
   "remaining_running_seconds": 17662.966,
-  "remaining_physical_attempts": 5995,
+  "remaining_physical_attempts": 5990,
   "calibration_replay_verified": true,
   "L4_registered": false,
   "L4_started": false,
@@ -67,12 +67,24 @@
   "additional_pod_authorized": true,
   "source_commit": "f3f785e",
   "source_archive_sha256": "0fc736486114f2051103d58f01925f19998e79eb2712ad2f1d44591e4ef0059b",
-  "new_calibration_started": false,
+  "new_calibration_started": true,
   "bootstrap_completed_session": 79514,
   "restore_completed_session": 50057,
   "restored_prior_physical_claims": 5,
   "calibration_registration_tool_cell": null,
   "calibration_registration_completed_session": 16605,
   "new_calibration_registration_sha256": "5e362b3715a81969953cac188bfa4d7b3c381a0b6ccd284f68d2bda7878b3a03",
-  "calibration_run_tool_cell": "189"
+  "calibration_run_tool_cell": null,
+  "new_calibration_complete": true,
+  "calibration_completed_session": 22696,
+  "calibration_verify_completed_session": 19659,
+  "new_calibration_result": {
+    "complete": true,
+    "attempts": 5,
+    "timeouts": 0,
+    "wall_seconds": 25.30665740557015,
+    "median_seconds": 1.9101342167705297,
+    "max_seconds": 17.494062535464764,
+    "next_timeout_seconds": 52.48218760639429
+  }
 }
