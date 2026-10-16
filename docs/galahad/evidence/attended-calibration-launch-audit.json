@@ -1,0 +1,17 @@
+{
+  "version": "calibration-interrupted-launch-audit-v1",
+  "checked_at_utc": "2026-10-16T06:53:27.755053+00:00",
+  "pending_command": "ssh target194.68.245.46:22159 timeout2000 bash /root/nerve-attended-study.sh run-calibration",
+  "tool_result": "aborted by user after305.2s; no cell/session/model result returned",
+  "remote_recovery_via": "SCP calibration and shared budget directories",
+  "calibration_files": [
+    "private-input.json",
+    "registration.json"
+  ],
+  "consumed_exists": false,
+  "physical_call_claims": 0,
+  "registration_sha256": "e2f3ac8b54c2bb531974da1f8f70892863c58a9201388ca6d6d82890690d62b2",
+  "fixed_launcher_sha256": "f21add00f6a97d6b1cac83e7ce518a7d967d8e46e11d113b08b5c1f39910bffd",
+  "next_launch_owner": "root",
+  "do_not_duplicate": true
+}

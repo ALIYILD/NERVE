@@ -1,11 +1,11 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T06:38:53.395413+00:00",
-  "status": "replacement_runtime_bootstrap_running",
+  "updated_at_utc": "2026-10-16T06:53:27.755053+00:00",
+  "status": "bank_sealed_runtime_verified_calibration_registered_not_dispatched",
   "prior_running_seconds": 1160.783,
   "physical_attempts": 0,
   "pod_status": "RUNNING",
-  "real_bank_generated": false,
+  "real_bank_generated": true,
   "candidate_designed": false,
   "holdout_consumed": false,
   "inference_cutoff_utc": "2026-10-16T10:15:00Z",
@@ -13,7 +13,14 @@
   "pod_id": "97vr620wnmtuga",
   "replacement_count": 1,
   "provider_started_at_utc": "2026-10-16T06:27:28.749Z",
-  "bootstrap_exec_session": 50979,
+  "bootstrap_exec_session": null,
   "original_pod_status": "EXITED",
-  "bootstrap_attempt1": "failed readiness timeout; preservedreceipt"
+  "bootstrap_attempt1": "failed readiness timeout; preservedreceipt",
+  "bank_sealed": true,
+  "bank_manifest_sha256": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
+  "runtime_verified": true,
+  "calibration_registration_sha256": "e2f3ac8b54c2bb531974da1f8f70892863c58a9201388ca6d6d82890690d62b2",
+  "calibration_launch_owner": "root",
+  "calibration_exec_session": null,
+  "calibration_launch_state": "prior approval interrupted; durable audit confirms no consumption or attempt claims"
 }
