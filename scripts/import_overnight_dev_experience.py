@@ -15,15 +15,19 @@ from nerve_awim.memory_v18 import MemoryAuthority,TrustedMemoryLedger
 import run_scientific_family_b_v4_sweden as old
 from nerve_awim.memory_gateway import scientific_family_b_v5 as v5
 from run_v5_signed_gate_study import v5score
+from nerve_awim.memory_gateway.scientific_bank_v3_truth import validate
 
 def read(p):return json.loads(p.read_text())
 def filehash(p):return sha256(p.read_bytes()).hexdigest()
 def run(source,directory):
     registration=read(source/'registration.json');tasks=read(source/'private-tasks.json')
+    for name,expected in registration['source_sha256'].items():
+        if filehash(ROOT/name)!=expected:raise ValueError('historical_evaluator_source_changed')
     if not registration['dev_only'] or len(tasks)!=100 or any(t['split']!='dev' for t in tasks):raise ValueError('complete_dev_only_source_required')
     if len({t['task_id'] for t in tasks})!=100:raise ValueError('unique_tasks_required')
     regsha=filehash(source/'registration.json');receipt=filehash(source/'result.json');episodes=[];rows=[]
     for i,t in enumerate(tasks):
+        validate(t)
         p=old.prepare(t,'candidate','src/nerve_awim/memory_gateway/scientific_family_b_v4.py')
         payload=old.schedule([t],['candidate'],'src/nerve_awim/memory_gateway/scientific_family_b_v4.py')[0]['payload']
         body=old.canonical(payload);attempts=sorted(source.glob(f'attempt-{i:03}-*.json'))
