@@ -1,0 +1,50 @@
+{
+  "bank_reserve_access": false,
+  "counterexample_scope": "Different rule-set outputs for schema-valid supplied raw values; does not assert that the actual model emits these counterexamples.",
+  "counts": {
+    "entity-decoy": {
+      "correct_raw_byte_agreement": 189,
+      "correct_raw_semantic_agreement": 189,
+      "production_boundary_cases": 189,
+      "schema_valid_wrong_value_counterexamples": 189
+    },
+    "measurement-decoy": {
+      "correct_raw_byte_agreement": 126,
+      "correct_raw_semantic_agreement": 126,
+      "production_boundary_cases": 126,
+      "schema_valid_wrong_value_counterexamples": 126
+    },
+    "stale-vs-current": {
+      "correct_raw_byte_agreement": 210,
+      "correct_raw_semantic_agreement": 210,
+      "production_boundary_cases": 210,
+      "schema_valid_wrong_value_counterexamples": 210
+    },
+    "supported-measurement": {
+      "correct_raw_byte_agreement": 189,
+      "correct_raw_semantic_agreement": 189,
+      "production_boundary_cases": 189,
+      "schema_valid_wrong_value_counterexamples": 189
+    }
+  },
+  "enumeration": "All three target sentence productions x seven registered numeric boundary representatives x every target-list position, for four representative generated evidence contexts. Does NOT enumerate all identities, values, decoy combinations, source permutations or model executions.",
+  "format_variant": {
+    "byte_identical": 63,
+    "decisional_differences": 32,
+    "items": 100,
+    "numeric_value_string_changes_total_overlapping": 16,
+    "representational_only_differences": 5,
+    "wrong_source_decisions": 32
+  },
+  "full_v4_v5_equivalence_proven": false,
+  "grammar_bound": "Templates are finite; the bounded instantiated language is enormous. V4 output value is model supplied and not constrained to the evidence value by its schema. Grammar enumeration alone cannot prove end-to-end equivalence.",
+  "model_calls": 0,
+  "proof_obligation_remaining": "Formal verification of the model output function, or exhaustive actual model evaluation over all admissible instantiated inputs; neither performed. Supplying a correct raw answer is a conditional test, not such proof.",
+  "source_sha256": {
+    "scripts/audit_single_source_grammar.py": "a319276b59ed08ee85f71d8be3bb20333001a008c86cf0faef1804d8baf8e2cc",
+    "src/nerve_awim/memory_gateway/scientific_family_b_adapter.py": "8e2e4c8a022b11d1a5256e7283cde89928328fb839bd5afde28f2688735c178d",
+    "src/nerve_awim/memory_gateway/scientific_family_b_v4.py": "764961cf67b04bbdc4ebd1d8dabb7af2380c7de2a42ca064ce5f0799dd323ee9",
+    "src/nerve_awim/memory_gateway/scientific_family_b_v5.py": "a2850cbd0c580cfe78abab763513d2e206f011c446fcd61ec5ce3d0feac689ab",
+    "src/nerve_awim/memory_gateway/scientific_task_bank_v3.py": "ff90984ac0797bbe352a4b59f3a929adb0685d76b392830ef7063d11221251c3"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "execution_status": "awaiting_explicit_pod_start_authorization",
+  "files": {
+    "docs/galahad/125-bank-v5-equivalence-and-discrimination.md": "07961df15777cf134888b594ac49d56b32c2c25f64656d50b7168bd09092a923",
+    "docs/galahad/evidence/bank-v5-cpu-validation.json": "21e20d80aa13a92a50be5314ec8e7138ff3e097851398598912c9b935cb2f8a6",
+    "docs/galahad/evidence/bank-v5-dev-study-registration.json": "3042b6e83773b37d19bba2cbe2ad87869c26f2853c111fd18a307d0b71e6ee38",
+    "docs/galahad/evidence/bank-v5-equivalence-audit.json": "e493ddafd2ac2b8e8716a2ddb601901454319e8f5b1a37ae4c41eace4fcd9c3c",
+    "docs/galahad/evidence/bank-v5-generation-registration.json": "df48a798029458371cf264488604798fa8bbc53cbade92a6d9b74b17578c11fc",
+    "docs/galahad/evidence/bank-v5-hardening-hypothesis.json": "cc9bc87c672ea65567b8e9ee4f7496b46074e7d04bb9a913d415cc13124279ff",
+    "docs/galahad/evidence/bank-v5-manifest.json": "f09c2ab320813781b7dbfaf3e064593cc3355a3b1774890dd46253877ae771e4",
+    "docs/galahad/evidence/bank-v5-pod-off.json": "2a759f50bcb709d7b2399eff52ac2ad2e68f5bad21ddd3232afb4bc83c6e1a46",
+    "docs/galahad/evidence/bank-v5-power-preregistration.json": "8fd6b127d6a4ff18408016745266a8477a3ba9a521670d1f7179e4e9b43e9395",
+    "docs/galahad/evidence/bank-v5-sealing-receipt.json": "4895fce6d3bf1e7d575f0f36a9098e6a846cd75466ec9cc585d65653561c8f6d",
+    "scripts/audit_single_source_grammar.py": "a319276b59ed08ee85f71d8be3bb20333001a008c86cf0faef1804d8baf8e2cc",
+    "scripts/build_scientific_task_bank_v5.py": "0533fd8d6ce6c6c30acd3a9cd0871d501f9823f789773f1380f2c5fbd1c6fbee",
+    "scripts/resimulate_bank_v5_measured_gate.py": "8fbd43fdc547325b1820f263d7751e7fad3d28d3fab5beb15375ceeb6c57557a",
+    "scripts/run_bank_v5_dev_discrimination.py": "a1bb146de422a022ee82d1c95526cc8de424198118f65ca8d25a2801085ba369",
+    "scripts/test_bank_v5_dev_harness_offline.py": "7f4b0026d640dc4ffade2d966c256916e12475c8c5f90dde1fee9e6391a9f6d1",
+    "scripts/test_scientific_bank_v5.py": "12bfb84187c01797468bd019c83d3461da91216e388e838e24df9942be5a1b5c",
+    "src/nerve_awim/memory_gateway/scientific_task_bank_v5.py": "9b7d6f9e19d4c5f075fdb6bc0c337f743bdedad85c2728cb6376f932c94772e7"
+  },
+  "model_calls": 0,
+  "new_GPU_cost": 0,
+  "new_GPU_hours": 0,
+  "pod_status": "EXITED",
+  "private_item_level_exported": false
+}

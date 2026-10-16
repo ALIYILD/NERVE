@@ -1,0 +1,15 @@
+{
+  "canonical_gate": "v3",
+  "generator_tests_passed": 4,
+  "mock_wire_responses": 100,
+  "offline_harness_tests_passed": 2,
+  "private_ledger_sha256": "ae816c9539f7b01e5952b36b40bb0514451b575f615e6d5ba495635c75fd1731",
+  "real_dev_consumed": 0,
+  "real_model_calls": 0,
+  "real_reserve_consumed": 0,
+  "tests": {
+    "scripts/test_bank_v5_dev_harness_offline.py": "7f4b0026d640dc4ffade2d966c256916e12475c8c5f90dde1fee9e6391a9f6d1",
+    "scripts/test_scientific_bank_v5.py": "12bfb84187c01797468bd019c83d3461da91216e388e838e24df9942be5a1b5c"
+  },
+  "v3_1_signed": false
+}

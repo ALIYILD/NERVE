@@ -1,0 +1,36 @@
+{
+  "conditional_win_rate": "Use observed wins/discordances only where nonzero; else report undefined and no outcome depends on it at discordance0. Also simulate p=.85 and p=1 for comparison.",
+  "fixtures": [
+    "per-stratum empirical rates: new measured agreement dev and historical unchanged-stratum dev",
+    "optimistic sensitivity: Wilson95 upper discordance endpoints in all answer strata, p=1; not a joint confidence bound or measured performance"
+  ],
+  "m": 10,
+  "main_cap": 460,
+  "model_calls": 0,
+  "no_redistribution": "Do not spread agreement discordance uniformly into the four answer strata not changed by bank v5.",
+  "primary_cap": 100,
+  "risk_N": 40,
+  "risk_stratum": "dissenter",
+  "run_admission": "Complete new dev result plus byte-identical offline replay required; no model calls",
+  "seeds": {
+    "H0": 2026101802,
+    "main": 2026101801
+  },
+  "source_sha256": {
+    "docs/galahad/evidence/bank-v5-dev-study-registration.json": "3042b6e83773b37d19bba2cbe2ad87869c26f2853c111fd18a307d0b71e6ee38",
+    "docs/galahad/evidence/gate-v3_1-dev-seam-replay.json": "28d9f21a3be170a081e3322ffe192fc70ccbfa6b370d5ea7b46a9c543bc98431",
+    "scripts/confirm_gate_v3.py": "43af7778d0ac170837232733c869c79b99f5e4b8dcffae2183a0f927f5514910",
+    "scripts/resimulate_bank_v5_measured_gate.py": "8fbd43fdc547325b1820f263d7751e7fad3d28d3fab5beb15375ceeb6c57557a",
+    "scripts/study_extended_coverage.py": "4d2b6a61a74960e461c1b28c1d25dc67e273d1ad0a7dc2ea863dd4f0b6c2eb40",
+    "scripts/study_two_stage_followup.py": "8a9b10bafc033c9a24626ec9054cbbfc3ed93b01f15648c8e161a0bacb996306",
+    "src/nerve_awim/memory_gateway/scientific_promotion_gate_v3.py": "2e643b6472deb22ec56e9ea25ad4aab9a0cce4b9592b548fed824e4f5f089a54"
+  },
+  "streams": 10000,
+  "t": 0,
+  "targets": {
+    "H0_max": 0.05,
+    "good085_accept_min": 0.8
+  },
+  "total_cap": 500,
+  "unchanged_strata_assumption": "Historical dev replay used as plug-in; zero observed discordance is not population zero."
+}
