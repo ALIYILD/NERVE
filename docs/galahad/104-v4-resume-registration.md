@@ -1,10 +1,10 @@
-# V 4 resumed research window
+# V4 resumed research window
 
 The user authorized completing the registered v4 development study and, only if eligible, one sealed holdout slice. The existing candidate remains unchanged and unsigned. The completed L4 result and earlier missed shutdown-verification deadline remain recorded in document 103.
 
 This prospective execution version changes persistence, admission and deadlines only. It carries all 1,510 prior physical attempts and a conservative 15,597.911 seconds of prior GPU time against the original 6-hour/6,000-attempt cap. The same Canada A40 pod is the only permitted inference host. The window is at most 90 minutes from its freshly verified provider start, with inference ending after 80 minutes and 10 minutes reserved for preservation/shutdown. L6 development and conditional holdout share 3,600 study-wall seconds. No signing is authorized.
 
-The fixed v4 source SHA is 764961cf 67b 04bbdc 4ebd 1d 8dabb 7af 2380c 7de 2a 42ca 064ce 5f 0799dd 323ee 9. The sealed bank, original L4 and five-call Canada calibration remain unchanged. Historical replay uses the original Canada verifier. A versioned migration copies the exact 1,510 claim files to persistent workspace, with every original claim hash registered. No counter is reset. The same-pod cold-load-inclusive calibration is reused only after exact model digest, served runtime and GPU identity verification.
+The fixed v4 source SHA is `764961cf67b04bbdc4ebd1d8dabb7af2380c7de2a42ca064ce5f0799dd323ee9`. The sealed bank, original L4 and five-call Canada calibration remain unchanged. Historical replay uses the original Canada verifier. A versioned migration copies the exact 1,510 claim files to persistent workspace, with every original claim hash registered. No counter is reset. The same-pod cold-load-inclusive calibration is reused only after exact model digest, served runtime and GPU identity verification.
 
 Before inference, the root-owned controller must upload the frozen source and private backups, arm the independent pod watchdog, restore and replay historical evidence, verify the model identity, download a preflight evidence archive and confirm its digest. All new claims and study receipts are written under /workspace/nerve-v4-resume-20261016 from their first write. The root must observe actual provider EXITED after requesting shutdown; the watchdog signal and CLI return alone do not prove that state.
 
