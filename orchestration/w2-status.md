@@ -30,3 +30,14 @@ tests passed; one suite at a time under shared test lock, now released to W3.
 B01 superseded before any calls by B01a to bound SSH subprocesses at 42s rather
 than inherited 180s. Same items/rule; no outcome-driven revision. Active hash:
 `47ae40566374094f3e3d99104e0569804c769b483373fc31113759822a35b409`.
+
+Independent pre-call review found eager executor.map queued all100 jobs. Fixed:
+at most4 submitted futures, worker failures immediately set cancellation,
+checks before each claim and call, no replacement admission after a failure.
+Three focused dispatcher tests pass, including injected first-batch failure
+with exactly4 started items and zero subsequent items. Reviewer statically
+confirmed the correction. Shared test lock released.
+
+Active registration B01b supersedes B01a before any B study calls/results:
+`094e6058bac759f3a16824f1124b8f9fd4c5a2cacccb9c6fe84cdae5a873e568`.
+Schedule/keep rule unchanged. Both supersession records are preserved.

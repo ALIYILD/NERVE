@@ -1,0 +1,6 @@
+{
+  "superseded_registration_sha256": "47ae40566374094f3e3d99104e0569804c769b483373fc31113759822a35b409",
+  "replacement_registration_sha256": "094e6058bac759f3a16824f1124b8f9fd4c5a2cacccb9c6fe84cdae5a873e568",
+  "reason": "Independent pre-call review: replace queued100 executor map with at-most4 submitted futures and fail-fast cancellation checked before claims and model calls. Frozen schedule and keep rule unchanged; no B study inference/results existed.",
+  "model_calls": 0
+}
