@@ -1,19 +1,19 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T08:20:23Z",
-  "status": "duration_authorized_capacity_blocked_both_existing_pods",
+  "updated_at_utc": "2026-10-16T08:36:38.989119+00:00",
+  "status": "authorized_canada_pod_bootstrapping_source_frozen",
   "prior_running_seconds": 3937.034,
   "physical_attempts": 5,
-  "pod_status": "EXITED",
+  "pod_status": "RUNNING",
   "real_bank_generated": true,
   "candidate_designed": false,
   "holdout_consumed": false,
   "inference_cutoff_utc": "2026-10-16T10:15:00Z",
   "handoff_deadline_utc": "2026-10-16T10:30:00Z",
-  "pod_id": "97vr620wnmtuga",
-  "replacement_count": 1,
-  "provider_started_at_utc": "2026-10-16T06:27:28.749Z",
-  "bootstrap_exec_session": null,
+  "pod_id": "b7qj6qyx9ij6gg",
+  "replacement_count": 2,
+  "provider_started_at_utc": "2026-10-16T08:33:31.123Z",
+  "bootstrap_exec_session": 79514,
   "original_pod_status": "EXITED",
   "bootstrap_attempt1": "failed readiness timeout; preservedreceipt",
   "bank_sealed": true,
@@ -36,7 +36,7 @@
   "calibration_replay_verified": true,
   "L4_registered": false,
   "L4_started": false,
-  "required_decision": "Any additional pod would require explicit new authority; none created.",
+  "required_decision": null,
   "backup": "Private sealedbank and fullcalibration+sharedbudget durably copied outsideGit. Original /root workingcopies cleared by stop; restore from these verified backups before restartstudy.",
   "duration_authorized": true,
   "latest_start_cell": "243",
@@ -62,5 +62,10 @@
       "http_status": 400
     }
   ],
-  "fresh_readback_utc": "2026-10-16T08:20:23Z"
+  "fresh_readback_utc": "2026-10-16T08:20:23Z",
+  "bootstrap_launch_owner": "root",
+  "additional_pod_authorized": true,
+  "source_commit": "f3f785e",
+  "source_archive_sha256": "0fc736486114f2051103d58f01925f19998e79eb2712ad2f1d44591e4ef0059b",
+  "new_calibration_started": false
 }
