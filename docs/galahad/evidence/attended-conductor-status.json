@@ -1,7 +1,7 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T08:36:38.989119+00:00",
-  "status": "authorized_canada_pod_bootstrapping_source_frozen",
+  "updated_at_utc": "2026-10-16T08:49:02.908953+00:00",
+  "status": "canada_calibration_registered_launch_pending",
   "prior_running_seconds": 3937.034,
   "physical_attempts": 5,
   "pod_status": "RUNNING",
@@ -13,12 +13,12 @@
   "pod_id": "b7qj6qyx9ij6gg",
   "replacement_count": 2,
   "provider_started_at_utc": "2026-10-16T08:33:31.123Z",
-  "bootstrap_exec_session": 79514,
+  "bootstrap_exec_session": null,
   "original_pod_status": "EXITED",
   "bootstrap_attempt1": "failed readiness timeout; preservedreceipt",
   "bank_sealed": true,
   "bank_manifest_sha256": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
-  "runtime_verified": false,
+  "runtime_verified": true,
   "calibration_registration_sha256": "e2f3ac8b54c2bb531974da1f8f70892863c58a9201388ca6d6d82890690d62b2",
   "calibration_launch_owner": "root",
   "calibration_exec_session": null,
@@ -67,5 +67,12 @@
   "additional_pod_authorized": true,
   "source_commit": "f3f785e",
   "source_archive_sha256": "0fc736486114f2051103d58f01925f19998e79eb2712ad2f1d44591e4ef0059b",
-  "new_calibration_started": false
+  "new_calibration_started": false,
+  "bootstrap_completed_session": 79514,
+  "restore_completed_session": 50057,
+  "restored_prior_physical_claims": 5,
+  "calibration_registration_tool_cell": null,
+  "calibration_registration_completed_session": 16605,
+  "new_calibration_registration_sha256": "5e362b3715a81969953cac188bfa4d7b3c381a0b6ccd284f68d2bda7878b3a03",
+  "calibration_run_tool_cell": "189"
 }
