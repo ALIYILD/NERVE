@@ -1,0 +1,34 @@
+{
+  "protected_count": 80,
+  "protected_changed": [],
+  "existing_sources": {
+    "src/nerve_awim/goal_orchestrator.py": {
+      "sha256": "9364cf7fd48887e3245920624845fdb3d56aa86b34bdd54d85dde391c2bcfad5",
+      "identical_530591c": true
+    },
+    "src/nerve_awim/adaptation_repository_evaluation.py": {
+      "sha256": "472a2a2a29ae844a675f55c688bb12f4731eca73fc44d4637b1401bd6fcf7e96",
+      "identical_530591c": true
+    },
+    "src/nerve_awim/adaptation_evaluation.py": {
+      "sha256": "e3f0cb8ad15f0eb641664fc577caf1d1591cd507e40606f2b67e363238472028",
+      "identical_530591c": true
+    },
+    "src/nerve_awim/adaptation_replay.py": {
+      "sha256": "691189d5de7e0edf2b5c86019afb44760cbf154deee945223d1078a8660dd360",
+      "identical_530591c": true
+    },
+    "src/nerve_awim/adaptation_repository.py": {
+      "sha256": "e41163e65a6d1e29b2124bbff0f4724064ee7286bc719ffdf389d223b1c64e3d",
+      "identical_530591c": true
+    },
+    "src/nerve_awim/adaptation.py": {
+      "sha256": "4c4c286e38d1329237b3ba27f92cfad3307f0b68f45821c423be9542fd7a6da6",
+      "identical_530591c": true
+    },
+    "src/nerve_awim/adaptation_cli.py": {
+      "sha256": "122fb8c8978cf148cdd3d5e85b99d1d7489469a185e1cfeb36d2ca88c01b0e1a",
+      "identical_530591c": true
+    }
+  }
+}

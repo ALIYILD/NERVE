@@ -1,0 +1,6 @@
+*.sqlite
+*.sqlite-*
+goal/
+checkpoint-ready
+interrupted/
+clean/

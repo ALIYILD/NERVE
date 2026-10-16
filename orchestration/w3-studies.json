@@ -1,0 +1,86 @@
+{
+  "completed_at": "2026-10-16T23:52:16.425428+00:00",
+  "studies": [
+    {
+      "domain": "scientific",
+      "evaluation_study": "ed3a85c8accaf9d39553c85d88b973e9dd4451f62ee93343ab99cc9640481185",
+      "adaptation_study": "af9b5eea16c875be879ea9cee95756b5ae8780550d613e2843a6e6a0a504046d",
+      "candidate_registration": "5c6b9fa94e16d77db992e7bd6165a166bcdffd32d4cd37cbd55a508f9d074d6f",
+      "bundle_sha256": "7cb3fa78a4c409621457431fb0eeee6932781e580f708d6ef33acfa229d05c73",
+      "evaluation_verdict": "kept",
+      "wins": 34,
+      "losses": 0,
+      "totals": {
+        "always-abstain": 0,
+        "candidate:context": 100,
+        "random": 59,
+        "synthetic-family-a": 66
+      },
+      "experience_head": "5e8935134138d166fd0560042ba693b2f47c3b7559ec539e69c43ba7b8d717a5",
+      "learning": {
+        "learned": 100,
+        "model_calls": 0,
+        "provenance": "host-supplied receipt references; not signatures",
+        "study_memory_count": 100
+      },
+      "replay_verified": true,
+      "calls": 0,
+      "cost_usd": 0,
+      "synthetic": true
+    },
+    {
+      "domain": "perfflux-sandbox",
+      "evaluation_study": "dfe21817f6847d197ada6f6212e72fe653193fc3bc388e327a66ac4f661e8271",
+      "adaptation_study": "8bf8f9ede9c6cdcd682f04a4b96316008a1ccf96f8f3b1e3465b1b6d3b2ef13d",
+      "candidate_registration": "aba6276c7b3d9bacdc41c9e6036a668993ffd1cb65fa838d6ed07cbb071b740a",
+      "bundle_sha256": "8787bed9c48dc61a92cf59e986fe13a43093be76db25424a08725d1bd1bfc3fd",
+      "evaluation_verdict": "kept",
+      "wins": 34,
+      "losses": 0,
+      "totals": {
+        "always-abstain": 0,
+        "candidate:context": 100,
+        "direct": 66,
+        "random": 59
+      },
+      "experience_head": "571257cc337d9f079a06d82cc68254b032cec0d01e2b1baf61798e3d1cec751a",
+      "learning": {
+        "learned": 100,
+        "model_calls": 0,
+        "provenance": "host-supplied receipt references; not signatures",
+        "study_memory_count": 100
+      },
+      "replay_verified": true,
+      "calls": 0,
+      "cost_usd": 0,
+      "synthetic": true
+    },
+    {
+      "domain": "clinicalos-sandbox",
+      "evaluation_study": "ba1f90eb043aea51d065797d6d0553bfeae016a7c29bf4268ca21a67bc87058b",
+      "adaptation_study": "8c44d432ad8aa651161ec45ca54c86e5ae089a604b314b4d4e6f5d0f7c8a2816",
+      "candidate_registration": "66415b26c980a039918bd804c935650a214cf058130a34553396284216c132af",
+      "bundle_sha256": "6f15c03a80afa6661892a274d72e34383ad7e287aaa04b22d099842716dbfb01",
+      "evaluation_verdict": "kept",
+      "wins": 34,
+      "losses": 0,
+      "totals": {
+        "always-abstain": 0,
+        "candidate:context": 100,
+        "random": 59,
+        "title-retrieval": 66
+      },
+      "experience_head": "38c4a4cce9b1ca939c68138ae1e3ec657350bf6fb85810efd64bd325dcd0f1c1",
+      "learning": {
+        "learned": 100,
+        "model_calls": 0,
+        "provenance": "host-supplied receipt references; not signatures",
+        "study_memory_count": 100
+      },
+      "replay_verified": true,
+      "calls": 0,
+      "cost_usd": 0,
+      "synthetic": true
+    }
+  ]
+}
