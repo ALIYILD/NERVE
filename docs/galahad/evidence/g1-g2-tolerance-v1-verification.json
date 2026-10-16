@@ -1,0 +1,10 @@
+{
+  "fixture_tests_passed": 9,
+  "scalar_vector_fixture_streams_checked": 186,
+  "scenario_tolerance_cells_reconciled": 36,
+  "sources_unchanged": true,
+  "selection_matches_registered_rule": true,
+  "chosen_t": null,
+  "model_calls": 0,
+  "signing_payload_created": false
+}

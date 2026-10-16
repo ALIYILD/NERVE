@@ -1,0 +1,88 @@
+{
+  "version": "g1-g2-tolerance-selection-v1",
+  "registration_sha256": "34f0153f2534429ad5edda14fca866d83f1040e3b9b241b9a020d3c6e15cad71",
+  "result_sha256": "9d7efa01281526186f938faa841de06cb5c8ab8b24e09a0d01feffad01c1e10f",
+  "primary_sampling": "discordance_priority",
+  "criteria": {
+    "good_accept_085_min": 0.8,
+    "regression_catch_min": 0.9
+  },
+  "tables": {
+    "balanced": [
+      {
+        "t": 0,
+        "good_accept_085": 0.0752,
+        "good_accept_090": 0.0988,
+        "false_veto_085": 0.4305,
+        "false_veto_090": 0.2906,
+        "regression_catch": 0.419,
+        "neutral_accept": 0.0003,
+        "harmful_accept": 0.0,
+        "h0_false_promotion": 0.0004
+      },
+      {
+        "t": 1,
+        "good_accept_085": 0.0879,
+        "good_accept_090": 0.1065,
+        "false_veto_085": 0.3225,
+        "false_veto_090": 0.2294,
+        "regression_catch": 0.3455,
+        "neutral_accept": 0.0003,
+        "harmful_accept": 0.0,
+        "h0_false_promotion": 0.0006
+      },
+      {
+        "t": 2,
+        "good_accept_085": 0.1033,
+        "good_accept_090": 0.1151,
+        "false_veto_085": 0.2065,
+        "false_veto_090": 0.172,
+        "regression_catch": 0.1539,
+        "neutral_accept": 0.0004,
+        "harmful_accept": 0.0,
+        "h0_false_promotion": 0.0006
+      }
+    ],
+    "discordance_priority": [
+      {
+        "t": 0,
+        "good_accept_085": 0.5717,
+        "good_accept_090": 0.7123,
+        "false_veto_085": 0.3689,
+        "false_veto_090": 0.2471,
+        "regression_catch": 0.3775,
+        "neutral_accept": 0.0034,
+        "harmful_accept": 0.0,
+        "h0_false_promotion": 0.0031
+      },
+      {
+        "t": 1,
+        "good_accept_085": 0.589,
+        "good_accept_090": 0.7184,
+        "false_veto_085": 0.3346,
+        "false_veto_090": 0.2369,
+        "regression_catch": 0.3676,
+        "neutral_accept": 0.0039,
+        "harmful_accept": 0.0,
+        "h0_false_promotion": 0.0037
+      },
+      {
+        "t": 2,
+        "good_accept_085": 0.6761,
+        "good_accept_090": 0.775,
+        "false_veto_085": 0.2016,
+        "false_veto_090": 0.1684,
+        "regression_catch": 0.0427,
+        "neutral_accept": 0.0052,
+        "harmful_accept": 0.0,
+        "h0_false_promotion": 0.0046
+      }
+    ]
+  },
+  "chosen_t": null,
+  "reason": "No registered tolerance satisfies both thresholds.",
+  "payload_prepared": false,
+  "canonical_changes": false,
+  "model_calls": 0,
+  "reserve_accessed": false
+}

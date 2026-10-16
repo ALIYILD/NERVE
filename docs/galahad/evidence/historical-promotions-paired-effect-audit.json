@@ -1,0 +1,84 @@
+{
+  "v4": {
+    "counts": {
+      "wins": 21,
+      "losses": 0,
+      "both_correct": 72,
+      "both_wrong": 7
+    },
+    "discordant_pairs": 21,
+    "discordant_win_rate": 1.0,
+    "strata": {
+      "entity-decoy": {
+        "wins": 6,
+        "losses": 0,
+        "both_correct": 5,
+        "both_wrong": 0
+      },
+      "format-variant-agreement": {
+        "wins": 2,
+        "losses": 0,
+        "both_correct": 5,
+        "both_wrong": 4
+      },
+      "unit-mismatch": {
+        "wins": 0,
+        "losses": 0,
+        "both_correct": 11,
+        "both_wrong": 0
+      },
+      "dissenter": {
+        "wins": 0,
+        "losses": 0,
+        "both_correct": 11,
+        "both_wrong": 0
+      },
+      "stale-vs-current": {
+        "wins": 2,
+        "losses": 0,
+        "both_correct": 9,
+        "both_wrong": 0
+      },
+      "supported-measurement": {
+        "wins": 6,
+        "losses": 0,
+        "both_correct": 6,
+        "both_wrong": 0
+      },
+      "measurement-decoy": {
+        "wins": 4,
+        "losses": 0,
+        "both_correct": 7,
+        "both_wrong": 0
+      },
+      "multi-source-agreement": {
+        "wins": 1,
+        "losses": 0,
+        "both_correct": 7,
+        "both_wrong": 3
+      },
+      "conflict": {
+        "wins": 0,
+        "losses": 0,
+        "both_correct": 11,
+        "both_wrong": 0
+      }
+    },
+    "source_archive_sha256": "5216c3fe3532e9bbc5f9d79bdae8c0ed234ee448747339c5df63240df0e97d1e",
+    "rows_checked": 400
+  },
+  "v3": {
+    "wins": 80,
+    "losses": 0,
+    "both_correct": 20,
+    "both_wrong": 0,
+    "discordant_pairs": 80,
+    "discordant_win_rate": 1.0,
+    "derivation": "Candidate 100/100 and incumbent 20/100 uniquely imply these paired counts; no private item inspection required.",
+    "source": "registry/scientific-v3-7b/holdout_study.json",
+    "source_sha256": "35c314b5732f3aed25357688405e9b7b1dc9c2b6d1c2d867ec5c7bd55b1c5035"
+  },
+  "scope": "Post-hoc aggregate effect audit, not a new prospective gate evaluation or inference",
+  "model_calls": 0,
+  "reserve_opened": false
+}
