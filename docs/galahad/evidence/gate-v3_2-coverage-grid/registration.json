@@ -1,0 +1,129 @@
+{
+  "cost": {
+    "basis": "Historical measured all-arm A40 study range requested previously; projections, not billed compute. Mean and p90 include all streams including primary failures and followup. Simulation/model costs zero.",
+    "hourly_usd": 0.59,
+    "seconds_per_item": [
+      2.3,
+      3.4
+    ]
+  },
+  "coverage_grid": [
+    12,
+    14,
+    16
+  ],
+  "fixtures": {
+    "broad_75": {
+      "answer_discordance": 0.375,
+      "meaning": "75% ties overall across nine, as signed historical fixture"
+    },
+    "measured": {
+      "format-variant-agreement": 0.64,
+      "meaning": "Measured dev plug-in rates; zeros elsewhere historical assumptions, not proof",
+      "multi-source-agreement": 0.22,
+      "other_discordance": 0
+    },
+    "narrow_64": {
+      "agreement_discordance": 0.36,
+      "meaning": "64% ties within two agreement strata",
+      "other_discordance": 0
+    },
+    "narrow_88": {
+      "agreement_discordance": 0.12,
+      "meaning": "88% ties within two agreement strata",
+      "other_discordance": 0
+    }
+  },
+  "gate": "v3.2 coverage grid, unsigned",
+  "metric_decomposition": "Report any-route nonpromotion, primary nonacceptance, incomplete coverage, G2 rejection (all proposals and evaluated denominator), and identification of bad stratum separately. Historical v3 92% includes non-evaluations; never relabel total v3.2 nonpromotion as G2 alone.",
+  "model_calls": 0,
+  "numpy": "2.2.6",
+  "parent_registration_sha256": "a9dcae213f2d439d30178b9f187b1dad239fa431b9de197256ff016e67e8358c",
+  "regression_metric": "non-promotion by any route; identification separate; small silent regressions reported separately without inventing a new target",
+  "reserve_access": false,
+  "sampling": {
+    "G1": "zero tolerance, recorded zero-misfire fixture; not a claim of population safety",
+    "G2": "single-stage t=0 on complete coverage, all answer net counts nonnegative; safety strata covered by G1",
+    "coverage": "Only uncovered answer strata, least observed first with same rotated tie break. Coverage >=m discordances for m in12,14,16 OR zero in>=60 observations. Primary observations count. Main cap960 reserves40 risk items inside1000.",
+    "main_cap": 960,
+    "pooled_e": "bet .3, threshold20, frozen after primary acceptance; no coverage-stage resurrection of rejected primary",
+    "primary": "balanced all nine; rotating initial offset stream_index modulo9; until e>=20 or300 items, retaining prior futility e<=.05, net>=3 and all-nine-observed conditions",
+    "risk_followup": "Unconditional40 dissenter items after every primary acceptance, even if coverage incomplete or G2 fails; G1 immediate safety veto; risk-net<0 rejects. Structural both-correct ties in recorded fixture.",
+    "total_cap": 1000
+  },
+  "scenario_scope": "never_worse only measured; silent regressions narrow and measured, not broad which has no silent stratum; good085/good090/neutral/harmful/H0/regression all fixtures",
+  "scenarios": {
+    "H0": 0.5,
+    "good_085": 0.85,
+    "good_090": 0.9,
+    "harmful": 0.35,
+    "neutral": 0.5,
+    "never_worse": 1.0,
+    "regression": "one active answer stratum p=.30, rotates; other active strata p=.91875",
+    "silent_regression_05": "one originally silent answer stratum rotates, per-item loss-only discordance .05; agreement p=.85",
+    "silent_regression_10": "same with .10 loss-only discordance"
+  },
+  "scope": {
+    "admission": "Public Process requires prospective dev-scope evidence hash, profile and declared primary discordance before any holdout item. Below.08 or unvalidated profile returns insufficient_power immediately. No threshold inferred retrospectively from holdout outcomes. Study custodian must independently verify hash and registration provenance.",
+    "claim_limit": "Validation is for these declared profile families, including their registered regression/null alternatives. The8% floor is necessary, not a distribution-free power guarantee for every heterogeneous vector above it. Measured zeros outside agreement are assumptions, not proof.",
+    "denominator": "all nine equally weighted primary strata; not only agreement items",
+    "fixture_primary_discordance": {
+      "broad_75": 0.25,
+      "measured": 0.09555555555555556,
+      "narrow_64": 0.08,
+      "narrow_88": 0.026666666666666665
+    },
+    "in_scope_profiles": [
+      "broad_75",
+      "narrow_64",
+      "measured"
+    ],
+    "minimum_conditional_win_p": 0.85,
+    "minimum_primary_discordance": 0.08,
+    "out_of_scope": [
+      "narrow_88"
+    ],
+    "outside_diagnostic": "Run raw kernel for narrow88 without scope admission solely to report residual power/H0 and cost. Actual scope-enforced verdict is insufficient_power for every stream, zero accepted and zero items. Raw and admitted results remain separate."
+  },
+  "seed_order": [
+    "registered",
+    "fresh"
+  ],
+  "seeds": {
+    "fresh": {
+      "H0": 2026102402,
+      "main": 2026102401
+    },
+    "registered": {
+      "H0": 2026101802,
+      "main": 2026101801
+    }
+  },
+  "silent_bound": {
+    "certificate": "Zero discordances among a predeclared first60 observations; if primary samples beyond60 and later discordance occurs, the terminal silent branch is invalidated. Report ever-obtained first60 certificate separately from terminal bound activation. Primary may stop before60; no certificate then.",
+    "exact_marginal_95_upper": 0.04870291331009746,
+    "limits": "IID stationary per-stratum paired outcomes required. Marginal95%, not simultaneous across six, not equivalence. Report bound activation for the deliberately regressed silent stratum separately from any silent stratum.",
+    "miss_probability_05": 0.046069798986951946,
+    "miss_probability_10": 0.001797010299914434,
+    "rule_of_three": 0.05
+  },
+  "sources": {
+    "docs/galahad/evidence/bank-v5-dev-study-result.json": "c9f9fb05b53bd2cb8d8769a3cb4cb9c3b4c0ba110d034227a30d7146f5fdb9d8",
+    "docs/galahad/evidence/gate-v3-confirmation-v1-result.json": "004ece330044616c2ff8e403cc911252a24105a34125a60679c137c672778f3c",
+    "docs/galahad/evidence/gate-v3_2-budget/registration.json": "a9dcae213f2d439d30178b9f187b1dad239fa431b9de197256ff016e67e8358c",
+    "docs/galahad/evidence/gate-v3_2-budget/result.json": "a31d56a30c904a0db007c8337da8f26dc2992d5dd62f4936a9487ad3556dac18",
+    "docs/galahad/evidence/two-stage-rule-gated-safety-fixture.json": "a04b9d4387dd09f1770871238a98c09a7bef82f07940b05d168d8a7711a18828",
+    "scripts/simulate_gate_v3_2_grid.py": "cfc1b9959b220eb7bcda88c98142fb085ed6384e786fc32ca3cc641a78a2138b",
+    "scripts/test_gate_v3_2_grid.py": "6c535e82276df51fef012bcb34e78778c41d7cc7f86a53558ed0f7adcda3690f",
+    "src/nerve_awim/memory_gateway/scientific_promotion_gate_v3_2.py": "7e404b52dad531bffdee4040f6efaa4f3997286c8ba6e151165db64f95ad15ba"
+  },
+  "streams_per_cell": 10000,
+  "targets": {
+    "H0_max": 0.05,
+    "good085_min": 0.8,
+    "harmful_accept_count": 0,
+    "qualification": "Smallest m satisfying all targets on broad75,narrow64,measured in BOTH original and fresh seeds. Additionally broad G2 identification among evaluated candidates >=.90, with raw out-of-scope H0<=.05. Silent5/10 regressions reported separately; no invented additional target.",
+    "regressed_nonpromotion_min": 0.9
+  },
+  "verification": "100 independent scalar/vector parity streams per cell; public scope admission separately tested. Deterministic gzip level1 receipts. Original seed set completes before fresh; no tuning between sets."
+}

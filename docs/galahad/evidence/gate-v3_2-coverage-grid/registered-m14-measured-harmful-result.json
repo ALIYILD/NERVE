@@ -1,0 +1,52 @@
+{
+  "G1_false_veto": 0,
+  "G2_identified_bad_rate_evaluated": null,
+  "G2_rejection_rate_all": 0.0,
+  "G2_rejection_rate_evaluated": null,
+  "G2_veto_count": 0,
+  "accept_rate": 0.0,
+  "accepted": 0,
+  "admitted_accepted": 0,
+  "any_answer_bound_activation_rate": 0.0,
+  "bad_stratum_bound_activated_count": null,
+  "bad_stratum_bound_activation_rate": null,
+  "bad_stratum_first60_certificate_count": null,
+  "bad_stratum_loss_or_discordance_observed_rate": null,
+  "bad_stratum_promotions_with_bound": null,
+  "coverage_incomplete": 0,
+  "evaluated_G2_count": 0,
+  "identification_rate": null,
+  "m": 14,
+  "max_items": 300,
+  "mean_A40_minutes": [
+    8.221457333333333,
+    12.153458666666667
+  ],
+  "mean_A40_usd": [
+    0.08084433044444445,
+    0.11950901022222223
+  ],
+  "mean_items": 214.4728,
+  "nonpromotion_rate": 1.0,
+  "p90_A40_minutes": [
+    11.5,
+    17.0
+  ],
+  "p90_A40_usd": [
+    0.11308333333333334,
+    0.16716666666666666
+  ],
+  "p90_items": 300.0,
+  "primary_accepts": 0,
+  "primary_nonacceptance_count": 10000,
+  "receipt": {
+    "path": "docs/galahad/evidence/gate-v3_2-coverage-grid/registered-m14-measured-harmful-streams.json.gz",
+    "raw_sha256": "8cfa5a3539648afa635495202817a07fc5d86a45ff5d5468fa21b1ffb471159a",
+    "sha256": "4d649e092f82525fb4c1acd659a0041f7eb9ff40a88acf3c0ec930f6ee385bbf"
+  },
+  "risk_followups": 0,
+  "scalar_parity_streams": 100,
+  "scope_admitted": true,
+  "streams": 10000,
+  "total_items": 2144728
+}

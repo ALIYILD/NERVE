@@ -1,0 +1,174 @@
+{
+  "all_matched": true,
+  "cases": [
+    {
+      "cell": "fresh-m12-measured-harmful",
+      "items": 453,
+      "matched": true,
+      "net": {
+        "conflict": 0,
+        "dissenter": 0,
+        "entity-decoy": 0,
+        "format-variant-agreement": 10,
+        "measurement-decoy": 0,
+        "multi-source-agreement": 6,
+        "stale-vs-current": 0,
+        "supported-measurement": 0,
+        "unit-mismatch": 0
+      },
+      "simulated_stream": 905,
+      "verdict": "promote_proposal"
+    },
+    {
+      "cell": "fresh-m12-measured-harmful",
+      "items": 421,
+      "matched": true,
+      "net": {
+        "conflict": 0,
+        "dissenter": 0,
+        "entity-decoy": 0,
+        "format-variant-agreement": 6,
+        "measurement-decoy": 0,
+        "multi-source-agreement": 6,
+        "stale-vs-current": 0,
+        "supported-measurement": 0,
+        "unit-mismatch": 0
+      },
+      "simulated_stream": 5398,
+      "verdict": "promote_proposal"
+    },
+    {
+      "cell": "fresh-m14-measured-harmful",
+      "items": 469,
+      "matched": true,
+      "net": {
+        "conflict": 0,
+        "dissenter": 0,
+        "entity-decoy": 0,
+        "format-variant-agreement": 10,
+        "measurement-decoy": 0,
+        "multi-source-agreement": 6,
+        "stale-vs-current": 0,
+        "supported-measurement": 0,
+        "unit-mismatch": 0
+      },
+      "simulated_stream": 905,
+      "verdict": "promote_proposal"
+    },
+    {
+      "cell": "fresh-m14-measured-harmful",
+      "items": 419,
+      "matched": true,
+      "net": {
+        "conflict": 0,
+        "dissenter": 0,
+        "entity-decoy": 0,
+        "format-variant-agreement": 4,
+        "measurement-decoy": 0,
+        "multi-source-agreement": 4,
+        "stale-vs-current": 0,
+        "supported-measurement": 0,
+        "unit-mismatch": 0
+      },
+      "simulated_stream": 5398,
+      "verdict": "promote_proposal"
+    },
+    {
+      "cell": "fresh-m16-measured-harmful",
+      "items": 477,
+      "matched": true,
+      "net": {
+        "conflict": 0,
+        "dissenter": 0,
+        "entity-decoy": 0,
+        "format-variant-agreement": 10,
+        "measurement-decoy": 0,
+        "multi-source-agreement": 4,
+        "stale-vs-current": 0,
+        "supported-measurement": 0,
+        "unit-mismatch": 0
+      },
+      "simulated_stream": 905,
+      "verdict": "promote_proposal"
+    },
+    {
+      "cell": "fresh-m16-measured-harmful",
+      "items": 434,
+      "matched": true,
+      "net": {
+        "conflict": 0,
+        "dissenter": 0,
+        "entity-decoy": 0,
+        "format-variant-agreement": 4,
+        "measurement-decoy": 0,
+        "multi-source-agreement": 2,
+        "stale-vs-current": 0,
+        "supported-measurement": 0,
+        "unit-mismatch": 0
+      },
+      "simulated_stream": 5398,
+      "verdict": "promote_proposal"
+    },
+    {
+      "cell": "registered-m12-narrow_64-harmful",
+      "items": 415,
+      "matched": true,
+      "net": {
+        "conflict": 0,
+        "dissenter": 0,
+        "entity-decoy": 0,
+        "format-variant-agreement": 6,
+        "measurement-decoy": 0,
+        "multi-source-agreement": 4,
+        "stale-vs-current": 0,
+        "supported-measurement": 0,
+        "unit-mismatch": 0
+      },
+      "simulated_stream": 7870,
+      "verdict": "promote_proposal"
+    },
+    {
+      "cell": "registered-m14-narrow_64-harmful",
+      "items": 419,
+      "matched": true,
+      "net": {
+        "conflict": 0,
+        "dissenter": 0,
+        "entity-decoy": 0,
+        "format-variant-agreement": 6,
+        "measurement-decoy": 0,
+        "multi-source-agreement": 4,
+        "stale-vs-current": 0,
+        "supported-measurement": 0,
+        "unit-mismatch": 0
+      },
+      "simulated_stream": 7870,
+      "verdict": "promote_proposal"
+    },
+    {
+      "cell": "registered-m16-narrow_64-harmful",
+      "items": 427,
+      "matched": true,
+      "net": {
+        "conflict": 0,
+        "dissenter": 0,
+        "entity-decoy": 0,
+        "format-variant-agreement": 4,
+        "measurement-decoy": 0,
+        "multi-source-agreement": 2,
+        "stale-vs-current": 0,
+        "supported-measurement": 0,
+        "unit-mismatch": 0
+      },
+      "simulated_stream": 7870,
+      "verdict": "promote_proposal"
+    }
+  ],
+  "harmful_promotions_expected": 9,
+  "harmful_promotions_replayed": 9,
+  "model_calls": 0,
+  "registered_source_hashes_match": true,
+  "scope_admitted_public_Process_used": true,
+  "scope_floor_boundary_checks_passed": 2,
+  "source_sha256": "1bfdb90eb579b6ebf5efe22db8cda15ff90f038de7747120239787072bebee1e"
+}

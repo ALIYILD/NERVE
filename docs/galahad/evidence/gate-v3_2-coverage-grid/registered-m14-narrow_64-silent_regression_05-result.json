@@ -1,0 +1,52 @@
+{
+  "G1_false_veto": 0,
+  "G2_identified_bad_rate_evaluated": 0.9416654722660169,
+  "G2_rejection_rate_all": 0.657,
+  "G2_rejection_rate_evaluated": 0.9416654722660169,
+  "G2_veto_count": 6570,
+  "accept_rate": 0.0407,
+  "accepted": 407,
+  "admitted_accepted": 407,
+  "any_answer_bound_activation_rate": 0.6977,
+  "bad_stratum_bound_activated_count": 407,
+  "bad_stratum_bound_activation_rate": 0.0407,
+  "bad_stratum_first60_certificate_count": 407,
+  "bad_stratum_loss_or_discordance_observed_rate": 0.9273,
+  "bad_stratum_promotions_with_bound": 407,
+  "coverage_incomplete": 0,
+  "evaluated_G2_count": 6977,
+  "identification_rate": 0.657,
+  "m": 14,
+  "max_items": 1000,
+  "mean_A40_minutes": [
+    20.42433733333333,
+    30.192498666666665
+  ],
+  "mean_A40_usd": [
+    0.20083931711111108,
+    0.29689290355555553
+  ],
+  "mean_items": 532.8088,
+  "nonpromotion_rate": 0.9593,
+  "p90_A40_minutes": [
+    27.791666666666664,
+    41.083333333333336
+  ],
+  "p90_A40_usd": [
+    0.27328472222222217,
+    0.4039861111111111
+  ],
+  "p90_items": 725.0,
+  "primary_accepts": 6977,
+  "primary_nonacceptance_count": 3023,
+  "receipt": {
+    "path": "docs/galahad/evidence/gate-v3_2-coverage-grid/registered-m14-narrow_64-silent_regression_05-streams.json.gz",
+    "raw_sha256": "4de9a3b3771dd25e921ab513fd5aa0191b8ee9b6a4324f6e5d82ef757582d672",
+    "sha256": "5c240e13136fc5df1ac20ef96097c7bce932158363ae743b555b2df10412c3be"
+  },
+  "risk_followups": 6977,
+  "scalar_parity_streams": 100,
+  "scope_admitted": true,
+  "streams": 10000,
+  "total_items": 5328088
+}

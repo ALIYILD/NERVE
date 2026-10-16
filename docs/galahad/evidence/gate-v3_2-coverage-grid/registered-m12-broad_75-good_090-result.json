@@ -1,0 +1,52 @@
+{
+  "G1_false_veto": 0,
+  "G2_identified_bad_rate_evaluated": 0.0,
+  "G2_rejection_rate_all": 0.0001,
+  "G2_rejection_rate_evaluated": 0.0001,
+  "G2_veto_count": 1,
+  "accept_rate": 0.9999,
+  "accepted": 9999,
+  "admitted_accepted": 9999,
+  "any_answer_bound_activation_rate": 0.0,
+  "bad_stratum_bound_activated_count": null,
+  "bad_stratum_bound_activation_rate": null,
+  "bad_stratum_first60_certificate_count": null,
+  "bad_stratum_loss_or_discordance_observed_rate": null,
+  "bad_stratum_promotions_with_bound": null,
+  "coverage_incomplete": 0,
+  "evaluated_G2_count": 10000,
+  "identification_rate": null,
+  "m": 12,
+  "max_items": 343,
+  "mean_A40_minutes": [
+    9.663840999999998,
+    14.285677999999999
+  ],
+  "mean_A40_usd": [
+    0.09502776983333332,
+    0.14047583366666666
+  ],
+  "mean_items": 252.1002,
+  "nonpromotion_rate": 0.0001,
+  "p90_A40_minutes": [
+    10.733333333333333,
+    15.866666666666667
+  ],
+  "p90_A40_usd": [
+    0.10554444444444443,
+    0.1560222222222222
+  ],
+  "p90_items": 280.0,
+  "primary_accepts": 10000,
+  "primary_nonacceptance_count": 0,
+  "receipt": {
+    "path": "docs/galahad/evidence/gate-v3_2-coverage-grid/registered-m12-broad_75-good_090-streams.json.gz",
+    "raw_sha256": "8af732de2a5e1432d4a8b8d01b28d31fae92e1555bf9720b7b2e5e7d994d8e69",
+    "sha256": "27750bff8012c0c76a692487e245ac8fd4cd3027d31c8c8ef5644522910826c8"
+  },
+  "risk_followups": 10000,
+  "scalar_parity_streams": 100,
+  "scope_admitted": true,
+  "streams": 10000,
+  "total_items": 2521002
+}

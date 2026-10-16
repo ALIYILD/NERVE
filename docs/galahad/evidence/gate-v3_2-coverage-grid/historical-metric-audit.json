@@ -1,0 +1,33 @@
+{
+  "doc128": {
+    "fresh": {
+      "G2_evaluated": 9999,
+      "G2_rejection_conditional": 0.8508850885088509,
+      "G2_rejections": 8508,
+      "bad_stratum_identification_conditional": 0.8507850785078508,
+      "bad_stratum_identified": 8507,
+      "coverage_incomplete": 0,
+      "nonpromoted": 8509,
+      "primary_nonacceptance": 1
+    },
+    "registered": {
+      "G2_evaluated": 10000,
+      "G2_rejection_conditional": 0.8529,
+      "G2_rejections": 8529,
+      "bad_stratum_identification_conditional": 0.8529,
+      "bad_stratum_identified": 8529,
+      "coverage_incomplete": 0,
+      "nonpromoted": 8529,
+      "primary_nonacceptance": 0
+    }
+  },
+  "v3": {
+    "G2_detection_conditional": 0.8944265809217578,
+    "G2_evaluated": 7464,
+    "G2_rejections": 6676,
+    "all_streams": 10000,
+    "coverage_incomplete": 62,
+    "nonpromoted": 9212,
+    "primary_nonacceptance": 2474
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "canonical_v3_signature_valid": true,
+  "cells": 186,
+  "chosen_m": null,
+  "focused_tests_passed": 10,
+  "installed": false,
+  "model_calls": 0,
+  "pod_operations": 0,
+  "reserve_consumed": 0,
+  "scalar_parity_streams": 18600,
+  "signed": false,
+  "streams_verified": 1860000
+}
