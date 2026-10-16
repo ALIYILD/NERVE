@@ -1,0 +1,75 @@
+{
+  "G1": "Zero tolerance on unaffected safety strata. Replay plus structural proof at admission; enforce on every audited safety outcome and risk40. No population-zero-safety claim.",
+  "counts": [
+    2,
+    3,
+    6
+  ],
+  "fresh_seed_rule": "Freeze all code, scope and thresholds before both seed sets; no tuning or reselection after registered-seed outputs; report every cell.",
+  "model_calls": 0,
+  "numpy": "2.2.6",
+  "parameters": {
+    "alpha": 0.05,
+    "bet": 0.3,
+    "futility_e": 0.05,
+    "m": 10,
+    "main_cap": 460,
+    "minimum_net_wins": 3,
+    "primary_cap": 100,
+    "risk_followup_items": 40,
+    "t": 0,
+    "total_cap": 500
+  },
+  "regression": "One affected stratum p=.30, other affected strata p=.91875, bad rotates across k. Overall p=(.30+(k-1)*.91875)/k: .609375, .7125, .815625. Not mislabeled as overall .85.",
+  "reserve_access": false,
+  "risk": "Unconditional40 after primary acceptance, on registered dissenter; structural both-correct ties, no RNG required. Within total500.",
+  "scenarios": [
+    "good085",
+    "good090",
+    "regressed",
+    "neutral",
+    "harmful",
+    "H0"
+  ],
+  "scope": "Primary and coverage balanced among registered affected answer strata only; all other gate constants unchanged. Observed differences cannot select scope. Candidate v5 requires all six answer strata; k2/k3 are hypothetical candidates with independent seam proofs.",
+  "seeds": {
+    "fresh": {
+      "H0": 2026101902,
+      "main": 2026101901,
+      "risk": 2026101903
+    },
+    "registered": {
+      "H0": 2026101802,
+      "main": 2026101801,
+      "risk": 2026101803
+    }
+  },
+  "sources": {
+    "docs/galahad/evidence/gate-v3_1-dev-seam-replay.json": "28d9f21a3be170a081e3322ffe192fc70ccbfa6b370d5ea7b46a9c543bc98431",
+    "scripts/simulate_gate_v3_1.py": "b02777aba60e61c448bd8ffb3dae05762d4db8c7a0339bbd8dc158762610946f",
+    "src/nerve_awim/memory_gateway/scientific_promotion_gate_v3.py": "2e643b6472deb22ec56e9ea25ad4aab9a0cce4b9592b548fed824e4f5f089a54",
+    "src/nerve_awim/memory_gateway/scientific_promotion_gate_v3_1.py": "2cfd0251b6cda76fe6fc80cb152c5ad8055785c38ea9df09ef76929690829e63"
+  },
+  "stream_columns": [
+    "primary",
+    "coverage",
+    "promoted",
+    "G2_rejected",
+    "identified_bad",
+    "items",
+    "primary_accept_item"
+  ],
+  "streams_per_cell": 10000,
+  "targets": {
+    "H0_max": 0.05,
+    "good085_accept_min": 0.8,
+    "harmful_observed_accept_max": 0,
+    "regressed_nonpromotion_min": 0.9
+  },
+  "ties": [
+    0.64,
+    0.75
+  ],
+  "unaffected_proof": "Code reachability plus byte-identical full registered dev replay; counterexample or source change blocks admission. Empirical success alone cannot establish a seam is unreachable.",
+  "version": "v3.1-proposed"
+}

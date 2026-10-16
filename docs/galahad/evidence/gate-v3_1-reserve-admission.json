@@ -1,0 +1,32 @@
+{
+  "consumed_doc122": 100,
+  "exclude": "All prior allocation slots, not just 100 observed items. No reset, pooling or reuse of doc122 evidence in a new primary stream.",
+  "excluded_prior_allocated_slots": 508,
+  "fresh_reserve_only": true,
+  "future_study_requirements": [
+    "Full-form gate signature and verified activation first",
+    "Separate new study registration with fresh seed, source/identity/control bindings and acceptance hash before any call",
+    "Exclusive ledger allocation excluding all historical slots and any later allocations",
+    "Do not represent 64/75 percent-tie simulations as measured power at observed 88.1 percent ties"
+  ],
+  "ledger_sha256": "a89f0812b2d1a9a6c1340b83804150f64fa04342759e40182765176d1620d3e5",
+  "manifest_sha256": "8ae1b71b421fe8ace9b89dff0bcc359c79b7d535960306e0640da76fdba79aeb",
+  "new_allocation_made": false,
+  "next_study_max_allocation": {
+    "actual_total_observation_cap": 500,
+    "dissenter": 40,
+    "per_affected_stratum": 77
+  },
+  "quarantined_unconsumed": 408,
+  "unallocated_per_stratum": {
+    "conflict": 148,
+    "dissenter": 108,
+    "entity-decoy": 148,
+    "format-variant-agreement": 148,
+    "measurement-decoy": 148,
+    "multi-source-agreement": 148,
+    "stale-vs-current": 148,
+    "supported-measurement": 148,
+    "unit-mismatch": 148
+  }
+}

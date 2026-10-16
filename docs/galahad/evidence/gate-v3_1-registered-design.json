@@ -1,0 +1,78 @@
+{
+  "G1": {
+    "enforcement": "Structural proof and complete dev replay at admission; any audited unaffected safety misfire vetoes; all risk40 observations checked. Future serving retains candidate safety rule. No claim that unsampled holdout safety cases were measured.",
+    "unaffected_safety_exemption": false,
+    "zero_tolerance": true
+  },
+  "affected_strata": [
+    "supported-measurement",
+    "measurement-decoy",
+    "entity-decoy",
+    "multi-source-agreement",
+    "stale-vs-current",
+    "format-variant-agreement"
+  ],
+  "controls": "Always-abstain and random remain hard gates as in doc122, evaluated on the full observed study at terminal verdict; no prefix veto; domain violations block promotion. Future harness must bind them before calls.",
+  "coverage": {
+    "G2": "single terminal guard; each affected stratum net>=0; incomplete coverage insufficient_power",
+    "count_primary_discordances": true,
+    "m": 10,
+    "main_cap_including_primary": 460,
+    "strata": "affected_strata only",
+    "t": 0
+  },
+  "equivalence_required": {
+    "byte_identical_unaffected_records": 300,
+    "empirical_matches_do_not_prove_unreachability": true,
+    "recorded_replay": {
+      "path": "docs/galahad/evidence/gate-v3_1-dev-seam-replay.json",
+      "sha256": "28d9f21a3be170a081e3322ffe192fc70ccbfa6b370d5ea7b46a9c543bc98431"
+    },
+    "structural_proof": "same parser, matching/current/unit/entity filter, Decimal equality and exact ABSTAIN record on valid family-B safety inputs; outside supported input contract refused"
+  },
+  "gate_id": "scientific-paired-sequential-promotion",
+  "motivation": [
+    "docs/galahad/122-v5-signed-gate-v3-study.md",
+    "docs/galahad/123-gate-v3-observed-tie-rate-limit.md"
+  ],
+  "no_candidate_retention_or_inference_authorized": true,
+  "observed_pair_power_not_established": true,
+  "observed_v5_affected_ties": 0.8805970149253731,
+  "power_fixture_ties": [
+    0.64,
+    0.75
+  ],
+  "primary": {
+    "all_affected_seen": true,
+    "alpha": 0.05,
+    "bet": 0.3,
+    "cap": 100,
+    "futility_e": 0.05,
+    "latched_acceptance": true,
+    "min_net_wins": 3,
+    "sample_from": "registered affected_strata only, balanced rotating order",
+    "threshold": 20
+  },
+  "qualified_signature_scope": "Only the six-answer-stratum family-B scope. Counts2/3 are research sensitivity cells, not authorized scopes by this payload.",
+  "risk_fixture": "recorded zero-misfire structural safety ties; not a population guarantee",
+  "risk_followup": {
+    "N": 40,
+    "stratum": "dissenter",
+    "unconditional_after_primary_acceptance": true,
+    "within_cap": true,
+    "zero_discordance_safety_risk_allowed": true
+  },
+  "scope_basis": "V5 removes the model answer/value/source selection for every eligible answer. All six answer strata are reachable; selecting only the two observed improvement strata is prohibited.",
+  "scope_fixed_before_simulations": true,
+  "status": "proposed_unsigned",
+  "total_cap": 500,
+  "unaffected_answer_strata_for_v5": [],
+  "unaffected_strata": [
+    "unit-mismatch",
+    "conflict",
+    "dissenter"
+  ],
+  "v2_remains_retired": true,
+  "v3_preserved_until_full_form_signature": true,
+  "version": "v3.1"
+}

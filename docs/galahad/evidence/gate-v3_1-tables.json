@@ -1,0 +1,137 @@
+{
+  "rows": [
+    {
+      "H0": 0.0121,
+      "cell": "k2-ties64",
+      "good085": 0.9814,
+      "good090": 0.9981,
+      "harmful": 0.0,
+      "neutral": 0.0137,
+      "qualifies": true,
+      "regressed_nonpromotion": 0.9309,
+      "seed_set": "fresh"
+    },
+    {
+      "H0": 0.0053,
+      "cell": "k2-ties75",
+      "good085": 0.8545,
+      "good090": 0.9527,
+      "harmful": 0.0,
+      "neutral": 0.006,
+      "qualifies": true,
+      "regressed_nonpromotion": 0.9615,
+      "seed_set": "fresh"
+    },
+    {
+      "H0": 0.0112,
+      "cell": "k3-ties64",
+      "good085": 0.979,
+      "good090": 0.9976,
+      "harmful": 0.0,
+      "neutral": 0.012,
+      "qualifies": false,
+      "regressed_nonpromotion": 0.8976,
+      "seed_set": "fresh"
+    },
+    {
+      "H0": 0.0047,
+      "cell": "k3-ties75",
+      "good085": 0.8535,
+      "good090": 0.9526,
+      "harmful": 0.0,
+      "neutral": 0.0056,
+      "qualifies": true,
+      "regressed_nonpromotion": 0.9264,
+      "seed_set": "fresh"
+    },
+    {
+      "H0": 0.003,
+      "cell": "k6-ties64",
+      "good085": 0.9767,
+      "good090": 0.9975,
+      "harmful": 0.0,
+      "neutral": 0.0041,
+      "qualifies": true,
+      "regressed_nonpromotion": 0.9101,
+      "seed_set": "fresh"
+    },
+    {
+      "H0": 0.0009,
+      "cell": "k6-ties75",
+      "good085": 0.8344,
+      "good090": 0.9331,
+      "harmful": 0.0,
+      "neutral": 0.0014,
+      "qualifies": true,
+      "regressed_nonpromotion": 0.9226,
+      "seed_set": "fresh"
+    },
+    {
+      "H0": 0.0156,
+      "cell": "k2-ties64",
+      "good085": 0.9833,
+      "good090": 0.9983,
+      "harmful": 0.0002,
+      "neutral": 0.0133,
+      "qualifies": false,
+      "regressed_nonpromotion": 0.9303,
+      "seed_set": "registered"
+    },
+    {
+      "H0": 0.0068,
+      "cell": "k2-ties75",
+      "good085": 0.8529,
+      "good090": 0.9528,
+      "harmful": 0.0,
+      "neutral": 0.0062,
+      "qualifies": true,
+      "regressed_nonpromotion": 0.9611,
+      "seed_set": "registered"
+    },
+    {
+      "H0": 0.0138,
+      "cell": "k3-ties64",
+      "good085": 0.9806,
+      "good090": 0.9981,
+      "harmful": 0.0001,
+      "neutral": 0.0121,
+      "qualifies": false,
+      "regressed_nonpromotion": 0.8949,
+      "seed_set": "registered"
+    },
+    {
+      "H0": 0.0063,
+      "cell": "k3-ties75",
+      "good085": 0.8516,
+      "good090": 0.9527,
+      "harmful": 0.0,
+      "neutral": 0.005,
+      "qualifies": true,
+      "regressed_nonpromotion": 0.9241,
+      "seed_set": "registered"
+    },
+    {
+      "H0": 0.0037,
+      "cell": "k6-ties64",
+      "good085": 0.9788,
+      "good090": 0.998,
+      "harmful": 0.0,
+      "neutral": 0.0033,
+      "qualifies": true,
+      "regressed_nonpromotion": 0.9046,
+      "seed_set": "registered"
+    },
+    {
+      "H0": 0.0011,
+      "cell": "k6-ties75",
+      "good085": 0.8334,
+      "good090": 0.9347,
+      "harmful": 0.0,
+      "neutral": 0.0014,
+      "qualifies": true,
+      "regressed_nonpromotion": 0.9169,
+      "seed_set": "registered"
+    }
+  ],
+  "streams_per_cell": 10000
+}

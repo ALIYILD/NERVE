@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-16T22:33:41.062149+00:00",
+  "model_calls": 0,
+  "no_canonical_mutation": true,
+  "scalar_vector_parity_streams": 3600,
+  "simulation_cells": 72,
+  "streams_per_cell": 10000,
+  "test_source": {
+    "path": "scripts/test_promotion_gate_v3_1.py",
+    "sha256": "d8d9e39a04c970ea46efa725e82bcce8833cd84918e5627b3127cdbd87934bcc"
+  },
+  "unit_tests_passed": 10
+}

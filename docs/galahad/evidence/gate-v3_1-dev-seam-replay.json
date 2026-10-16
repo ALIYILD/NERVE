@@ -1,0 +1,119 @@
+{
+  "conservative_affected_strata": [
+    "supported-measurement",
+    "measurement-decoy",
+    "entity-decoy",
+    "multi-source-agreement",
+    "stale-vs-current",
+    "format-variant-agreement"
+  ],
+  "historical_receipts": {
+    "private-input.json": "bd2cdc4a0428da2e639102c3be35b7795e1ec42b58b9e3a7243285af5f551183",
+    "private-report.json": "0d2149dd2f3a0a42f4af755dd04c4d3956818223b309b5831495d8abee4a6fe2",
+    "registration.json": "221883fcdd8a5fd92726c691490fef8398c9784d0790643b55305997c21b7b0b"
+  },
+  "holdout_access": false,
+  "model_calls": 0,
+  "post_model_only": false,
+  "private_rows_sha256": "6499416c880d53ec71fb787c01e0079c497221d81d83becc41db086dd85c87d1",
+  "reason": "v4 uses model output for every eligible answer; v5 bypasses inference and selects value and source from parsed evidence for ALL eligible answers. Raw outputs are replayed through v4; v5 ignores them by design.",
+  "sources": {
+    "scripts/replay_v4_v5_dev_seam.py": "b9951bf4fe7aab5f8dace9b71a4d7979fee848e4469eefaa64b26382268f04e2",
+    "src/nerve_awim/memory_gateway/scientific_family_b_adapter.py": "8e2e4c8a022b11d1a5256e7283cde89928328fb839bd5afde28f2688735c178d",
+    "src/nerve_awim/memory_gateway/scientific_family_b_v4.py": "764961cf67b04bbdc4ebd1d8dabb7af2380c7de2a42ca064ce5f0799dd323ee9",
+    "src/nerve_awim/memory_gateway/scientific_family_b_v5.py": "a2850cbd0c580cfe78abab763513d2e206f011c446fcd61ec5ce3d0feac689ab"
+  },
+  "table": {
+    "conflict": {
+      "byte_identical": 100,
+      "changed_fields": {},
+      "n": 100,
+      "numeric_semantically_equal": 100,
+      "v4_correct": 100,
+      "v4_decode_errors": 0,
+      "v5_correct": 100
+    },
+    "dissenter": {
+      "byte_identical": 100,
+      "changed_fields": {},
+      "n": 100,
+      "numeric_semantically_equal": 100,
+      "v4_correct": 100,
+      "v4_decode_errors": 0,
+      "v5_correct": 100
+    },
+    "entity-decoy": {
+      "byte_identical": 100,
+      "changed_fields": {},
+      "n": 100,
+      "numeric_semantically_equal": 100,
+      "v4_correct": 100,
+      "v4_decode_errors": 0,
+      "v5_correct": 100
+    },
+    "format-variant-agreement": {
+      "byte_identical": 63,
+      "changed_fields": {
+        "source_id": 32,
+        "value": 16
+      },
+      "n": 100,
+      "numeric_semantically_equal": 68,
+      "v4_correct": 68,
+      "v4_decode_errors": 0,
+      "v5_correct": 100
+    },
+    "measurement-decoy": {
+      "byte_identical": 100,
+      "changed_fields": {},
+      "n": 100,
+      "numeric_semantically_equal": 100,
+      "v4_correct": 100,
+      "v4_decode_errors": 0,
+      "v5_correct": 100
+    },
+    "multi-source-agreement": {
+      "byte_identical": 71,
+      "changed_fields": {
+        "source_id": 29
+      },
+      "n": 100,
+      "numeric_semantically_equal": 71,
+      "v4_correct": 71,
+      "v4_decode_errors": 0,
+      "v5_correct": 100
+    },
+    "stale-vs-current": {
+      "byte_identical": 100,
+      "changed_fields": {},
+      "n": 100,
+      "numeric_semantically_equal": 100,
+      "v4_correct": 100,
+      "v4_decode_errors": 0,
+      "v5_correct": 100
+    },
+    "supported-measurement": {
+      "byte_identical": 100,
+      "changed_fields": {},
+      "n": 100,
+      "numeric_semantically_equal": 100,
+      "v4_correct": 100,
+      "v4_decode_errors": 0,
+      "v5_correct": 100
+    },
+    "unit-mismatch": {
+      "byte_identical": 100,
+      "changed_fields": {},
+      "n": 100,
+      "numeric_semantically_equal": 100,
+      "v4_correct": 100,
+      "v4_decode_errors": 0,
+      "v5_correct": 100
+    }
+  },
+  "unaffected_within_valid_family_B_contract": [
+    "unit-mismatch",
+    "conflict",
+    "dissenter"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "candidate_binding": {
+    "actual_affected_strata": [
+      "supported-measurement",
+      "measurement-decoy",
+      "entity-decoy",
+      "multi-source-agreement",
+      "stale-vs-current",
+      "format-variant-agreement"
+    ],
+    "candidate": "family-B v5 unchanged from doc113/doc122",
+    "candidate_source": {
+      "path": "src/nerve_awim/memory_gateway/scientific_family_b_v5.py",
+      "sha256": "a2850cbd0c580cfe78abab763513d2e206f011c446fcd61ec5ce3d0feac689ab"
+    },
+    "incumbent_source": {
+      "path": "src/nerve_awim/memory_gateway/scientific_family_b_v4.py",
+      "sha256": "764961cf67b04bbdc4ebd1d8dabb7af2380c7de2a42ca064ce5f0799dd323ee9"
+    },
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "two_stratum_scope_refused": true
+  },
+  "canonical_policy_on_future_valid_signature_and_activation": {
+    "automatic_candidate_signing": false,
+    "existing_retained_skills": "unchanged",
+    "gate_v2": "remains retired for promotions",
+    "gate_v3_until_activation": "unchanged canonical",
+    "new_study": "separate preregistration and fresh exclusive allocation; exclude all doc122 allocated slots",
+    "v3_1_scope": "six answer strata with verified structural scope and complete unaffected replay proof; k2/k3 are not approved by this signature"
+  },
+  "gate_id": "scientific-paired-sequential-promotion",
+  "installed": false,
+  "limitations": [
+    "V5 is not a post-model-only two-stratum seam; it bypasses inference on all eligible answers.",
+    "Actual affected-only tie rate59/67=88.06% is outside64/75% power fixtures; no claim of useful power for the proposed bank-v4 rerun.",
+    "The scoped e-process requires conditional-null validity on the prospectively selected population, not an overall-bank improvement guarantee.",
+    "Zero observed harmful acceptance and zero recorded safety misfire are not population-zero proofs.",
+    "Payload preparation grants no inference, reserve consumption, candidate promotion or retention authority.",
+    "Simulation rates are for the paired gate kernel; additional mandatory random/always-abstain controls are not independently simulated and can lower study acceptance."
+  ],
+  "payload_version": "scientific-gate-signing-payload-v1",
+  "promotion_authorized": false,
+  "protected_path_manifest_update": {
+    "applied": false,
+    "path": "docs/galahad/evidence/gate-v3_1-protected-paths-proposed.json",
+    "sha256": "1fae50c995c4ada549c4912dfe944d53b52155a300bb5aba2de73636c3352cb4"
+  },
+  "qualification": "Six-stratum scope fixed by code inspection before simulations passes original and fresh seeds at both requested tie rates; failing k2/k3 research cells retained in evidence.",
+  "registered_design": {
+    "path": "docs/galahad/evidence/gate-v3_1-registered-design.json",
+    "sha256": "171ff356441914175c92ee47b5a8e99847ac7d48e6a67a85865ab1fda59634c2"
+  },
+  "replay_equivalence": {
+    "path": "docs/galahad/evidence/gate-v3_1-dev-seam-replay.json",
+    "sha256": "28d9f21a3be170a081e3322ffe192fc70ccbfa6b370d5ea7b46a9c543bc98431"
+  },
+  "reserve_admission": {
+    "path": "docs/galahad/evidence/gate-v3_1-reserve-admission.json",
+    "sha256": "acece6a2bddffb191ba3e38296392a0713d6ae33ee7e43fccf90bf48323d4a1e"
+  },
+  "signature_requirement": "Exact full form binds gate_id, version, payload_sha256, simulation_evidence_sha256 and protected_paths_sha256; bare sign refused. Existing v3 signer is not repurposed.",
+  "signed": false,
+  "simulation_evidence": {
+    "path": "docs/galahad/evidence/gate-v3_1-signing-evidence-index.json",
+    "sha256": "304208fd8a49f52816a050a580bb74f793b1824c52867e26e24de1c29d2ca315"
+  },
+  "source": {
+    "path": "src/nerve_awim/memory_gateway/scientific_promotion_gate_v3_1.py",
+    "sha256": "2cfd0251b6cda76fe6fc80cb152c5ad8055785c38ea9df09ef76929690829e63"
+  },
+  "status": "awaiting_review_and_full_form_signature_six_stratum_scope_only",
+  "tables": {
+    "path": "docs/galahad/evidence/gate-v3_1-tables.json",
+    "sha256": "c505ccbfa007c15a96f7939a6fce8fefa9a2eb86eea330cbb0897b62cca65744"
+  },
+  "version": "v3.1"
+}

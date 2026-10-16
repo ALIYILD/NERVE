@@ -1,0 +1,14 @@
+{
+  "canonical_version_still": "v3",
+  "full_form": "sign gate_id=scientific-paired-sequential-promotion version=v3.1 payload_sha256=7fd315233a50c722816a71d5d3adeb5903e894e04ead5014e88f9fb4efb9ac14 simulation_evidence_sha256=304208fd8a49f52816a050a580bb74f793b1824c52867e26e24de1c29d2ca315 protected_paths_sha256=1fae50c995c4ada549c4912dfe944d53b52155a300bb5aba2de73636c3352cb4",
+  "installed": false,
+  "model_calls": 0,
+  "new_reserve_items": 0,
+  "original_and_fresh_targets_pass": true,
+  "payload_sha256": "7fd315233a50c722816a71d5d3adeb5903e894e04ead5014e88f9fb4efb9ac14",
+  "proposed_version": "v3.1",
+  "scope": "six answer strata only",
+  "signed": false,
+  "unaffected_byte_identical": 300,
+  "verified": true
+}
