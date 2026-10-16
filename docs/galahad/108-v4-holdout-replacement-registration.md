@@ -17,3 +17,13 @@ Seven focused CPU checks passed, covering fixed candidate/claims, public calibra
 Protocol: evidence/family-b-v4-holdout-replacement-protocol.json. Focused receipt: evidence/v4-holdout-replacement-focused.json. New scripts: scientific_attended_holdout_replacement_transport.py, run_scientific_family_b_v4_holdout_replacement.py and nerve_holdout_replacement_stage.sh.
 
 Before any creation, live capacity changed from CA-MTL-1 to EU-SE-1. The prospectively allowed region set is therefore those two regions; the actual root-owned creation window binds exactly one provider region. GPU class, price, model, candidate, budget and scientific gate remain unchanged. No pod or inference occurred during this amendment.
+
+## Actual window: approval delay, no study
+
+Replacement pod ki9m7vdg9qsea6 was created in EU-SE-1 at $0.59/hour, provider start 2026-10-16T17:01:07.794Z. The approved controller preflight did not establish persistent permission for its later upload and arm-watchdog actions. Upload approval remained pending until approximately 17:14 UTC and watchdog-arm approval until 17:23:26 UTC. These are approval delays, not model inference latency or successful study execution.
+
+Seven artifacts were uploaded and the watchdog eventually armed. By then insufficient time remained in the inference window, so root stopped the pod through the provider control plane and verified EXITED at 17:24:14 UTC. Restore, bootstrap, calibration and holdout registration/inference were never executed. The original sealed-bank archive was uploaded but never extracted. No additional model calls or holdout consumption occurred; no signing occurred.
+
+Conservative new running time through EXITED confirmation is 1,386.206 seconds. Cumulative conservative usage is 20,854.140 seconds (5.792817 GPU hours), approximately $3.417762 compute at $0.59/hour, excluding storage and not an invoice. Only 745.860 seconds remain under the original six-hour cap. The physical-attempt total stays 2,715. This checkpoint authorizes no additional pod, restart, budget or scientific execution.
+
+The attempt demonstrates that a successful preflight command approval is not proof that later controller actions are pre-approved. Future execution design must address that operational limitation before any new billing interval; no such future run is claimed here. The frozen candidate and prior dev result remain unchanged: 839/900, holdout_eligible, with no holdout verdict.

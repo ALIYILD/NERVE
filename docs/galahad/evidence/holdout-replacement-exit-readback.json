@@ -1,0 +1,34 @@
+{
+  "id": "ki9m7vdg9qsea6",
+  "status": "EXITED",
+  "startedAt": "2026-10-16T17:01:07.794Z",
+  "hourly_usd": 0.59,
+  "verified_at": "2026-10-16 17:24:14 UTC",
+  "source_commit": "a563380",
+  "source_archive_sha256": "ac1a775823587755232c3da7345e3bccfbb2fd3de610f734e99fbbb17f58e0bd",
+  "guard_armed_at_utc": "2026-10-16T17:23:26.955704Z",
+  "inference_deadline_utc": "2026-10-16T17:26:07.794Z",
+  "stop_deadline_utc": "2026-10-16T17:31:07.794Z",
+  "completed_stages": [
+    "upload",
+    "arm-watchdog"
+  ],
+  "unexecuted_stages": [
+    "restore",
+    "bootstrap",
+    "register-calibration",
+    "run-calibration",
+    "register-holdout",
+    "run-holdout"
+  ],
+  "new_model_calls": 0,
+  "holdout_consumed": false,
+  "running_seconds_upper": 1386.206,
+  "cumulative_running_seconds_upper": 20854.14,
+  "remaining_global_seconds": 745.86,
+  "incremental_compute_usd_upper": 0.2271837611111111,
+  "cumulative_compute_usd_upper": 3.4177618333333335,
+  "storage_excluded": true,
+  "cost_is_invoice": false,
+  "reason": "Per-action command approvals waited after preflight approval; insufficient registered time for calibration and holdout when guard armed."
+}
