@@ -1,7 +1,7 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T08:51:13.566698+00:00",
-  "status": "canada_calibration_complete_L4_registration_next",
+  "updated_at_utc": "2026-10-16T08:53:26.485999+00:00",
+  "status": "L4_running_root_owned_session84145",
   "prior_running_seconds": 3937.034,
   "physical_attempts": 10,
   "pod_status": "RUNNING",
@@ -34,8 +34,8 @@
   "remaining_running_seconds": 17662.966,
   "remaining_physical_attempts": 5990,
   "calibration_replay_verified": true,
-  "L4_registered": false,
-  "L4_started": false,
+  "L4_registered": true,
+  "L4_started": true,
   "required_decision": null,
   "backup": "Private sealedbank and fullcalibration+sharedbudget durably copied outsideGit. Original /root workingcopies cleared by stop; restore from these verified backups before restartstudy.",
   "duration_authorized": true,
@@ -86,5 +86,9 @@
     "median_seconds": 1.9101342167705297,
     "max_seconds": 17.494062535464764,
     "next_timeout_seconds": 52.48218760639429
-  }
+  },
+  "L4_exec_session": 84145,
+  "L4_registration_sha256": "1c0b7ff95de25979fbef6e42fdac521d33ed6cda55240f200a5f8c3c495ee07e",
+  "L4_completed": false,
+  "physical_attempts_note": "10 confirmed through completed calibrations; live L4 adds physical claims. Final count pending."
 }
