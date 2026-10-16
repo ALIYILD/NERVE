@@ -1,0 +1,256 @@
+{
+  "gate_changed": false,
+  "model_calls": 0,
+  "registration_sha256": "a845fe056c0a0dadacc71f816e4b76f8de602fdd148adfd5d94f404801d725c9",
+  "reserve_items_consumed": 0,
+  "results": {
+    "concentrated": {
+      "H0": {
+        "G1_rejections": 0,
+        "accept_rate": 0.0,
+        "accepted": 0,
+        "conditional_coverage_items_mean": null,
+        "coverage_completed_after_primary": 0,
+        "coverage_incomplete": 0,
+        "false_veto_rate": 0.0,
+        "insufficient_power": 10000,
+        "insufficient_power_rate": 1.0,
+        "maximum_items": 100,
+        "mean_A40_compute_usd_range": [
+          0.03768196758333332,
+          0.05570377816666666
+        ],
+        "mean_A40_minutes_range": [
+          3.8320644999999995,
+          5.664790999999999
+        ],
+        "mean_items": 99.9669,
+        "nonpromotion_rate": 1.0,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "primary_accepts": 0,
+        "risk_extra_items_mean": 0.0,
+        "risk_followup_studies": 0,
+        "risk_marginal_identification_rate": 0.0,
+        "scalar_parity_streams": 100,
+        "streams": 10000,
+        "total_items": 999669
+      },
+      "good_085": {
+        "G1_rejections": 0,
+        "accept_rate": 0.0,
+        "accepted": 0,
+        "conditional_coverage_items_mean": null,
+        "coverage_completed_after_primary": 0,
+        "coverage_incomplete": 102,
+        "false_veto_rate": 0.0,
+        "insufficient_power": 10000,
+        "insufficient_power_rate": 1.0,
+        "maximum_items": 500,
+        "mean_A40_compute_usd_range": [
+          0.03923237777777778,
+          0.057995688888888876
+        ],
+        "mean_A40_minutes_range": [
+          3.989733333333333,
+          5.897866666666666
+        ],
+        "mean_items": 104.08,
+        "nonpromotion_rate": 1.0,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "primary_accepts": 102,
+        "risk_extra_items_mean": 0.40800000000000003,
+        "risk_followup_studies": 102,
+        "risk_marginal_identification_rate": 0.0,
+        "scalar_parity_streams": 100,
+        "streams": 10000,
+        "total_items": 1040800
+      },
+      "never_worse": {
+        "G1_rejections": 0,
+        "accept_rate": 0.0,
+        "accepted": 0,
+        "conditional_coverage_items_mean": null,
+        "coverage_completed_after_primary": 0,
+        "coverage_incomplete": 613,
+        "false_veto_rate": 0.0,
+        "insufficient_power": 10000,
+        "insufficient_power_rate": 1.0,
+        "maximum_items": 500,
+        "mean_A40_compute_usd_range": [
+          0.04693712222222221,
+          0.06938531111111111
+        ],
+        "mean_A40_minutes_range": [
+          4.773266666666666,
+          7.056133333333333
+        ],
+        "mean_items": 124.52,
+        "nonpromotion_rate": 1.0,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "primary_accepts": 613,
+        "risk_extra_items_mean": 2.452,
+        "risk_followup_studies": 613,
+        "risk_marginal_identification_rate": 0.0,
+        "scalar_parity_streams": 100,
+        "streams": 10000,
+        "total_items": 1245200
+      }
+    },
+    "diffuse": {
+      "H0": {
+        "G1_rejections": 0,
+        "accept_rate": 0.0,
+        "accepted": 0,
+        "conditional_coverage_items_mean": null,
+        "coverage_completed_after_primary": 0,
+        "coverage_incomplete": 0,
+        "false_veto_rate": 0.0,
+        "insufficient_power": 10000,
+        "insufficient_power_rate": 1.0,
+        "maximum_items": 100,
+        "mean_A40_compute_usd_range": [
+          0.037682533,
+          0.055704614
+        ],
+        "mean_A40_minutes_range": [
+          3.8321219999999996,
+          5.6648760000000005
+        ],
+        "mean_items": 99.9684,
+        "nonpromotion_rate": 1.0,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "primary_accepts": 0,
+        "risk_extra_items_mean": 0.0,
+        "risk_followup_studies": 0,
+        "risk_marginal_identification_rate": 0.0,
+        "scalar_parity_streams": 100,
+        "streams": 10000,
+        "total_items": 999684
+      },
+      "good_085": {
+        "G1_rejections": 0,
+        "accept_rate": 0.0,
+        "accepted": 0,
+        "conditional_coverage_items_mean": null,
+        "coverage_completed_after_primary": 0,
+        "coverage_incomplete": 195,
+        "false_veto_rate": 0.0,
+        "insufficient_power": 10000,
+        "insufficient_power_rate": 1.0,
+        "maximum_items": 500,
+        "mean_A40_compute_usd_range": [
+          0.0406346111111111,
+          0.06006855555555555
+        ],
+        "mean_A40_minutes_range": [
+          4.1323333333333325,
+          6.108666666666666
+        ],
+        "mean_items": 107.8,
+        "nonpromotion_rate": 1.0,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "primary_accepts": 195,
+        "risk_extra_items_mean": 0.78,
+        "risk_followup_studies": 195,
+        "risk_marginal_identification_rate": 0.0,
+        "scalar_parity_streams": 100,
+        "streams": 10000,
+        "total_items": 1078000
+      },
+      "never_worse": {
+        "G1_rejections": 0,
+        "accept_rate": 0.0,
+        "accepted": 0,
+        "conditional_coverage_items_mean": null,
+        "coverage_completed_after_primary": 0,
+        "coverage_incomplete": 967,
+        "false_veto_rate": 0.0,
+        "insufficient_power": 10000,
+        "insufficient_power_rate": 1.0,
+        "maximum_items": 500,
+        "mean_A40_compute_usd_range": [
+          0.052274655555555556,
+          0.07727557777777778
+        ],
+        "mean_A40_minutes_range": [
+          5.316066666666667,
+          7.858533333333333
+        ],
+        "mean_items": 138.68,
+        "nonpromotion_rate": 1.0,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "primary_accepts": 967,
+        "risk_extra_items_mean": 3.868,
+        "risk_followup_studies": 967,
+        "risk_marginal_identification_rate": 0.0,
+        "scalar_parity_streams": 100,
+        "streams": 10000,
+        "total_items": 1386800
+      }
+    }
+  },
+  "uncapped_coverage_diagnostic": {
+    "concentrated": {
+      "finite_coverage_possible": false,
+      "reason": "Four required answer strata have structural zero discordance in this sensitivity fixture; no finite sample covers them."
+    },
+    "diffuse": {
+      "covered_by_460": 0,
+      "covered_by_500_ignoring_risk40": 0,
+      "maximum_items": 2203,
+      "mean_items": 1045.8334,
+      "mean_with_risk40": 1085.8334,
+      "median_items": 1024.0,
+      "minimum_items": 545,
+      "p90_items": 1288.0
+    }
+  }
+}

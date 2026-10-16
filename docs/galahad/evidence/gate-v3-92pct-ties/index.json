@@ -1,0 +1,42 @@
+{
+  "compressed_stream_receipts": {
+    "concentrated-H0-streams.json.gz": {
+      "sha256": "318de0868c07235f0c36caa4c55eb6c518fc746f3461338e8f904324bb22929f",
+      "streams": 10000,
+      "uncompressed_sha256": "82befe661458be95fb6b0f52d27607d3490c88df1a67ad4a33bea55953db1b8a"
+    },
+    "concentrated-good_085-streams.json.gz": {
+      "sha256": "cb78a9fda85d14fa4c49ab1ed533e910c9d6b0109a8a12ce2508630e26623696",
+      "streams": 10000,
+      "uncompressed_sha256": "16dd5b3029b02436b4c07454c3b46e89d708832bc32de703f2e7b0011d0eed34"
+    },
+    "concentrated-never_worse-streams.json.gz": {
+      "sha256": "d3aab1cba74ab3c0dcfd318a1d8055ed9ff01e9c9ff06b6d9fdd64dc96ad74a8",
+      "streams": 10000,
+      "uncompressed_sha256": "998d133c3d78be13e5274d091590927cff026ae00fee9e93a12a729970e8a694"
+    },
+    "diffuse-H0-streams.json.gz": {
+      "sha256": "57daf5313afc1c83585716a9ab12866bc9c4ad27928a2aa75f9a8de10eb89d6c",
+      "streams": 10000,
+      "uncompressed_sha256": "e90577d7f3142b126f8423c183dc5ec5b93bc151ff93c5d73aa73f43a7b9b0b3"
+    },
+    "diffuse-good_085-streams.json.gz": {
+      "sha256": "ac8a0308e245517d932d2dfe87dbbd446d9984f6ca2f7b9d1d02af7b541ca517",
+      "streams": 10000,
+      "uncompressed_sha256": "7021a8996c0b0c449fd736c1d35242c1456a22e6a191b5a62a7204aecc30fbd4"
+    },
+    "diffuse-never_worse-streams.json.gz": {
+      "sha256": "381d2ed2a3a732ce440bc38debe2e6ffe8d25fa6b408bcfb8ab2bb678d051395",
+      "streams": 10000,
+      "uncompressed_sha256": "45579aaf575433a09d804a599ad377e101bcbf99c54ed886101915d676f76d36"
+    }
+  },
+  "files": {
+    "pod-off.json": "042ea8338a4224381fdc2f8bcdd24a78f7868b9772feca55b7fa442329388863",
+    "registration.json": "a845fe056c0a0dadacc71f816e4b76f8de602fdd148adfd5d94f404801d725c9",
+    "result.json": "2b940031df606b323e8ddb1b332b3bc6d1278abc53a319916f47f5dfd25e5960"
+  },
+  "gate_modified": false,
+  "model_calls": 0,
+  "new_reserve_consumption": 0
+}

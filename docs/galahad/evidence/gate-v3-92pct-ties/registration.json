@@ -1,0 +1,48 @@
+{
+  "H0_p": 0.5,
+  "coverage_diagnostic": "Uncapped balanced sampling ignoring primary rejection: independent negative-binomial draws with main seed for ten discordances in each answer stratum; hypothetical, not a gate continuation. Positions include round-robin offset and exclude risk40.",
+  "fixture_notes": "G1 recorded-zero-misfire safety ties unchanged. Concentrated fixture preserves observed support and normalizes 4/11 in each agreement stratum to .36 for exactly .08 population discordance under balanced nine-stratum sampling. Zero observed discordance is not proof of population zero.",
+  "fixtures": {
+    "concentrated": {
+      "format-variant-agreement": 0.36,
+      "multi-source-agreement": 0.36,
+      "other_strata_discordance": 0,
+      "overall_ties": 0.92
+    },
+    "diffuse": {
+      "answer_discordance": 0.12,
+      "overall_ties": 0.92
+    }
+  },
+  "kind": "post-hoc sensitivity, not new confirmatory validation",
+  "m": 10,
+  "main_cap": 460,
+  "model_calls": 0,
+  "numpy": "2.2.6",
+  "p": [
+    0.85,
+    1.0
+  ],
+  "parity": "First 100 streams of each fixture/scenario replayed through exact signed scalar Process and compared to vector simulation",
+  "primary_cap": 100,
+  "reserve_access": false,
+  "risk_N": 40,
+  "risk_stratum": "dissenter",
+  "seeds": {
+    "H0": 2026101802,
+    "main": 2026101801,
+    "risk": 2026101803
+  },
+  "signed_payload_sha256": "c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8",
+  "sources": {
+    "docs/galahad/evidence/v5-gate-v3-result.json": "ab3d0fac8a2a1af8745c6622b9a919432ef93adc09569f40386050d295f9e385",
+    "scripts/confirm_gate_v3.py": "43af7778d0ac170837232733c869c79b99f5e4b8dcffae2183a0f927f5514910",
+    "scripts/study_extended_coverage.py": "4d2b6a61a74960e461c1b28c1d25dc67e273d1ad0a7dc2ea863dd4f0b6c2eb40",
+    "scripts/study_gate_v3_92pct_ties.py": "9232cb27c38fe33c77ea8be6a86178be84169ec9bf984036960d6f2c149db7ca",
+    "scripts/study_two_stage_followup.py": "8a9b10bafc033c9a24626ec9054cbbfc3ed93b01f15648c8e161a0bacb996306",
+    "src/nerve_awim/memory_gateway/scientific_promotion_gate_v3.py": "2e643b6472deb22ec56e9ea25ad4aab9a0cce4b9592b548fed824e4f5f089a54"
+  },
+  "streams": 10000,
+  "t": 0,
+  "total_cap": 500
+}
