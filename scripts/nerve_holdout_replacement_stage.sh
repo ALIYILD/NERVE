@@ -12,7 +12,7 @@ os.environ['RUNPOD_POD_ID']=provider['RUNPOD_POD_ID']
 if provider.get('RUNPOD_API_KEY'):os.environ['RUNPOD_API_KEY']=provider['RUNPOD_API_KEY']
 assert len(sys.argv)==2;stage=sys.argv[1]
 win=json.loads(Path('/workspace/holdout-replacement-window.json').read_text())
-assert win['pod_id']==provider['RUNPOD_POD_ID'] and win['region']=='CA-MTL-1' and win['hourly_usd']==0.59
+assert win['pod_id']==provider['RUNPOD_POD_ID'] and win['region'] in ('CA-MTL-1','EU-SE-1') and win['hourly_usd']==0.59
 assert win['prior_gpu_seconds']==19467.934 and win['gpu_budget_seconds']==21600
 start=datetime.fromisoformat(win['provider_started_at_utc'].replace('Z','+00:00'));assert start.tzinfo
 if stage not in ('stop','backup','progress'):assert 0<=time.time()-start.timestamp()<1800
@@ -34,7 +34,7 @@ if stage=='arm-watchdog':
  cli=W/'bin/runpodctl';cli.parent.mkdir(exist_ok=True)
  src=Path('/workspace/runpodctl-linux-amd64');assert sha(src)=='b66d11eca8cacbf18a2de6943c6e18a79ffbdc8a3c30aa13a49dc6cfc15d4239';shutil.copyfile(src,cli);cli.chmod(0o700)
  os.environ['PATH']=str(cli.parent)+':'+os.environ['PATH']
- watcher=Path('/workspace/runpod-self-stop-holdout-replacement-v1.py');assert sha(watcher)=='68906d7efd8beadd68d7749b866309f0b96bd131d52daf75feade09ae4ffc1d0'
+ watcher=Path('/workspace/runpod-self-stop-holdout-replacement-v1.py');assert sha(watcher)=='5bfc41cb29d6b6a89e7775a808e77501d4a0d91293e9dc57f7106b9ed882dea2'
  with (W/'watchdog.log').open('xb') as log:p=subprocess.Popen(['python3',str(watcher),'--restart-epoch',str(start.timestamp()),'--receipt-dir',str(W)],stdin=subprocess.DEVNULL,stdout=log,stderr=log,start_new_session=True,env=os.environ)
  for _ in range(45):
   if (W/'watchdog-ready.json').exists():print((W/'watchdog-ready.json').read_text());break

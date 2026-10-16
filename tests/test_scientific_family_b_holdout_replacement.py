@@ -17,7 +17,16 @@ class HoldoutReplacementTests(unittest.TestCase):
   self.assertEqual(len(p['prior_claim_sha256']),2715)
   self.assertEqual(r.hashbytes((ROOT/p['candidate_module']).read_bytes()),p['candidate_sha256'])
   self.assertIn('fresh_calibration_max_seconds',p['minimum_preconsumption_formula'])
-  self.assertEqual(p['region'],'CA-MTL-1')
+  self.assertEqual(p['allowed_regions'],['CA-MTL-1','EU-SE-1'])
+ def test_allowed_region_binding(self):
+  with tempfile.TemporaryDirectory() as d:
+   window=Path(d)/'window.json'
+   with patch.object(r.transport,'WINDOW',window),patch.object(Path,'read_bytes',return_value=b'RUNPOD_POD_ID=testpod\0'):
+    for region in ('CA-MTL-1','EU-SE-1'):
+     window.write_text(json.dumps({'pod_id':'testpod','region':region,'hourly_usd':0.59}))
+     self.assertEqual(r.transport.pod_id(),'testpod')
+    window.write_text(json.dumps({'pod_id':'testpod','region':'OTHER','hourly_usd':0.59}))
+    with self.assertRaises(ValueError):r.transport.pod_id()
  def test_public_calibration(self):
   tasks=[r.bank.item(bytes(32),'dev','multi-source-agreement',1000+i) for i in range(5)]
   rows=r.schedule(tasks,['adapted_v1'],kind='calibration')

@@ -10,7 +10,7 @@ import run_scientific_runpod_gate as original
 WINDOW=Path('/workspace/holdout-replacement-window.json')
 def pod_id():
     window=json.loads(WINDOW.read_text())
-    if window.get('region')!='CA-MTL-1' or window.get('hourly_usd')!=0.59:raise ValueError('registered_host_class_changed')
+    if window.get('region') not in ('CA-MTL-1','EU-SE-1') or window.get('hourly_usd')!=0.59:raise ValueError('registered_host_class_changed')
     pod=window['pod_id']
     if not isinstance(pod,str) or not pod.isalnum():raise ValueError('invalid_pod_id')
     provider=dict(x.split('=',1) for x in Path('/proc/1/environ').read_bytes().decode().split('\0') if '=' in x)

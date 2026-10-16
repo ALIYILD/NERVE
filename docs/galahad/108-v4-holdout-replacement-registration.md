@@ -1,6 +1,6 @@
 # One replacement host for frozen v4 holdout
 
-After the existing Sweden pod failed to restart, the user explicitly authorized one replacement pod. This prospective registration binds a new Secure A40 in CA-MTL-1 at $0.59/hour to the root-owned provider identity/window. No additional replacement is implied. Root owns creation and all remote execution.
+After the existing Sweden pod failed to restart, the user explicitly authorized one replacement pod. This prospective registration binds a new Secure A40 in CA-MTL-1 or EU-SE-1 at $0.59/hour to the root-owned provider identity/window. No additional replacement is implied. Root owns creation and all remote execution.
 
 The frozen candidate, prompts, schema, bank and scientific acceptance gate remain unchanged. The exact prior holdout-eligible development proof and all 2,715 historical claims are preserved. Prior conservative running time is 19,467.934 seconds; 2,132.066 seconds remain under the six-hour cap. The replacement has at most 30 minutes from provider start, inference ends after 25 minutes, and the holdout study allowance remains 20 minutes. No signing is authorized.
 
@@ -12,6 +12,8 @@ Timeouts are three times the fresh maximum latency with two identical-request ti
 
 The pinned independent watchdog is armed before restore/bootstrap, uses a fresh trusted provider window and stops at 30 minutes. A downloaded-and-hash-confirmed preflight backup is required before calibration. New evidence is persistent under /workspace/nerve-v4-holdout-replacement-20261016. Final backup includes the actual shared ledger and slice-consumption metadata, while private items stay outside Git. Actual EXITED verification remains root's responsibility.
 
-Six focused CPU checks passed, covering fixed candidate/claims, public calibration scheduling, prior budget/window bounds, watchdog duration rejection, parent tampering and rejection of a dev registration. No model calls or local holdout reads occurred. Historical files remain unchanged. Runtime and scientific outcomes are pending actual execution.
+Seven focused CPU checks passed, covering fixed candidate/claims, public calibration scheduling, prior budget/window bounds, watchdog duration rejection, parent tampering, rejection of a dev registration and allowed-region binding. No model calls or local holdout reads occurred. Historical files remain unchanged. Runtime and scientific outcomes are pending actual execution.
 
 Protocol: evidence/family-b-v4-holdout-replacement-protocol.json. Focused receipt: evidence/v4-holdout-replacement-focused.json. New scripts: scientific_attended_holdout_replacement_transport.py, run_scientific_family_b_v4_holdout_replacement.py and nerve_holdout_replacement_stage.sh.
+
+Before any creation, live capacity changed from CA-MTL-1 to EU-SE-1. The prospectively allowed region set is therefore those two regions; the actual root-owned creation window binds exactly one provider region. GPU class, price, model, candidate, budget and scientific gate remain unchanged. No pod or inference occurred during this amendment.

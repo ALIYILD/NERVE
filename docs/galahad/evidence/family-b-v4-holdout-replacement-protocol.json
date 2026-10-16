@@ -1,7 +1,7 @@
 {
   "version": "family-b-v4-holdout-replacement-v1",
   "authorized": true,
-  "authorization": "User do it explicitly approved one replacement Secure A40 CA-MTL-1 at0.59/hour after existinghost restart capacity failure; frozenholdout only",
+  "authorization": "User approved one replacement Secure A40 at0.59/hour; liveavailability beforecreation selects CA-MTL-1 or EU-SE-1 in root-owned creationwindow; scientific/budget constraints unchanged",
   "prior_running_seconds": 19467.934,
   "prior_attempts": 2715,
   "physical_attempt_cap": 6000,
@@ -2735,9 +2735,8 @@
   "signing_authorized": false,
   "calibration_policy": "Newhost freshfive public calibration calls required; oldSweden calibration historicalonly; timeout3max with twoidenticaltimeout retries",
   "migration": "Restore exact2715 priorclaim bytes from verifiedSwedenfinalarchive and originalsealedbank archive. No study rerun/reset; source andparent journalhashes prove completed eligibility. Freshcal addsfiveclaims beforeholdout.",
-  "watchdog_sha256": "68906d7efd8beadd68d7749b866309f0b96bd131d52daf75feade09ae4ffc1d0",
+  "watchdog_sha256": "5bfc41cb29d6b6a89e7775a808e77501d4a0d91293e9dc57f7106b9ed882dea2",
   "pod_id_binding": "root-owned /workspace/holdout-replacement-window.json matched actual PID1",
-  "region": "CA-MTL-1",
   "holdout_study_seconds": 1200,
   "L6_previous_dev_wall_seconds": 3021.795081410557,
   "parent_evidence_sha256": {
@@ -8779,5 +8778,9 @@
   "parent_final_archive_sha256": "d82ff7929f9e174a28d4d2fe93fae8d30e9258a073c9fcd9bd405521883903ff",
   "original_sealed_bank_archive_sha256": "6b61fdc3cd68ca4d9ed45fb937b46765936e9e049827ce3133b4278ad8f921dc",
   "holdout_predecessor_status": "No holdout registration/calls in prior finalarchive and rootstagehistory; attempted samehostrestart failedbeforeexecution",
-  "minimum_preconsumption_formula": "200 * prior_dev_wall_seconds/1200 + fresh_calibration_max_seconds + 3 * fresh_timeout_seconds; must fit1200studyseconds and remaininginferencewindow"
+  "minimum_preconsumption_formula": "200 * prior_dev_wall_seconds/1200 + fresh_calibration_max_seconds + 3 * fresh_timeout_seconds; must fit1200studyseconds and remaininginferencewindow",
+  "allowed_regions": [
+    "CA-MTL-1",
+    "EU-SE-1"
+  ]
 }
