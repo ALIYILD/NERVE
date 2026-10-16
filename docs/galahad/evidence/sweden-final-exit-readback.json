@@ -1,0 +1,42 @@
+{
+  "reads": [
+    {
+      "id": "lvojhtouu5gede",
+      "status": "EXITED",
+      "startedAt": "2026-10-16T15:08:25.977Z",
+      "cost": 0.59,
+      "checked_at": {
+        "current_time": "2026-10-16 16:12:56 UTC"
+      }
+    },
+    {
+      "id": "lg0svvuenxvbno",
+      "status": "EXITED",
+      "startedAt": "2026-10-15T23:08:59.019Z",
+      "cost": 0.59,
+      "checked_at": {
+        "current_time": "2026-10-16 16:12:57 UTC"
+      }
+    },
+    {
+      "id": "97vr620wnmtuga",
+      "status": "EXITED",
+      "startedAt": "2026-10-16T06:27:28.749Z",
+      "cost": 0.59,
+      "checked_at": {
+        "current_time": "2026-10-16 16:12:57 UTC"
+      }
+    },
+    {
+      "id": "b7qj6qyx9ij6gg",
+      "status": "EXITED",
+      "startedAt": "2026-10-16T08:33:31.123Z",
+      "cost": 0.59,
+      "checked_at": {
+        "current_time": "2026-10-16 16:12:56 UTC"
+      }
+    }
+  ],
+  "archive_sha256": "d82ff7929f9e174a28d4d2fe93fae8d30e9258a073c9fcd9bd405521883903ff",
+  "sweden_upper_seconds": 3870.023
+}
