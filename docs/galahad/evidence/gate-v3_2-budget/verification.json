@@ -1,0 +1,12 @@
+{
+  "all_targets_pass": false,
+  "canonical_v3_signature_verified": true,
+  "cells": 62,
+  "focused_tests_passed": 6,
+  "model_calls": 0,
+  "payload_prepared": false,
+  "pod_operations": 0,
+  "reserve_consumed": 0,
+  "scalar_parity_streams": 6200,
+  "streams_verified": 620000
+}
