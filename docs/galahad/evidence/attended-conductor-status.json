@@ -1,12 +1,12 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T08:53:26.485999+00:00",
-  "status": "L4_running_root_owned_session84145",
+  "updated_at_utc": "2026-10-16T09:32:11.133912+00:00",
+  "status": "L4_verified_exploratory_failures_L5_registration_preparing",
   "prior_running_seconds": 3937.034,
-  "physical_attempts": 10,
+  "physical_attempts": 1510,
   "pod_status": "RUNNING",
   "real_bank_generated": true,
-  "candidate_designed": false,
+  "candidate_designed": true,
   "holdout_consumed": false,
   "inference_cutoff_utc": "2026-10-16T10:15:00Z",
   "handoff_deadline_utc": "2026-10-16T10:30:00Z",
@@ -32,7 +32,7 @@
     "next_timeout_seconds": 46.11825466901064
   },
   "remaining_running_seconds": 17662.966,
-  "remaining_physical_attempts": 5990,
+  "remaining_physical_attempts": 4490,
   "calibration_replay_verified": true,
   "L4_registered": true,
   "L4_started": true,
@@ -87,8 +87,18 @@
     "max_seconds": 17.494062535464764,
     "next_timeout_seconds": 52.48218760639429
   },
-  "L4_exec_session": 84145,
+  "L4_exec_session": null,
   "L4_registration_sha256": "1c0b7ff95de25979fbef6e42fdac521d33ed6cda55240f200a5f8c3c495ee07e",
-  "L4_completed": false,
-  "physical_attempts_note": "10 confirmed through completed calibrations; live L4 adds physical claims. Final count pending."
+  "L4_completed": true,
+  "physical_attempts_note": "Completed two calibrations10 plus L4 1500; no retries.",
+  "L4_progress": {
+    "claims": 1500,
+    "results": 1500,
+    "rows": 3600,
+    "total_rows": 3600,
+    "report_exists": true
+  },
+  "L4_verify_session": 39198,
+  "L4_verdict": "exploratory_failures",
+  "candidate_registered": false
 }
