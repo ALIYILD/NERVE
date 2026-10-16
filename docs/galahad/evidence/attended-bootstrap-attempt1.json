@@ -1,0 +1,17 @@
+{
+  "version": "bootstrap-attempt-v1",
+  "exec_session": 5702,
+  "exit_code": 1,
+  "bootstrap_source_sha256": "61de323cea317f34bbcb685b7243d5335d2be6143e99ae7d9908a75803c8af4b",
+  "completed": [
+    "zstd installation",
+    "Ollama0.40.5 archive download1438684604bytes",
+    "runtime extraction",
+    "server launch"
+  ],
+  "failed": "First read-only /api/version probe: TimeoutError: timed out",
+  "trace_excerpt": "urllib.request.urlopen(http://127.0.0.1:11434/api/version, timeout=2) -> http.client.getresponse -> socket.recv_into -> TimeoutError: timed out",
+  "model_pull_started": false,
+  "inference_calls": 0,
+  "log_note": "Captured failure excerpt from tool output; remote server.log preserved. No claim this is full stdout."
+}

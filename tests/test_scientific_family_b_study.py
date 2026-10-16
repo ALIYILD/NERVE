@@ -67,12 +67,20 @@ class FamilyStudyTests(unittest.TestCase):
         with self.assertRaises(ValueError):study.require_exact_development_candidate(reg,str(other),'protocol')
         candidate.write_text('# tampered')
         with self.assertRaises(ValueError):study.require_exact_development_candidate(reg,str(candidate),'protocol')
+    def test_replacement_transport_rejects_laptop_and_original_pod(self):
+        with patch.object(study.transport.platform,'system',return_value='Darwin'),patch.dict(study.transport.os.environ,{'RUNPOD_POD_ID':study.transport.POD}):
+            with self.assertRaises(RuntimeError):study.transport.network('/api/tags')
+        with patch.object(study.transport.platform,'system',return_value='Linux'),patch.dict(study.transport.os.environ,{'RUNPOD_POD_ID':'lg0svvuenxvbno'}):
+            with self.assertRaises(RuntimeError):study.transport.network('/api/tags')
+        self.assertEqual(study.transport.POD,'97vr620wnmtuga')
+        self.assertEqual(study.transport.original.POD,'lg0svvuenxvbno')
+
     def test_attended_window_caps_deadline_before_final_handoff(self):
         class AttendedClock(datetime):
             @classmethod
             def now(cls,tz=None):return datetime(2026,10,16,6,30,tzinfo=timezone.utc)
         with patch.object(study,'datetime',AttendedClock):
-            study.register(self.root,'calibration',None,ROOT/'docs/galahad/evidence/family-b-attended-protocol-v2.json',None,self.budget,running_start='2026-10-16T06:30:00+00:00',prior_running_seconds=1160.783)
+            study.register(self.root,'calibration',None,ROOT/'docs/galahad/evidence/family-b-attended-protocol-v3.json',None,self.budget,running_start='2026-10-16T06:30:00+00:00',prior_running_seconds=1160.783)
         reg=json.loads((self.root/'registration.json').read_text())
         self.assertEqual(reg['absolute_deadline_utc'],'2026-10-16T10:15:00+00:00')
         self.assertEqual(reg['prior_running_seconds'],1160.783)

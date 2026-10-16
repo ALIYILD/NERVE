@@ -13,17 +13,17 @@ import socket
 import statistics
 import time
 import urllib.error
-import run_scientific_runpod_gate as transport
+import scientific_attended_replacement_transport as transport
 from nerve_awim.memory_gateway import scientific_family_b_adapter as adapter
 from nerve_awim.memory_gateway import scientific_task_bank_v3 as bank
 from nerve_awim.memory_gateway.scientific_task_bank import RULES
 from nerve_awim.memory_gateway.scientific_candidate_execution import ABSTAIN
 
 ROOT=Path(__file__).resolve().parents[1]
-VERSION='registered-family-b-study-v2-attended'
+VERSION='registered-family-b-study-v3-attended-replacement'
 WRAPUP=datetime.fromisoformat('2026-10-16T10:15:00+00:00')
 SEED=20261016
-SOURCES=['docs/galahad/evidence/family-b-attended-protocol-v2.json','docs/galahad/evidence/overnight-protected-paths.json','scripts/run_scientific_family_b_study.py','scripts/run_scientific_runpod_gate.py',
+SOURCES=['docs/galahad/evidence/family-b-attended-protocol-v3.json','docs/galahad/evidence/overnight-protected-paths.json','scripts/run_scientific_family_b_study.py','scripts/run_scientific_runpod_gate.py','scripts/scientific_attended_replacement_transport.py',
          'src/nerve_awim/memory_gateway/scientific_family_b_adapter.py','src/nerve_awim/memory_gateway/scientific_task_bank_v3.py',
          'src/nerve_awim/memory_gateway/scientific_task_bank.py','src/nerve_awim/memory_gateway/scientific_structured_tasks.py',
          'src/nerve_awim/memory_gateway/scientific_candidate_v3.py','src/nerve_awim/memory_gateway/scientific_candidate_execution.py',

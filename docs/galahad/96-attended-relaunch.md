@@ -25,3 +25,17 @@ python3 scripts/run_scientific_family_b_study.py verify --directory <private-stu
 ```
 
 Registration supplies `--bank`, `--calibration`, `--prior` and the exact frozen candidate module only where required. Holdout is never called unless verified candidate development is eligible. Transfer uses `git archive`, `scp` and `tar`; private archives stay outside Git in a mode-0700 local directory. Commands with an actual execution approval requirement will be surfaced before waiting.
+
+## Authorized replacement
+
+Original pod start returned capacity error400 twice and fresh reads confirmed EXITED. The one permitted replacement is `97vr620wnmtuga`, A40 at $0.59/hour, started2026-10-16T06:27:28.749Z. Catalog stock was MEDIUM in EU-SE-1. Its account-injected SSH key did not match this laptop; only replacement pod configuration was amended with the local public key, preserving existing environment and keys. The automatic container restart changed directSSH to194.68.245.46:22159; cumulative time still starts at the original provider timestamp.
+
+Protocol `evidence/family-b-attended-protocol-v3.json` pins this replacement. New `scientific_attended_replacement_transport.py` preserves the historical transport file and the exact Linux/loopback/model/runtime/decoder guards. Two focused tests passed for replacement isolation and the attended deadline. The previous window/source receipts remain unchanged historical records.
+
+Actual bootstrap command, running without inference:
+
+```sh
+ssh -p 22159 -i /Users/aliyildirim/.ssh/id_ed25519 -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=yes root@194.68.245.46 timeout 1800 bash /root/nerve-attended-bootstrap.sh
+```
+
+Its exact source is `scripts/bootstrap_attended_runpod.sh`; it pulls only the requested named model and rejects any digest mismatch. Runtime readiness is pending until its identity receipt is verified.

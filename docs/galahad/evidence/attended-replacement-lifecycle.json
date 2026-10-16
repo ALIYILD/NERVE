@@ -1,0 +1,19 @@
+{
+  "version": "attended-replacement-lifecycle-v1",
+  "original_pod_id": "lg0svvuenxvbno",
+  "original_status_before_create": "EXITED",
+  "original_start_attempts": 2,
+  "original_start_failure": "400: There are not enough free GPUs on the host machine to start this pod.",
+  "replacement_id": "97vr620wnmtuga",
+  "replacement_count": 1,
+  "replacement_started_at_utc": "2026-10-16T06:27:28.749Z",
+  "replacement_status": "RUNNING",
+  "gpu": "NVIDIA A40",
+  "hourly_usd": 0.59,
+  "catalog_stock": "SECURE EU-SE-1 MEDIUM",
+  "prior_running_seconds": 1160.783,
+  "model_calls": 0,
+  "connection": "194.68.245.46:22159",
+  "setup": "Only replacement pod PUBLIC_KEY appended local public key, existing env preserved; automatic container restart changed direct port, provider startedAt unchanged. Account key list untouched.",
+  "bootstrap_exec_session": 5702
+}

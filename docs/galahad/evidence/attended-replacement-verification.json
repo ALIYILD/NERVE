@@ -1,0 +1,18 @@
+{
+  "version": "attended-replacement-verification-v1",
+  "created_at_utc": "2026-10-16T06:38:53.395413+00:00",
+  "tests": 2,
+  "passed": 2,
+  "log_sha256": "b0765e0df72e35a070e83572570f74f71e52f19175dd44a62f5d5d1ad35e4d89",
+  "sources": {
+    "scripts/scientific_attended_replacement_transport.py": "d3d82a3b50f694cc1902ad2182732cdd66983f5b71360188396a3cd7de62a47f",
+    "scripts/run_scientific_family_b_study.py": "08aea19ecdf0f4fdecfd9907bb18ae5a409eb7adce0bc629f87cbac6a9a8a356",
+    "tests/test_scientific_family_b_study.py": "ad5e8445d0860df3f0f395c7e0620d72860f6a0b15f6d7ef524733719585f877",
+    "scripts/bootstrap_attended_runpod.sh": "f9f3707928f6535731a6f0a6de62fadd9b47bf5f8a7e6973f91f6ca1501b7bf6",
+    "docs/galahad/evidence/family-b-attended-protocol-v3.json": "b4567e9751026b8eeac00ba0ce4f7c9b0026030976dafbb29db7201a7cac64f8"
+  },
+  "review": "Independent read-only review cleared explicit replacement identity and unchanged Linux/loopback/runtime/model/decoder guards.",
+  "historical_transport_sha256": "5b652c23b280ca43b04750e0f500c65bcdcc4ecfff7dce3a712c50996319fa8b",
+  "model_calls": 0,
+  "bootstrap_setup_correction": "Read-only readiness timeout increased2\u219210seconds, TimeoutError retried; existing runtime archive/server reused. No inference or study change."
+}

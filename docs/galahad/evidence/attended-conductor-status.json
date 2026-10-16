@@ -1,13 +1,19 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T06:20:45.675466+00:00",
-  "status": "prelaunch_frozen_source_review",
+  "updated_at_utc": "2026-10-16T06:38:53.395413+00:00",
+  "status": "replacement_runtime_bootstrap_running",
   "prior_running_seconds": 1160.783,
   "physical_attempts": 0,
-  "pod_status": "EXITED",
+  "pod_status": "RUNNING",
   "real_bank_generated": false,
   "candidate_designed": false,
   "holdout_consumed": false,
   "inference_cutoff_utc": "2026-10-16T10:15:00Z",
-  "handoff_deadline_utc": "2026-10-16T10:30:00Z"
+  "handoff_deadline_utc": "2026-10-16T10:30:00Z",
+  "pod_id": "97vr620wnmtuga",
+  "replacement_count": 1,
+  "provider_started_at_utc": "2026-10-16T06:27:28.749Z",
+  "bootstrap_exec_session": 50979,
+  "original_pod_status": "EXITED",
+  "bootstrap_attempt1": "failed readiness timeout; preservedreceipt"
 }
