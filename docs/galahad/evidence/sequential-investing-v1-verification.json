@@ -1,0 +1,11 @@
+{
+  "fixture_tests_passed": 8,
+  "historical_study_replay_matches": 200,
+  "ledger_entries_verified": 200,
+  "sources_unchanged": true,
+  "model_calls": 0,
+  "holdout_accessed": false,
+  "installed": false,
+  "registration_sha256": "308c41c03a3958e4aca43297d8275305c1c745586907826b503816f9c03e0d0c",
+  "result_sha256": "0938061dc10891880b5234b9ad2adbc1b7f02e8840db7ae7add5695edaa86718"
+}
