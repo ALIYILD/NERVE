@@ -1,0 +1,11 @@
+{
+  "version": "loop-46-wall-v1",
+  "wall": "family-A skill v1 cannot parse family-B grammar; no seam reaches it.",
+  "meaning": "Within the frozen family-A contract and registered downstream rule seams; not a universal impossibility claim.",
+  "evidence": "docs/galahad/evidence/overnight-contract-compatibility.json",
+  "evidence_sha256": "6636079bd9160c70c67b22bd7fbc99d63c4072d73d0990f9412cbfd5e8b341bb",
+  "status": "registered",
+  "proposed_hypothesis": "normalise-then-decide",
+  "new_contract_required": true,
+  "inference_calls": 0
+}

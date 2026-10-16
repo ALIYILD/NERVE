@@ -1,0 +1,160 @@
+{
+  "version": "family-b-v5-prospective-registration-v1",
+  "status": "registered_not_executable",
+  "candidate": "family-b-v5-numeric-agreement-smallest-source",
+  "incumbent": {
+    "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+    "version": "v1",
+    "candidate": "v4@7B",
+    "record_sha256": "8d0a56f69708c470ac6d2791f21be20a2969496bd388d6e1702bcf592f5e8644"
+  },
+  "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+  "design_inputs": {
+    "only": "published per-stratum counts; no item-level journals or reserve items",
+    "holdout_aggregate_sha256": "ec61d0a7436e1d57caabeee0167d271f579ca406ccfb7fb042e6e01bc0cbb7f4",
+    "v4_correct": {
+      "conflict": {
+        "correct": 11,
+        "n": 11
+      },
+      "dissenter": {
+        "correct": 11,
+        "n": 11
+      },
+      "entity-decoy": {
+        "correct": 11,
+        "n": 11
+      },
+      "format-variant-agreement": {
+        "correct": 7,
+        "n": 11
+      },
+      "measurement-decoy": {
+        "correct": 11,
+        "n": 11
+      },
+      "multi-source-agreement": {
+        "correct": 8,
+        "n": 11
+      },
+      "stale-vs-current": {
+        "correct": 11,
+        "n": 11
+      },
+      "supported-measurement": {
+        "correct": 12,
+        "n": 12
+      },
+      "unit-mismatch": {
+        "correct": 11,
+        "n": 11
+      }
+    }
+  },
+  "candidate_rule": {
+    "input": "Existing family-B parsed records and exact queried entity/mass/mg; no normalization model, parser or prompt changes.",
+    "filter": "current=true AND exact entity AND measurement=mass AND unit=mg",
+    "no_matching_records": "abstain",
+    "comparison": "Exact Decimal equality of all matching values; no float tolerance, rounding, unit conversion or majority vote. Numeric equality already exists in the baseline; preserve it.",
+    "disagreement": "abstain if any matching numeric value differs, including a single dissenter",
+    "agreement": "Select lexicographically smallest full source_id among ALL matching agreeing records; emit that record identity, exact numeric value rendered as Decimal and unit. Do not ask the model to choose provenance.",
+    "unsupported": "fail closed under unchanged family-B parser/input bounds",
+    "new_effect": "Deterministic answer/source selection instead of model choice; not a novel numeric-equality implementation.",
+    "implementation_status": "specification frozen; candidate implementation and source hash required before admission"
+  },
+  "predictions": {
+    "target_strata": [
+      "format-variant-agreement",
+      "multi-source-agreement"
+    ],
+    "risk_primary": "dissenter: accidental majority/approximate equality would hide a real conflict",
+    "risk_secondary": [
+      "stale-vs-current: stale lexical winner must not be eligible",
+      "entity-decoy and measurement-decoy: source ordering must follow exact relevance filtering"
+    ],
+    "expected_effect": "Fewer provenance errors; no predicted gain from already-existing Decimal equality; no measured v5 result."
+  },
+  "evaluation": {
+    "mode": "paired anytime-valid sequential reserve stream; NOT fixed-slice gate",
+    "bank_manifest_sha256": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
+    "reserve_containers": [
+      {
+        "count": 100,
+        "name": "slice2.json",
+        "sha256": "fe605fa0b0138a4eddba66ed099e5ab6d00c4f2affd21529607d4f680d523263",
+        "stratum_counts": {
+          "conflict": 11,
+          "dissenter": 11,
+          "entity-decoy": 11,
+          "format-variant-agreement": 11,
+          "measurement-decoy": 12,
+          "multi-source-agreement": 11,
+          "stale-vs-current": 11,
+          "supported-measurement": 11,
+          "unit-mismatch": 11
+        }
+      },
+      {
+        "count": 100,
+        "name": "slice3.json",
+        "sha256": "a031662f476a1c59e6aec340bf54c620485ecd21614d44aac5e4f7b14cad710e",
+        "stratum_counts": {
+          "conflict": 11,
+          "dissenter": 11,
+          "entity-decoy": 12,
+          "format-variant-agreement": 11,
+          "measurement-decoy": 11,
+          "multi-source-agreement": 11,
+          "stale-vs-current": 11,
+          "supported-measurement": 11,
+          "unit-mismatch": 11
+        }
+      }
+    ],
+    "maximum_items": 200,
+    "exclude": "All consumed slice1 items and all development items",
+    "schedule": "Gate-private deterministic seeded shuffle within strata then stratified round-robin across pooled unused containers, full rounds before leftovers. Seed 20261017. Freeze schedule hash before first outcome; no candidate/designer item access.",
+    "candidate_vs": "retained family-B v4, paired on identical items",
+    "controls": [
+      "always-abstain"
+    ],
+    "no_slice_reset": true,
+    "gate_source_status": "Existing v2 gate/contract is simulation-only and remains unchanged, unsigned, inactive. Future versioned reserve adapter required; no production deployment assertion.",
+    "proposed_gate": {
+      "alpha": 0.00025,
+      "bet": 0.5,
+      "futility_e": 0.05,
+      "item_budget": 200,
+      "order_seed": 20261017,
+      "plateau": "max(3, ceil(2 * stdev(three real dev seed deltas) * 200)); deltas not yet measured; do not invent zeros",
+      "marginal_delta": "paired v5 correctness minus v4 correctness with only the candidate change reverted"
+    },
+    "wallet": "Dedicated prospective research allocation required before access; existing simulation wallet is exhausted/immutable and must not be reused or reset. No alpha allocated by this registration.",
+    "stop_rules": [
+      "domain violation or registered stratum veto: retain incumbent",
+      "E <= 0.05: futility",
+      "E >= 4000 and plateau met and all strata observed: proposal only",
+      "200 items without crossing: insufficient_power",
+      "infrastructure failure: incomplete, no redispatch/reset"
+    ],
+    "statistical_limit": "Anytime-valid claim requires conditional null assumption and prospective without-replacement finite-bank validity review; absent review, exploratory only. Stratum veto non-crossing is not noninferiority proof.",
+    "admission_blockers": [
+      "tested versioned reserve gate adapter and explicit research activation",
+      "prospectively hashed candidate implementation",
+      "three-seed dev deltas for plateau, without reserve access",
+      "exclusive unused-reserve proof and schedule commitment by gate custodian",
+      "dedicated alpha wallet commitment and statistical validity review"
+    ],
+    "call_budget": "Candidate rule requires zero model calls on supported records; paired v4 <=200 logical model calls, <=600 physical attempts with two identical-request retries. Any later dev/calibration calls are separately registered; no such calls now."
+  },
+  "source_sha256": {
+    "src/nerve_awim/memory_gateway/scientific_family_b_adapter.py": "8e2e4c8a022b11d1a5256e7283cde89928328fb839bd5afde28f2688735c178d",
+    "src/nerve_awim/memory_gateway/scientific_family_b_v4.py": "764961cf67b04bbdc4ebd1d8dabb7af2380c7de2a42ca064ce5f0799dd323ee9",
+    "src/nerve_awim/memory_gateway/scientific_sequential_gate.py": "0798347362940c8889682dcb3e43bab0a2af2fdb52c586bea51218bfa7e5db57",
+    "src/nerve_awim/memory_gateway/scientific_sequential_contract.py": "70c4ee2a40727082b1a841e63b314bf897fe4c81196c057ea7d25bfde13f8de0"
+  },
+  "model_calls": 0,
+  "reserve_accessed": false,
+  "promotion_authorized": false,
+  "signing_authorized": false
+}

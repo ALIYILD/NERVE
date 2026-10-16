@@ -1,0 +1,11 @@
+{
+  "authorization_tests_passed": 5,
+  "actual_annotation_binding_verified": true,
+  "existing_registry_files_unchanged": 7,
+  "protected_files_unchanged": 17,
+  "reserve_metadata_count": 200,
+  "reserve_items_opened": 0,
+  "model_calls": 0,
+  "new_signatures": 0,
+  "scope": "CPU authorization tests and public metadata/hash checks only"
+}
