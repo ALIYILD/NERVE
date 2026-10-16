@@ -1,0 +1,20 @@
+{
+  "version": "family-b-L5-wrapper-focused-v1",
+  "checked_at_utc": "2026-10-16T09:00:43.905131+00:00",
+  "checks": [
+    "aggregate_only_cluster",
+    "incomplete_or_saturated_rejected",
+    "allowed_generic_fixture",
+    "forbidden_import_call_and_fragment_rejected",
+    "actual_canonical_history_readonly_verified"
+  ],
+  "model_calls": 0,
+  "actual_candidate_created": false,
+  "wrapper_sha256": "622c8ded7fdd4534ac93c3c6fcecec89d9cd5a8782a1f9a595c8d8f76ddf34a5",
+  "history": {
+    "sha256": "d54cb5c56b98192fe7bbef34d04a30bfb3164005ee11a973ff36776de3724845",
+    "head": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count": 0,
+    "path": "/Users/aliyildirim/nerve-research-runs/scientific-negative-history-v1/rejections.sqlite"
+  }
+}
