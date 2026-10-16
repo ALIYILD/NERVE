@@ -1,0 +1,10 @@
+{
+  "calibration_calls_verified": 5,
+  "dev_records_byte_identical": 10,
+  "network_disabled": true,
+  "new_model_calls": 0,
+  "registration_sha256": "a17bfcbd26cfce5da09a5d067c0b01b2c30ba27fc9e063dd0825070f3ec5e686",
+  "replay_source_sha256": "230906b0aa6697e666416cc5d59e5e80b8d4b88bff65aee3180f95d08356b7c6",
+  "report_sha256": "471bce840de36434b2e9de561b848b6a3105f0c2fa2de2dd69c59a244eca1717",
+  "verified": true
+}

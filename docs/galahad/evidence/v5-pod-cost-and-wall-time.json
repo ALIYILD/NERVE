@@ -1,0 +1,21 @@
+{
+  "pod_id": "5xndo7i7s5r9zn",
+  "gpu": "NVIDIA A40",
+  "region": "EU-SE-1",
+  "hourly_usd": 0.59,
+  "provider_started_at": "2026-10-16T21:48:40.32Z",
+  "stop_response_exited_at": "2026-10-16 22:14:57 UTC",
+  "verified_exited_at": "2026-10-16 22:15:07 UTC",
+  "pod_elapsed_seconds": 1576.68,
+  "gpu_hours": 0.43796666666666667,
+  "estimated_compute_usd": 0.25840033333333334,
+  "actual_invoice": false,
+  "storage_excluded": true,
+  "study_wall_seconds": 210.33798931800993,
+  "study_remote_call_seconds": 117.74256310332566,
+  "preflight_remote_call_seconds": 32.83049083314836,
+  "preflight_model_calls": 12,
+  "study_model_calls": 67,
+  "total_model_calls": 79,
+  "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364"
+}

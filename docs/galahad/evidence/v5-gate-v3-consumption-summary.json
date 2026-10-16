@@ -1,0 +1,9 @@
+{
+  "bank_manifest_sha256": "8ae1b71b421fe8ace9b89dff0bcc359c79b7d535960306e0640da76fdba79aeb",
+  "consumed_items": 100,
+  "allocated_items": 508,
+  "unconsumed_allocated_quarantined": 408,
+  "unallocated_reserve": 1292,
+  "all_reserve_files_mode000": true,
+  "ledger_sha256": "a89f0812b2d1a9a6c1340b83804150f64fa04342759e40182765176d1620d3e5"
+}

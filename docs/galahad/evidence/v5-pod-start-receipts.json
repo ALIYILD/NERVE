@@ -1,0 +1,64 @@
+{
+  "v5_start_result": {
+    "detail": "There are not enough free GPUs on the host machine to start this pod.",
+    "status": 400,
+    "title": "Bad Request",
+    "hint": "Capacity, not input: the request is valid but no machine can take it right now. Don't change the payload shape. Retry with another GPU type, data center, cloud, CUDA version or count, or try again later. For a stopped Pod, its host's GPUs are taken; that Pod can only start once they free up."
+  },
+  "v5_after_start": {
+    "cost": 0.59,
+    "dataCenterId": "EU-SE-1",
+    "gpu": {
+      "count": 1,
+      "id": "NVIDIA A40",
+      "memory": 50,
+      "vcpuCount": 9
+    },
+    "id": "lvojhtouu5gede",
+    "name": "nerve-v4-sweden-20261016",
+    "startedAt": "2026-10-16T15:08:25.977Z",
+    "status": "EXITED"
+  },
+  "v5_fallback_before": {
+    "cost": 0.59,
+    "dataCenterId": "EU-SE-1",
+    "gpu": {
+      "count": 1,
+      "id": "NVIDIA A40",
+      "memory": 50,
+      "vcpuCount": 9
+    },
+    "id": "5xndo7i7s5r9zn",
+    "name": "nerve-v4-final-holdout-20261016",
+    "startedAt": "2026-10-16T17:58:15.091Z",
+    "status": "EXITED"
+  },
+  "v5_fallback_start": {
+    "cost": 0.59,
+    "dataCenterId": "EU-SE-1",
+    "gpu": {
+      "count": 1,
+      "id": "NVIDIA A40",
+      "memory": 50,
+      "vcpuCount": 9
+    },
+    "id": "5xndo7i7s5r9zn",
+    "name": "nerve-v4-final-holdout-20261016",
+    "startedAt": "2026-10-16T21:48:40.32Z",
+    "status": "RUNNING"
+  },
+  "v5_running_pod": {
+    "cost": 0.59,
+    "dataCenterId": "EU-SE-1",
+    "gpu": {
+      "count": 1,
+      "id": "NVIDIA A40",
+      "memory": 50,
+      "vcpuCount": 9
+    },
+    "id": "5xndo7i7s5r9zn",
+    "name": "nerve-v4-final-holdout-20261016",
+    "startedAt": "2026-10-16T21:48:40.32Z",
+    "status": "RUNNING"
+  }
+}

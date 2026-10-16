@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-10-16T22:03:46.894533+00:00",
+  "registration_sha256": "a17bfcbd26cfce5da09a5d067c0b01b2c30ba27fc9e063dd0825070f3ec5e686",
+  "pod_id": "5xndo7i7s5r9zn",
+  "replaces_pod": "lvojhtouu5gede",
+  "reason": "original host has no free GPUs; same Sweden A40, same rate/runtime/model; no inference yet",
+  "hourly_usd": 0.59,
+  "execution_sources": {
+    "scripts/v5_remote_call.py": "fc91114612b1d736efe407ef99aa478a8c7b4093de4aebe2e47f8acb02a012c5",
+    "scripts/execute_v5_identity_replay.py": "30085a4a6e412068a9f5ea2c4a65db6546cb2e24face14fb2e24efbea59d4129"
+  }
+}

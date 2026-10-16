@@ -1,0 +1,9 @@
+{
+  "signed_gate_verified": true,
+  "gate_version": "v3",
+  "payload_sha256": "c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8",
+  "private_ledger_consumed": 100,
+  "bank_manifest_sha256": "8ae1b71b421fe8ace9b89dff0bcc359c79b7d535960306e0640da76fdba79aeb",
+  "new_model_calls": 0,
+  "historical_consumer_smoke_test": "No longer applicable: asserts zero bank consumption. Its post-study failure was that precondition, not signature/source verification."
+}

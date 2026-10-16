@@ -1,0 +1,34 @@
+{
+  "read_at": "2026-10-16 22:15:07 UTC",
+  "pods": [
+    {
+      "cost": 0.59,
+      "dataCenterId": "EU-SE-1",
+      "gpu": {
+        "count": 1,
+        "id": "NVIDIA A40",
+        "memory": 50,
+        "vcpuCount": 9
+      },
+      "id": "5xndo7i7s5r9zn",
+      "startedAt": "2026-10-16T21:48:40.32Z",
+      "status": "EXITED"
+    },
+    {
+      "cost": 0.59,
+      "dataCenterId": "EU-SE-1",
+      "gpu": {
+        "count": 1,
+        "id": "NVIDIA A40",
+        "memory": 50,
+        "vcpuCount": 9
+      },
+      "id": "lvojhtouu5gede",
+      "startedAt": "2026-10-16T15:08:25.977Z",
+      "status": "EXITED"
+    }
+  ],
+  "stop_requested_at": "2026-10-16 22:14:57 UTC",
+  "stopped_pod": "5xndo7i7s5r9zn",
+  "storage_preserved": true
+}

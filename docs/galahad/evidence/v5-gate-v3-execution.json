@@ -1,0 +1,7 @@
+{
+  "concurrency": 1,
+  "model_calls": 67,
+  "timeouts": 0,
+  "total_remote_call_seconds": 117.74256310332566,
+  "wall_seconds": 210.33798931800993
+}

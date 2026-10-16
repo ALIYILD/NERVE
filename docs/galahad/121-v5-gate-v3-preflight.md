@@ -1,5 +1,7 @@
 # V5 under signed gate v3 — calibration prerequisite
 
+Historical preflight blockage, superseded by the user's explicit correction: no 20-item calibration exists or should be created. The authorized replacement is the historical five-call latency/identity check and a byte-identical replay of the first ten registered family-B v4 dev items. See [the corrected study report](122-v5-signed-gate-v3-study.md). The remaining text records the earlier state, not the current admission status.
+
 Status: **candidate_requires_review**, reason **calibration_contract_missing**. This is an admission/preflight status, not a study verdict. No calibration or holdout study has run.
 
 The requested “20-item calibration from doc94” cannot be identified: this checkout’s doc94 is `94-sequential-power-feasibility-v2.md` (see the exact path and hash in the receipt), an analytical sequential-power feasibility result with no model calls, calibration fixture or expected 20-item result. Existing runtime calibration receipts in docs97/101/106/108–110 cover five-call latency checks. They are not silently substituted. The user has been asked for the exact fixture/receipt and matching criterion.
