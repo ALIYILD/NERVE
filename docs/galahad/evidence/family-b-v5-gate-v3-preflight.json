@@ -1,0 +1,60 @@
+{
+  "version": "family-b-v5-gate-v3-preflight-v1",
+  "status": "candidate_requires_review",
+  "reason": "calibration_contract_missing",
+  "not_a_scientific_study_verdict": true,
+  "admitted": false,
+  "study_run": false,
+  "calibration_run": false,
+  "user_requested_calibration": "20-item calibration from doc94, confirm matches",
+  "actual_doc94": {
+    "path": "docs/galahad/94-sequential-power-feasibility-v2.md",
+    "sha256": "3d578a34b44deb81a9472ac4b6de935a309d8bb5ca3d3f2a9f5d4b8f765f80bd",
+    "title": "# Sequential gate v2: prospective power feasibility",
+    "has_twenty_item_calibration": false
+  },
+  "required_before_inference": "Exact public calibration item fixture and expected receipt/matching criterion. Existing five-call latency calibration is not substituted.",
+  "candidate": "family-b-v5-numeric-agreement-smallest-source",
+  "incumbent": "retained family-B v4 skillv1",
+  "source_sha256": {
+    "src/nerve_awim/memory_gateway/scientific_family_b_v5.py": "a2850cbd0c580cfe78abab763513d2e206f011c446fcd61ec5ce3d0feac689ab",
+    "scripts/test_family_b_v5_candidate.py": "59d2881a2cf28e362b6e0f5cfee8ec82e7ce5c5bea8c883b57ada7d3dae6c830",
+    "docs/galahad/evidence/family-b-v5-registration.json": "ead1ba9da2a3cf257e9b59e882fabb459f109f594b90cf44f025de3c0f5fb9c5",
+    "src/nerve_awim/memory_gateway/scientific_family_b_v4.py": "764961cf67b04bbdc4ebd1d8dabb7af2380c7de2a42ca064ce5f0799dd323ee9",
+    "src/nerve_awim/memory_gateway/scientific_family_b_adapter.py": "8e2e4c8a022b11d1a5256e7283cde89928328fb839bd5afde28f2688735c178d"
+  },
+  "candidate_cpu_tests_passed": 7,
+  "signed_gate_commit": "43c3e78",
+  "gate_payload_sha256": "c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8",
+  "bank_v4_manifest_sha256": "8ae1b71b421fe8ace9b89dff0bcc359c79b7d535960306e0640da76fdba79aeb",
+  "proposed_study": {
+    "m": 10,
+    "t": 0,
+    "total_cap": 500,
+    "main_cap": 460,
+    "primary_cap": 100,
+    "risk_stratum": "dissenter",
+    "risk_followup_N": 40,
+    "order_seed": 2026101804,
+    "incumbent_model_seed": 20261016,
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "runtime": "Ollama0.40.5",
+    "controls": [
+      "always-abstain",
+      "random"
+    ],
+    "controls_hard_gate": "Promotion also requires candidate correct count >= each control in every observed stratum, strictly greater overall than both controls, and zero candidate domain violations. Counts assessed only on shared completed observations; no control-driven early prefix veto.",
+    "acceptance": "Signed gatev3 promote_proposal plus both control gates; control failure retain_incumbent; scientific cap/futility insufficient_power; infrastructure or missing prerequisites candidate_requires_review. No automatic signing/retention.",
+    "requests_concurrency": 1,
+    "source_hashing": "Once per study execution before inference, not per item; independent fresh-process replay verifies frozen source/journal without network.",
+    "admission_status": "DRAFT ONLY: calibration, executable harness, complete source pins, schedule and exclusive reserve allocation must be bound before first inference call."
+  },
+  "bank_reserve_opened": false,
+  "reserve_consumed": 0,
+  "model_calls": 0,
+  "pods_started": [],
+  "new_GPU_hours": 0,
+  "new_compute_cost_usd": 0,
+  "signing_performed": false,
+  "retention_performed": false
+}

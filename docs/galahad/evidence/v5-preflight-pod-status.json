@@ -1,0 +1,51 @@
+{
+  "observed_at_utc": "2026-10-16 21:37:32 UTC",
+  "source": "Runpod MCP list-pods",
+  "all_listed_exited": true,
+  "pods": [
+    {
+      "id": "5xndo7i7s5r9zn",
+      "name": "nerve-v4-final-holdout-20261016",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "dataCenterId": "EU-SE-1"
+    },
+    {
+      "id": "ki9m7vdg9qsea6",
+      "name": "nerve-frozen-v4-holdout-20261016",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "dataCenterId": "EU-SE-1"
+    },
+    {
+      "id": "lvojhtouu5gede",
+      "name": "nerve-v4-sweden-20261016",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "dataCenterId": "EU-SE-1"
+    },
+    {
+      "id": "b7qj6qyx9ij6gg",
+      "name": "nerve-attended-ca-20261016",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "dataCenterId": "CA-MTL-1"
+    },
+    {
+      "id": "97vr620wnmtuga",
+      "name": "nerve-attended-a40-20261016",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "dataCenterId": "EU-SE-1"
+    },
+    {
+      "id": "lg0svvuenxvbno",
+      "name": "perfflux-live-telemetry-demo",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "dataCenterId": "EU-SE-1"
+    }
+  ],
+  "pods_started_this_task": [],
+  "model_calls": 0
+}
