@@ -1,8 +1,8 @@
 {
   "version": "attended-duration-amendment-v1",
   "prepared_at_utc": "2026-10-16T07:09:17.014210+00:00",
-  "authorized": false,
-  "authorization_status": "Required user answer pending; no registration or dispatch allowed.",
+  "authorized": true,
+  "authorization_status": "User explicitly approved revised limits and continuation: yes do it",
   "L4_max_wall_seconds": 3600,
   "L6_cumulative_dev_holdout_wall_seconds": 3600,
   "unchanged_global_running_seconds": 21600,
@@ -25,5 +25,6 @@
       "seconds": 2776.251,
       "end_upper_bound_utc": "2026-10-16T07:13:45Z"
     }
-  ]
+  ],
+  "authorization_observed_at_utc": "2026-10-16T08:05:26Z"
 }

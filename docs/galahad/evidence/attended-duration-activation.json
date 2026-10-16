@@ -1,0 +1,21 @@
+{
+  "version": "attended-duration-activation-v1",
+  "checked_at_utc": "2026-10-16T08:17:39.145768+00:00",
+  "authorized": true,
+  "historical_calibration_replay_exact": true,
+  "additional_model_calls": 0,
+  "source_sha256": {
+    "scripts/run_scientific_family_b_extended_window.py": "dd6670b590c8249a21ac44478a553818fdbc733dc1b2dc53c6f35ff6db7ab314",
+    "docs/galahad/evidence/attended-duration-amendment.json": "5afb28f0ab200b5509a8e7d5a074e4e252d188ace25b9cd40a624d8a0cef3ad2"
+  },
+  "capacity_start_failure": {
+    "cell": "243",
+    "http_status": 400,
+    "message": "There are not enough free GPUs on the host machine to start this pod.",
+    "readback_utc": "2026-10-16T08:09:59Z",
+    "replacement_status": "EXITED",
+    "original_status": "EXITED"
+  },
+  "prior_running_seconds": 3937.034,
+  "physical_attempts": 5
+}

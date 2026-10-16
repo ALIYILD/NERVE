@@ -1,7 +1,7 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T07:15:40.048876+00:00",
-  "status": "paused_compute_stopped_pending_required_duration_decision",
+  "updated_at_utc": "2026-10-16T08:17:39.145768+00:00",
+  "status": "duration_authorized_start_failed_capacity_root_owns_future_lifecycle",
   "prior_running_seconds": 3937.034,
   "physical_attempts": 5,
   "pod_status": "EXITED",
@@ -18,7 +18,7 @@
   "bootstrap_attempt1": "failed readiness timeout; preservedreceipt",
   "bank_sealed": true,
   "bank_manifest_sha256": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
-  "runtime_verified": true,
+  "runtime_verified": false,
   "calibration_registration_sha256": "e2f3ac8b54c2bb531974da1f8f70892863c58a9201388ca6d6d82890690d62b2",
   "calibration_launch_owner": "root",
   "calibration_exec_session": null,
@@ -36,6 +36,10 @@
   "calibration_replay_verified": true,
   "L4_registered": false,
   "L4_started": false,
-  "required_decision": "Authorize L4<=3600s and cumulativeL6<=3600s; draftguardfalse until explicitanswer. Same globalcaps/cutoffs.",
-  "backup": "Private sealedbank and fullcalibration+sharedbudget durably copied outsideGit. Original /root workingcopies cleared by stop; restore from these verified backups before restartstudy."
+  "required_decision": null,
+  "backup": "Private sealedbank and fullcalibration+sharedbudget durably copied outsideGit. Original /root workingcopies cleared by stop; restore from these verified backups before restartstudy.",
+  "duration_authorized": true,
+  "latest_start_cell": "243",
+  "latest_start_result": "terminal HTTP400 host capacity unavailable",
+  "lifecycle_owner": "root"
 }
