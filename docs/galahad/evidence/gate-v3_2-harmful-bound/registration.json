@@ -1,0 +1,71 @@
+{
+  "acceptance": {
+    "all_profiles_must_pass": true,
+    "marginal_per_profile_not_simultaneous": true,
+    "maximum_one_sided_95_upper": 0.0005,
+    "method": "Clopper-Pearson beta.ppf(0.95,k+1,n-k); k=n gives1"
+  },
+  "conditional_win_p": 0.35,
+  "fresh_seed": 2026102501,
+  "m": 14,
+  "model_calls": 0,
+  "parent_commit": "b97aabf",
+  "parent_grid_rerun": false,
+  "pod_operations": 0,
+  "profiles_in_order": [
+    "narrow_64",
+    "measured",
+    "broad_75"
+  ],
+  "randomness": "Same fresh seed across profiles; common random numbers, do not pool as independent replications. Fixed100000 denominator per profile; no optional stopping or retuning.",
+  "reason": "Zero observed accepts is not proof of zero risk: zero of 10000 has a one-sided95% exact upper bound about0.03%. User prospectively replaces the failed zero-count target with a bounded rate for new validation.",
+  "reformulation_after_doc": 129,
+  "registered_at": "2026-10-16T23:48:04.301101+00:00",
+  "replay": "First three fresh harmful promotions in registered profile order then ascending stream index, through public scalar Process; retain full reports and item-level phase transitions. If fewer than three exist, report shortfall without changing seed.",
+  "reserve_items_consumed": 0,
+  "scenario": "harmful",
+  "schema": "gate-v3.2-harmful-bound-registration.v1",
+  "scope": {
+    "admission": "Public Process requires prospective dev-scope evidence hash, profile and declared primary discordance before any holdout item. Below.08 or unvalidated profile returns insufficient_power immediately. No threshold inferred retrospectively from holdout outcomes. Study custodian must independently verify hash and registration provenance.",
+    "claim_limit": "Validation is for these declared profile families, including their registered regression/null alternatives. The8% floor is necessary, not a distribution-free power guarantee for every heterogeneous vector above it. Measured zeros outside agreement are assumptions, not proof.",
+    "denominator": "all nine equally weighted primary strata; not only agreement items",
+    "fixture_primary_discordance": {
+      "broad_75": 0.25,
+      "measured": 0.09555555555555556,
+      "narrow_64": 0.08,
+      "narrow_88": 0.026666666666666665
+    },
+    "in_scope_profiles": [
+      "broad_75",
+      "narrow_64",
+      "measured"
+    ],
+    "minimum_conditional_win_p": 0.85,
+    "minimum_primary_discordance": 0.08,
+    "out_of_scope": [
+      "narrow_88"
+    ],
+    "outside_diagnostic": "Run raw kernel for narrow88 without scope admission solely to report residual power/H0 and cost. Actual scope-enforced verdict is insufficient_power for every stream, zero accepted and zero items. Raw and admitted results remain separate."
+  },
+  "scope_floor": 0.08,
+  "sources": {
+    "docs/galahad/129-gate-v3_2-coverage-grid.md": "efda63a67d47ca20c567ffdd99b9dbddbc5f3577669a43a277aa7e88c830fbb1",
+    "docs/galahad/evidence/gate-v3_2-coverage-grid/registration.json": "ff4012b75335da8d2193d5edee4598775a055a08ffad38918e43e75d8b0c0fcb",
+    "docs/galahad/evidence/gate-v3_2-coverage-grid/result.json": "1721f4f8b0b18c90dd871e74262f82020802044a761b6cc937f6040206066ebf",
+    "scripts/simulate_gate_v3_2_grid.py": "cfc1b9959b220eb7bcda88c98142fb085ed6384e786fc32ca3cc641a78a2138b",
+    "scripts/verify_gate_v3_2_harmful_bound.py": "9afe06496fd9ba46e1b4fedea30f3ba7cc97d665fc3950d6c78428373d37af57",
+    "src/nerve_awim/memory_gateway/scientific_promotion_gate_v3_2.py": "7e404b52dad531bffdee4040f6efaa4f3997286c8ba6e151165db64f95ad15ba"
+  },
+  "streams_per_profile": 100000,
+  "unchanged_rules": {
+    "G1": "zero tolerance, recorded zero-misfire fixture; not a claim of population safety",
+    "G2": "single-stage t=0 on complete coverage, all answer net counts nonnegative; safety strata covered by G1",
+    "coverage": "Only uncovered answer strata, least observed first with same rotated tie break. Coverage >=m discordances for m in12,14,16 OR zero in>=60 observations. Primary observations count. Main cap960 reserves40 risk items inside1000.",
+    "main_cap": 960,
+    "pooled_e": "bet .3, threshold20, frozen after primary acceptance; no coverage-stage resurrection of rejected primary",
+    "primary": "balanced all nine; rotating initial offset stream_index modulo9; until e>=20 or300 items, retaining prior futility e<=.05, net>=3 and all-nine-observed conditions",
+    "risk_followup": "Unconditional40 dissenter items after every primary acceptance, even if coverage incomplete or G2 fails; G1 immediate safety veto; risk-net<0 rejects. Structural both-correct ties in recorded fixture.",
+    "total_cap": 1000
+  },
+  "zero_of_10000_upper": 0.00029952835977661195
+}

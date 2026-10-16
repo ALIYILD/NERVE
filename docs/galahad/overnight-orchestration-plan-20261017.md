@@ -30,3 +30,9 @@ All learning synthetic; real clinician sign-off and real PerfFlux workload rewar
 - Dirty local feature/galahad-persistent-memory preserved. W0 isolated at overnight/w0-orchestrator from remote b97aabf, which descends from requested1992f11. W1-W3 share that base.
 - Existing doc129 is a negative v3.2 result; cannot queue a qualifying gate payload.
 - Canonical signature verifies; legacy combined checker fails stale bankv4 empty-ledger assertion (100 already consumed). No bank reset allowed.
+
+## L2 bounded-rate amendment after doc 129
+
+The user superseded only the harmful0 target with a prospectively registered harmful acceptance one-sided exact 95% upper bound <=0.05% per profile. Doc130 records the reason: zero of10,000 only bounds the rate at approximately0.03%, not zero. The completed b97aabf grid was not rerun. Fresh seed2026102501, m14,100,000 streams each: narrow64 3 accepts (upper0.007753472%), measuredv5 1 (0.004743776%), broad75 0 (0.002995687%). All original m14 non-harmful checks remain satisfied; the original failed zero-count result remains unchanged.
+
+Full unsigned v3.2 payload (m14, scope floor8%) is queued in ~/nerve-orchestration/signing-queue.json. See docs/galahad/evidence/gate-v3_2-queue-and-l4-admission-receipt.json. D4 now has qualifying bounded-rate simulation evidence; signing and activation remain human-only. D3 and L4 are still unachieved: no completed eligible broad candidate or bound fresh exclusive study reserve is evidenced. The current signed gate remains v3. Earlier launch deviations and independent-review snapshots describe their observation time and are not current qualification claims.
