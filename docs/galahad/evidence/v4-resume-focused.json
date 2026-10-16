@@ -1,0 +1,15 @@
+{
+  "focused_tests": 5,
+  "passed": 5,
+  "failures": 0,
+  "new_model_calls": 0,
+  "command": "python3 -m unittest discover -s tests -p test_scientific_family_b_resume.py -v",
+  "source_sha256": {
+    "scripts/run_scientific_family_b_v4_resume.py": "d4bc076249fad23906927a8e052d57f2834a959ae2c33eea9f91375827a4f574",
+    "scripts/nerve_resume_stage.sh": "54142e1950486075174c0e3063caf80d242e0544600a91ccbf33f6a4a69f8411",
+    "docs/galahad/evidence/family-b-v4-resume-protocol.json": "131f90a62448405e81831ace314bf2067aca38ffb1abd9c49135a6988e62738b",
+    "tests/test_scientific_family_b_resume.py": "91d9241aacf9be06848960d83e213781f675d6c72b0009d4bb81b79cd5185ce8"
+  },
+  "shell_syntax": true,
+  "embedded_python_syntax": true
+}
