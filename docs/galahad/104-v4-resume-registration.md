@@ -11,3 +11,11 @@ Before inference, the root-owned controller must upload the frozen source and pr
 Five focused CPU tests passed for window limits, prior-budget binding, live watchdog checks, exact candidate/claim manifest and cumulative holdout residual. Shell and embedded Python syntax checks passed. No full CPU suite was repeated because historical registered sources and candidate semantics remain unchanged. No model calls were made during preparation. The source review cleared the revised runner and stage; live admission remains pending until restart.
 
 Artifacts: evidence/family-b-v4-resume-protocol.json, evidence/v4-resume-focused.json, scripts/run_scientific_family_b_v4_resume.py and scripts/nerve_resume_stage.sh. Research remains incomplete until the new studies actually finish; this document is a prospective registration, not an efficacy result.
+
+## Restart checkpoint
+
+At the root controller's attempted restart, Runpod returned HTTP 400: no free GPU on the existing Canada pod's host. The subsequent provider read showed b7qj6qyx9ij6gg still EXITED with its prior start timestamp unchanged. All pods remain stopped. This attempt added zero model calls and no new running interval. The candidate is registered but unevaluated; no holdout was consumed and nothing was signed.
+
+The frozen execution source remains faa75e78a7ea26f86cdb14e48d6854d355fd638c. Its prepared archive remains unchanged. Cumulative accounting remains 1,510 physical attempts and a conservative 15,597.911 GPU seconds, leaving 6,002.089 seconds against the original six-hour cap.
+
+A further pod would require a new explicit allowance because the previous additional-pod permission has already been used. The root is preparing that request; no additional pod is authorized or created by this checkpoint. If separately approved, a new host requires a prospectively bound transport identity and fresh five-call calibration with the exact model digest, charged to the same cumulative budget. The existing study has not silently switched hosts.

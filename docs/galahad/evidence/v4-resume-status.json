@@ -1,0 +1,20 @@
+{
+  "version": "v4-resume-status-v1",
+  "checkpoint_recorded_at_utc": "2026-10-16T14:52:37Z",
+  "status": "capacity_blocked",
+  "source_of_provider_result": "root controller report; restart HTTP400 no free GPU on existing host, fresh read EXITED",
+  "pod_id": "b7qj6qyx9ij6gg",
+  "pod_status": "EXITED",
+  "all_pods_stopped": true,
+  "new_model_calls": 0,
+  "new_running_seconds": 0,
+  "cumulative_physical_attempts": 1510,
+  "conservative_prior_running_seconds": 15597.911,
+  "remaining_gpu_seconds": 6002.089,
+  "frozen_execution_commit": "faa75e78a7ea26f86cdb14e48d6854d355fd638c",
+  "frozen_source_archive_sha256": "af0fa8ffd0a84aca05e8f85a3868c5119845fa09f4bd457b5cb5332cd3b4daa6",
+  "v4_status": "registered_unevaluated",
+  "holdout_consumed": false,
+  "signing_authorized": false,
+  "next_dependency": "explicit additional-pod allowance; fresh exact-identity calibration if new host approved"
+}
