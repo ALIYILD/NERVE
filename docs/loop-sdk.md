@@ -65,9 +65,12 @@ only as bounded change specification (typed seam), predeclared assessment
 not establish regulatory compliance or authorize a medical change.
 
 Dedicated tests: `PYTHONPATH=src python3.13 -m unittest discover -s tests -p
- test_loop_sdk.py`. The signed `tests/suite_tiers.json` is read-only; this task
-therefore cannot add the suite to the existing fast tier. CI integration requires
-an independently authorized manifest update.
+ test_loop_sdk.py`. The existing fast runner discovers all test modules absent from
+`slow_modules`, so these SDK tests automatically belong to the fast tier without
+changing the protected `tests/suite_tiers.json`. The dedicated six-test SDK suite
+passed; W0 reported that the full fast tier exceeded its existing 180-second
+deadline. Full fast-tier completion is therefore unverified, not blocked by a
+missing SDK integration.
 
 Monitoring uses a fixed retained reference skill's correctness, so successful
 routing does not itself change the detector's baseline. Failed served skill

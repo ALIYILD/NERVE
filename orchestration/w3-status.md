@@ -17,8 +17,11 @@ fixtures, not an online production bandit. Signed gate evaluation fails closed.
 L5/L6 completed on the synthetic contract scope. Verdict kept for each dev
 fixture; calls 0, cost $0. D5 partial because canonical scientific bank/model
 stream was not run. D6 synthetic contract demonstration achieved. D7 interfaces,
-three domains, CLI receipts, replay and docs implemented; protected fast-tier
-manifest integration remains unavailable. One candidate template only, so this
+three domains, CLI receipts, replay and docs implemented. SDK tests are
+automatically discovered in the fast tier because they are absent from
+slow_modules; no protected manifest edit is needed. The dedicated suite passed,
+but W0 reported the full fast tier timed out at its 180-second deadline, so full
+fast-tier completion remains unverified. One candidate template only, so this
 does not establish scientific three-proposal autonomy or sealed improvement.
 
 Validation: six dedicated SDK tests passed under Python 3.13 in 52.543 seconds
@@ -32,3 +35,9 @@ IDs are in w3-source-integrity.json and w3-studies.json respectively.
 Code commit 942ebbe pushed to ALIYILD/NERVE overnight/w3-adapt-sdk. Final evidence
 commit follows. No signatures, retention, activation, holdout reads or external
 repository writes. No pods started or used by W3.
+
+Reviewer correction: the earlier claim that SDK fast-tier integration required
+a protected manifest edit was incorrect. scripts/timed_test_runner.py selects
+all discovered modules absent from slow_modules. Only the full-tier timeout
+remains a verification limitation. Signed API evaluation still fails closed;
+sealed studies require the external signed gate, and no SDK method signs.
