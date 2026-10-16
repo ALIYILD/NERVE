@@ -1,0 +1,26 @@
+{
+  "artifact_sha256": {
+    "completed-tests.jsonl": "3127593df732bc8108899259e96ce89b37f8c5cc3fe88057e7394bb842645407",
+    "result.json": "42f347a72a74cd7735190d37fe49bf5ebe0154705ccec9ef0ba76376b189bb23",
+    "run.log": "b563127ed8ff6a210a4325c010b6a6a1c6ea5dfc3f09c616c27b0cb942c160f4",
+    "timings.json": "e234ad96264654ed7629e64e86b7294a968be46a5821b5bdb731e3103294ad4e"
+  },
+  "canonical_180s_fast_gate_passed": false,
+  "exact_ordered_inventory_match": true,
+  "journal_chain_valid": true,
+  "journal_matches_timing_records": true,
+  "model_calls": 0,
+  "operational_cutoff_applied": false,
+  "outcomes": {
+    "passed": 2226,
+    "skipped": 2
+  },
+  "registration_sha256": "0bbac351b59dc6ea557f10239db76804bcbd7392ffe2f9ac52b5047427cc6b85",
+  "skip_reasons": {
+    "test_memory_inference.InferenceServiceContractTests.test_actual_inference_and_scope_responses_match_openapi": "jsonschema required for OpenAPI response validation",
+    "world_model.test_world_model.WorldModelTests.test_optional_mcp_real_stdio_inspection_binding": "official MCP SDK absent"
+  },
+  "source_hashes_unchanged": true,
+  "unique_completed_ids": 2228,
+  "version": "cpu-preflight-v3-independent-verification-v1"
+}

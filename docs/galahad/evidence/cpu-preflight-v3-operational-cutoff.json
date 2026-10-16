@@ -1,0 +1,14 @@
+{
+  "action_if_unfinished": "Root terminates worker process group, allows parent to persist blocked result and release mutex. No coverage pass inferred from diagnostic journal.",
+  "additional_test_runs": 0,
+  "child_process_group": 20869,
+  "cutoff_utc": "2026-10-16T06:25:00Z",
+  "hard_stop_utc": "2026-10-16T06:30:00Z",
+  "owner": "root",
+  "parent_process": 20822,
+  "reason": "Original overnight wall-clock hard stop overrides the separately registered 3600-second CPU allowance; wrap-up has already begun.",
+  "recorded_utc": "2026-10-16T06:05:57.468587+00:00",
+  "registration_sha256": "0bbac351b59dc6ea557f10239db76804bcbd7392ffe2f9ac52b5047427cc6b85",
+  "source_or_test_mutations": false,
+  "version": "cpu-preflight-v3-operational-cutoff-plan"
+}

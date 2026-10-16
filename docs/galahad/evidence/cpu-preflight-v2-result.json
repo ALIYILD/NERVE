@@ -1,0 +1,18 @@
+{
+  "budget_seconds": 1200,
+  "canonical_180s_fast_gate_passed": false,
+  "errors": null,
+  "exact_inventory_match": false,
+  "exit_code": 124,
+  "failures": null,
+  "model_calls": 0,
+  "registration_sha256": "ef00311ba16c44605630b6ab5bf5dc3942d59a324abb38c2c0d2e1c7923f5281",
+  "selected_count": 2228,
+  "skipped": null,
+  "source_hashes_unchanged": true,
+  "suite_seconds": null,
+  "tests_run": null,
+  "verdict": "blocked",
+  "version": "cpu-preflight-v2",
+  "wall_seconds": 1201.5627725759987
+}
