@@ -1,0 +1,14 @@
+{
+  "checked_at_utc": "2026-10-16T11:49:11.724775+00:00",
+  "private_archive": "/Users/aliyildirim/nerve-research-runs/attended-20261016/nerve-canada-final.private.tar.gz",
+  "archive_sha256": "c387c9d9bb04bd536d521f7e4636cd249d141756cdc0f65604b55b8c4e39a8f6",
+  "archive_bytes": 1802719,
+  "archive_mode": "0o600",
+  "L4_actual_attempt_receipts": 3000,
+  "L4_actual_row_receipts": 3600,
+  "global_actual_claims": 1510,
+  "L4_source_pins_unchanged": 283,
+  "protected_source_pins_unchanged": 17,
+  "no_receipt_reconstruction": true,
+  "no_new_model_calls": true
+}

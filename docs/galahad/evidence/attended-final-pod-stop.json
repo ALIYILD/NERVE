@@ -1,0 +1,34 @@
+{
+  "version": "canada-final-stop-v1",
+  "stop_action_cell": "393",
+  "stop_request_preceded_by_running_read_utc": "2026-10-16T10:15:08Z",
+  "action_result": {
+    "id": "b7qj6qyx9ij6gg",
+    "status": "EXITED"
+  },
+  "fresh_all_pods_readback_utc": "2026-10-16T11:47:51Z",
+  "statuses": {
+    "b7qj6qyx9ij6gg": "EXITED",
+    "97vr620wnmtuga": "EXITED",
+    "lg0svvuenxvbno": "EXITED"
+  },
+  "provider_stopped_at_available": false,
+  "stop_effect_time_unknown": true,
+  "shutdown_verification_deadline_utc": "2026-10-16T10:30:00Z",
+  "verification_deadline_met": false,
+  "verification_lateness_seconds": 4671,
+  "canada_provider_start_utc": "2026-10-16T08:33:31.123Z",
+  "conservative_end_upper_bound_utc": "2026-10-16T11:47:52Z",
+  "canada_running_seconds_upper_bound": 11660.877,
+  "prior_running_seconds": 3937.034,
+  "cumulative_running_seconds_upper_bound": 15597.911,
+  "cumulative_gpu_hours_upper_bound": 4.332753055555556,
+  "compute_estimate_usd_upper_bound": 2.556324302777778,
+  "hourly_usd": 0.59,
+  "storage_excluded": true,
+  "invoice_verified": false,
+  "physical_attempts": 1510,
+  "L6_model_calls": 0,
+  "holdout_consumed": false,
+  "reason_for_uncertainty": "Stop action yielded while awaiting completion; provider response exposes no stoppedAt. Do not substitute requested time for confirmed stop time."
+}

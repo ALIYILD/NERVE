@@ -1,0 +1,12 @@
+{
+  "checked_at_utc": "2026-10-16T10:13:52.496141+00:00",
+  "exact_replay": true,
+  "network_disabled": true,
+  "additional_model_calls": 0,
+  "attempt_receipts": 3000,
+  "row_receipts": 3600,
+  "shared_physical_claims": 1510,
+  "private_directory": "/Users/aliyildirim/nerve-research-runs/attended-20261016/L4-essential-backup",
+  "aggregate_sha256": "fbbb24442d6aa543eef5934fdddccbb6ec62d8e45a966f21cd12471849af76af",
+  "transport": "Actual file receipts preserved by read-only legacy SCP; no receipt reconstruction."
+}

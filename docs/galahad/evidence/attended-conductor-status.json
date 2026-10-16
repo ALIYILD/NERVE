@@ -1,10 +1,10 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T09:32:11.133912+00:00",
-  "status": "L4_verified_exploratory_failures_L5_registration_preparing",
+  "updated_at_utc": "2026-10-16T11:48:37.873036+00:00",
+  "status": "closed_incomplete_research_L5_registered_L6_not_run_all_pods_EXITED",
   "prior_running_seconds": 3937.034,
   "physical_attempts": 1510,
-  "pod_status": "RUNNING",
+  "pod_status": "EXITED",
   "real_bank_generated": true,
   "candidate_designed": true,
   "holdout_consumed": false,
@@ -41,7 +41,7 @@
   "duration_authorized": true,
   "latest_start_cell": "243",
   "latest_start_result": "terminal HTTP400 host capacity unavailable",
-  "lifecycle_owner": "root",
+  "lifecycle_owner": "galahad emergency shutdown; root acknowledged",
   "capacity_failures": [
     {
       "owner": "galahad",
@@ -100,5 +100,17 @@
   },
   "L4_verify_session": 39198,
   "L4_verdict": "exploratory_failures",
-  "candidate_registered": false
+  "candidate_registered": true,
+  "all_pods_exited": true,
+  "candidate_registration_sha256": "945f3719f2e58ac4b9984b1cff7288f1e0812d82f9d632eaf982c3ae62c44310",
+  "L5_completed": true,
+  "L6_started": false,
+  "L6_completed": false,
+  "L6_reason": "Insufficient remaining registered window after evidence preservation; no cutoff extension.",
+  "signing_performed": false,
+  "stop_readback_utc": "2026-10-16T11:47:51Z",
+  "shutdown_verification_deadline_met": false,
+  "cumulative_running_seconds_upper_bound": 15597.911,
+  "compute_estimate_usd_upper_bound": 2.556324302777778,
+  "operational_limit": "Actual stop-effect time unknown; verification completed after hard deadline."
 }
