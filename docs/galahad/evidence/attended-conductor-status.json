@@ -1,0 +1,13 @@
+{
+  "version": "attended-conductor-v1",
+  "updated_at_utc": "2026-10-16T06:20:45.675466+00:00",
+  "status": "prelaunch_frozen_source_review",
+  "prior_running_seconds": 1160.783,
+  "physical_attempts": 0,
+  "pod_status": "EXITED",
+  "real_bank_generated": false,
+  "candidate_designed": false,
+  "holdout_consumed": false,
+  "inference_cutoff_utc": "2026-10-16T10:15:00Z",
+  "handoff_deadline_utc": "2026-10-16T10:30:00Z"
+}

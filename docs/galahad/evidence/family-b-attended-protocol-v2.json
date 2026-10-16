@@ -1,0 +1,117 @@
+{
+  "version": "family-b-attended-protocol-v2",
+  "authorization": "User explicitly relaunched attended on2026-10-16 with L7 complete by11:30London; same cumulative budgets and conditional single holdout.",
+  "scope": "Adapted-v3 pipeline and adapted bootstrap, not unchanged retained skill v1. Synthetic exploratory development; no model weights change.",
+  "model": "qwen2.5-coder:7b",
+  "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+  "runtime": "0.40.5",
+  "pod_id": "lg0svvuenxvbno",
+  "gpu": "NVIDIA A40",
+  "hourly_usd": 0.59,
+  "budget": {
+    "maximum_cumulative_running_seconds": 21600,
+    "maximum_physical_model_attempts": 6000,
+    "wrapup_london": "2026-10-16T11:15:00+01:00",
+    "hard_stop_london": "2026-10-16T11:30:00+01:00",
+    "initial_running_at_utc": "2026-10-15T23:08:59.019Z",
+    "maximum_concurrent_pods": 1,
+    "replacement_maximum": 1,
+    "deadline_rule": "At actual restart: provider start plus21600seconds minus1160.783 prior runningseconds and any subsequent intervals, bounded by10:15UTC inference cutoff. Complete backup and verifiedstop by10:30UTC.",
+    "L4_study_wall_seconds": 1800,
+    "L6_cumulative_dev_plus_holdout_study_wall_seconds": 2400,
+    "calibration_wall_seconds": 1800,
+    "prior_running_seconds": 1160.783,
+    "prior_physical_attempts": 0
+  },
+  "bank": {
+    "version": "task-bank-v3-family-b",
+    "dev": 900,
+    "holdout": 300,
+    "total": 1200,
+    "strata": 9,
+    "dev_each": 100,
+    "holdout_first_three_each": 34,
+    "holdout_remaining_each": 33,
+    "slices": 3,
+    "slice_size": 100,
+    "seed": "private fresh256-bit seed; identity registered before generation",
+    "ground_truth": "independent string-splitting parser and Decimal semantic implementation, no generator/adapter imports",
+    "seal": "new nine-stratum sealer using exclusive writes, fsync, mode000 seed/fullholdout/slices, verified manifest; old seven-stratum sealer unchanged"
+  },
+  "adapter": {
+    "version": "family-b-adapted-v3-input-v1",
+    "raw_entity_names": true,
+    "raw_source_ids": true,
+    "record_order_preserved": true,
+    "repeated_agreeing_records_preserved": true,
+    "current_false_records_preserved_in_model_request": true,
+    "qualified_measurement_labels_preserved": true,
+    "max_records": 12,
+    "eligibility": "Existing v3 semantic predicate: exact target entity, mass,mg,current=true and Decimal agreement; deterministic abstention otherwise",
+    "baseline": "same parsed facts and shared task rules; strict value|unit|fullsource_id output",
+    "candidate": "same facts; original candidate system plus full-ID output instruction and JSON numeric value/unit/source schema",
+    "source_selection": "none by adapter or decoder; lexical-smallest supporting source rule supplied explicitly to both model arms",
+    "decode": "copy entity/measurement only from model-cited source; no numeric/unit/source repair",
+    "intentional_changes_from_retained": "Parsing familyB, capacity12, raw entity/source identities instead of aliases, preserved order instead of sort, stale facts retained, explicit shared task semantics. No original module changed."
+  },
+  "sampling": {
+    "temperature": 0,
+    "seed": 20261016,
+    "max_output_tokens": 128,
+    "observed_prompt_token_limit": 4096,
+    "prompt_byte_limit": 32768,
+    "max_response_bytes": 1000000,
+    "order": "sha256(seed:task_id:arm), fixed before first call",
+    "calibration_order": "descending serialized payload bytes, task_id tie-break; other studies SHA256 fixed order",
+    "source_snapshot": "All existing src Python files and used scripts are registered. Replay verifies this exact frozen path set, so a later added candidate file cannot invalidate earlier evidence."
+  },
+  "transport": {
+    "calibration": "Five public multi-source-agreement fixtures with largest serialized eligible payloads among deterministic seed-zero indices1000..1099; largest first includes cold load; registered before inference; initial120-second attempt timeout.",
+    "study_timeout": "three times measured calibration maximum; two identical-request retries only on timeout",
+    "max_attempts_each": 3,
+    "claim_before_attempt": true,
+    "no_retry_after_observed_result": true,
+    "interrupted_claim": "incomplete_infrastructure; never re-dispatch"
+  },
+  "L4": {
+    "arms": [
+      "adapted_v1",
+      "adapted_bootstrap",
+      "always_abstain",
+      "random"
+    ],
+    "scope": "exploratory",
+    "promotion_authorized": false,
+    "saturated": "100/100 in every stratum for adapted_v1; no forced candidate"
+  },
+  "L5": {
+    "design_after_sealed_bank_only": true,
+    "design_from": "L4 stratum-level failure counts",
+    "max_proposals": 3,
+    "candidate_limit": 1,
+    "seams": [
+      "abstention-rule",
+      "extraction-schema",
+      "prompt-fragment"
+    ]
+  },
+  "L6": {
+    "dev_condition": "v4 no lower than adapted_v1 in every stratum, strictly greater overall, zero domain violations",
+    "holdout_consumptions_authorized": 1,
+    "slice": "slice1 only",
+    "holdout_acceptance": "complete; v4 strictly beats adapted_v1,always_abstain,random overall; no stratum below adapted_v1; zero domain violations; descriptive Wilson intervals",
+    "never_sign_or_activate": true
+  },
+  "reporting": {
+    "interval": "95% Wilson marginal descriptive; no pooled independence claim",
+    "five_axes": [
+      "accuracy",
+      "efficiency",
+      "robustness=n/a single seed",
+      "safety wrong answers and false abstentions plus domain checks",
+      "UX=n/a"
+    ],
+    "holdout_item_level": "gate-private only",
+    "cost": "all running walltime including idle from provider start; allocatedstudy cost separately labeled"
+  }
+}

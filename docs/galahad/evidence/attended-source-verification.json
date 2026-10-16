@@ -1,0 +1,15 @@
+{
+  "version": "attended-source-verification-v1",
+  "created_at_utc": "2026-10-16T06:20:45.675466+00:00",
+  "protected_unchanged": 17,
+  "cpu_registered_sources_unchanged": 583,
+  "deadline_test_passed": true,
+  "deadline_test_log_sha256": "01a4d8f7a1904621d22d277d43d188706c4c9e1808c92f48a7b31c5f659273bb",
+  "model_calls": 0,
+  "sources": {
+    "scripts/run_scientific_family_b_study.py": "db520d79520494aa75510724396db82e0205be61cd375b8120148d316235c6e2",
+    "tests/test_scientific_family_b_study.py": "4c951de07ecfc3b24332e7854e70edd4bb3920d20a4f0468df0194166c312c4c",
+    "docs/galahad/evidence/family-b-attended-protocol-v2.json": "b0252c1917873d23ee337889fb77354dff19cbeb7aa7cea659d091e242a26f08"
+  },
+  "changes_since_18_focused_tests": "Harness version, registered protocol source path, WRAPUP06:00\u219210:15UTC; added one deadline test. Original receipt preserved; no efficacy logic changes."
+}

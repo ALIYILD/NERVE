@@ -67,6 +67,18 @@ class FamilyStudyTests(unittest.TestCase):
         with self.assertRaises(ValueError):study.require_exact_development_candidate(reg,str(other),'protocol')
         candidate.write_text('# tampered')
         with self.assertRaises(ValueError):study.require_exact_development_candidate(reg,str(candidate),'protocol')
+    def test_attended_window_caps_deadline_before_final_handoff(self):
+        class AttendedClock(datetime):
+            @classmethod
+            def now(cls,tz=None):return datetime(2026,10,16,6,30,tzinfo=timezone.utc)
+        with patch.object(study,'datetime',AttendedClock):
+            study.register(self.root,'calibration',None,ROOT/'docs/galahad/evidence/family-b-attended-protocol-v2.json',None,self.budget,running_start='2026-10-16T06:30:00+00:00',prior_running_seconds=1160.783)
+        reg=json.loads((self.root/'registration.json').read_text())
+        self.assertEqual(reg['absolute_deadline_utc'],'2026-10-16T10:15:00+00:00')
+        self.assertEqual(reg['prior_running_seconds'],1160.783)
+        self.assertEqual(reg['physical_attempt_cap'],6000)
+        self.assertEqual(len(list(self.budget.glob('call-*.json'))),0)
+
     def test_loop_wall_budgets(self):
         self.assertEqual(study.study_wall_budget('dev',None),1800)
         self.assertEqual(study.study_wall_budget('dev','candidate.py'),2400)
