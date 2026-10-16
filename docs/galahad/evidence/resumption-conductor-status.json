@@ -1,7 +1,7 @@
 {
   "version": "resumption-conductor-status-v1",
-  "updated_at_utc": "2026-10-16T06:03:47.274676+00:00",
-  "status": "active_CPU_preparation_pod_stopped",
+  "updated_at_utc": "2026-10-16T06:14:50.249279+00:00",
+  "status": "closed_under_wrapup_stop_rule_research_not_measured",
   "authorization": "User explicit do-it-all authorizes versioned input/preparation adapter and newCPUpreflight deadline; original protected paths remain unchanged.",
   "cpu_preflight": {
     "owner": "root/outcome_overnight",
@@ -41,7 +41,8 @@
     "model_calls": 0,
     "replacement_created": false,
     "status": "EXITED",
-    "cost_note": "Provider start to stop readback includes startup/idle/stop latency; upper bound estimate, not invoice; storage separate."
+    "cost_note": "Provider start to stop readback includes startup/idle/stop latency; upper bound estimate, not invoice; storage separate.",
+    "fresh_EXITED_readback_at_utc": "2026-10-16T06:04:02Z"
   },
   "limits": {
     "cumulative_running_seconds": 21600,
@@ -58,17 +59,32 @@
     "stop pod with freshEXITED; backup private evidence; push featurebranch; update morninghandoff"
   ],
   "inference_calls": 0,
-  "next_action": "Freeze new protocol and sources; await complete CPU preflight admission before pod restart and actual bank generation.",
+  "next_action": "New prospective research window needed; CPU admission complete, actual bank and inference remain unexecuted.",
   "cpu_preflight_v3": {
     "owner": "root",
-    "status": "running",
+    "status": "passed",
     "session_id": 94410,
     "registered_timeout_seconds": 3600,
     "output_directory": "/Users/aliyildirim/nerve-research-runs/cpu-preflight-v3-20261016",
     "registration_sha256": "0bbac351b59dc6ea557f10239db76804bcbd7392ffe2f9ac52b5047427cc6b85",
     "inventory_tests": 2228,
     "evidence": "registration.json, run.log, completed-tests.jsonl; final result pending",
-    "launch_note": "Prior approval delay resolved; root verified live session. No duplicate launch."
+    "launch_note": "Prior approval delay resolved; root verified live session. No duplicate launch.",
+    "result": {
+      "tests_run": 2228,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2,
+      "suite_seconds": 439.47109839500627,
+      "wall_seconds": 470.02052818302764,
+      "exact_inventory_match": true,
+      "source_hashes_unchanged": true,
+      "canonical_180s_gate_passed": false
+    }
   },
-  "source_freeze_commit": "55ab4397ec83818d60065e36c52054ed1ba4be0c"
+  "source_freeze_commit": "55ab4397ec83818d60065e36c52054ed1ba4be0c",
+  "research_outcome": "Not measured: real bank ungenerated/unsealed; no v4; no holdout consumption.",
+  "cpu_evidence_integration_commit": "9fc7934",
+  "final_handoff": "docs/galahad/95-resumption-handoff.md",
+  "objective_achieved": false
 }

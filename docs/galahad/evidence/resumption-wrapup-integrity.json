@@ -1,0 +1,22 @@
+{
+  "version": "resumption-wrapup-integrity-v1",
+  "checked_at_utc": "2026-10-16T06:04:41.516655+00:00",
+  "protected_count": 17,
+  "changed": [],
+  "pod_id": "lg0svvuenxvbno",
+  "pod_status": "EXITED",
+  "pod_readback_at_utc": "2026-10-16T06:04:02Z",
+  "running_seconds_upper_bound": 1160.783,
+  "compute_cost_upper_bound_usd": 0.1902394361111111,
+  "inference_calls": 0,
+  "real_bank_generated": false,
+  "holdout_consumed": false,
+  "candidate_designed": false,
+  "wrapup_reason": "Approval delay passed registered 06:00 UTC wrapup; no new GPU work permitted.",
+  "final_checked_at_utc": "2026-10-16T06:14:50.249279+00:00",
+  "tested_family_source_count": 8,
+  "tested_family_source_mismatches": [],
+  "cpu_registered_source_count": 583,
+  "cpu_registered_source_mismatches": [],
+  "cpu_evidence_integration_commit": "9fc7934"
+}
