@@ -1,0 +1,17 @@
+# One replacement host for frozen v4 holdout
+
+After the existing Sweden pod failed to restart, the user explicitly authorized one replacement pod. This prospective registration binds a new Secure A40 in CA-MTL-1 at $0.59/hour to the root-owned provider identity/window. No additional replacement is implied. Root owns creation and all remote execution.
+
+The frozen candidate, prompts, schema, bank and scientific acceptance gate remain unchanged. The exact prior holdout-eligible development proof and all 2,715 historical claims are preserved. Prior conservative running time is 19,467.934 seconds; 2,132.066 seconds remain under the six-hour cap. The replacement has at most 30 minutes from provider start, inference ends after 25 minutes, and the holdout study allowance remains 20 minutes. No signing is authorized.
+
+The replacement restores the verified Sweden final archive (SHA d82ff7929f9e174a28d4d2fe93fae8d30e9258a073c9fcd9bd405521883903ff) and original sealed bank archive (SHA 6b61fdc3cd68ca4d9ed45fb937b46765936e9e049827ce3133b4278ad8f921dc). Only prior dev/calibration/L5/claim directories are extracted from the final archive so historical watchdog state cannot overwrite the new guard. Every parent journal and claim hash is verified against completed offline evidence. Prior stage history and final archive show no holdout registration/calls; the failed same-host restart never opened the slice. No bank generation or counter reset occurs.
+
+A new host requires fresh calibration: five registered public stress fixtures, counted in the same physical-attempt ledger. Successful calibration moves the count from 2,715 to 2,720 before holdout admission. Old calibration remains historical proof only. The exact model digest, Ollama 0.40.5 and A40 identity are checked before inference. No substitute model is allowed.
+
+Timeouts are three times the fresh maximum latency with two identical-request timeout retries. Before opening slice1, the remaining window must cover a conservative 200 possible model calls at measured dev wall time per call, the fresh cold-load maximum, and the three-timeout reserve; this must also fit the 1,200-second study allowance. Slow setup or calibration causes a stop before slice consumption. Runtime/model setup is bounded to four minutes and all setup/idle time counts against the window.
+
+The pinned independent watchdog is armed before restore/bootstrap, uses a fresh trusted provider window and stops at 30 minutes. A downloaded-and-hash-confirmed preflight backup is required before calibration. New evidence is persistent under /workspace/nerve-v4-holdout-replacement-20261016. Final backup includes the actual shared ledger and slice-consumption metadata, while private items stay outside Git. Actual EXITED verification remains root's responsibility.
+
+Six focused CPU checks passed, covering fixed candidate/claims, public calibration scheduling, prior budget/window bounds, watchdog duration rejection, parent tampering and rejection of a dev registration. No model calls or local holdout reads occurred. Historical files remain unchanged. Runtime and scientific outcomes are pending actual execution.
+
+Protocol: evidence/family-b-v4-holdout-replacement-protocol.json. Focused receipt: evidence/v4-holdout-replacement-focused.json. New scripts: scientific_attended_holdout_replacement_transport.py, run_scientific_family_b_v4_holdout_replacement.py and nerve_holdout_replacement_stage.sh.
