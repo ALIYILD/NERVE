@@ -1,0 +1,117 @@
+{
+  "version": "rule-gated-safety-fixture-v1",
+  "profiles": [
+    {
+      "candidate": "v3_family_A",
+      "receipt_kind": "dev_study",
+      "receipt_scope": "dev dry-run bundle",
+      "source": "registry/scientific-v3-7b/dev_study.json",
+      "sha256": "5f2ce6d42f8819a6159506458e6d780e5ee27035b5d6cb2f74a7a27e76dc3ead",
+      "strata": {
+        "conflict": {
+          "correct": 20,
+          "n": 20,
+          "errors": 0
+        },
+        "unit-mismatch": {
+          "correct": 20,
+          "n": 20,
+          "errors": 0
+        }
+      }
+    },
+    {
+      "candidate": "v3_family_A",
+      "receipt_kind": "holdout_study",
+      "receipt_scope": "holdout_study",
+      "source": "registry/scientific-v3-7b/holdout_study.json",
+      "sha256": "35c314b5732f3aed25357688405e9b7b1dc9c2b6d1c2d867ec5c7bd55b1c5035",
+      "strata": {
+        "conflict": {
+          "correct": 20,
+          "n": 20,
+          "errors": 0
+        },
+        "unit-mismatch": {
+          "correct": 20,
+          "n": 20,
+          "errors": 0
+        }
+      }
+    },
+    {
+      "candidate": "v4_family_B",
+      "receipt_kind": "dev_study",
+      "receipt_scope": "dev_study",
+      "source": "registry/scientific-family-b-v4-7b/dev_study.json",
+      "sha256": "d2ffa2eaccf3901d0021ffbda5b433fbef459326dcbb8ed003a8023c6a6f26d4",
+      "strata": {
+        "conflict": {
+          "correct": 100,
+          "n": 100,
+          "errors": 0
+        },
+        "dissenter": {
+          "correct": 100,
+          "n": 100,
+          "errors": 0
+        },
+        "unit-mismatch": {
+          "correct": 100,
+          "n": 100,
+          "errors": 0
+        }
+      }
+    },
+    {
+      "candidate": "v4_family_B",
+      "receipt_kind": "holdout_study",
+      "receipt_scope": "holdout_study",
+      "source": "registry/scientific-family-b-v4-7b/holdout_study.json",
+      "sha256": "d0cc9d2351633edb231d3a16e284c0a4623d1baa4934083709603ee3345e0307",
+      "strata": {
+        "conflict": {
+          "correct": 11,
+          "n": 11,
+          "errors": 0
+        },
+        "dissenter": {
+          "correct": 11,
+          "n": 11,
+          "errors": 0
+        },
+        "unit-mismatch": {
+          "correct": 11,
+          "n": 11,
+          "errors": 0
+        }
+      }
+    },
+    {
+      "candidate": "v3_family_A",
+      "receipt_kind": "original_runpod_dev",
+      "source_sha256": "6e28b07f04b781d69105b17c4e065d8082b0ae90c96d2d95ad8a68aeb251d980",
+      "source": "original private report pinned by signed dev bundle reference_report_sha256; aggregate export only",
+      "strata": {
+        "conflict": {
+          "correct": 20,
+          "n": 20,
+          "errors": 0
+        },
+        "unit-mismatch": {
+          "correct": 20,
+          "n": 20,
+          "errors": 0
+        }
+      }
+    }
+  ],
+  "misfire_probability_by_observed_stratum": {
+    "conflict": 0.0,
+    "unit-mismatch": 0.0,
+    "dissenter": 0.0
+  },
+  "interpretation": "All listed abstain-expected candidate results are correct; empirical error distribution is degenerate at zero. Repeated dev items are not pooled as independent evidence. Zero observed errors does not prove zero population misfires.",
+  "unobserved": "v3 family A has no dissenter evidence; v4 family B supplies that stratum.",
+  "model_calls": 0
+}

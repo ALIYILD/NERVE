@@ -1,0 +1,16 @@
+{
+  "registration_sha256": "978a9e3e85e5aea2b39ec3591f1b7c4a29fceadf00829b90e9d0c6a75464fba1",
+  "result_sha256": "9f20eb08c4e861c9e0acf7d75a132f4e0d1fdc4885c70fad08636e6057cf0ede",
+  "all_registered_source_hashes_match": true,
+  "count_rate_cost_reconciliation": true,
+  "fixture_tests_passed": 10,
+  "chosen_N": null,
+  "eligible_N": [],
+  "selection_reason": "All N fail unconditional regression catch >=90%; conditional follow-up catch is not end-to-end catch.",
+  "model_calls": 0,
+  "reserve_items_consumed": 0,
+  "payload_prepared": false,
+  "protected_paths_verified": 17,
+  "retained_family_b_files_verified": 7,
+  "payload_absent": true
+}

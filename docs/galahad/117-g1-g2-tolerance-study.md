@@ -1,5 +1,7 @@
 # Registered G1/G2 tolerance comparison
 
+Current design status: the single-stage per-stratum guard is retired, not the primary e-process gate. The registered two-stage escalation study in [doc 118](118-two-stage-stratum-followup.md) restores good acceptance above 80% under full funding, but no N meets the 90% end-to-end regression-catch target. Chosen N is null; no payload, signing or canonical installation. Historical results below are unchanged.
+
 The user requested tolerance selection by simulation, superseding the preliminary zero-tolerance shelving decision in doc 116. This study registers t in {0,1,2} before outcome generation and does not prepare a signing payload unless a tolerance satisfies both selection requirements. All scores are synthetic; no model calls or real bank items are used.
 
 Primary sampling is cyclic round-robin over strata with fewer than two discordant pairs; after every stratum is decidable it becomes ordinary round-robin. A balanced round-robin sensitivity is also registered. The next stratum depends only on prior tie/discordance indicators, never win direction, class or t. Full potential streams are shared across tolerances. This isolates tolerance from sampling outcomes and gives undecided strata priority. The score fixture assumes available synthetic observations; it does not establish availability in a finite sealed reserve.

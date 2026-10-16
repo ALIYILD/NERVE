@@ -1,0 +1,54 @@
+{
+  "version": "bank-v3-reserve-capacity-v1",
+  "manifest_sha256": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
+  "basis": "Manifest slices2+3, excluding consumed slice1; no new study has consumed reserve in this session. Custodian must verify current consumption ledger before any actual admission.",
+  "available_before_primary": {
+    "conflict": 22,
+    "dissenter": 22,
+    "entity-decoy": 23,
+    "format-variant-agreement": 22,
+    "measurement-decoy": 23,
+    "multi-source-agreement": 22,
+    "stale-vs-current": 22,
+    "supported-measurement": 22,
+    "unit-mismatch": 22
+  },
+  "followups_before_primary": {
+    "20": {
+      "conflict": 1,
+      "dissenter": 1,
+      "entity-decoy": 1,
+      "format-variant-agreement": 1,
+      "measurement-decoy": 1,
+      "multi-source-agreement": 1,
+      "stale-vs-current": 1,
+      "supported-measurement": 1,
+      "unit-mismatch": 1
+    },
+    "30": {
+      "conflict": 0,
+      "dissenter": 0,
+      "entity-decoy": 0,
+      "format-variant-agreement": 0,
+      "measurement-decoy": 0,
+      "multi-source-agreement": 0,
+      "stale-vs-current": 0,
+      "supported-measurement": 0,
+      "unit-mismatch": 0
+    },
+    "40": {
+      "conflict": 0,
+      "dissenter": 0,
+      "entity-decoy": 0,
+      "format-variant-agreement": 0,
+      "measurement-decoy": 0,
+      "multi-source-agreement": 0,
+      "stale-vs-current": 0,
+      "supported-measurement": 0,
+      "unit-mismatch": 0
+    }
+  },
+  "after_balanced_100_primary_range": "Each stratum would lose 11 or12 items; remaining10..12, so no N20/30/40 follow-up can be guaranteed from the same reserve.",
+  "content_opened": false,
+  "model_calls": 0
+}
