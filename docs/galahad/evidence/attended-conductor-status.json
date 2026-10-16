@@ -1,7 +1,7 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T08:17:39.145768+00:00",
-  "status": "duration_authorized_start_failed_capacity_root_owns_future_lifecycle",
+  "updated_at_utc": "2026-10-16T08:20:23Z",
+  "status": "duration_authorized_capacity_blocked_both_existing_pods",
   "prior_running_seconds": 3937.034,
   "physical_attempts": 5,
   "pod_status": "EXITED",
@@ -36,10 +36,31 @@
   "calibration_replay_verified": true,
   "L4_registered": false,
   "L4_started": false,
-  "required_decision": null,
+  "required_decision": "Any additional pod would require explicit new authority; none created.",
   "backup": "Private sealedbank and fullcalibration+sharedbudget durably copied outsideGit. Original /root workingcopies cleared by stop; restore from these verified backups before restartstudy.",
   "duration_authorized": true,
   "latest_start_cell": "243",
   "latest_start_result": "terminal HTTP400 host capacity unavailable",
-  "lifecycle_owner": "root"
+  "lifecycle_owner": "root",
+  "capacity_failures": [
+    {
+      "owner": "galahad",
+      "cell": "243",
+      "pod_id": "97vr620wnmtuga",
+      "http_status": 400
+    },
+    {
+      "owner": "root",
+      "cell": "161",
+      "pod_id": "97vr620wnmtuga",
+      "http_status": 400
+    },
+    {
+      "owner": "root",
+      "cell": "163",
+      "pod_id": "lg0svvuenxvbno",
+      "http_status": 400
+    }
+  ],
+  "fresh_readback_utc": "2026-10-16T08:20:23Z"
 }
