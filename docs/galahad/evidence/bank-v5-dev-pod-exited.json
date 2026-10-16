@@ -1,0 +1,29 @@
+{
+  "pod_id": "lvojhtouu5gede",
+  "gpu": {
+    "count": 1,
+    "id": "NVIDIA A40",
+    "memory": 50,
+    "vcpuCount": 9
+  },
+  "region": "EU-SE-1",
+  "hourly_usd": 0.59,
+  "started_at": "2026-10-16T22:54:08.373Z",
+  "stop_response_at": "2026-10-16T23:03:04.257Z",
+  "elapsed_seconds_upper_estimate": 535.884,
+  "gpu_hours_estimate": 0.14885666666666666,
+  "compute_usd_estimate": 0.08782543333333333,
+  "cost_basis": "Provider startedAt to stop response timestamp; estimate not invoice; storage excluded",
+  "final_readbacks": [
+    {
+      "id": "lvojhtouu5gede",
+      "status": "EXITED"
+    },
+    {
+      "id": "5xndo7i7s5r9zn",
+      "status": "EXITED"
+    }
+  ],
+  "original_start_error": "There are not enough free GPUs on the host machine to start this pod.",
+  "operational_substitution": "Existing previously authorized Sweden A40 lvojhtouu5gede; before first inference, recorded amendment; no new pod created"
+}

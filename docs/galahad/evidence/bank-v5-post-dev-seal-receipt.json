@@ -1,0 +1,11 @@
+{
+  "all18_item_files_mode000": true,
+  "allocation_state": "complete",
+  "dev_consumed": 100,
+  "ledger_sha256": "1b75d7c68eee1165d91ad8eeb6184aa9422471d123e5b91325d95027dc14b4d9",
+  "manifest_sha256": "f09c2ab320813781b7dbfaf3e064593cc3355a3b1774890dd46253877ae771e4",
+  "reserve_consumed": 0,
+  "reserve_content_opened_for_verification": false,
+  "reserve_per_stratum": 200,
+  "reserve_total": 1800
+}

@@ -1,0 +1,578 @@
+{
+  "model_calls": 0,
+  "registration_sha256": "5c317fd5e28286e83c91a66f444e33b31d88be671581da54c7521576367387b9",
+  "results": {
+    "measured-targets-fresh-H0": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 1,
+      "false_veto_rate": 0.0,
+      "maximum_items": 500,
+      "mean_A40_compute_usd_range": [
+        0.03768200527777777,
+        0.05570383388888888
+      ],
+      "mean_A40_minutes_range": [
+        3.832068333333333,
+        5.664796666666666
+      ],
+      "mean_items": 99.967,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 1,
+      "risk_extra_items_mean": 0.004,
+      "risk_followup_studies": 1,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-fresh-H0-streams.json.gz",
+        "sha256": "a2b1678a71e629020df79a130a58d405420fafce43c4a21567438336ca4db41c",
+        "uncompressed_sha256": "ed7798733326a8ae5e25a03f0bc8d4925d6be4a0655db8bb77a83a8701f2f681"
+      },
+      "streams": 10000,
+      "total_items": 999670
+    },
+    "measured-targets-fresh-good_090": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 621,
+      "false_veto_rate": 0.0,
+      "maximum_items": 500,
+      "mean_A40_compute_usd_range": [
+        0.047057744444444445,
+        0.06956362222222222
+      ],
+      "mean_A40_minutes_range": [
+        4.785533333333333,
+        7.074266666666667
+      ],
+      "mean_items": 124.84,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 621,
+      "risk_extra_items_mean": 2.484,
+      "risk_followup_studies": 621,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-fresh-good_090-streams.json.gz",
+        "sha256": "0ac0958f1332d7531a867e95ea3300d3b15f2ff60d46ca1a4d0c843bcb28b1b8",
+        "uncompressed_sha256": "9711266182b9df1aaa6411cbd2b8ef236f636c8b6cf2a7f97a86f3fb9741d421"
+      },
+      "streams": 10000,
+      "total_items": 1248400
+    },
+    "measured-targets-fresh-harmful": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 0,
+      "false_veto_rate": 0.0,
+      "maximum_items": 100,
+      "mean_A40_compute_usd_range": [
+        0.03746854163888888,
+        0.05538827894444444
+      ],
+      "mean_A40_minutes_range": [
+        3.8103601666666664,
+        5.632706333333333
+      ],
+      "mean_items": 99.4007,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 0,
+      "risk_extra_items_mean": 0.0,
+      "risk_followup_studies": 0,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-fresh-harmful-streams.json.gz",
+        "sha256": "73a9895287130b1fe4c11abe1e0947353273abd072d24c9fdd441d9d5017c872",
+        "uncompressed_sha256": "57641cd92dfce840b4b760c32dfda32d3a38be853f71d8e47ad1d76c7e4e70b7"
+      },
+      "streams": 10000,
+      "total_items": 994007
+    },
+    "measured-targets-fresh-neutral": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 0,
+      "false_veto_rate": 0.0,
+      "maximum_items": 100,
+      "mean_A40_compute_usd_range": [
+        0.03766530663888889,
+        0.055679148944444444
+      ],
+      "mean_A40_minutes_range": [
+        3.8303701666666665,
+        5.662286333333333
+      ],
+      "mean_items": 99.9227,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 0,
+      "risk_extra_items_mean": 0.0,
+      "risk_followup_studies": 0,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-fresh-neutral-streams.json.gz",
+        "sha256": "91215f8e5171a0d157d176477be2f151957a9e90373f543dbb0249ccdd367236",
+        "uncompressed_sha256": "b43fc5bded37ea37b7afc4408c1c6caa684b6f58fcfc0bbfc47e7a79ec4455ea"
+      },
+      "streams": 10000,
+      "total_items": 999227
+    },
+    "measured-targets-fresh-regression": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 11,
+      "false_veto_rate": 0.0,
+      "identification_rate": 0.0,
+      "identified": 0,
+      "maximum_items": 500,
+      "mean_A40_compute_usd_range": [
+        0.03785668133333333,
+        0.05596205066666667
+      ],
+      "mean_A40_minutes_range": [
+        3.8498319999999997,
+        5.691056000000001
+      ],
+      "mean_items": 100.4304,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 11,
+      "risk_extra_items_mean": 0.044000000000000004,
+      "risk_followup_studies": 11,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-fresh-regression-streams.json.gz",
+        "sha256": "d1a94df4cfd91a6f1ba9f7c229699c840bf81d37ec2186258cbe36317e903a38",
+        "uncompressed_sha256": "71926e171f48189e7816e79e0298f84bb84639b263294a5b390ca38b9b86140c"
+      },
+      "streams": 10000,
+      "total_items": 1004304
+    },
+    "measured-targets-fresh-silent_regression_05": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 214,
+      "false_veto_rate": 0.0,
+      "identification_rate": 0.0,
+      "identified": 0,
+      "maximum_items": 500,
+      "mean_A40_compute_usd_range": [
+        0.04092108888888888,
+        0.06049204444444444
+      ],
+      "mean_A40_minutes_range": [
+        4.161466666666667,
+        6.1517333333333335
+      ],
+      "mean_items": 108.56,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 214,
+      "risk_extra_items_mean": 0.856,
+      "risk_followup_studies": 214,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-fresh-silent_regression_05-streams.json.gz",
+        "sha256": "ca2251d6915e567a1d61b757ec54dd52105b379ff5ad061550afc5718f62ecb0",
+        "uncompressed_sha256": "7055275568e3ffaa0bf1afad266944be966019677f58fb7a62022341aeded646"
+      },
+      "streams": 10000,
+      "total_items": 1085600
+    },
+    "measured-targets-fresh-silent_regression_10": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 137,
+      "false_veto_rate": 0.0,
+      "identification_rate": 0.0,
+      "identified": 0,
+      "maximum_items": 500,
+      "mean_A40_compute_usd_range": [
+        0.03976009999999999,
+        0.058775799999999996
+      ],
+      "mean_A40_minutes_range": [
+        4.0434,
+        5.9772
+      ],
+      "mean_items": 105.48,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 137,
+      "risk_extra_items_mean": 0.548,
+      "risk_followup_studies": 137,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-fresh-silent_regression_10-streams.json.gz",
+        "sha256": "0f76e7c14a71f9616e3ffdcdfbf5893a0189a60b45c7d63102f46063f60c0d38",
+        "uncompressed_sha256": "b1456753c3c88f7f265271a8d5ad4eb4fc73b3f4eb64cce3e98cd110d674f655"
+      },
+      "streams": 10000,
+      "total_items": 1054800
+    },
+    "measured-targets-registered-H0": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 0,
+      "false_veto_rate": 0.0,
+      "maximum_items": 100,
+      "mean_A40_compute_usd_range": [
+        0.03766394963888888,
+        0.055677142944444445
+      ],
+      "mean_A40_minutes_range": [
+        3.8302321666666663,
+        5.662082333333333
+      ],
+      "mean_items": 99.9191,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 0,
+      "risk_extra_items_mean": 0.0,
+      "risk_followup_studies": 0,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-registered-H0-streams.json.gz",
+        "sha256": "5143fb94504e9320c331bfc0860ecda81c3ea3493b527758f47f59c993eceb50",
+        "uncompressed_sha256": "8a5483016bb4954c7761852f968533668d6d948098680870a9222544a4eaf6c4"
+      },
+      "streams": 10000,
+      "total_items": 999191
+    },
+    "measured-targets-registered-good_090": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 573,
+      "false_veto_rate": 0.0,
+      "maximum_items": 500,
+      "mean_A40_compute_usd_range": [
+        0.04633401111111111,
+        0.06849375555555555
+      ],
+      "mean_A40_minutes_range": [
+        4.7119333333333335,
+        6.965466666666667
+      ],
+      "mean_items": 122.92,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 573,
+      "risk_extra_items_mean": 2.292,
+      "risk_followup_studies": 573,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-registered-good_090-streams.json.gz",
+        "sha256": "2b3acde66fc2e52247c557373911b3baf4f42a582482bc9b6a4d59b62e99a5e8",
+        "uncompressed_sha256": "a5ebc32d08c8fa25cdc5a0be563b20042dc2f669c4eade5eb23978495def4fc3"
+      },
+      "streams": 10000,
+      "total_items": 1229200
+    },
+    "measured-targets-registered-harmful": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 0,
+      "false_veto_rate": 0.0,
+      "maximum_items": 100,
+      "mean_A40_compute_usd_range": [
+        0.037492402222222214,
+        0.0554235511111111
+      ],
+      "mean_A40_minutes_range": [
+        3.8127866666666663,
+        5.636293333333333
+      ],
+      "mean_items": 99.464,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 0,
+      "risk_extra_items_mean": 0.0,
+      "risk_followup_studies": 0,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-registered-harmful-streams.json.gz",
+        "sha256": "c7c930ac93f30f39d9363d8066d24c131689999ed57594a335f506175e8daaf3",
+        "uncompressed_sha256": "aaaf5375147f2661e103c2f5b1fd133de0a82e32c13a8fa0cfbf851f79cfeb11"
+      },
+      "streams": 10000,
+      "total_items": 994640
+    },
+    "measured-targets-registered-neutral": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 0,
+      "false_veto_rate": 0.0,
+      "maximum_items": 100,
+      "mean_A40_compute_usd_range": [
+        0.03766896299999999,
+        0.055684554
+      ],
+      "mean_A40_minutes_range": [
+        3.830742,
+        5.6628359999999995
+      ],
+      "mean_items": 99.9324,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 0,
+      "risk_extra_items_mean": 0.0,
+      "risk_followup_studies": 0,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-registered-neutral-streams.json.gz",
+        "sha256": "8b0265be6e2e0cb7a20917a9d648ac9dff46fbffb29cfcc7d6a914879f7a85f6",
+        "uncompressed_sha256": "5431f78d88007fe388482a2a08bdf9cdf78e457a80339c59bd7159c60f376288"
+      },
+      "streams": 10000,
+      "total_items": 999324
+    },
+    "measured-targets-registered-regression": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 6,
+      "false_veto_rate": 0.0,
+      "identification_rate": 0.0,
+      "identified": 0,
+      "maximum_items": 500,
+      "mean_A40_compute_usd_range": [
+        0.03777435666666667,
+        0.05584035333333333
+      ],
+      "mean_A40_minutes_range": [
+        3.8414599999999997,
+        5.67868
+      ],
+      "mean_items": 100.212,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 6,
+      "risk_extra_items_mean": 0.023999999999999997,
+      "risk_followup_studies": 6,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-registered-regression-streams.json.gz",
+        "sha256": "c3c994f193c7f8ea24a322627526101ed162d868ca8617058ce44d431a7ffec6",
+        "uncompressed_sha256": "f1efead24e32974a80a9d9cc8d20f830e6d8926af6d2e80ab0b5101421b62b1e"
+      },
+      "streams": 10000,
+      "total_items": 1002120
+    },
+    "measured-targets-registered-silent_regression_05": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 201,
+      "false_veto_rate": 0.0,
+      "identification_rate": 0.0,
+      "identified": 0,
+      "maximum_items": 500,
+      "mean_A40_compute_usd_range": [
+        0.04072507777777777,
+        0.060202288888888886
+      ],
+      "mean_A40_minutes_range": [
+        4.141533333333333,
+        6.1222666666666665
+      ],
+      "mean_items": 108.04,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 201,
+      "risk_extra_items_mean": 0.804,
+      "risk_followup_studies": 201,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-registered-silent_regression_05-streams.json.gz",
+        "sha256": "bc3c5ef0b376d92ab6b05a49b3a56c2e329d14761565c8671d333646a897e9e9",
+        "uncompressed_sha256": "be4b81ccc431cdda6c8893a87f4a044ee37f0e91a2693d54992c4fd135d28230"
+      },
+      "streams": 10000,
+      "total_items": 1080400
+    },
+    "measured-targets-registered-silent_regression_10": {
+      "G1_rejections": 0,
+      "accept_rate": 0.0,
+      "accepted": 0,
+      "coverage_incomplete": 140,
+      "false_veto_rate": 0.0,
+      "identification_rate": 0.0,
+      "identified": 0,
+      "maximum_items": 500,
+      "mean_A40_compute_usd_range": [
+        0.039805333333333325,
+        0.05884266666666666
+      ],
+      "mean_A40_minutes_range": [
+        4.047999999999999,
+        5.983999999999999
+      ],
+      "mean_items": 105.6,
+      "nonpromotion_rate": 1.0,
+      "p90_A40_compute_usd_range": [
+        0.03769444444444444,
+        0.055722222222222215
+      ],
+      "p90_A40_minutes_range": [
+        3.833333333333333,
+        5.666666666666667
+      ],
+      "p90_items": 100.0,
+      "primary_accepts": 140,
+      "risk_extra_items_mean": 0.56,
+      "risk_followup_studies": 140,
+      "risk_marginal_identification_rate": 0.0,
+      "scalar_parity_streams": 100,
+      "silent_60_bound_certificates": 0,
+      "stream_receipt": {
+        "path": "docs/galahad/evidence/gate-v3_2/measured-targets-registered-silent_regression_10-streams.json.gz",
+        "sha256": "0d7815eab98e1cb0f7eac7170b9ebc229516888497c67dd7087318c218379589",
+        "uncompressed_sha256": "00694f5d0db089b492cf6d4437a93d8d527c8876652accad5ea888f8455cde35"
+      },
+      "streams": 10000,
+      "total_items": 1056000
+    }
+  }
+}

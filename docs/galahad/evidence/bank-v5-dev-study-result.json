@@ -1,0 +1,80 @@
+{
+  "per_stratum": {
+    "format-variant-agreement": {
+      "byte_identical": 15,
+      "conditional_win_interval": [
+        0.8928208017449293,
+        1
+      ],
+      "conditional_win_rate": 1.0,
+      "discordance_interval": [
+        0.501410168761127,
+        0.7586125034815325
+      ],
+      "discordance_rate": 0.64,
+      "losses": 0,
+      "n": 50,
+      "ties": 18,
+      "v4_correct": 18,
+      "v4_error_interval": [
+        0.501410168761127,
+        0.7586125034815325
+      ],
+      "v4_error_rate": 0.64,
+      "v5_correct": 50,
+      "wins": 32
+    },
+    "multi-source-agreement": {
+      "byte_identical": 39,
+      "conditional_win_interval": [
+        0.7411670330319684,
+        1
+      ],
+      "conditional_win_rate": 1.0,
+      "discordance_interval": [
+        0.1275391597021442,
+        0.3524154958125367
+      ],
+      "discordance_rate": 0.22,
+      "losses": 0,
+      "n": 50,
+      "ties": 39,
+      "v4_correct": 39,
+      "v4_error_interval": [
+        0.1275391597021442,
+        0.3524154958125367
+      ],
+      "v4_error_rate": 0.22,
+      "v5_correct": 50,
+      "wins": 11
+    },
+    "pooled": {
+      "byte_identical": 54,
+      "conditional_win_interval": [
+        0.9179901967742088,
+        1
+      ],
+      "conditional_win_rate": 1.0,
+      "discordance_interval": [
+        0.33733298524110106,
+        0.5278461045078768
+      ],
+      "discordance_rate": 0.43,
+      "losses": 0,
+      "n": 100,
+      "ties": 57,
+      "v4_correct": 57,
+      "v4_error_interval": [
+        0.33733298524110106,
+        0.5278461045078768
+      ],
+      "v4_error_rate": 0.43,
+      "v5_correct": 100,
+      "wins": 43
+    }
+  },
+  "promotion_authorized": false,
+  "registration_sha256": "7e0774a08b792e256f5506339dd7572551d523720aee022b23930f98b9dee69a",
+  "reserve_items_consumed": 0,
+  "status": "dev_discrimination_only"
+}

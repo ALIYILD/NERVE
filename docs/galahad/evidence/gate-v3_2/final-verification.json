@@ -1,0 +1,14 @@
+{
+  "canonical_gate": "v3",
+  "canonical_signature_valid": true,
+  "cpu_simulation_model_calls": 0,
+  "new_payload_prepared": false,
+  "real_dev_logical_calls": 100,
+  "real_dev_physical_attempts": 101,
+  "reserve_consumed": 0,
+  "retained": false,
+  "scalar_parity_streams": 6600,
+  "scenario_cells": 66,
+  "signed": false,
+  "streams_verified": 660000
+}

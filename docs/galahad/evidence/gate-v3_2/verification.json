@@ -1,0 +1,13 @@
+{
+  "boundary_guard_tests_passed": 4,
+  "canonical_v3_signature_verified": true,
+  "execution_order_deviation": "Sorted JSON keys caused fresh seed set to execute before original seed set. Both sets/scenarios frozen before all outputs; no between-run tuning.",
+  "model_calls": 0,
+  "new_silent_branch_reachable_under_registered_schedule": false,
+  "registration_sha256": "085f819c6db062f9bbeb1c51faee91acdb4fcc92abe0e73aa5d99ca9f41d8073",
+  "results_sha256": "a9043ccb9a6d65feeef83c845ff293392382cca782afa11d4ee61897b5f960fb",
+  "scalar_parity_streams": 4400,
+  "source_pins_match": true,
+  "stream_receipts_verified": 44,
+  "streams_verified": 440000
+}

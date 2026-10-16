@@ -1,0 +1,27 @@
+{
+  "dev_result_sha256": "c9f9fb05b53bd2cb8d8769a3cb4cb9c3b4c0ba110d034227a30d7146f5fdb9d8",
+  "fixtures": "Parent narrow fixture with agreement discordances replaced by measured .22/.64; four other answer strata zero except stated silent regression. Regression p=.30 alternates agreement strata; other agreement p=.91875. Silent losses follow parent specification.",
+  "model_calls": 0,
+  "parent_registration_sha256": "085f819c6db062f9bbeb1c51faee91acdb4fcc92abe0e73aa5d99ca9f41d8073",
+  "reason": "Complete target metrics at measured per-stratum rates in addition to already registered empirical/.85/never-worse/optimistic sensitivity. Measured rates are known; these target simulations are registered before their execution. No gate tuning.",
+  "scenarios": {
+    "H0": 0.5,
+    "good_090": 0.9,
+    "harmful": 0.35,
+    "neutral": 0.5,
+    "regression": null,
+    "silent_regression_05": null,
+    "silent_regression_10": null
+  },
+  "seeds": {
+    "fresh": {
+      "H0": 2026102202,
+      "main": 2026102201
+    },
+    "registered": {
+      "H0": 2026101802,
+      "main": 2026101801
+    }
+  },
+  "source_sha256": "66f6c56dfc1a877bb9de8c85d5cbd7e8782efec5b8d1d84106ee12301f406c8c"
+}

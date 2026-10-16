@@ -1,0 +1,10 @@
+{
+  "authority": "v3.1 withdrawn on principle: equivalence is unprovable with a model in the incumbent\u2019s path. Propose v3.2 instead, pre-registered",
+  "basis": "No construction-level equivalence proof for the incumbent model path was established; empirical agreement cannot certify the narrow seam.",
+  "canonical_changed": false,
+  "canonical_gate": "v3",
+  "historical_payload_preserved": true,
+  "signature_created": false,
+  "status": "withdrawn_unsigned_proposal",
+  "version": "v3.1"
+}
