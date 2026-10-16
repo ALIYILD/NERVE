@@ -1,0 +1,14 @@
+{
+  "passed": 4,
+  "tests": 4,
+  "actual_network_calls": 0,
+  "actual_lifecycle_calls": 0,
+  "workflow_live_tested": false,
+  "sha256": {
+    "orchestration-controller.py": "59a99ebf4834bc34fe80bcb6e00ad3a89828dc4b6f6cfad968c19f955ba6912e",
+    "test_orchestration_controller.py": "34426060f0589fc002de8f8a910a3ae608d945227888a03d5d3fbe4f5929c3a7",
+    "orchestration-tests.log": "2823fd13e12a0bb56e27eab4aa7a04e93e98b06864f0a08481592664891d0b7f"
+  },
+  "artifact_directory": "/Users/aliyildirim/nerve-research-runs/holdout-replacement-20261016",
+  "current_budget_admits_execution": false
+}
