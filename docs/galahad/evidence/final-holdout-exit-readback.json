@@ -1,0 +1,65 @@
+{
+  "reads": [
+    {
+      "id": "5xndo7i7s5r9zn",
+      "status": "EXITED",
+      "startedAt": "2026-10-16T17:58:15.091Z",
+      "hourly_usd": 0.59,
+      "checked_at": {
+        "current_time": "2026-10-16 18:15:10 UTC"
+      }
+    },
+    {
+      "id": "lg0svvuenxvbno",
+      "status": "EXITED",
+      "startedAt": "2026-10-15T23:08:59.019Z",
+      "hourly_usd": 0.59,
+      "checked_at": {
+        "current_time": "2026-10-16 18:15:10 UTC"
+      }
+    },
+    {
+      "id": "97vr620wnmtuga",
+      "status": "EXITED",
+      "startedAt": "2026-10-16T06:27:28.749Z",
+      "hourly_usd": 0.59,
+      "checked_at": {
+        "current_time": "2026-10-16 18:15:10 UTC"
+      }
+    },
+    {
+      "id": "b7qj6qyx9ij6gg",
+      "status": "EXITED",
+      "startedAt": "2026-10-16T08:33:31.123Z",
+      "hourly_usd": 0.59,
+      "checked_at": {
+        "current_time": "2026-10-16 18:15:09 UTC"
+      }
+    },
+    {
+      "id": "lvojhtouu5gede",
+      "status": "EXITED",
+      "startedAt": "2026-10-16T15:08:25.977Z",
+      "hourly_usd": 0.59,
+      "checked_at": {
+        "current_time": "2026-10-16 18:15:10 UTC"
+      }
+    },
+    {
+      "id": "ki9m7vdg9qsea6",
+      "status": "EXITED",
+      "startedAt": "2026-10-16T17:01:07.794Z",
+      "hourly_usd": 0.59,
+      "checked_at": {
+        "current_time": "2026-10-16 18:15:10 UTC"
+      }
+    }
+  ],
+  "final_archive_sha256": "5216c3fe3532e9bbc5f9d79bdae8c0ed234ee448747339c5df63240df0e97d1e",
+  "running_seconds_upper": 1014.909,
+  "cumulative_running_seconds_upper": 21869.049,
+  "compute_usd_upper": 0.16633230833333332,
+  "cumulative_compute_usd_upper": 3.5840941416666663,
+  "storage_excluded": true,
+  "cost_is_invoice": false
+}

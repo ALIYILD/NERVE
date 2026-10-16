@@ -1,0 +1,760 @@
+{
+  "verified": true,
+  "archive_sha256": "5216c3fe3532e9bbc5f9d79bdae8c0ed234ee448747339c5df63240df0e97d1e",
+  "predecessor_archive_sha256": "d82ff7929f9e174a28d4d2fe93fae8d30e9258a073c9fcd9bd405521883903ff",
+  "prior_claims": 2715,
+  "physical_claims": 2854,
+  "new_attempts": 139,
+  "claims_by_registration": {
+    "e2f3ac8b54c2bb531974da1f8f70892863c58a9201388ca6d6d82890690d62b2": 5,
+    "5e362b3715a81969953cac188bfa4d7b3c381a0b6ccd284f68d2bda7878b3a03": 5,
+    "1c0b7ff95de25979fbef6e42fdac521d33ed6cda55240f200a5f8c3c495ee07e": 1500,
+    "f234a8be0e2127b60bde5ae8bebd69551e2de2b234cb0833dc508460e61b9290": 5,
+    "221883fcdd8a5fd92726c691490fef8398c9784d0790643b55305997c21b7b0b": 1200,
+    "082499e147eb8ddc2580f90714f2402fecf8a89e6d337a4666220f5422352cd1": 5,
+    "bc86c7531476ffe43d1a64283e83fdeca601eab93a9b604450b3747c63c86b2a": 134
+  },
+  "reports": {
+    "replacement-calibration": {
+      "version": "registered-family-b-v4-final-holdout-v1",
+      "kind": "calibration",
+      "complete": true,
+      "verdict": "exploratory_latency_calibration_complete",
+      "registration_sha256": "082499e147eb8ddc2580f90714f2402fecf8a89e6d337a4666220f5422352cd1",
+      "bank_manifest_sha256": null,
+      "identity": {
+        "gpu": "NVIDIA A40",
+        "model": "qwen2.5-coder:7b",
+        "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+        "pod_id": "5xndo7i7s5r9zn",
+        "runtime": {
+          "version": "0.40.5"
+        }
+      },
+      "tables": {
+        "adapted_v1": {
+          "supported-measurement": {
+            "n": 0,
+            "correct": 0,
+            "ci95": null,
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "measurement-decoy": {
+            "n": 0,
+            "correct": 0,
+            "ci95": null,
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "entity-decoy": {
+            "n": 0,
+            "correct": 0,
+            "ci95": null,
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "unit-mismatch": {
+            "n": 0,
+            "correct": 0,
+            "ci95": null,
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "conflict": {
+            "n": 0,
+            "correct": 0,
+            "ci95": null,
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "multi-source-agreement": {
+            "n": 5,
+            "correct": 1,
+            "ci95": [
+              0.03622410863243014,
+              0.6244653702374747
+            ],
+            "wrong_answers": 4,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "wrong_provenance": 3,
+              "decoy_selected": 1
+            }
+          },
+          "stale-vs-current": {
+            "n": 0,
+            "correct": 0,
+            "ci95": null,
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "format-variant-agreement": {
+            "n": 0,
+            "correct": 0,
+            "ci95": null,
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "dissenter": {
+            "n": 0,
+            "correct": 0,
+            "ci95": null,
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          }
+        }
+      },
+      "totals": {
+        "adapted_v1": 1
+      },
+      "attempts": 5,
+      "timeouts": 0,
+      "logical_model_calls": 5,
+      "tokens": {
+        "prompt_tokens": 4407,
+        "completion_tokens": 225,
+        "total_tokens": 4632
+      },
+      "attempt_latencies_seconds": [
+        5.412097113206983,
+        1.8260492468252778,
+        1.7473798338323832,
+        1.6877805292606354,
+        1.8092110184952617
+      ],
+      "latency_summary_seconds": {
+        "n": 5,
+        "median": 1.8092110184952617,
+        "max": 5.412097113206983
+      },
+      "wall_seconds": 20.824902955442667,
+      "allocated_compute_estimate_usd": 0.0034129702065864367,
+      "cost_note": "Study allocation only; total running/idle recorded separately; not invoice.",
+      "error": null,
+      "promotion_authorized": false,
+      "item_level_exported": false,
+      "model_weights_changed": false,
+      "robustness": "n/a single seed",
+      "UX": "n/a",
+      "comparison": "adapted pipelines, not unchanged retained skill v1"
+    },
+    "v4-holdout": {
+      "version": "registered-family-b-v4-final-holdout-v1",
+      "kind": "holdout",
+      "complete": true,
+      "verdict": "promote_proposal",
+      "registration_sha256": "bc86c7531476ffe43d1a64283e83fdeca601eab93a9b604450b3747c63c86b2a",
+      "bank_manifest_sha256": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
+      "identity": {
+        "gpu": "NVIDIA A40",
+        "model": "qwen2.5-coder:7b",
+        "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+        "pod_id": "5xndo7i7s5r9zn",
+        "runtime": {
+          "version": "0.40.5"
+        }
+      },
+      "tables": {
+        "candidate": {
+          "supported-measurement": {
+            "n": 12,
+            "correct": 12,
+            "ci95": [
+              0.7575059933447592,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "measurement-decoy": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "entity-decoy": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "unit-mismatch": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "conflict": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "multi-source-agreement": {
+            "n": 11,
+            "correct": 8,
+            "ci95": [
+              0.43435469882387084,
+              0.902539407099751
+            ],
+            "wrong_answers": 3,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "wrong_provenance": 3
+            }
+          },
+          "stale-vs-current": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "format-variant-agreement": {
+            "n": 11,
+            "correct": 7,
+            "ci95": [
+              0.35380117450784887,
+              0.8483352890463243
+            ],
+            "wrong_answers": 4,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "wrong_provenance": 4
+            }
+          },
+          "dissenter": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          }
+        },
+        "adapted_v1": {
+          "supported-measurement": {
+            "n": 12,
+            "correct": 6,
+            "ci95": [
+              0.2537815976337061,
+              0.7462184023662939
+            ],
+            "wrong_answers": 6,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "decoy_selected": 6
+            }
+          },
+          "measurement-decoy": {
+            "n": 11,
+            "correct": 7,
+            "ci95": [
+              0.35380117450784887,
+              0.8483352890463243
+            ],
+            "wrong_answers": 4,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "decoy_selected": 4
+            }
+          },
+          "entity-decoy": {
+            "n": 11,
+            "correct": 5,
+            "ci95": [
+              0.21271271622459764,
+              0.719908462590678
+            ],
+            "wrong_answers": 6,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "decoy_selected": 6
+            }
+          },
+          "unit-mismatch": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "conflict": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "multi-source-agreement": {
+            "n": 11,
+            "correct": 7,
+            "ci95": [
+              0.35380117450784887,
+              0.8483352890463243
+            ],
+            "wrong_answers": 4,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "decoy_selected": 2,
+              "wrong_provenance": 2
+            }
+          },
+          "stale-vs-current": {
+            "n": 11,
+            "correct": 9,
+            "ci95": [
+              0.523019438039156,
+              0.9486323102539149
+            ],
+            "wrong_answers": 2,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "decoy_selected": 2
+            }
+          },
+          "format-variant-agreement": {
+            "n": 11,
+            "correct": 5,
+            "ci95": [
+              0.21271271622459764,
+              0.719908462590678
+            ],
+            "wrong_answers": 6,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "wrong_provenance": 4,
+              "decoy_selected": 2
+            }
+          },
+          "dissenter": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          }
+        },
+        "always_abstain": {
+          "supported-measurement": {
+            "n": 12,
+            "correct": 0,
+            "ci95": [
+              2.7755575615628914e-17,
+              0.24249400665524085
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 12,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "abstained_when_answerable": 12
+            }
+          },
+          "measurement-decoy": {
+            "n": 11,
+            "correct": 0,
+            "ci95": [
+              0,
+              0.2588329669680317
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 11,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "abstained_when_answerable": 11
+            }
+          },
+          "entity-decoy": {
+            "n": 11,
+            "correct": 0,
+            "ci95": [
+              0,
+              0.2588329669680317
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 11,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "abstained_when_answerable": 11
+            }
+          },
+          "unit-mismatch": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "conflict": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          },
+          "multi-source-agreement": {
+            "n": 11,
+            "correct": 0,
+            "ci95": [
+              0,
+              0.2588329669680317
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 11,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "abstained_when_answerable": 11
+            }
+          },
+          "stale-vs-current": {
+            "n": 11,
+            "correct": 0,
+            "ci95": [
+              0,
+              0.2588329669680317
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 11,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "abstained_when_answerable": 11
+            }
+          },
+          "format-variant-agreement": {
+            "n": 11,
+            "correct": 0,
+            "ci95": [
+              0,
+              0.2588329669680317
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 11,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "abstained_when_answerable": 11
+            }
+          },
+          "dissenter": {
+            "n": 11,
+            "correct": 11,
+            "ci95": [
+              0.7411670330319684,
+              1
+            ],
+            "wrong_answers": 0,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {}
+          }
+        },
+        "random": {
+          "supported-measurement": {
+            "n": 12,
+            "correct": 0,
+            "ci95": [
+              2.7755575615628914e-17,
+              0.24249400665524085
+            ],
+            "wrong_answers": 7,
+            "false_abstentions": 5,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "abstained_when_answerable": 5,
+              "decoy_selected": 7
+            }
+          },
+          "measurement-decoy": {
+            "n": 11,
+            "correct": 1,
+            "ci95": [
+              0.016232172885884855,
+              0.37735843645159567
+            ],
+            "wrong_answers": 8,
+            "false_abstentions": 2,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "decoy_selected": 8,
+              "abstained_when_answerable": 2
+            }
+          },
+          "entity-decoy": {
+            "n": 11,
+            "correct": 1,
+            "ci95": [
+              0.016232172885884855,
+              0.37735843645159567
+            ],
+            "wrong_answers": 8,
+            "false_abstentions": 2,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "decoy_selected": 8,
+              "abstained_when_answerable": 2
+            }
+          },
+          "unit-mismatch": {
+            "n": 11,
+            "correct": 3,
+            "ci95": [
+              0.09746059290024889,
+              0.5656453011761291
+            ],
+            "wrong_answers": 8,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "answered_when_should_abstain": 8
+            }
+          },
+          "conflict": {
+            "n": 11,
+            "correct": 3,
+            "ci95": [
+              0.09746059290024889,
+              0.5656453011761291
+            ],
+            "wrong_answers": 8,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "conflict_not_detected": 8
+            }
+          },
+          "multi-source-agreement": {
+            "n": 11,
+            "correct": 1,
+            "ci95": [
+              0.016232172885884855,
+              0.37735843645159567
+            ],
+            "wrong_answers": 8,
+            "false_abstentions": 2,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "decoy_selected": 7,
+              "abstained_when_answerable": 2,
+              "wrong_provenance": 1
+            }
+          },
+          "stale-vs-current": {
+            "n": 11,
+            "correct": 0,
+            "ci95": [
+              0,
+              0.2588329669680317
+            ],
+            "wrong_answers": 9,
+            "false_abstentions": 2,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "abstained_when_answerable": 2,
+              "decoy_selected": 8,
+              "stale_selected": 1
+            }
+          },
+          "format-variant-agreement": {
+            "n": 11,
+            "correct": 2,
+            "ci95": [
+              0.05136768974608513,
+              0.4769805619608442
+            ],
+            "wrong_answers": 5,
+            "false_abstentions": 4,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "decoy_selected": 4,
+              "wrong_provenance": 1,
+              "abstained_when_answerable": 4
+            }
+          },
+          "dissenter": {
+            "n": 11,
+            "correct": 3,
+            "ci95": [
+              0.09746059290024889,
+              0.5656453011761291
+            ],
+            "wrong_answers": 8,
+            "false_abstentions": 0,
+            "domain_violations": 0,
+            "format_invalid": 0,
+            "diagnoses": {
+              "conflict_not_detected": 8
+            }
+          }
+        }
+      },
+      "totals": {
+        "candidate": 93,
+        "adapted_v1": 72,
+        "always_abstain": 33,
+        "random": 14
+      },
+      "attempts": 134,
+      "timeouts": 0,
+      "logical_model_calls": 134,
+      "tokens": {
+        "prompt_tokens": 88226,
+        "completion_tokens": 6048,
+        "total_tokens": 94274
+      },
+      "attempt_latencies_seconds": null,
+      "latency_summary_seconds": {
+        "n": 134,
+        "median": 1.6535968240350485,
+        "max": 2.031292852945626
+      },
+      "wall_seconds": 461.78978476766497,
+      "allocated_compute_estimate_usd": 0.07568221472581176,
+      "cost_note": "Study allocation only; total running/idle recorded separately; not invoice.",
+      "error": null,
+      "promotion_authorized": false,
+      "item_level_exported": false,
+      "model_weights_changed": false,
+      "robustness": "n/a single seed",
+      "UX": "n/a",
+      "comparison": "adapted pipelines, not unchanged retained skill v1"
+    }
+  },
+  "aggregate_sha256": {
+    "replacement-calibration": "86703b5ebcce3bf178ed3466dfc196a398529028ef16bfdfa2df14f09ba07f80",
+    "v4-holdout": "ec61d0a7436e1d57caabeee0167d271f579ca406ccfb7fb042e6e01bc0cbb7f4"
+  },
+  "slice1_consumption_marker_present": true,
+  "parent_proof_hash_verified": true,
+  "new_model_calls_from_verification": 0,
+  "promotion_or_signing_performed": false,
+  "private_item_contents_exported": false
+}
