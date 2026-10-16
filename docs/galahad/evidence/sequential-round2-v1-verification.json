@@ -1,0 +1,12 @@
+{
+  "fixture_tests_passed": 9,
+  "terminal_power_cells_independently_checked": 25,
+  "item_power_probability_mass_verified": 4,
+  "study_reports_reconciled": 800,
+  "source_hashes_unchanged": true,
+  "registration_sha256": "119e247f52f742ce9c28eb535083cf8745dd4db12e40a788543bf22e40ced7a5",
+  "result_sha256": "ccea9aaf8924418b557fbc3c1e3575883a70adf9834a0301d421c699cba82ee5",
+  "model_calls": 0,
+  "holdout_accessed": false,
+  "installed": false
+}

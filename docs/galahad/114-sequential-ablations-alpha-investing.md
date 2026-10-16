@@ -14,16 +14,16 @@ All new simulated draws occur only after an exclusive source-hashed registration
 
 The original 200 study verdicts, stopping counts, log-e values and net wins reproduced exactly, as did the 436/10,000 original H0 crossings. New registration SHA: `308c41c03a3958e4aca43297d8275305c1c745586907826b503816f9c03e0d0c`. All 200 investing debit/reward transitions independently reconciled; all registered source hashes remained unchanged.
 
-| Variant | Good accepted | Harmful accepted | Items consumed |
-|---|---:|---:|---:|
-| Slice, naive reuse | 100/100 (100%) | 0/40 (0%) | 20,000 |
-| Slice, matched fresh sensitivity | 97/100 (97%) | 2/40 (5%) | 20,000 |
-| Original sequential | 0/100 (0%) | 0/40 (0%) | 16,386 |
-| Alpha-wallet off | 48/100 (48%) | 0/40 (0%) | 14,457 |
-| Plateau off | 0/100 (0%) | 0/40 (0%) | 16,386 |
-| Per-stratum veto off | 0/100 (0%) | 0/40 (0%) | 16,386 |
-| Bet doubled (0.6) | 4/100 (4%) | 0/40 (0%) | 9,280 |
-| Alpha-investing | 0/100 (0%) | 0/40 (0%) | 16,386 |
+| Variant | Good accepted | Harmful accepted | Neutral accepted | Items consumed |
+|---|---:|---:|---:|---:|
+| Slice, naive reuse | 100/100 (100%) | 0/40 (0%) | 18/60 (30.00%) | 20,000 |
+| Slice, matched fresh sensitivity | 97/100 (97%) | 2/40 (5%) | 30/60 (50.00%) | 20,000 |
+| Original sequential | 0/100 (0%) | 0/40 (0%) | 0/60 (0.00%) | 16,386 |
+| Alpha-wallet off | 48/100 (48%) | 0/40 (0%) | 2/60 (3.33%) | 14,457 |
+| Plateau off | 0/100 (0%) | 0/40 (0%) | 0/60 (0.00%) | 16,386 |
+| Per-stratum veto off | 0/100 (0%) | 0/40 (0%) | 0/60 (0.00%) | 16,386 |
+| Bet doubled (0.6) | 4/100 (4%) | 0/40 (0%) | 0/60 (0.00%) | 9,280 |
+| Alpha-investing | 0/100 (0%) | 0/40 (0%) | 0/60 (0.00%) | 16,386 |
 
 The investing variant's four operational figures are **0% harmful acceptance, 0% good acceptance, 16,386 items, and 1.75% all-null portfolio type-I rate (175/10,000 portfolios)**. It fails the power target of at least 80%. It earned no rewards in the 200-proposal mixture, so wealth decayed to approximately 3.53e-11; the potential reward could not bootstrap power. The all-null portfolios did exercise rewards: 182 total false promotions occurred in 175 portfolios. No study parameters were retuned after these results.
 
