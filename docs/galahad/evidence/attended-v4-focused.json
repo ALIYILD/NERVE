@@ -1,0 +1,17 @@
+{
+  "checked_at_utc": "2026-10-16T09:30:30.043097+00:00",
+  "tests": 4,
+  "failures": 0,
+  "errors": 0,
+  "model_calls": 0,
+  "actual_dev_items_read": false,
+  "static": {
+    "source_sha256": "764961cf67b04bbdc4ebd1d8dabb7af2380c7de2a42ca064ce5f0799dd323ee9",
+    "normalized_ast_sha256": "092c89e83398c7625349e3553feb77cb19971ba2b0073f42905b51fe472073fb",
+    "bytes": 654,
+    "seam": "extraction-schema",
+    "fragment_characters": 0,
+    "review_required": "Static screening does not prove semantic seam confinement; independent source review required before study."
+  },
+  "test_source_sha256": "59251252252f82a374c726ca0f3fd77139099b66eb159259568dbe4c223b2be7"
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "family-b-v4-relevant-source-enum",
+    "module": "src/nerve_awim/memory_gateway/scientific_family_b_v4.py",
+    "seam": "extraction-schema",
+    "fragment": "",
+    "hypothesis": "Restrict the existing source_id enum to current records matching the queried entity, mass and mg. This should reduce measurement-decoy selections (67/100 errors, largest final L4 cluster) while preserving all supplied facts, their order, the numeric field, source tie choices and abstention predicate. Predicted regression risk: a decoy numeric value may persist while the schema forces a relevant source, producing wrong-value/domain violations, especially in measurement-decoy; lexical provenance errors may remain in multi-source agreement. This is deterministic schema preparation within an adapted pipeline, not model learning.",
+    "predicted_regression_stratum": "measurement-decoy",
+    "cluster": {
+      "stratum": "measurement-decoy",
+      "diagnosis": "decoy_selected",
+      "count": 67
+    },
+    "selected": true
+  }
+]
