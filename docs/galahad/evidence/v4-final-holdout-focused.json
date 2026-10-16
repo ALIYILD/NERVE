@@ -1,0 +1,16 @@
+{
+  "tests": 7,
+  "passed": 7,
+  "failures": 0,
+  "new_model_calls": 0,
+  "holdout_items_read": false,
+  "command": "python3 -m unittest discover -s tests -p test_scientific_family_b_final_holdout.py -v",
+  "source_sha256": {
+    "scripts/scientific_attended_final_holdout_transport.py": "99a5b9ad3731b4764fe5122f8987ce0482ea4b2543b9993e3a499389bbf612ba",
+    "scripts/run_scientific_family_b_v4_final_holdout.py": "54f13091f826d18f430294ff24ee763dc08fc13984b6995b789ca8cf8ec0e436",
+    "scripts/nerve_final_holdout_stage.sh": "953d474386e6ab2764eefd86d5bf3e505f7dc7f8c2857322f6f4fc5a02941d1a",
+    "docs/galahad/evidence/family-b-v4-final-holdout-protocol.json": "ea76a1bd2c49c7820e0cc14e48949e78400ae215f4659d1ed41bd0a4fbc2fd4a",
+    "tests/test_scientific_family_b_final_holdout.py": "124698e72845ea5c5279fb34b35b3f386d770722babb5dbbfb7832d265f8d958"
+  },
+  "embedded_python_syntax": true
+}
