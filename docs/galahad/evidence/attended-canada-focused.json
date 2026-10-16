@@ -1,0 +1,22 @@
+{
+  "version": "canada-focused-v1",
+  "checks": [
+    "authorized_prior_claims_and_running_budget",
+    "reset_rejected",
+    "laptop_network_rejected",
+    "L4_3600",
+    "L6_residual2700",
+    "calibration1800",
+    "pod_identity",
+    "shell_syntax"
+  ],
+  "model_calls": 0,
+  "source_sha256": {
+    "scripts/run_scientific_family_b_canada.py": "c2781a0e9b506e3bf53dc2f2b194bc092e70539a2f940f37cac1bbfa3a9a7f16",
+    "scripts/scientific_attended_canada_transport.py": "60b61f3899cb66ad219a4065f05fec5e66ec076e8ddfe2e60de643f8586e4a6c",
+    "scripts/attended_canada_stage.sh": "11465d39524be9aed4174658bc67dc760eb3fe2560647a8fa233002a8b32cf65",
+    "scripts/bootstrap_attended_canada.sh": "fc73e3355ef9faa5c2d5764cef085384ee83b763ceae383f9133cc995d98e8ab",
+    "docs/galahad/evidence/attended-canada-amendment.json": "8c5888cac84e72871c839ea454cee2185ec984f230f0c3c6bd49ab5e11051e88"
+  },
+  "metadata_note": "Authorization timing/scope clarified after checks; runtime code unchanged."
+}

@@ -1,0 +1,42 @@
+{
+  "version": "attended-canada-transfer-v1",
+  "prepared_at_utc": "2026-10-16T08:35:04.974791+00:00",
+  "authorized": true,
+  "authorization_status": "User DO IT approved one additional Secure A40 CA-MTL-1 at $0.59/hour after both existing pods failed to restart.",
+  "L4_max_wall_seconds": 3600,
+  "L6_cumulative_dev_holdout_wall_seconds": 3600,
+  "unchanged_global_running_seconds": 21600,
+  "prior_running_seconds": 3937.034,
+  "unchanged_physical_attempts_cap": 6000,
+  "attempts_already_consumed": 5,
+  "inference_cutoff_utc": "2026-10-16T10:15:00Z",
+  "handoff_deadline_utc": "2026-10-16T10:30:00Z",
+  "sealed_bank_manifest_sha256": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
+  "reason": "Prospective stress-fixture median2.097603s\u00d71500calls\u224852.4minutes exceeds original30minute L4 cap; no efficacy outcomes used.",
+  "scope": "Host identity transfer and fresh calibration, preserving sealed bank and original calibration; previously approved duration limits unchanged; no candidate or signing.",
+  "prior_running_intervals": [
+    {
+      "pod_id": "lg0svvuenxvbno",
+      "seconds": 1160.783
+    },
+    {
+      "pod_id": "97vr620wnmtuga",
+      "seconds": 2776.251,
+      "end_upper_bound_utc": "2026-10-16T07:13:45Z"
+    }
+  ],
+  "pod_id": "b7qj6qyx9ij6gg",
+  "provider_started_at_utc": "2026-10-16T08:33:31.123Z",
+  "fresh_calibration": "Five identical public calibration fixtures prospectively registered on this pod before any dev calls; preserve historical calibration and prior physical claims.",
+  "prior_claim_sha256": {
+    "call-00000.json": "b460457cdf5aab689d8723cc306ec23c97ff28ba0cc29da8b5e74cb6b4ae070d",
+    "call-00001.json": "68fa853147bdc5dbc2ccdaa11df86e0bcbfee9059584f61b5fdf075072b60162",
+    "call-00002.json": "a44ca787133c3b0a5f31bb2894fb63adc0b6218123ec17c6386b5b4744e49f8b",
+    "call-00003.json": "58a6c30b49f6054fd6960b65ba7bb1c2e4b4d348c3f6cba564aca44aed9d216d",
+    "call-00004.json": "560955ccad745cfae983c74896e295f17532c4e1240e37904311f43331b22609"
+  },
+  "historical_calibration_registration_sha256": "e2f3ac8b54c2bb531974da1f8f70892863c58a9201388ca6d6d82890690d62b2",
+  "prior_duration_authorization_observed_at_utc": "2026-10-16T08:05:26Z",
+  "authorization_observed_at_utc": "2026-10-16T08:32:00Z",
+  "authorization_time_precision": "minute; root relayed explicit user DO IT before creation"
+}
