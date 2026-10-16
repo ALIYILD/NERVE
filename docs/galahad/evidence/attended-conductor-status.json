@@ -1,9 +1,9 @@
 {
   "version": "attended-conductor-v1",
-  "updated_at_utc": "2026-10-16T06:53:27.755053+00:00",
-  "status": "bank_sealed_runtime_verified_calibration_registered_not_dispatched",
+  "updated_at_utc": "2026-10-16T07:04:02.724038+00:00",
+  "status": "calibration_complete_L4_feasibility_review",
   "prior_running_seconds": 1160.783,
-  "physical_attempts": 0,
+  "physical_attempts": 5,
   "pod_status": "RUNNING",
   "real_bank_generated": true,
   "candidate_designed": false,
@@ -22,5 +22,13 @@
   "calibration_registration_sha256": "e2f3ac8b54c2bb531974da1f8f70892863c58a9201388ca6d6d82890690d62b2",
   "calibration_launch_owner": "root",
   "calibration_exec_session": null,
-  "calibration_launch_state": "prior approval interrupted; durable audit confirms no consumption or attempt claims"
+  "calibration_launch_state": "completed exit0 under root-owned18775",
+  "calibration_result": {
+    "complete": true,
+    "attempts": 5,
+    "timeouts": 0,
+    "median_seconds": 2.0976030826568604,
+    "max_seconds": 15.37275155633688,
+    "next_timeout_seconds": 46.11825466901064
+  }
 }
