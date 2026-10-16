@@ -1,0 +1,25 @@
+{
+  "signed": true,
+  "canonical_gate": "v3",
+  "gate_v2": "retired_for_promotions",
+  "signed_at_utc": "2026-10-16T21:20:26.890441+00:00",
+  "authorization": "sign gate_id=scientific-paired-sequential-promotion version=v3 payload_sha256=c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8 simulation_evidence_sha256=4a988dbd4ce59638eebc71473dbaf0923b3454b00d78f822bfd2037bdd587315 protected_paths_sha256=0e102563b9c72a700e07657ab5993656ff06b2d913b8846d647e258ab019fcc1",
+  "authorized_by": "user",
+  "executed_by": "Codex",
+  "signature_type": "delegated_local_ed25519",
+  "user_personal_key": false,
+  "payload_sha256": "c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8",
+  "signed_record_sha256": "fc0508917dbe176132f58aababd4087eae948e65f425a1f96cd4b5d10a2d11aa",
+  "trust_sha256": "1d33037129a5a179fbc8357c4136dbbf018327f4b54240280fdd3fb3ef8c4ea8",
+  "canonical_policy_sha256": "b80cdef8a5b4bf7bbfe09b1dee6e577cb75d588bcb8f851d87539e52d07ed459",
+  "consumer_verification_sha256": "a6cab4c3081d361bb3ef203cec29cb49f9c05fffbd8b5f0e131c5430efaa577f",
+  "signer_sha256": "0d5fac4a8a3aa9002d7cfd55bc0066707923a270fc115468517fdc0489a86bfd",
+  "loader_sha256": "da3154edfbfab7b88806d7ea8798cb1e020ce20c38e8fb0ed1910730215333f6",
+  "tests_passed": {
+    "signature_and_authorization": 8,
+    "gate_and_simulator": 9
+  },
+  "model_calls": 0,
+  "reserve_consumed": 0,
+  "existing_retained_skills_unchanged": true
+}

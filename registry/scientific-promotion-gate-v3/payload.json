@@ -1,0 +1,504 @@
+{
+  "bank_v4": {
+    "gate_private_directory": "/Users/aliyildirim/nerve-research-runs/scientific-bank-v4-20261016",
+    "manifest_path": "docs/galahad/evidence/bank-v4-manifest.json",
+    "manifest_sha256": "8ae1b71b421fe8ace9b89dff0bcc359c79b7d535960306e0640da76fdba79aeb",
+    "reserve_per_stratum": 200,
+    "reserve_total": 1800,
+    "unconsumed": true,
+    "v5_predates_bank": {
+      "doc113_sha256": "c8d18996eb67ae16ce2074df5c8afc466d5844308c0df8f8d69dc2e5494043c3",
+      "prior_commit": "5b003896d9cca3550e110186998d4054452d1a26",
+      "registration_sha256": "ead1ba9da2a3cf257e9b59e882fabb459f109f594b90cf44f025de3c0f5fb9c5",
+      "specification_unchanged": true
+    }
+  },
+  "canonical_policy_on_valid_signing_and_activation": {
+    "audit_path": "docs/galahad/evidence/historical-promotions-paired-effect-audit.json",
+    "audit_sha256": "55e2f6685a76a9afa7da25cfb998fb5217fd0aa8f76e15d4be537ed360ac47b6",
+    "existing_promotions": "v3 and v4 retained promotions stand unchanged on their discordant audits: v3 80 wins/0 losses; v4 21 wins/0 losses. This preserves prior retention, not a retrospective prospective-gate evaluation.",
+    "gate_v2": "retired_for_promotion_decisions; historical replay only",
+    "promotion_gate": "v3",
+    "reason": "Gate-v2 slice gate had 47.18% H0 false promotion (4718/10000) and 43.33% neutral acceptance (26/60) in the registered doc115 simulation fixture."
+  },
+  "gate_id": "scientific-paired-sequential-promotion",
+  "installed": false,
+  "metric_clarification": "Post-hoc clarification of doc119 catch to any-route nonpromotion, registered before this new-seed confirmation; identification reported separately, not gated.",
+  "payload_version": "scientific-gate-signing-payload-v1",
+  "promotion_authorized": false,
+  "protected_path_manifest_update": {
+    "applied": false,
+    "path": "docs/galahad/evidence/gate-v3-protected-paths-proposed.json",
+    "sha256": "0e102563b9c72a700e07657ab5993656ff06b2d913b8846d647e258ab019fcc1"
+  },
+  "registered_design": {
+    "path": "docs/galahad/evidence/gate-v3-selected-design.json",
+    "risk_followup_N": 40,
+    "risk_stratum": "dissenter",
+    "selected_m": 10,
+    "sha256": "05d3b2c7e9e67f49dee8d1ac50b0c10d8623fbd4042093ff61c986ea6781efcf",
+    "t": 0,
+    "total_cap": 500
+  },
+  "scope_limits": [
+    "Simulation confirms the recorded zero-misfire fixture and v5 registered safety risk; not measured v5 efficacy or a universal safety guarantee.",
+    "Zero harmful accept is observed 0/10000, not proof of population zero.",
+    "No model calls, signing, deployment or reserve consumption authorized by preparation."
+  ],
+  "signature_requirement": "Full form must bind gate_id, version, payload_sha256, simulation_evidence_sha256 and protected_paths_sha256. Bare sign refused.",
+  "signed": false,
+  "simulation_evidence": {
+    "path": "docs/galahad/evidence/gate-v3-signing-evidence-index.json",
+    "scope": "Exact docs114\u2013119, linked historical receipts, fresh confirmation and registered design/tables",
+    "sha256": "4a988dbd4ce59638eebc71473dbaf0923b3454b00d78f822bfd2037bdd587315"
+  },
+  "source": {
+    "path": "src/nerve_awim/memory_gateway/scientific_promotion_gate_v3.py",
+    "sha256": "2e643b6472deb22ec56e9ea25ad4aab9a0cce4b9592b548fed824e4f5f089a54"
+  },
+  "status": "awaiting_full_form_signature",
+  "tables": {
+    "items_time_cost": [
+      {
+        "m": 8,
+        "mean_A40_compute_usd_range": [
+          0.03661114380555555,
+          0.054120821277777766
+        ],
+        "mean_A40_minutes_range": [
+          3.723167166666666,
+          5.503812333333332
+        ],
+        "mean_items": 97.1261,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "scenario": "H0"
+      },
+      {
+        "m": 8,
+        "mean_A40_compute_usd_range": [
+          0.10225914744444443,
+          0.1511656962222222
+        ],
+        "mean_A40_minutes_range": [
+          10.399235333333333,
+          15.372782666666666
+        ],
+        "mean_items": 271.2844,
+        "p90_A40_compute_usd_range": [
+          0.13343833333333333,
+          0.19725666666666664
+        ],
+        "p90_A40_minutes_range": [
+          13.569999999999999,
+          20.06
+        ],
+        "p90_items": 354.0,
+        "scenario": "good_085"
+      },
+      {
+        "m": 8,
+        "mean_A40_compute_usd_range": [
+          0.1100332873611111,
+          0.16265790305555552
+        ],
+        "mean_A40_minutes_range": [
+          11.189825833333334,
+          16.541481666666666
+        ],
+        "mean_items": 291.9085,
+        "p90_A40_compute_usd_range": [
+          0.13532305555555554,
+          0.20004277777777776
+        ],
+        "p90_A40_minutes_range": [
+          13.761666666666665,
+          20.34333333333333
+        ],
+        "p90_items": 359.0,
+        "scenario": "good_090"
+      },
+      {
+        "m": 8,
+        "mean_A40_compute_usd_range": [
+          0.02936095666666666,
+          0.043403153333333326
+        ],
+        "mean_A40_minutes_range": [
+          2.9858599999999997,
+          4.41388
+        ],
+        "mean_items": 77.892,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "scenario": "harmful"
+      },
+      {
+        "m": 8,
+        "mean_A40_compute_usd_range": [
+          0.036469337305555544,
+          0.053911194277777776
+        ],
+        "mean_A40_minutes_range": [
+          3.708746166666666,
+          5.482494333333333
+        ],
+        "mean_items": 96.7499,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "scenario": "neutral"
+      },
+      {
+        "m": 8,
+        "mean_A40_compute_usd_range": [
+          0.09360906402777777,
+          0.1383786163888889
+        ],
+        "mean_A40_minutes_range": [
+          9.519565833333333,
+          14.072401666666668
+        ],
+        "mean_items": 248.3365,
+        "p90_A40_compute_usd_range": [
+          0.13042277777777775,
+          0.19279888888888885
+        ],
+        "p90_A40_minutes_range": [
+          13.263333333333332,
+          19.606666666666666
+        ],
+        "p90_items": 346.0,
+        "scenario": "regression_requested"
+      },
+      {
+        "m": 10,
+        "mean_A40_compute_usd_range": [
+          0.03677266449999999,
+          0.05435959099999999
+        ],
+        "mean_A40_minutes_range": [
+          3.7395929999999993,
+          5.528093999999999
+        ],
+        "mean_items": 97.5546,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "scenario": "H0"
+      },
+      {
+        "m": 10,
+        "mean_A40_compute_usd_range": [
+          0.12044984552777778,
+          0.1780562933888889
+        ],
+        "mean_A40_minutes_range": [
+          12.249136833333333,
+          18.10741966666667
+        ],
+        "mean_items": 319.5427,
+        "p90_A40_compute_usd_range": [
+          0.15643194444444442,
+          0.2312472222222222
+        ],
+        "p90_A40_minutes_range": [
+          15.908333333333331,
+          23.516666666666666
+        ],
+        "p90_items": 415.0,
+        "scenario": "good_085"
+      },
+      {
+        "m": 10,
+        "mean_A40_compute_usd_range": [
+          0.13023762266666664,
+          0.19252518133333332
+        ],
+        "mean_A40_minutes_range": [
+          13.244504,
+          19.578832
+        ],
+        "mean_items": 345.5088,
+        "p90_A40_compute_usd_range": [
+          0.15831666666666663,
+          0.23403333333333332
+        ],
+        "p90_A40_minutes_range": [
+          16.099999999999998,
+          23.8
+        ],
+        "p90_items": 420.0,
+        "scenario": "good_090"
+      },
+      {
+        "m": 10,
+        "mean_A40_compute_usd_range": [
+          0.02936438686111111,
+          0.04340822405555555
+        ],
+        "mean_A40_minutes_range": [
+          2.9862088333333334,
+          4.414395666666667
+        ],
+        "mean_items": 77.9011,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "scenario": "harmful"
+      },
+      {
+        "m": 10,
+        "mean_A40_compute_usd_range": [
+          0.03660488652777777,
+          0.054111571388888884
+        ],
+        "mean_A40_minutes_range": [
+          3.722530833333333,
+          5.502871666666667
+        ],
+        "mean_items": 97.1095,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "scenario": "neutral"
+      },
+      {
+        "m": 10,
+        "mean_A40_compute_usd_range": [
+          0.10944065530555554,
+          0.16178183827777776
+        ],
+        "mean_A40_minutes_range": [
+          11.129558166666666,
+          16.452390333333334
+        ],
+        "mean_items": 290.3363,
+        "p90_A40_compute_usd_range": [
+          0.1537933333333333,
+          0.22734666666666667
+        ],
+        "p90_A40_minutes_range": [
+          15.639999999999999,
+          23.12
+        ],
+        "p90_items": 408.0,
+        "scenario": "regression_requested"
+      },
+      {
+        "m": 12,
+        "mean_A40_compute_usd_range": [
+          0.036926683999999994,
+          0.054587272
+        ],
+        "mean_A40_minutes_range": [
+          3.7552559999999997,
+          5.551248
+        ],
+        "mean_items": 97.9632,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "scenario": "H0"
+      },
+      {
+        "m": 12,
+        "mean_A40_compute_usd_range": [
+          0.13795469319444445,
+          0.2039330247222222
+        ],
+        "mean_A40_minutes_range": [
+          14.029290833333333,
+          20.738951666666665
+        ],
+        "mean_items": 365.9815,
+        "p90_A40_compute_usd_range": [
+          0.1790486111111111,
+          0.26468055555555553
+        ],
+        "p90_A40_minutes_range": [
+          18.208333333333332,
+          26.916666666666668
+        ],
+        "p90_items": 475.0,
+        "scenario": "good_085"
+      },
+      {
+        "m": 12,
+        "mean_A40_compute_usd_range": [
+          0.14966839258333328,
+          0.22124892816666664
+        ],
+        "mean_A40_minutes_range": [
+          15.220514499999998,
+          22.499890999999998
+        ],
+        "mean_items": 397.0569,
+        "p90_A40_compute_usd_range": [
+          0.1809333333333333,
+          0.26746666666666663
+        ],
+        "p90_A40_minutes_range": [
+          18.4,
+          27.2
+        ],
+        "p90_items": 480.0,
+        "scenario": "good_090"
+      },
+      {
+        "m": 12,
+        "mean_A40_compute_usd_range": [
+          0.02936608311111111,
+          0.04341073155555556
+        ],
+        "mean_A40_minutes_range": [
+          2.9863813333333336,
+          4.414650666666668
+        ],
+        "mean_items": 77.9056,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "scenario": "harmful"
+      },
+      {
+        "m": 12,
+        "mean_A40_compute_usd_range": [
+          0.03671842219444444,
+          0.05427940672222222
+        ],
+        "mean_A40_minutes_range": [
+          3.7340768333333334,
+          5.519939666666668
+        ],
+        "mean_items": 97.4107,
+        "p90_A40_compute_usd_range": [
+          0.03769444444444444,
+          0.055722222222222215
+        ],
+        "p90_A40_minutes_range": [
+          3.833333333333333,
+          5.666666666666667
+        ],
+        "p90_items": 100.0,
+        "scenario": "neutral"
+      },
+      {
+        "m": 12,
+        "mean_A40_compute_usd_range": [
+          0.12482707519444443,
+          0.1845269807222222
+        ],
+        "mean_A40_minutes_range": [
+          12.694278833333332,
+          18.765455666666664
+        ],
+        "mean_items": 331.1551,
+        "p90_A40_compute_usd_range": [
+          0.17640999999999998,
+          0.26078
+        ],
+        "p90_A40_minutes_range": [
+          17.939999999999998,
+          26.52
+        ],
+        "p90_items": 468.0,
+        "scenario": "regression_requested"
+      }
+    ],
+    "path": "docs/galahad/evidence/gate-v3-confirmation-tables.json",
+    "performance": [
+      {
+        "H0_false_promotion": 0.002,
+        "false_veto_good_085": 0.0063,
+        "false_veto_good_090": 0.0009,
+        "good_085_accept": 0.8547,
+        "good_090_accept": 0.9576,
+        "harmful_accept": 0.0,
+        "m": 8,
+        "neutral_accept": 0.0016,
+        "qualifies": false,
+        "regressed_identification": 0.6439,
+        "regressed_nonpromotion": 0.8917
+      },
+      {
+        "H0_false_promotion": 0.0019,
+        "false_veto_good_085": 0.0024,
+        "false_veto_good_090": 0.0002,
+        "good_085_accept": 0.8518,
+        "good_090_accept": 0.9503,
+        "harmful_accept": 0.0,
+        "m": 10,
+        "neutral_accept": 0.0013,
+        "qualifies": true,
+        "regressed_identification": 0.6676,
+        "regressed_nonpromotion": 0.9212
+      },
+      {
+        "H0_false_promotion": 0.0018,
+        "false_veto_good_085": 0.0013,
+        "false_veto_good_090": 0.0,
+        "good_085_accept": 0.8102,
+        "good_090_accept": 0.9015,
+        "harmful_accept": 0.0,
+        "m": 12,
+        "neutral_accept": 0.0009,
+        "qualifies": true,
+        "regressed_identification": 0.6544,
+        "regressed_nonpromotion": 0.9434
+      }
+    ],
+    "sha256": "5b98830c875190059e0ea7fb343e89ed2a239bd53139decc128340d0f58502d2"
+  },
+  "version": "v3"
+}

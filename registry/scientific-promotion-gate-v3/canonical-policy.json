@@ -1,0 +1,22 @@
+{
+  "active_promotion_gate": "v3",
+  "basis": {
+    "audit_path": "docs/galahad/evidence/historical-promotions-paired-effect-audit.json",
+    "audit_sha256": "55e2f6685a76a9afa7da25cfb998fb5217fd0aa8f76e15d4be537ed360ac47b6",
+    "existing_promotions": "v3 and v4 retained promotions stand unchanged on their discordant audits: v3 80 wins/0 losses; v4 21 wins/0 losses. This preserves prior retention, not a retrospective prospective-gate evaluation.",
+    "gate_v2": "retired_for_promotion_decisions; historical replay only",
+    "promotion_gate": "v3",
+    "reason": "Gate-v2 slice gate had 47.18% H0 false promotion (4718/10000) and 43.33% neutral acceptance (26/60) in the registered doc115 simulation fixture."
+  },
+  "candidate_signing_automatic": false,
+  "gate_id": "scientific-paired-sequential-promotion",
+  "gate_v2": "retired_for_promotions",
+  "gate_v2_historical_replay_allowed": true,
+  "inference_or_study_authorized": false,
+  "protected_manifest_sha256": "0e102563b9c72a700e07657ab5993656ff06b2d913b8846d647e258ab019fcc1",
+  "risk_followup_N": 40,
+  "risk_stratum": "dissenter",
+  "selected_m": 10,
+  "t": 0,
+  "total_cap": 500
+}

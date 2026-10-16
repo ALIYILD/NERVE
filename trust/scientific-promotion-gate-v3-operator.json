@@ -1,0 +1,11 @@
+{
+  "authority": "Exact full-form user instruction; locally delegated key, not user personal key.",
+  "gate_id": "scientific-paired-sequential-promotion",
+  "loader_sha256": "da3154edfbfab7b88806d7ea8798cb1e020ce20c38e8fb0ed1910730215333f6",
+  "payload_sha256": "c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8",
+  "public_key_base64": "Rh846/+J9j+3NnuuX5xdmNiHvsV7qLsZ7xrAjt5HK/I=",
+  "signed_at_utc": "2026-10-16T21:20:26.890441+00:00",
+  "signed_message_sha256": "7f34f5755a9db2a8fe3d81b4dfc223681e8a55fa6499d076abeb5f7b0b52b82e",
+  "signer_sha256": "0d5fac4a8a3aa9002d7cfd55bc0066707923a270fc115468517fdc0489a86bfd",
+  "version": "v3"
+}

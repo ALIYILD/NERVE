@@ -1,5 +1,9 @@
 # Gate v3: fresh-seed confirmation and unsigned signing payload
 
+**Signed and canonical.** The user supplied the exact full-form authorization; signature verified at 2026-10-16T21:20:26.890441+00:00. Gate v3 is active in the canonical promotion registry; gate v2 is retired for new promotion decisions and remains available for historical replay. Both retained skills stand unchanged. No inference or holdout consumption occurred.
+
+The preparation narrative below records the pre-signature state; immutable payload/evidence/proposed-manifest bytes remain unchanged.
+
 **Selected m=10, t=0, unconditional risk follow-up N=40, total cap500.** It is the smallest registered m meeting all four observed confirmation targets. Bank v4 is generated and sealed. The signing payload and proposed protected-path update are prepared, unsigned and unapplied; nothing is installed or activated.
 
 ## Prospective registration and post-hoc metric clarification
@@ -78,3 +82,21 @@ Nine tests passed, including exact scalar/vector agreement over45 streams×6 sce
 [Signing payload](evidence/gate-v3-signing-payload.json) · [Registered selected design](evidence/gate-v3-selected-design.json) · [Both machine-readable tables](evidence/gate-v3-confirmation-tables.json) · [Evidence index](evidence/gate-v3-signing-evidence-index.json) · [Proposed protected-path update](evidence/gate-v3-protected-paths-proposed.json) · [Full-form signing instruction](evidence/gate-v3-signing-request.txt).
 
 **Stop point: awaiting the user’s full-form signature. No signature, installation, canonical pointer change, model call or holdout consumption occurred.**
+
+## Signature and canonical consumer record
+
+Exact user authorization:
+
+```text
+sign gate_id=scientific-paired-sequential-promotion version=v3 payload_sha256=c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8 simulation_evidence_sha256=4a988dbd4ce59638eebc71473dbaf0923b3454b00d78f822bfd2037bdd587315 protected_paths_sha256=0e102563b9c72a700e07657ab5993656ff06b2d913b8846d647e258ab019fcc1
+```
+
+The operator-authorized local Ed25519 signature is executed by Codex with a newly generated delegated key, not the user’s personal key. Private key stays outside Git in a mode0700 directory, key0600. Independent host trust and its public mirror bind the reviewed payload, canonical policy, signer and loader. A signed registry was atomically published only after staged signature/binding verification.
+
+Registry: `registry/scientific-promotion-gate-v3`. The canonical loader enforces the reviewed protected manifest and evidence hashes, fixes m=10 and risk=dissenter, refuses v2 for new promotions and rejects item reuse. It creates proposals only: it does not automatically sign candidate skills or authorize inference. Existing historical evaluation implementations remain unchanged for replay.
+
+Signed-record SHA-256: `fc0508917dbe176132f58aababd4087eae948e65f425a1f96cd4b5d10a2d11aa`. Trust SHA-256: `1d33037129a5a179fbc8357c4136dbbf018327f4b54240280fdd3fb3ef8c4ea8`. Payload remains `c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8`. The original payload retains its preparation-state flags; signed status and canonical selection live in the separately signed registry record and policy, avoiding changes to the authorized bytes.
+
+Fresh isolated-process verification passed: signature/trust/evidence, canonical consumer, v2 refusal and reuse refusal. The synthetic consumer fixture completed with m=10 and40 risk items, with no model calls or real reserve access. Eight signer/tamper tests and nine gate/simulator tests passed. Bank-v4 ledger remains zero consumed/zero allocated.
+
+[Signing receipt](evidence/gate-v3-signing-receipt.json) · [Fresh-process consumer proof](evidence/gate-v3-signed-consumer-verification.json).
