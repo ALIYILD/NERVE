@@ -24,3 +24,9 @@ Remaining 100 agreement dev IDs exclude prior study; safety conclusions restrict
 to answerable agreement strata. Runner awaits W0 preflight and test slot.
 Family-A prior 7B v3 receipt is 100/100 (zero failures); obsolete baseline failures
 must not be misrepresented as retained-v3 failures. New model calls remain zero.
+
+Validation: 3 focused selection/provenance tests + 9 existing v2 compatibility
+tests passed; one suite at a time under shared test lock, now released to W3.
+B01 superseded before any calls by B01a to bound SSH subprocesses at 42s rather
+than inherited 180s. Same items/rule; no outcome-driven revision. Active hash:
+`47ae40566374094f3e3d99104e0569804c769b483373fc31113759822a35b409`.

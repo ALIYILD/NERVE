@@ -8,6 +8,8 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor
 from hashlib import sha256
 import json
+import ipaddress
+import subprocess
 import os
 from pathlib import Path
 import sys
@@ -18,11 +20,17 @@ from nerve_awim.memory_gateway import overnight_autoresearch as engine
 from nerve_awim.memory_gateway import scientific_family_b_v5 as v5
 from run_v5_signed_gate_study import v5score
 import run_scientific_family_b_v4_sweden as old
-from run_bank_v5_dev_discrimination import remote
 
 DIGEST='dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364'
 MODULE='src/nerve_awim/memory_gateway/scientific_family_b_v4.py'
 STRATA=('multi-source-agreement','format-variant-agreement')
+
+def remote(connection,action,payload=None,timeout=42):
+    host=str(ipaddress.ip_address(connection['host']));port=connection['port']
+    if type(port)is not int or not 1<=port<=65535 or connection['pod_id']!='5xndo7i7s5r9zn':raise ValueError('pinned_pod_connection_required')
+    command=['ssh','-p',str(port),'-i','/Users/aliyildirim/.ssh/id_ed25519','-o','BatchMode=yes','-o','ConnectTimeout=5','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','root@'+host,'python3','/workspace/v5_remote_call.py',action]
+    completed=subprocess.run(command,input=None if payload is None else json.dumps(payload),text=True,capture_output=True,check=True,timeout=timeout)
+    return json.loads(completed.stdout)
 
 def read(p):return json.loads(Path(p).read_text())
 def filehash(p):return sha256(Path(p).read_bytes()).hexdigest()
@@ -129,7 +137,7 @@ def run(root,authorization,shared):
     def one(pair):
         i,t=pair;body=old.canonical(payload(t))
         for attempt in range(3):
-            if time.monotonic()+reg['timeout_seconds']>deadline:raise ValueError('wall_budget_exceeded')
+            if time.monotonic()+42>deadline:raise ValueError('wall_budget_exceeded')
             if read(shared/'pod-B.lock')!=lock:raise ValueError('pod_lock_revoked')
             # Exclusive claim prevents restarting an ambiguous network call.
             claim=root/f'claim-{i:03}-{attempt}.json'
@@ -143,6 +151,7 @@ def run(root,authorization,shared):
         save(root/f'row-{i:03}.json',judgment(t,result))
     try:
         with ThreadPoolExecutor(max_workers=4) as executor:list(executor.map(one,enumerate(tasks)))
+        if time.monotonic()>deadline:raise ValueError('wall_budget_exceeded')
         result=replay(root)
         save(root/'result.json',dict(result,model_calls=len(list(root.glob('attempt-*.json'))),elapsed_seconds=240-(deadline-time.monotonic())))
         return result
