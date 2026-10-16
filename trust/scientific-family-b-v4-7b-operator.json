@@ -1,0 +1,62 @@
+{
+  "authorization": {
+    "authorized_by": "user",
+    "executed_by": "Codex",
+    "instruction": "sign",
+    "scope": "family-B skill v1 retaining evaluated v4; original family-A skill unchanged",
+    "signature_type": "delegated-local-ed25519"
+  },
+  "authorized_payload_sha256": "615bba40a11cd3e1de4a4528f88d8c432b9d8a7488c1614178263707c29a6864",
+  "config_hash": "600d08c47088cd6843cc95253f1d5e9dced2e29a5ca5eb910b649e17dcf55b51",
+  "evidence_bundle": {
+    "dev_study": {
+      "sha256": "d2ffa2eaccf3901d0021ffbda5b433fbef459326dcbb8ed003a8023c6a6f26d4",
+      "uri": "dev_study.json"
+    },
+    "holdout_study": {
+      "sha256": "d0cc9d2351633edb231d3a16e284c0a4623d1baa4934083709603ee3345e0307",
+      "uri": "holdout_study.json"
+    },
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "task_bank_manifest": {
+      "sha256": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
+      "uri": "task-bank-manifest.json"
+    }
+  },
+  "helper_path": "/Users/aliyildirim/nerve-runpod-retention/scripts/scientific_family_b_retention_evidence.py",
+  "helper_sha256": "564cba82f6a3a768d401d8563c0451730719194a337ffbcc9b6409b6085890b0",
+  "incumbent": {
+    "config_hash": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+    "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+    "version": "adapted-v1@7B-bootstrap"
+  },
+  "key_id": "delegated-local-ed25519:418616ae0f5c1539b528fdbb67f00aec8550021da17a1d42b4ddced8c4d8a9cd",
+  "manifest_hash": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
+  "metadata_path": "/Users/aliyildirim/nerve-research-runs/family-b-retention-20261016/preparation.json",
+  "metadata_sha256": "2253286e13599133f3e47c24a45a86b1bccc5058bfdc6f33de3cc22fa7451afd",
+  "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+  "prepared_files": {
+    "baseline-config.json": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+    "candidate-config.json": "600d08c47088cd6843cc95253f1d5e9dced2e29a5ca5eb910b649e17dcf55b51",
+    "dev_study.json": "d2ffa2eaccf3901d0021ffbda5b433fbef459326dcbb8ed003a8023c6a6f26d4",
+    "holdout_study.json": "d0cc9d2351633edb231d3a16e284c0a4623d1baa4934083709603ee3345e0307",
+    "registry-transition.json": "e81b886bd65ffbb78c078d6bae702a629e1f1b39e710fc0061ffb95d19b2597a",
+    "task-bank-manifest.json": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
+    "unsigned-record.json": "7eae405dbb2b963008ec56d726ab1dc6200f60e5e32638446f8d966c64259bdb"
+  },
+  "production_authorized": false,
+  "public_key_base64": "BMtIi4QlccVJwzE47cwJ1TtP+4fxxx8bw2O6qX2tRAc=",
+  "registry_only": true,
+  "registry_state_sha256": "e81b886bd65ffbb78c078d6bae702a629e1f1b39e710fc0061ffb95d19b2597a",
+  "signature_is_user_personal_key": false,
+  "signed_at_utc": "2026-10-16T19:26:39.096483+00:00",
+  "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+  "verification": {
+    "dev_verdict": "holdout_eligible",
+    "holdout_verdict": "promote_proposal",
+    "model_calls": 0,
+    "physical_claims": 2854,
+    "verified": true
+  },
+  "version": "v1"
+}

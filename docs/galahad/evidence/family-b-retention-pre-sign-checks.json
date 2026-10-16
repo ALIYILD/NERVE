@@ -1,0 +1,18 @@
+{
+  "adapter_trust_pin_status": "unsigned_fail_closed",
+  "fixture_scope": "temporary keys and registry only; no real signing",
+  "holdout_verdict": "promote_proposal",
+  "model_calls": 0,
+  "offline_evidence_verified": true,
+  "physical_claims_reconciled": 2854,
+  "preparation_sha256": "2253286e13599133f3e47c24a45a86b1bccc5058bfdc6f33de3cc22fa7451afd",
+  "source_sha256": {
+    "scripts/retain_scientific_family_b_v4.py": "2a4e05072cead49aff3accc2983f25be59fd25afa2c72a4960ed919bca952cf8",
+    "scripts/retained_scientific_family_b_skill.py": "8c77e917173b14b0e263b1430ba7e5e27e521714a72c7928c47842694700fc3c",
+    "scripts/scientific_family_b_retention_evidence.py": "564cba82f6a3a768d401d8563c0451730719194a337ffbcc9b6409b6085890b0",
+    "scripts/test_family_b_retention_adapter.py": "e085740525462e7a532e1c4183bb27d5e34776c35c683227be678363d26912b3"
+  },
+  "tests_failed": 0,
+  "tests_passed": 6,
+  "version": "family-b-retention-pre-sign-checks-v1"
+}

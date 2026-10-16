@@ -1,0 +1,25 @@
+{
+  "current": {
+    "config_hash": "600d08c47088cd6843cc95253f1d5e9dced2e29a5ca5eb910b649e17dcf55b51",
+    "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+    "version": "v1"
+  },
+  "production_authorized": false,
+  "records": {
+    "adapted-v1@7B-bootstrap": {
+      "bootstrap": true,
+      "descriptor": {
+        "config_hash": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+        "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+        "version": "adapted-v1@7B-bootstrap"
+      },
+      "status": "superseded",
+      "superseded_by": "v1"
+    },
+    "v1": {
+      "record": "skill-v1.json",
+      "status": "retained"
+    }
+  },
+  "runtime_activation": false
+}

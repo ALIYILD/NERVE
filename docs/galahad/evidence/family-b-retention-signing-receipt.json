@@ -1,0 +1,53 @@
+{
+  "adapter_sha256": "3dde5715bb239606b7e9cc399378b1fd60ec7b2ce8293732b5fde5dae4b0036d",
+  "authorization_instruction": "sign",
+  "authorized_by": "user",
+  "candidate": "v4@7B",
+  "consumer_checks": {
+    "fresh_process_cases_passed": 7,
+    "goal_orchestrator_checks_passed": 16,
+    "persist_restart_passed": true,
+    "production_authorized": false
+  },
+  "consumer_proof_sha256": {
+    "docs/outcome-learning/evidence/actual-family-b-retained-consumer-seven-cases.json": "ab6531774b68121558c411ce019ee4783dbf1f59afc099bcb164f2d5a3cadb54",
+    "docs/outcome-learning/evidence/actual-family-b-retained-skill-consumer.json": "faf870bf801fa03781405cc0767eb100249f006d8c10a6af54628a263ca6c51a"
+  },
+  "executed_by": "Codex",
+  "new_model_calls": 0,
+  "original_family_A_unchanged": true,
+  "private_key_directory_mode": "0o700",
+  "private_key_mode": "0o600",
+  "production_authorized": false,
+  "public_trust_matches_host": true,
+  "record_sha256": "8d0a56f69708c470ac6d2791f21be20a2969496bd388d6e1702bcf592f5e8644",
+  "registry_files_sha256": {
+    "baseline-config.json": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+    "candidate-config.json": "600d08c47088cd6843cc95253f1d5e9dced2e29a5ca5eb910b649e17dcf55b51",
+    "dev_study.json": "d2ffa2eaccf3901d0021ffbda5b433fbef459326dcbb8ed003a8023c6a6f26d4",
+    "holdout_study.json": "d0cc9d2351633edb231d3a16e284c0a4623d1baa4934083709603ee3345e0307",
+    "registry.json": "e81b886bd65ffbb78c078d6bae702a629e1f1b39e710fc0061ffb95d19b2597a",
+    "skill-v1.json": "8d0a56f69708c470ac6d2791f21be20a2969496bd388d6e1702bcf592f5e8644",
+    "task-bank-manifest.json": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43"
+  },
+  "signature_type": "delegated-local-ed25519",
+  "signed": true,
+  "signed_at_utc": "2026-10-16T19:26:39.096483+00:00",
+  "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+  "supersedes": {
+    "config_hash": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+    "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+    "version": "adapted-v1@7B-bootstrap"
+  },
+  "trust_sha256": "f592a0aca09e0d32fb4ede63a607012d7866a486aa6eef5103ac2025e54d8a50",
+  "user_personal_key": false,
+  "verification": {
+    "dev_verdict": "holdout_eligible",
+    "holdout_verdict": "promote_proposal",
+    "model_calls": 0,
+    "physical_claims": 2854,
+    "verified": true
+  },
+  "version": "family-b-retention-signing-receipt-v1",
+  "version_retained": "v1"
+}

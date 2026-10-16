@@ -1,0 +1,101 @@
+{
+  "actual_registry_unchanged": true,
+  "adapter_sha256": "3dde5715bb239606b7e9cc399378b1fd60ec7b2ce8293732b5fde5dae4b0036d",
+  "canonical_replay_network_denial": "enforced separately by trusted adapter",
+  "consumer_sha256": "c42f64b3ae7f05ee53fbcb6a9bbdd931dd690bef19e9b378281b77f653abfa5b",
+  "fresh_process_per_case": true,
+  "model_calls": 0,
+  "network_denied_in_each_child": true,
+  "production_authorized": false,
+  "registry_file_sha256": {
+    "baseline-config.json": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+    "candidate-config.json": "600d08c47088cd6843cc95253f1d5e9dced2e29a5ca5eb910b649e17dcf55b51",
+    "dev_study.json": "d2ffa2eaccf3901d0021ffbda5b433fbef459326dcbb8ed003a8023c6a6f26d4",
+    "holdout_study.json": "d0cc9d2351633edb231d3a16e284c0a4623d1baa4934083709603ee3345e0307",
+    "registry.json": "e81b886bd65ffbb78c078d6bae702a629e1f1b39e710fc0061ffb95d19b2597a",
+    "skill-v1.json": "8d0a56f69708c470ac6d2791f21be20a2969496bd388d6e1702bcf592f5e8644",
+    "task-bank-manifest.json": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43"
+  },
+  "results": [
+    {
+      "case": "actual",
+      "network_denied": true,
+      "production_authorized": false,
+      "retained_skill_selected": true,
+      "selected": {
+        "config_hash": "600d08c47088cd6843cc95253f1d5e9dced2e29a5ca5eb910b649e17dcf55b51",
+        "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+        "version": "v1"
+      }
+    },
+    {
+      "case": "unsigned",
+      "network_denied": true,
+      "production_authorized": false,
+      "reason": "retention_verification_failed",
+      "retained_skill_selected": false,
+      "selected": {
+        "config_hash": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+        "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+        "version": "adapted-v1@7B-bootstrap"
+      }
+    },
+    {
+      "case": "tampered_config",
+      "network_denied": true,
+      "production_authorized": false,
+      "reason": "retention_verification_failed",
+      "retained_skill_selected": false,
+      "selected": {
+        "config_hash": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+        "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+        "version": "adapted-v1@7B-bootstrap"
+      }
+    },
+    {
+      "case": "wrong_model",
+      "network_denied": true,
+      "production_authorized": false,
+      "reason": "retention_verification_failed",
+      "retained_skill_selected": false,
+      "selected": {
+        "config_hash": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+        "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+        "version": "adapted-v1@7B-bootstrap"
+      }
+    },
+    {
+      "case": "wrong_manifest",
+      "network_denied": true,
+      "production_authorized": false,
+      "reason": "retention_verification_failed",
+      "retained_skill_selected": false,
+      "selected": {
+        "config_hash": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+        "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+        "version": "adapted-v1@7B-bootstrap"
+      }
+    },
+    {
+      "case": "tampered_registry",
+      "network_denied": true,
+      "production_authorized": false,
+      "rejected_at_loader": true,
+      "retained_skill_selected": false
+    },
+    {
+      "case": "source_drift",
+      "network_denied": true,
+      "production_authorized": false,
+      "reason": "retention_verification_failed",
+      "retained_skill_selected": false,
+      "selected": {
+        "config_hash": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+        "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+        "version": "adapted-v1@7B-bootstrap"
+      },
+      "simulated_source_reads_changed": 1
+    }
+  ],
+  "version": "family-b-real-retained-consumer-proof-v1"
+}

@@ -1,0 +1,29 @@
+{
+  "config_hash": "600d08c47088cd6843cc95253f1d5e9dced2e29a5ca5eb910b649e17dcf55b51",
+  "evidence_bundle": {
+    "dev_study": {
+      "sha256": "d2ffa2eaccf3901d0021ffbda5b433fbef459326dcbb8ed003a8023c6a6f26d4",
+      "uri": "dev_study.json"
+    },
+    "holdout_study": {
+      "sha256": "d0cc9d2351633edb231d3a16e284c0a4623d1baa4934083709603ee3345e0307",
+      "uri": "holdout_study.json"
+    },
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "task_bank_manifest": {
+      "sha256": "5095941f6aa42b369bcd72dece08406ee87290ea7c56e71ca5e1017c738afa43",
+      "uri": "task-bank-manifest.json"
+    }
+  },
+  "signed_by": {
+    "key_id": "delegated-local-ed25519:418616ae0f5c1539b528fdbb67f00aec8550021da17a1d42b4ddced8c4d8a9cd",
+    "signature": "Pz65N7KRBid49RZKHpt7eSzj3vojXkgW1+RF+irxYBKNQYbRXH5r3+2f5jNtk/cYfFVURdKaN3aCjjuSrfI9CA=="
+  },
+  "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+  "supersedes": {
+    "config_hash": "f1bec6b650dfdc1166d7c1dec8c4ef26b1fc26ca548462ad41928cf36f83a926",
+    "skill_id": "scientific-family-b-measurement-qwen2.5-coder-7b",
+    "version": "adapted-v1@7B-bootstrap"
+  },
+  "version": "v1"
+}
