@@ -39,6 +39,43 @@ def validated_store(path, kind):
     return dict(name=path.parent.name, sha256=before, data=dict(head=head, episodes=episodes))
 
 
+def require_cycle_admission(root, shared, authorization, connection, model_digest):
+    """Bind startup to a specific operator preflight and unchanged focused evidence.
+
+    These records are local evidence, not a human signature or promotion authority.
+    """
+    checks = json.loads((root/'research/overnight-20261017/cycle-readiness.json').read_text())
+    pins = checks.get('source_sha256', {})
+    required = {'scripts/overnight_cycle.py', 'scripts/overnight_cycle_preflight.py'}
+    if (checks.get('tests_passed') is not True or not required <= pins.keys()
+            or any(hashed(root/name) != expected for name, expected in pins.items())):
+        raise ValueError('cycle_focused_evidence_stale')
+    for name in ('log', 'receipt'):
+        if hashed(root/checks[name]) != checks[name+'_sha256']:
+            raise ValueError('cycle_focused_evidence_tampered')
+    rows = [json.loads(line) for line in (shared/'ledger.jsonl').read_text().splitlines() if line.strip()]
+    matching = [row for row in rows if row.get('event') == 'preflight_ok'
+                and row.get('pod_id') == connection['pod_id']]
+    if not matching:
+        raise ValueError('current_preflight_ok_missing')
+    row = matching[-1]
+    fingerprint = sha256(json.dumps(row, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    replay_hash = row.get('replay_hash', '')
+    if (row.get('issued_by') != 'operator' or row.get('digest') != model_digest
+            or not isinstance(replay_hash, str) or len(replay_hash) != 64
+            or any(c not in '0123456789abcdef' for c in replay_hash)
+            or authorization.get('preflight_event_sha256') != fingerprint):
+        raise ValueError('current_preflight_binding_required')
+    for later in rows[rows.index(row)+1:]:
+        if (later.get('event') in ('preflight_failed', 'pod_marked_unusable')
+                and later.get('pod_id') == connection['pod_id']):
+            raise ValueError('preflight_superseded_by_failure')
+    lock = json.loads((shared/'pod-B.lock').read_text())
+    if lock.get('pod_id') != connection['pod_id']:
+        raise ValueError('admitted_pod_lock_required')
+    return fingerprint
+
+
 def run(shared, runs, vault):
     paths = json.loads((ROOT/'docs/galahad/evidence/overnight-protected-paths.json').read_text())['paths']
     mismatches = [p for p, h in paths.items() if hashed(ROOT/p) != h]
