@@ -1,5 +1,15 @@
 # NERVE morning report — 17 October 2026
 
+**Instruction update, 01:51 London:** the user forbids further full-tier runs.
+Pod admission now requires integrity hashes, focused tests for the involved
+modules, identity replay for an owned pod, and a current `preflight_ok` entry in
+`~/nerve-orchestration/ledger.jsonl`. The failed full-tier timings below remain
+historical evidence; they are not the new pod-admission rule. No current
+`preflight_ok` was present at this update, and no pod calls were made.
+[Focused readiness](../../orchestration/focused-readiness-resume.json) records
+80 matching protected hashes in each of four worktrees and existing unchanged
+module test evidence. This update does not claim a new accepted code merge.
+
 CPU continuation has produced independently replayed improvements on preserved
 worker branches. **The required fast gate has not passed; Galahad integration and
 inference remain blocked.** The latest check also timed out at 180 seconds; its exclusivity could not be verified. No signing,
