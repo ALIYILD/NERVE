@@ -1,9 +1,14 @@
 {
+  "reviewed_worker_commits": {
+    "W1": "46b0f2d",
+    "W2": "8f81985",
+    "W3": "3ac9d63"
+  },
   "scope": "report/evidence snapshot only; worker code not merged after failed fast gate",
   "sha256": {
     "docs/galahad/130-autoresearch-ledger-20261017.md": "980c5220f479c85326878be8257e733df655fa02551b58250782edc55ac8935c",
     "docs/galahad/130-overnight-gate-review-20261017.md": "aaade91a77f94ec5a6a0ba1dc05bbb9687a7b14693bf460ee75616a4fe39c573",
-    "docs/galahad/13x-morning-report-20261017.md": "3b67488ff8a72058eda0202efd876ae0b7261bd5faa0814736cb72bedcdff1e6",
+    "docs/galahad/13x-morning-report-20261017.md": "adc8e96e42e0f43afaf13105deab4b49e541dae8a6a25df85d93d21ab555a4cb",
     "docs/galahad/evidence/overnight-20261017-gate-reverification.json": "076763e611506e37bafedcc6f37ade4c39d5a016fd4478b7d9a2c356813c3c2b",
     "docs/galahad/evidence/overnight-20261017/B01b-identity.json": "04dd5280381d45a7d269270efc2e03581a7320a4c497914984fd4edc0c719393",
     "docs/galahad/evidence/overnight-20261017/B01b-registration.json": "094e6058bac759f3a16824f1124b8f9fd4c5a2cacccb9c6fe84cdae5a873e568",
@@ -66,10 +71,5 @@
     "research/overnight-20261017/closure.json": "2186a04cefd203107547927d589f1fb075789517901d0ca2d65233c4fbce7f6f",
     "research/overnight-20261017/historical-b-import.json": "438a16d173cc0f52624b535077c456bc17bb2998dbae0a71f15099bb488d5d75",
     "research/overnight-20261017/program-registration.json": "c82dacbeb0952c9550c0f7efa085b70e550a05afbb6658c4fa3b5e3bd6b7c9d0"
-  },
-  "worker_tips": {
-    "W1": "46b0f2d",
-    "W2": "8f81985",
-    "W3": "3ac9d63"
   }
 }

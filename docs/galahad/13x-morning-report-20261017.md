@@ -137,6 +137,12 @@ therefore produces no next candidate instead of inventing a failure cluster. The
 rejection-memory mechanism has tests, but no actual reverted experiment occurred
 tonight. Neither family establishes three completed autonomous proposal cycles.
 
-Final worker tips: W1 `46b0f2d`, W2 `8f81985`, W3 `3ac9d63`. The report branch
+Reviewed worker commits: W1 `46b0f2d`, W2 `8f81985`, W3 `3ac9d63`. The report branch
 contains copied report/evidence snapshots, not an accepted merge of worker code.
 Use the worker branches to inspect or run the corresponding implementations.
+
+Final remote read-back also found a concurrent W2 successor `9b7e93d` after the
+reviewed `8f81985` (prospective advisor calibration and replacement-cycle design).
+That successor is outside this run and its independent verification. Evidence
+and claims above remain pinned to the reviewed commits; no external work was
+reset, merged into this report, or credited as overnight experimental success.
