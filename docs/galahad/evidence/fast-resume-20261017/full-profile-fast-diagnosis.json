@@ -1,0 +1,79 @@
+{
+  "profile_path": "/Users/aliyildirim/nerve-orchestration/cpu-full-profile.json",
+  "profile_sha256": "c201358dc232a3fed8f48ea04b3cfaf64dc20e3f5f0d9226070e8275955511f7",
+  "profile_successful": false,
+  "profile_total_tests": 2803,
+  "protected_manifest_sha256": "d4e0c4322de6837216bdc48defc92337529967540a8994c7009ba04f20764992",
+  "fast_selected_tests": 2282,
+  "fast_outcomes": {
+    "passed": 2220,
+    "error": 2,
+    "skipped": 60
+  },
+  "fast_test_seconds": 457.30523790302686,
+  "slowest_fast_modules": [
+    [
+      "test_scientific_compact_dev_study",
+      59.03108708088985
+    ],
+    [
+      "test_scientific_candidate_v3_study",
+      53.07231652806513
+    ],
+    [
+      "world_model.test_generalization",
+      47.06873659812845
+    ],
+    [
+      "test_arc_evaluation",
+      41.73324833693914
+    ],
+    [
+      "world_model.test_world_model",
+      15.931241737271193
+    ],
+    [
+      "test_scientific_substrate_calibration",
+      14.580849867255893
+    ],
+    [
+      "test_adaptation_repository",
+      9.091942969127558
+    ],
+    [
+      "test_scientific_sequential_gate",
+      7.385531083040405
+    ],
+    [
+      "test_adaptation",
+      7.378427470102906
+    ],
+    [
+      "test_repository_cross_task_learning",
+      6.16293862182647
+    ],
+    [
+      "test_memory_holdout",
+      5.567139176942874
+    ],
+    [
+      "test_forecast_research_coordinator",
+      5.500576175923925
+    ],
+    [
+      "test_agentos_audit_shadow",
+      5.365992627048399
+    ],
+    [
+      "test_arc_cli",
+      5.171132629038766
+    ],
+    [
+      "test_phase_forecast_study",
+      4.945501264941413
+    ]
+  ],
+  "fast_deadline_seconds": 180,
+  "gate_pass_claimed": false,
+  "note": "Projected subset cost from external serial full profile, not a current fast gate run; code changed since profile."
+}

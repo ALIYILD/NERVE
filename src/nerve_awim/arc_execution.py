@@ -41,6 +41,8 @@ class ArcRuntime:
         self.sleeper = sleeper
         self._permits = {}
         with engine._db() as con:
+            # One durable schema transaction, including the immutable trigger.
+            # The engine connection context commits or rolls back the whole set.
             con.executescript('''
             BEGIN IMMEDIATE;
             CREATE TABLE IF NOT EXISTS arc_modes(tenant TEXT, agent TEXT, context TEXT, mode TEXT, PRIMARY KEY(tenant,agent,context));

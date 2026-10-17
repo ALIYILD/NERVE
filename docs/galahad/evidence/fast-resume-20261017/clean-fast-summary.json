@@ -1,0 +1,17 @@
+{
+  "exit_code": 124,
+  "elapsed_seconds": 180.36936045100447,
+  "deadline_seconds": 180,
+  "model_calls": 0,
+  "sandbox_escalated": true,
+  "sample_count": 85,
+  "foreign_process_samples": null,
+  "exclusive_observed": false,
+  "monitor_limit": "Original monitor filtered truncated macOS comm fields and missed Python runners. Corrected monitor ran after gate completion, observing two unrelated pytest processes; overlap duration is unknown. No full-run exclusivity claim.",
+  "exclusive_status": "unverified_monitor_defect",
+  "original_monitor_sha256": "c35f0f84170f9fa4ef8dd5081110322b149370b68ca2c9f22a94021789a659cd",
+  "corrected_monitor_sha256": "e54b19cd49e3e7237952cbe80a136485005795add29287400638c95f4de51e45",
+  "completed_ok_lines": 1800,
+  "failure_lines": [],
+  "protected_hash_mismatches": []
+}

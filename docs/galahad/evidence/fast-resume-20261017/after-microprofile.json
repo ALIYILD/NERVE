@@ -1,0 +1,15 @@
+{
+  "root": "/Users/aliyildirim/nerve-resume-fast",
+  "case_id": "python-functions-0",
+  "iterations": 5,
+  "elapsed_seconds": 0.2619754100451246,
+  "matched": [
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "model_calls": 0,
+  "profile": "         41822 function calls (40224 primitive calls) in 0.261 seconds\n\n   Ordered by: cumulative time\n   List reduced from 688 to 20 due to restriction <20>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n        5    0.000    0.000    0.262    0.052 /Users/aliyildirim/nerve-resume-fast/src/nerve_awim/arc_evaluation.py:69(_run)\n        5    0.000    0.000    0.182    0.036 /Users/aliyildirim/nerve-resume-fast/src/nerve_awim/arc_workflows.py:230(run_workflow)\n       10    0.000    0.000    0.095    0.010 /Users/aliyildirim/nerve-resume-fast/src/nerve_awim/arc_execution.py:334(wrapped)\n     29/4    0.000    0.000    0.093    0.023 <frozen importlib._bootstrap>:1349(_find_and_load)\n     29/4    0.000    0.000    0.093    0.023 <frozen importlib._bootstrap>:1304(_find_and_load_unlocked)\n     29/4    0.000    0.000    0.092    0.023 <frozen importlib._bootstrap>:911(_load_unlocked)\n     23/4    0.000    0.000    0.092    0.023 <frozen importlib._bootstrap_external>:1017(exec_module)\n     65/9    0.000    0.000    0.088    0.010 <frozen importlib._bootstrap>:480(_call_with_frames_removed)\n     36/4    0.019    0.001    0.082    0.020 {built-in method builtins.exec}\n      126    0.000    0.000    0.075    0.001 {built-in method builtins.next}\n      120    0.001    0.000    0.075    0.001 /Users/aliyildirim/nerve-resume-fast/src/nerve_awim/governed_learning_v20.py:129(_db)\n        5    0.001    0.000    0.073    0.015 /Users/aliyildirim/nerve-resume-fast/src/nerve_awim/arc_workflows.py:136(build_workflow_engine)\n        5    0.001    0.000    0.071    0.014 /Users/aliyildirim/nerve-resume-fast/src/nerve_awim/arc_execution.py:216(execute)\n        1    0.000    0.000    0.064    0.064 /Users/aliyildirim/nerve-resume-fast/src/nerve_awim/arc_workflows.py:1(<module>)\n       60    0.000    0.000    0.057    0.001 /usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/contextlib.py:145(__exit__)\n       55    0.050    0.001    0.050    0.001 {method '__exit__' of 'sqlite3.Connection' objects}\n        1    0.000    0.000    0.044    0.044 /Users/aliyildirim/nerve-resume-fast/src/nerve_awim/agent_learning_v12.py:1(<module>)\n      245    0.040    0.000    0.040    0.000 {method 'execute' of 'sqlite3.Connection' objects}\n        1    0.000    0.000    0.039    0.039 /Users/aliyildirim/nerve-resume-fast/src/nerve_awim/parallel_agents_v11.py:1(<module>)\n       13    0.000    0.000    0.032    0.002 /usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/dataclasses.py:1343(wrap)\n\n\n"
+}

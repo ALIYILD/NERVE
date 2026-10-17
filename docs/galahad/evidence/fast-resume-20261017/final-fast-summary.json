@@ -1,0 +1,15 @@
+{
+  "exit_code": 124,
+  "elapsed_seconds": 180.2870513680391,
+  "deadline_seconds": 180,
+  "protected_manifest_unchanged": true,
+  "model_calls": 0,
+  "sandbox_escalated": true,
+  "completed_ok_lines": 1791,
+  "failure_lines": [],
+  "log_sha256": "6aef766b69f42716bfbbe6e6eaf0819e39265b13e6886ee054d1a399d98ff671",
+  "protected_hash_mismatches": [],
+  "exclusive_run": false,
+  "timing_contaminated": true,
+  "incident": "test-lock-overlap-incident.json"
+}
