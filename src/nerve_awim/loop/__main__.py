@@ -15,7 +15,15 @@ def demo(domain, directory, budget=100):
     directory=Path(directory); directory.mkdir(parents=True,exist_ok=True)
     loop=Loop(domain,directory)
     bank=loop.domain.bank(budget)
-    baseline=[{'item':r,'prediction':loop.domain.predict(loop.domain.skills[0],r)} for r in bank]
+    protocol={'schema':'loop-demo-protocol-v2','domain':domain,'domain_version':loop.domain.version,
+              'budget':budget,'bank_hash':digest(bank),'source_sha256':source_hashes(),
+              'keep_rule':{'net_wins':6,'max_losses':1,'safety_errors':0,'beat_controls':True},
+              'model_calls':0,'adaptation':'legacy synthetic paired reward fixture; not canonical D5'}
+    protocol_path=directory/'protocol.json'
+    if protocol_path.exists() and json.loads(protocol_path.read_text())!=protocol:
+        raise ValueError('registered demo protocol changed')
+    protocol_path.write_text(canonical(protocol)+'\n')  # Before any prediction.
+    baseline=[{'item':r,'prediction':loop.domain.predict(loop.domain.skills[0],loop.domain.public_input(r))} for r in bank]
     baseline_hash=digest(baseline)
     episodes=[{'id':r['item']['id'],'cluster':r['item']['cluster'],
                'correct':loop.domain.correct(r['prediction'],r['item']),
@@ -52,21 +60,25 @@ def demo(domain, directory, budget=100):
     candidate=next(t['receipt'] for t in state['tasks'] if t['id']=='propose')
     evaluation=loop.evaluate(candidate,bank)
     adaptation=loop.adapt(loop.domain.stream())
-    bundle={'schema':'loop-demo-v1','domain':domain,'budget':budget,'baseline':baseline,
+    bundle={'schema':'loop-demo-v2','protocol':protocol,'protocol_sha256':digest(protocol),'domain':domain,'budget':budget,'baseline':baseline,
             'episodes':episodes,'candidate':candidate,'evaluation':evaluation,'adaptation':adaptation,
             'status':loop.status(),'orchestrator_status':state['status'],
             'learning':next(t['receipt'] for t in state['tasks'] if t['id']=='learn'),
             'experience_head':loop.memory.store.query(loop.memory.actor)['head']}
     loop.close()
     (directory/'bundle.json').write_text(canonical(bundle)+'\n')
+    manifest={'bundle_sha256':digest(bundle),'model_calls':0,'synthetic':True,
+              'source_sha256':source_hashes()}
+    (directory/'manifest.json').write_text(canonical(manifest)+'\n')
+    return manifest
+
+
+def source_hashes():
     source_root=Path(__file__).resolve().parents[1]
     sources=['loop/__init__.py','loop/__main__.py','loop/domains.py','loop/experience.py',
              'memory_gateway/drift_monitor.py','memory_gateway/site_router.py',
              'memory_gateway/experience_study_store_v2.py','goal_orchestrator.py']
-    manifest={'bundle_sha256':digest(bundle),'model_calls':0,'synthetic':True,
-              'source_sha256':{p:sha256((source_root/p).read_bytes()).hexdigest() for p in sources}}
-    (directory/'manifest.json').write_text(canonical(manifest)+'\n')
-    return manifest
+    return {p:sha256((source_root/p).read_bytes()).hexdigest() for p in sources}
 
 
 def replay(directory):
@@ -74,6 +86,13 @@ def replay(directory):
     bundle=json.loads((directory/'bundle.json').read_text()); manifest=json.loads((directory/'manifest.json').read_text())
     if digest(bundle)!=manifest['bundle_sha256']:
         raise ValueError('bundle hash mismatch')
+    if bundle.get('schema')!='loop-demo-v2':
+        raise ValueError('legacy fixture: replay using its original pinned source checkout')
+    if manifest.get('source_sha256')!=source_hashes():
+        raise ValueError('source hash mismatch; use pinned source checkout')
+    protocol=json.loads((directory/'protocol.json').read_text())
+    if protocol!=bundle['protocol'] or digest(protocol)!=bundle['protocol_sha256']:
+        raise ValueError('registered protocol mismatch')
     with tempfile.TemporaryDirectory() as temporary:
         result=demo(bundle['domain'],temporary,bundle['budget'])
         if result!=manifest:

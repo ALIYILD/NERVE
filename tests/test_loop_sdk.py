@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from nerve_awim.loop import Loop, digest
 from nerve_awim.loop.__main__ import demo, replay
-from nerve_awim.loop.domains import DOMAINS
+from nerve_awim.loop.domains import DOMAINS, Domain, get_domain
 from nerve_awim.memory_gateway.site_router import SiteRouter
 
 class LoopTests(unittest.TestCase):
@@ -26,6 +26,63 @@ class LoopTests(unittest.TestCase):
                 self.assertEqual(sum(e['kind']=='rollback' for e in events),1)
                 self.assertEqual(sum(e['kind']=='switch' for e in events),3)
                 self.assertEqual(trace[-1]['after'],bundle['status']['incumbents'][0])
+
+    def test_unregistered_custom_domain_is_rejected(self):
+        class Oracle(Domain):
+            def predict(self, skill, public):
+                return 1
+        with self.assertRaises(ValueError):get_domain(Oracle('scientific',DOMAINS['scientific'].skills))
+        with self.assertRaises(ValueError):get_domain(Domain('scientific',('other-a','other-b')))
+
+    def test_predictions_do_not_read_private_rewards(self):
+        for domain in DOMAINS.values():
+            for item in domain.bank(30):
+                public=domain.public_input(item)
+                changed=dict(item,truth=1-item['truth'],cluster='adversarial',safety=not item['safety'])
+                self.assertEqual(public,domain.public_input(changed))
+                for skill in (*domain.skills,'candidate:context','random','always-abstain'):
+                    prediction=domain.predict(skill,public)
+                    self.assertEqual(prediction,domain.predict(skill,domain.public_input(changed)))
+                    with self.assertRaises(ValueError):domain.predict(skill,item)
+                prediction=domain.predict('candidate:context',public)
+                self.assertNotEqual(domain.correct(prediction,item),domain.correct(prediction,changed))
+
+    def test_distinct_task_contracts_and_observable_changes(self):
+        keys=[set(domain.bank(1)[0]['task']) for domain in DOMAINS.values()]
+        self.assertEqual(len({frozenset(k) for k in keys}),3)
+        scientific=DOMAINS['scientific']; public=scientific.public_input(scientific.bank(1)[0])
+        before=scientific.predict('candidate:context',public)
+        public['task']['measurements']['delta'] *= -1
+        self.assertNotEqual(before,scientific.predict('candidate:context',public))
+
+    def test_fresh_seed_task_contracts_and_controls(self):
+        # Never used by the demo's registered development bank.
+        for domain in DOMAINS.values():
+            for seed in (58201,94039):
+                bank=domain.bank(100,seed=seed)
+                scores={skill:[domain.correct(domain.predict(skill,domain.public_input(item)),item)
+                               for item in bank]
+                        for skill in (*domain.skills,'candidate:context','always-abstain','random')}
+                self.assertEqual(sum(scores['candidate:context']),100)
+                self.assertLess(sum(scores[domain.skills[0]]),100)
+                self.assertGreater(sum(scores['candidate:context']),sum(scores['random']))
+                self.assertGreater(sum(scores['candidate:context']),sum(scores['always-abstain']))
+                # Renaming item IDs must not alter the repaired task solution.
+                for item in bank:
+                    public=domain.public_input(item)
+                    self.assertEqual(domain.predict('candidate:context',public),
+                                     domain.predict('candidate:context',dict(public,id='renamed')))
+
+    def test_protocol_and_source_tampering_fail_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            demo('scientific',directory,budget=1)
+            path=Path(directory)/'protocol.json'; original=path.read_text()
+            protocol=json.loads(original);protocol['budget']=99;path.write_text(json.dumps(protocol))
+            with self.assertRaisesRegex(ValueError,'protocol mismatch'):replay(directory)
+            path.write_text(original)
+            path=Path(directory)/'manifest.json';manifest=json.loads(path.read_text())
+            manifest['source_sha256']['loop/domains.py']='0'*64;path.write_text(json.dumps(manifest))
+            with self.assertRaisesRegex(ValueError,'source hash mismatch'):replay(directory)
 
     def test_restart_identical_and_changed_stream_rejected(self):
         with tempfile.TemporaryDirectory() as a,tempfile.TemporaryDirectory() as b:

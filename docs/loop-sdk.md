@@ -49,8 +49,10 @@ abstract retrieval over synthetic metadata. No real workloads, patient data,
 clinical benefit, latency improvement or performance deployment is claimed.
 The injected degradation affects served outcomes, not retention or installation.
 
-For a real domain, implement the `Domain` contract (`bank`, `predict`, `correct`,
-`stream`, `skills`, `reward_source`) using trusted, versioned reward receipts.
+For a real domain, add a reviewed, versioned source adapter implementing `bank`,
+`public_input`, `predict`, `correct`, `stream`, `skills` and `reward_source`, using
+trusted reward receipts. The current release accepts only the three built-in
+contracts; arbitrary custom `Domain` objects cannot be injected at runtime.
 A real reward importer must independently verify and scope the source before
 `learn`, and supply paired outcomes or a separately registered exploration
 policy for adaptation. Loop 38 clinician sign-off and PerfFlux workload data are
@@ -67,7 +69,7 @@ not establish regulatory compliance or authorize a medical change.
 Dedicated tests: `PYTHONPATH=src python3.13 -m unittest discover -s tests -p
  test_loop_sdk.py`. The existing fast runner discovers all test modules absent from
 `slow_modules`, so these SDK tests automatically belong to the fast tier without
-changing the protected `tests/suite_tiers.json`. The dedicated eight-test SDK suite
+changing the protected `tests/suite_tiers.json`. The original dedicated eight-test SDK suite
 passed; W0 reported that the full fast tier exceeded its existing 180-second
 deadline. Full fast-tier completion is therefore unverified, not blocked by a
 missing SDK integration.
@@ -103,6 +105,47 @@ D7 is partial for the originally requested `evaluate(..., gate='signed')`
 capability: this release exposes the mode but refuses it safely. The external
 signed-gate handoff is a documented boundary, not an implemented SDK signed
 assessment path.
+
+## Synthetic contract v2 (continuation)
+
+New demos use `loop-demo-v2`. Predictors receive an allowlisted copy containing
+only item ID and public `task`; evaluator truth, safety strata and cluster labels
+are withheld. Label-mutation tests hold inputs fixed and flip private rewards:
+predictions stay identical while evaluation changes. This is input separation,
+not process isolation against malicious Python code.
+
+The scientific task extracts the sign of a reported delta. PerfFlux compares
+explicit synthetic direct latency against batch overhead plus cache misses.
+Clinical OS matches a query term against synthetic title/abstract metadata;
+this is retrieval relevance, never clinical correctness. The incumbent abstains
+when its summary is unavailable; the candidate uses observable structured context.
+These hand-written deterministic repairs exercise the SDK contract, not autonomous
+scientific discovery or measured production performance. No model calls occur.
+
+`protocol.json` registers version, bank, source hashes, budget and the unchanged
+keep rule before even baseline predictions. Evaluation separately registers the
+candidate and bank before scoring. Fresh-process replay first verifies the exact
+source pins and protocol, then recomputes the receipt. Existing v1 receipts remain
+unchanged and require their original pinned checkout; v2 refuses to silently
+reinterpret them. Hashes establish consistency, not authenticity or independent
+reward validity. `learn` continues to accept host-asserted receipt references.
+
+Adaptation still consumes the existing deliberately injected paired-reward
+fixture. It is not derived from these task banks, and does not substantiate D5
+or production counterfactual reward availability. Signed evaluation remains
+fail-closed. This version improves task/reward separation only; the generator
+still has a single context repair and does not satisfy D1's three proposals.
+
+Direct `evaluate` registrations also pin the SDK evaluator and domain source
+hashes. Runtime custom domain subclasses/configurations are rejected until a
+reviewed, versioned contract is added to the domain registry in source (not the
+protected skill registry). This avoids pretending unpinned host code is a fixed
+evaluator. Real-domain integration currently requires that source-level adapter.
+
+Continuation validation: all 13 SDK tests passed and all three v2 bundles replayed
+in separate fresh processes under the shared test lock. See
+`docs/galahad/140-sdk-task-reward-separation-20261017.md` and
+`receipts/sdk-v2-validation-20261017.txt`; inherited SQLite ResourceWarnings remain.
 
 The [signed evaluation handoff design](loop-signed-evaluation-handoff.md)
 identifies the remaining authenticated candidate/study mapping and custodian

@@ -39,7 +39,7 @@ class Loop:
         if self.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='episodes'").fetchone():
             self.db.close()
             raise ValueError('legacy dual-store SDK directory requires explicit migration or a fresh directory')
-        binding={'domain':self.domain.name,'skills':self.domain.skills,'reward_source':self.domain.reward_source}
+        binding={'domain':self.domain.name,'skills':self.domain.skills,'reward_source':self.domain.reward_source,'version':self.domain.version}
         old=self.db.execute("SELECT payload FROM metadata WHERE key='domain'").fetchone()
         if old and old[0] != canonical(binding):
             raise ValueError('domain binding changed')
@@ -80,7 +80,7 @@ class Loop:
             if self.db.execute('SELECT 1 FROM rejected WHERE seam=? AND cluster=?',(seam,cluster)).fetchone():
                 continue
             candidate={'skill':'candidate:context','seam':seam,'cluster':cluster,'failures':count,
-                       'domain':self.domain.name,'hypothesis':'supply missing synthetic context',
+                       'domain':self.domain.name,'hypothesis':'use observable structured context when summaries are unavailable',
                        'evidence_hash':digest(self.memory.episodes())}
             candidate['registration_hash']=self._register(candidate)
             return candidate
@@ -99,14 +99,17 @@ class Loop:
             raise ValueError('exact registered candidate required')
         registration={'candidate_hash':identifier,'bank_hash':digest(bank),'gate':'dev',
                       'keep_rule':{'net_wins':6,'max_losses':1,'safety_errors':0,'beat_controls':True},
-                      'controls':['always-abstain','random'],'model_calls':0}
+                      'controls':['always-abstain','random'],'model_calls':0,
+                      'domain_version':self.domain.version,
+                      'evaluator_source_sha256':{name:sha256((Path(__file__).parent/name).read_bytes()).hexdigest()
+                                                 for name in ('__init__.py','domains.py')}}
         study=self._register(registration)  # Persist before evaluator execution.
         prior=self.db.execute('SELECT payload FROM receipts WHERE id=?',(study,)).fetchone()
         if prior:
             return json.loads(prior[0])
         rows=[]
         for item in bank:
-            scores={s:self.domain.correct(self.domain.predict(s,item),item) for s in
+            scores={s:self.domain.correct(self.domain.predict(s,self.domain.public_input(item)),item) for s in
                     [self.domain.skills[0],candidate['skill'],'always-abstain','random']}
             rows.append({'item':item,'scores':scores})
         incumbent=self.domain.skills[0]; skill=candidate['skill']
