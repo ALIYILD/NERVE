@@ -1,0 +1,22 @@
+{
+  "time": "2026-10-17T01:08:19.936255+00:00",
+  "event": "L0_continuation_cpu_review",
+  "window": "W0-primary-20261017-root",
+  "integrity_checked": 80,
+  "integrity_mismatches": [],
+  "model_calls": 0,
+  "pod_calls": 0,
+  "inference_admitted": false,
+  "preflight_ok": false,
+  "W2_blockers": [
+    "actual remote worker bytes not checked against pin",
+    "concurrent source changes stale readiness",
+    "supported Python validation required"
+  ],
+  "W3_blockers": [
+    "canonical A/B drift missing same-task paired model outcomes",
+    "SDK signed evaluate intentionally unimplemented"
+  ],
+  "action": "W2 worker fixes/revalidation routed; no W0 engineering, fulltier or merge",
+  "L7_completed": false
+}

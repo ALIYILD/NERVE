@@ -1,0 +1,37 @@
+{
+  "created_at": "2026-10-16T23:56:57.379619+00:00",
+  "queue_path": "/Users/aliyildirim/nerve-orchestration/signing-queue.json",
+  "entry": {
+    "id": "gate-v3.2-bounded-harmful-m14-4e2a5addbcc5",
+    "kind": "promotion_gate_signature",
+    "status": "awaiting_full_form_signature",
+    "created_at": "2026-10-16T23:56:57.379619+00:00",
+    "gate_id": "scientific-paired-sequential-promotion",
+    "version": "v3.2",
+    "payload_path": "/Users/aliyildirim/nerve-w0/docs/galahad/evidence/gate-v3_2-signing-payload.json",
+    "payload_sha256": "4e2a5addbcc56117a9971e67152b632f63536d9341bf92909e56b81fb83a0d5f",
+    "simulation_evidence_sha256": "9c268690c9946626831b834d39f5036c12b490f0bbf5d8d96040abae4138f694",
+    "protected_paths_sha256": "32aa0d4f47dab44f1c0b81b4185867cd4708fa8ea1456993eaad2ebdeaf113ba",
+    "full_form": "sign gate_id=scientific-paired-sequential-promotion version=v3.2 payload_sha256=4e2a5addbcc56117a9971e67152b632f63536d9341bf92909e56b81fb83a0d5f simulation_evidence_sha256=9c268690c9946626831b834d39f5036c12b490f0bbf5d8d96040abae4138f694 protected_paths_sha256=32aa0d4f47dab44f1c0b81b4185867cd4708fa8ea1456993eaad2ebdeaf113ba",
+    "signed": false,
+    "installed": false,
+    "promotion_authorized": false,
+    "selected_m": 14,
+    "scope_floor": 0.08
+  },
+  "queue_append_verified": true,
+  "gate_activated": false,
+  "l4_admission": {
+    "status": "not_admitted",
+    "canonical_verified_version": "v3",
+    "canonical_payload_sha256": "c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8",
+    "blockers": [
+      "No completed fresh broad-candidate result/replay/qualification in W2 overnight artifacts; B01a registration covers only two agreement strata.",
+      "Fresh exclusive reserve and prospective study binding have not been established for an eligible candidate."
+    ],
+    "v3_2_unsigned": true,
+    "model_calls": 0,
+    "holdout_items_consumed": 0,
+    "next_action": "Admit L4 only after eligible candidate evidence and prospective exclusive reserve/study checks under verified signed v3, or separately signed and activated v3.2; never auto-sign or reuse consumed reserve."
+  }
+}

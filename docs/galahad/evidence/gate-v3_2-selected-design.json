@@ -1,0 +1,53 @@
+{
+  "harmful_requirement": {
+    "all_profiles_must_pass": true,
+    "marginal_per_profile_not_simultaneous": true,
+    "maximum_one_sided_95_upper": 0.0005,
+    "method": "Clopper-Pearson beta.ppf(0.95,k+1,n-k); k=n gives1"
+  },
+  "main_cap": 960,
+  "primary_cap": 300,
+  "registration": {
+    "path": "docs/galahad/evidence/gate-v3_2-harmful-bound/registration.json",
+    "sha256": "54cebe931c42194593cf858504600499b08a774ee1d1dc551c271615649263aa"
+  },
+  "risk_followup_N": 40,
+  "risk_stratum": "dissenter",
+  "rules": {
+    "G1": "zero tolerance, recorded zero-misfire fixture; not a claim of population safety",
+    "G2": "single-stage t=0 on complete coverage, all answer net counts nonnegative; safety strata covered by G1",
+    "coverage": "Only uncovered answer strata, least observed first with same rotated tie break. Coverage >=m discordances for m in12,14,16 OR zero in>=60 observations. Primary observations count. Main cap960 reserves40 risk items inside1000.",
+    "main_cap": 960,
+    "pooled_e": "bet .3, threshold20, frozen after primary acceptance; no coverage-stage resurrection of rejected primary",
+    "primary": "balanced all nine; rotating initial offset stream_index modulo9; until e>=20 or300 items, retaining prior futility e<=.05, net>=3 and all-nine-observed conditions",
+    "risk_followup": "Unconditional40 dissenter items after every primary acceptance, even if coverage incomplete or G2 fails; G1 immediate safety veto; risk-net<0 rejects. Structural both-correct ties in recorded fixture.",
+    "total_cap": 1000
+  },
+  "scope": {
+    "admission": "Public Process requires prospective dev-scope evidence hash, profile and declared primary discordance before any holdout item. Below.08 or unvalidated profile returns insufficient_power immediately. No threshold inferred retrospectively from holdout outcomes. Study custodian must independently verify hash and registration provenance.",
+    "claim_limit": "Validation is for these declared profile families, including their registered regression/null alternatives. The8% floor is necessary, not a distribution-free power guarantee for every heterogeneous vector above it. Measured zeros outside agreement are assumptions, not proof.",
+    "denominator": "all nine equally weighted primary strata; not only agreement items",
+    "fixture_primary_discordance": {
+      "broad_75": 0.25,
+      "measured": 0.09555555555555556,
+      "narrow_64": 0.08,
+      "narrow_88": 0.026666666666666665
+    },
+    "in_scope_profiles": [
+      "broad_75",
+      "narrow_64",
+      "measured"
+    ],
+    "minimum_conditional_win_p": 0.85,
+    "minimum_primary_discordance": 0.08,
+    "out_of_scope": [
+      "narrow_88"
+    ],
+    "outside_diagnostic": "Run raw kernel for narrow88 without scope admission solely to report residual power/H0 and cost. Actual scope-enforced verdict is insufficient_power for every stream, zero accepted and zero items. Raw and admitted results remain separate."
+  },
+  "scope_floor": 0.08,
+  "selected_m": 14,
+  "t": 0,
+  "total_cap": 1000,
+  "version": "v3.2"
+}

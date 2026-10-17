@@ -1,0 +1,67 @@
+{
+  "canonical_policy_on_future_valid_signing_and_activation": {
+    "automatic_activation": false,
+    "automatic_signing": false,
+    "current_gate_unchanged": "v3",
+    "fresh_exclusive_reserve_required": true,
+    "fresh_registered_candidate_study_required": true,
+    "historical_retained_promotions": "unchanged",
+    "promotion_gate": "v3.2",
+    "reserve_allocation_authorized": false,
+    "scope_floor": 0.08,
+    "selected_m": 14
+  },
+  "gate_id": "scientific-paired-sequential-promotion",
+  "installed": false,
+  "payload_version": "scientific-gate-signing-payload-v1",
+  "promotion_authorized": false,
+  "protected_path_manifest_update": {
+    "applied": false,
+    "path": "docs/galahad/evidence/gate-v3_2-protected-paths-proposed.json",
+    "sha256": "32aa0d4f47dab44f1c0b81b4185867cd4708fa8ea1456993eaad2ebdeaf113ba"
+  },
+  "qualification": {
+    "all_three_fresh_profile_bounds_pass": true,
+    "fresh_seed": 2026102501,
+    "harmful_rate_upper_95_max": 0.0005,
+    "original_nonharmful_m14_checks_pass": true,
+    "reformulation_after_doc129": true,
+    "streams_per_profile": 100000
+  },
+  "registered_design": {
+    "main_cap": 960,
+    "path": "docs/galahad/evidence/gate-v3_2-selected-design.json",
+    "primary_cap": 300,
+    "risk_followup_N": 40,
+    "risk_stratum": "dissenter",
+    "scope_floor": 0.08,
+    "selected_m": 14,
+    "sha256": "54bd75b52c17c0f66639cdcf8976fcff4cb35f8ba3b8685360aa13034d6c11e7",
+    "t": 0,
+    "total_cap": 1000
+  },
+  "scope_limits": [
+    "Marginal per-profile 95% bounds, not simultaneous familywise coverage; common random numbers are not independent replications.",
+    "Validated profile families only; 8% primary discordance floor is necessary, not a universal power guarantee.",
+    "Measured v5 is a dev plug-in profile; its approximately 7.50% lower bound does not certify the 8% floor. Silent strata and zero safety misfires are fixture assumptions.",
+    "Gate qualification does not qualify any model candidate or authorize reserve allocation.",
+    "Canonical signed v3 remains active until separately verified human signature and activation; current loader and signer are pinned to v3 and cannot install this payload automatically."
+  ],
+  "signature_requirement": "Full form must bind gate_id, version, payload_sha256, simulation_evidence_sha256 and protected_paths_sha256. Bare sign refused.",
+  "signed": false,
+  "simulation_evidence": {
+    "path": "docs/galahad/evidence/gate-v3_2-signing-evidence-index.json",
+    "scope": "Original completed L2 grid plus prospectively registered fresh harmful bounded-rate verification and scalar replays",
+    "sha256": "9c268690c9946626831b834d39f5036c12b490f0bbf5d8d96040abae4138f694"
+  },
+  "source": {
+    "path": "src/nerve_awim/memory_gateway/scientific_promotion_gate_v3_2.py",
+    "sha256": "7e404b52dad531bffdee4040f6efaa4f3997286c8ba6e151165db64f95ad15ba"
+  },
+  "status": "awaiting_full_form_signature",
+  "tables": {
+    "path": "docs/galahad/evidence/gate-v3_2-confirmation-tables.json",
+    "sha256": "5db3ca0ea2456420471536a7c3fbfd2299e38af657a5a55f4bd86d2efa1daa17"
+  },
+  "version": "v3.2"
+}

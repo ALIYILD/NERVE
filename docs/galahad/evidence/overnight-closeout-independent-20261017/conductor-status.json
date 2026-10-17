@@ -1,0 +1,15 @@
+{
+  "actions": [],
+  "all_exited": true,
+  "budget_warning": false,
+  "checked_at": "2026-10-17T00:08:40.529301+00:00",
+  "compute_usd": 0.2084487305027778,
+  "integrity_errors": [],
+  "model_calls": 112,
+  "observed_at": "2026-10-17T00:06:59.498Z",
+  "projected_compute_usd": 0.2084487305027778,
+  "reasons": [
+    "infrastructure_stop"
+  ],
+  "shutdown_verified": true
+}

@@ -1,0 +1,52 @@
+{
+  "G1_false_veto": 0,
+  "G2_identified_bad_rate_evaluated": 0.0,
+  "G2_rejection_rate_all": 0.0,
+  "G2_rejection_rate_evaluated": 0.0,
+  "G2_veto_count": 0,
+  "accept_rate": 3e-05,
+  "accepted": 3,
+  "any_answer_bound_activation_rate": 3e-05,
+  "bad_stratum_bound_activated_count": null,
+  "bad_stratum_bound_activation_rate": null,
+  "bad_stratum_first60_certificate_count": null,
+  "bad_stratum_loss_or_discordance_observed_rate": null,
+  "bad_stratum_promotions_with_bound": null,
+  "bound_passed": true,
+  "coverage_incomplete": 0,
+  "evaluated_G2_count": 3,
+  "identification_rate": null,
+  "m": 14,
+  "max_items": 455,
+  "mean_A40_minutes": [
+    9.095096999999999,
+    13.444926
+  ],
+  "mean_A40_usd": [
+    0.08943512049999998,
+    0.13220843899999998
+  ],
+  "mean_items": 237.2634,
+  "nonpromotion_rate": 0.99997,
+  "p90_A40_minutes": [
+    11.5,
+    17.0
+  ],
+  "p90_A40_usd": [
+    0.11308333333333334,
+    0.16716666666666666
+  ],
+  "p90_items": 300.0,
+  "primary_accepts": 3,
+  "primary_nonacceptance_count": 99997,
+  "receipt": {
+    "path": "docs/galahad/evidence/gate-v3_2-harmful-bound/fresh-m14-narrow_64-harmful-streams.json.gz",
+    "raw_sha256": "07105d10277b556da9c46b05141fe8b4868421ede1147255378e6918aecf498b",
+    "sha256": "74dd06d0c0af798b58ad064f4ba93b2663bea3adc5a1b1dbab736f425dd23765"
+  },
+  "risk_followups": 3,
+  "scalar_parity_streams": 100,
+  "streams": 100000,
+  "total_items": 23726340,
+  "upper_95": 7.753472238564708e-05
+}

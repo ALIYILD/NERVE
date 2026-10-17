@@ -1,0 +1,108 @@
+{
+  "window": "W0-primary-20261017-root",
+  "status": "incomplete_infrastructure",
+  "integrity_matches": 80,
+  "focused_tests_passed": 4,
+  "pods": [
+    {
+      "id": "5xndo7i7s5r9zn",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-17T00:00:31.877Z",
+      "assigned_role": "A"
+    },
+    {
+      "id": "ki9m7vdg9qsea6",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-16T17:01:07.794Z",
+      "assigned_role": null
+    },
+    {
+      "id": "lvojhtouu5gede",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-17T00:59:35.742Z",
+      "assigned_role": "B"
+    },
+    {
+      "id": "b7qj6qyx9ij6gg",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "CA-MTL-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-16T08:33:31.123Z",
+      "assigned_role": null
+    },
+    {
+      "id": "97vr620wnmtuga",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-16T06:27:28.749Z",
+      "assigned_role": null
+    },
+    {
+      "id": "lg0svvuenxvbno",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-15T23:08:59.019Z",
+      "assigned_role": null
+    }
+  ],
+  "preflight": {
+    "pod_id": "lvojhtouu5gede",
+    "gpu": "NVIDIA A40",
+    "ollama": "0.40.5",
+    "digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "latencies": [
+      66.33078790735453,
+      1.6275664907880127,
+      1.6983141107484698,
+      1.6885026609525084,
+      1.553256728220731
+    ],
+    "registered_band": [
+      1.5230746129527688,
+      62.35253082308918
+    ],
+    "dev_replays": 0,
+    "model_calls": 5,
+    "holdout_items": 0,
+    "preflight_ok": false
+  },
+  "coordinator_policy": "All other coordinator sessions observer only; no preflight_ok, locks, or merges.",
+  "cpu_worker_blockers_routed": [
+    "hardcoded previous pod and worker",
+    "undefined audit"
+  ],
+  "compute_usd_estimate": 0.2619353340666667,
+  "storage_excluded": true,
+  "L0_cpu_followup": {
+    "time": "2026-10-17T01:06:36.262365+00:00",
+    "event": "L0_cpu_blocker_resolution",
+    "window": "W0-primary-20261017-root",
+    "W2_commits": [
+      "cb4d0e7",
+      "5657e5e"
+    ],
+    "focused_tests_passed": 33,
+    "merged": false,
+    "concurrent_writer_incident": "Other W2 session committed same tested implementation while delegated worker staged; preserved both commits; worktree reported clean",
+    "independent_preflight_review": "confirmed failure, integrity80/80 and spend; accounting findings corrected",
+    "preflight_ok": false,
+    "inference_blocked": true,
+    "all_pods_exited": true,
+    "full_tier_run": false,
+    "new_L7_run": false
+  }
+}

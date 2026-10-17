@@ -1,0 +1,25 @@
+{
+  "cap_usd": 12,
+  "compute_usd": 0.2084487305027778,
+  "infrastructure_failures": 3,
+  "intervals": [
+    {
+      "basis": "conservative request time",
+      "end": "2026-10-16T23:59:51.424915+00:00",
+      "hourly_usd": 0.59,
+      "pod_id": "5xndo7i7s5r9zn",
+      "start": "2026-10-16T23:45:14.437716+00:00"
+    },
+    {
+      "basis": "conservative request time",
+      "end": "2026-10-17T00:07:00.477979+00:00",
+      "hourly_usd": 0.59,
+      "pod_id": "5xndo7i7s5r9zn",
+      "start": "2026-10-17T00:00:25.574619+00:00"
+    }
+  ],
+  "last_checked_at": "2026-10-17T00:08:40.529301+00:00",
+  "model_calls": 112,
+  "projected_compute_usd": 0.2084487305027778,
+  "storage_excluded_pending_billing": true
+}
