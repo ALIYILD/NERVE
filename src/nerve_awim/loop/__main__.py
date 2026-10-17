@@ -19,7 +19,7 @@ def demo(domain, directory, budget=100):
     baseline_hash=digest(baseline)
     episodes=[{'id':r['item']['id'],'cluster':r['item']['cluster'],
                'correct':loop.domain.correct(r['prediction'],r['item']),
-               'source_receipt_sha256':baseline_hash} for r in baseline]
+               'source_receipt_sha256':baseline_hash,'source_ordinal':i} for i,r in enumerate(baseline)]
     def evaluate_task(ctx):
         receipt=loop.evaluate(ctx['propose'],bank)
         return {'receipt_hash':digest(receipt),'items':len(receipt['rows']),

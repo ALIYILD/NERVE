@@ -41,3 +41,14 @@ a protected manifest edit was incorrect. scripts/timed_test_runner.py selects
 all discovered modules absent from slow_modules. Only the full-tier timeout
 remains a verification limitation. Signed API evaluation still fails closed;
 sealed studies require the external signed gate, and no SDK method signs.
+
+Independent review found an ingestion atomicity defect: local episode writes
+could precede a companion failure, and positional ordinals made reordered retries
+conflict. Corrected by removing duplicate episode storage, using explicit stable
+source ordinals, and committing the entire bounded batch in one companion
+transaction. No protected original v2 file changed. Added reorder/retry/restart,
+late conflict after 1,001 new records, byte-unchanged failure, large valid batch,
+and changed-ordinal regression coverage. All three bundles were regenerated and freshly replay-verified; prior local
+checkpoints are preserved outside the worktree. Eight SDK tests passed in
+30.129 seconds with the atomic test lock held. The lock is now released.
+SIGKILL proof regenerated successfully; 80 protected hashes remain unchanged.

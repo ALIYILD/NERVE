@@ -67,7 +67,7 @@ not establish regulatory compliance or authorize a medical change.
 Dedicated tests: `PYTHONPATH=src python3.13 -m unittest discover -s tests -p
  test_loop_sdk.py`. The existing fast runner discovers all test modules absent from
 `slow_modules`, so these SDK tests automatically belong to the fast tier without
-changing the protected `tests/suite_tiers.json`. The dedicated six-test SDK suite
+changing the protected `tests/suite_tiers.json`. The dedicated eight-test SDK suite
 passed; W0 reported that the full fast tier exceeded its existing 180-second
 deadline. Full fast-tier completion is therefore unverified, not blocked by a
 missing SDK integration.
@@ -81,3 +81,20 @@ are handled by rolling scores. This assumes trusted paired reference outcomes.
 The registered three-shift synthetic stream is an engineering fixture, not a
 power-calibrated statistical drift benchmark; initial local fixture iterations
 were used to correct routing/monitor interaction before the final receipt run.
+
+Learning ingestion uses one authority: the append-only study-v2 companion. There
+is no separately committed SDK episode table. Each call of up to 10,000 records
+is validated and appended in one transaction, so a conflict anywhere in a batch
+leaves the complete batch unapplied. Reordered identical records are idempotent.
+Episode identity is domain + caller ID; changed content for an existing ID fails
+closed. `source_ordinal` is the explicit position in a multi-row source receipt;
+it defaults to 0 for a single-record receipt and never derives from batch order.
+The demo supplies every baseline item's original ordinal. Proposals derive their
+evidence hash and failure clusters from this same authoritative store.
+
+The earlier dual-store development implementation was not atomic. Its local
+checkpoint directories are rejected with an explicit migration/fresh-directory
+error; no silent migration or deletion occurs. Arbitrary external episode sinks
+are rejected because the SDK cannot atomically commit their side effects. SDK
+bundles committed after the correction were regenerated and independently
+replayed against the corrected source pins.

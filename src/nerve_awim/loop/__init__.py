@@ -22,7 +22,8 @@ class Loop:
         self.domain=get_domain(domain)
         self.directory=Path(directory)
         self.directory.mkdir(parents=True,exist_ok=True)
-        self.episode_sink=episode_sink
+        if episode_sink is not None:
+            raise ValueError('external episode sinks cannot participate in atomic ingestion')
         from .experience import StudyMemory
         self.memory=StudyMemory(self.directory,self.domain.name)
         self.db=sqlite3.connect(self.directory/'loop.sqlite')
@@ -30,12 +31,14 @@ class Loop:
         self.db.execute('PRAGMA synchronous=FULL')
         self.db.executescript('''
             CREATE TABLE IF NOT EXISTS metadata(key TEXT PRIMARY KEY,payload TEXT NOT NULL);
-            CREATE TABLE IF NOT EXISTS episodes(id TEXT PRIMARY KEY,payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS registrations(id TEXT PRIMARY KEY,payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS receipts(id TEXT PRIMARY KEY,payload TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS rejected(seam TEXT,cluster TEXT,PRIMARY KEY(seam,cluster));
             CREATE TABLE IF NOT EXISTS stream(id INTEGER PRIMARY KEY,payload TEXT NOT NULL);
         ''')
+        if self.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='episodes'").fetchone():
+            self.db.close()
+            raise ValueError('legacy dual-store SDK directory requires explicit migration or a fresh directory')
         binding={'domain':self.domain.name,'skills':self.domain.skills,'reward_source':self.domain.reward_source}
         old=self.db.execute("SELECT payload FROM metadata WHERE key='domain'").fetchone()
         if old and old[0] != canonical(binding):
@@ -57,22 +60,13 @@ class Loop:
         if not episodes or len(episodes)>10000:
             raise ValueError('one to 10000 recorded episodes required')
         for e in episodes:
-            if set(e) != {'id','cluster','correct','source_receipt_sha256'} or type(e['correct']) is not bool or not isinstance(e['id'],str) or not isinstance(e['cluster'],str):
+            if set(e) not in ({'id','cluster','correct','source_receipt_sha256'}, {'id','cluster','correct','source_receipt_sha256','source_ordinal'}) or type(e['correct']) is not bool or not isinstance(e['id'],str) or not isinstance(e['cluster'],str):
                 raise ValueError('typed recorded outcome required')
             h=e['source_receipt_sha256']
             if not isinstance(h,str) or len(h)!=64 or any(c not in '0123456789abcdef' for c in h):
                 raise ValueError('source receipt SHA256 required')
-        self.memory.prepare(episodes)  # Validate companion schema before any writes.
-        with self.db:
-            for e in episodes:
-                old=self.db.execute('SELECT payload FROM episodes WHERE id=?',(e['id'],)).fetchone()
-                if old and old[0]!=canonical(e):
-                    raise ValueError('conflicting episode id')
-                self.db.execute('INSERT OR IGNORE INTO episodes VALUES(?,?)',(e['id'],canonical(e)))
         memory=self.memory.append(episodes)
-        if self.episode_sink is not None:
-            self.episode_sink(episodes)
-        return {'learned':self.db.execute('SELECT COUNT(*) FROM episodes').fetchone()[0], 'model_calls':0,
+        return {'learned':memory['count'], 'model_calls':0,
                 'study_memory_count':memory['count'], 'provenance':'host-supplied receipt references; not signatures'}
 
     def propose(self):
@@ -87,7 +81,7 @@ class Loop:
                 continue
             candidate={'skill':'candidate:context','seam':seam,'cluster':cluster,'failures':count,
                        'domain':self.domain.name,'hypothesis':'supply missing synthetic context',
-                       'evidence_hash':digest(list(self.db.execute('SELECT payload FROM episodes ORDER BY id')))}
+                       'evidence_hash':digest(self.memory.episodes())}
             candidate['registration_hash']=self._register(candidate)
             return candidate
         return None

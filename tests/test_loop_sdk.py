@@ -65,6 +65,46 @@ class LoopTests(unittest.TestCase):
             self.assertEqual(bundle['evaluation']['verdict'],'reverted')
             self.assertTrue(replay(d)['verified'])
 
+    def test_learning_reordered_retries_use_one_source_of_truth(self):
+        with tempfile.TemporaryDirectory() as d:
+            loop=Loop('scientific',d)
+            def episode(identifier):
+                return {'id':identifier,'cluster':'missing-context','correct':False,
+                        'source_receipt_sha256':'a'*64}
+            a,b,c=map(episode,('a','b','c'))
+            self.assertEqual(loop.learn([a,b])['learned'],2)
+            self.assertEqual(loop.learn([b,a,c])['learned'],3)
+            head=loop.memory.store.query(loop.memory.actor)['head']
+            self.assertEqual(loop.learn([c,b,a])['learned'],3)
+            self.assertEqual(loop.memory.store.query(loop.memory.actor)['head'],head)
+            self.assertEqual(loop.memory.episodes(),[a,b,c])
+            self.assertFalse(loop.db.execute("SELECT 1 FROM sqlite_master WHERE name='episodes'").fetchone())
+            loop.close()
+            resumed=Loop('scientific',d)
+            self.assertEqual(resumed.learn([b,a])['learned'],3)
+            resumed.close()
+
+    def test_learning_late_batch_conflict_is_atomic(self):
+        with tempfile.TemporaryDirectory() as d:
+            loop=Loop('scientific',d)
+            existing={'id':'existing','cluster':'missing-context','correct':False,
+                      'source_receipt_sha256':'a'*64,'source_ordinal':7}
+            loop.learn([existing])
+            before=loop.memory.store.query(loop.memory.actor)
+            original_bytes=loop.memory.store.path.read_bytes()
+            new=[dict(existing,id=str(i),source_ordinal=i) for i in range(1001)]
+            with self.assertRaises(ValueError):
+                loop.learn(new+[dict(existing,correct=True)])
+            self.assertEqual(loop.memory.store.query(loop.memory.actor),before)
+            self.assertEqual(loop.memory.store.path.read_bytes(),original_bytes)
+            # A valid batch larger than the old 1000-row chunks commits completely.
+            self.assertEqual(loop.learn(new)['learned'],1002)
+            after=loop.memory.store.query(loop.memory.actor)
+            with self.assertRaises(ValueError):
+                loop.learn([dict(existing,id='new'),dict(existing,source_ordinal=8)])
+            self.assertEqual(loop.memory.store.query(loop.memory.actor),after)
+            loop.close()
+
     def test_corrupt_bundle_rejected(self):
         with tempfile.TemporaryDirectory() as d:
             demo('scientific',d)

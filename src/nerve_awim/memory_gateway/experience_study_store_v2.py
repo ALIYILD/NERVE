@@ -85,7 +85,7 @@ class ExperienceStudyStoreV2(ExperienceStore):
         if not self.enabled:return self._off()
         self._require(actor,'propose')
         if not self.path.exists():return {'status':'off','reason':'no_data','episodes':[]}
-        if type(episodes) is not list or not 1<=len(episodes)<=1000:raise ValueError('bounded_batch_required')
+        if type(episodes) is not list or not 1<=len(episodes)<=MAX_RECORDS:raise ValueError('bounded_batch_required')
         encoded=[_episode(e) for e in episodes]
         try:
             with self._connect() as db:
