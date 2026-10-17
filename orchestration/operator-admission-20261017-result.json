@@ -1,0 +1,18 @@
+{
+  "loop": "L1.B.resume",
+  "event": "pod_start_refused",
+  "end": "2026-10-17T01:02:00.035038+00:00",
+  "verdict": "incomplete_infrastructure",
+  "pod_id": "5xndo7i7s5r9zn",
+  "issued_by": "operator",
+  "reason": "RunPod400: not enough free GPUs on this stopped pods host",
+  "live_status_after": "EXITED",
+  "previous_started_at_unchanged": "2026-10-17T00:00:31.877Z",
+  "integrity_hashes_verified": 80,
+  "identity_replay_executed": false,
+  "preflight_ok_written": false,
+  "calls": 0,
+  "model_calls": 0,
+  "new_compute_not_started": true,
+  "scope": "no alternate pod admitted yet"
+}

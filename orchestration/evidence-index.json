@@ -12,7 +12,7 @@
     "docs/galahad/131-family-a-routing-replay-20261017.md": "7caf3adc97cfcce432f13931c5c99d49c8c9693dd2fc811f946837fa50b0e162",
     "docs/galahad/132-continuation-20261017.md": "fe61fe9b9c805de4ab398732cb9deeb8ccfb7db3b09b98c87a63a41e654a9d7e",
     "docs/galahad/13x-initial-wrap-report-20261017.md": "adc8e96e42e0f43afaf13105deab4b49e541dae8a6a25df85d93d21ab555a4cb",
-    "docs/galahad/13x-morning-report-20261017.md": "63021f16e65b89a0baf9b9d02a4aeb383ec7a3751994a9cef2e02614a07292f7",
+    "docs/galahad/13x-morning-report-20261017.md": "f61c3a827b1423401ff82601b2e5262cadb4151f1e9000bf7ad302b8dbfe23a4",
     "docs/galahad/140-sdk-task-reward-separation-20261017.md": "2cbc5e4b4848f99bda576796f39cf4c75145d5f3c14479881cb12e3d645454f0",
     "docs/galahad/evidence/fast-resume-20261017/after-microprofile.json": "63762f2424530c78c5848c9e9fbfb5322376ceb3ecee013b511e7e4ba94bcc4f",
     "docs/galahad/evidence/fast-resume-20261017/before-microprofile.json": "eb16d29d6251b0c70bca47492e1db6b5306a6b30b3d94849e1762f5da13fc86e",
@@ -62,7 +62,7 @@
     "orchestration/independent-scientific.log": "9c2956a9391f146238924367597638bd2f427dee6837dba2bed83f349223197f",
     "orchestration/inference-revoked.json": "8ff65a4519d15f3c166a4b993b37fd83d852b17554f42ac31689cf7e8efafd76",
     "orchestration/integrity-baseline.json": "cd0808489a8e4ad2a5160ee705fe132b978736abea86f7df6ab0d575906b598e",
-    "orchestration/ledger.jsonl": "ed832ce9e35733ae069fdbdf263bd2ef728dd173823304d119fb6b0281eda42a",
+    "orchestration/ledger.jsonl": "e07f02eb4857bffa6893ba87819db94628de23e5b5133c78d5a9356c186fa091",
     "orchestration/pods.json": "fcfee4558d5527e5dbae82236eef5d06bcedf24cd0055362f7d97a2d732a4e28",
     "orchestration/preflight-fast-exclusive.log": "7c4acdc7a50217bc79c0cf291566caaaba963606f5022b84338e414e378da2d8",
     "orchestration/preflight-fast-py313.log": "b31fa304330831756d4ea97cad07fc611a6aff21a1e7c88f08fd18bc59ce15aa",
@@ -113,7 +113,8 @@
     "research/overnight-20261017/historical-b-import.json": "438a16d173cc0f52624b535077c456bc17bb2998dbae0a71f15099bb488d5d75",
     "research/overnight-20261017/program-registration.json": "c82dacbeb0952c9550c0f7efa085b70e550a05afbb6658c4fa3b5e3bd6b7c9d0",
     "orchestration/focused-readiness-resume.json": "c2e418390ab6f1d6305b6b68a8a8885d018790cdca30743680f3316ee4b9f292",
-    "orchestration/resume-module-preflight-evidence.json": "53c5a4efd6597c09e2ad990ddabaf877cceba14be88c5c3e3e8a33ce925685fa"
+    "orchestration/resume-module-preflight-evidence.json": "53c5a4efd6597c09e2ad990ddabaf877cceba14be88c5c3e3e8a33ce925685fa",
+    "orchestration/operator-admission-20261017-result.json": "f4e589346ab83193cc0124ecd83923fd7747043549e33f99ee186f9be6d5f0fa"
   },
   "pod_admission_instruction": "User supersedes full-tier preflight with integrity, focused tests, owned-pod identity and current ledger preflight_ok; no further full-tier runs."
 }

@@ -1,5 +1,13 @@
 # NERVE morning report — 17 October 2026
 
+**Operator admission attempt:** pod B was explicitly admitted as
+`5xndo7i7s5r9zn`. After acquiring its lock and verifying 80 integrity hashes,
+the live provider read showed EXITED. Start was refused because the existing
+host had no free GPUs; read-back remained EXITED. No model calls, latency
+checks or identity replay ran, no `preflight_ok` was written, and the owned lock
+was released. An alternate pod requires an updated admission.
+[Failure receipt](../../orchestration/operator-admission-20261017-result.json).
+
 **Instruction update, 01:51 London:** the user forbids further full-tier runs.
 Pod admission now requires integrity hashes, focused tests for the involved
 modules, identity replay for an owned pod, and a current `preflight_ok` entry in
