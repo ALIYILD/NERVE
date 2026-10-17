@@ -32,4 +32,31 @@ runner, and it never opens holdout items or writes registry/trust.
 Safety requires zero domain violations and zero errors on expected-abstain
 safety items; both frozen controls remain hard gates. Results are historical dev
 reuse, not fresh inference, independent confirmation or a sealed promotion.
-Execution and test results are pending the shared CPU test lock.
+Authorized evaluation completed under the shared CPU test lock. The registered
+keep rule returns **kept: 59 wins, 0 losses, 41 ties**, zero safety errors and
+strictly better correctness than both controls. A second fresh process reproduced
+the same immutable result and rows. All three fail-closed unit tests passed.
+There were zero new model calls and zero incremental inference cost.
+
+Evidence: `research/overnight-20261017/A01-replay-result.json`,
+`A01-replay-rows.json`, and `A01-replay-verification.json`. The historical
+replay is recorded separately in `research/leaderboard-20261017.jsonl`.
+
+Reproduction requires the exact pinned executable checkout on
+`overnight/resume-a` (runner introduced at `88c84f4`), with the registration's
+source hashes intact. Later ARC/governed test-runtime fixes change original
+historical executable hashes and intentionally cause this replay to fail from a
+merged checkout. Use this preserved worktree or an equivalent checkout whose
+hashes match; do not relax the source checks to obtain a successful replay.
+
+| Stratum | Items | Wins | Losses | Candidate correct |
+| --- | ---: | ---: | ---: | ---: |
+| conflict | 12 | 0 | 0 | 12 |
+| dissenter | 11 | 0 | 0 | 11 |
+| entity-decoy | 11 | 11 | 0 | 11 |
+| format-variant-agreement | 11 | 8 | 0 | 8 |
+| measurement-decoy | 11 | 11 | 0 | 11 |
+| multi-source-agreement | 11 | 7 | 0 | 7 |
+| stale-vs-current | 11 | 11 | 0 | 11 |
+| supported-measurement | 11 | 11 | 0 | 11 |
+| unit-mismatch | 11 | 0 | 0 | 11 |
