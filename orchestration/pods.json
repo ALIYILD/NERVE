@@ -1,0 +1,63 @@
+{
+  "observed_at": "2026-10-17T00:13:52.273Z",
+  "pagination": {
+    "hasNextPage": false,
+    "nextCursor": null
+  },
+  "pods": [
+    {
+      "id": "5xndo7i7s5r9zn",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-17T00:00:31.877Z",
+      "assigned_role": "A+B"
+    },
+    {
+      "id": "ki9m7vdg9qsea6",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-16T17:01:07.794Z",
+      "assigned_role": null
+    },
+    {
+      "id": "lvojhtouu5gede",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-16T22:54:08.373Z",
+      "assigned_role": null
+    },
+    {
+      "id": "b7qj6qyx9ij6gg",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "CA-MTL-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-16T08:33:31.123Z",
+      "assigned_role": null
+    },
+    {
+      "id": "97vr620wnmtuga",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-16T06:27:28.749Z",
+      "assigned_role": null
+    },
+    {
+      "id": "lg0svvuenxvbno",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-15T23:08:59.019Z",
+      "assigned_role": null
+    }
+  ]
+}

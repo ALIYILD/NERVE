@@ -1,0 +1,6 @@
+{
+  "superseded_registration_sha256": "aa964df1ad0477f0208474242708e37328385925a55faf97a1002e05b3c685e7",
+  "replacement_registration_sha256": "47ae40566374094f3e3d99104e0569804c769b483373fc31113759822a35b409",
+  "reason": "Pre-execution hardening: SSH subprocess timeout42s and admission require42s remaining instead of inherited180s timeout. No study calls or outcomes existed. Schedule and keep rule unchanged.",
+  "model_calls": 0
+}
