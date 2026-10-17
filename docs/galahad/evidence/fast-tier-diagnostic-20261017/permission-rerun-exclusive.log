@@ -1,0 +1,434 @@
+test_adversarial_capabilities_and_judge_tampering_rejected (test_agentos_taskbench.RepairBenchmarkTests.test_adversarial_capabilities_and_judge_tampering_rejected) ... ok
+test_all_originals_pass_and_all_curated_mutations_fail (test_agentos_taskbench.RepairBenchmarkTests.test_all_originals_pass_and_all_curated_mutations_fail) ... ok
+test_corrupt_patch_contract_rejected (test_agentos_taskbench.RepairBenchmarkTests.test_corrupt_patch_contract_rejected) ... ok
+test_distinct_function_families_and_stable_public_identity (test_agentos_taskbench.RepairBenchmarkTests.test_distinct_function_families_and_stable_public_identity) ... ok
+test_kernel_denies_home_reads_and_network_even_for_trusted_probe (test_agentos_taskbench.RepairBenchmarkTests.test_kernel_denies_home_reads_and_network_even_for_trusted_probe) ... ok
+test_nonterminating_patch_killed_by_timeout (test_agentos_taskbench.RepairBenchmarkTests.test_nonterminating_patch_killed_by_timeout) ... ok
+test_raw_validation_precedes_trimming (test_agentos_taskbench.RepairBenchmarkTests.test_raw_validation_precedes_trimming) ... ok
+test_unavailable_sandbox_fails_closed (test_agentos_taskbench.RepairBenchmarkTests.test_unavailable_sandbox_fails_closed) ... ok
+test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v2.SecondRepairCohortTests.test_all_references_pass_and_mutants_fail) ... ok
+test_fixed_split_and_new_families (test_agentos_taskbench_v2.SecondRepairCohortTests.test_fixed_split_and_new_families) ... ok
+test_identity_stable_and_public_copy_isolated (test_agentos_taskbench_v2.SecondRepairCohortTests.test_identity_stable_and_public_copy_isolated) ... ok
+test_all_references_pass_and_mutants_fail (test_agentos_taskbench_v3.OperationalRepairCohortTests.test_all_references_pass_and_mutants_fail) ... ok
+test_completion_cannot_be_proved_by_previous_attempt_receipt (test_agentos_taskbench_v3.OperationalRepairCohortTests.test_completion_cannot_be_proved_by_previous_attempt_receipt) ... ok
+test_every_mutation_changes_a_named_operational_mechanism (test_agentos_taskbench_v3.OperationalRepairCohortTests.test_every_mutation_changes_a_named_operational_mechanism) ... ok
+test_fixed_split_and_new_families (test_agentos_taskbench_v3.OperationalRepairCohortTests.test_fixed_split_and_new_families) ... ok
+test_identity_stable_and_public_copy_isolated (test_agentos_taskbench_v3.OperationalRepairCohortTests.test_identity_stable_and_public_copy_isolated) ... ok
+test_observed_timeout_recovery_and_blocked_successors (test_agentos_taskbench_v3.OperationalRepairCohortTests.test_observed_timeout_recovery_and_blocked_successors) ... ok
+test_cli_never_overwrites_evidence_or_echoes_network_errors (test_galahad_gpu_smoke.RuntimeProbeTests.test_cli_never_overwrites_evidence_or_echoes_network_errors) ... ok
+test_malformed_usage_and_duplicate_json_rejected (test_galahad_gpu_smoke.RuntimeProbeTests.test_malformed_usage_and_duplicate_json_rejected) ... ok
+test_missing_logprobs_and_cached_usage_are_unknown_not_success (test_galahad_gpu_smoke.RuntimeProbeTests.test_missing_logprobs_and_cached_usage_are_unknown_not_success) ... ok
+test_origin_policy_and_no_redirect_forwarding (test_galahad_gpu_smoke.RuntimeProbeTests.test_origin_policy_and_no_redirect_forwarding) ... ok
+test_prompt_is_bounded_run_specific_and_reproducible (test_galahad_gpu_smoke.RuntimeProbeTests.test_prompt_is_bounded_run_specific_and_reproducible) ... ok
+test_real_http_capture_and_comparison_do_not_claim_gpu_or_galahad (test_galahad_gpu_smoke.RuntimeProbeTests.test_real_http_capture_and_comparison_do_not_claim_gpu_or_galahad) ... ok
+test_selected_metrics_omit_labels_and_ambiguous_processes (test_galahad_gpu_smoke.RuntimeProbeTests.test_selected_metrics_omit_labels_and_ambiguous_processes) ... ok
+test_changed_model_tool_calls_role_and_finish_reason_rejected (test_memory_inference.InferenceContractTests.test_changed_model_tool_calls_role_and_finish_reason_rejected) ... ok
+test_concurrency_budget_fails_without_network_or_retry (test_memory_inference.InferenceContractTests.test_concurrency_budget_fails_without_network_or_retry) ... /usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023010>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109022b60>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023880>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023790>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023e20>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023f10>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814040>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814130>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814220>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098145e0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098146d0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098147c0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098148b0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098149a0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098144f0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814b80>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814c70>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814d60>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814e50>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814a90>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814f40>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815030>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815120>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815210>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098153f0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098154e0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098155d0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098156c0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098157b0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814400>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815300>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098158a0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815990>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815a80>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815b70>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815c60>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815d50>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/unittest/mock.py:458: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815f30>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_durable_scope_revoked_during_inference_discards_output (test_memory_inference.InferenceContractTests.test_durable_scope_revoked_during_inference_discards_output) ... ok
+test_failures_open_circuit_without_retry_then_cooldown (test_memory_inference.InferenceContractTests.test_failures_open_circuit_without_retry_then_cooldown) ... ok
+test_no_evidence_abstains_without_network (test_memory_inference.InferenceContractTests.test_no_evidence_abstains_without_network) ... ok
+test_only_host_literal_loopback_and_bounded_config (test_memory_inference.InferenceContractTests.test_only_host_literal_loopback_and_bounded_config) ... ok
+test_oversized_response_and_usage_cap_rejected (test_memory_inference.InferenceContractTests.test_oversized_response_and_usage_cap_rejected) ... /Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023e20>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023790>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023880>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109022b60>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023010>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109022a70>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023f10>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109023100>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1090233d0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1090232e0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1090231f0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815e40>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109816020>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815f30>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815b70>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815a80>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815990>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098158a0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815300>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098157b0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098156c0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815c60>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098155d0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098154e0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098153f0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814310>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815210>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815120>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109815030>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814f40>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814c70>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814b80>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098144f0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098149a0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098148b0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098145e0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814220>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814130>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814040>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109816890>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109816d40>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109816e30>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109817100>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098175b0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098176a0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109817880>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109817d30>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109817e20>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109817f10>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d4130>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d4220>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d4310>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d4400>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d44f0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d45e0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d46d0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d47c0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d48b0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d49a0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d4a90>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d4c70>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d4d60>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d4e50>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d4f40>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d5030>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d5120>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814e50>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x109814d60>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d4b80>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d5210>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d5300>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d53f0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d54e0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d55d0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d56c0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d6020>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d6110>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d6200>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d62f0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d63e0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d5e40>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d5f30>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d64d0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d65c0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d66b0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d67a0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d6890>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d6980>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d6a70>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d71f0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w0/src/nerve_awim/memory_gateway/policy.py:46: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1098d72e0>
+  con.execute('''CREATE TABLE IF NOT EXISTS memory_scope_revocations_v1 (
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_real_loopback_http_contract_and_no_redirect (test_memory_inference.InferenceContractTests.test_real_loopback_http_contract_and_no_redirect) ... ok
+test_revoked_actor_discards_generated_output (test_memory_inference.InferenceContractTests.test_revoked_actor_discards_generated_output) ... ok
+test_revoked_source_discards_generated_output (test_memory_inference.InferenceContractTests.test_revoked_source_discards_generated_output) ... ok
+test_scoped_evidence_and_fixed_messages_prefill_only (test_memory_inference.InferenceContractTests.test_scoped_evidence_and_fixed_messages_prefill_only) ... ok
+test_invalid_inference_config_rejected_before_ledger_creation (test_memory_inference.InferenceRuntimeContractTests.test_invalid_inference_config_rejected_before_ledger_creation) ... skipped 'PyJWT[crypto] required'
+test_actual_inference_and_scope_responses_match_openapi (test_memory_inference.InferenceServiceContractTests.test_actual_inference_and_scope_responses_match_openapi) ... skipped 'PyJWT[crypto] required'
+test_configured_service_response_and_default_501 (test_memory_inference.InferenceServiceContractTests.test_configured_service_response_and_default_501) ... skipped 'PyJWT[crypto] required'
+test_scope_admin_routes_enforce_roles_and_exact_context (test_memory_inference.InferenceServiceContractTests.test_scope_admin_routes_enforce_roles_and_exact_context) ... skipped 'PyJWT[crypto] required'
+test_scope_errors_precede_inference_and_provider_errors_sanitised (test_memory_inference.InferenceServiceContractTests.test_scope_errors_precede_inference_and_provider_errors_sanitised) ... skipped 'PyJWT[crypto] required'
+test_scope_revocation_blocks_reads_but_permits_admin_purge (test_memory_inference.InferenceServiceContractTests.test_scope_revocation_blocks_reads_but_permits_admin_purge) ... skipped 'PyJWT[crypto] required'
+test_service_discards_output_after_token_expiry (test_memory_inference.InferenceServiceContractTests.test_service_discards_output_after_token_expiry) ... skipped 'PyJWT[crypto] required'
+
+----------------------------------------------------------------------
+Ran 42 tests in 13.886s
+
+OK (skipped=7)

@@ -1,0 +1,62 @@
+[
+  {
+    "label": "arc-baseline-1",
+    "exit_code": 0,
+    "elapsed_seconds": 29.086449356051162,
+    "log": "/Users/aliyildirim/nerve-orchestration/arc-baseline-1.log",
+    "modules": [
+      "test_arc_evaluation"
+    ],
+    "model_calls": 0,
+    "source_sha256": {
+      "src/nerve_awim/arc_execution.py": "cc6706789b074145203cc4626facae5bd4dfbb5e7739c5064e541b9702b30422",
+      "src/nerve_awim/governed_learning_v20.py": "95cbfe909dd498479dd0d55fea6a81758d30f075576c24b490cc38f881d9a36a"
+    },
+    "source_stable": true
+  },
+  {
+    "label": "arc-patched-1",
+    "exit_code": 0,
+    "elapsed_seconds": 17.104437355999835,
+    "log": "/Users/aliyildirim/nerve-orchestration/arc-patched-1.log",
+    "modules": [
+      "test_arc_evaluation"
+    ],
+    "model_calls": 0,
+    "source_sha256": {
+      "src/nerve_awim/arc_execution.py": "73ffeeb86a913e85c5e53bff07d29ce7d7a73b96687062ceb5cd2f5a44b70a1d",
+      "src/nerve_awim/governed_learning_v20.py": "62b70ad0089205b0e51641b6e55c50a5d62a1211953eae079bb29bab593e0135"
+    },
+    "source_stable": true
+  },
+  {
+    "label": "arc-patched-2",
+    "exit_code": 0,
+    "elapsed_seconds": 16.32726047799224,
+    "log": "/Users/aliyildirim/nerve-orchestration/arc-patched-2.log",
+    "modules": [
+      "test_arc_evaluation"
+    ],
+    "model_calls": 0,
+    "source_sha256": {
+      "src/nerve_awim/arc_execution.py": "73ffeeb86a913e85c5e53bff07d29ce7d7a73b96687062ceb5cd2f5a44b70a1d",
+      "src/nerve_awim/governed_learning_v20.py": "62b70ad0089205b0e51641b6e55c50a5d62a1211953eae079bb29bab593e0135"
+    },
+    "source_stable": true
+  },
+  {
+    "label": "arc-baseline-2",
+    "exit_code": 0,
+    "elapsed_seconds": 25.825942147988826,
+    "log": "/Users/aliyildirim/nerve-orchestration/arc-baseline-2.log",
+    "modules": [
+      "test_arc_evaluation"
+    ],
+    "model_calls": 0,
+    "source_sha256": {
+      "src/nerve_awim/arc_execution.py": "cc6706789b074145203cc4626facae5bd4dfbb5e7739c5064e541b9702b30422",
+      "src/nerve_awim/governed_learning_v20.py": "95cbfe909dd498479dd0d55fea6a81758d30f075576c24b490cc38f881d9a36a"
+    },
+    "source_stable": true
+  }
+]

@@ -1,0 +1,21 @@
+test_actual_three_arm_release_and_consumed_holdout (test_arc_evaluation.ArcEvaluationTests.test_actual_three_arm_release_and_consumed_holdout) ... ok
+test_actual_workflow_baseline_misses_absent_readback (test_arc_evaluation.ArcEvaluationTests.test_actual_workflow_baseline_misses_absent_readback) ... ok
+test_candidate_budget_validation (test_arc_evaluation.ArcEvaluationTests.test_candidate_budget_validation) ... ok
+test_candidate_definition_cannot_modify_evaluator (test_arc_evaluation.ArcEvaluationTests.test_candidate_definition_cannot_modify_evaluator) ... ok
+test_changed_evaluator_cannot_resume (test_arc_evaluation.ArcEvaluationTests.test_changed_evaluator_cannot_resume) ... ok
+test_concurrent_runner_cannot_consume_or_interrupt_active_claim (test_arc_evaluation.ArcEvaluationTests.test_concurrent_runner_cannot_consume_or_interrupt_active_claim) ... ok
+test_correct_abstentions_are_not_failure_evidence (test_arc_evaluation.ArcEvaluationTests.test_correct_abstentions_are_not_failure_evidence) ... ok
+test_fixture_mutation_rejected (test_arc_evaluation.ArcEvaluationTests.test_fixture_mutation_rejected) ... ok
+test_frozen_sixty_family_disjoint_cases (test_arc_evaluation.ArcEvaluationTests.test_frozen_sixty_family_disjoint_cases) ... ok
+test_interrupted_release_consumes_holdout (test_arc_evaluation.ArcEvaluationTests.test_interrupted_release_consumes_holdout) ... ok
+test_interruption_claim_is_not_replayed (test_arc_evaluation.ArcEvaluationTests.test_interruption_claim_is_not_replayed) ... ok
+test_policy_metric_does_not_trust_self_reported_permission (test_arc_evaluation.ArcEvaluationTests.test_policy_metric_does_not_trust_self_reported_permission) ... ok
+test_regressive_candidate_rejected_and_budget_resumes (test_arc_evaluation.ArcEvaluationTests.test_regressive_candidate_rejected_and_budget_resumes) ... /Users/aliyildirim/nerve-w0/src/nerve_awim/governed_learning_v20.py:182: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10cc47790>
+  con.execute('INSERT INTO gl_state VALUES(?,?,?,?,?)',
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 25.501s
+
+OK

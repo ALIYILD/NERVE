@@ -1,0 +1,120 @@
+{
+  "baseline_revision": "40a28d5",
+  "profile_successful": false,
+  "complete_coverage": true,
+  "tests_run": 2803,
+  "failures": 36,
+  "errors": 2,
+  "skipped": 147,
+  "suite_seconds": 935.4524489710457,
+  "current_fast_test_seconds": 457.30523790302686,
+  "slowest_fast_modules": [
+    [
+      "test_scientific_compact_dev_study",
+      59.03108708088985
+    ],
+    [
+      "test_scientific_candidate_v3_study",
+      53.07231652806513
+    ],
+    [
+      "world_model.test_generalization",
+      47.06873659812845
+    ],
+    [
+      "test_arc_evaluation",
+      41.73324833693914
+    ],
+    [
+      "world_model.test_world_model",
+      15.931241737271193
+    ],
+    [
+      "test_scientific_substrate_calibration",
+      14.580849867255893
+    ],
+    [
+      "test_adaptation_repository",
+      9.091942969127558
+    ],
+    [
+      "test_scientific_sequential_gate",
+      7.385531083040405
+    ],
+    [
+      "test_adaptation",
+      7.378427470102906
+    ],
+    [
+      "test_repository_cross_task_learning",
+      6.16293862182647
+    ],
+    [
+      "test_memory_holdout",
+      5.567139176942874
+    ],
+    [
+      "test_forecast_research_coordinator",
+      5.500576175923925
+    ],
+    [
+      "test_agentos_audit_shadow",
+      5.365992627048399
+    ],
+    [
+      "test_arc_cli",
+      5.171132629038766
+    ],
+    [
+      "test_phase_forecast_study",
+      4.945501264941413
+    ]
+  ],
+  "protected_tier_manifest_sha256": "d4e0c4322de6837216bdc48defc92337529967540a8994c7009ba04f20764992",
+  "files": {
+    "cpu-full-profile.json": "c201358dc232a3fed8f48ea04b3cfaf64dc20e3f5f0d9226070e8275955511f7",
+    "cpu-full-profile.log": "6695cbc409e8087e1b72e075fba9c6449917f9bf790fb24fab86f1bb710e5f93",
+    "fast-discovery-diagnostic.json": "7f5e066bcc456886794fc3ec427438738e8455a5da9627b411b00f209335219d",
+    "arc-evaluation-profile-summary.json": "e894780676afdc6daa8e371ca3d550a89645ffca098ebd499c2de63e01ce466e",
+    "test-overlap-continuation.json": "3477e81d30a7d5b7cc091a402c64ded8a0210a74460b5c9a47d03084d7220453",
+    "atomic-schema-cpu-checks.json": "618c7cde225644e20382589a1157063252cd3e4e5d24e4f39260d7b0f1b66f77",
+    "atomic-schema-comparison.json": "4aeb68f810b856bed2bc52e4dedc9ceb7b79b4c4b3157c3c52070684fc7f2d9f",
+    "atomic-schema-comparison-inputs.json": "4863f9564ca531af730b32c1191977381332fdf82213ee6357188a866ed2e803",
+    "permission-rerun-exclusive.log": "bc2f82ef9fe7c8fa63a6f9130c9bad69a3ba22625d4271ff2ae084d77e697f08",
+    "atomic-schema-regressions.log": "e4bb211b5f333f5e57a96f5fe4f7bf1b78a4ad6864d6a48a07b26a1cc7c04bd4",
+    "arc-baseline-1.log": "a7e593e5c3cd10a2865bcf361776fd7a9825793e5e026f987ade4b62d6f19fe5",
+    "arc-baseline-2.log": "82fff14799b0c9e867b4f1ce537a16a6e98cc79f9e5e3ee9ced57ac5b5f2173d",
+    "arc-patched-1.log": "a7761b396de19163e6a0f41f08d6403fa5c3e3db3152fd1e3b34a6504d59b278",
+    "arc-patched-2.log": "560da49ed668a5a274d5b5c028b6c609718ac4d629ff3b1a611e09414186bfc3"
+  },
+  "new_model_calls": 0,
+  "fast_gate_passed": false,
+  "partition_changed": false,
+  "arc_comparison": {
+    "baseline_mean_seconds": 27.456195752019994,
+    "patched_mean_seconds": 16.715848916996038,
+    "reduction_fraction": 0.3911811720760249,
+    "order": [
+      "arc-baseline-1",
+      "arc-patched-1",
+      "arc-patched-2",
+      "arc-baseline-2"
+    ],
+    "all_passed_and_source_stable": true,
+    "tests_per_run": 13,
+    "exploratory_timing_only": true
+  },
+  "targeted_regression_tests": 115,
+  "permission_rerun": {
+    "tests_run": 42,
+    "skipped": 7,
+    "failures": 0,
+    "errors": 0
+  },
+  "post_comparison_input_hashes_match": {
+    "baseline": true,
+    "patched": true
+  },
+  "protected_hashes_checked": 80,
+  "protected_mismatches": []
+}
