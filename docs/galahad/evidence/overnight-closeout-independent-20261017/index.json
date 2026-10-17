@@ -1,0 +1,50 @@
+{
+  "captured_at": "2026-10-17T00:13:09.240017+00:00",
+  "files": {
+    "independent-review.md": {
+      "sha256": "48e6c00f62b32d54169e10646956e76e355ab5c286a5405d3994a1310fba7d76",
+      "source": "/Users/aliyildirim/nerve-w0/orchestration/independent-review.md"
+    },
+    "independent-B01b-replay.json": {
+      "sha256": "4177c85cd063336907e67df71e1250923e366a201db44bd2648a6ba63962db7d",
+      "source": "/Users/aliyildirim/nerve-w0/orchestration/independent-B01b-replay.json"
+    },
+    "independent-fixed-learn.json": {
+      "sha256": "daa69d481f0038cb53311021108bb0fe61cc64af33d41da7f4da7ff970e12602",
+      "source": "/Users/aliyildirim/nerve-w0/orchestration/independent-fixed-learn.json"
+    },
+    "independent-final-pods.json": {
+      "sha256": "ead6a98dd96d78343c41903d968e319c60769e0b216b681293be8edea430121f",
+      "source": "/Users/aliyildirim/nerve-w0/orchestration/independent-final-pods.json"
+    },
+    "independent-external-queue-check.json": {
+      "sha256": "0017fdac29a3082e0bc72a58f431b38dc2f5a882cefe46f802d5fba3f5753e4a",
+      "source": "/Users/aliyildirim/nerve-w0/orchestration/independent-external-queue-check.json"
+    },
+    "spend.json": {
+      "sha256": "8a4891acc9da78c01971c5ee3ca65d3c62e124c3900a5633ac2180ee91349d4f",
+      "source": "/Users/aliyildirim/nerve-orchestration/spend.json"
+    },
+    "conductor-status.json": {
+      "sha256": "a1fe91994d0c0d32e12d7e69f895b75b11f23ede276fdf804885366e485fd4ac",
+      "source": "/Users/aliyildirim/nerve-orchestration/conductor-status.json"
+    },
+    "supervision-accounting-tests.log": {
+      "sha256": "768f33515108d468d01685ad24675e49e4901c1661474ee02f35a29f60f57c51",
+      "source": "/Users/aliyildirim/nerve-orchestration/supervision-accounting-tests.log"
+    },
+    "preflight-fast-exclusive.log": {
+      "sha256": "7c4acdc7a50217bc79c0cf291566caaaba963606f5022b84338e414e378da2d8",
+      "source": "/Users/aliyildirim/nerve-orchestration/preflight-fast-exclusive.log"
+    }
+  },
+  "branches": {
+    "overnight/w0-orchestrator": "cb1a8a0747109eeb7129048b18cf04fd490359c0",
+    "overnight/w1-gate": "46b0f2dd61241805a22b046ec508ce1639c92b78",
+    "overnight/w2-autoresearch": "8f8198585eca246c8caf2224c4d469451b1cd53c",
+    "overnight/w3-adapt-sdk": "3ac9d63a07dfe8af58f05a790794ecac7db09b1b"
+  },
+  "model_calls": 0,
+  "snapshot_only": true,
+  "merged": false
+}

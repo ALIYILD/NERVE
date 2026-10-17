@@ -1,0 +1,1 @@
+{"entry": "gate-v3.2-bounded-harmful-m14-4e2a5addbcc5", "checks": {"simulation_evidence": true, "protected_path_manifest_update": true, "registered_design": true, "source": true, "tables": true, "full_form_exact": true}, "original_D4_achieved": false, "scope": "hash bindings only; external bounded-harmful study not replayed"}
