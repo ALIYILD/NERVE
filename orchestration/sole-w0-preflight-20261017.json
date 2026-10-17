@@ -86,5 +86,23 @@
     "undefined audit"
   ],
   "compute_usd_estimate": 0.2619353340666667,
-  "storage_excluded": true
+  "storage_excluded": true,
+  "L0_cpu_followup": {
+    "time": "2026-10-17T01:06:36.262365+00:00",
+    "event": "L0_cpu_blocker_resolution",
+    "window": "W0-primary-20261017-root",
+    "W2_commits": [
+      "cb4d0e7",
+      "5657e5e"
+    ],
+    "focused_tests_passed": 33,
+    "merged": false,
+    "concurrent_writer_incident": "Other W2 session committed same tested implementation while delegated worker staged; preserved both commits; worktree reported clean",
+    "independent_preflight_review": "confirmed failure, integrity80/80 and spend; accounting findings corrected",
+    "preflight_ok": false,
+    "inference_blocked": true,
+    "all_pods_exited": true,
+    "full_tier_run": false,
+    "new_L7_run": false
+  }
 }
