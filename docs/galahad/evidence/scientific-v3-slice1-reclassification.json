@@ -1,0 +1,12 @@
+{
+  "attempted_model_calls": 35,
+  "interpretation": "Infrastructure-incomplete study; neither efficacy rejection nor acceptance. Slice remains consumed.",
+  "model_calls": 34,
+  "prior_aggregate_sha256": "bdef4056a88927b992e9eda3bff30ce722d899454f7d4c620ef59664044b95f8",
+  "prior_artifacts_rewritten": false,
+  "prior_private_report_sha256": "35d8650e7f4304f73f01620e3f69b88299eb49c38d113086e70b8d5473346f28",
+  "promotion_authorized": false,
+  "supersedes_verdict": "retain_incumbent",
+  "verdict": "incomplete_infrastructure",
+  "version": "scientific-v3-holdout-v2"
+}

@@ -121,3 +121,8 @@ not authorize new policies or promotion.
 Verification disabled network/inference functions, checked all 30 claims and scores,
 and confirmed seven current artifacts and all five recorded v1 predecessor
 artifacts retained their bytes and modification times. Work stops at this report.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.

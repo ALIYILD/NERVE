@@ -140,3 +140,8 @@ PYTHONPATH=src .venv/bin/python scripts/run_scientific_candidate_v3_study.py --v
 The CLI denies Python opens of the real task-bank holdout and sibling private seed
 paths. This is not an OS sandbox; the trusted host remains responsible for file
 isolation. Development readers never receive a holdout capability.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.

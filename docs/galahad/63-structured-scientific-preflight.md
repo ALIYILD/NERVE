@@ -128,3 +128,8 @@ PYTHONPATH=src .venv/bin/python scripts/run_scientific_structured_preflight.py \
 The digest was checked before and after this failed run. Preserve the original journal and
 experiment directory. Repeating the same command now refuses the failed consumed receipt; changing directories or deleting journals is not an authorized
 retry of consumed work.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Vaccaro](https://arxiv.org/abs/2606.11217). This follow-on does not change this document's historical registration or evidence claims.

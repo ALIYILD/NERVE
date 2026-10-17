@@ -99,3 +99,8 @@ All 2,044 tests passed in the clean timing profile (225.761 seconds), including
 harness tests. The earlier timed-out and flawed temporary completion runs are not
 counted as successful coverage. See [measured test tiers](72-measured-test-tiers.md)
 for the full profile, measured partition and subsequent clean tier runs.
+
+
+## Staged external-methods follow-on
+
+See [implementation and limits](79-external-methods-adoption.md), drawing on [Regimes](https://arxiv.org/abs/2606.10241). This follow-on does not change this document's historical registration or evidence claims.
