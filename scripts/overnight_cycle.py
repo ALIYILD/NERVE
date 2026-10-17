@@ -507,6 +507,7 @@ def session(connection):
             or authorization.get('program_sha256')!=hashfile(ROOT/'research/program-20261017.md')):
         raise ValueError('current_session_authorization_required')
     POD=validate_connection(connection)
+    preflight.require_cycle_admission(ROOT,SHARED,authorization,connection,MODEL)
     if PRIVATE.exists():raise ValueError('session_already_exists_no_ambiguous_restart')
     PRIVATE.mkdir(mode=0o700);PUBLIC.mkdir(parents=True,exist_ok=True)
     pins=protected();sources=source_pins()

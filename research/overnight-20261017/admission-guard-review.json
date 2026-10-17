@@ -1,0 +1,26 @@
+{
+  "time": "2026-10-17T01:25:54.595893+00:00",
+  "syntax_parse_passed": [
+    "scripts/overnight_cycle.py",
+    "scripts/overnight_cycle_preflight.py",
+    "tests/test_overnight_admission.py"
+  ],
+  "protected_hashes_checked": 80,
+  "protected_mismatches": [],
+  "focused_tests_run": false,
+  "reason": "Existing PerfFlux integration pytest process PID 87893; one-suite-at-a-time rule",
+  "model_calls": 0,
+  "pod_calls": 0,
+  "preflight_ok_claimed": false,
+  "base_commit": "8a2cfec3ec672550628bcc540d8feac11ab266e7",
+  "source_sha256": {
+    "scripts/overnight_cycle.py": "a12e0213dc64d5031fc05507e568fde57a3557702fea9d83882c9c088559f15e",
+    "scripts/overnight_cycle_preflight.py": "a2fb9880eda36b92ac73d3617dc205a94ef038187846df87e8e3ed6662c937ef",
+    "tests/test_overnight_admission.py": "2e4790015ad81d39b8d03d146306106da026b2b512688cd75a827e867bd42381"
+  },
+  "focused_cases_pending": 10,
+  "independent_findings_fixed": [
+    "startup_lock_conflict",
+    "duplicate_row_position"
+  ]
+}
