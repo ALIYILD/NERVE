@@ -72,10 +72,12 @@ def test_paid_call_respects_resume_budget_before_claim(tmp_path,monkeypatch):
     monkeypatch.setattr(cycle,'PRIVATE',tmp_path/'private')
     monkeypatch.setattr(cycle,'SHARED',tmp_path/'shared')
     monkeypatch.setattr(cycle,'AUTH',dict(expires_epoch=time.time()+60,resume_compute_cap_usd=0.25))
+    cycle.save(tmp_path/'private/session-registration.json',dict(preflight_sha256='fixture'))
+    monkeypatch.setattr(cycle,'require_preflight',lambda *args:'fixture')
     monkeypatch.setattr(cycle,'accounting',lambda _:dict(compute_usd=0,active_cycle_interval=dict(compute_usd=0)))
     with pytest.raises(ValueError,match='combined_compute_API_budget_stop'):
         cycle.reserve_call('socratic','registration')
-    assert not (tmp_path/'private').exists()
+    assert not (tmp_path/'private/calls').exists()
 
 
 def test_workspace_header_is_confined_to_anthropic_route(tmp_path,monkeypatch):

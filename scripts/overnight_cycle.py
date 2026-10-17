@@ -107,6 +107,37 @@ def assert_protected(pins):
     if protected()!=pins:raise ValueError('protected_inventory_or_hash_changed')
 
 
+def require_preflight(authorization, pod, expected_sha256=None):
+    """Admit only the current owner's latest successful preflight for this pod start."""
+    if (SHARED/'inference-revoked.json').exists():raise ValueError('inference_revoked')
+    if not authorization or time.time()>authorization['expires_epoch']:
+        raise ValueError('current_session_authorization_required')
+    owner=read(SHARED/'coordinator-owner.json')['window']
+    latest=None
+    for line in (SHARED/'ledger.jsonl').read_text().splitlines():
+        if not line.strip():continue
+        row=json.loads(line)
+        if row.get('window')!=owner:continue
+        if row.get('event') in ('inference_revoked','inference_revocation'):
+            latest=None
+        if row.get('pod_id')==pod and row.get('event') in ('preflight_ok','preflight_failed','pod_marked_unusable'):
+            latest=row
+    if not latest or latest.get('event')!='preflight_ok':
+        raise ValueError('current_preflight_ok_required')
+    try:
+        stamp=datetime.fromisoformat(latest['time'].replace('Z','+00:00'))
+        if stamp.tzinfo is None:raise ValueError('timezone_required')
+        timestamp=stamp.timestamp()
+    except (KeyError,TypeError,ValueError):
+        raise ValueError('preflight_timestamp_invalid') from None
+    if timestamp<authorization['pod_started_epoch'] or timestamp>time.time():
+        raise ValueError('preflight_not_current_pod_start')
+    receipt=digest(latest)
+    if expected_sha256 is not None and receipt!=expected_sha256:
+        raise ValueError('preflight_binding_changed')
+    return receipt
+
+
 def bank_tasks(family):
     if family=='A':
         with tarfile.open(ARCHIVE) as archive:
@@ -145,6 +176,15 @@ def experience(family):
     return preflight.validated_store(RUNS/name/'experiences.sqlite',ExperienceStudyStoreV2)
 
 
+def incumbent_episodes(state):
+    episodes=state['experience']['data']['episodes']
+    # Quarantined generation increments n without creating a cycle study store.
+    # Historical stores use their original candidate IDs, not our config digests.
+    if state.get('cycle_experience'):
+        return [e for e in episodes if e['candidate_id']==digest(state['incumbent'])]
+    return episodes
+
+
 def check_bank(state):
     binding=state['bank']
     if digest(state['tasks'])!=binding['dev_sha256'] and 'path' in binding:
@@ -163,7 +203,8 @@ def check_bank(state):
 def reserve_call(kind, registration):
     with mutex:
         if AUTH is not None:
-            if (SHARED/'inference-revoked.json').exists():raise ValueError('inference_revoked')
+            registration_record=read(PRIVATE/'session-registration.json')
+            require_preflight(AUTH,POD,registration_record['preflight_sha256'])
             if time.time()>AUTH['expires_epoch']:raise ValueError('session_time_budget')
             accounting(AUTH)
         claims=list((PRIVATE/'calls').glob('*.json'))
@@ -485,6 +526,8 @@ def remote(connection, action, payload=None, timeout=42):
     if (type(expected) is not str or len(expected)!=64
             or any(c not in '0123456789abcdef' for c in expected)):
         raise ValueError('registered_worker_hash_invalid')
+    require_preflight(AUTH,pod,registration['preflight_sha256'])
+    assert_protected(registration['protected'])
     import shlex
     command=['ssh','-p',str(connection['port']),'-i',str(Path.home()/'.ssh/id_ed25519'),
              '-o','BatchMode=yes','-o','ConnectTimeout=5','-o','ServerAliveInterval=5',
@@ -507,12 +550,14 @@ def session(connection):
             or authorization.get('program_sha256')!=hashfile(ROOT/'research/program-20261017.md')):
         raise ValueError('current_session_authorization_required')
     POD=validate_connection(connection)
+    preflight_sha256=require_preflight(authorization,POD)
     if PRIVATE.exists():raise ValueError('session_already_exists_no_ambiguous_restart')
     PRIVATE.mkdir(mode=0o700);PUBLIC.mkdir(parents=True,exist_ok=True)
     pins=protected();sources=source_pins()
     AUTH=authorization
     save(PRIVATE/'session-registration.json',dict(time=now(),sources=sources,protected=pins,
          program_sha256=hashfile(ROOT/'research/program-20261017.md'),authorization_sha256=hashfile(SHARED/'W2-cycle-resume-authorization.json'),
+         preflight_sha256=preflight_sha256,
          hermes_provider='anthropic',hermes_model=HERMES_MODEL,hermes_call_allocation_usd=HERMES_CALL_ALLOCATION_USD,
          calls_cap=1000,jev_cap=40,agent_node_cap=400,rule=advisors.RULE,max_experiments_per_family=12,
          model_digest=MODEL,pod_id=POD,connection=connection,
@@ -534,8 +579,7 @@ def session(connection):
                 assert_protected(pins)
                 check_bank(state)
                 state['experience']=preflight.validated_store(state['experience_path'],ExperienceStudyStoreV2)
-                if state['n']:
-                    state['experience']['data']['episodes']=[e for e in state['experience']['data']['episodes'] if e['candidate_id']==digest(state['incumbent'])]
+                state['experience']['data']['episodes']=incumbent_episodes(state)
                 if source_pins()!=sources:raise ValueError('cycle_source_changed')
                 # Read latest shared ledger at every iteration; a new revoke wins.
                 _=[json.loads(x) for x in (SHARED/'ledger.jsonl').read_text().splitlines() if x]
@@ -691,7 +735,8 @@ def session(connection):
                     for key in chosen['rejection_keys']:save(PRIVATE/'rejections'/family/f'{key}.json',dict(experiment=ident,verdict='reverted',receipt_sha256=row['receipt_sha256']))
                 state['experience']=ingest(directory,family,state['incumbent'])
                 state['experience_path']=directory/'experience/experiences.sqlite'
-                state['experience']['data']['episodes']=[e for e in state['experience']['data']['episodes'] if e['candidate_id']==digest(state['incumbent'])]
+                state['cycle_experience']=True
+                state['experience']['data']['episodes']=incumbent_episodes(state)
                 if result['kept'] and state['keeps']%2==0:
                     handoff=dict(family=family,candidate=state['incumbent'],candidate_sha256=digest(state['incumbent']),
                                  development_registration_sha256=regsha,receipt_sha256=row['receipt_sha256'],
