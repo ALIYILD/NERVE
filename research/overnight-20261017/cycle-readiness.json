@@ -2,15 +2,16 @@
   "anthropic_sdk": "0.87.0",
   "command": "/Users/aliyildirim/.cache/uv/archive-v0/OI2t9KVJQ6hSK7ic/bin/python -m pytest -q tests/test_faithfulness_monitor.py tests/test_overnight_hermes_claude.py tests/test_overnight_cycle.py tests/test_overnight_advisors.py tests/test_obsidian_export_v18.py",
   "cryptography": "48.0.1",
+  "current_tree_validated": false,
   "exclusive_test_lock": true,
   "live_end_to_end_validated": false,
-  "log": "research/overnight-20261017/cycle-remote-integrity-py313.log",
-  "log_sha256": "f5d5048cdadab8c1cf0479ce477a9efbe739f2e05373b0f93eafca286cb2b2b5",
+  "log": "research/overnight-20261017/cycle-claude-workspace-py313.log",
+  "log_sha256": "4ed079d73e24d5017c885c1deba9866c0e8d0b4b8e4012ebce7fd2d331c0f1f1",
   "native_workspace_header_verified": true,
-  "notes": "Existing supported Python 3.13 environment; source snapshots identical before and after focused tests. Remote-worker drift fails before executing worker bytes. Provider calls mocked; no model or pod calls. W0 latency preflight remains blocked.",
+  "notes": "Fresh supported Python3.13 validation of stable684c162 source pins; identical before/after snapshots. Provider operations mocked; no API, model or pod calls; live preflight and scoped admission remain W0 responsibility. After test completion, another writer changed overnight_cycle.py to add preflight guards; this receipt validates684c162 only. Revalidation is required for that change.",
   "python": "3.13.12",
-  "receipt": "research/overnight-20261017/cycle-remote-integrity-py313.json",
-  "receipt_sha256": "89d7175b84773be7c69b000df5807a4feb9ab54950aa309cc660c3c99485676b",
+  "receipt": "research/overnight-20261017/cycle-claude-workspace-py313.json",
+  "receipt_sha256": "1e6b89a4fee5c4b97baffede1f430620b436e8767e5871158bee6fba0189b247",
   "source_sha256": {
     "research/program-20261017.md": "d72cfedbb91384da29de58944919ab4cd8034e3006611a519a618d8f3ee62449",
     "scripts/bank_v5_fallback_remote.py": "c7c9d2e929154c4ae6323a242e52d2b4fe8aa7f7a50f94387b3f26326e04c704",
@@ -29,8 +30,8 @@
     "tests/test_overnight_cycle.py": "6785e8d582a56a1d083fcdf8cbd33b1173eaf325a2c680b9ced85575143e0bd8",
     "tests/test_overnight_hermes_claude.py": "031d1b848dafc2b2c4c3591987e9a69217615c569851863ec8ee5928e7038011"
   },
-  "test_seconds": 15.89,
+  "test_seconds": 8.67,
   "tests": 43,
   "tests_passed": true,
-  "time": "2026-10-17T01:26:06.752455+00:00"
+  "time": "2026-10-17T01:27:52.954235+00:00"
 }
