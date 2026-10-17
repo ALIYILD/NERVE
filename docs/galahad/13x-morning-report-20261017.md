@@ -2,11 +2,13 @@
 
 **Operator admission attempt:** pod B was explicitly admitted as
 `5xndo7i7s5r9zn`. After acquiring its lock and verifying 80 integrity hashes,
-the live provider read showed EXITED. Start was refused because the existing
-host had no free GPUs; read-back remained EXITED. No model calls, latency
+the live provider read showed EXITED. Two start attempts were refused because the existing
+host had no free GPUs; read-back remained EXITED. The pod is now marked unusable
+under the two-consecutive-infrastructure-failures rule. No model calls, latency
 checks or identity replay ran, no `preflight_ok` was written, and the owned lock
 was released. An alternate pod requires an updated admission.
-[Failure receipt](../../orchestration/operator-admission-20261017-result.json).
+[First failure](../../orchestration/operator-admission-20261017-result.json),
+[second failure and lock release](../../orchestration/operator-admission-20261017-retry-result.json).
 
 **Instruction update, 01:51 London:** the user forbids further full-tier runs.
 Pod admission now requires integrity hashes, focused tests for the involved
@@ -19,8 +21,8 @@ historical evidence; they are not the new pod-admission rule. No current
 module test evidence. This update does not claim a new accepted code merge.
 
 CPU continuation has produced independently replayed improvements on preserved
-worker branches. **The required fast gate has not passed; Galahad integration and
-inference remain blocked.** The latest check also timed out at 180 seconds; its exclusivity could not be verified. No signing,
+worker branches. **Galahad integration remains unverified. Inference is blocked by the admitted
+pod’s capacity failure and missing current preflight.** The latest check also timed out at 180 seconds; its exclusivity could not be verified. No signing,
 retaining, activation, reserve access, registry write or trust write occurred.
 All rewards remain synthetic; clinician sign-off and real PerfFlux workload data
 are still required. The SDK does not manufacture those inputs.
