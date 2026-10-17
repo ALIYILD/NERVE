@@ -28,7 +28,6 @@ def admitted(tmp_path):
     write(root/'research/overnight-20261017/cycle-readiness.json',checks)
     event=dict(event='preflight_ok',pod_id='p',issued_by='operator',digest='d',replay_hash='a'*64)
     (shared/'ledger.jsonl').write_text(json.dumps(event)+'\n')
-    write(shared/'pod-B.lock',dict(pod_id='p'))
     authorization=dict(preflight_event_sha256=hashlib.sha256(json.dumps(event,sort_keys=True,separators=(',',':')).encode()).hexdigest())
     return root,shared,authorization,dict(pod_id='p'),'d'
 
@@ -40,7 +39,7 @@ def test_matching_operator_preflight_and_test_evidence(admitted):
 @pytest.mark.parametrize('change,error',[
     ('ledger','current_preflight_ok_missing'),('binding','current_preflight_binding_required'),
     ('source','cycle_focused_evidence_stale'),('receipt','cycle_focused_evidence_tampered'),
-    ('log','cycle_focused_evidence_tampered'),('lock','admitted_pod_lock_required'),
+    ('log','cycle_focused_evidence_tampered'),('lock','pod_B_busy'),
     ('later_failure','preflight_superseded_by_failure'),
 ])
 def test_refusal_boundaries(admitted,change,error):
@@ -67,3 +66,10 @@ def test_session_checks_admission_before_creating_session(tmp_path,monkeypatch):
     monkeypatch.setattr(preflight,'require_cycle_admission',reject)
     with pytest.raises(ValueError,match='current_preflight_ok_missing'): cycle.session({'pod_id':'p'})
     assert not private.exists()
+
+
+def test_latest_preflight_position_handles_duplicate_rows(admitted):
+    root,shared,*_=admitted
+    ledger=shared/'ledger.jsonl'; success=ledger.read_text()
+    ledger.write_text(success+json.dumps(dict(event='preflight_failed',pod_id='p'))+'\n'+success)
+    assert preflight.require_cycle_admission(*admitted)==admitted[2]['preflight_event_sha256']

@@ -54,11 +54,11 @@ def require_cycle_admission(root, shared, authorization, connection, model_diges
         if hashed(root/checks[name]) != checks[name+'_sha256']:
             raise ValueError('cycle_focused_evidence_tampered')
     rows = [json.loads(line) for line in (shared/'ledger.jsonl').read_text().splitlines() if line.strip()]
-    matching = [row for row in rows if row.get('event') == 'preflight_ok'
+    matching = [(i, row) for i, row in enumerate(rows) if row.get('event') == 'preflight_ok'
                 and row.get('pod_id') == connection['pod_id']]
     if not matching:
         raise ValueError('current_preflight_ok_missing')
-    row = matching[-1]
+    index, row = matching[-1]
     fingerprint = sha256(json.dumps(row, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     replay_hash = row.get('replay_hash', '')
     if (row.get('issued_by') != 'operator' or row.get('digest') != model_digest
@@ -66,13 +66,14 @@ def require_cycle_admission(root, shared, authorization, connection, model_diges
             or any(c not in '0123456789abcdef' for c in replay_hash)
             or authorization.get('preflight_event_sha256') != fingerprint):
         raise ValueError('current_preflight_binding_required')
-    for later in rows[rows.index(row)+1:]:
+    for later in rows[index+1:]:
         if (later.get('event') in ('preflight_failed', 'pod_marked_unusable')
                 and later.get('pod_id') == connection['pod_id']):
             raise ValueError('preflight_superseded_by_failure')
-    lock = json.loads((shared/'pod-B.lock').read_text())
-    if lock.get('pod_id') != connection['pod_id']:
-        raise ValueError('admitted_pod_lock_required')
+    # The dev executor acquires its own O_EXCL lock immediately before SSH.
+    # Do not consume advisor calls while another worker/preflight owns the pod.
+    if (shared/'pod-B.lock').exists():
+        raise ValueError('pod_B_busy')
     return fingerprint
 
 
