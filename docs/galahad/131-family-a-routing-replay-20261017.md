@@ -60,3 +60,27 @@ hashes match; do not relax the source checks to obtain a successful replay.
 | stale-vs-current | 11 | 11 | 0 | 11 |
 | supported-measurement | 11 | 11 | 0 | 11 |
 | unit-mismatch | 11 | 0 | 0 | 11 |
+
+## Learning from this replay
+
+`scripts/ingest_family_a_replay.py` replayed the bound study and imported the
+actual 200 arm outcomes into the explicit `ExperienceStudyStoreV2` companion at
+`~/nerve-research-runs/resume-20261017-A01-experiences/experiences.sqlite`.
+Each episode binds the source receipt and registration hashes. Reimporting all
+200 outcomes left the store head and episode count unchanged.
+
+The candidate scored 93/100; seven failures remain: three in
+`format-variant-agreement` and four in `multi-source-agreement`. Filtering to
+candidate-arm episodes before calling the existing generator produced two
+cluster-bound proposals for **one distinct abstention-rule configuration**.
+These are unevaluated generic configuration proposals, not two novel ideas and
+not an implemented successor to the composite router. Applicability to the
+composite still needs a registered implementation and evaluation. The kept
+routing seam is not re-proposed. No failure-free result or completed three-cycle
+family loop is claimed.
+
+The import and proposal receipt is
+`research/overnight-20261017/A01-replay-ingestion.json`. Store head:
+`bbec81724dd0603e93e7526ab530c82144ce821be6e9cfc5f2adab822f020d08`.
+This post-study learning used zero inference and did not change the pinned
+replay runner or either registration.
