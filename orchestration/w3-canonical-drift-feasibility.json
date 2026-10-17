@@ -1,0 +1,45 @@
+{
+  "scope": "read-only dev receipt inventory; no study execution, no inference, no holdout reads",
+  "existing": {
+    "retained_A_v3_original_dev": {
+      "rows": 2800,
+      "unique_task_ids": 700,
+      "replicates": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "registration_sha256": "2a40b2a03777226d0b19fd859314e3e3dff98f3a940ae13ab82669255989bad8",
+      "path": "/Users/aliyildirim/nerve-research-runs/runpod-robustness-bank-v2-20261015/private-robustness-receipt/study"
+    },
+    "retained_B_v4_bank_v3_dev": {
+      "rows": 3600,
+      "v4_unique_task_ids": 900,
+      "other_arms": [
+        "adapted_v1",
+        "always_abstain",
+        "random"
+      ],
+      "report_sha256": "0d2149dd2f3a0a42f4af755dd04c4d3956818223b309b5831495d8abee4a6fe2",
+      "path": "/Users/aliyildirim/nerve-research-runs/sweden-20261016/final-extracted/v4-dev/private-report.json"
+    },
+    "retained_B_v4_bank_v5_dev": {
+      "paired_rows": 100,
+      "unique_task_ids": 100,
+      "paired_with": "unretained candidate v5, not retained A-v3",
+      "strata": [
+        "format-variant-agreement",
+        "multi-source-agreement"
+      ],
+      "path": "/Users/aliyildirim/nerve-research-runs/bank-v5-dev-discrimination-20261016"
+    }
+  },
+  "observed_task_id_intersections": {
+    "A_v3_with_B_v4_bank_v3": 0,
+    "A_v3_with_B_v4_bank_v5": 0,
+    "B_v4_bank_v3_with_B_v4_bank_v5": 0
+  },
+  "canonical_cpu_only_1200_stream_supported": false,
+  "reason": "No observed A-v3/B-v4 same-task model-outcome pairs across inventoried dev receipts. adapted_v1 has different preparation/seed; v5 is unretained. Deterministic gates can be replayed, but missing model-arm outputs cannot be inferred from truth or other prompts."
+}

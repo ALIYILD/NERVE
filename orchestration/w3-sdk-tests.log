@@ -1,0 +1,559 @@
+test_all_domain_receipts_and_replay (test_loop_sdk.LoopTests.test_all_domain_receipts_and_replay) ... /Users/aliyildirim/nerve-w3/src/nerve_awim/memory_gateway/experience_store.py:99: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a87c0>
+  for sql in TRIGGERS.values():db.execute(sql)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/memory_gateway/experience_store.py:99: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a88b0>
+  for sql in TRIGGERS.values():db.execute(sql)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/memory_gateway/experience_store.py:99: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a89a0>
+  for sql in TRIGGERS.values():db.execute(sql)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/memory_gateway/experience_store.py:99: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a8b80>
+  for sql in TRIGGERS.values():db.execute(sql)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/dataclasses.py:1372: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c040>
+  return tuple(f for f in fields.values() if f._field_type is _FIELD)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/dataclasses.py:1372: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c130>
+  return tuple(f for f in fields.values() if f._field_type is _FIELD)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/dataclasses.py:1372: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c220>
+  return tuple(f for f in fields.values() if f._field_type is _FIELD)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/dataclasses.py:1372: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c310>
+  return tuple(f for f in fields.values() if f._field_type is _FIELD)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530ff10>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c220>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c130>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050ab4c0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c040>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c4f0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050abc40>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c310>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c4f0>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050ab4c0>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c310>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050abb50>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050abf10>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8400>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c84f0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c85e0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a489a0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8c70>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8d60>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530d300>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8f40>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9030>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530d5d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a8c70>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c400>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c86d0>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9030>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10530c6d0>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c86d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105420400>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054204f0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054205e0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054206d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054207c0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054a46d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8b80>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105420e50>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9120>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9210>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105421120>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c84f0>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9210>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054b4040>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a84400>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a844f0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a845e0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a846d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a847c0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105b606d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a84e50>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a85120>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8c70>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105b28040>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054a8400>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054a84f0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054a85e0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054a86d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054a87c0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1053746d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054a8e50>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1054a9120>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8b80>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105354040>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a28400>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a284f0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a285e0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a286d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a287c0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a906d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a28e50>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105a29120>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8f40>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105c74040>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_candidate_cannot_route_or_use_signed_gate (test_loop_sdk.LoopTests.test_candidate_cannot_route_or_use_signed_gate) ... ok
+test_corrupt_bundle_rejected (test_loop_sdk.LoopTests.test_corrupt_bundle_rejected) ... /Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10538c8b0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10538c9a0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10538ca90>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10538cb80>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10538cc70>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105348b80>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c93f0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c94e0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10538d7b0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c95d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c96c0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10538da80>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9300>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c96c0>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105368040>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_learning_late_batch_conflict_is_atomic (test_loop_sdk.LoopTests.test_learning_late_batch_conflict_is_atomic) ... /usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c96c0>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9300>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9210>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c95d0>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c94e0>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8b80>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8d60>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c84f0>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9030>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c85e0>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c86d0>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8400>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8c70>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/re/__init__.py:172: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9120>
+  return _compile(pattern, flags).fullmatch(string)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9120>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8c70>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8400>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c86d0>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c85e0>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9030>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_learning_reordered_retries_use_one_source_of_truth (test_loop_sdk.LoopTests.test_learning_reordered_retries_use_one_source_of_truth) ... ok
+test_rejection_memory_and_forged_candidate (test_loop_sdk.LoopTests.test_rejection_memory_and_forged_candidate) ... ok
+test_restart_identical_and_changed_stream_rejected (test_loop_sdk.LoopTests.test_restart_identical_and_changed_stream_rejected) ... /Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9300>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c97b0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c98a0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9990>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9a80>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9b70>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9c60>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9d50>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9e40>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c9f30>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca020>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca110>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca200>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca2f0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca3e0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca4d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca5c0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca6b0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca7a0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca890>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052ca980>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052caa70>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cab60>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cac50>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cb1f0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cb4c0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cb6a0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cbb50>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cbc40>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cbd30>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cbe20>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cbf10>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cb790>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cb100>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cb010>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a8b80>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a89a0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a88b0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a87c0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050ab970>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105330040>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105330130>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105330220>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105330310>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105330400>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1053304f0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1053305e0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1053306d0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1053307c0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1053308b0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1053309a0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105330a90>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x105330b80>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cba60>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cae30>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/aliyildirim/nerve-w3/src/nerve_awim/loop/domains.py:42: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052cb5b0>
+  rows.append({'id':str(i),'rewards':rewards,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:346: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050abf10>
+  end = _w(s, end).end()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:346: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050abb50>
+  end = _w(s, end).end()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:346: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050ab970>
+  end = _w(s, end).end()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1052c8d60>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050ab970>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050abb50>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050abf10>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a88b0>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a89a0>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_small_budget_revert_still_completes (test_loop_sdk.LoopTests.test_small_budget_revert_still_completes) ... /usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x1050a8c70>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 30.129s
+
+OK
