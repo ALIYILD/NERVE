@@ -1,0 +1,9 @@
+# W1 gate and holdout status — 2026-10-17
+
+L2 verdict: **retain_incumbent**. Existing registered/fresh-seed grid is a negative result. All m values (12, 14, 16) fail the registered zero-observed-harmful criterion; no signing payload is justified. D4 is not achieved. Canonical v3 signature independently verifies; 390 indexed research files match their recorded SHA-256 values. New overnight replay passed: 186 receipt cells / 1,860,000 aggregate rows and all nine harmful public-scalar cases match. Evidence: `docs/galahad/evidence/overnight-20261017-gate-reverification.json`. The audit ran concurrently with W0 tests by W0 authorization; no second test suite ran.
+
+L4: not run; no model calls or pod operations. Narrow v5 is queued conceptually for a future qualified gate, not for signing this failed v3.2 gate. A broad candidate still requires W2's qualifying handoff, fresh exclusive reserve allocation, and completed infrastructure preflight. No holdout output was opened.
+
+The legacy `check_signed_promotion_gate_v3.py` fails its final assertion that bank v4 has zero consumption and no allocations. Its signature check is valid. The live bank v4 ledger records 100 consumed items and one completed prior study (`v5-gate-v3-20261016`, registration `f12a178767efc14a649a9bd265d1027f1f9578b88a281ec3fd8b5afc023b752f`). Its allocation reserves 508 slots, so 1,700 not-yet-consumed items must not be confused with 1,292 unallocated slots. We did not alter the checker or any ledger. Bank v5's live metadata reports zero reserve consumption, 100 dev consumed, one allocation; these are not a fresh reserve execution authorization.
+
+Cost: $0.00. Model calls: 0. Protected code, registry, trust, reserve files, and original research evidence unchanged. Existing simulations use synthetic ground truth only.
