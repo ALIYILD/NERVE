@@ -84,3 +84,7 @@ The import and proposal receipt is
 `bbec81724dd0603e93e7526ab530c82144ce821be6e9cfc5f2adab822f020d08`.
 This post-study learning used zero inference and did not change the pinned
 replay runner or either registration.
+
+The successful worker tests, replay and ingestion used the existing interpreter
+`/Library/Frameworks/Python.framework/Versions/3.10/bin/python3` (3.10.0), whose
+installed dependencies include cryptography. No package installation occurred.
