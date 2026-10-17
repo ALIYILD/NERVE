@@ -23,7 +23,7 @@ Family B: {"higher_keep_rate": null, "socratic": {"keep_rate": null, "kept": 0, 
 
 Run summary / refusals / bank hardening: {}
 
-Reason: W0_inference_revoked_no_calls
+Reason: ANTHROPIC_API_KEY_missing_and_W0_preflight_pending
 
 Evidence: research/leaderboard-20261017.jsonl; research/calibration-20261017.json; research/status-20261017.json.
 Private immutable registrations and wire receipts: ~/nerve-research-runs/w2-cycle-20261017/.

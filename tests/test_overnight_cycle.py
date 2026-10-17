@@ -106,9 +106,9 @@ def test_hermes_identity_inspection_needs_no_live_audit(monkeypatch):
     requests=[]
     def inspect_only(command, **kwargs):
         requests.append(json.loads(kwargs['input']))
-        return SimpleNamespace(stdout=json.dumps({'configured_model':'fixture:free'}))
+        return SimpleNamespace(stdout=json.dumps({'configured_model':cycle.HERMES_MODEL,'provider':'anthropic'}))
     monkeypatch.setattr(cycle.subprocess,'run',inspect_only)
-    assert cycle.hermes_identity('proposer')=={'configured_model':'fixture:free'}
+    assert cycle.hermes_identity('proposer')=={'configured_model':cycle.HERMES_MODEL,'provider':'anthropic'}
     assert requests[0]['inspect'] and requests[0]['inspect_profile']
 
 

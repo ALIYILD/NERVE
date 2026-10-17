@@ -45,6 +45,8 @@ POD_WORKERS={
     '5xndo7i7s5r9zn':'/workspace/v5_remote_call.py',
     'lvojhtouu5gede':'/workspace/bank_v5_fallback_remote.py',
 }
+HERMES_MODEL='claude-sonnet-4-6'
+HERMES_CALL_ALLOCATION_USD=0.50
 MODEL=transport.DIGEST
 read=transport.read
 hashfile=transport.filehash
@@ -73,12 +75,13 @@ def accounting(authorization):
     additional=elapsed*authorization['hourly_usd']/3600
     total=authorization['base_compute_usd']+additional
     spend=read(SHARED/'spend.json')
-    spend.update(compute_usd=total,projected_compute_usd=total,last_checked_at=now(),
+    allocated=sum(read(p).get('api_allocation_usd',0) for p in (PRIVATE/'calls').glob('*.json'))
+    spend.update(api_allocation_usd=allocated,projected_compute_plus_api_allocation_usd=total+allocated,compute_usd=total,projected_compute_usd=total,last_checked_at=now(),
                  model_calls=authorization['base_model_calls']+len(list((PRIVATE/'calls').glob('*.json'))),
                  active_cycle_interval=dict(pod_id=POD,started_epoch=authorization['pod_started_epoch'],
                     hourly_usd=authorization['hourly_usd'],elapsed_seconds=elapsed,compute_usd=additional))
     atomic(SHARED/'spend.json',spend)
-    if total>=11 or additional>=authorization['resume_compute_cap_usd']:
+    if total+allocated>=11 or additional+allocated>=authorization['resume_compute_cap_usd']:
         raise ValueError('compute_budget_stop')
     return spend
 
@@ -169,8 +172,17 @@ def reserve_call(kind, registration):
             raise ValueError('combined_advisor_call_cap')
         if kind=='jev' and counts[kind]>=40:raise ValueError('jev_cap')
         if kind=='agent-node' and counts[kind]>=400:raise ValueError('normaliser_cap')
+        allocation=HERMES_CALL_ALLOCATION_USD if kind=='socratic' else 0
+        allocated=sum(read(p).get('api_allocation_usd',0) for p in claims)
+        if AUTH is not None and kind=='socratic':
+            spend=accounting(AUTH)
+            if (spend['compute_usd']+allocated+allocation>11
+                    or spend['active_cycle_interval']['compute_usd']+allocated+allocation>AUTH['resume_compute_cap_usd']):
+                raise ValueError('combined_compute_API_budget_stop')
         path=PRIVATE/'calls'/f'{len(claims):05}.json'
-        save(path,dict(kind=kind,registration_sha256=registration,time=now()))
+        save(path,dict(kind=kind,registration_sha256=registration,time=now(),
+                       api_allocation_usd=allocation,api_provider='anthropic' if allocation else None,
+                       allocation_basis='conservative per-call budget reservation, not billed usage'))
         return path
 
 
@@ -182,7 +194,8 @@ def hermes_identity(role):
     result=subprocess.run([str(python),str(worker)],input=json.dumps(dict(profile=profile,inspect=True,inspect_profile=True)),
                           text=True,capture_output=True,env=env,timeout=20,check=True)
     identity=json.loads(result.stdout)
-    if not identity['configured_model'].endswith(':free'):raise ValueError('Hermes_profile_not_free')
+    if identity.get('provider')!='anthropic' or identity['configured_model']!=HERMES_MODEL:
+        raise ValueError('registered_Claude_identity_required')
     return identity
 
 
@@ -201,15 +214,17 @@ def hermes(role, context, envelope_hash, identity, audit):
     env=dict(os.environ,PYTHONPATH=str(Path.home()/'.hermes/hermes-agent'))
     if hermes_identity(role)!=identity:raise ValueError('Hermes_identity_changed')
     model=identity['configured_model']
-    if not model.endswith(':free'):raise ValueError('Hermes_profile_not_free')
+    if model!=HERMES_MODEL or identity.get('provider')!='anthropic':raise ValueError('registered_Claude_identity_required')
+    if not identity.get('credential_present'):raise ValueError('ANTHROPIC_API_KEY_not_configured')
     reserve_call('socratic',envelope_hash)
     audit['trace'][role]=dict(sources_used=['context:'+role], tests_run=[], tools_called=[], fallbacks_taken=[], complete=False)
-    result=subprocess.run([str(python),str(worker)],input=json.dumps(dict(profile=profile,available_models=[model],
+    result=subprocess.run([str(python),str(worker)],input=json.dumps(dict(profile=profile,model=model,provider='anthropic',
                           prompt=prompt,max_tokens=1024)),text=True,capture_output=True,env=env,timeout=70)
     # No stdout/stderr is persisted until a verdict; hashes/counts only before it.
     try:response=json.loads(result.stdout)
     except ValueError:raise ValueError('Hermes_invalid_response') from None
-    if not response.get('ok') or not response.get('native_hermes'):raise ValueError('Hermes_call_failed')
+    if (response.get('provider')!='anthropic' or response.get('requested_model')!=HERMES_MODEL
+            or not response.get('ok') or not response.get('native_hermes')):raise ValueError('Hermes_call_failed')
     audit['trace'][role]['complete']=response.get('tools') == 0 and response.get('availability_fallback') is False
     if response.get('availability_fallback'):audit['trace'][role]['fallbacks_taken'].append('model_availability')
     value=response['value']
@@ -478,6 +493,7 @@ def session(connection):
     AUTH=authorization
     save(PRIVATE/'session-registration.json',dict(time=now(),sources=sources,protected=pins,
          program_sha256=hashfile(ROOT/'research/program-20261017.md'),authorization_sha256=hashfile(SHARED/'W2-cycle-resume-authorization.json'),
+         hermes_provider='anthropic',hermes_model=HERMES_MODEL,hermes_call_allocation_usd=HERMES_CALL_ALLOCATION_USD,
          calls_cap=1000,jev_cap=40,agent_node_cap=400,rule=advisors.RULE,max_experiments_per_family=12,
          model_digest=MODEL,pod_id=POD,connection=connection,
          remote_worker_sha256=hashfile(ROOT/'scripts'/Path(connection['remote_worker']).name),physical_transport_attempts=1))

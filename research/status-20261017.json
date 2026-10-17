@@ -1,6 +1,7 @@
 {
   "advisor_prior_mode": "no-live-jev",
   "calibration": "no_prospective_verdicts",
+  "credit_balance_verified": false,
   "existing_leaderboard_rows": 1,
   "experience_chains_validated": 4,
   "faithfulness_monitor": {
@@ -12,22 +13,29 @@
     "quarantined": 0,
     "socratic": 0
   },
-  "focused_tests_passed": 31,
+  "focused_tests_passed": 39,
+  "hermes_credential_present": false,
+  "hermes_model": "claude-sonnet-4-6",
+  "hermes_provider": "anthropic",
   "holdout_opened": false,
+  "live_anthropic_auth_verified": false,
   "lock_acquired": false,
   "model_calls": 0,
+  "native_profile_inspection_passed": [
+    "backend-engineer",
+    "evidence-safety-auditor"
+  ],
   "new_cycle_verdict_rows": 0,
-  "program_sha256": "448c4dc93304a233e4ec978f89e906119689ed9b056d0a1a20ec06c07060f253",
+  "program_sha256": "07706bcfe2202667f9bf1f51d9e551e5e1bff3f4f7ecbb170cb8d75f4203bf7b",
   "protected_files_checked": 17,
   "protected_mismatches": [],
-  "reason": "W0_inference_revoked_no_calls",
+  "reason": "ANTHROPIC_API_KEY_missing_and_W0_preflight_pending",
   "reasons": [
     "W0_global_inference_revocation_present",
-    "pod_B_not_acquired",
     "W0_scoped_cycle_admission_missing"
   ],
   "spend_updated": false,
   "status": "blocked",
-  "timestamp": "2026-10-17T00:48:27.323222+00:00",
+  "timestamp": "2026-10-17T01:09:05.665214+00:00",
   "vault": "/Users/aliyildirim/nerve-research-runs/obsidian-audit-vault"
 }
