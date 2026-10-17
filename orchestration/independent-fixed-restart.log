@@ -1,0 +1,1 @@
+{"boundary":"CPU recorded outcomes only; not exactly-once remote inference","checkpoint_items":611,"clean_sha256":"e3fea3d6c91dbffcdbd6dd611385e1ddd68f85005364267798b19fe73a3b3f4c","equal":true,"model_calls":0,"resumed_sha256":"e3fea3d6c91dbffcdbd6dd611385e1ddd68f85005364267798b19fe73a3b3f4c","signal":"SIGKILL","total_items":1200,"unique_items":1200,"worker_returncode":-9}

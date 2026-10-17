@@ -1,0 +1,38 @@
+{
+  "observed_at": "2026-10-17T00:08:00.393Z",
+  "source": "independent RunPod MCP list_pods",
+  "hasNextPage": false,
+  "pods": [
+    {
+      "id": "5xndo7i7s5r9zn",
+      "status": "EXITED",
+      "cost": 0.59
+    },
+    {
+      "id": "ki9m7vdg9qsea6",
+      "status": "EXITED",
+      "cost": 0.59
+    },
+    {
+      "id": "lvojhtouu5gede",
+      "status": "EXITED",
+      "cost": 0.59
+    },
+    {
+      "id": "b7qj6qyx9ij6gg",
+      "status": "EXITED",
+      "cost": 0.59
+    },
+    {
+      "id": "97vr620wnmtuga",
+      "status": "EXITED",
+      "cost": 0.59
+    },
+    {
+      "id": "lg0svvuenxvbno",
+      "status": "EXITED",
+      "cost": 0.59
+    }
+  ],
+  "all_exited": true
+}

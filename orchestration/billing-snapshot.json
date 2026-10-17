@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "query": {
+      "bucketSize": "hour",
+      "endTime": "2026-10-17T01:00:00Z",
+      "startTime": "2026-10-16T23:00:00Z"
+    },
+    "recordCount": 6,
+    "totals": {
+      "cpuAmount": 0,
+      "diskAmount": 0.002893518772907555,
+      "gpuAmount": 0.06457861233502626,
+      "totalAmount": 0.06747213110793382
+    },
+    "uniquePodCount": 6
+  },
+  "records": [
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00046296301297843456,
+      "endTime": "2026-10-17T00:00:00Z",
+      "gpuAmount": 0,
+      "podId": "5xndo7i7s5r9zn",
+      "startTime": "2026-10-16T23:00:00Z",
+      "totalAmount": 0.00046296301297843456
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00046296301297843456,
+      "endTime": "2026-10-17T00:00:00Z",
+      "gpuAmount": 0,
+      "podId": "97vr620wnmtuga",
+      "startTime": "2026-10-16T23:00:00Z",
+      "totalAmount": 0.00046296301297843456
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00046296301297843456,
+      "endTime": "2026-10-17T00:00:00Z",
+      "gpuAmount": 0,
+      "podId": "b7qj6qyx9ij6gg",
+      "startTime": "2026-10-16T23:00:00Z",
+      "totalAmount": 0.00046296301297843456
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00046296301297843456,
+      "endTime": "2026-10-17T00:00:00Z",
+      "gpuAmount": 0,
+      "podId": "ki9m7vdg9qsea6",
+      "startTime": "2026-10-16T23:00:00Z",
+      "totalAmount": 0.00046296301297843456
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.00046296301297843456,
+      "endTime": "2026-10-17T00:00:00Z",
+      "gpuAmount": 0,
+      "podId": "lg0svvuenxvbno",
+      "startTime": "2026-10-16T23:00:00Z",
+      "totalAmount": 0.00046296301297843456
+    },
+    {
+      "cpuAmount": 0,
+      "diskAmount": 0.0005787037080153823,
+      "endTime": "2026-10-17T00:00:00Z",
+      "gpuAmount": 0.06457861233502626,
+      "podId": "lvojhtouu5gede",
+      "startTime": "2026-10-16T23:00:00Z",
+      "totalAmount": 0.06515731604304165
+    }
+  ]
+}

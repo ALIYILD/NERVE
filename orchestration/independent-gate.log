@@ -1,0 +1,203 @@
+{
+  "aggregate_replay": "counts, promotions, total and maximum items; not full scalar replay of all streams",
+  "bank_v4": {
+    "allocations": [
+      {
+        "consumed": 100,
+        "registration_sha256": "f12a178767efc14a649a9bd265d1027f1f9578b88a281ec3fd8b5afc023b752f",
+        "reserved_slots": 508,
+        "state": "complete"
+      }
+    ],
+    "consumed_items": 100,
+    "ledger_sha256": "a89f0812b2d1a9a6c1340b83804150f64fa04342759e40182765176d1620d3e5"
+  },
+  "canonical_gate": "v3",
+  "canonical_signature_verified": true,
+  "chosen_m": null,
+  "eligible_m": [],
+  "harmful_scalar_replay": {
+    "all_matched": true,
+    "cases": [
+      {
+        "cell": "fresh-m12-measured-harmful",
+        "items": 453,
+        "matched": true,
+        "net": {
+          "conflict": 0,
+          "dissenter": 0,
+          "entity-decoy": 0,
+          "format-variant-agreement": 10,
+          "measurement-decoy": 0,
+          "multi-source-agreement": 6,
+          "stale-vs-current": 0,
+          "supported-measurement": 0,
+          "unit-mismatch": 0
+        },
+        "simulated_stream": 905,
+        "verdict": "promote_proposal"
+      },
+      {
+        "cell": "fresh-m12-measured-harmful",
+        "items": 421,
+        "matched": true,
+        "net": {
+          "conflict": 0,
+          "dissenter": 0,
+          "entity-decoy": 0,
+          "format-variant-agreement": 6,
+          "measurement-decoy": 0,
+          "multi-source-agreement": 6,
+          "stale-vs-current": 0,
+          "supported-measurement": 0,
+          "unit-mismatch": 0
+        },
+        "simulated_stream": 5398,
+        "verdict": "promote_proposal"
+      },
+      {
+        "cell": "fresh-m14-measured-harmful",
+        "items": 469,
+        "matched": true,
+        "net": {
+          "conflict": 0,
+          "dissenter": 0,
+          "entity-decoy": 0,
+          "format-variant-agreement": 10,
+          "measurement-decoy": 0,
+          "multi-source-agreement": 6,
+          "stale-vs-current": 0,
+          "supported-measurement": 0,
+          "unit-mismatch": 0
+        },
+        "simulated_stream": 905,
+        "verdict": "promote_proposal"
+      },
+      {
+        "cell": "fresh-m14-measured-harmful",
+        "items": 419,
+        "matched": true,
+        "net": {
+          "conflict": 0,
+          "dissenter": 0,
+          "entity-decoy": 0,
+          "format-variant-agreement": 4,
+          "measurement-decoy": 0,
+          "multi-source-agreement": 4,
+          "stale-vs-current": 0,
+          "supported-measurement": 0,
+          "unit-mismatch": 0
+        },
+        "simulated_stream": 5398,
+        "verdict": "promote_proposal"
+      },
+      {
+        "cell": "fresh-m16-measured-harmful",
+        "items": 477,
+        "matched": true,
+        "net": {
+          "conflict": 0,
+          "dissenter": 0,
+          "entity-decoy": 0,
+          "format-variant-agreement": 10,
+          "measurement-decoy": 0,
+          "multi-source-agreement": 4,
+          "stale-vs-current": 0,
+          "supported-measurement": 0,
+          "unit-mismatch": 0
+        },
+        "simulated_stream": 905,
+        "verdict": "promote_proposal"
+      },
+      {
+        "cell": "fresh-m16-measured-harmful",
+        "items": 434,
+        "matched": true,
+        "net": {
+          "conflict": 0,
+          "dissenter": 0,
+          "entity-decoy": 0,
+          "format-variant-agreement": 4,
+          "measurement-decoy": 0,
+          "multi-source-agreement": 2,
+          "stale-vs-current": 0,
+          "supported-measurement": 0,
+          "unit-mismatch": 0
+        },
+        "simulated_stream": 5398,
+        "verdict": "promote_proposal"
+      },
+      {
+        "cell": "registered-m12-narrow_64-harmful",
+        "items": 415,
+        "matched": true,
+        "net": {
+          "conflict": 0,
+          "dissenter": 0,
+          "entity-decoy": 0,
+          "format-variant-agreement": 6,
+          "measurement-decoy": 0,
+          "multi-source-agreement": 4,
+          "stale-vs-current": 0,
+          "supported-measurement": 0,
+          "unit-mismatch": 0
+        },
+        "simulated_stream": 7870,
+        "verdict": "promote_proposal"
+      },
+      {
+        "cell": "registered-m14-narrow_64-harmful",
+        "items": 419,
+        "matched": true,
+        "net": {
+          "conflict": 0,
+          "dissenter": 0,
+          "entity-decoy": 0,
+          "format-variant-agreement": 6,
+          "measurement-decoy": 0,
+          "multi-source-agreement": 4,
+          "stale-vs-current": 0,
+          "supported-measurement": 0,
+          "unit-mismatch": 0
+        },
+        "simulated_stream": 7870,
+        "verdict": "promote_proposal"
+      },
+      {
+        "cell": "registered-m16-narrow_64-harmful",
+        "items": 427,
+        "matched": true,
+        "net": {
+          "conflict": 0,
+          "dissenter": 0,
+          "entity-decoy": 0,
+          "format-variant-agreement": 4,
+          "measurement-decoy": 0,
+          "multi-source-agreement": 2,
+          "stale-vs-current": 0,
+          "supported-measurement": 0,
+          "unit-mismatch": 0
+        },
+        "simulated_stream": 7870,
+        "verdict": "promote_proposal"
+      }
+    ],
+    "harmful_promotions_expected": 9,
+    "harmful_promotions_replayed": 9,
+    "model_calls": 0,
+    "registered_source_hashes_match": true,
+    "scope_admitted_public_Process_used": true,
+    "scope_floor_boundary_checks_passed": 2,
+    "source_sha256": "1bfdb90eb579b6ebf5efe22db8cda15ff90f038de7747120239787072bebee1e"
+  },
+  "indexed_files_verified": 390,
+  "model_calls": 0,
+  "payload_sha256": "c1dab32c453609ce2cae72a7c3b660874f243b1f2e67bebde8c9463d44de22d8",
+  "pod_operations": 0,
+  "receipt_cells_verified": 186,
+  "receipt_rows_verified": 1860000,
+  "reserve_items_consumed": 0,
+  "signing_payload_prepared": false,
+  "source_sha256": "bf38334af7428413f15d9974ded6c8d8a023e42cc3db695fd146228434e41d60",
+  "verdict": "retain_incumbent"
+}

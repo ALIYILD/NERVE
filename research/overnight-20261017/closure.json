@@ -1,0 +1,35 @@
+{
+  "D1": "partial: no three proposal/evaluation cycles per family; no actual reverted candidate rejection this run",
+  "D2": "partial: B kept scoped dev improvement; A candidate not evaluated",
+  "family_A": {
+    "cpu_audited_items": 900,
+    "deterministic_failures": 600,
+    "distinct_proposed_candidates": 1,
+    "evaluated_new_candidates": 0,
+    "failure_clusters": 6,
+    "imported_episodes": 900,
+    "proposal_iterations": 1
+  },
+  "family_B": {
+    "fresh_imported_arm_episodes": 200,
+    "fresh_items": 100,
+    "historical_distinct_candidate_configs": 1,
+    "historical_failure_clusters": 2,
+    "historical_imported_episodes": 100,
+    "historical_proposal_records": 2,
+    "historical_replayed_items": 100,
+    "kept": true,
+    "losses": 0,
+    "post_keep_reason": "no observed failures in v5 on these100 items",
+    "post_keep_reclustering_next_proposals": 0,
+    "ties": 65,
+    "wins": 35
+  },
+  "fresh_dev_studies": 1,
+  "fresh_kept": 1,
+  "fresh_reverted": 0,
+  "holdout_handoff": "B narrow candidate candidate_requires_review; no holdout evaluation or signing payload",
+  "new_model_calls": 100,
+  "stop": "W0 declared third infrastructure failure; no further experiments/inference; allpods verifiedEXITED by W0",
+  "synthetic_only": true
+}

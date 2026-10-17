@@ -1,0 +1,11 @@
+test_budget_counts_open_interval_without_reset (test_overnight_conductor.ConductorTests.test_budget_counts_open_interval_without_reset) ... ok
+test_changed_protected_file_revokes (test_overnight_conductor.ConductorTests.test_changed_protected_file_revokes) ... ok
+test_no_unregistered_verdict (test_overnight_conductor.ConductorTests.test_no_unregistered_verdict) ... ok
+test_stale_exited_not_shutdown_proof (test_overnight_conductor.ConductorTests.test_stale_exited_not_shutdown_proof) ... ok
+test_third_failure_revokes_and_requests_stop (test_overnight_conductor.ConductorTests.test_third_failure_revokes_and_requests_stop) ... ok
+test_wrap_before_hard_stop_revokes (test_overnight_conductor.ConductorTests.test_wrap_before_hard_stop_revokes) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.188s
+
+OK

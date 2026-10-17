@@ -1,0 +1,22 @@
+{
+  "verified": true,
+  "new_model_calls": 0,
+  "recorded_claims": 100,
+  "result": {
+    "wins": 35,
+    "losses": 0,
+    "ties": 65,
+    "safety_errors": 0,
+    "controls": {
+      "always-abstain": true,
+      "random": true
+    },
+    "kept": true,
+    "verdict": "kept",
+    "registration_sha256": "094e6058bac759f3a16824f1124b8f9fd4c5a2cacccb9c6fe84cdae5a873e568",
+    "rows_sha256": "8a473ba29926766252ef62d9f9c2e7f14b5d332aff43f5bd006d9ec6cb387497",
+    "new_model_calls": 0,
+    "replay_verified": true
+  },
+  "immutable_source_receipts_modified": false
+}
