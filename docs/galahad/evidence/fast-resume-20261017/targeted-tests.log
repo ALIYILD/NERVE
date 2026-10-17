@@ -1,0 +1,85 @@
+test_arc_schema_failure_preserves_existing_governed_store (test_schema_initialization_atomic.SchemaInitializationTests.test_arc_schema_failure_preserves_existing_governed_store) ... ok
+test_governed_schema_failure_leaves_no_partial_tables (test_schema_initialization_atomic.SchemaInitializationTests.test_governed_schema_failure_leaves_no_partial_tables) ... ok
+test_successful_schema_reopens_without_changing_definition (test_schema_initialization_atomic.SchemaInitializationTests.test_successful_schema_reopens_without_changing_definition) ... ok
+test_concurrent_approval_only_one_release_wins (test_governed_learning_v20.GovernedLearningTests.test_concurrent_approval_only_one_release_wins) ... ok
+test_context_regression_is_rejected_even_with_overall_gain (test_governed_learning_v20.GovernedLearningTests.test_context_regression_is_rejected_even_with_overall_gain) ... ok
+test_database_contains_no_raw_payload_or_expected_answer (test_governed_learning_v20.GovernedLearningTests.test_database_contains_no_raw_payload_or_expected_answer) ... ok
+test_end_to_end_real_handlers_change_only_after_approval_then_rollback (test_governed_learning_v20.GovernedLearningTests.test_end_to_end_real_handlers_change_only_after_approval_then_rollback) ... /usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x106cebc40>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x106cebd30>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x106cebe20>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x106cebf10>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x106df0130>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x106df0040>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/usr/local/Cellar/python@3.13/3.13.15/Frameworks/Python.framework/Versions/3.13/lib/python3.13/json/encoder.py:254: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x106df0220>
+  _iterencode = c_make_encoder(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_forged_and_revoked_capabilities_rejected (test_governed_learning_v20.GovernedLearningTests.test_forged_and_revoked_capabilities_rejected) ... ok
+test_frozen_snapshot_unchanged_by_later_training (test_governed_learning_v20.GovernedLearningTests.test_frozen_snapshot_unchanged_by_later_training) ... ok
+test_handler_errors_remain_in_holdout_denominators (test_governed_learning_v20.GovernedLearningTests.test_handler_errors_remain_in_holdout_denominators) ... ok
+test_heldout_tasks_cannot_train_or_evaluate_another_candidate (test_governed_learning_v20.GovernedLearningTests.test_heldout_tasks_cannot_train_or_evaluate_another_candidate) ... ok
+test_holdout_judge_failure_is_terminal_and_unpromotable (test_governed_learning_v20.GovernedLearningTests.test_holdout_judge_failure_is_terminal_and_unpromotable) ... ok
+test_holdout_regression_blocks_activation (test_governed_learning_v20.GovernedLearningTests.test_holdout_regression_blocks_activation) ... ok
+test_invalid_judge_boolean_is_not_a_reward (test_governed_learning_v20.GovernedLearningTests.test_invalid_judge_boolean_is_not_a_reward) ... ok
+test_judge_failure_stores_no_partial_training_rewards (test_governed_learning_v20.GovernedLearningTests.test_judge_failure_stores_no_partial_training_rewards) ... ok
+test_no_improvement_against_capable_baseline_is_rejected (test_governed_learning_v20.GovernedLearningTests.test_no_improvement_against_capable_baseline_is_rejected) ... ok
+test_overlap_detected_by_payload_even_with_renamed_task_ids (test_governed_learning_v20.GovernedLearningTests.test_overlap_detected_by_payload_even_with_renamed_task_ids) ... ok
+test_pending_candidate_never_deploys (test_governed_learning_v20.GovernedLearningTests.test_pending_candidate_never_deploys) ... ok
+test_persistence_survives_new_engine_and_new_host_capabilities (test_governed_learning_v20.GovernedLearningTests.test_persistence_survives_new_engine_and_new_host_capabilities) ... ok
+test_revision_change_fails_closed (test_governed_learning_v20.GovernedLearningTests.test_revision_change_fails_closed) ... ok
+test_runtime_does_not_accept_unregistered_context (test_governed_learning_v20.GovernedLearningTests.test_runtime_does_not_accept_unregistered_context) ... ok
+test_same_candidate_cannot_retry_holdout (test_governed_learning_v20.GovernedLearningTests.test_same_candidate_cannot_retry_holdout) ... ok
+test_stale_activation_after_another_release_or_rollback_rejected (test_governed_learning_v20.GovernedLearningTests.test_stale_activation_after_another_release_or_rollback_rejected) ... ok
+test_tenant_and_agent_isolation_for_candidates_releases_and_training (test_governed_learning_v20.GovernedLearningTests.test_tenant_and_agent_isolation_for_candidates_releases_and_training) ... ok
+test_trainer_and_evaluator_cannot_activate_or_rollback (test_governed_learning_v20.GovernedLearningTests.test_trainer_and_evaluator_cannot_activate_or_rollback) ... ok
+test_training_scores_come_from_actual_handlers_not_user_rewards (test_governed_learning_v20.GovernedLearningTests.test_training_scores_come_from_actual_handlers_not_user_rewards) ... ok
+test_underpowered_training_and_holdout_fail_before_evaluation (test_governed_learning_v20.GovernedLearningTests.test_underpowered_training_and_holdout_fail_before_evaluation) ... ok
+test_argument_tampering (test_arc_runtime.ArcRuntimeTests.test_argument_tampering) ... <frozen importlib._bootstrap>:488: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x106df0130>
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_bounded_decisions_and_no_progress (test_arc_runtime.ArcRuntimeTests.test_bounded_decisions_and_no_progress) ... ok
+test_cancel (test_arc_runtime.ArcRuntimeTests.test_cancel) ... ok
+test_cancellation_during_effect_requires_reconciliation (test_arc_runtime.ArcRuntimeTests.test_cancellation_during_effect_requires_reconciliation) ... ok
+test_contract_bad_version (test_arc_runtime.ArcRuntimeTests.test_contract_bad_version) ... ok
+test_direct_bypass_denied (test_arc_runtime.ArcRuntimeTests.test_direct_bypass_denied) ... ok
+test_duplicate_and_concurrent_dispatch_one_effect (test_arc_runtime.ArcRuntimeTests.test_duplicate_and_concurrent_dispatch_one_effect) ... ok
+test_empty_success_is_not_completion (test_arc_runtime.ArcRuntimeTests.test_empty_success_is_not_completion) ... ok
+test_evidence_hash_binding (test_arc_runtime.ArcRuntimeTests.test_evidence_hash_binding) ... ok
+test_expired_approval_rejected (test_arc_runtime.ArcRuntimeTests.test_expired_approval_rejected) ... ok
+test_expiry_and_fresh_same_content (test_arc_runtime.ArcRuntimeTests.test_expiry_and_fresh_same_content) ... ok
+test_legacy_shadow_and_training_cannot_bypass (test_arc_runtime.ArcRuntimeTests.test_legacy_shadow_and_training_cannot_bypass) ... ok
+test_modes_durable_shadow_no_effects (test_arc_runtime.ArcRuntimeTests.test_modes_durable_shadow_no_effects) ... ok
+test_off_context_preserves_legacy_flow (test_arc_runtime.ArcRuntimeTests.test_off_context_preserves_legacy_flow) ... ok
+test_partial_outcome (test_arc_runtime.ArcRuntimeTests.test_partial_outcome) ... ok
+test_provider_invalid_and_invented_evidence (test_arc_runtime.ArcRuntimeTests.test_provider_invalid_and_invented_evidence) ... ok
+test_readback_bounded_to_two_retries (test_arc_runtime.ArcRuntimeTests.test_readback_bounded_to_two_retries) ... ok
+test_readback_expiry_after_callback_rejects_success (test_arc_runtime.ArcRuntimeTests.test_readback_expiry_after_callback_rejects_success) ... ok
+test_redacted_rejection_metrics (test_arc_runtime.ArcRuntimeTests.test_redacted_rejection_metrics) ... ok
+test_reopened_bare_dispatcher_fails_closed (test_arc_runtime.ArcRuntimeTests.test_reopened_bare_dispatcher_fails_closed) ... ok
+test_restart_intent_never_replayed (test_arc_runtime.ArcRuntimeTests.test_restart_intent_never_replayed) ... ok
+test_retry_backoff_cannot_cross_deadline (test_arc_runtime.ArcRuntimeTests.test_retry_backoff_cannot_cross_deadline) ... ok
+test_retry_backoff_is_bounded (test_arc_runtime.ArcRuntimeTests.test_retry_backoff_is_bounded) ... ok
+test_review_references_reject_free_text (test_arc_runtime.ArcRuntimeTests.test_review_references_reject_free_text) ... ok
+test_review_scope_expiry_retraction_deletion (test_arc_runtime.ArcRuntimeTests.test_review_scope_expiry_retraction_deletion) ... ok
+test_roundtrip_and_verified_semantics (test_arc_runtime.ArcRuntimeTests.test_roundtrip_and_verified_semantics) ... ok
+test_stale_changed_missing_cross_scope (test_arc_runtime.ArcRuntimeTests.test_stale_changed_missing_cross_scope) ... ok
+test_uncertain_write_never_replayed (test_arc_runtime.ArcRuntimeTests.test_uncertain_write_never_replayed) ... ok
+test_valid_provider_reaches_dispatch (test_arc_runtime.ArcRuntimeTests.test_valid_provider_reaches_dispatch) ... ok
+test_write_approval_bound_and_revoked (test_arc_runtime.ArcRuntimeTests.test_write_approval_bound_and_revoked) ... ok
+
+----------------------------------------------------------------------
+Ran 57 tests in 2.175s
+
+OK
