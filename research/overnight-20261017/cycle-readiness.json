@@ -1,17 +1,19 @@
 {
-  "command": "pytest -q tests/test_faithfulness_monitor.py tests/test_overnight_hermes_claude.py tests/test_overnight_cycle.py tests/test_overnight_advisors.py tests/test_obsidian_export_v18.py",
-  "cryptography": "48.0.0",
+  "command": "/Users/aliyildirim/.cache/uv/archive-v0/OI2t9KVJQ6hSK7ic/bin/python -m pytest -q tests/test_faithfulness_monitor.py tests/test_overnight_hermes_claude.py tests/test_overnight_cycle.py tests/test_overnight_advisors.py tests/test_obsidian_export_v18.py",
+  "cryptography": "48.0.1",
   "exclusive_test_lock": true,
   "live_end_to_end_validated": false,
-  "log": "research/overnight-20261017/cycle-pod-binding-focused.log",
-  "log_sha256": "4520a5dfaf5b1bf8bf8f1ae2e534b5f4b031a4efa8c32f665d01d776d598ef01",
-  "notes": "Existing Python 3.13 interpreter lacks pytest; focused validation used existing 3.10 environment. No inference; preflight_ok remains absent.",
-  "python": "3.10.0",
+  "log": "research/overnight-20261017/cycle-remote-integrity-py313.log",
+  "log_sha256": "f5d5048cdadab8c1cf0479ce477a9efbe739f2e05373b0f93eafca286cb2b2b5",
+  "notes": "Existing supported Python 3.13 environment; source snapshots identical before and after focused tests. Remote-worker drift fails before executing worker bytes. Provider calls mocked; no model or pod calls. W0 latency preflight remains blocked.",
+  "python": "3.13.12",
+  "receipt": "research/overnight-20261017/cycle-remote-integrity-py313.json",
+  "receipt_sha256": "89d7175b84773be7c69b000df5807a4feb9ab54950aa309cc660c3c99485676b",
   "source_sha256": {
     "research/program-20261017.md": "07706bcfe2202667f9bf1f51d9e551e5e1bff3f4f7ecbb170cb8d75f4203bf7b",
     "scripts/bank_v5_fallback_remote.py": "c7c9d2e929154c4ae6323a242e52d2b4fe8aa7f7a50f94387b3f26326e04c704",
     "scripts/faithfulness_monitor.py": "bc315d9b9b6dc83470f4a356c1c7877b418942df4cca1e5a9d12a4cf092f2bae",
-    "scripts/overnight_cycle.py": "0aae8bcf8a6fb8d53d964a889b229751b9afee46af9d79d7ba9baff72c12784e",
+    "scripts/overnight_cycle.py": "944cbc629cccd39afd1b1d64b5dc2f677bbe682c1ef9d41249c56291ba36624c",
     "scripts/overnight_cycle_preflight.py": "511ab8cea2ec2a32a70f763fcf270dbf11896bb4cde7f0547f7935aff366de4e",
     "scripts/overnight_hermes_worker.py": "554e7d87799de3448b02bfdc133b18d779454c67bcf29da1633e1f0913db836d",
     "scripts/v5_remote_call.py": "fc91114612b1d736efe407ef99aa478a8c7b4093de4aebe2e47f8acb02a012c5",
@@ -22,11 +24,11 @@
     "tests/test_faithfulness_monitor.py": "9af7f7ebc045c46a7b30445ab95f08a53054869dfdee9dee49835aeee06991c9",
     "tests/test_obsidian_export_v18.py": "4f5c1969f29b4f52f279b83cec402aa7cda202f18c8a3aacf54cf571af1e82d2",
     "tests/test_overnight_advisors.py": "6e264cdb66c382abe411357a534940398587f45fa220e92164e0101fb0456393",
-    "tests/test_overnight_cycle.py": "34b28b69d4c408e1c1b990f62b9caa0c6db77d65523aa20afba3f84485dfb71a",
+    "tests/test_overnight_cycle.py": "6785e8d582a56a1d083fcdf8cbd33b1173eaf325a2c680b9ced85575143e0bd8",
     "tests/test_overnight_hermes_claude.py": "6e03b083b462db3356abe2246feddad9c31ecb3681e66f18baf51afd60af733d"
   },
-  "test_seconds": 2.42,
-  "tests": 39,
+  "test_seconds": 2.47,
+  "tests": 41,
   "tests_passed": true,
-  "time": "2026-10-17T01:09:05.394826+00:00"
+  "time": "2026-10-17T01:16:31.219511+00:00"
 }

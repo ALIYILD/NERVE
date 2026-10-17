@@ -112,18 +112,20 @@ def test_hermes_identity_inspection_needs_no_live_audit(monkeypatch):
     assert requests[0]['inspect'] and requests[0]['inspect_profile']
 
 
-def test_registered_fallback_worker_transport(monkeypatch):
+def test_registered_fallback_worker_transport(monkeypatch, tmp_path):
     from types import SimpleNamespace
     connection=dict(host='194.68.245.122',port=22019,pod_id='lvojhtouu5gede',
                     remote_worker='/workspace/bank_v5_fallback_remote.py')
     monkeypatch.setattr(cycle,'POD',connection['pod_id'])
+    monkeypatch.setattr(cycle,'PRIVATE',tmp_path)
+    cycle.save(tmp_path/'session-registration.json',dict(connection=connection,remote_worker_sha256='a'*64))
     commands=[]
     def fake_remote(command, **kwargs):
         commands.append(command)
         return SimpleNamespace(stdout=json.dumps({'pod_id':connection['pod_id']}))
     monkeypatch.setattr(cycle.subprocess,'run',fake_remote)
     assert cycle.remote(connection,'identity')['pod_id']==connection['pod_id']
-    assert commands[0][-2:]==['/workspace/bank_v5_fallback_remote.py','identity']
+    assert commands[0][-3:]==['/workspace/bank_v5_fallback_remote.py','a'*64,'identity']
     assert 'root@194.68.245.122' in commands[0]
     for change in ({'pod_id':'other'},{'remote_worker':'/tmp/arbitrary.py'},
                    {'remote_worker':'/workspace/v5_remote_call.py'},{'port':True}):
@@ -136,3 +138,35 @@ def test_registered_fallback_worker_transport(monkeypatch):
     with pytest.raises(ValueError,match='registered_pod_mismatch'):
         cycle.remote(connection,'identity')
     assert len(commands)==1
+
+
+
+def test_remote_worker_hash_mismatch_executes_no_worker(tmp_path):
+    import subprocess
+    from hashlib import sha256
+    marker=tmp_path/'model-call-marker'
+    worker=tmp_path/'worker.py'
+    good=("from pathlib import Path\nPath("+repr(str(marker))+").write_text('dispatched')\n").encode()
+    worker.write_bytes(good)
+    expected=sha256(good).hexdigest()
+    worker.write_bytes(good+b"# changed remote source\n")
+    command=[sys.executable,'-c',cycle.PINNED_WORKER_LAUNCHER,str(worker),expected,'call']
+    refused=subprocess.run(command,text=True,capture_output=True)
+    assert refused.returncode!=0 and 'remote_worker_hash_mismatch' in refused.stderr
+    assert not marker.exists()  # No worker execution, hence no possible model dispatch.
+    worker.write_bytes(good)
+    allowed=subprocess.run(command,text=True,capture_output=True)
+    assert allowed.returncode==0, allowed.stderr
+    assert marker.read_text()=='dispatched'
+
+
+def test_remote_connection_must_match_immutable_registration(tmp_path,monkeypatch):
+    connection=dict(host='194.68.245.122',port=22019,pod_id='lvojhtouu5gede',
+                    remote_worker='/workspace/bank_v5_fallback_remote.py')
+    monkeypatch.setattr(cycle,'POD',connection['pod_id'])
+    monkeypatch.setattr(cycle,'PRIVATE',tmp_path)
+    cycle.save(tmp_path/'session-registration.json',dict(connection=connection,remote_worker_sha256='a'*64))
+    def denied(*args,**kwargs):raise AssertionError('SSH must not run')
+    monkeypatch.setattr(cycle.subprocess,'run',denied)
+    with pytest.raises(ValueError,match='registered_connection_mismatch'):
+        cycle.remote(dict(connection,port=22020),'call')

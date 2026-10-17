@@ -463,14 +463,34 @@ def validate_connection(connection):
     return pod
 
 
+PINNED_WORKER_LAUNCHER = """import hashlib,sys
+from pathlib import Path
+worker,expected,action=sys.argv[1:]
+source=Path(worker).read_bytes()
+if hashlib.sha256(source).hexdigest()!=expected:
+    raise RuntimeError('remote_worker_hash_mismatch')
+sys.argv=[worker,action]
+exec(compile(source,worker,'exec'),{'__name__':'__main__','__file__':worker})
+"""
+
+
 def remote(connection, action, payload=None, timeout=42):
     pod=validate_connection(connection)
     if pod!=POD:raise ValueError('registered_pod_mismatch')
     if action not in ('identity','call'):raise ValueError('worker_action_forbidden')
+    registration=read(PRIVATE/'session-registration.json')
+    if registration.get('connection')!=connection:
+        raise ValueError('registered_connection_mismatch')
+    expected=registration['remote_worker_sha256']
+    if (type(expected) is not str or len(expected)!=64
+            or any(c not in '0123456789abcdef' for c in expected)):
+        raise ValueError('registered_worker_hash_invalid')
+    import shlex
     command=['ssh','-p',str(connection['port']),'-i',str(Path.home()/'.ssh/id_ed25519'),
              '-o','BatchMode=yes','-o','ConnectTimeout=5','-o','ServerAliveInterval=5',
              '-o','ServerAliveCountMax=2','root@'+connection['host'],
-             'python3',connection['remote_worker'],action]
+             'python3','-c',shlex.quote(PINNED_WORKER_LAUNCHER),
+             connection['remote_worker'],expected,action]
     completed=subprocess.run(command,input=None if payload is None else json.dumps(payload),
                              text=True,capture_output=True,check=True,timeout=timeout)
     return json.loads(completed.stdout)
