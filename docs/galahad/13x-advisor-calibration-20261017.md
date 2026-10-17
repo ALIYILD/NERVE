@@ -4,6 +4,8 @@ Status: **blocked**. All evidence is synthetic dev research. No holdout, signing
 
 D9: Brier and AUC per generator against verdicts, final advisor trust weights, and template versus Socratic keep rates.
 
+D10: monitor coverage and quarantine counts: {"agent_node": 0, "checked": 0, "eligible": 0, "exercised": false, "missing": 0, "quarantined": 0, "socratic": 0}. Zero eligible is not live validation.
+
 | Advisor | Verdicts | Brier | AUC | Weight |
 |---|---:|---:|---:|---:|
 | template | 0 | None | None | 0.333333 |

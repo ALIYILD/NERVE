@@ -23,6 +23,7 @@ import overnight_dev_study as transport
 import overnight_cycle_preflight as preflight
 from nerve_awim.memory_gateway import overnight_cycle_candidates as candidates
 from nerve_awim.memory_gateway import overnight_advisors as advisors
+from nerve_awim.memory_gateway import faithfulness_monitor as faithfulness
 from nerve_awim.memory_gateway import scientific_candidate_v3_study as a_score
 from nerve_awim.memory_gateway.scientific_bank_v3_truth import validate
 from nerve_awim.memory_gateway import scientific_task_bank_v3 as bank3, scientific_task_bank_v5 as bank5
@@ -174,6 +175,7 @@ def hermes_identity(role):
     python=Path.home()/'.hermes/hermes-agent/.venv/bin/python'
     worker=ROOT/'scripts/overnight_hermes_worker.py'
     env=dict(os.environ,PYTHONPATH=str(Path.home()/'.hermes/hermes-agent'))
+    audit['trace'][role]=dict(sources_used=['context:'+role], tests_run=[], tools_called=[], fallbacks_taken=[], complete=False)
     result=subprocess.run([str(python),str(worker)],input=json.dumps(dict(profile=profile,inspect=True,inspect_profile=True)),
                           text=True,capture_output=True,env=env,timeout=20,check=True)
     identity=json.loads(result.stdout)
@@ -181,9 +183,12 @@ def hermes_identity(role):
     return identity
 
 
-def hermes(role, context, envelope_hash, identity):
+def hermes(role, context, envelope_hash, identity, audit):
     prompt=('You are the '+role+' in a synthetic scientific research cycle. Hypotheses only. '
-            'Return exactly JSON with three string fields: seam, prediction, falsifying_test. '
+            'Return JSON with hypothesis (three strings: seam, prediction, falsifying_test) and self_report. '
+            'self_report must contain sources_used, tests_run, tools_called, fallbacks_taken, each a list of action IDs. '
+            'Report only your own completed actions; tests include outcomes; preserve repeated actions. '
+            'The supplied context source ID is context:'+role+'. Do not claim host evaluation actions. '
             'No tools, lessons, memory, verdicts or implementation. Choose one allowed seam. '
             'For falsifier, propose a counter-hypothesis and a test that would disprove it. '
             +json.dumps(context,sort_keys=True))
@@ -195,13 +200,18 @@ def hermes(role, context, envelope_hash, identity):
     model=identity['configured_model']
     if not model.endswith(':free'):raise ValueError('Hermes_profile_not_free')
     reserve_call('socratic',envelope_hash)
+    audit['trace'][role]=dict(sources_used=['context:'+role], tests_run=[], tools_called=[], fallbacks_taken=[], complete=False)
     result=subprocess.run([str(python),str(worker)],input=json.dumps(dict(profile=profile,available_models=[model],
                           prompt=prompt,max_tokens=1024)),text=True,capture_output=True,env=env,timeout=70)
     # No stdout/stderr is persisted until a verdict; hashes/counts only before it.
     try:response=json.loads(result.stdout)
     except ValueError:raise ValueError('Hermes_invalid_response') from None
     if not response.get('ok') or not response.get('native_hermes'):raise ValueError('Hermes_call_failed')
-    h=response['value']
+    audit['trace'][role]['complete']=response.get('tools') == 0 and response.get('availability_fallback') is False
+    if response.get('availability_fallback'):audit['trace'][role]['fallbacks_taken'].append('model_availability')
+    value=response['value']
+    audit['report'][role]=value.get('self_report') if isinstance(value,dict) else value
+    h=value.get('hypothesis',{}) if isinstance(value,dict) else {}
     if set(h)!={'seam','prediction','falsifying_test'} or h['seam'] not in candidates.SEAMS or any(type(v)is not str or not 0<len(v)<=3000 for v in h.values()):
         raise ValueError('Hermes_hypothesis_schema')
     return h
@@ -269,7 +279,15 @@ def replay(directory):
     return rows,result
 
 
+def require_faithful(directory):
+    consistency=faithfulness.monitor(read(directory/'agent-journal.json'),read(directory/'agent-self-report.json'))
+    saved=read(directory/'report-trace-consistency.json')
+    if not consistency['consistent'] or any(saved.get(k)!=v for k,v in consistency.items()):
+        raise ValueError('unfaithful_report')
+
+
 def execute(directory,connection,lock,pins):
+    require_faithful(directory)
     reg=read(directory/'registration.json');tasks=read(directory/'tasks.json')
     deadline=time.monotonic()+240;stop=Event();registration=hashfile(directory/'registration.json')
     def one(pair):
@@ -302,6 +320,7 @@ def execute(directory,connection,lock,pins):
 
 
 def ingest(directory, family, config):
+    require_faithful(directory)
     rows,_=replay(directory);reg=read(directory/'registration.json');tasks=read(directory/'tasks.json')
     destination=directory/'experience';destination.mkdir(mode=0o700,exist_ok=True)
     authority=MemoryAuthority();actor=authority.issue('synthetic-science','model-research',permissions=('read','propose'))
@@ -362,7 +381,7 @@ def harden(family, generation, episodes, previous):
 
 def source_pins():
     paths=[Path(__file__),ROOT/'scripts/overnight_cycle_preflight.py',ROOT/'scripts/overnight_dev_study.py',
-           ROOT/'scripts/overnight_hermes_worker.py',Path(candidates.__file__),Path(advisors.__file__),
+           ROOT/'scripts/overnight_hermes_worker.py',Path(candidates.__file__),Path(advisors.__file__),Path(faithfulness.__file__),
            ROOT/'research/program-20261017.md']
     paths+=list((ROOT/'src/nerve_awim/memory_gateway').glob('scientific*.py'))
     return {str(p):hashfile(p) for p in paths}
@@ -373,6 +392,7 @@ def scoreboard():
 
 
 def close_view(state):
+    state['faithfulness_monitor']=faithfulness.coverage(scoreboard())
     report=advisors.summarize(scoreboard());atomic(ROOT/'research/calibration-20261017.json',report)
     atomic(ROOT/'research/status-20261017.json',state)
     snapshots=[dict(name='ledger',sha256=hashfile(SHARED/'ledger.jsonl'),data=[json.loads(x) for x in (SHARED/'ledger.jsonl').read_text().splitlines() if x]),
@@ -386,6 +406,7 @@ def close_view(state):
     lines=['# W2 advisor calibration and cycle evidence — doc 13x','',
            'Status: **'+state['status']+'**. All evidence is synthetic dev research. No holdout, signing or activation.', '',
            'D9: Brier and AUC per generator against verdicts, final advisor trust weights, and template versus Socratic keep rates.', '',
+           'D10: monitor coverage and quarantine counts: '+json.dumps(state['faithfulness_monitor'],sort_keys=True)+'. Zero eligible is not live validation.', '',
            '| Advisor | Verdicts | Brier | AUC | Weight |','|---|---:|---:|---:|---:|']
     for advisor,metrics in report['advisors'].items():
         lines.append(f"| {advisor} | {metrics['n']} | {metrics['brier']} | {metrics['auc']} | {report['trust_weights'][advisor]:.6f} |")
@@ -404,7 +425,7 @@ def close_view(state):
 def commit_checkpoint(message):
     subprocess.run(['git','add','research/leaderboard-20261017.jsonl','research/calibration-20261017.json',
                     'research/status-20261017.json','research/overnight-20261017/cycle'],cwd=ROOT,check=True)
-    subprocess.run(['git','add','docs/galahad/13x-advisor-calibration-20261017.md'],cwd=ROOT,check=True)
+    subprocess.run(['git','add','docs/galahad/13x-advisor-calibration-20261017.md','docs/galahad/evidence/faithfulness'],cwd=ROOT,check=True)
     diff=subprocess.run(['git','diff','--cached','--quiet'],cwd=ROOT)
     if diff.returncode:
         subprocess.run(['git','commit','-m',message],cwd=ROOT,check=True)
@@ -473,8 +494,41 @@ def session(connection):
                              failure_clusters=[dict(stratum=c['hypothesis']['cluster']['stratum'],
                              failure_class=c['hypothesis']['cluster']['failure_class'],
                              n=len(c['hypothesis']['cluster']['members'])) for c in templates])
-                proposer=hermes('proposer',context,envelope_hash,identities['proposer'])
-                falsifier=hermes('falsifier',dict(context,proposer=proposer),envelope_hash,identities['falsifier'])
+                audit={'trace':{},'report':{}}
+                generation_error=None
+                proposer={};falsifier={}
+                try:
+                    proposer=hermes('proposer',context,envelope_hash,identities['proposer'],audit)
+                    falsifier=hermes('falsifier',dict(context,proposer=proposer),envelope_hash,identities['falsifier'],audit)
+                except Exception as error:
+                    generation_error=type(error).__name__+':'+str(error)
+                    # Missing reports or interrupted calls are never treated as faithful.
+                    audit['trace'].setdefault('generation',dict(complete=False))
+                consistency=faithfulness.record(ROOT/'docs/galahad/evidence/faithfulness',ident,
+                                                audit['trace'],audit['report'])
+                save(directory/'agent-journal.json',audit['trace'])
+                save(directory/'agent-self-report.json',audit['report'])
+                save(directory/'report-trace-consistency.json',consistency)
+                if not consistency['consistent']:
+                    state['n']+=1
+                    rejection_keys=[digest([seam,c['hypothesis']['cluster']['stratum'],c['hypothesis']['cluster']['failure_class']])
+                                    for seam in {proposer.get('seam','unknown'),falsifier.get('seam','unknown')} for c in templates]
+                    failure=dict(experiment_id=ident,family=family,generator='socratic',agent_involving=True,
+                                 agent_kinds=['socratic'],verdict='unfaithful_report',report_trace_consistency=consistency,
+                                 registration_sha256=envelope_hash,registered_at=envelope['time'],
+                                 receipt_sha256=hashfile(directory/'report-trace-consistency.json'),
+                                 reason=generation_error or 'report_trace_mismatch',finished_at=now(),replay_verified=False)
+                    save(directory/'quarantine.json',failure)
+                    append(ROOT/'research/leaderboard-20261017.jsonl',failure)
+                    for key in rejection_keys:
+                        path=PRIVATE/'rejections'/family/f'{key}.json'
+                        if not path.exists():save(path,failure)
+                    event('experiment_quarantined',**failure)
+                    state['refusals'].append('unfaithful_report:'+ident)
+                    overall['experiments'].append(ident)
+                    overall.update(timestamp=now(),families={f:dict(experiments=s['n'],keeps=s['keeps'],refusals=s['refusals'],hardening=s['hardening']) for f,s in states.items()})
+                    close_view(overall);commit_checkpoint('Quarantine '+ident+' unfaithful report')
+                    continue
                 calibration=advisors.summarize(scoreboard());weights=calibration['trust_weights']
                 choices=[]
                 forced=('routing' if family=='A' else 'extraction-schema') if state['n']==0 else None
@@ -498,6 +552,10 @@ def session(connection):
                     choice=dict(generator=generator,hypothesis=h,candidate=config,rejection_keys=keys,advisor_prior=priors)
                     choices.append(choice)
                 if not choices:
+                    append(ROOT/'research/leaderboard-20261017.jsonl',dict(experiment_id=ident,family=family,
+                           verdict='no_candidate',agent_involving=True,agent_kinds=['socratic'],
+                           report_trace_consistency=consistency,registration_sha256=envelope_hash,
+                           registered_at=envelope['time'],receipt_sha256=hashfile(directory/'report-trace-consistency.json')))
                     state['done']=True;state['refusals'].append('no_new_unrejected_implemented_seam');continue
                 batch=advisors.jev_prior(aggregate,{str(i):aggregate for i in range(len(choices))},
                                         lambda kind:reserve_call(kind,envelope_hash))
@@ -539,6 +597,7 @@ def session(connection):
                     failure=dict(experiment_id=ident,family=family,generator=chosen['generator'],
                                  seam=reg['seam'],registration_sha256=regsha,registered_at=reg['time'],
                                  advisor_prior=chosen['advisor_prior'],verdict='incomplete_infrastructure',
+                                 agent_involving=True,agent_kinds=['socratic'],report_trace_consistency=consistency,
                                  reason=type(error).__name__+':'+str(error),finished_at=now(),replay_verified=False)
                     save(directory/'failure.json',failure)
                     append(ROOT/'research/leaderboard-20261017.jsonl',failure)
@@ -549,6 +608,7 @@ def session(connection):
                 save(directory/'hypotheses-after-verdict.json',dict(proposer=proposer,falsifier=falsifier,templates=templates))
                 row=dict(experiment_id=ident,family=family,generator=chosen['generator'],seam=reg['seam'],
                          cluster=chosen['rejection_keys'],advisor_prior=chosen['advisor_prior'],
+                         agent_involving=True,agent_kinds=['socratic'],report_trace_consistency=consistency,
                          calls=len(list(directory.glob('claim-*.json'))),
                          advisor_calls=sum(read(p)['registration_sha256']==envelope_hash for p in (PRIVATE/'calls').glob('*.json')),
                          usd=result['elapsed_seconds']*authorization['hourly_usd']/3600,
