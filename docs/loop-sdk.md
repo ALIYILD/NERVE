@@ -49,8 +49,10 @@ abstract retrieval over synthetic metadata. No real workloads, patient data,
 clinical benefit, latency improvement or performance deployment is claimed.
 The injected degradation affects served outcomes, not retention or installation.
 
-For a real domain, implement the `Domain` contract (`bank`, `predict`, `correct`,
-`stream`, `skills`, `reward_source`) using trusted, versioned reward receipts.
+For a real domain, add a reviewed, versioned source adapter implementing `bank`,
+`public_input`, `predict`, `correct`, `stream`, `skills` and `reward_source`, using
+trusted reward receipts. The current release accepts only the three built-in
+contracts; arbitrary custom `Domain` objects cannot be injected at runtime.
 A real reward importer must independently verify and scope the source before
 `learn`, and supply paired outcomes or a separately registered exploration
 policy for adaptation. Loop 38 clinician sign-off and PerfFlux workload data are
