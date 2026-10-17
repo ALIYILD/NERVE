@@ -23,3 +23,6 @@ Final verification: one actual fast gate on this changed branch, using the uncha
 
 
 Correction: the shared ledger later recorded a foreign W0 test-lock violation during that final fast run. Its 42-test permission rerun took 11.879 seconds; the log file timestamps span 00:38:33–00:38:45 UTC, while this fast gate started at 00:38:28.223 UTC. The gate timeout is a real process outcome but **must not be used as exclusive-run timing evidence**. The original log is preserved and the incident is adjacent. The schema microprofile and 57-test targeted run occurred before this overlap.
+
+
+A single further unchanged-deadline attempt was authorized because of that external overlap. It also timed out (exit124), after 180.36936045100447 seconds, with 1800 completed `ok` lines and no `FAIL`/`ERROR` lines. **Exclusivity is unverified for this attempt too:** the process monitor used macOS's truncated `comm` column and failed to identify Python runners. A corrected snapshot ran only after gate completion and found two unrelated PerfFlux pytest processes; their overlap duration is unknown. The sanitized monitor evidence omits unrelated test arguments. No further test runs were attempted. All80protected hashes match. Both timeouts are actual process outcomes, neither is exclusive timing proof.
