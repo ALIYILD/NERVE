@@ -92,7 +92,11 @@ class GovernedLearning:
         self._registry = registry
         self._baseline = self._routes(baseline_routes)
         with self._db() as con:
+            # executescript does not inherit the connection context's transaction:
+            # without BEGIN each DDL statement commits separately. Keep schema
+            # creation atomic; _db commits on success and rolls back on failure.
             con.executescript('''
+              BEGIN IMMEDIATE;
               CREATE TABLE IF NOT EXISTS gl_state (
                 tenant TEXT, agent TEXT, contract TEXT, active TEXT, generation INTEGER,
                 PRIMARY KEY (tenant, agent));
