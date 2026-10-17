@@ -175,20 +175,40 @@ PROVIDER = 'anthropic'
 BASE_URL = 'https://api.anthropic.com'
 
 
-def anthropic_key(installed, root):
+def local_setting(installed, root, variable):
     """Use API credentials only, never subscription OAuth or OpenRouter keys."""
-    key = os.environ.get('ANTHROPIC_API_KEY', '').strip()
+    key = os.environ.get(variable, '').strip()
     if key:
         return key
     for path in (root/'.env', installed/'profiles/coordinator/.env', installed/'.env'):
         if path.is_file():
             for line in path.read_text().splitlines():
                 name, sep, value = line.strip().partition('=')
-                if sep and name == 'ANTHROPIC_API_KEY':
+                if sep and name == variable:
                     key = value.strip().strip(chr(34)+chr(39))
                     if key:
                         return key
     return ''
+
+
+def anthropic_key(installed, root):
+    return local_setting(installed, root, 'ANTHROPIC_API_KEY')
+
+
+def anthropic_workspace(installed, root):
+    value = local_setting(installed, root, 'ANTHROPIC_WORKSPACE_ID')
+    if value and not re.fullmatch(r'wrkspc_[A-Za-z0-9]+', value):
+        raise ValueError('invalid_anthropic_workspace_id')
+    return value
+
+
+def isolated_config(model, workspace):
+    config = dict(model=dict(default=model, provider=PROVIDER), fallback_providers=[],
+                  agent=dict(api_max_retries=1, auto_recovery_cycles=0, environment_probe=False))
+    if workspace:
+        config['custom_providers'] = [dict(name='anthropic-workspace', base_url=BASE_URL,
+            extra_headers={'anthropic-workspace-id': workspace})]
+    return config
 
 
 def main():
@@ -204,6 +224,7 @@ def main():
     config = yaml.safe_load((root/'config.yaml').read_text())
     profile_model = config['model']['default']
     model = original_model = MODEL
+    workspace = anthropic_workspace(installed, root)
     if request.get('inspect_profile') is True:
         if request.get('inspect') is not True:
             raise ValueError('profile inspection cannot request inference')
@@ -211,7 +232,7 @@ def main():
         revision, clean = inspect_hermes_checkout(installed / 'hermes-agent')
         print(json.dumps({'ok': True, 'profile': profile, 'requested_model': model,
             'configured_model': model, 'provider': PROVIDER, 'base_url': BASE_URL,
-            'profile_default_model': profile_model, 'credential_present': bool(anthropic_key(installed, root)),
+            'workspace_id': workspace or None, 'profile_default_model': profile_model, 'credential_present': bool(anthropic_key(installed, root)),
             'availability_fallback': False,
             'native_hermes': False, 'tools': 0, 'value': None,
             'cce_profile': inspect_native_profile(profile, model, model, soul,
@@ -245,7 +266,7 @@ def main():
         os.environ['HERMES_HOME'] = isolated
         os.environ['HERMES_RUNTIME_DIR'] = isolated
         os.environ['HERMES_DISABLE_LAZY_INSTALLS']='1'
-        Path(isolated,'config.yaml').write_text('model:\n  default: '+model+'\n  provider: anthropic\nfallback_providers: []\nagent:\n  api_max_retries: 1\n  auto_recovery_cycles: 0\n  environment_probe: false\n')
+        Path(isolated,'config.yaml').write_text(json.dumps(isolated_config(model, workspace)))
         os.environ['HERMES_API_TIMEOUT']='30'
         # Suppress native startup/progress output. Only the final bounded JSON
         # result crosses this process boundary; provider errors are categorical.
@@ -261,6 +282,8 @@ def main():
                 run_budget_seconds=55, fallback_model=None,
                 reasoning_config={'enabled':False})
             try:
+                if workspace and runtime._anthropic_client.default_headers.get('anthropic-workspace-id') != workspace:
+                    raise RuntimeError('anthropic_workspace_header_missing')
                 if runtime.tools != []:
                     raise RuntimeError('unexpected tools')
                 os.write(2,b'NERVE_STAGE=inference\n')

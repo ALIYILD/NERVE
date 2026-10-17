@@ -76,3 +76,39 @@ def test_paid_call_respects_resume_budget_before_claim(tmp_path,monkeypatch):
     with pytest.raises(ValueError,match='combined_compute_API_budget_stop'):
         cycle.reserve_call('socratic','registration')
     assert not (tmp_path/'private').exists()
+
+
+def test_workspace_header_is_confined_to_anthropic_route(tmp_path,monkeypatch):
+    monkeypatch.delenv('ANTHROPIC_WORKSPACE_ID',raising=False)
+    root=tmp_path/'profile';root.mkdir()
+    (tmp_path/'.env').write_text('ANTHROPIC_WORKSPACE_ID=wrkspc_fixture123\n')
+    workspace=worker.anthropic_workspace(tmp_path,root)
+    config=worker.isolated_config(worker.MODEL,workspace)
+    assert config['custom_providers']==[dict(name='anthropic-workspace',base_url='https://api.anthropic.com',extra_headers={'anthropic-workspace-id':'wrkspc_fixture123'})]
+    assert config['fallback_providers']==[]
+    assert 'custom_providers' not in worker.isolated_config(worker.MODEL,'')
+    monkeypatch.setenv('ANTHROPIC_WORKSPACE_ID','invalid\nheader')
+    with pytest.raises(ValueError,match='invalid_anthropic_workspace_id'):
+        worker.anthropic_workspace(tmp_path,root)
+
+
+def test_installed_hermes_attaches_workspace_header_without_inference(tmp_path):
+    import os
+    import subprocess
+    checkout=Path.home()/'.hermes/hermes-agent'
+    python=checkout/'.venv/bin/python'
+    if not python.is_file():pytest.skip('installed Hermes integration only')
+    (tmp_path/'config.yaml').write_text(json.dumps(worker.isolated_config(worker.MODEL,'wrkspc_fixture123')))
+    code="""
+from agent.anthropic_adapter import build_anthropic_client
+client=build_anthropic_client('sk-ant-api03-fixture', 'https://api.anthropic.com')
+try:
+    assert client.default_headers.get('anthropic-workspace-id')=='wrkspc_fixture123'
+finally:
+    client.close()
+print('workspace_header_verified_without_inference')
+"""
+    result=subprocess.run([str(python),'-c',code],capture_output=True,text=True,timeout=25,
+                          env=dict(os.environ,HERMES_HOME=str(tmp_path),PYTHONPATH=str(checkout)))
+    assert result.returncode==0, 'Native Hermes header construction failed'
+    assert 'workspace_header_verified_without_inference' in result.stdout
