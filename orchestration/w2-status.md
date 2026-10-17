@@ -41,3 +41,17 @@ confirmed the correction. Shared test lock released.
 Active registration B01b supersedes B01a before any B study calls/results:
 `094e6058bac759f3a16824f1124b8f9fd4c5a2cacccb9c6fe84cdae5a873e568`.
 Schedule/keep rule unchanged. Both supersession records are preserved.
+
+FINAL: B01b kept35/0/65,100RunPod calls,198.899s, both controls beaten,0observed
+domain violations. W0 stopped pod and verified allEXITED. Replay verified;
+200fresh arm episodes ingested; v5 next-clustering has0failures/0proposals.
+Leaderboard and result/replay receipts committed under research/.
+
+A registered CPU audit:900dev items all canonical-v3 unsupported_evidence;
+300correct deterministic abstentions,600incorrect. 900episodes imported,
+6clusters→1distinct routing hypothesis, not6ideas. A01 next-study design hash
+1a4044ba4bbbdeb84fd2fc722701c2e3aa69862dc62c2d4dcd3212643a93a680;
+not executed, still needs runner/review/authorization. Stop honored: no new
+experiments/inference after W0 third-infrastructure-failure declaration.
+W2 total fresh calls100; fresh experiments1kept/0reverted; total imported1200
+including historical100B + fresh200B + deterministic900A. D1/D2partial.

@@ -1,0 +1,13 @@
+{
+  "candidate": "family-b-v5",
+  "dev_verdict": "kept",
+  "family": "B",
+  "holdout_candidate_registration": false,
+  "losses": 0,
+  "promotion_authorized": false,
+  "reason": "Narrow agreement-stratum candidate; gate-v3.2 did not meet registered targets. Queue for morning gate decision; no sealed evaluation authorized.",
+  "registration_sha256": "094e6058bac759f3a16824f1124b8f9fd4c5a2cacccb9c6fe84cdae5a873e568",
+  "signing_payload": false,
+  "status": "candidate_requires_review",
+  "wins": 35
+}
