@@ -1,0 +1,13 @@
+{
+  "advisor_prior": {
+    "readiness_only": {
+      "advisory_only": true,
+      "fixture": "neutral-risk-v1",
+      "label": "no-live-jev",
+      "live_calls": 0,
+      "p_keep": 0.5,
+      "risk_probability": 0.5
+    }
+  },
+  "scope": "readiness-only; not scored against historical verdicts"
+}
