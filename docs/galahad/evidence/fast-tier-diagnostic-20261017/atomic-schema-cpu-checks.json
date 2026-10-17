@@ -1,0 +1,35 @@
+[
+  {
+    "label": "permission-rerun-exclusive",
+    "exit_code": 0,
+    "elapsed_seconds": 14.543352143024094,
+    "log": "/Users/aliyildirim/nerve-orchestration/permission-rerun-exclusive.log",
+    "modules": [
+      "test_agentos_taskbench",
+      "test_agentos_taskbench_v2",
+      "test_agentos_taskbench_v3",
+      "test_galahad_gpu_smoke",
+      "test_memory_inference"
+    ],
+    "model_calls": 0
+  },
+  {
+    "label": "atomic-schema-regressions",
+    "exit_code": 0,
+    "elapsed_seconds": 27.355874606000725,
+    "log": "/Users/aliyildirim/nerve-orchestration/atomic-schema-regressions.log",
+    "modules": [
+      "test_atomic_schema_initialization",
+      "test_governed_learning_v20",
+      "test_arc_runtime",
+      "test_arc_schema_migration",
+      "test_arc_workflows",
+      "test_arc_evaluation",
+      "test_arc_optional_adaptation",
+      "test_arc_provider",
+      "test_arc_review",
+      "test_arc_cli"
+    ],
+    "model_calls": 0
+  }
+]

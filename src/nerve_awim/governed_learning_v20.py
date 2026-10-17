@@ -93,6 +93,7 @@ class GovernedLearning:
         self._baseline = self._routes(baseline_routes)
         with self._db() as con:
             con.executescript('''
+              BEGIN IMMEDIATE;
               CREATE TABLE IF NOT EXISTS gl_state (
                 tenant TEXT, agent TEXT, contract TEXT, active TEXT, generation INTEGER,
                 PRIMARY KEY (tenant, agent));

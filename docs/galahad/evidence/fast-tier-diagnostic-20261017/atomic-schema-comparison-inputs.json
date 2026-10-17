@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-10-17T00:46:55.927346+00:00",
+  "roots": {
+    "baseline": {
+      "head": "40a28d52f3864c293f9af1fe70f77b761015da3f",
+      "files": {
+        "tests/test_arc_evaluation.py": "e2c0a0906c26a105941be24a42de6e3b041404dbe8692217b21c016d5b763109",
+        "src/nerve_awim/arc_evaluation.py": "4b2161de9326f8ce7a2fba7e29c16e1c60146b0adcffd04ee49818d704ba66f6",
+        "src/nerve_awim/arc_workflows.py": "e65491f65279e21b14ae72fb4875d8432f7eb9d877003fd8df2527788f3993cf",
+        "src/nerve_awim/arc_execution.py": "cc6706789b074145203cc4626facae5bd4dfbb5e7739c5064e541b9702b30422",
+        "src/nerve_awim/governed_learning_v20.py": "95cbfe909dd498479dd0d55fea6a81758d30f075576c24b490cc38f881d9a36a"
+      }
+    },
+    "patched": {
+      "head": "40a28d52f3864c293f9af1fe70f77b761015da3f",
+      "files": {
+        "tests/test_arc_evaluation.py": "e2c0a0906c26a105941be24a42de6e3b041404dbe8692217b21c016d5b763109",
+        "src/nerve_awim/arc_evaluation.py": "4b2161de9326f8ce7a2fba7e29c16e1c60146b0adcffd04ee49818d704ba66f6",
+        "src/nerve_awim/arc_workflows.py": "e65491f65279e21b14ae72fb4875d8432f7eb9d877003fd8df2527788f3993cf",
+        "src/nerve_awim/arc_execution.py": "73ffeeb86a913e85c5e53bff07d29ce7d7a73b96687062ceb5cd2f5a44b70a1d",
+        "src/nerve_awim/governed_learning_v20.py": "62b70ad0089205b0e51641b6e55c50a5d62a1211953eae079bb29bab593e0135",
+        "scripts/check_atomic_schema_cpu.py": "bb29f3f2701cd831bdc8f5ce0cb8f472a18241610f8363ff54994d7db6977b07"
+      }
+    }
+  },
+  "arc_tests_identical": true,
+  "existing_comparison_logs": [
+    "arc-baseline-1.log"
+  ]
+}
