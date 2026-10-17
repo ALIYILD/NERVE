@@ -62,7 +62,7 @@
     "orchestration/independent-scientific.log": "9c2956a9391f146238924367597638bd2f427dee6837dba2bed83f349223197f",
     "orchestration/inference-revoked.json": "8ff65a4519d15f3c166a4b993b37fd83d852b17554f42ac31689cf7e8efafd76",
     "orchestration/integrity-baseline.json": "cd0808489a8e4ad2a5160ee705fe132b978736abea86f7df6ab0d575906b598e",
-    "orchestration/ledger.jsonl": "b839b30c8875d1964daff031aa36e3215eff1e54fb4ec5f529cfeb4fb59520af",
+    "orchestration/ledger.jsonl": "ed832ce9e35733ae069fdbdf263bd2ef728dd173823304d119fb6b0281eda42a",
     "orchestration/pods.json": "fcfee4558d5527e5dbae82236eef5d06bcedf24cd0055362f7d97a2d732a4e28",
     "orchestration/preflight-fast-exclusive.log": "7c4acdc7a50217bc79c0cf291566caaaba963606f5022b84338e414e378da2d8",
     "orchestration/preflight-fast-py313.log": "b31fa304330831756d4ea97cad07fc611a6aff21a1e7c88f08fd18bc59ce15aa",
@@ -112,7 +112,8 @@
     "research/overnight-20261017/closure.json": "2186a04cefd203107547927d589f1fb075789517901d0ca2d65233c4fbce7f6f",
     "research/overnight-20261017/historical-b-import.json": "438a16d173cc0f52624b535077c456bc17bb2998dbae0a71f15099bb488d5d75",
     "research/overnight-20261017/program-registration.json": "c82dacbeb0952c9550c0f7efa085b70e550a05afbb6658c4fa3b5e3bd6b7c9d0",
-    "orchestration/focused-readiness-resume.json": "c2e418390ab6f1d6305b6b68a8a8885d018790cdca30743680f3316ee4b9f292"
+    "orchestration/focused-readiness-resume.json": "c2e418390ab6f1d6305b6b68a8a8885d018790cdca30743680f3316ee4b9f292",
+    "orchestration/resume-module-preflight-evidence.json": "53c5a4efd6597c09e2ad990ddabaf877cceba14be88c5c3e3e8a33ce925685fa"
   },
   "pod_admission_instruction": "User supersedes full-tier preflight with integrity, focused tests, owned-pod identity and current ledger preflight_ok; no further full-tier runs."
 }

@@ -1,0 +1,47 @@
+{
+  "time": "2026-10-17T00:55:08.660725+00:00",
+  "event": "focused_preflight_evidence_available",
+  "window": "resume-workers",
+  "modules": {
+    "fast": {
+      "worktree": "/Users/aliyildirim/nerve-resume-fast",
+      "module_sha256": {
+        "src/nerve_awim/governed_learning_v20.py": "d3ed802d1618b6de8282c58b2507271c71e9ed2ac8525933c676bb102b1fcf25",
+        "src/nerve_awim/arc_execution.py": "327192ea0747fedddeba3315048f643c4fc120e5167811c2c0f2106c524f989e",
+        "tests/test_schema_initialization_atomic.py": "7c5fe680b38b4056439b476bdf684c37342ce74a67983d583c3b5d3c94f0cf03"
+      },
+      "evidence_path": "/Users/aliyildirim/nerve-resume-fast/docs/galahad/evidence/fast-resume-20261017/targeted-tests.log",
+      "evidence_sha256": "277c865e0f50764ae669be2f04dd9a78ec516736a8c997d03f4d37e2187a0b3d",
+      "focused_tests_passed": 57,
+      "reuse_existing_unchanged_source_evidence": true
+    },
+    "sdk": {
+      "worktree": "/Users/aliyildirim/nerve-resume-sdk",
+      "module_sha256": {
+        "src/nerve_awim/loop/__init__.py": "24fcb0f8362c1690b754493ffa542069a3f4f971ca3b16c02feb35c6ac9867d7",
+        "src/nerve_awim/loop/__main__.py": "abdf4daebb4ae15afeedf9eb728ea4034d41f51223a68495000c40e16ed874a7",
+        "src/nerve_awim/loop/domains.py": "db1da8caf30423d6a3c20f46c051d99a1f30160c85ada7692135fa94e10c4a6e",
+        "tests/test_loop_sdk.py": "b7d11341821a2a85d459b8f698916fc31e2ca4705f6d64b429879b4754512fa0"
+      },
+      "evidence_path": "/Users/aliyildirim/nerve-resume-sdk/receipts/sdk-v2-validation-20261017.txt",
+      "evidence_sha256": "af6ec6158e0a1fd9d189bed7c04c270fb841b7121ddbe241e35fa88e7efd0c84",
+      "focused_tests_passed": 13,
+      "reuse_existing_unchanged_source_evidence": true
+    },
+    "a": {
+      "worktree": "/Users/aliyildirim/nerve-resume-a",
+      "module_sha256": {
+        "scripts/replay_overnight_family_a.py": "920354f1a9598e3c0d43409d0a1bc9f2bad33064569585447bde95a29286b046",
+        "tests/test_overnight_family_a_replay.py": "7f8481d9e704117dc68d83bd2329aa28ba9e611594a2be63430ae54f6e8dfd98"
+      },
+      "evidence_path": "/Users/aliyildirim/nerve-resume-a/research/overnight-20261017/A01-replay-verification.json",
+      "evidence_sha256": "b4ef5aff5e824a24eb7273c43d3deb87d2cee82861ebd802d5920bc379b59d3f",
+      "focused_tests_passed": 3,
+      "reuse_existing_unchanged_source_evidence": true
+    }
+  },
+  "identity": "pod-owner responsibility; no new identity call made by this window",
+  "pod_calls": 0,
+  "new_model_calls": 0,
+  "preflight_ok_claimed": false
+}
