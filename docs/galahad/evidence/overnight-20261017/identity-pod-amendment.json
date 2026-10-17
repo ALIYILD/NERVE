@@ -1,0 +1,13 @@
+{
+  "connection": {
+    "host": "194.68.245.37",
+    "port": 22188
+  },
+  "execution_sources": {
+    "scripts/execute_v5_identity_replay.py": "30085a4a6e412068a9f5ea2c4a65db6546cb2e24face14fb2e24efbea59d4129",
+    "scripts/overnight_identity_replay.py": "230392360e8c85e25a4760b88a0c3157e6cb22c3ac25dbef76f3e0d67c3c98e3"
+  },
+  "pod_id": "5xndo7i7s5r9zn",
+  "reason": "live MCP connection binding before calls",
+  "registration_sha256": "c2f8775f1b824238e21f896c8d56ad5f599501c7728619cf4639c5546a45f733"
+}
