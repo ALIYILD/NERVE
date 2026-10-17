@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-17T01:16:03.097652+00:00",
+  "scope": "CPU reconciliation of shared evidence; no new pod calls or tests",
+  "compute_usd_recomputed": 0.2619353340666667,
+  "model_calls_shared": 117,
+  "additional_calibration_attempt_files": 5,
+  "latency_seconds_max": 66.33078790735453,
+  "identity_replay_items_compared": 0,
+  "protected_hashes_checked": 80,
+  "protected_mismatches": [],
+  "preflight_ok_rows_found": 0,
+  "model_calls_this_audit": 0,
+  "source_report_sha256": "f9c85518b81a828b870930fbe8dd3dd3f14a92d0323aa01467a22db62f9875e8",
+  "storage_excluded_pending_billing": true,
+  "infra_accounting_note": "Shared spend reports four infrastructure failures; this coordinator separately recorded two rejected starts. No count reset or inference admission inferred."
+}

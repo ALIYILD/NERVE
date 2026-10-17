@@ -1,15 +1,15 @@
 {
-  "actions": [],
+  "checked_at": "2026-10-17T01:08:19.936255+00:00",
+  "window": "W0-primary-20261017-root",
   "all_exited": true,
-  "budget_warning": false,
-  "checked_at": "2026-10-17T00:13:53.956360+00:00",
-  "compute_usd": 0.2084487305027778,
-  "integrity_errors": [],
-  "model_calls": 112,
-  "observed_at": "2026-10-17T00:13:52.273Z",
-  "projected_compute_usd": 0.2084487305027778,
+  "shutdown_verified": true,
+  "compute_usd": 0.2619353340666667,
+  "model_calls": 117,
   "reasons": [
-    "infrastructure_stop"
+    "latency_outside_registered_band"
   ],
-  "shutdown_verified": true
+  "inference_admitted": false,
+  "cpu_worker_fixes": "W2 remote bytes/readiness/runtime blockers routed",
+  "new_L7_run": false,
+  "merge_admitted": false
 }

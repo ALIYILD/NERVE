@@ -1,0 +1,74 @@
+{
+  "scientific": {
+    "bundle_digest_matches": true,
+    "wins": 34,
+    "losses": 0,
+    "ties": 66,
+    "safety_errors": 0,
+    "kept": true,
+    "totals": {
+      "always-abstain": 0,
+      "candidate:context": 100,
+      "random": 53,
+      "synthetic-family-a": 66
+    },
+    "model_calls": 0
+  },
+  "perfflux-sandbox": {
+    "bundle_digest_matches": true,
+    "wins": 34,
+    "losses": 0,
+    "ties": 66,
+    "safety_errors": 0,
+    "kept": true,
+    "totals": {
+      "always-abstain": 0,
+      "candidate:context": 100,
+      "direct": 66,
+      "random": 43
+    },
+    "model_calls": 0
+  },
+  "clinicalos-sandbox": {
+    "bundle_digest_matches": true,
+    "wins": 34,
+    "losses": 0,
+    "ties": 66,
+    "safety_errors": 0,
+    "kept": true,
+    "totals": {
+      "always-abstain": 0,
+      "candidate:context": 100,
+      "random": 41,
+      "title-retrieval": 66
+    },
+    "model_calls": 0
+  },
+  "A": {
+    "rows": 100,
+    "strata": {
+      "stale-vs-current": 11,
+      "unit-mismatch": 11,
+      "conflict": 12,
+      "supported-measurement": 11,
+      "multi-source-agreement": 11,
+      "entity-decoy": 11,
+      "dissenter": 11,
+      "format-variant-agreement": 11,
+      "measurement-decoy": 11
+    },
+    "wins": 59,
+    "losses": 0,
+    "safety_errors": 0,
+    "totals": {
+      "candidate": 93,
+      "incumbent": 34,
+      "random": 10,
+      "always-abstain": 34
+    },
+    "rows_digest_matches": true,
+    "registration_digest_matches": true,
+    "committed_rows_equal": true,
+    "committed_result_equal": true
+  }
+}

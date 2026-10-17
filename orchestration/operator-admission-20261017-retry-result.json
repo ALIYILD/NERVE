@@ -1,0 +1,21 @@
+{
+  "time": "2026-10-17T01:09:55.839783+00:00",
+  "loop": "L1.B.resume",
+  "event": "pod_marked_unusable",
+  "verdict": "incomplete_infrastructure",
+  "pod_id": "5xndo7i7s5r9zn",
+  "issued_by": "operator",
+  "admission_scope": "named pod B; operator did not supply actual start time",
+  "consecutive_start_failures": 2,
+  "provider_status": 400,
+  "reason": "There are not enough free GPUs on the host machine to start this pod.",
+  "readback_status": "EXITED",
+  "readback_startedAt": "2026-10-17T00:00:31.877Z",
+  "model_calls": 0,
+  "additional_compute_started": false,
+  "identity_replay_ran": false,
+  "preflight_ok_written": false,
+  "unusable": true,
+  "replacement_admission_received": false,
+  "owned_lock_released": true
+}

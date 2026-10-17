@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-17T00:51:59.322902+00:00",
+  "authority": "user: no full tier; integrity + focused tests + owned-pod identity; wait current preflight_ok",
+  "checks": {
+    "fast": {
+      "head": "638e5154619dae9d83d3311f3857f9dc17905e7a",
+      "protected_paths": 80,
+      "mismatches": []
+    },
+    "sdk": {
+      "head": "322ea73eb581f9adc95be1d3094618be4fa4e764",
+      "protected_paths": 80,
+      "mismatches": []
+    },
+    "a": {
+      "head": "134a5b576789d989cc3838041761c140cd3d7ad9",
+      "protected_paths": 80,
+      "mismatches": []
+    },
+    "report": {
+      "head": "6a7db36e519ac2b60d05136a69b419505a99c2fd",
+      "protected_paths": 80,
+      "mismatches": []
+    }
+  },
+  "focused_test_evidence": {
+    "fast": "57 targeted tests at unchanged source; no full-tier success claimed",
+    "sdk": "13 contracts at322ea73,3independent freshprocessreplays",
+    "a": "3guards plus independent historical replay at134a5b5; Python3.10limitation documented"
+  },
+  "current_preflight_ok_found": false,
+  "preflight_entries": [],
+  "pod_calls_made": 0,
+  "new_model_calls": 0,
+  "global_inference_revocation_preserved": true,
+  "next_action": "await authoritative current preflight_ok; run only focused tests if code changes; identity required for owned pod"
+}

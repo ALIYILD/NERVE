@@ -1,0 +1,38 @@
+{
+  "fast": {
+    "head": "6102dc4ff160677dfac40fb96c2e9983f23aa00a",
+    "baseline_count": 80,
+    "missing": [],
+    "changed": [],
+    "registry_trust_baseline_count": 23,
+    "registry_trust_current_count": 23,
+    "added": [],
+    "removed": [],
+    "blob_changed": [],
+    "git_diff_empty": true
+  },
+  "sdk": {
+    "head": "322ea73eb581f9adc95be1d3094618be4fa4e764",
+    "baseline_count": 80,
+    "missing": [],
+    "changed": [],
+    "registry_trust_baseline_count": 23,
+    "registry_trust_current_count": 23,
+    "added": [],
+    "removed": [],
+    "blob_changed": [],
+    "git_diff_empty": true
+  },
+  "a": {
+    "head": "134a5b576789d989cc3838041761c140cd3d7ad9",
+    "baseline_count": 80,
+    "missing": [],
+    "changed": [],
+    "registry_trust_baseline_count": 23,
+    "registry_trust_current_count": 23,
+    "added": [],
+    "removed": [],
+    "blob_changed": [],
+    "git_diff_empty": true
+  }
+}
