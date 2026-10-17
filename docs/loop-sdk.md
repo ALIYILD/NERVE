@@ -98,3 +98,8 @@ error; no silent migration or deletion occurs. Arbitrary external episode sinks
 are rejected because the SDK cannot atomically commit their side effects. SDK
 bundles committed after the correction were regenerated and independently
 replayed against the corrected source pins.
+
+D7 is partial for the originally requested `evaluate(..., gate='signed')`
+capability: this release exposes the mode but refuses it safely. The external
+signed-gate handoff is a documented boundary, not an implemented SDK signed
+assessment path.

@@ -52,3 +52,14 @@ and changed-ordinal regression coverage. All three bundles were regenerated and 
 checkpoints are preserved outside the worktree. Eight SDK tests passed in
 30.129 seconds with the atomic test lock held. The lock is now released.
 SIGKILL proof regenerated successfully; 80 protected hashes remain unchanged.
+
+Canonical D5 feasibility audit complete: 700 unique original A-v3 dev tasks,
+900 B-v4 bank-v3 tasks, and 100 B-v4/v5 bank-v5 tasks have zero cross-bank task-ID
+intersections. Existing adapted_v1 is not unchanged retained A-v3; v5 is not a
+retained routing arm. No complete actual paired A-v3/B-v4 stream can be built
+from these recorded model outcomes. Missing-data inventory and minimal registered
+RunPod study requirements are in the drift report and
+w3-canonical-drift-feasibility.json. No inference or holdout reads occurred.
+D7 remains partial for signed evaluation: the API intentionally refuses that
+mode and delegates to the external signed gate; it does not implement the full
+requested signed evaluate path.
