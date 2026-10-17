@@ -69,7 +69,7 @@ not establish regulatory compliance or authorize a medical change.
 Dedicated tests: `PYTHONPATH=src python3.13 -m unittest discover -s tests -p
  test_loop_sdk.py`. The existing fast runner discovers all test modules absent from
 `slow_modules`, so these SDK tests automatically belong to the fast tier without
-changing the protected `tests/suite_tiers.json`. The dedicated eight-test SDK suite
+changing the protected `tests/suite_tiers.json`. The original dedicated eight-test SDK suite
 passed; W0 reported that the full fast tier exceeded its existing 180-second
 deadline. Full fast-tier completion is therefore unverified, not blocked by a
 missing SDK integration.
@@ -141,3 +141,8 @@ hashes. Runtime custom domain subclasses/configurations are rejected until a
 reviewed, versioned contract is added to the domain registry in source (not the
 protected skill registry). This avoids pretending unpinned host code is a fixed
 evaluator. Real-domain integration currently requires that source-level adapter.
+
+Continuation validation: all 13 SDK tests passed and all three v2 bundles replayed
+in separate fresh processes under the shared test lock. See
+`docs/galahad/140-sdk-task-reward-separation-20261017.md` and
+`receipts/sdk-v2-validation-20261017.txt`; inherited SQLite ResourceWarnings remain.
