@@ -1,0 +1,84 @@
+[
+  {
+    "name": "scientific",
+    "command": [
+      "/usr/local/opt/python@3.13/bin/python3.13",
+      "-m",
+      "nerve_awim.loop",
+      "replay",
+      "receipts/loop-demo-v2-scientific-20261017"
+    ],
+    "cwd": "/Users/aliyildirim/nerve-resume-sdk",
+    "returncode": 0,
+    "stdout": "{\"bundle_sha256\":\"724c0097e1a1f52e7524399dca2863668dd04dca6932c92ed929b57add78deec\",\"model_calls\":0,\"verified\":true}\n",
+    "stderr": ""
+  },
+  {
+    "name": "perfflux-sandbox",
+    "command": [
+      "/usr/local/opt/python@3.13/bin/python3.13",
+      "-m",
+      "nerve_awim.loop",
+      "replay",
+      "receipts/loop-demo-v2-perfflux-sandbox-20261017"
+    ],
+    "cwd": "/Users/aliyildirim/nerve-resume-sdk",
+    "returncode": 0,
+    "stdout": "{\"bundle_sha256\":\"63888cb2c142c77f6968b9c0362c587a4e01c93950178b36d8038a50a6dddc68\",\"model_calls\":0,\"verified\":true}\n",
+    "stderr": ""
+  },
+  {
+    "name": "clinicalos-sandbox",
+    "command": [
+      "/usr/local/opt/python@3.13/bin/python3.13",
+      "-m",
+      "nerve_awim.loop",
+      "replay",
+      "receipts/loop-demo-v2-clinicalos-sandbox-20261017"
+    ],
+    "cwd": "/Users/aliyildirim/nerve-resume-sdk",
+    "returncode": 0,
+    "stdout": "{\"bundle_sha256\":\"218ec26d66aff8eaa329c804cd752c81d2fbb0111330d0b05a4f8b5a36c0c822\",\"model_calls\":0,\"verified\":true}\n",
+    "stderr": ""
+  },
+  {
+    "name": "A-historical",
+    "command": [
+      "/usr/local/opt/python@3.13/bin/python3.13",
+      "scripts/replay_overnight_family_a.py",
+      "evaluate",
+      "--directory",
+      "/Users/aliyildirim/nerve-research-runs/resume-20261017-A01-replay",
+      "--authorization",
+      "/Users/aliyildirim/nerve-orchestration/A01-replay-authorization.json"
+    ],
+    "cwd": "/Users/aliyildirim/nerve-resume-a",
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/aliyildirim/nerve-resume-a/scripts/replay_overnight_family_a.py\", line 15, in <module>\n    import overnight_dev_study as records\n  File \"/Users/aliyildirim/nerve-resume-a/scripts/overnight_dev_study.py\", line 22, in <module>\n    from run_v5_signed_gate_study import v5score\n  File \"/Users/aliyildirim/nerve-resume-a/scripts/run_v5_signed_gate_study.py\", line 14, in <module>\n    from nerve_awim.memory_gateway.retained_promotion_gate import CanonicalProcess\n  File \"/Users/aliyildirim/nerve-resume-a/src/nerve_awim/memory_gateway/retained_promotion_gate.py\", line 4, in <module>\n    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey\nModuleNotFoundError: No module named 'cryptography'\n"
+  },
+  {
+    "name": "A-historical",
+    "command": [
+      "/Library/Frameworks/Python.framework/Versions/3.10/bin/python3",
+      "scripts/replay_overnight_family_a.py",
+      "evaluate",
+      "--directory",
+      "/Users/aliyildirim/nerve-research-runs/resume-20261017-A01-replay",
+      "--authorization",
+      "/Users/aliyildirim/nerve-orchestration/A01-replay-authorization.json"
+    ],
+    "cwd": "/Users/aliyildirim/nerve-resume-a",
+    "returncode": 0,
+    "stdout": "{\"controls\": {\"always-abstain\": true, \"random\": true}, \"historical_dev_reuse\": true, \"holdout_opened\": false, \"kept\": true, \"losses\": 0, \"new_model_calls\": 0, \"promotion_authorized\": false, \"registration_sha256\": \"f52dbba67eb10500a5614c8348212c64fc2199d3af02392bbfb358f16cffef01\", \"rows_sha256\": \"166200e2977d6dff7a789ffd68717dc288380d7d7cbc50913f35c4ba25b830a9\", \"safety_errors\": 0, \"ties\": 41, \"verdict\": \"kept\", \"wins\": 59}\n",
+    "stderr": ""
+  },
+  {
+    "A_files_unchanged": true,
+    "A_byte_hashes": {
+      "registration.json": "f52dbba67eb10500a5614c8348212c64fc2199d3af02392bbfb358f16cffef01",
+      "rows.json": "c07f5035c9e32c09ac01ebfb195e84e5587a414cfda41dbd0b2126b528bfcb40",
+      "result.json": "75392848d2415776ea9d6dfb17747e200156aa111b8e9f2ddec4bbad91624ee0"
+    }
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "original_monitor_defective": true,
+  "original_sample_count": 85,
+  "original_start": "2026-10-17T00:43:28.996962+00:00",
+  "original_end": "2026-10-17T00:46:29.534675+00:00",
+  "original_raw_sha256": "c35f0f84170f9fa4ef8dd5081110322b149370b68ca2c9f22a94021789a659cd",
+  "corrected_post_run_samples": [
+    {
+      "time": 1792198108.626323,
+      "runners": [
+        {
+          "pid": 68134,
+          "ppid": 68131,
+          "runner": "pytest",
+          "project": "external PerfFlux",
+          "own": false
+        },
+        {
+          "pid": 75460,
+          "ppid": 48461,
+          "runner": "pytest",
+          "project": "external PerfFlux",
+          "own": false
+        }
+      ]
+    }
+  ],
+  "command_arguments_omitted": true,
+  "exclusivity_verified": false
+}

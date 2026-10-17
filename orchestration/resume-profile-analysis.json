@@ -1,0 +1,19 @@
+{
+  "source": "external W0 profile; diagnostic, not acceptance",
+  "profile_sha256": "c201358dc232a3fed8f48ea04b3cfaf64dc20e3f5f0d9226070e8275955511f7",
+  "log_sha256": "6695cbc409e8087e1b72e075fba9c6449917f9bf790fb24fab86f1bb710e5f93",
+  "tests_run": 2803,
+  "suite_seconds": 935.4524489710457,
+  "failures": 36,
+  "errors": 2,
+  "skipped": 147,
+  "current_fast_test_count": 2282,
+  "current_fast_summed_test_seconds": 457.30523790302686,
+  "current_fast_outcomes": {
+    "passed": 2220,
+    "error": 2,
+    "skipped": 60
+  },
+  "protected_manifest_unchanged": true,
+  "does_not_authorize_partition_change": true
+}

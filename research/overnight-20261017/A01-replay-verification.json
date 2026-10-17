@@ -1,0 +1,14 @@
+{
+  "exact_source_pins_required": true,
+  "fresh_process_replay_verified": true,
+  "holdout_opened": false,
+  "new_model_calls": 0,
+  "promotion_authorized": false,
+  "registration_sha256": "f52dbba67eb10500a5614c8348212c64fc2199d3af02392bbfb358f16cffef01",
+  "replay_processes": 2,
+  "result_sha256": "75392848d2415776ea9d6dfb17747e200156aa111b8e9f2ddec4bbad91624ee0",
+  "rows_file_sha256": "c07f5035c9e32c09ac01ebfb195e84e5587a414cfda41dbd0b2126b528bfcb40",
+  "scoring_checkout": "overnight/resume-a at d60ae1f; documentation-only edits afterward",
+  "test_command": "python3 -m unittest discover -s tests -p test_overnight_family_a_replay.py -v",
+  "tests_passed": 3
+}
