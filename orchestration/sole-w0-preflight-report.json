@@ -1,0 +1,27 @@
+{
+  "amendment_sha256": "17ad6808c6ac4af8493aa226eb05f4d0b2bafe9f78ab99a25896cd3f9368cbd6",
+  "calibration_latencies_seconds": [
+    66.33078790735453,
+    1.6275664907880127,
+    1.6983141107484698,
+    1.6885026609525084,
+    1.553256728220731
+  ],
+  "dev_items_compared": 0,
+  "dev_matches": 0,
+  "diff": [],
+  "holdout_items_consumed": 0,
+  "identity": {
+    "gpu": "NVIDIA A40",
+    "model": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "pod_id": "lvojhtouu5gede",
+    "runtime": {
+      "version": "0.40.5"
+    }
+  },
+  "model_calls": 5,
+  "reason": "latency_outside_recorded_band",
+  "registration_sha256": "68238d4d838e778051745e4736b7d1c38ccdf0fea7a20193f9baae227f083cf4",
+  "status": "incomplete_infrastructure"
+}

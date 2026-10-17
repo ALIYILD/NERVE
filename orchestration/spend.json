@@ -1,7 +1,7 @@
 {
   "cap_usd": 12,
-  "compute_usd": 0.2084487305027778,
-  "infrastructure_failures": 3,
+  "compute_usd": 0.2619353340666667,
+  "infrastructure_failures": 4,
   "intervals": [
     {
       "basis": "conservative request time",
@@ -16,10 +16,26 @@
       "hourly_usd": 0.59,
       "pod_id": "5xndo7i7s5r9zn",
       "start": "2026-10-17T00:00:25.574619+00:00"
+    },
+    {
+      "pod_id": "5xndo7i7s5r9zn",
+      "start": "2026-10-17T00:59:16.889385+00:00",
+      "end": "2026-10-17T00:59:35.060587+00:00",
+      "hourly_usd": 0.59,
+      "basis": "conservative start request time",
+      "billable": false,
+      "start_rejected": true
+    },
+    {
+      "pod_id": "lvojhtouu5gede",
+      "start": "2026-10-17T00:59:35.060587+00:00",
+      "end": "2026-10-17T01:05:01.419524+00:00",
+      "hourly_usd": 0.59,
+      "basis": "conservative start request time"
     }
   ],
-  "last_checked_at": "2026-10-17T00:13:53.956360+00:00",
-  "model_calls": 112,
-  "projected_compute_usd": 0.2084487305027778,
+  "last_checked_at": "2026-10-17T01:16:03.091979+00:00",
+  "model_calls": 117,
+  "projected_compute_usd": 0.2619353340666667,
   "storage_excluded_pending_billing": true
 }

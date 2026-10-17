@@ -81,10 +81,18 @@ They are pushed only to ALIYILD/NERVE. This report branch copies evidence; it is
 not an accepted merge of worker implementations into Galahad. Original dirty
 worktrees and concurrent worker work remain preserved.
 
-Continuation made **zero model calls**. The recorded run remains **112 calls**
-and **$0.20844873 estimated compute**, with storage excluded and provider hourly
-billing not yet reconciled. The original $12 cap and inference stop are preserved.
-[Spend](../../orchestration/spend.json), [latest pod read](../../orchestration/resume-pods.json).
+This coordinator’s continuation made **zero model calls**. A concurrent
+coordinator recorded five calibration calls on `lvojhtouu5gede`; its first
+latency of 66.33 seconds exceeded the registered band, so no dev identity
+items were compared and no `preflight_ok` was issued. The shared total is now
+**117 calls and $0.26193533 estimated compute**. CPU recomputation matches the
+recorded billable intervals; storage and provider billing reconciliation remain
+excluded. The shared pod inventory records all pods EXITED at 01:05 UTC;
+this is a timestamped observation, not a new live check.
+[Preflight failure](../../orchestration/sole-w0-preflight-report.json),
+[accounting audit](../../orchestration/continuation-accounting-audit.json),
+[spend](../../orchestration/spend.json), [pod snapshot](../../orchestration/pods.json).
+The original $12 cap and inference stop are preserved.
 
 No new qualifying signing payload was generated. The preserved external
 bounded-harmful gate entry is unsigned, outside original D4, and its full-form
