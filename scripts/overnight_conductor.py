@@ -10,6 +10,10 @@ import json
 import os
 from pathlib import Path
 from datetime import datetime, timezone
+try:
+    from scripts.overnight_supervision_accounting import count_attempts, pod_failure_state
+except ModuleNotFoundError:
+    from overnight_supervision_accounting import count_attempts, pod_failure_state
 
 VERDICTS = {'promote_proposal','retain_incumbent','candidate_requires_review','insufficient_power','incomplete_infrastructure','kept','reverted'}
 WRAP = datetime.fromisoformat('2026-10-17T06:00:00+00:00')
@@ -50,7 +54,12 @@ def inspect(root, state, now=None):
     compute = sum(max(0, (datetime.fromisoformat(x['end']) if x.get('end') else now).__sub__(datetime.fromisoformat(x['start'])).total_seconds()) / 3600 * x['hourly_usd'] for x in intervals)
     active = [p for p in pods if p['status'] != 'EXITED']
     burn = sum(p['hourly_usd'] for p in active)
-    calls = previous.get('model_calls', 0)
+    # Claims are written before dispatch; counting them is conservative after crashes.
+    calls = max(previous.get('model_calls', 0), count_attempts(
+        Path.home()/'nerve-research-runs', previous.get('registered_attempt_roots', [])))
+    ledger = [json.loads(line) for line in (state/'ledger.jsonl').read_text().splitlines() if line.strip()]
+    pod_failures = pod_failure_state(ledger)
+    infra = sum(row.get('verdict')=='incomplete_infrastructure' and row.get('event')=='end' for row in ledger)
     errors = check_integrity(root,state)
     reasons = []
     if errors: reasons.append('integrity')
@@ -60,12 +69,26 @@ def inspect(root, state, now=None):
     if now >= STOP: reasons.append('hard_stop')
     if len(active)>2: reasons.append('concurrency')
     if (now-observed).total_seconds()>660: reasons.append('stale_inventory')
-    if previous.get('infrastructure_failures',0)>=3: reasons.append('infrastructure_stop')
+    if infra>=3: reasons.append('infrastructure_stop')
     projected = compute + burn * max(0,(WRAP-now).total_seconds()) / 3600
     result = dict(observed_at=inventory['observed_at'],checked_at=now.isoformat(),compute_usd=compute,projected_compute_usd=projected,model_calls=calls,integrity_errors=errors,reasons=reasons,budget_warning=projected>12,actions=[{'id':p['id'],'action':'stop'} for p in active] if reasons else [],all_exited=not active,shutdown_verified=not active and (now-observed).total_seconds()<=660)
+    result.update(pod_failures)
+    if not reasons:
+        result['actions'] = [{'id': p['id'], 'action': 'stop'} for p in active
+                             if p['id'] in pod_failures['retired_pods']]
+        # A retired pod cannot be re-admitted just because another pod remains healthy.
+        atomic(state/'retired-pods.json', pod_failures)
+        for name in ('pod-A.lock','pod-B.lock'):
+            lock = state/name
+            if lock.exists() and json.loads(lock.read_text()).get('pod_id') in pod_failures['retired_pods']:
+                lock.rename(state/(name+'.revoked-'+now.strftime('%Y%m%dT%H%M%S%f')))
     if reasons:
         atomic(state/'inference-revoked.json',result)
-    previous.update(compute_usd=compute,projected_compute_usd=projected,last_checked_at=now.isoformat())
+        for name in ('pod-A.lock','pod-B.lock'):
+            lock=state/name
+            if lock.exists():
+                lock.rename(state/(name+'.revoked-'+now.strftime('%Y%m%dT%H%M%S%f')))
+    previous.update(compute_usd=compute,projected_compute_usd=projected,model_calls=calls,infrastructure_failures=infra,last_checked_at=now.isoformat())
     atomic(state/'spend.json',previous)
     atomic(state/'conductor-status.json',result)
     return result
