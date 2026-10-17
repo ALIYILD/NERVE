@@ -103,3 +103,8 @@ D7 is partial for the originally requested `evaluate(..., gate='signed')`
 capability: this release exposes the mode but refuses it safely. The external
 signed-gate handoff is a documented boundary, not an implemented SDK signed
 assessment path.
+
+The [signed evaluation handoff design](loop-signed-evaluation-handoff.md)
+identifies the remaining authenticated candidate/study mapping and custodian
+attestation requirements. Canonical gate verification alone does not authenticate
+caller-supplied outcome receipts; the proposed consumer remains unimplemented.
