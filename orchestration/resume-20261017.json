@@ -1,0 +1,12 @@
+{
+  "resumed_at": "2026-10-17T00:20:44.535842+00:00",
+  "authorization": "user continue",
+  "scope": "CPU recovery, no protected edits, no signing, no model calls while inference revoked",
+  "original_spend_and_call_caps_preserved": true,
+  "original_stop_record_preserved": true,
+  "branches": [
+    "overnight/resume-fast",
+    "overnight/resume-sdk",
+    "overnight/resume-a"
+  ]
+}
