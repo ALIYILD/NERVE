@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from nerve_awim.memory_v18 import MemoryAuthority, TrustedMemoryLedger
-from nerve_awim.obsidian_export_v18 import render_reviewed_markdown
+from nerve_awim.obsidian_export_v18 import render_reviewed_markdown, render_research_snapshot
 
 
 class ObsidianPreviewV18Tests(unittest.TestCase):
@@ -75,6 +75,15 @@ class ObsidianPreviewV18Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             render_reviewed_markdown(
                 self.ledger, self.author, context="learning", limit=200)
+
+    def test_research_snapshot_is_explicit_untrusted_view(self):
+        text = render_research_snapshot([dict(name='audit', sha256='a'*64,
+                                             data={'value': '<script> demo@example.org'})])
+        self.assertIn('Not state, approved memory', text)
+        self.assertNotIn('<script>', text)
+        self.assertNotIn('demo@example.org', text)
+        with self.assertRaises(ValueError):
+            render_research_snapshot([dict(name='audit', sha256='invalid', data={})])
 
 
 if __name__ == "__main__":

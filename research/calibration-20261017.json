@@ -1,0 +1,275 @@
+{
+  "advisors": {
+    "jev": {
+      "auc": null,
+      "auc_reason": "both_verdict_classes_required",
+      "brier": null,
+      "n": 0,
+      "reliability_bins": [
+        {
+          "keep_rate": null,
+          "lower": 0.0,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.2
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.2,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.4
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.4,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.6
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.6,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.8
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.8,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 1.0
+        }
+      ]
+    },
+    "socratic": {
+      "auc": null,
+      "auc_reason": "both_verdict_classes_required",
+      "brier": null,
+      "n": 0,
+      "reliability_bins": [
+        {
+          "keep_rate": null,
+          "lower": 0.0,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.2
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.2,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.4
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.4,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.6
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.6,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.8
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.8,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 1.0
+        }
+      ]
+    },
+    "template": {
+      "auc": null,
+      "auc_reason": "both_verdict_classes_required",
+      "brier": null,
+      "n": 0,
+      "reliability_bins": [
+        {
+          "keep_rate": null,
+          "lower": 0.0,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.2
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.2,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.4
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.4,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.6
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.6,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 0.8
+        },
+        {
+          "keep_rate": null,
+          "lower": 0.8,
+          "mean_prior": null,
+          "n": 0,
+          "upper": 1.0
+        }
+      ]
+    }
+  },
+  "excluded_without_prospective_verdict": [
+    "B01b"
+  ],
+  "families": {
+    "A": {
+      "higher_keep_rate": null,
+      "socratic": {
+        "keep_rate": null,
+        "kept": 0,
+        "n": 0
+      },
+      "template": {
+        "keep_rate": null,
+        "kept": 0,
+        "n": 0
+      }
+    },
+    "B": {
+      "higher_keep_rate": null,
+      "socratic": {
+        "keep_rate": null,
+        "kept": 0,
+        "n": 0
+      },
+      "template": {
+        "keep_rate": null,
+        "kept": 0,
+        "n": 0
+      }
+    }
+  },
+  "interpretation": "selection_conditional; no causal generator comparison",
+  "jev_fixture": {
+    "auc": null,
+    "auc_reason": "both_verdict_classes_required",
+    "brier": null,
+    "n": 0,
+    "reliability_bins": [
+      {
+        "keep_rate": null,
+        "lower": 0.0,
+        "mean_prior": null,
+        "n": 0,
+        "upper": 0.2
+      },
+      {
+        "keep_rate": null,
+        "lower": 0.2,
+        "mean_prior": null,
+        "n": 0,
+        "upper": 0.4
+      },
+      {
+        "keep_rate": null,
+        "lower": 0.4,
+        "mean_prior": null,
+        "n": 0,
+        "upper": 0.6
+      },
+      {
+        "keep_rate": null,
+        "lower": 0.6,
+        "mean_prior": null,
+        "n": 0,
+        "upper": 0.8
+      },
+      {
+        "keep_rate": null,
+        "lower": 0.8,
+        "mean_prior": null,
+        "n": 0,
+        "upper": 1.0
+      }
+    ]
+  },
+  "jev_live": {
+    "auc": null,
+    "auc_reason": "both_verdict_classes_required",
+    "brier": null,
+    "n": 0,
+    "reliability_bins": [
+      {
+        "keep_rate": null,
+        "lower": 0.0,
+        "mean_prior": null,
+        "n": 0,
+        "upper": 0.2
+      },
+      {
+        "keep_rate": null,
+        "lower": 0.2,
+        "mean_prior": null,
+        "n": 0,
+        "upper": 0.4
+      },
+      {
+        "keep_rate": null,
+        "lower": 0.4,
+        "mean_prior": null,
+        "n": 0,
+        "upper": 0.6
+      },
+      {
+        "keep_rate": null,
+        "lower": 0.6,
+        "mean_prior": null,
+        "n": 0,
+        "upper": 0.8
+      },
+      {
+        "keep_rate": null,
+        "lower": 0.8,
+        "mean_prior": null,
+        "n": 0,
+        "upper": 1.0
+      }
+    ]
+  },
+  "rule": {
+    "eta": 0.5,
+    "exploration": 0.1,
+    "feedback": "selected_candidate_only",
+    "initial_weights": {
+      "jev": 0.3333333333333333,
+      "socratic": 0.3333333333333333,
+      "template": 0.3333333333333333
+    },
+    "reliability_edges": [
+      0,
+      0.2,
+      0.4,
+      0.6,
+      0.8,
+      1
+    ],
+    "reward": "negative_brier"
+  },
+  "trust_weights": {
+    "jev": 0.3333333333333333,
+    "socratic": 0.3333333333333333,
+    "template": 0.3333333333333333
+  }
+}

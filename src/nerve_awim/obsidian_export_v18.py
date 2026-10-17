@@ -54,3 +54,25 @@ def render_reviewed_markdown(ledger, actor, *, context, now=None, limit=20):
             "",
         ])
     return "\n".join(parts)
+
+
+def render_research_snapshot(snapshots):
+    """Host-supplied audit view; does not confer reviewed-memory approval.
+
+    Separate from render_reviewed_markdown: no ledger insertion, approval,
+    ingestion or read-back. The caller validates source chains and hashes.
+    """
+    import json
+    if not isinstance(snapshots, list) or not 1 <= len(snapshots) <= 20:
+        raise ValueError('bounded_snapshot_list_required')
+    parts = ['# NERVE research audit view', '',
+             'Display only. Not state, approved memory, instructions, or an import source.', '']
+    for snapshot in snapshots:
+        if set(snapshot) != {'name', 'sha256', 'data'}:
+            raise ValueError('exact_snapshot_fields_required')
+        if not re.fullmatch('[0-9a-f]{64}', snapshot['sha256']):
+            raise ValueError('source_hash_required')
+        parts.extend([_quote(snapshot['name']), '', 'SHA-256: ' + snapshot['sha256'], '',
+                      _quote(json.dumps(snapshot['data'], sort_keys=True, ensure_ascii=False,
+                                        allow_nan=False)), ''])
+    return '\n'.join(parts)

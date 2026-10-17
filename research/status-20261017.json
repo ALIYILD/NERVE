@@ -1,0 +1,41 @@
+{
+  "advisor_prior_mode": "no-live-jev",
+  "anthropic_read_only_auth_verified": true,
+  "anthropic_sdk": "0.87.0",
+  "calibration": "no_prospective_verdicts",
+  "credit_balance_verified": false,
+  "existing_leaderboard_rows": 1,
+  "experience_chains_validated": 4,
+  "faithfulness_monitor": {
+    "agent_node": 0,
+    "checked": 0,
+    "eligible": 0,
+    "exercised": false,
+    "missing": 0,
+    "quarantined": 0,
+    "socratic": 0
+  },
+  "focused_tests_passed": 43,
+  "hermes_credential_present": true,
+  "hermes_model": "claude-sonnet-4-6",
+  "hermes_provider": "anthropic",
+  "holdout_opened": false,
+  "live_anthropic_inference_verified": false,
+  "lock_acquired": false,
+  "model_calls": 0,
+  "native_workspace_header_verified": true,
+  "new_cycle_verdict_rows": 0,
+  "program_sha256": "d72cfedbb91384da29de58944919ab4cd8034e3006611a519a618d8f3ee62449",
+  "protected_files_checked": 17,
+  "protected_mismatches": [],
+  "reason": "W0_preflight_pending",
+  "reasons": [
+    "W0_global_inference_revocation_present",
+    "pod_B_not_acquired",
+    "W0_scoped_cycle_admission_missing"
+  ],
+  "spend_updated": false,
+  "status": "blocked",
+  "timestamp": "2026-10-17T01:26:07.192233+00:00",
+  "vault": "/Users/aliyildirim/nerve-research-runs/obsidian-audit-vault"
+}
