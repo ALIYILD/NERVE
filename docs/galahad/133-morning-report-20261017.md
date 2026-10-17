@@ -130,3 +130,33 @@ Everything is in [orchestration/morning-close-20261017/](../../orchestration/mor
 1. Put a `RUNPOD_API_KEY` in the laptop's environment, so that whichever tool is awake can stop a pod. Last night, the only tool that could stop one had hit its usage limit.
 2. Explicitly approve or reject the cold-start-separated preflight amendment, using the approval text in the proposal.
 3. Merge the admission guard and the laptop process lock, or implement the lock first, before running two coordinators again.
+
+## Addendum, later on 17 October: all worker branches merged
+
+On operator instruction ("push and merge them all", then "update all"), every `overnight/*` branch has been merged into `feature/galahad-persistent-memory` with `--no-ff`. This supersedes the "Merged: No" column in the Branches table above.
+
+Before merging, two pieces of work stranded at the usage-limit stop were committed:
+- **W2 `4b9196a`:** every cycle call and remote dispatch is now bound to the coordinator owner's current `preflight_ok`.
+- **resume-report `c18aeb6`:** an unrun CPU follow-through script, preserved for the record only.
+
+Five files conflicted. Each resolution kept a superset or the union of both sides:
+
+| File | Resolution |
+|---|---|
+| `scripts/overnight_conductor.py` | Kept `cb1a8a0`, which is a superset of `cee9c75` |
+| `src/nerve_awim/memory_gateway/experience_study_store_v2.py` | Kept the `MAX_RECORDS` bound, the one line that differed |
+| `research/leaderboard-20261017.jsonl` | Kept the merged copy, which already held every branch's lines |
+| `docs/loop-sdk.md` | Combined resume-sdk's v2 sections with W3's handoff paragraph |
+| `scripts/overnight_cycle.py` | Kept both admission checks: the reviewed `require_cycle_admission`, then W2's `require_preflight`. Admission is stricter, not looser. |
+
+Checks on the merged tree:
+- All 80 protected pins match.
+- `registry/`, `trust/` and `tests/suite_tiers.json` are unchanged.
+- The 13 changed test files passed once on Python 3.13.12: 90 tests and 3 subtests.
+- No fast or full tier was run.
+
+Every local branch in the repository has also been pushed. The diverged `codex/nerve-adaptation-integrated-20261012` went up as `…-local-20261017`. Nothing was force-pushed. The repository is public.
+
+Item 3 under "Before the next attempt" is now half done. The single-owner admission guard is merged. The laptop process lock is still not implemented.
+
+The attended v5-vs-v4 run requested afterwards did not start, for two reasons. Gate v3.2 is unsigned: it is held as `pending_verification`, and signing is human-only. No `RUNPOD_API_KEY` exists, so a pod cannot be started, driven or verified through the API.
