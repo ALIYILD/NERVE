@@ -118,7 +118,10 @@ def test_registered_fallback_worker_transport(monkeypatch, tmp_path):
                     remote_worker='/workspace/bank_v5_fallback_remote.py')
     monkeypatch.setattr(cycle,'POD',connection['pod_id'])
     monkeypatch.setattr(cycle,'PRIVATE',tmp_path)
-    cycle.save(tmp_path/'session-registration.json',dict(connection=connection,remote_worker_sha256='a'*64))
+    cycle.save(tmp_path/'session-registration.json',dict(connection=connection,remote_worker_sha256='a'*64,
+               preflight_sha256='b'*64,protected={}))
+    monkeypatch.setattr(cycle,'require_preflight',lambda *args: 'b'*64)
+    monkeypatch.setattr(cycle,'assert_protected',lambda pins: None)
     commands=[]
     def fake_remote(command, **kwargs):
         commands.append(command)
@@ -170,3 +173,58 @@ def test_remote_connection_must_match_immutable_registration(tmp_path,monkeypatc
     monkeypatch.setattr(cycle.subprocess,'run',denied)
     with pytest.raises(ValueError,match='registered_connection_mismatch'):
         cycle.remote(dict(connection,port=22020),'call')
+
+
+def test_preflight_requires_current_owner_pod_and_start(tmp_path,monkeypatch):
+    monkeypatch.setattr(cycle,'SHARED',tmp_path)
+    monkeypatch.setattr(cycle.time,'time',lambda: 200)
+    (tmp_path/'coordinator-owner.json').write_text(json.dumps({'window':'W0-owner'}))
+    ledger=tmp_path/'ledger.jsonl'
+    auth={'pod_started_epoch':100,'expires_epoch':300}
+    good=dict(event='preflight_ok',window='W0-owner',pod_id='pod-B',time='1970-01-01T00:02:30+00:00')
+    for rows in ([],[dict(good,window='observer')],[dict(good,pod_id='other')]):
+        ledger.write_text(''.join(json.dumps(r)+'\n' for r in rows))
+        with pytest.raises(ValueError,match='current_preflight_ok_required'):
+            cycle.require_preflight(auth,'pod-B')
+    ledger.write_text(json.dumps(dict(good,time='1970-01-01T00:00:30+00:00'))+'\n')
+    with pytest.raises(ValueError,match='preflight_not_current_pod_start'):
+        cycle.require_preflight(auth,'pod-B')
+    ledger.write_text(json.dumps(good)+'\n')
+    pin=cycle.require_preflight(auth,'pod-B')
+    assert pin==cycle.digest(good)
+    assert cycle.require_preflight(auth,'pod-B',pin)==pin
+    with pytest.raises(ValueError,match='preflight_binding_changed'):
+        cycle.require_preflight(auth,'pod-B','0'*64)
+    ledger.write_text(json.dumps(good)+'\n'+json.dumps(dict(good,event='preflight_failed'))+'\n')
+    with pytest.raises(ValueError,match='current_preflight_ok_required'):
+        cycle.require_preflight(auth,'pod-B',pin)
+    ledger.write_text(json.dumps(good)+'\n')
+    (tmp_path/'inference-revoked.json').write_text('{}')
+    with pytest.raises(ValueError,match='inference_revoked'):
+        cycle.require_preflight(auth,'pod-B',pin)
+
+
+def test_remote_identity_cannot_bypass_preflight(tmp_path,monkeypatch):
+    connection=dict(host='194.68.245.122',port=22019,pod_id='lvojhtouu5gede',
+                    remote_worker='/workspace/bank_v5_fallback_remote.py')
+    monkeypatch.setattr(cycle,'PRIVATE',tmp_path)
+    monkeypatch.setattr(cycle,'POD',connection['pod_id'])
+    cycle.save(tmp_path/'session-registration.json',dict(connection=connection,remote_worker_sha256='a'*64,
+               preflight_sha256='b'*64,protected={}))
+    def refused(*args):raise ValueError('current_preflight_ok_required')
+    monkeypatch.setattr(cycle,'require_preflight',refused)
+    def no_ssh(*args,**kwargs):raise AssertionError('SSH must not run without admission')
+    monkeypatch.setattr(cycle.subprocess,'run',no_ssh)
+    with pytest.raises(ValueError,match='current_preflight_ok_required'):
+        cycle.remote(connection,'identity')
+
+
+def test_quarantine_keeps_historical_residuals_until_a_cycle_store_exists():
+    incumbent=candidate.initial('A')
+    historical=[dict(candidate_id='historical-v3',failure_class='incorrect_selection')]
+    state=dict(n=1,incumbent=incumbent,experience={'data':{'episodes':historical}})
+    assert cycle.incumbent_episodes(state)==historical
+    current=dict(candidate_id=cycle.digest(incumbent),failure_class='incorrect_selection')
+    rejected=dict(candidate_id='rejected-config',failure_class='none')
+    state.update(cycle_experience=True,experience={'data':{'episodes':[current,rejected]}})
+    assert cycle.incumbent_episodes(state)==[current]
