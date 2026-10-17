@@ -103,3 +103,39 @@ D7 is partial for the originally requested `evaluate(..., gate='signed')`
 capability: this release exposes the mode but refuses it safely. The external
 signed-gate handoff is a documented boundary, not an implemented SDK signed
 assessment path.
+
+## Synthetic contract v2 (continuation)
+
+New demos use `loop-demo-v2`. Predictors receive an allowlisted copy containing
+only item ID and public `task`; evaluator truth, safety strata and cluster labels
+are withheld. Label-mutation tests hold inputs fixed and flip private rewards:
+predictions stay identical while evaluation changes. This is input separation,
+not process isolation against malicious Python code.
+
+The scientific task extracts the sign of a reported delta. PerfFlux compares
+explicit synthetic direct latency against batch overhead plus cache misses.
+Clinical OS matches a query term against synthetic title/abstract metadata;
+this is retrieval relevance, never clinical correctness. The incumbent abstains
+when its summary is unavailable; the candidate uses observable structured context.
+These hand-written deterministic repairs exercise the SDK contract, not autonomous
+scientific discovery or measured production performance. No model calls occur.
+
+`protocol.json` registers version, bank, source hashes, budget and the unchanged
+keep rule before even baseline predictions. Evaluation separately registers the
+candidate and bank before scoring. Fresh-process replay first verifies the exact
+source pins and protocol, then recomputes the receipt. Existing v1 receipts remain
+unchanged and require their original pinned checkout; v2 refuses to silently
+reinterpret them. Hashes establish consistency, not authenticity or independent
+reward validity. `learn` continues to accept host-asserted receipt references.
+
+Adaptation still consumes the existing deliberately injected paired-reward
+fixture. It is not derived from these task banks, and does not substantiate D5
+or production counterfactual reward availability. Signed evaluation remains
+fail-closed. This version improves task/reward separation only; the generator
+still has a single context repair and does not satisfy D1's three proposals.
+
+Direct `evaluate` registrations also pin the SDK evaluator and domain source
+hashes. Runtime custom domain subclasses/configurations are rejected until a
+reviewed, versioned contract is added to the domain registry in source (not the
+protected skill registry). This avoids pretending unpinned host code is a fixed
+evaluator. Real-domain integration currently requires that source-level adapter.
