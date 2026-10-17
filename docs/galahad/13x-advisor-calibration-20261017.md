@@ -1,43 +1,28 @@
-# W2 advisor calibration checkpoint
+# W2 advisor calibration and cycle evidence — doc 13x
 
-D9: advisor calibration — Brier and AUC per generator against verdicts, trust
-weights at close, and whether Socratic or template hypotheses were kept more often.
-Evidence: `research/leaderboard-20261017.jsonl`,
-`research/calibration-20261017.json`, this doc 13x.
+Status: **blocked**. All evidence is synthetic dev research. No holdout, signing or activation.
 
-Status: **not achieved; new cycle not running**. The rewritten program replaces
-W2's old stop-after-three-reverts specification. The existing B01b keep remains
-historical: its registration has no prospective advisor priors, so it contributes
-neither calibration labels nor bandit feedback. No new verdict was manufactured.
+D9: Brier and AUC per generator against verdicts, final advisor trust weights, and template versus Socratic keep rates.
 
-| Advisor | Prospective verdicts | Brier | AUC | Current weight |
-|---|---:|---|---|---:|
-| template | 0 | undefined | undefined | 1/3 |
-| socratic | 0 | undefined | undefined | 1/3 |
-| jev | 0 | undefined | undefined | 1/3 |
+| Advisor | Verdicts | Brier | AUC | Weight |
+|---|---:|---:|---:|---:|
+| template | 0 | None | None | 0.333333 |
+| socratic | 0 | None | None | 0.333333 |
+| jev | 0 | None | None | 0.333333 |
 
-Both families lack comparable generator keep rates. No bank hardening has run;
-old versus new incumbent scores are unmeasured. Jev's absent key selects the
-neutral `no-live-jev` readiness fixture, not a backfilled historical prior.
+Null metrics are undefined, not passing scores. Jev fixture and live calibration are separated in the JSON file.
+Historical rows without prospective priors are excluded. Comparisons are conditional on selection, not causal generator effects.
 
-Preflight verified the existing 17 protected-file hashes and four experience
-journal chains. The live Runpod get-pod read found pinned pod B
-`5xndo7i7s5r9zn` EXITED at USD0.59/hour. No GBP rate is claimed without an FX
-basis. W0's shared inference-revoked.json still records infrastructure_stop.
-No lock was acquired, no model calls made, no holdout opened, no spend fabricated.
+Family A: {"higher_keep_rate": null, "socratic": {"keep_rate": null, "kept": 0, "n": 0}, "template": {"keep_rate": null, "kept": 0, "n": 0}}
 
-The new code supplies advisor triage/calibration, a labelled offline Jev prior,
-and a source-hashed Obsidian research view through obsidian_export_v18. It does
-not yet wire the two Hermes generators, arbitrary family seams, transport,
-sealed new-bank creation or repeated cycle dispatch into an executable runner.
-The existing overnight_dev_study.py remains a historical one-study transport;
-its frozen source and evaluator have not been changed to bypass registration.
+Run summary / refusals / bank hardening: {}
 
-Refusals: retrospectively assigning priors to B01b; counting an infrastructure
-stop as a revert; claiming AUC with one/no label class; calling this a running
-engine; treating exported research records as approved memory; reopening W0's
-global stop without resolving its scope. The four 01:40 readiness checks are
-not satisfied at this checkpoint.
+Family B: {"higher_keep_rate": null, "socratic": {"keep_rate": null, "kept": 0, "n": 0}, "template": {"keep_rate": null, "kept": 0, "n": 0}}
 
-Audit view: `~/nerve-research-runs/obsidian-audit-vault/W2-20261017.md`.
-The vault is display only and is never read back as state.
+Run summary / refusals / bank hardening: {}
+
+Reason: W0_inference_revoked_no_calls
+
+Evidence: research/leaderboard-20261017.jsonl; research/calibration-20261017.json; research/status-20261017.json.
+Private immutable registrations and wire receipts: ~/nerve-research-runs/w2-cycle-20261017/.
+Obsidian exports: ~/nerve-research-runs/obsidian-audit-vault/. Display only, never state.

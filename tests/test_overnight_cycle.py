@@ -88,3 +88,14 @@ def test_call_caps_claim_before_dispatch(tmp_path, monkeypatch):
         cycle.reserve_call('jev','a'*64)
     assert len(list((tmp_path/'calls').glob('*.json')))==40
     cycle.reserve_call('socratic','b'*64)
+
+
+def test_global_revocation_blocks_before_any_session_side_effect(tmp_path, monkeypatch):
+    shared=tmp_path/'shared';shared.mkdir()
+    (shared/'inference-revoked.json').write_text('{}')
+    private=tmp_path/'new-session'
+    monkeypatch.setattr(cycle,'SHARED',shared)
+    monkeypatch.setattr(cycle,'PRIVATE',private)
+    with pytest.raises(ValueError,match='W0_inference_revoked_no_calls'):
+        cycle.session({})
+    assert not private.exists()

@@ -3,20 +3,23 @@
   "calibration": "no_prospective_verdicts",
   "existing_leaderboard_rows": 1,
   "experience_chains_validated": 4,
+  "focused_tests_passed": 18,
   "holdout_opened": false,
+  "live_end_to_end_validated": false,
   "lock_acquired": false,
   "model_calls": 0,
   "new_cycle_verdict_rows": 0,
-  "program_sha256": "33d3342fb7075c81747dc71f6cf4e555ee50187350a29be12b07aa68bc348bdd",
+  "program_sha256": "72e18785054bcbeb110fd23af57cacd2460d1abfa280ff524208885987b8a310",
   "protected_files_checked": 17,
   "protected_mismatches": [],
+  "reason": "W0_inference_revoked_no_calls",
   "reasons": [
     "W0_global_inference_revocation_present",
     "pod_B_not_acquired",
-    "new_cycle_transport_and_bank_hardening_integration_not_complete"
+    "W0_scoped_cycle_admission_missing"
   ],
   "spend_updated": false,
-  "status": "not_running",
-  "timestamp": "2026-10-17T00:14:38.680762+00:00",
+  "status": "blocked",
+  "timestamp": "2026-10-17T00:42:10.728282+00:00",
   "vault": "/Users/aliyildirim/nerve-research-runs/obsidian-audit-vault"
 }

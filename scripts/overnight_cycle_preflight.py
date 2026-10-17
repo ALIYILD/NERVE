@@ -68,7 +68,15 @@ def run(shared, runs, vault):
         reasons.append('W0_global_inference_revocation_present')
     if not (shared/'pod-B.lock').exists():
         reasons.append('pod_B_not_acquired')
-    reasons.append('new_cycle_transport_and_bank_hardening_integration_not_complete')
+    readiness=ROOT/'research/overnight-20261017/cycle-readiness.json'
+    if not readiness.exists():
+        reasons.append('cycle_focused_validation_pending')
+    else:
+        checks=json.loads(readiness.read_text())
+        if checks.get('tests_passed') is not True or any(hashed(ROOT/name)!=h for name,h in checks['source_sha256'].items()):
+            reasons.append('cycle_validation_missing_or_source_changed')
+    if not (shared/'W2-cycle-resume-authorization.json').exists():
+        reasons.append('W0_scoped_cycle_admission_missing')
     status = dict(timestamp=datetime.now(timezone.utc).isoformat(), status='not_running',
                   reasons=reasons, protected_files_checked=len(paths), protected_mismatches=[],
                   experience_chains_validated=len(snapshots)-1,

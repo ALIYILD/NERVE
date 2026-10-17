@@ -1,0 +1,9 @@
+{
+  "holdout_opened": false,
+  "model_calls": 0,
+  "readiness_sha256": "a797491f463852158ebaadd948354495ce050d6f0099dc6950d9bd7f27a194c7",
+  "reason": "W0_inference_revoked_no_calls",
+  "session_directory_created": false,
+  "status": "blocked",
+  "time": "2026-10-17T00:42:10.362263+00:00"
+}

@@ -415,7 +415,11 @@ def session(connection):
     global AUTH
     if (SHARED/'inference-revoked.json').exists():raise ValueError('W0_inference_revoked_no_calls')
     authorization=read(SHARED/'W2-cycle-resume-authorization.json')
-    if authorization.get('authorized') is not True or authorization.get('program_sha256')!=hashfile(ROOT/'research/program-20261017.md'):
+    if (authorization.get('authorized') is not True
+            or authorization.get('identity_replay_passed') is not True
+            or authorization.get('model_digest')!=MODEL
+            or authorization.get('connection')!=connection
+            or authorization.get('program_sha256')!=hashfile(ROOT/'research/program-20261017.md')):
         raise ValueError('current_session_authorization_required')
     if PRIVATE.exists():raise ValueError('session_already_exists_no_ambiguous_restart')
     PRIVATE.mkdir(mode=0o700);PUBLIC.mkdir(parents=True,exist_ok=True)
@@ -527,7 +531,9 @@ def session(connection):
                 with os.fdopen(fd,'w') as f:json.dump(lock,f)
                 try:
                     identity=transport.remote(connection,'identity')
-                    if identity['model_digest']!=MODEL:raise ValueError('identity_mismatch')
+                    if (identity['model_digest']!=MODEL or identity['pod_id']!=POD
+                            or identity['runtime']!={'version':'0.40.5'}
+                            or identity['gpu'] not in ('A40','NVIDIA A40')):raise ValueError('identity_mismatch')
                     result=execute(directory,connection,lock,pins)
                 except BaseException as error:
                     failure=dict(experiment_id=ident,family=family,generator=chosen['generator'],

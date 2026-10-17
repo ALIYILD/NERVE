@@ -1,0 +1,23 @@
+{
+  "command": "pytest -q tests/test_overnight_cycle.py tests/test_overnight_advisors.py tests/test_obsidian_export_v18.py",
+  "cryptography": "48.0.1",
+  "exclusive_test_lock": true,
+  "live_end_to_end_validated": false,
+  "python": "3.13",
+  "source_sha256": {
+    "research/program-20261017.md": "72e18785054bcbeb110fd23af57cacd2460d1abfa280ff524208885987b8a310",
+    "scripts/overnight_cycle.py": "0091c668aba6c9c3de8ee0726f59c8a56de612539eb9751a8c472b54da7de608",
+    "scripts/overnight_cycle_preflight.py": "511ab8cea2ec2a32a70f763fcf270dbf11896bb4cde7f0547f7935aff366de4e",
+    "scripts/overnight_hermes_worker.py": "bb63a99627306009678a99ce580105a6e94a770d57c7218002321076f933e32b",
+    "src/nerve_awim/memory_gateway/overnight_advisors.py": "627e2b52429069ccf8ec6106ba1ec3f011d012f756ad75ff750fea9e905e3966",
+    "src/nerve_awim/memory_gateway/overnight_cycle_candidates.py": "9323476e77b29ea7e216388ffa4d46bd80b2d06cc6343683ed572cfca15a14cc",
+    "src/nerve_awim/obsidian_export_v18.py": "56eb56aaf3ecc97d6ab7399ccb7bba31f04fe1dc3b381239d90c9c374cd863cc",
+    "tests/test_obsidian_export_v18.py": "4f5c1969f29b4f52f279b83cec402aa7cda202f18c8a3aacf54cf571af1e82d2",
+    "tests/test_overnight_advisors.py": "6e264cdb66c382abe411357a534940398587f45fa220e92164e0101fb0456393",
+    "tests/test_overnight_cycle.py": "36e2eebb4aad7363fcd329b813cc816a36e23ffad222a61e92f2cc187c3677a7"
+  },
+  "test_seconds": 6.27,
+  "tests": 18,
+  "tests_passed": true,
+  "time": "2026-10-17T00:42:10.353432+00:00"
+}
