@@ -41,6 +41,10 @@ PUBLIC=ROOT/'research/overnight-20261017/cycle'
 ARCHIVE=RUNS/'attended-20261016/nerve-attended-bank-v3.private.tar.gz'
 BANK_B=RUNS/'scientific-bank-v5-20261016'
 POD='5xndo7i7s5r9zn'
+POD_WORKERS={
+    '5xndo7i7s5r9zn':'/workspace/v5_remote_call.py',
+    'lvojhtouu5gede':'/workspace/bank_v5_fallback_remote.py',
+}
 MODEL=transport.DIGEST
 read=transport.read
 hashfile=transport.filehash
@@ -175,7 +179,6 @@ def hermes_identity(role):
     python=Path.home()/'.hermes/hermes-agent/.venv/bin/python'
     worker=ROOT/'scripts/overnight_hermes_worker.py'
     env=dict(os.environ,PYTHONPATH=str(Path.home()/'.hermes/hermes-agent'))
-    audit['trace'][role]=dict(sources_used=['context:'+role], tests_run=[], tools_called=[], fallbacks_taken=[], complete=False)
     result=subprocess.run([str(python),str(worker)],input=json.dumps(dict(profile=profile,inspect=True,inspect_profile=True)),
                           text=True,capture_output=True,env=env,timeout=20,check=True)
     identity=json.loads(result.stdout)
@@ -299,7 +302,7 @@ def execute(directory,connection,lock,pins):
                 if read(SHARED/'pod-B.lock')!=lock:raise ValueError('lock_revoked')
                 save(directory/f'claim-{i:03}-{arm}.json',dict(body_sha256=digest(body),registration_sha256=registration,time=now()))
                 reserve_call('evaluation',registration)
-                response=transport.remote(connection,'call',dict(body=transport.old.canonical(body),timeout=35))
+                response=remote(connection,'call',dict(body=transport.old.canonical(body),timeout=35))
                 save(directory/f'response-{i:03}-{arm}.json',response)
                 if response['status']!='ok':raise ValueError('incomplete_infrastructure')
                 raw=transport.old.transport.decode(response['wire'])[0]
@@ -381,7 +384,8 @@ def harden(family, generation, episodes, previous):
 
 def source_pins():
     paths=[Path(__file__),ROOT/'scripts/overnight_cycle_preflight.py',ROOT/'scripts/overnight_dev_study.py',
-           ROOT/'scripts/overnight_hermes_worker.py',Path(candidates.__file__),Path(advisors.__file__),Path(faithfulness.__file__),
+           ROOT/'scripts/overnight_hermes_worker.py',
+           ROOT/'scripts/v5_remote_call.py',ROOT/'scripts/bank_v5_fallback_remote.py',Path(candidates.__file__),Path(advisors.__file__),Path(faithfulness.__file__),
            ROOT/'research/program-20261017.md']
     paths+=list((ROOT/'src/nerve_awim/memory_gateway').glob('scientific*.py'))
     return {str(p):hashfile(p) for p in paths}
@@ -432,8 +436,33 @@ def commit_checkpoint(message):
         subprocess.run(['git','push','origin','overnight/w2-autoresearch'],cwd=ROOT,check=True,timeout=45)
 
 
+def validate_connection(connection):
+    # A registered endpoint can change, but the pod-to-worker binding is closed.
+    import ipaddress
+    ipaddress.ip_address(connection['host'])
+    port=connection['port'];pod=connection['pod_id']
+    if (type(port) is not int or not 1<=port<=65535
+            or pod not in POD_WORKERS
+            or connection.get('remote_worker')!=POD_WORKERS[pod]):
+        raise ValueError('pinned_pod_connection_required')
+    return pod
+
+
+def remote(connection, action, payload=None, timeout=42):
+    pod=validate_connection(connection)
+    if pod!=POD:raise ValueError('registered_pod_mismatch')
+    if action not in ('identity','call'):raise ValueError('worker_action_forbidden')
+    command=['ssh','-p',str(connection['port']),'-i',str(Path.home()/'.ssh/id_ed25519'),
+             '-o','BatchMode=yes','-o','ConnectTimeout=5','-o','ServerAliveInterval=5',
+             '-o','ServerAliveCountMax=2','root@'+connection['host'],
+             'python3',connection['remote_worker'],action]
+    completed=subprocess.run(command,input=None if payload is None else json.dumps(payload),
+                             text=True,capture_output=True,check=True,timeout=timeout)
+    return json.loads(completed.stdout)
+
+
 def session(connection):
-    global AUTH
+    global AUTH, POD
     if (SHARED/'inference-revoked.json').exists():raise ValueError('W0_inference_revoked_no_calls')
     authorization=read(SHARED/'W2-cycle-resume-authorization.json')
     if (authorization.get('authorized') is not True
@@ -442,6 +471,7 @@ def session(connection):
             or authorization.get('connection')!=connection
             or authorization.get('program_sha256')!=hashfile(ROOT/'research/program-20261017.md')):
         raise ValueError('current_session_authorization_required')
+    POD=validate_connection(connection)
     if PRIVATE.exists():raise ValueError('session_already_exists_no_ambiguous_restart')
     PRIVATE.mkdir(mode=0o700);PUBLIC.mkdir(parents=True,exist_ok=True)
     pins=protected();sources=source_pins()
@@ -449,7 +479,8 @@ def session(connection):
     save(PRIVATE/'session-registration.json',dict(time=now(),sources=sources,protected=pins,
          program_sha256=hashfile(ROOT/'research/program-20261017.md'),authorization_sha256=hashfile(SHARED/'W2-cycle-resume-authorization.json'),
          calls_cap=1000,jev_cap=40,agent_node_cap=400,rule=advisors.RULE,max_experiments_per_family=12,
-         model_digest=MODEL,pod_id=POD,physical_transport_attempts=1))
+         model_digest=MODEL,pod_id=POD,connection=connection,
+         remote_worker_sha256=hashfile(ROOT/'scripts'/Path(connection['remote_worker']).name),physical_transport_attempts=1))
     event('cycle_start',registration_sha256=hashfile(PRIVATE/'session-registration.json'))
     # Verify format-only v2 too; never coerce general bank receipts into that schema.
     preflight.validated_store(RUNS/'scientific-format-episodes-v1/experiences.sqlite',ExperienceStoreV2)
@@ -588,7 +619,7 @@ def session(connection):
                 fd=os.open(SHARED/'pod-B.lock',os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
                 with os.fdopen(fd,'w') as f:json.dump(lock,f)
                 try:
-                    identity=transport.remote(connection,'identity')
+                    identity=remote(connection,'identity')
                     if (identity['model_digest']!=MODEL or identity['pod_id']!=POD
                             or identity['runtime']!={'version':'0.40.5'}
                             or identity['gpu'] not in ('A40','NVIDIA A40')):raise ValueError('identity_mismatch')

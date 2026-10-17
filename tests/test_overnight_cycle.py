@@ -99,3 +99,40 @@ def test_global_revocation_blocks_before_any_session_side_effect(tmp_path, monke
     with pytest.raises(ValueError,match='W0_inference_revoked_no_calls'):
         cycle.session({})
     assert not private.exists()
+
+
+def test_hermes_identity_inspection_needs_no_live_audit(monkeypatch):
+    from types import SimpleNamespace
+    requests=[]
+    def inspect_only(command, **kwargs):
+        requests.append(json.loads(kwargs['input']))
+        return SimpleNamespace(stdout=json.dumps({'configured_model':'fixture:free'}))
+    monkeypatch.setattr(cycle.subprocess,'run',inspect_only)
+    assert cycle.hermes_identity('proposer')=={'configured_model':'fixture:free'}
+    assert requests[0]['inspect'] and requests[0]['inspect_profile']
+
+
+def test_registered_fallback_worker_transport(monkeypatch):
+    from types import SimpleNamespace
+    connection=dict(host='194.68.245.122',port=22019,pod_id='lvojhtouu5gede',
+                    remote_worker='/workspace/bank_v5_fallback_remote.py')
+    monkeypatch.setattr(cycle,'POD',connection['pod_id'])
+    commands=[]
+    def fake_remote(command, **kwargs):
+        commands.append(command)
+        return SimpleNamespace(stdout=json.dumps({'pod_id':connection['pod_id']}))
+    monkeypatch.setattr(cycle.subprocess,'run',fake_remote)
+    assert cycle.remote(connection,'identity')['pod_id']==connection['pod_id']
+    assert commands[0][-2:]==['/workspace/bank_v5_fallback_remote.py','identity']
+    assert 'root@194.68.245.122' in commands[0]
+    for change in ({'pod_id':'other'},{'remote_worker':'/tmp/arbitrary.py'},
+                   {'remote_worker':'/workspace/v5_remote_call.py'},{'port':True}):
+        with pytest.raises(ValueError,match='pinned_pod_connection_required'):
+            cycle.remote(dict(connection,**change),'identity')
+    with pytest.raises(ValueError,match='worker_action_forbidden'):
+        cycle.remote(connection,'bootstrap')
+    assert len(commands)==1
+    monkeypatch.setattr(cycle,'POD','5xndo7i7s5r9zn')
+    with pytest.raises(ValueError,match='registered_pod_mismatch'):
+        cycle.remote(connection,'identity')
+    assert len(commands)==1

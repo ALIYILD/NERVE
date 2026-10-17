@@ -3,7 +3,9 @@
 The runnable entrypoint is `scripts/overnight_cycle.py run --connection PATH`.
 Use Python >=3.12 with the project's retention extra (`cryptography>=48,<49`).
 The connection file is the fresh live pod-B SSH connection object, not the old
-B01b connection or a holdout allocation. The runner pins pod5xndo7i7s5r9zn,
+B01b connection or a holdout allocation. The runner accepts only the pod and remote-worker pair named in fresh W0 authorization:
+`5xndo7i7s5r9zn` with `/workspace/v5_remote_call.py`, or
+`lvojhtouu5gede` with `/workspace/bank_v5_fallback_remote.py`. It pins
 qwen2.5-coder:7b digest dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364,
 Ollama0.40.5 and NVIDIA A40.
 
@@ -12,7 +14,7 @@ The runner does not delete or override it. W0's scoped authorization is read fro
 `~/nerve-orchestration/W2-cycle-resume-authorization.json` and must contain:
 
 - `authorized: true`, `identity_replay_passed: true`, canonical `model_digest`;
-- current `program_sha256` and the exact fresh `connection` object;
+- current `program_sha256` and the exact fresh `connection` object (`host`, `port`, `pod_id`, `remote_worker`);
 - provider `pod_started_epoch`, observed `hourly_usd`, absolute `expires_epoch`;
 - `base_compute_usd`, `base_model_calls`, and `resume_compute_cap_usd`.
 
