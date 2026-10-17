@@ -1,0 +1,18 @@
+{
+  "time": "2026-10-17T01:17:23.217179+00:00",
+  "event": "W2_CPU_admission_blockers_resolved",
+  "window": "W0-primary-20261017-root",
+  "worker_commit": "8a2cfec",
+  "tests": 41,
+  "python": "3.13.12",
+  "source_pins": 16,
+  "source_log_receipt_hashes_verified": true,
+  "independent_review": "passed scoped remote-byte enforcement and readiness review",
+  "remote_execution": "hash and execute same remote bytes against immutable registered hash",
+  "inference_admitted": false,
+  "preflight_ok": false,
+  "remaining_inference_blocker": "registered latency failure; ten-item replay not executed",
+  "model_calls": 0,
+  "pod_mutations": 0,
+  "merged": false
+}
