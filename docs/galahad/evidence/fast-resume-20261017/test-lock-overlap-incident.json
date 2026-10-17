@@ -1,0 +1,15 @@
+{
+  "time": "2026-10-17T00:39:03.240553+00:00",
+  "event": "test_lock_overlap_incident",
+  "loop": "CPU.diagnostic",
+  "owner": "W0-continuation",
+  "reason": "Retry launched despite mkdir lock failure due to unchecked sequential tool result. Exclude retry timing and overlapping resume-fast timing from exclusive-run evidence.",
+  "other_lock": {
+    "owner": "resume-fast",
+    "purpose": "final unchanged 180s fast verification",
+    "started": 1792197508.222812
+  },
+  "our_log": "/Users/aliyildirim/nerve-orchestration/cpu-permission-rerun.log",
+  "our_run_finished": true,
+  "new_model_calls": 0
+}

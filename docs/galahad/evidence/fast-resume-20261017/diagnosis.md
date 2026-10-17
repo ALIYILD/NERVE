@@ -20,3 +20,6 @@ The protected fast partition remains unchanged. A new tier partition cannot vali
 
 
 Final verification: one actual fast gate on this changed branch, using the unchanged protected partition and 180-second deadline, ran outside the sandbox to allow the required loopback tests. It timed out (exit 124) after 180.287 seconds during `test_scientific_compact_dev_study.test_external_replay_and_claim_tamper_refused`. The log contains 1791 completed `ok` lines, no `FAIL`/`ERROR` lines, and no completed timing report because the runner was killed at its deadline. All 80 protected hashes still match. This is **not a passing fast gate**; no repeated full run was attempted.
+
+
+Correction: the shared ledger later recorded a foreign W0 test-lock violation during that final fast run. Its 42-test permission rerun took 11.879 seconds; the log file timestamps span 00:38:33–00:38:45 UTC, while this fast gate started at 00:38:28.223 UTC. The gate timeout is a real process outcome but **must not be used as exclusive-run timing evidence**. The original log is preserved and the incident is adjacent. The schema microprofile and 57-test targeted run occurred before this overlap.
