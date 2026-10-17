@@ -1,0 +1,25 @@
+{
+  "entries": [
+    {
+      "id": "gate-v3.2-bounded-harmful-m14-4e2a5addbcc5",
+      "kind": "promotion_gate_signature",
+      "status": "pending_verification",
+      "created_at": "2026-10-16T23:56:57.379619+00:00",
+      "gate_id": "scientific-paired-sequential-promotion",
+      "version": "v3.2",
+      "payload_path": "/Users/aliyildirim/nerve-w0/docs/galahad/evidence/gate-v3_2-signing-payload.json",
+      "payload_sha256": "4e2a5addbcc56117a9971e67152b632f63536d9341bf92909e56b81fb83a0d5f",
+      "simulation_evidence_sha256": "9c268690c9946626831b834d39f5036c12b490f0bbf5d8d96040abae4138f694",
+      "protected_paths_sha256": "32aa0d4f47dab44f1c0b81b4185867cd4708fa8ea1456993eaad2ebdeaf113ba",
+      "full_form": "sign gate_id=scientific-paired-sequential-promotion version=v3.2 payload_sha256=4e2a5addbcc56117a9971e67152b632f63536d9341bf92909e56b81fb83a0d5f simulation_evidence_sha256=9c268690c9946626831b834d39f5036c12b490f0bbf5d8d96040abae4138f694 protected_paths_sha256=32aa0d4f47dab44f1c0b81b4185867cd4708fa8ea1456993eaad2ebdeaf113ba",
+      "signed": false,
+      "installed": false,
+      "promotion_authorized": false,
+      "selected_m": 14,
+      "scope_floor": 0.08,
+      "pending_reason": "held pending operator verification on operator instruction. Correction: the instruction stated the harmful-rate 100k-stream check was not run; evidence shows it was run by W0 (commit 49bbe7b, docs/galahad/evidence/gate-v3_2-harmful-bound/, seed 2026102501, 100000 streams/profile, all bounds passed). Hold stands until operator confirms which verification remains outstanding (e.g. independent W1 replay).",
+      "marked_pending_at": "2026-10-17T07:08:54.708688+00:00",
+      "pending_reason_corrected_at": "2026-10-17T07:09:34.593959+00:00"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "cap_usd": 12,
+  "compute_usd": 3.6156,
+  "infrastructure_failures": 4,
+  "intervals": [
+    {
+      "basis": "conservative request time",
+      "end": "2026-10-16T23:59:51.424915+00:00",
+      "hourly_usd": 0.59,
+      "pod_id": "5xndo7i7s5r9zn",
+      "start": "2026-10-16T23:45:14.437716+00:00"
+    },
+    {
+      "basis": "conservative request time",
+      "end": "2026-10-17T00:07:00.477979+00:00",
+      "hourly_usd": 0.59,
+      "pod_id": "5xndo7i7s5r9zn",
+      "start": "2026-10-17T00:00:25.574619+00:00"
+    },
+    {
+      "pod_id": "5xndo7i7s5r9zn",
+      "start": "2026-10-17T00:59:16.889385+00:00",
+      "end": "2026-10-17T00:59:35.060587+00:00",
+      "hourly_usd": 0.59,
+      "basis": "conservative start request time",
+      "billable": false,
+      "start_rejected": true
+    },
+    {
+      "pod_id": "lvojhtouu5gede",
+      "start": "2026-10-17T00:59:35.060587+00:00",
+      "end": "2026-10-17T01:05:01.419524+00:00",
+      "hourly_usd": 0.59,
+      "basis": "conservative start request time"
+    },
+    {
+      "pod_id": "lvojhtouu5gede",
+      "start": "2026-10-17T01:27:11.038656+00:00",
+      "end": "2026-10-17T07:08:14+00:00",
+      "hourly_usd": 0.59,
+      "basis": "console-verified (stopped by Claude Code in the operator's signed-in RunPod console on operator instruction), API unverified",
+      "verification": "operator_verified",
+      "usd": 3.3537
+    }
+  ],
+  "last_checked_at": "2026-10-17T07:08:54.708688+00:00",
+  "model_calls": 117,
+  "projected_compute_usd": 3.6156,
+  "storage_excluded_pending_billing": true,
+  "compute_usd_pre_recovery": 0.2619353340666667,
+  "recovery_pod_usd": 3.3537,
+  "figure_basis": "console-verified (stopped by Claude Code in the operator's signed-in RunPod console on operator instruction), API unverified",
+  "morning_close": {
+    "closed_at": "2026-10-17T07:08:54.708688+00:00",
+    "pods_checked": 6,
+    "pods_stopped": [
+      "lvojhtouu5gede"
+    ],
+    "all_exited": true,
+    "pods": {
+      "lvojhtouu5gede": "EXITED",
+      "5xndo7i7s5r9zn": "EXITED",
+      "ki9m7vdg9qsea6": "EXITED",
+      "b7qj6qyx9ij6gg": "EXITED",
+      "97vr620wnmtuga": "EXITED",
+      "lg0svvuenxvbno": "EXITED"
+    },
+    "lvojhtouu5gede_idle_uptime_hours": 5.6842,
+    "note": "pod idle at 0% GPU from ~01:30 UTC (usage-limit stop) until 07:08:14 UTC",
+    "pod_table": [
+      {
+        "pod_id": "lvojhtouu5gede",
+        "role": "B / recovery",
+        "intervals": [
+          [
+            "2026-10-17T00:59:35Z",
+            "2026-10-17T01:05:01Z"
+          ],
+          [
+            "2026-10-17T01:27:11Z",
+            "2026-10-17T07:08:14Z"
+          ]
+        ],
+        "usd": 3.4072,
+        "final": "EXITED",
+        "stopped_by": "Claude Code in operator console 07:08:14Z"
+      },
+      {
+        "pod_id": "5xndo7i7s5r9zn",
+        "role": "A",
+        "intervals": [
+          [
+            "2026-10-16T23:45:14Z",
+            "2026-10-16T23:59:51Z"
+          ],
+          [
+            "2026-10-17T00:00:25Z",
+            "2026-10-17T00:07:00Z"
+          ]
+        ],
+        "usd": 0.2085,
+        "final": "EXITED",
+        "note": "00:59 start rejected, not billable"
+      },
+      {
+        "pod_id": "ki9m7vdg9qsea6",
+        "intervals": [],
+        "usd": 0.0,
+        "final": "EXITED"
+      },
+      {
+        "pod_id": "b7qj6qyx9ij6gg",
+        "intervals": [],
+        "usd": 0.0,
+        "final": "EXITED"
+      },
+      {
+        "pod_id": "97vr620wnmtuga",
+        "intervals": [],
+        "usd": 0.0,
+        "final": "EXITED"
+      },
+      {
+        "pod_id": "lg0svvuenxvbno",
+        "intervals": [],
+        "usd": 0.0,
+        "final": "EXITED",
+        "note": "perfflux demo pod, not NERVE"
+      }
+    ],
+    "reconciliation": "ledger 117 calls / $0.2619 = 5xndo 0.3534h + lvoj 0.0907h at $0.59/h; recovery interval adds $3.3537 with 0 recorded calls; total $3.6156 compute; storage excluded (stopped-pod idle disk ~$0.003/h each)"
+  }
+}

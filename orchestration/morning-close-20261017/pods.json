@@ -1,0 +1,60 @@
+{
+  "observed_at": "2026-10-17T01:16:03.091979+00:00",
+  "pods": [
+    {
+      "id": "5xndo7i7s5r9zn",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-17T00:00:31.877Z",
+      "assigned_role": "A"
+    },
+    {
+      "id": "ki9m7vdg9qsea6",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-16T17:01:07.794Z",
+      "assigned_role": null
+    },
+    {
+      "id": "lvojhtouu5gede",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-17T00:59:35.742Z",
+      "assigned_role": "B"
+    },
+    {
+      "id": "b7qj6qyx9ij6gg",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "CA-MTL-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-16T08:33:31.123Z",
+      "assigned_role": null
+    },
+    {
+      "id": "97vr620wnmtuga",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-16T06:27:28.749Z",
+      "assigned_role": null
+    },
+    {
+      "id": "lg0svvuenxvbno",
+      "status": "EXITED",
+      "gpu": "NVIDIA A40",
+      "region": "EU-SE-1",
+      "hourly_usd": 0.59,
+      "started_at": "2026-10-15T23:08:59.019Z",
+      "assigned_role": null
+    }
+  ],
+  "source": "fresh MCP list in sole-W0 continuation"
+}
